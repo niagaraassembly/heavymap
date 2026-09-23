@@ -13,6 +13,8 @@ Beta is the repository top level. [`niagara-atlas/`](../../niagara-atlas/) and t
 | Parcel Context Display Protocol (PCDP) | [PCDP.md](PCDP.md) | Minimum-to-maximum contract for how any parcel is presented. The dossier is one surface. |
 | Claim & Refusal Contract | [claim-refusal-contract.md](claim-refusal-contract.md) | Every assertion needs an evidence grade and a source stamp. Absence is a named refusal. |
 
+Machine-readable tokens for these contracts are in [vocab/](vocab/README.md).
+
 Plumbing that is not a fifth product name:
 
 - **MCS** — which datasets exist and which bands, surfaces, and readings they may feed.
