@@ -1,0 +1,273 @@
+{
+  "synthetic": true,
+  "not_an_observation_of_real_land": true,
+  "do_not_publish_as_a_real_parcel": true,
+  "linear": "NIA-16",
+  "prose": "docs/architecture/PCDP.md",
+  "vocabulary": "docs/architecture/vocab/pcdp.vocab.json",
+  "snapshot": "maximum",
+  "surfaces": ["dossier", "share", "export"],
+  "spine_key": "hm:ca:on:welland:footprint:SYN-0142",
+  "grain": "footprint",
+  "jurisdiction": {
+    "sentence": "City of Welland, a lower-tier municipality of Niagara Region, Ontario.",
+    "country": "ca",
+    "region": "on",
+    "slug": "welland",
+    "inside_geography_v1": true
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [-79.25, 42.99],
+        [-79.24, 42.99],
+        [-79.24, 43.0],
+        [-79.25, 43.0],
+        [-79.25, 42.99]
+      ]
+    ]
+  },
+  "geometry_note": "Synthetic outline stub in WGS84. The box is about a kilometre on a side, on round coordinates. It is not a survey and not a real building footprint.",
+  "bands": [
+    {
+      "band": "identity",
+      "status": "filled",
+      "claims": [
+        {
+          "about": "spine key",
+          "grade": "observed",
+          "assertion_state": "supported",
+          "value": "hm:ca:on:welland:footprint:SYN-0142",
+          "stamp": {
+            "source_name": "HeavyMap synthetic walkthrough",
+            "publisher": "HeavyMap architecture walkthrough",
+            "licence": "synthetic illustration; not a municipal open-data licence",
+            "original_id": "SYN-0142",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2026-01-01",
+            "note": "Illustrative dates, not a file retrieval. The key is HeavyMap's. It is not a publisher parcel identifier."
+          }
+        },
+        {
+          "about": "grain",
+          "grade": "observed",
+          "assertion_state": "supported",
+          "value": "footprint",
+          "stamp": {
+            "source_name": "synthetic building outline",
+            "publisher": "HeavyMap architecture walkthrough",
+            "licence": "synthetic illustration; not a municipal open-data licence",
+            "original_id": "SYN-0142",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2026-01-01",
+            "note": "Building outline is the unit. It is drawn as a footprint. Illustrative dates, not a file retrieval."
+          }
+        },
+        {
+          "about": "jurisdiction",
+          "grade": "observed",
+          "assertion_state": "supported",
+          "value": "City of Welland, a lower-tier municipality of Niagara Region, Ontario.",
+          "stamp": {
+            "source_name": "HeavyMap geography v1",
+            "publisher": "HeavyMap architecture walkthrough",
+            "licence": "synthetic illustration; not a municipal open-data licence",
+            "original_id": "SYN-0142",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2026-01-01",
+            "note": "Inside geography v1. The spine slug is the lower tier, welland, not niagara. Illustrative dates, not a file retrieval."
+          }
+        },
+        {
+          "about": "native key",
+          "name": "nei_id",
+          "grade": "joined",
+          "assertion_state": "supported",
+          "value": "SYN-8130",
+          "stamp": {
+            "source_name": "Niagara Employment Inventory (synthetic row)",
+            "publisher": "Niagara Region",
+            "licence": "synthetic illustration; not a retrieval of the regional inventory",
+            "original_id": "SYN-8130",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2022-01-01",
+            "join_method": "identifier",
+            "note": "Illustrative dates, not a file retrieval. Joined by identifier. Address text is not used as a join."
+          }
+        }
+      ],
+      "refusals": [
+        {
+          "object": "parcel polygon",
+          "grade": "refused",
+          "reason": "not_in_coverage",
+          "must_not_conclude": "That Welland has no lot here.",
+          "stamp": {
+            "source_name": "municipal parcel fabric",
+            "publisher": "City of Welland",
+            "licence": "none held in this illustration",
+            "note": "The illustration has no public parcel fabric for this city. The unit is not dropped and is not drawn as a parcel."
+          }
+        },
+        {
+          "object": "MPAC roll",
+          "grade": "refused",
+          "reason": "not_licensed",
+          "must_not_conclude": "That the land is unassessed.",
+          "stamp": {
+            "source_name": "Ontario assessment roll",
+            "publisher": "MPAC",
+            "licence": "MPAC assessment roll (not used)",
+            "note": "The product not used is the MPAC assessment roll. The refusal is about licence, not about whether the land has an assessment."
+          }
+        }
+      ]
+    },
+    {
+      "band": "land_use",
+      "status": "filled",
+      "claims": [
+        {
+          "about": "zoning",
+          "grade": "joined",
+          "assertion_state": "supported",
+          "value": "L1 — Light Industrial",
+          "stamp": {
+            "source_name": "illustrative current zoning by-law",
+            "publisher": "City of Welland",
+            "licence": "Open Government Licence",
+            "original_id": "SYN-ZONE-L1",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2017-01-01",
+            "join_method": "point_in_polygon",
+            "note": "Synthetic zoning text. Illustrative dates, not a retrieval of a real by-law, and not the same kind of date. Zoning text is not an employment fact."
+          }
+        }
+      ],
+      "refusals": [
+        {
+          "object": "assessed value",
+          "grade": "refused",
+          "reason": "not_licensed",
+          "must_not_conclude": "That the land is unassessed.",
+          "stamp": {
+            "source_name": "Ontario assessment roll",
+            "publisher": "MPAC",
+            "licence": "MPAC assessment roll (not used)",
+            "note": "Assessed value stays refused inside this rung beside the zoning claim. The product not used is the MPAC assessment roll."
+          }
+        }
+      ]
+    },
+    {
+      "band": "constraints",
+      "status": "refused",
+      "claims": [],
+      "refusals": [
+        {
+          "object": "constraints",
+          "grade": "refused",
+          "reason": "not_joined",
+          "must_not_conclude": "That the site is unconstrained.",
+          "stamp": {
+            "source_name": "constraint overlay",
+            "publisher": "none joined in this illustration",
+            "licence": "none joined",
+            "note": "The rung is present. It does not say there are no constraints."
+          }
+        }
+      ]
+    },
+    {
+      "band": "activity_registers",
+      "status": "filled",
+      "claims": [
+        {
+          "about": "nei_id",
+          "grade": "joined",
+          "assertion_state": "supported",
+          "value": "SYN-8130",
+          "stamp": {
+            "source_name": "Niagara Employment Inventory (synthetic row)",
+            "publisher": "Niagara Region",
+            "licence": "synthetic illustration; not a retrieval of the regional inventory",
+            "original_id": "SYN-8130",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2022-01-01",
+            "join_method": "identifier",
+            "note": "Illustrative dates, not a file retrieval. Identifier join only. No operating-status claim is made."
+          }
+        },
+        {
+          "about": "employment band",
+          "grade": "observed",
+          "assertion_state": "supported",
+          "value": "5–99",
+          "stamp": {
+            "source_name": "Niagara Employment Inventory (synthetic row)",
+            "publisher": "Niagara Region",
+            "licence": "synthetic illustration; not a retrieval of the regional inventory",
+            "original_id": "SYN-8130",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2022-01-01",
+            "note": "Source band copied as published, for illustration. Not an operating-status claim. employment_interval is not listed on derived_readings in this illustration."
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "band": "derived_readings",
+      "status": "refused",
+      "claims": [],
+      "refusals": [
+        {
+          "object": "coverage_ratio",
+          "grade": "refused",
+          "reason": "not_in_coverage",
+          "must_not_conclude": "That coverage is zero.",
+          "stamp": {
+            "source_name": "coverage ratio",
+            "publisher": "HeavyMap architecture walkthrough",
+            "licence": "not applicable; parcel area is not in this illustration",
+            "note": "No parcel area to divide by. The reading is absent. It is not shown as a number."
+          }
+        }
+      ]
+    },
+    {
+      "band": "share_export",
+      "status": "filled",
+      "claims": [
+        {
+          "about": "packet",
+          "grade": "derived",
+          "assertion_state": "supported",
+          "value": "Packet repeats every rung in this fixture, including refusals.",
+          "surfaces": ["share", "export"],
+          "inputs": [
+            "identity",
+            "land_use",
+            "constraints",
+            "activity_registers",
+            "derived_readings"
+          ],
+          "method": "repeat the same claims and the same refusals",
+          "stamp": {
+            "source_name": "HeavyMap synthetic PCDP packet",
+            "publisher": "HeavyMap architecture walkthrough",
+            "licence": "synthetic illustration; not a data licence",
+            "original_id": "SYN-0142",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2026-01-01",
+            "inputs": "identity, land_use, constraints, activity_registers, derived_readings",
+            "method": "repeat the same claims and the same refusals",
+            "note": "A share card that kept only L1 and the NEI id would be under the minimum. Illustrative dates, not a publication. This packet is not a public site."
+          }
+        }
+      ],
+      "refusals": []
+    }
+  ]
+}
