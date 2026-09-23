@@ -1,0 +1,1083 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pcdp.schema.json",
+  "title": "HeavyMap PCDP vocabulary",
+  "description": "Closed tokens from docs/architecture. Prose is the source of truth (NIA-11). This schema locks pcdp.vocab.json to those tokens (NIA-14). Illustrative derived-reading identifiers are an open set: the schema requires the three documented examples and does not forbid later ones.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "schema_version",
+    "linear",
+    "prose_linear",
+    "source_of_truth",
+    "rule",
+    "normative",
+    "illustrative"
+  ],
+  "properties": {
+    "id": { "const": "pcdp-vocabulary" },
+    "schema_version": { "const": 1 },
+    "linear": { "const": "NIA-14" },
+    "prose_linear": { "const": "NIA-11" },
+    "source_of_truth": {
+      "type": "array",
+      "prefixItems": [
+        { "const": "docs/architecture/context-band-ladder.md" },
+        { "const": "docs/architecture/claim-refusal-contract.md" },
+        { "const": "docs/architecture/parcel-identity-spine.md" },
+        { "const": "docs/architecture/PCDP.md" },
+        { "const": "docs/architecture/README.md" }
+      ],
+      "items": false,
+      "minItems": 5,
+      "maxItems": 5
+    },
+    "rule": { "type": "string", "minLength": 1 },
+    "normative": { "$ref": "#/$defs/normativeCatalog" },
+    "illustrative": { "$ref": "#/$defs/illustrativeCatalog" }
+  },
+  "$defs": {
+    "band": {
+      "description": "Context Band Ladder token. Presentation order is bandLadder, not this enum.",
+      "enum": [
+        "identity",
+        "land_use",
+        "constraints",
+        "activity_registers",
+        "derived_readings",
+        "share_export"
+      ]
+    },
+    "bandLadder": {
+      "description": "The ladder in fixed presentation order.",
+      "type": "array",
+      "prefixItems": [
+        { "const": "identity" },
+        { "const": "land_use" },
+        { "const": "constraints" },
+        { "const": "activity_registers" },
+        { "const": "derived_readings" },
+        { "const": "share_export" }
+      ],
+      "items": false,
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "bandStatus": {
+      "description": "Rung status. Not an evidence grade and not an assertion state.",
+      "enum": ["filled", "refused"]
+    },
+    "uiSurface": {
+      "description": "PCDP protocol surface. dossier is a surface, not a band.",
+      "enum": ["selection", "dossier", "share", "export"]
+    },
+    "refusalReason": {
+      "enum": ["not_in_coverage", "not_licensed", "not_joined"]
+    },
+    "evidenceGrade": {
+      "description": "Grade on a value. refused here is a grade, not band status refused.",
+      "enum": ["observed", "joined", "derived", "refused"]
+    },
+    "joinMethod": {
+      "description": "Carried on the stamp when the evidence grade is joined. Tolerances are not re-specified.",
+      "enum": [
+        "identifier",
+        "normalized_address",
+        "point_in_polygon",
+        "containment",
+        "proximity",
+        "overlap"
+      ]
+    },
+    "assertionState": {
+      "description": "Allowed when an assertion is filled. A refusal is not an assertion state.",
+      "enum": ["supported", "contested", "refuted"]
+    },
+    "grain": {
+      "enum": ["parcel", "footprint", "address"]
+    },
+    "country": {
+      "enum": ["ca", "us"]
+    },
+    "regionV1": {
+      "description": "v1 region slug. on is Ontario. ny is New York.",
+      "enum": ["on", "ny"]
+    },
+    "datasetDisposition": {
+      "description": "D-5 disposition of a dataset. derive is not evidence grade derived.",
+      "enum": ["ship", "simplify", "derive", "tile", "link"]
+    },
+    "notBandToken": {
+      "description": "Words the ladder says not to use as band names.",
+      "enum": ["regulatory", "physical", "neighbours", "dossier"]
+    },
+    "spineKey": {
+      "description": "HeavyMap spine key for v1. Template hm:{country}:{region}:{jurisdiction}:{grain}:{local}.",
+      "type": "string",
+      "pattern": "^hm:(ca|us):(on|ny):[a-z0-9]+(?:-[a-z0-9]+)*:(parcel|footprint|address):[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "examples": [
+        "hm:ca:on:welland:footprint:SYN-0142",
+        "hm:us:ny:erie:parcel:SYN-999.00-1-1.1"
+      ]
+    },
+    "derivedReadingIdentifier": {
+      "description": "Open set. Not a closed catalog. Not a ladder token.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "examples": ["floor_area_m2", "employment_interval", "coverage_ratio"]
+    },
+    "tokenOrder": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["order", "token", "may_hold", "must_not_hold"],
+      "properties": {
+        "order": { "type": "integer" },
+        "token": { "$ref": "#/$defs/band" },
+        "may_hold": { "type": "string", "minLength": 1 },
+        "must_not_hold": { "type": "string", "minLength": 1 }
+      }
+    },
+    "normativeCatalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bands",
+        "band_status",
+        "ui_surfaces",
+        "refusal_reasons",
+        "evidence_grades",
+        "join_methods",
+        "assertion_states",
+        "spine_key",
+        "dataset_dispositions",
+        "geography_v1",
+        "register_quotation_only",
+        "source_stamp_fields",
+        "mcs_part2"
+      ],
+      "properties": {
+        "bands": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "order_is_significant",
+            "mcs_column",
+            "separator",
+            "tokens",
+            "not_band_tokens",
+            "notes"
+          ],
+          "properties": {
+            "order_is_significant": { "const": true },
+            "mcs_column": { "const": "dossier_bands" },
+            "separator": { "const": "|" },
+            "tokens": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "allOf": [
+                    { "$ref": "#/$defs/tokenOrder" },
+                    {
+                      "properties": {
+                        "order": { "const": 1 },
+                        "token": { "const": "identity" }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    { "$ref": "#/$defs/tokenOrder" },
+                    {
+                      "properties": {
+                        "order": { "const": 2 },
+                        "token": { "const": "land_use" }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    { "$ref": "#/$defs/tokenOrder" },
+                    {
+                      "properties": {
+                        "order": { "const": 3 },
+                        "token": { "const": "constraints" }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    { "$ref": "#/$defs/tokenOrder" },
+                    {
+                      "properties": {
+                        "order": { "const": 4 },
+                        "token": { "const": "activity_registers" }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    { "$ref": "#/$defs/tokenOrder" },
+                    {
+                      "properties": {
+                        "order": { "const": 5 },
+                        "token": { "const": "derived_readings" }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    { "$ref": "#/$defs/tokenOrder" },
+                    {
+                      "properties": {
+                        "order": { "const": 6 },
+                        "token": { "const": "share_export" }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "items": false,
+              "minItems": 6,
+              "maxItems": 6
+            },
+            "not_band_tokens": {
+              "type": "array",
+              "prefixItems": [
+                { "const": "regulatory" },
+                { "const": "physical" },
+                { "const": "neighbours" },
+                { "const": "dossier" }
+              ],
+              "items": false,
+              "minItems": 4,
+              "maxItems": 4
+            },
+            "notes": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1
+            }
+          }
+        },
+        "band_status": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["order_is_significant", "tokens", "notes"],
+          "properties": {
+            "order_is_significant": { "const": false },
+            "tokens": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "filled" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "refused" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "notes": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1
+            }
+          }
+        },
+        "ui_surfaces": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "order_is_significant",
+            "listing_order_matches_pcdp_table",
+            "mcs_column",
+            "separator",
+            "tokens",
+            "notes"
+          ],
+          "properties": {
+            "order_is_significant": { "const": false },
+            "listing_order_matches_pcdp_table": { "const": true },
+            "mcs_column": { "const": "ui_surfaces" },
+            "separator": { "const": "|" },
+            "tokens": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "role"],
+                  "properties": {
+                    "token": { "const": "selection" },
+                    "role": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "role"],
+                  "properties": {
+                    "token": { "const": "dossier" },
+                    "role": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "role"],
+                  "properties": {
+                    "token": { "const": "share" },
+                    "role": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "role"],
+                  "properties": {
+                    "token": { "const": "export" },
+                    "role": { "type": "string", "minLength": 1 }
+                  }
+                }
+              ],
+              "items": false,
+              "minItems": 4,
+              "maxItems": 4
+            },
+            "notes": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1
+            }
+          }
+        },
+        "refusal_reasons": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["order_is_significant", "exactly_one", "tokens", "precedence", "notes"],
+          "properties": {
+            "order_is_significant": { "const": false },
+            "exactly_one": { "const": true },
+            "tokens": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "use_when"],
+                  "properties": {
+                    "token": { "const": "not_in_coverage" },
+                    "use_when": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "use_when"],
+                  "properties": {
+                    "token": { "const": "not_licensed" },
+                    "use_when": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "use_when"],
+                  "properties": {
+                    "token": { "const": "not_joined" },
+                    "use_when": { "type": "string", "minLength": 1 }
+                  }
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "precedence": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "notes": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1
+            }
+          }
+        },
+        "evidence_grades": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["order_is_significant", "tokens", "notes"],
+          "properties": {
+            "order_is_significant": { "const": false },
+            "tokens": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "observed" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "joined" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "derived" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "refused" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                }
+              ],
+              "items": false,
+              "minItems": 4,
+              "maxItems": 4
+            },
+            "notes": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1
+            }
+          }
+        },
+        "join_methods": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "order_is_significant",
+            "required_on_stamp_when_grade",
+            "tokens",
+            "notes"
+          ],
+          "properties": {
+            "order_is_significant": { "const": false },
+            "required_on_stamp_when_grade": { "const": "joined" },
+            "tokens": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "reader_takeaway"],
+                  "properties": {
+                    "token": { "const": "identifier" },
+                    "reader_takeaway": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "reader_takeaway"],
+                  "properties": {
+                    "token": { "const": "normalized_address" },
+                    "reader_takeaway": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "reader_takeaway"],
+                  "properties": {
+                    "token": { "const": "point_in_polygon" },
+                    "reader_takeaway": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "reader_takeaway"],
+                  "properties": {
+                    "token": { "const": "containment" },
+                    "reader_takeaway": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "reader_takeaway"],
+                  "properties": {
+                    "token": { "const": "proximity" },
+                    "reader_takeaway": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "reader_takeaway"],
+                  "properties": {
+                    "token": { "const": "overlap" },
+                    "reader_takeaway": { "type": "string", "minLength": 1 }
+                  }
+                }
+              ],
+              "items": false,
+              "minItems": 6,
+              "maxItems": 6
+            },
+            "notes": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1
+            }
+          }
+        },
+        "assertion_states": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["order_is_significant", "applies_when", "tokens", "notes"],
+          "properties": {
+            "order_is_significant": { "const": false },
+            "applies_when": { "type": "string", "minLength": 1 },
+            "tokens": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token"],
+                  "properties": {
+                    "token": { "const": "supported" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "contested" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "refuted" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "notes": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1
+            }
+          }
+        },
+        "spine_key": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["template", "regex", "regex_note", "parts", "examples", "notes"],
+          "properties": {
+            "template": { "const": "hm:{country}:{region}:{jurisdiction}:{grain}:{local}" },
+            "regex": {
+              "const": "^hm:(ca|us):(on|ny):[a-z0-9]+(?:-[a-z0-9]+)*:(parcel|footprint|address):[A-Za-z0-9][A-Za-z0-9._-]*$"
+            },
+            "regex_note": { "type": "string", "minLength": 1 },
+            "parts": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["country", "region", "jurisdiction", "grain", "local"],
+              "properties": {
+                "country": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["enum"],
+                  "properties": {
+                    "enum": {
+                      "type": "array",
+                      "prefixItems": [{ "const": "ca" }, { "const": "us" }],
+                      "items": false,
+                      "minItems": 2,
+                      "maxItems": 2
+                    }
+                  }
+                },
+                "region": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["v1_enum", "gloss"],
+                  "properties": {
+                    "v1_enum": {
+                      "type": "array",
+                      "prefixItems": [{ "const": "on" }, { "const": "ny" }],
+                      "items": false,
+                      "minItems": 2,
+                      "maxItems": 2
+                    },
+                    "gloss": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["on", "ny"],
+                      "properties": {
+                        "on": { "const": "Ontario" },
+                        "ny": { "const": "New York" }
+                      }
+                    }
+                  }
+                },
+                "jurisdiction": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["closed_catalog", "pattern", "note"],
+                  "properties": {
+                    "closed_catalog": { "const": false },
+                    "pattern": { "const": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+                    "note": { "type": "string", "minLength": 1 }
+                  }
+                },
+                "grain": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["enum", "meanings"],
+                  "properties": {
+                    "enum": {
+                      "type": "array",
+                      "prefixItems": [
+                        { "const": "parcel" },
+                        { "const": "footprint" },
+                        { "const": "address" }
+                      ],
+                      "items": false,
+                      "minItems": 3,
+                      "maxItems": 3
+                    },
+                    "meanings": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["parcel", "footprint", "address"],
+                      "properties": {
+                        "parcel": { "type": "string", "minLength": 1 },
+                        "footprint": { "type": "string", "minLength": 1 },
+                        "address": { "type": "string", "minLength": 1 }
+                      }
+                    }
+                  }
+                },
+                "local": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["pattern", "note"],
+                  "properties": {
+                    "pattern": { "const": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+                    "note": { "type": "string", "minLength": 1 }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "key",
+                  "status",
+                  "country",
+                  "region",
+                  "jurisdiction",
+                  "grain",
+                  "local",
+                  "note"
+                ],
+                "properties": {
+                  "key": { "$ref": "#/$defs/spineKey" },
+                  "status": { "const": "synthetic" },
+                  "country": { "$ref": "#/$defs/country" },
+                  "region": { "$ref": "#/$defs/regionV1" },
+                  "jurisdiction": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                  },
+                  "grain": { "$ref": "#/$defs/grain" },
+                  "local": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+                  },
+                  "note": { "type": "string", "minLength": 1 }
+                }
+              },
+              "allOf": [
+                {
+                  "contains": {
+                    "type": "object",
+                    "required": ["key"],
+                    "properties": {
+                      "key": { "const": "hm:ca:on:welland:footprint:SYN-0142" }
+                    }
+                  }
+                },
+                {
+                  "contains": {
+                    "type": "object",
+                    "required": ["key"],
+                    "properties": {
+                      "key": { "const": "hm:us:ny:erie:parcel:SYN-999.00-1-1.1" }
+                    }
+                  }
+                }
+              ]
+            },
+            "notes": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1
+            }
+          }
+        },
+        "dataset_dispositions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "order_is_significant", "tokens", "note"],
+          "properties": {
+            "name": { "const": "D-5" },
+            "order_is_significant": { "const": false },
+            "tokens": {
+              "type": "array",
+              "prefixItems": [
+                { "const": "ship" },
+                { "const": "simplify" },
+                { "const": "derive" },
+                { "const": "tile" },
+                { "const": "link" }
+              ],
+              "items": false,
+              "minItems": 5,
+              "maxItems": 5
+            },
+            "note": { "type": "string", "minLength": 1 }
+          }
+        },
+        "geography_v1": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "source",
+            "names_are_not_spine_slugs",
+            "outside_this_list",
+            "out_of_core",
+            "canada",
+            "united_states_counties",
+            "notes"
+          ],
+          "properties": {
+            "role": { "const": "coverage_fence" },
+            "source": { "const": "docs/architecture/README.md" },
+            "names_are_not_spine_slugs": { "const": true },
+            "outside_this_list": { "const": "not_in_coverage" },
+            "out_of_core": {
+              "type": "array",
+              "prefixItems": [{ "const": "Halton" }, { "const": "Burlington" }],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "canada": {
+              "type": "array",
+              "prefixItems": [
+                { "const": "Niagara Region" },
+                { "const": "St. Catharines" },
+                { "const": "Niagara Falls" },
+                { "const": "Welland" },
+                { "const": "Fort Erie" },
+                { "const": "Port Colborne" },
+                { "const": "Thorold" },
+                { "const": "Grimsby" },
+                { "const": "Lincoln" },
+                { "const": "Niagara-on-the-Lake" },
+                { "const": "Pelham" },
+                { "const": "Wainfleet" },
+                { "const": "West Lincoln" },
+                { "const": "City of Hamilton" },
+                { "const": "Haldimand County" },
+                { "const": "Norfolk County" },
+                { "const": "Brantford" },
+                { "const": "Brant County" }
+              ],
+              "items": false,
+              "minItems": 18,
+              "maxItems": 18
+            },
+            "united_states_counties": {
+              "type": "array",
+              "prefixItems": [
+                { "const": "Chautauqua" },
+                { "const": "Cattaraugus" },
+                { "const": "Erie" },
+                { "const": "Niagara" },
+                { "const": "Wyoming" },
+                { "const": "Genesee" },
+                { "const": "Orleans" },
+                { "const": "Monroe" }
+              ],
+              "items": false,
+              "minItems": 8,
+              "maxItems": 8
+            },
+            "notes": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1
+            }
+          }
+        },
+        "register_quotation_only": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["words", "rule"],
+          "properties": {
+            "words": {
+              "type": "array",
+              "prefixItems": [
+                { "const": "vacant" },
+                { "const": "empty" },
+                { "const": "available" },
+                { "const": "closed" },
+                { "const": "departed" }
+              ],
+              "items": false,
+              "minItems": 5,
+              "maxItems": 5
+            },
+            "rule": { "type": "string", "minLength": 1 }
+          }
+        },
+        "source_stamp_fields": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["fields", "notes"],
+          "properties": {
+            "fields": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["field", "required"],
+                  "properties": {
+                    "field": { "const": "source_name" },
+                    "required": { "const": "Yes" },
+                    "note": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["field", "required"],
+                  "properties": {
+                    "field": { "const": "publisher" },
+                    "required": { "const": "Yes" },
+                    "note": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["field", "required", "note"],
+                  "properties": {
+                    "field": { "const": "licence" },
+                    "required": { "const": "Yes" },
+                    "note": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["field", "required"],
+                  "properties": {
+                    "field": { "const": "original_id" },
+                    "required": { "const": "Yes when the source has one." },
+                    "note": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["field", "required", "note"],
+                  "properties": {
+                    "field": { "const": "retrieved_on" },
+                    "required": { "const": "Yes for anything HeavyMap holds." },
+                    "note": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["field", "required", "note"],
+                  "properties": {
+                    "field": { "const": "observation_on" },
+                    "required": { "const": "Yes" },
+                    "note": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["field", "required"],
+                  "properties": {
+                    "field": { "const": "join_method" },
+                    "required": { "const": "Yes when grade is joined." },
+                    "note": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["field", "required"],
+                  "properties": {
+                    "field": { "const": "inputs" },
+                    "required": { "const": "Yes when grade is derived." },
+                    "note": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["field", "required"],
+                  "properties": {
+                    "field": { "const": "method" },
+                    "required": { "const": "Yes when grade is derived." },
+                    "note": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["field", "required", "note"],
+                  "properties": {
+                    "field": { "const": "note" },
+                    "required": { "const": "When a trap matters." },
+                    "note": { "type": "string", "minLength": 1 }
+                  }
+                }
+              ],
+              "items": false,
+              "minItems": 10,
+              "maxItems": 10
+            },
+            "notes": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1
+            }
+          }
+        },
+        "mcs_part2": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["spreadsheet_edited", "columns"],
+          "properties": {
+            "spreadsheet_edited": { "const": false },
+            "columns": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["dossier_bands", "ui_surfaces", "derived_readings"],
+              "properties": {
+                "dossier_bands": { "type": "string", "minLength": 1 },
+                "ui_surfaces": { "type": "string", "minLength": 1 },
+                "derived_readings": { "type": "string", "minLength": 1 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "illustrativeCatalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["closed_catalog", "derived_reading_identifiers", "note"],
+      "properties": {
+        "closed_catalog": { "const": false },
+        "derived_reading_identifiers": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["identifier", "method_kind", "typical_refusal"],
+            "properties": {
+              "identifier": { "$ref": "#/$defs/derivedReadingIdentifier" },
+              "method_kind": { "type": "string", "minLength": 1 },
+              "typical_refusal": { "type": "string", "minLength": 1 }
+            }
+          },
+          "allOf": [
+            {
+              "contains": {
+                "type": "object",
+                "required": ["identifier"],
+                "properties": { "identifier": { "const": "floor_area_m2" } }
+              }
+            },
+            {
+              "contains": {
+                "type": "object",
+                "required": ["identifier"],
+                "properties": { "identifier": { "const": "employment_interval" } }
+              }
+            },
+            {
+              "contains": {
+                "type": "object",
+                "required": ["identifier"],
+                "properties": { "identifier": { "const": "coverage_ratio" } }
+              }
+            }
+          ]
+        },
+        "note": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}
