@@ -18,6 +18,14 @@ Plumbing that is not a fifth product name:
 - **MCS** — which datasets exist and which bands, surfaces, and readings they may feed.
 - **D-5** — disposition of a dataset: `ship`, `simplify`, `derive`, `tile`, or `link`.
 
+## Platform decisions
+
+Accepted records. Each one locks a platform choice beside the four concepts. A platform decision is not a fifth product name.
+
+| Decision | Document |
+|---|---|
+| OSM (or an equivalent tile service) is the visual map substrate. No bulk OSM prefetch as the parcel or intelligence corpus. | [adr/0001-osm-as-substrate.md](adr/0001-osm-as-substrate.md) (Linear **NIA-17**) |
+
 ## Geography v1
 
 The spine may speak about these jurisdictions. A name outside this list is `not_in_coverage` until a later lock adds it. Halton and Burlington are out of core for v1.
