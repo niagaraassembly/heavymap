@@ -1,0 +1,419 @@
+{
+  "id": "pcdp-vocabulary",
+  "schema_version": 1,
+  "linear": "NIA-14",
+  "prose_linear": "NIA-11",
+  "source_of_truth": [
+    "docs/architecture/context-band-ladder.md",
+    "docs/architecture/claim-refusal-contract.md",
+    "docs/architecture/parcel-identity-spine.md",
+    "docs/architecture/PCDP.md",
+    "docs/architecture/README.md"
+  ],
+  "rule": "Prose in source_of_truth wins. This file encodes tokens that those documents already name. It does not add bands, refusal reasons, surfaces, grades, or geographies.",
+  "normative": {
+    "bands": {
+      "order_is_significant": true,
+      "mcs_column": "dossier_bands",
+      "separator": "|",
+      "tokens": [
+        {
+          "order": 1,
+          "token": "identity",
+          "may_hold": "Spine key, grain, jurisdiction, geometry handle, native keys, and identity refusals.",
+          "must_not_hold": "Use, risk, activity, or scores."
+        },
+        {
+          "order": 2,
+          "token": "land_use",
+          "may_hold": "Designation, zoning, property class, or other published land classification, each labelled as which vocabulary it is.",
+          "must_not_hold": "A NAICS code pretending to be a by-law, or a by-law pretending to be a New York property class."
+        },
+        {
+          "order": 3,
+          "token": "constraints",
+          "may_hold": "Overlays and encumbrances a joined source states (flood, heritage, environmental, easement, and similar), each named by authority.",
+          "must_not_hold": "A sum of unrelated overlays into one constraint score, or a missing overlay shown as clear."
+        },
+        {
+          "order": 4,
+          "token": "activity_registers",
+          "may_hold": "Registers of activity placed on this key: employment inventory, permits, licences, facility registrations.",
+          "must_not_hold": "An inference that a business is operating, closed, or failing."
+        },
+        {
+          "order": 5,
+          "token": "derived_readings",
+          "may_hold": "Named readings computed from earlier rungs, each with inputs and method.",
+          "must_not_hold": "Raw source fields copied forward, or a composite of every reading."
+        },
+        {
+          "order": 6,
+          "token": "share_export",
+          "may_hold": "The packet a reader can take away: the same claims and the same refusals, on the share and export surfaces.",
+          "must_not_hold": "A postcard that drops refusals to look complete."
+        }
+      ],
+      "not_band_tokens": ["regulatory", "physical", "neighbours", "dossier"],
+      "notes": [
+        "Order is fixed. A later band may use an earlier one. It may not be shown as the same kind of fact.",
+        "The MCS header stays dossier_bands. dossier is a ui_surfaces token, not a band.",
+        "Do not invent regulatory, physical, neighbours, or dossier as band names.",
+        "A rung is empty only as a refusal. Empty never means vacant, idle, unconstrained, or unlicensed-as-a-fact-about-the-business."
+      ]
+    },
+    "band_status": {
+      "order_is_significant": false,
+      "tokens": [
+        {
+          "token": "filled",
+          "meaning": "At least one claim that passes the Claim & Refusal Contract."
+        },
+        {
+          "token": "refused",
+          "meaning": "No claim on the rung. Exactly one refusal reason."
+        }
+      ],
+      "notes": [
+        "These are rung statuses, not evidence grades and not assertion states.",
+        "A rung can be filled and still carry a separate refusal for something that rung does not have.",
+        "There is no third, silent status."
+      ]
+    },
+    "ui_surfaces": {
+      "order_is_significant": false,
+      "listing_order_matches_pcdp_table": true,
+      "mcs_column": "ui_surfaces",
+      "separator": "|",
+      "tokens": [
+        {
+          "token": "selection",
+          "role": "The minimum: outline or point, key, jurisdiction, refusals. What a map selection must be able to say before any dossier opens."
+        },
+        {
+          "token": "dossier",
+          "role": "The banded reading of one unit, from the current partial presentation up to the maximum. One surface among others."
+        },
+        {
+          "token": "share",
+          "role": "A human-readable packet of the same claims and refusals."
+        },
+        {
+          "token": "export",
+          "role": "A machine-readable packet of the same claims and refusals."
+        }
+      ],
+      "notes": [
+        "Surfaces are protocol roles, not screens.",
+        "share and export are the share_export rung made concrete. They are not a cleaner subset.",
+        "The word dossier does not appear in dossier_bands as a band token."
+      ]
+    },
+    "refusal_reasons": {
+      "order_is_significant": false,
+      "exactly_one": true,
+      "tokens": [
+        {
+          "token": "not_in_coverage",
+          "use_when": "The layer, jurisdiction, or vintage is outside what v1 holds, or the responsible publisher does not release that object. Geography outside the v1 list is this reason. A city with no public parcel fabric is this reason for parcel grain."
+        },
+        {
+          "token": "not_licensed",
+          "use_when": "A source exists and HeavyMap is not allowed to use it. Ontario assessment via MPAC is the standing example."
+        },
+        {
+          "token": "not_joined",
+          "use_when": "A usable source is in hand, or is expected in the joined set, and this key has no accepted join yet."
+        }
+      ],
+      "precedence": [
+        "If a layer is both unlicensed and unjoined, not_licensed wins: there is nothing to join.",
+        "If a layer was never in the v1 set, not_in_coverage wins: do not imply a join is the remaining step."
+      ],
+      "notes": [
+        "One reason only.",
+        "Not joined is not vacant. Not licensed is not unassessed. Not in coverage is not no industrial activity.",
+        "There is no fourth refusal code for owner name. Owner name is not a v1 ladder object."
+      ]
+    },
+    "evidence_grades": {
+      "order_is_significant": false,
+      "tokens": [
+        {
+          "token": "observed",
+          "meaning": "Copied from a source and normalised. Not interpreted."
+        },
+        {
+          "token": "joined",
+          "meaning": "An observed value placed on this spine key by a named join method. The method is part of the stamp."
+        },
+        {
+          "token": "derived",
+          "meaning": "Computed from named inputs by a named method. A reading, not a new observation."
+        },
+        {
+          "token": "refused",
+          "meaning": "No assertion. A refusal reason is required. There is no grade that means probably empty."
+        }
+      ],
+      "notes": [
+        "joined is not more true than observed. It records an extra step that can be wrong.",
+        "Evidence grade refused is not band status refused, and it is not an assertion state.",
+        "Dataset disposition derive is not evidence grade derived."
+      ]
+    },
+    "join_methods": {
+      "order_is_significant": false,
+      "required_on_stamp_when_grade": "joined",
+      "tokens": [
+        {
+          "token": "identifier",
+          "reader_takeaway": "The source's own id matched."
+        },
+        {
+          "token": "normalized_address",
+          "reader_takeaway": "Address text matched after normalisation. Some rows of that table will have failed."
+        },
+        {
+          "token": "point_in_polygon",
+          "reader_takeaway": "A point of this unit fell inside a published polygon."
+        },
+        {
+          "token": "containment",
+          "reader_takeaway": "Geometry of this unit sits inside the source geometry."
+        },
+        {
+          "token": "proximity",
+          "reader_takeaway": "Nearest feature under a stated distance. The distance is not access."
+        },
+        {
+          "token": "overlap",
+          "reader_takeaway": "Area overlap above a stated threshold."
+        }
+      ],
+      "notes": [
+        "Names follow the prior-art set. The claims sketch does not re-specify tolerances."
+      ]
+    },
+    "assertion_states": {
+      "order_is_significant": false,
+      "applies_when": "An assertion is filled. A refusal is not one of these states.",
+      "tokens": [
+        {
+          "token": "supported"
+        },
+        {
+          "token": "contested",
+          "meaning": "Two stamped records disagree. Both stay, grades and stamps intact."
+        },
+        {
+          "token": "refuted",
+          "meaning": "A later check knocks down an assertion. The assertion and the refutation both remain visible."
+        }
+      ],
+      "notes": [
+        "The contract names supported, contested, and refuted. It defines contested and refuted in prose. It does not give supported a separate procedure.",
+        "Deleting a contested line would hide the disagreement.",
+        "Most units will have no assertion beyond their observed attributes. That is a normal filled ladder, not a thin one."
+      ]
+    },
+    "spine_key": {
+      "template": "hm:{country}:{region}:{jurisdiction}:{grain}:{local}",
+      "regex": "^hm:(ca|us):(on|ny):[a-z0-9]+(?:-[a-z0-9]+)*:(parcel|footprint|address):[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "regex_note": "Mechanical reading of the parts table for v1. Country is ca or us. Region is on or ny. Jurisdiction is a lowercase slug (hyphens allowed). Grain is parcel, footprint, or address. Local is the remainder, may include digits, hyphens, and dots, and must not contain a colon. Synthetic examples use a SYN- prefix; the prefix is not required for every key.",
+      "parts": {
+        "country": {
+          "enum": ["ca", "us"]
+        },
+        "region": {
+          "v1_enum": ["on", "ny"],
+          "gloss": {
+            "on": "Ontario",
+            "ny": "New York"
+          }
+        },
+        "jurisdiction": {
+          "closed_catalog": false,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "note": "Stable slug of the publishing government the grain comes from. For a Niagara Region lower-tier municipality the slug is the lower tier (for example welland), not niagara. This vocab does not list every slug."
+        },
+        "grain": {
+          "enum": ["parcel", "footprint", "address"],
+          "meanings": {
+            "parcel": "A publisher in v1 releases a parcel polygon HeavyMap is licensed to use, and the polygon is the thing the reader would point at.",
+            "footprint": "Building outline is the best licensed geometry. There is no joined parcel polygon.",
+            "address": "Only a point or a normalized address is licensed and joined."
+          }
+        },
+        "local": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "note": "Unique inside that jurisdiction and grain. Synthetic examples use a SYN- prefix. Dots are allowed so the Erie SBL illustration matches."
+        }
+      },
+      "examples": [
+        {
+          "key": "hm:ca:on:welland:footprint:SYN-0142",
+          "status": "synthetic",
+          "country": "ca",
+          "region": "on",
+          "jurisdiction": "welland",
+          "grain": "footprint",
+          "local": "SYN-0142",
+          "note": "Illustration of a lower-tier city whose open data, in prior art, had no parcel fabric. Not an observation of real land."
+        },
+        {
+          "key": "hm:us:ny:erie:parcel:SYN-999.00-1-1.1",
+          "status": "synthetic",
+          "country": "us",
+          "region": "ny",
+          "jurisdiction": "erie",
+          "grain": "parcel",
+          "local": "SYN-999.00-1-1.1",
+          "note": "Illustration of a v1 county where a public tax-parcel polygon is the pattern. The municipality slug stays erie until a SWIS join names a city or town. Not an observation of real land."
+        }
+      ],
+      "notes": [
+        "The key is HeavyMap's. Publishers keep their own keys in native_keys.",
+        "A native key is never silently promoted to the spine key.",
+        "A spine key may be minted only inside geography v1. Outside the fence there is no key.",
+        "Inside the fence, missing data is still a key plus a refusal."
+      ]
+    },
+    "dataset_dispositions": {
+      "name": "D-5",
+      "order_is_significant": false,
+      "tokens": ["ship", "simplify", "derive", "tile", "link"],
+      "note": "Disposition of a dataset. Not a ladder band and not an evidence grade. derive here is not evidence grade derived."
+    },
+    "geography_v1": {
+      "role": "coverage_fence",
+      "source": "docs/architecture/README.md",
+      "names_are_not_spine_slugs": true,
+      "outside_this_list": "not_in_coverage",
+      "out_of_core": ["Halton", "Burlington"],
+      "canada": [
+        "Niagara Region",
+        "St. Catharines",
+        "Niagara Falls",
+        "Welland",
+        "Fort Erie",
+        "Port Colborne",
+        "Thorold",
+        "Grimsby",
+        "Lincoln",
+        "Niagara-on-the-Lake",
+        "Pelham",
+        "Wainfleet",
+        "West Lincoln",
+        "City of Hamilton",
+        "Haldimand County",
+        "Norfolk County",
+        "Brantford",
+        "Brant County"
+      ],
+      "united_states_counties": [
+        "Chautauqua",
+        "Cattaraugus",
+        "Erie",
+        "Niagara",
+        "Wyoming",
+        "Genesee",
+        "Orleans",
+        "Monroe"
+      ],
+      "notes": [
+        "Names are copied from the architecture index. They are not spine-key slugs.",
+        "Niagara Region's twelve lower-tier municipalities are St. Catharines through West Lincoln in the canada list.",
+        "Norfolk County includes Port Dover. Port Dover is not a separate v1 jurisdiction name.",
+        "A spine key for a Niagara lower-tier municipality uses the lower-tier slug, not niagara.",
+        "Hamilton, Haldimand, and Norfolk are single-tier. Brantford and Brant County are distinct.",
+        "Halton and Burlington are out of core for v1."
+      ]
+    },
+    "register_quotation_only": {
+      "words": ["vacant", "empty", "available", "closed", "departed"],
+      "rule": "These words may appear only as a quotation of a register, with evidence grade observed or joined and a stamp. Without that quotation they are forbidden, including as summaries of a refusal."
+    },
+    "source_stamp_fields": {
+      "fields": [
+        {
+          "field": "source_name",
+          "required": "Yes"
+        },
+        {
+          "field": "publisher",
+          "required": "Yes"
+        },
+        {
+          "field": "licence",
+          "required": "Yes",
+          "note": "If the refusal is not_licensed, the stamp names the product that was not used."
+        },
+        {
+          "field": "original_id",
+          "required": "Yes when the source has one."
+        },
+        {
+          "field": "retrieved_on",
+          "required": "Yes for anything HeavyMap holds.",
+          "note": "The date the file was obtained."
+        },
+        {
+          "field": "observation_on",
+          "required": "Yes",
+          "note": "The date the source's fact refers to. A by-law adopted in one year and retrieved in another keeps both dates."
+        },
+        {
+          "field": "join_method",
+          "required": "Yes when grade is joined."
+        },
+        {
+          "field": "inputs",
+          "required": "Yes when grade is derived."
+        },
+        {
+          "field": "method",
+          "required": "Yes when grade is derived."
+        },
+        {
+          "field": "note",
+          "required": "When a trap matters.",
+          "note": "Layer index, unit of measure, address restyling, and similar traps."
+        }
+      ],
+      "notes": [
+        "The original published value survives next to any normalised one.",
+        "retrieved_on and observation_on both show when both exist. The presentation does not collapse them into updated."
+      ]
+    },
+    "mcs_part2": {
+      "spreadsheet_edited": false,
+      "columns": {
+        "dossier_bands": "Ladder band tokens this dataset may fill, in ladder order, |-separated. Defined in context-band-ladder.md.",
+        "ui_surfaces": "PCDP surface tokens allowed to show the dataset: selection, dossier, share, export. Defined in PCDP.md.",
+        "derived_readings": "Reading identifiers this dataset may feed. Empty means the dataset feeds no reading. Not the ladder token derived_readings. Defined in claim-refusal-contract.md."
+      }
+    }
+  },
+  "illustrative": {
+    "closed_catalog": false,
+    "derived_reading_identifiers": [
+      {
+        "identifier": "floor_area_m2",
+        "method_kind": "Convert published floor area to square metres; keep the source unit on the stamp.",
+        "typical_refusal": "not_in_coverage when no floor area was published."
+      },
+      {
+        "identifier": "employment_interval",
+        "method_kind": "Carry a published employment band as a range.",
+        "typical_refusal": "not_in_coverage where no employment register exists."
+      },
+      {
+        "identifier": "coverage_ratio",
+        "method_kind": "Building footprint area divided by parcel area.",
+        "typical_refusal": "not_in_coverage or not_licensed when parcel area is missing; never 0."
+      }
+    ],
+    "note": "Examples from claim-refusal-contract.md. A new identifier may be added when a reading is specified. This list is not a closed catalog, and these identifiers are not ladder tokens."
+  }
+}
