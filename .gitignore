@@ -1,0 +1,8 @@
+# LibreOffice/OpenOffice lock files
+.~lock.*#
+
+# Business/personal documents kept locally, not in the shared repo
+/drive docs/
+/NA Docs/
+/NA Image Bin/
+/Niagara-Assembly-*.zip
