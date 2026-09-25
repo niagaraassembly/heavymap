@@ -1,0 +1,680 @@
+{
+  "id": "joining-concepts-vocabulary",
+  "schema_version": 1,
+  "linear": "NIA-22",
+  "inputs_linear": "NIA-10",
+  "source_of_truth": [
+    "docs/architecture/adr/0002-joining-concepts-and-terminology.md",
+    "heavymap-planning/10-joining-concepts-v1.md",
+    "heavymap-planning/11-synonym-parallel-ledger-v1.md",
+    "heavymap-planning/11-synonym-parallel-ledger-v1.csv",
+    "heavymap-planning/12-authority-scale-and-meta-proposals.md"
+  ],
+  "rule": "ADR 0002 is the prose source of truth for Slice 1 decisions. Planning files 10, 11, and 12 are the inputs. If a locked decision and a planning proposal disagree, the ADR wins. This file encodes those decisions. It does not add bands, stamp fields, reading identifiers, or geographies. Display genres and lot_area_m2 stay in deferred.",
+  "normative": {
+    "enums": {
+      "relation": {
+        "order_is_significant": false,
+        "measured_against": "The concept's anchor term: the ledger row marked as the anchor in its notes, or the first same row.",
+        "tokens": [
+          {
+            "token": "same",
+            "meaning": "The same job, and the wording is identical or a trivial variant."
+          },
+          {
+            "token": "alias",
+            "meaning": "Different words, same job."
+          },
+          {
+            "token": "near",
+            "meaning": "Close or overlapping. Never silently equated in a calculation."
+          },
+          {
+            "token": "false_friend",
+            "meaning": "The word or appearance suggests one concept and the substance is another. The row's joining concept id is the job it actually does."
+          }
+        ]
+      },
+      "authority_scale": {
+        "order_is_significant": false,
+        "tokens": [
+          {
+            "token": "municipal",
+            "meaning": "A single-tier or lower-tier municipality, or a US city, town, or village."
+          },
+          {
+            "token": "regional",
+            "meaning": "Upper-tier or county-level government, or a watershed or conservation authority."
+          },
+          {
+            "token": "provincial_or_state",
+            "meaning": "A province or state government, or an agency of one."
+          },
+          {
+            "token": "federal",
+            "meaning": "A federal government."
+          },
+          {
+            "token": "cross_border_register",
+            "meaning": "A register spanning both countries under one schema and body. In the closed set. No v1 source read for this slice used it."
+          }
+        ],
+        "notes": [
+          "Attach the scale to the authority of the assertion, not the host portal.",
+          "County does not decide the scale. Single-tier Ontario counties are municipal. New York counties are regional.",
+          "OSM has no scale. Leave the field absent.",
+          "Federal claims use this scale on the band they already belong to. The ladder stays six bands."
+        ]
+      },
+      "claim_grain": {
+        "order_is_significant": false,
+        "tokens": [
+          {
+            "token": "parcel",
+            "meaning": "The claim attaches to a parcel."
+          },
+          {
+            "token": "footprint",
+            "meaning": "The claim attaches to a building footprint."
+          },
+          {
+            "token": "address",
+            "meaning": "The claim attaches to an address."
+          },
+          {
+            "token": "register_unit",
+            "meaning": "The claim attaches to a premises or facility record."
+          },
+          {
+            "token": "zone_polygon",
+            "meaning": "An overlay or zone that attaches to a unit by point_in_polygon, containment, or overlap. A line or a point needs a stated distance or side rule."
+          },
+          {
+            "token": "jurisdiction_aggregate",
+            "meaning": "Counts for a whole county or city. Cannot attach to a spine unit."
+          }
+        ],
+        "notes": [
+          "Wider than spine-key grain. Spine grain remains parcel, footprint, and address in pcdp.vocab.json.",
+          "The enum is closed here. Placing claim_grain on a fixture claim waits on the deferred stamp meta."
+        ]
+      },
+      "register_family": {
+        "order_is_significant": false,
+        "applies_to_concept_id": "premises_register_key",
+        "tokens": [
+          {
+            "token": "local_survey",
+            "meaning": "A local employment survey. Anchor: Niagara NEI."
+          },
+          {
+            "token": "local_directory",
+            "meaning": "A local business directory. Anchor: Welland."
+          },
+          {
+            "token": "licence_register",
+            "meaning": "A licence register. Anchor: Hamilton licence tables."
+          },
+          {
+            "token": "regulatory",
+            "meaning": "A regulatory facility registry. Anchors: TRI, NPRI, DEC. This token is not a ladder band."
+          },
+          {
+            "token": "regulatory_cross_program",
+            "meaning": "A cross-program regulatory key. Anchor: EPA FRS."
+          }
+        ],
+        "notes": [
+          "Facet of premises_register_key. Two register families can share the concept and still share no key."
+        ]
+      },
+      "evidence_level": {
+        "order_is_significant": false,
+        "tokens": [
+          {
+            "token": "live_verified",
+            "meaning": "Read live from a public source for the synonym ledger."
+          },
+          {
+            "token": "documented",
+            "meaning": "Repo-doc evidence or a closed product, not re-read live."
+          },
+          {
+            "token": "catalog_only",
+            "meaning": "Known from a catalog entry and not read. Kept in the closed set. The v1 ledger has no such row."
+          },
+          {
+            "token": "unverified",
+            "meaning": "Not read. Kept in the closed set. The v1 ledger has no such row."
+          }
+        ],
+        "notes": [
+          "Provenance values for the synonym ledger column evidence_level. They are not evidence grades."
+        ]
+      }
+    },
+    "rules": [
+      {
+        "id": "concepts_above_native_names",
+        "statement": "A joining concept names the job a field does. The claim keeps the publisher's field name and value. The concept id is an extra handle."
+      },
+      {
+        "id": "concept_unity_is_not_joinability",
+        "statement": "Shared concept id means the same job. It does not mean the tables join."
+      },
+      {
+        "id": "federal_stamped_claims",
+        "statement": "Federal data is stamped claims under the existing six bands, plus authority_scale. There is no seventh band and no federal group on the parcel table."
+      },
+      {
+        "id": "aggregates_are_not_parcel_claims",
+        "statement": "jurisdiction_activity_aggregate does not attach to a spine unit. Parcel-level refusal for that object is not_in_coverage."
+      },
+      {
+        "id": "planning_policy_overlay_on_constraints",
+        "statement": "planning_policy_overlay feeds the constraints band. Each claim is named by its authority."
+      },
+      {
+        "id": "premises_register_key_alias",
+        "statement": "The locked id is premises_register_key. establishment_register_key is an alias for that id."
+      }
+    ],
+    "alias_index": [
+      {
+        "alias": "establishment_register_key",
+        "concept_id": "premises_register_key",
+        "status": "superseded_working_name",
+        "note": "Working name from the NIA-10 extension comment. Morgen locked premises_register_key on 2026-09-25."
+      }
+    ],
+    "families": [
+      {
+        "id": "unit_identity",
+        "source_label": "Family A — Unit identity"
+      },
+      {
+        "id": "activity_register",
+        "source_label": "Family B — Activity registers"
+      },
+      {
+        "id": "land_use_and_assessment",
+        "source_label": "Family C — Land use and assessment"
+      },
+      {
+        "id": "constraint_overlays",
+        "source_label": "Family D — Constraint overlays"
+      },
+      {
+        "id": "derived_reading_input",
+        "source_label": "Family E — Derived-reading inputs"
+      },
+      {
+        "id": "presentation_tier",
+        "source_label": "Family F — Presentation-tier (D-13)"
+      }
+    ],
+    "concepts": [
+      {
+        "id": "assessment_roll_key",
+        "family": "unit_identity",
+        "definition": "The key under which a parcel appears on a jurisdiction's assessment roll or tax map.",
+        "bands": ["identity"],
+        "claim_grain": "parcel",
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false
+      },
+      {
+        "id": "parcel_gis_key",
+        "family": "unit_identity",
+        "definition": "A publisher's GIS-side identifier for a parcel polygon, used to join that publisher's own parcel, land-use, and zoning layers.",
+        "bands": ["identity"],
+        "claim_grain": "parcel",
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false
+      },
+      {
+        "id": "assessing_unit_code",
+        "family": "unit_identity",
+        "definition": "The code of the assessing municipality that accompanies a roll key.",
+        "bands": ["identity"],
+        "claim_grain": "parcel",
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false
+      },
+      {
+        "id": "municipality_label",
+        "family": "unit_identity",
+        "definition": "The municipality named as text on a record. Not a key.",
+        "bands": ["identity"],
+        "claim_grain": null,
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "Map the text onto the spine jurisdiction slug. Do not mint the slug from the label."
+        ]
+      },
+      {
+        "id": "statistical_geography_code",
+        "family": "unit_identity",
+        "definition": "A government statistical-geography code carried on a record, used to attach census-style aggregates to a jurisdiction. Not a parcel or facility key.",
+        "bands": [],
+        "claim_grain": null,
+        "attaches_to_spine_unit": false,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "Jurisdiction-level context. It does not make a parcel claim."
+        ]
+      },
+      {
+        "id": "civic_address",
+        "family": "unit_identity",
+        "definition": "Street address text or split parts for a unit.",
+        "bands": ["identity"],
+        "claim_grain": "address",
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "Join method, when a join is claimed, is normalized_address."
+        ]
+      },
+      {
+        "id": "legal_description",
+        "family": "unit_identity",
+        "definition": "Lot, concession, plan, or lot-township-range text describing a parcel legally.",
+        "bands": ["identity"],
+        "claim_grain": null,
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false
+      },
+      {
+        "id": "parcel_fabric_flag",
+        "family": "unit_identity",
+        "definition": "A publisher's record-type or lifecycle flag on a parcel-fabric row.",
+        "bands": ["identity"],
+        "claim_grain": null,
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "A fabric flag is not a property class and not a use. Brant PARCELCLASS is the false friend of New York PROP_CLASS."
+        ]
+      },
+      {
+        "id": "publisher_row_id",
+        "family": "unit_identity",
+        "definition": "System row identifiers such as OBJECTID, GlobalID, FID, and NEI GSmartID. Excluded from joins so they are not mistaken for keys.",
+        "bands": [],
+        "claim_grain": null,
+        "attaches_to_spine_unit": false,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "Catalogued so system ids are not treated as assessment roll keys, parcel GIS keys, or premises register keys."
+        ]
+      },
+      {
+        "id": "premises_register_key",
+        "family": "activity_register",
+        "definition": "A publisher's stable key for one premises-level record in an activity register: a local employment survey, a business directory or licence register, or a regulatory facility registry.",
+        "bands": ["identity", "activity_registers"],
+        "claim_grain": "register_unit",
+        "attaches_to_spine_unit": true,
+        "aliases": ["establishment_register_key"],
+        "parent_id": null,
+        "uses_register_family": true,
+        "notes": [
+          "Morgen locked this id on 2026-09-25. establishment_register_key is the superseded working name.",
+          "The same concept on two registers is not a join.",
+          "Census CBP ESTAB is a count and a false friend. It belongs to jurisdiction_activity_aggregate."
+        ]
+      },
+      {
+        "id": "industry_classification",
+        "family": "activity_register",
+        "definition": "An industry code and its title attached to a register row.",
+        "bands": ["activity_registers"],
+        "claim_grain": "register_unit",
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "Keep apart from zoning_district and assessment_property_class."
+        ]
+      },
+      {
+        "id": "employment_size_band",
+        "family": "activity_register",
+        "definition": "A published employment range for a register row.",
+        "bands": ["activity_registers"],
+        "claim_grain": "register_unit",
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "Published input to the illustrative reading employment_interval. Jurisdiction-wide counts belong to jurisdiction_activity_aggregate."
+        ]
+      },
+      {
+        "id": "regulatory_activity_register",
+        "family": "activity_register",
+        "definition": "A regulator's or licensing body's register of facilities or licences, with the facts in it.",
+        "bands": ["activity_registers"],
+        "claim_grain": "register_unit",
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "Facets by authority_scale. Federal facility registers stay on activity_registers."
+        ]
+      },
+      {
+        "id": "jurisdiction_activity_aggregate",
+        "family": "activity_register",
+        "definition": "Counts or statistics for a whole jurisdiction. Not a claim about any spine unit.",
+        "bands": [],
+        "claim_grain": "jurisdiction_aggregate",
+        "attaches_to_spine_unit": false,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "Parcel-level refusal for this object is not_in_coverage.",
+          "Attaches to a jurisdiction through statistical_geography_code."
+        ]
+      },
+      {
+        "id": "zoning_district",
+        "family": "land_use_and_assessment",
+        "definition": "The zone a by-law assigns to land, with its code, label, and category.",
+        "bands": ["land_use"],
+        "claim_grain": "zone_polygon",
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "Comparability needs the by-law reference beside the code."
+        ]
+      },
+      {
+        "id": "zoning_site_modifier",
+        "family": "land_use_and_assessment",
+        "definition": "An exception or holding provision attached to a zone.",
+        "bands": ["land_use"],
+        "claim_grain": null,
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "Rides with the zoning claim. It is not a separate ladder rung."
+        ]
+      },
+      {
+        "id": "official_plan_designation",
+        "family": "land_use_and_assessment",
+        "definition": "A land-use designation from an official plan: policy, not regulation.",
+        "bands": ["land_use"],
+        "claim_grain": null,
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false
+      },
+      {
+        "id": "assessment_property_class",
+        "family": "land_use_and_assessment",
+        "definition": "The assessor's classification of a property for taxation.",
+        "bands": ["land_use"],
+        "claim_grain": "parcel",
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "Stamp it as property class. It is not zoning and not NAICS."
+        ]
+      },
+      {
+        "id": "assessment_use_descriptor",
+        "family": "land_use_and_assessment",
+        "definition": "The assessor's building-use code inside a class.",
+        "bands": ["land_use"],
+        "claim_grain": null,
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false
+      },
+      {
+        "id": "assessed_value",
+        "family": "land_use_and_assessment",
+        "definition": "A monetary value on the assessment roll, with facets assessed, land, taxable, and market_estimate.",
+        "bands": ["land_use"],
+        "claim_grain": null,
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "Those facets are near one another and are not interchangeable in a calculation."
+        ]
+      },
+      {
+        "id": "assessment_roll_context",
+        "family": "land_use_and_assessment",
+        "definition": "The roll's year and section. Stamp-adjacent: the year maps to observation_on.",
+        "bands": ["land_use"],
+        "claim_grain": null,
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "The year maps to the existing stamp field observation_on. This slice does not add stamp fields."
+        ]
+      },
+      {
+        "id": "constraint_overlay",
+        "family": "constraint_overlays",
+        "definition": "An overlay or encumbrance a joined source states, named by its authority and never summed. Family parent; the ledger gives it no rows of its own.",
+        "bands": ["constraints"],
+        "claim_grain": "zone_polygon",
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "Grain is usually zone_polygon. Some source layers are polylines or points and need a stated distance or side rule.",
+          "A missing overlay is not_joined or not_in_coverage."
+        ]
+      },
+      {
+        "id": "flood_hazard_overlay",
+        "family": "constraint_overlays",
+        "definition": "Flood hazard overlay named by its authority, including FEMA NFHL zones, NPCA regulation and floodplain layers, and the Haldimand Flood Hazard Limit.",
+        "bands": ["constraints"],
+        "claim_grain": "zone_polygon",
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": "constraint_overlay",
+        "uses_register_family": false,
+        "notes": [
+          "Haldimand's flood hazard limit is a polyline and needs a stated distance or side rule."
+        ]
+      },
+      {
+        "id": "natural_heritage_overlay",
+        "family": "constraint_overlays",
+        "definition": "Natural heritage overlay named by its authority, including Niagara NES series, NHS, wetlands, and woodlands.",
+        "bands": ["constraints"],
+        "claim_grain": "zone_polygon",
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": "constraint_overlay",
+        "uses_register_family": false
+      },
+      {
+        "id": "heritage_designation_overlay",
+        "family": "constraint_overlays",
+        "definition": "Heritage designation overlay named by its authority, including designated heritage properties and parcels.",
+        "bands": ["constraints"],
+        "claim_grain": "zone_polygon",
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": "constraint_overlay",
+        "uses_register_family": false,
+        "notes": [
+          "Niagara's designated heritage properties are points. Welland's designated heritage parcels are polygons. Points need a stated distance or side rule."
+        ]
+      },
+      {
+        "id": "planning_policy_overlay",
+        "family": "constraint_overlays",
+        "definition": "A planning-policy overlay that restricts or shapes what is permitted, named by its authority. Includes PSEZ, growth-boundary flags, NY BOA, and brownfield community-improvement plans.",
+        "bands": ["constraints"],
+        "claim_grain": "zone_polygon",
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": "constraint_overlay",
+        "uses_register_family": false,
+        "notes": [
+          "Morgen locked this band as constraints on 2026-09-25."
+        ]
+      },
+      {
+        "id": "floor_area_published",
+        "family": "derived_reading_input",
+        "definition": "A published building floor area, in the source's unit.",
+        "bands": ["derived_readings"],
+        "claim_grain": null,
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "Published input on the stamp of a reading. Not a raw field copied onto the derived_readings rung.",
+          "The illustrative reading identifier floor_area_m2 already exists in the PCDP vocabulary."
+        ]
+      },
+      {
+        "id": "lot_area_published",
+        "family": "derived_reading_input",
+        "definition": "A published parcel or lot area, assessor-stated or geometry-computed.",
+        "bands": ["derived_readings"],
+        "claim_grain": null,
+        "attaches_to_spine_unit": true,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "Published input on the stamp of a reading. Not a raw field copied onto the derived_readings rung.",
+          "lot_area_m2 as a named reading is deferred and is not in the PCDP reading list."
+        ]
+      },
+      {
+        "id": "owner_of_record",
+        "family": "presentation_tier",
+        "definition": "Owner name and mailing fields on an assessment record.",
+        "bands": [],
+        "claim_grain": null,
+        "attaches_to_spine_unit": false,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "D-13: retain at ingest and decide the presentation tier later. PCDP v1 has no owner rung.",
+          "NPCA owner values were not sampled. Licence clearance is deferred."
+        ]
+      },
+      {
+        "id": "owner_category",
+        "family": "presentation_tier",
+        "definition": "A non-identifying owner-type code.",
+        "bands": [],
+        "claim_grain": null,
+        "attaches_to_spine_unit": false,
+        "aliases": [],
+        "parent_id": null,
+        "uses_register_family": false,
+        "notes": [
+          "PCDP v1 has no owner rung."
+        ]
+      }
+    ],
+    "ledger_provenance": {
+      "source": "heavymap-planning/11-synonym-parallel-ledger-v1.csv",
+      "observed_on": "2026-09-25",
+      "row_count": 118,
+      "first_ledger_id": "LG-001",
+      "last_ledger_id": "LG-118",
+      "relation_counts": {
+        "same": 65,
+        "alias": 15,
+        "near": 28,
+        "false_friend": 10
+      },
+      "evidence_level_counts": {
+        "live_verified": 109,
+        "documented": 9,
+        "catalog_only": 0,
+        "unverified": 0
+      },
+      "concepts_with_at_least_one_row": 29,
+      "row_free_concept_id": "constraint_overlay",
+      "note": "Counts are the ledger at encode time. evidence_level stays the closed set of four, including the two values whose count is zero."
+    }
+  },
+  "deferred": {
+    "normative": false,
+    "items": [
+      {
+        "id": "default_display_genres",
+        "reason": "Planning file 10 §1 and §7 item 2 recommend ca, us, and neutral defaults. Morgen has not confirmed them. They are not a closed product rule in this catalog."
+      },
+      {
+        "id": "lot_area_m2_named_reading",
+        "reason": "Planning file 10 §6 proposes lot_area_m2 as a reading fed by lot_area_published. It is not added to the PCDP illustrative reading list."
+      },
+      {
+        "id": "claim_stamp_meta_section_2",
+        "reason": "Planning file 12 §2 proposes concept_id, native field and value, ledger_id, facet, authority, authority_scale on the stamp, claim_grain and register_family on the claim, edition_label, access_tier, is_register_quotation, and display_label_key. The enums are closed here. The fields are not added to the source stamp or to fixtures."
+      },
+      {
+        "id": "sentinels_section_3",
+        "reason": "Planning file 12 §3 proposes a per-source sentinel map in the normalize step. Sentinels are not encoded as claim fields here."
+      },
+      {
+        "id": "fixture_bumps",
+        "reason": "fixtures/parcels/ and PR #13 are unchanged, including the Erie floor-area note."
+      },
+      {
+        "id": "npca_mpac_licence_clearance",
+        "reason": "Planning file 12 §4. MPAC assessment data stays not_licensed. NPCA parcel layers are not ingested. Owner values stay unread."
+      },
+      {
+        "id": "mcs_history_and_servicing",
+        "reason": "Planning file 12 §5. history and servicing still need a band decision. No MCS cell is changed and no dataset_id is edited."
+      }
+    ]
+  }
+}

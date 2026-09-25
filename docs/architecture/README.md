@@ -19,6 +19,7 @@ Plumbing that is not a fifth product name:
 
 - **MCS** — which datasets exist and which bands, surfaces, and readings they may feed.
 - **D-5** — disposition of a dataset: `ship`, `simplify`, `derive`, `tile`, or `link`.
+- **Joining concepts** — the job a published field does, so native names can share a job or keep a lookalike apart. Closed catalog: [adr/0002-joining-concepts-and-terminology.md](adr/0002-joining-concepts-and-terminology.md).
 
 ## Platform decisions
 
@@ -27,6 +28,7 @@ Accepted records. Each one locks a platform choice beside the four concepts. A p
 | Decision | Document |
 |---|---|
 | OSM (or an equivalent tile service) is the visual map substrate. No bulk OSM prefetch as the parcel or intelligence corpus. | [adr/0001-osm-as-substrate.md](adr/0001-osm-as-substrate.md) (Linear **NIA-17**) |
+| Joining concepts sit above native field names. Relation, authority scale, claim grain, register family, and the thirty concept ids are closed sets. | [adr/0002-joining-concepts-and-terminology.md](adr/0002-joining-concepts-and-terminology.md) (Linear **NIA-22**) |
 
 ## Geography v1
 
