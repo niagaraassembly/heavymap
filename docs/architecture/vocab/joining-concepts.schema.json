@@ -1,0 +1,1131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "joining-concepts.schema.json",
+  "title": "HeavyMap joining concepts",
+  "description": "Closed joining-concept catalog for Slice 1 (NIA-22). Prose source of truth is ADR 0002. Planning files 10, 11, and 12 are the inputs. Display genres and lot_area_m2 stay under deferred and are not normative. Band tokens are copied from pcdp.schema.json so this file validates without a cross-file resolver.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "schema_version",
+    "linear",
+    "inputs_linear",
+    "source_of_truth",
+    "rule",
+    "normative",
+    "deferred"
+  ],
+  "properties": {
+    "id": { "const": "joining-concepts-vocabulary" },
+    "schema_version": { "const": 1 },
+    "linear": { "const": "NIA-22" },
+    "inputs_linear": { "const": "NIA-10" },
+    "source_of_truth": {
+      "type": "array",
+      "prefixItems": [
+        { "const": "docs/architecture/adr/0002-joining-concepts-and-terminology.md" },
+        { "const": "heavymap-planning/10-joining-concepts-v1.md" },
+        { "const": "heavymap-planning/11-synonym-parallel-ledger-v1.md" },
+        { "const": "heavymap-planning/11-synonym-parallel-ledger-v1.csv" },
+        { "const": "heavymap-planning/12-authority-scale-and-meta-proposals.md" }
+      ],
+      "items": false,
+      "minItems": 5,
+      "maxItems": 5
+    },
+    "rule": { "type": "string", "minLength": 1 },
+    "normative": { "$ref": "#/$defs/normativeCatalog" },
+    "deferred": { "$ref": "#/$defs/deferredCatalog" }
+  },
+  "$defs": {
+    "band": {
+      "description": "Context Band Ladder token. Copied from pcdp.schema.json $defs/band.",
+      "enum": [
+        "identity",
+        "land_use",
+        "constraints",
+        "activity_registers",
+        "derived_readings",
+        "share_export"
+      ]
+    },
+    "relation": {
+      "description": "Ledger relation against the concept anchor term.",
+      "enum": ["same", "alias", "near", "false_friend"]
+    },
+    "authorityScale": {
+      "description": "Scale of the authority that made an assertion. Not a band.",
+      "enum": [
+        "municipal",
+        "regional",
+        "provincial_or_state",
+        "federal",
+        "cross_border_register"
+      ]
+    },
+    "claimGrain": {
+      "description": "What a claim under a concept attaches to. Wider than spine-key grain.",
+      "enum": [
+        "parcel",
+        "footprint",
+        "address",
+        "register_unit",
+        "zone_polygon",
+        "jurisdiction_aggregate"
+      ]
+    },
+    "registerFamily": {
+      "description": "Facet of premises_register_key. regulatory here is not a ladder band.",
+      "enum": [
+        "local_survey",
+        "local_directory",
+        "licence_register",
+        "regulatory",
+        "regulatory_cross_program"
+      ]
+    },
+    "evidenceLevel": {
+      "description": "Synonym-ledger provenance. Not an evidence grade.",
+      "enum": ["live_verified", "documented", "catalog_only", "unverified"]
+    },
+    "familyId": {
+      "description": "Grouping from planning file 10. A family is not a band.",
+      "enum": [
+        "unit_identity",
+        "activity_register",
+        "land_use_and_assessment",
+        "constraint_overlays",
+        "derived_reading_input",
+        "presentation_tier"
+      ]
+    },
+    "joiningConceptId": {
+      "description": "The thirty concept ids from planning file 10. establishment_register_key is an alias, not an id.",
+      "enum": [
+        "assessment_roll_key",
+        "parcel_gis_key",
+        "assessing_unit_code",
+        "municipality_label",
+        "statistical_geography_code",
+        "civic_address",
+        "legal_description",
+        "parcel_fabric_flag",
+        "publisher_row_id",
+        "premises_register_key",
+        "industry_classification",
+        "employment_size_band",
+        "regulatory_activity_register",
+        "jurisdiction_activity_aggregate",
+        "zoning_district",
+        "zoning_site_modifier",
+        "official_plan_designation",
+        "assessment_property_class",
+        "assessment_use_descriptor",
+        "assessed_value",
+        "assessment_roll_context",
+        "constraint_overlay",
+        "flood_hazard_overlay",
+        "natural_heritage_overlay",
+        "heritage_designation_overlay",
+        "planning_policy_overlay",
+        "floor_area_published",
+        "lot_area_published",
+        "owner_of_record",
+        "owner_category"
+      ]
+    },
+    "conceptAlias": {
+      "enum": ["establishment_register_key"]
+    },
+    "concept": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "family",
+        "definition",
+        "bands",
+        "claim_grain",
+        "attaches_to_spine_unit",
+        "aliases",
+        "parent_id",
+        "uses_register_family"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/joiningConceptId" },
+        "family": { "$ref": "#/$defs/familyId" },
+        "definition": { "type": "string", "minLength": 1 },
+        "bands": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/band" },
+          "uniqueItems": true
+        },
+        "claim_grain": {
+          "anyOf": [{ "$ref": "#/$defs/claimGrain" }, { "type": "null" }]
+        },
+        "attaches_to_spine_unit": { "type": "boolean" },
+        "aliases": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/conceptAlias" },
+          "uniqueItems": true
+        },
+        "parent_id": {
+          "anyOf": [{ "$ref": "#/$defs/joiningConceptId" }, { "type": "null" }]
+        },
+        "uses_register_family": { "type": "boolean" },
+        "notes": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "id": { "const": "premises_register_key" } },
+            "required": ["id"]
+          },
+          "then": {
+            "properties": {
+              "uses_register_family": { "const": true },
+              "family": { "const": "activity_register" },
+              "claim_grain": { "const": "register_unit" },
+              "attaches_to_spine_unit": { "const": true },
+              "aliases": {
+                "prefixItems": [{ "const": "establishment_register_key" }],
+                "minItems": 1,
+                "maxItems": 1
+              },
+              "bands": {
+                "prefixItems": [
+                  { "const": "identity" },
+                  { "const": "activity_registers" }
+                ],
+                "minItems": 2,
+                "maxItems": 2
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "uses_register_family": { "const": false },
+              "aliases": { "maxItems": 0 }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "id": {
+                "enum": [
+                  "flood_hazard_overlay",
+                  "natural_heritage_overlay",
+                  "heritage_designation_overlay",
+                  "planning_policy_overlay"
+                ]
+              }
+            },
+            "required": ["id"]
+          },
+          "then": {
+            "properties": { "parent_id": { "const": "constraint_overlay" } }
+          },
+          "else": {
+            "properties": { "parent_id": { "type": "null" } }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "id": {
+                "enum": [
+                  "assessment_roll_key",
+                  "parcel_gis_key",
+                  "assessing_unit_code",
+                  "municipality_label",
+                  "civic_address",
+                  "legal_description",
+                  "parcel_fabric_flag"
+                ]
+              }
+            },
+            "required": ["id"]
+          },
+          "then": {
+            "properties": {
+              "family": { "const": "unit_identity" },
+              "attaches_to_spine_unit": { "const": true },
+              "bands": {
+                "prefixItems": [{ "const": "identity" }],
+                "minItems": 1,
+                "maxItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "id": {
+                "enum": ["statistical_geography_code", "publisher_row_id"]
+              }
+            },
+            "required": ["id"]
+          },
+          "then": {
+            "properties": {
+              "family": { "const": "unit_identity" },
+              "attaches_to_spine_unit": { "const": false },
+              "claim_grain": { "type": "null" },
+              "bands": { "maxItems": 0 }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "id": {
+                "enum": [
+                  "industry_classification",
+                  "employment_size_band",
+                  "regulatory_activity_register"
+                ]
+              }
+            },
+            "required": ["id"]
+          },
+          "then": {
+            "properties": {
+              "family": { "const": "activity_register" },
+              "claim_grain": { "const": "register_unit" },
+              "attaches_to_spine_unit": { "const": true },
+              "bands": {
+                "prefixItems": [{ "const": "activity_registers" }],
+                "minItems": 1,
+                "maxItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "id": { "const": "jurisdiction_activity_aggregate" } },
+            "required": ["id"]
+          },
+          "then": {
+            "properties": {
+              "family": { "const": "activity_register" },
+              "claim_grain": { "const": "jurisdiction_aggregate" },
+              "attaches_to_spine_unit": { "const": false },
+              "bands": { "maxItems": 0 }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "id": {
+                "enum": [
+                  "zoning_district",
+                  "zoning_site_modifier",
+                  "official_plan_designation",
+                  "assessment_property_class",
+                  "assessment_use_descriptor",
+                  "assessed_value",
+                  "assessment_roll_context"
+                ]
+              }
+            },
+            "required": ["id"]
+          },
+          "then": {
+            "properties": {
+              "family": { "const": "land_use_and_assessment" },
+              "attaches_to_spine_unit": { "const": true },
+              "bands": {
+                "prefixItems": [{ "const": "land_use" }],
+                "minItems": 1,
+                "maxItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "id": {
+                "enum": [
+                  "constraint_overlay",
+                  "flood_hazard_overlay",
+                  "natural_heritage_overlay",
+                  "heritage_designation_overlay",
+                  "planning_policy_overlay"
+                ]
+              }
+            },
+            "required": ["id"]
+          },
+          "then": {
+            "properties": {
+              "family": { "const": "constraint_overlays" },
+              "claim_grain": { "const": "zone_polygon" },
+              "attaches_to_spine_unit": { "const": true },
+              "bands": {
+                "prefixItems": [{ "const": "constraints" }],
+                "minItems": 1,
+                "maxItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "id": { "enum": ["floor_area_published", "lot_area_published"] }
+            },
+            "required": ["id"]
+          },
+          "then": {
+            "properties": {
+              "family": { "const": "derived_reading_input" },
+              "claim_grain": { "type": "null" },
+              "attaches_to_spine_unit": { "const": true },
+              "bands": {
+                "prefixItems": [{ "const": "derived_readings" }],
+                "minItems": 1,
+                "maxItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "id": { "enum": ["owner_of_record", "owner_category"] }
+            },
+            "required": ["id"]
+          },
+          "then": {
+            "properties": {
+              "family": { "const": "presentation_tier" },
+              "claim_grain": { "type": "null" },
+              "attaches_to_spine_unit": { "const": false },
+              "bands": { "maxItems": 0 }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "id": {
+                "enum": [
+                  "assessment_roll_key",
+                  "parcel_gis_key",
+                  "assessing_unit_code",
+                  "assessment_property_class"
+                ]
+              }
+            },
+            "required": ["id"]
+          },
+          "then": { "properties": { "claim_grain": { "const": "parcel" } } }
+        },
+        {
+          "if": {
+            "properties": { "id": { "const": "civic_address" } },
+            "required": ["id"]
+          },
+          "then": { "properties": { "claim_grain": { "const": "address" } } }
+        },
+        {
+          "if": {
+            "properties": { "id": { "const": "zoning_district" } },
+            "required": ["id"]
+          },
+          "then": { "properties": { "claim_grain": { "const": "zone_polygon" } } }
+        },
+        {
+          "if": {
+            "properties": {
+              "id": {
+                "enum": [
+                  "municipality_label",
+                  "legal_description",
+                  "parcel_fabric_flag",
+                  "zoning_site_modifier",
+                  "official_plan_designation",
+                  "assessment_use_descriptor",
+                  "assessed_value",
+                  "assessment_roll_context"
+                ]
+              }
+            },
+            "required": ["id"]
+          },
+          "then": { "properties": { "claim_grain": { "type": "null" } } }
+        }
+      ]
+    },
+    "normativeCatalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enums",
+        "rules",
+        "alias_index",
+        "families",
+        "concepts",
+        "ledger_provenance"
+      ],
+      "properties": {
+        "enums": { "$ref": "#/$defs/enums" },
+        "rules": { "$ref": "#/$defs/rules" },
+        "alias_index": { "$ref": "#/$defs/aliasIndex" },
+        "families": { "$ref": "#/$defs/families" },
+        "concepts": { "$ref": "#/$defs/concepts" },
+        "ledger_provenance": { "$ref": "#/$defs/ledgerProvenance" }
+      }
+    },
+    "enums": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relation",
+        "authority_scale",
+        "claim_grain",
+        "register_family",
+        "evidence_level"
+      ],
+      "properties": {
+        "relation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["order_is_significant", "measured_against", "tokens"],
+          "properties": {
+            "order_is_significant": { "const": false },
+            "measured_against": { "type": "string", "minLength": 1 },
+            "tokens": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "same" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "alias" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "near" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "false_friend" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                }
+              ],
+              "items": false,
+              "minItems": 4,
+              "maxItems": 4
+            }
+          }
+        },
+        "authority_scale": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["order_is_significant", "tokens", "notes"],
+          "properties": {
+            "order_is_significant": { "const": false },
+            "tokens": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "municipal" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "regional" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "provincial_or_state" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "federal" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "cross_border_register" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                }
+              ],
+              "items": false,
+              "minItems": 5,
+              "maxItems": 5
+            },
+            "notes": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1
+            }
+          }
+        },
+        "claim_grain": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["order_is_significant", "tokens", "notes"],
+          "properties": {
+            "order_is_significant": { "const": false },
+            "tokens": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "parcel" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "footprint" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "address" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "register_unit" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "zone_polygon" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "jurisdiction_aggregate" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                }
+              ],
+              "items": false,
+              "minItems": 6,
+              "maxItems": 6
+            },
+            "notes": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1
+            }
+          }
+        },
+        "register_family": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["order_is_significant", "applies_to_concept_id", "tokens", "notes"],
+          "properties": {
+            "order_is_significant": { "const": false },
+            "applies_to_concept_id": { "const": "premises_register_key" },
+            "tokens": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "local_survey" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "local_directory" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "licence_register" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "regulatory" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "regulatory_cross_program" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                }
+              ],
+              "items": false,
+              "minItems": 5,
+              "maxItems": 5
+            },
+            "notes": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1
+            }
+          }
+        },
+        "evidence_level": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["order_is_significant", "tokens", "notes"],
+          "properties": {
+            "order_is_significant": { "const": false },
+            "tokens": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "live_verified" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "documented" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "catalog_only" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["token", "meaning"],
+                  "properties": {
+                    "token": { "const": "unverified" },
+                    "meaning": { "type": "string", "minLength": 1 }
+                  }
+                }
+              ],
+              "items": false,
+              "minItems": 4,
+              "maxItems": 4
+            },
+            "notes": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1
+            }
+          }
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "statement"],
+          "properties": {
+            "id": { "const": "concepts_above_native_names" },
+            "statement": { "type": "string", "minLength": 1 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "statement"],
+          "properties": {
+            "id": { "const": "concept_unity_is_not_joinability" },
+            "statement": { "type": "string", "minLength": 1 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "statement"],
+          "properties": {
+            "id": { "const": "federal_stamped_claims" },
+            "statement": { "type": "string", "minLength": 1 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "statement"],
+          "properties": {
+            "id": { "const": "aggregates_are_not_parcel_claims" },
+            "statement": { "type": "string", "minLength": 1 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "statement"],
+          "properties": {
+            "id": { "const": "planning_policy_overlay_on_constraints" },
+            "statement": { "type": "string", "minLength": 1 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "statement"],
+          "properties": {
+            "id": { "const": "premises_register_key_alias" },
+            "statement": { "type": "string", "minLength": 1 }
+          }
+        }
+      ],
+      "items": false,
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "aliasIndex": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["alias", "concept_id", "status", "note"],
+          "properties": {
+            "alias": { "const": "establishment_register_key" },
+            "concept_id": { "const": "premises_register_key" },
+            "status": { "const": "superseded_working_name" },
+            "note": { "type": "string", "minLength": 1 }
+          }
+        }
+      ],
+      "items": false,
+      "minItems": 1,
+      "maxItems": 1
+    },
+    "families": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "source_label"],
+          "properties": {
+            "id": { "const": "unit_identity" },
+            "source_label": { "const": "Family A — Unit identity" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "source_label"],
+          "properties": {
+            "id": { "const": "activity_register" },
+            "source_label": { "const": "Family B — Activity registers" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "source_label"],
+          "properties": {
+            "id": { "const": "land_use_and_assessment" },
+            "source_label": { "const": "Family C — Land use and assessment" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "source_label"],
+          "properties": {
+            "id": { "const": "constraint_overlays" },
+            "source_label": { "const": "Family D — Constraint overlays" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "source_label"],
+          "properties": {
+            "id": { "const": "derived_reading_input" },
+            "source_label": { "const": "Family E — Derived-reading inputs" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "source_label"],
+          "properties": {
+            "id": { "const": "presentation_tier" },
+            "source_label": { "const": "Family F — Presentation-tier (D-13)" }
+          }
+        }
+      ],
+      "items": false,
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "concepts": {
+      "type": "array",
+      "minItems": 30,
+      "maxItems": 30,
+      "items": { "$ref": "#/$defs/concept" },
+      "allOf": [
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "assessment_roll_key" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "parcel_gis_key" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "assessing_unit_code" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "municipality_label" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "statistical_geography_code" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "civic_address" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "legal_description" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "parcel_fabric_flag" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "publisher_row_id" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "premises_register_key" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "industry_classification" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "employment_size_band" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "regulatory_activity_register" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "jurisdiction_activity_aggregate" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "zoning_district" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "zoning_site_modifier" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "official_plan_designation" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "assessment_property_class" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "assessment_use_descriptor" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "assessed_value" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "assessment_roll_context" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "constraint_overlay" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "flood_hazard_overlay" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "natural_heritage_overlay" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "heritage_designation_overlay" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "planning_policy_overlay" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "floor_area_published" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "lot_area_published" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "owner_of_record" } } } },
+        { "contains": { "type": "object", "required": ["id"], "properties": { "id": { "const": "owner_category" } } } }
+      ]
+    },
+    "ledgerProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "observed_on",
+        "row_count",
+        "first_ledger_id",
+        "last_ledger_id",
+        "relation_counts",
+        "evidence_level_counts",
+        "concepts_with_at_least_one_row",
+        "row_free_concept_id",
+        "note"
+      ],
+      "properties": {
+        "source": {
+          "const": "heavymap-planning/11-synonym-parallel-ledger-v1.csv"
+        },
+        "observed_on": { "const": "2026-09-25" },
+        "row_count": { "const": 118 },
+        "first_ledger_id": { "const": "LG-001" },
+        "last_ledger_id": { "const": "LG-118" },
+        "relation_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["same", "alias", "near", "false_friend"],
+          "properties": {
+            "same": { "const": 65 },
+            "alias": { "const": 15 },
+            "near": { "const": 28 },
+            "false_friend": { "const": 10 }
+          }
+        },
+        "evidence_level_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["live_verified", "documented", "catalog_only", "unverified"],
+          "properties": {
+            "live_verified": { "const": 109 },
+            "documented": { "const": 9 },
+            "catalog_only": { "const": 0 },
+            "unverified": { "const": 0 }
+          }
+        },
+        "concepts_with_at_least_one_row": { "const": 29 },
+        "row_free_concept_id": { "const": "constraint_overlay" },
+        "note": { "type": "string", "minLength": 1 }
+      }
+    },
+    "deferredCatalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["normative", "items"],
+      "properties": {
+        "normative": { "const": false },
+        "items": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "reason"],
+              "properties": {
+                "id": { "const": "default_display_genres" },
+                "reason": { "type": "string", "minLength": 1 }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "reason"],
+              "properties": {
+                "id": { "const": "lot_area_m2_named_reading" },
+                "reason": { "type": "string", "minLength": 1 }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "reason"],
+              "properties": {
+                "id": { "const": "claim_stamp_meta_section_2" },
+                "reason": { "type": "string", "minLength": 1 }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "reason"],
+              "properties": {
+                "id": { "const": "sentinels_section_3" },
+                "reason": { "type": "string", "minLength": 1 }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "reason"],
+              "properties": {
+                "id": { "const": "fixture_bumps" },
+                "reason": { "type": "string", "minLength": 1 }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "reason"],
+              "properties": {
+                "id": { "const": "npca_mpac_licence_clearance" },
+                "reason": { "type": "string", "minLength": 1 }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "reason"],
+              "properties": {
+                "id": { "const": "mcs_history_and_servicing" },
+                "reason": { "type": "string", "minLength": 1 }
+              }
+            }
+          ],
+          "items": false,
+          "minItems": 7,
+          "maxItems": 7
+        }
+      }
+    }
+  }
+}

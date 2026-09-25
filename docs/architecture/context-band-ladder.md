@@ -44,6 +44,8 @@ A later band may use an earlier one. It may not be shown as if it were the same 
 
 Bands render in this order whenever more than the minimum is shown. Share/export is last because it packages the others. It is not a second copy of the facts with weaker rules.
 
+The ladder stays these six tokens. Federal registers are claims on the band they already belong to, with an authority scale, and they do not add a rung. Planning-policy overlays (`planning_policy_overlay`) feed `constraints`, each named by its authority. See [ADR 0002](adr/0002-joining-concepts-and-terminology.md).
+
 ## Empty bands without lying
 
 Each rung on a presented unit has one of two statuses:

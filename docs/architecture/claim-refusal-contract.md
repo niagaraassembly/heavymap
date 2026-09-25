@@ -64,6 +64,12 @@ A stamp is the smallest set of fields that lets someone else find the same recor
 
 The original published value survives next to any normalised one. A New York floor area stays in the published square feet on the stamp even if a reading also states square metres.
 
+## Joining concepts
+
+A claim may carry a joining-concept id beside the publisher’s field name. The id names the job. The field name stays as published. The concept does not add a ladder band.
+
+The closed sets for relation, authority scale, claim grain, register family, and ledger evidence level, and the thirty concept ids, are in [ADR 0002](adr/0002-joining-concepts-and-terminology.md). Federal registers stay on the bands they already belong to, and carry an authority scale when a later slice writes that field. The source-stamp table above is unchanged. Counts for a whole jurisdiction (`jurisdiction_activity_aggregate`) are not claims about a spine unit. Parcel-level refusal for that object is `not_in_coverage`.
+
 ## Refusal reasons
 
 A refusal uses exactly one of:

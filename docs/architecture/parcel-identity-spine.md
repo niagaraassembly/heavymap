@@ -48,6 +48,8 @@ hm:{country}:{region}:{jurisdiction}:{grain}:{local}
 
 The key is HeavyMap’s. Publishers keep their own keys in `native_keys`. A native key is never silently promoted to the spine key, because municipal parcel identifiers, assessment roll numbers, New York SWIS/SBL print keys, `nei_id`, and street addresses fail in different ways and do not survive a border crossing.
 
+A joining concept is a second handle for the job a native field does. The publisher’s field name stays on the claim. The closed catalog, the relation set, and `authority_scale` are in [ADR 0002](adr/0002-joining-concepts-and-terminology.md) and [vocab/joining-concepts.vocab.json](vocab/joining-concepts.vocab.json). Spine grain stays `parcel`, `footprint`, or `address`. Claim grain is a wider set and adds `register_unit`, `zone_polygon`, and `jurisdiction_aggregate`. The `nei_id` class is `premises_register_key`; `establishment_register_key` is an alias of that id. Two fields that share a concept still need their own join before either table can be linked.
+
 ## Grain
 
 Grain is part of identity, because area and containment mean different things at each tier.
