@@ -1,0 +1,243 @@
+{
+  "synthetic": true,
+  "not_an_observation_of_real_land": true,
+  "do_not_publish_as_a_real_parcel": true,
+  "linear": "NIA-16",
+  "prose": "docs/architecture/PCDP.md",
+  "vocabulary": "docs/architecture/vocab/pcdp.vocab.json",
+  "snapshot": "maximum",
+  "surfaces": ["dossier", "share", "export"],
+  "spine_key": "hm:us:ny:erie:parcel:SYN-999.00-1-1.1",
+  "grain": "parcel",
+  "jurisdiction": {
+    "sentence": "Erie County, New York.",
+    "country": "us",
+    "region": "ny",
+    "slug": "erie",
+    "inside_geography_v1": true,
+    "note": "No city or town is named, because SWIS is not_joined. The municipality slug stays erie until that join."
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [-78.9, 42.9],
+        [-78.89, 42.9],
+        [-78.89, 42.91],
+        [-78.9, 42.91],
+        [-78.9, 42.9]
+      ]
+    ]
+  },
+  "geometry_note": "Synthetic parcel stub in WGS84. The box is about a kilometre on a side, on round coordinates. It is not a survey and not an Erie County tax parcel.",
+  "bands": [
+    {
+      "band": "identity",
+      "status": "filled",
+      "claims": [
+        {
+          "about": "spine key",
+          "grade": "observed",
+          "assertion_state": "supported",
+          "value": "hm:us:ny:erie:parcel:SYN-999.00-1-1.1",
+          "stamp": {
+            "source_name": "synthetic Erie County parcel extract",
+            "publisher": "Erie County parcel layer (synthetic illustration)",
+            "licence": "synthetic public parcel licence (illustrative; not a named extract)",
+            "original_id": "SYN-999.00-1-1.1",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2024-01-01",
+            "note": "Illustrative dates, not a file retrieval. observation_on stands in for a roll year. A real extract would name NYS or Erie County as the publisher. The HeavyMap key is not the SBL."
+          }
+        },
+        {
+          "about": "grain",
+          "grade": "observed",
+          "assertion_state": "supported",
+          "value": "parcel",
+          "stamp": {
+            "source_name": "synthetic Erie County parcel extract",
+            "publisher": "Erie County parcel layer (synthetic illustration)",
+            "licence": "synthetic public parcel licence (illustrative; not a named extract)",
+            "original_id": "SYN-999.00-1-1.1",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2024-01-01",
+            "note": "The unit is a parcel polygon. Illustrative dates, not a file retrieval."
+          }
+        },
+        {
+          "about": "jurisdiction",
+          "grade": "observed",
+          "assertion_state": "supported",
+          "value": "Erie County, New York.",
+          "stamp": {
+            "source_name": "HeavyMap geography v1",
+            "publisher": "HeavyMap architecture walkthrough",
+            "licence": "synthetic illustration; not a county open-data licence",
+            "original_id": "SYN-999.00-1-1.1",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2026-01-01",
+            "note": "Inside geography v1. Other v1 counties stay outside this key. Illustrative dates, not a file retrieval."
+          }
+        },
+        {
+          "about": "native key",
+          "name": "sbl",
+          "grade": "observed",
+          "assertion_state": "supported",
+          "value": "SYN-999.00-1-1.1",
+          "stamp": {
+            "source_name": "synthetic Erie County parcel extract",
+            "publisher": "Erie County parcel layer (synthetic illustration)",
+            "licence": "synthetic public parcel licence (illustrative; not a named extract)",
+            "original_id": "SYN-999.00-1-1.1",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2024-01-01",
+            "note": "SBL stays in native keys. It is not promoted to the spine key. Illustrative dates, not a file retrieval."
+          }
+        }
+      ],
+      "refusals": [
+        {
+          "object": "SWIS / municipality",
+          "grade": "refused",
+          "reason": "not_joined",
+          "must_not_conclude": "That the parcel is county land with no municipality.",
+          "stamp": {
+            "source_name": "SWIS municipality code",
+            "publisher": "Erie County parcel layer (synthetic illustration)",
+            "licence": "synthetic public parcel licence (illustrative; not a named extract)",
+            "note": "No city or town is named until a SWIS join is accepted."
+          }
+        }
+      ]
+    },
+    {
+      "band": "land_use",
+      "status": "filled",
+      "claims": [
+        {
+          "about": "property class",
+          "grade": "observed",
+          "assertion_state": "supported",
+          "value": "710",
+          "stamp": {
+            "source_name": "synthetic Erie County parcel extract",
+            "publisher": "Erie County parcel layer (synthetic illustration)",
+            "licence": "synthetic public parcel licence (illustrative; not a named extract)",
+            "original_id": "SYN-999.00-1-1.1",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2024-01-01",
+            "note": "Property class is an assessment code. It is not a zoning by-law and not NAICS. Those vocabularies stay unasserted. Zoning is not invented to fill the gap. Illustrative dates, not a file retrieval."
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "band": "constraints",
+      "status": "refused",
+      "claims": [],
+      "refusals": [
+        {
+          "object": "constraints",
+          "grade": "refused",
+          "reason": "not_in_coverage",
+          "must_not_conclude": "That no overlay applies in the world.",
+          "stamp": {
+            "source_name": "constraint overlay",
+            "publisher": "none held for this key in the illustration",
+            "licence": "none held",
+            "note": "No constraint layer is held for this key. The rung does not say the land is unconstrained."
+          }
+        }
+      ]
+    },
+    {
+      "band": "activity_registers",
+      "status": "refused",
+      "claims": [],
+      "refusals": [
+        {
+          "object": "activity_registers",
+          "grade": "refused",
+          "reason": "not_joined",
+          "must_not_conclude": "That the site is inactive.",
+          "stamp": {
+            "source_name": "permit or facility register",
+            "publisher": "none joined in this illustration",
+            "licence": "none joined",
+            "note": "Permit or facility points are not attached. Activity is not inferred from property class."
+          }
+        }
+      ]
+    },
+    {
+      "band": "derived_readings",
+      "status": "filled",
+      "claims": [
+        {
+          "about": "reading",
+          "identifier": "floor_area_m2",
+          "grade": "derived",
+          "assertion_state": "supported",
+          "value": 1858.06,
+          "unit": "m2",
+          "inputs": [
+            {
+              "name": "published_floor_area",
+              "value": 20000,
+              "unit": "square feet"
+            }
+          ],
+          "method": "multiply by 0.092903",
+          "stamp": {
+            "source_name": "synthetic Erie County parcel extract",
+            "publisher": "Erie County parcel layer (synthetic illustration)",
+            "licence": "synthetic public parcel licence (illustrative; not a named extract)",
+            "original_id": "SYN-999.00-1-1.1",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2024-01-01",
+            "inputs": "published floor area 20000 square feet",
+            "method": "multiply by 0.092903",
+            "note": "Original published value is 20000 square feet. The square-metre figure is a reading. It does not say the building is fully used. Illustrative dates, not a file retrieval."
+          }
+        }
+      ],
+      "refusals": []
+    },
+    {
+      "band": "share_export",
+      "status": "filled",
+      "claims": [
+        {
+          "about": "packet",
+          "grade": "derived",
+          "assertion_state": "supported",
+          "value": "Packet includes property class 710, the floor-area reading, and the refused constraints and activity rungs.",
+          "surfaces": ["share", "export"],
+          "inputs": [
+            "identity",
+            "land_use",
+            "constraints",
+            "activity_registers",
+            "derived_readings"
+          ],
+          "method": "repeat the same claims and the same refusals",
+          "stamp": {
+            "source_name": "HeavyMap synthetic PCDP packet",
+            "publisher": "HeavyMap architecture walkthrough",
+            "licence": "synthetic illustration; not a data licence",
+            "original_id": "SYN-999.00-1-1.1",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2026-01-01",
+            "inputs": "identity, land_use, constraints, activity_registers, derived_readings",
+            "method": "repeat the same claims and the same refusals",
+            "note": "The packet has no owner name. Illustrative dates, not a publication. This packet is not a public site."
+          }
+        }
+      ],
+      "refusals": []
+    }
+  ]
+}
