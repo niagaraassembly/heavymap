@@ -195,7 +195,11 @@ defined here and nowhere else.
 **Projection.** Everything is normalized to EPSG:4326 at ingestion. ArcGIS
 services are asked for `outSR=4326` explicitly rather than trusting a default.
 
-**Units.** New York reports floor area in square feet (`SQ_FT`, `GFA`);
+**Units.** New York reports floor area in square feet (`GFA`; `SQFT_LIVING`
+is habitable residential area). `SQ_FT` in the statewide parcel layer is
+**lot area**, not floor area: on 2026-09-25 it was 0 on every sampled Erie
+industrial row and populated on 73 of 1,159 Erie 700-series parcels, while
+`GFA` was populated on 1,046 of them.
 Niagara's NEI reports `indoorgfa` without stated units. Do not compare or
 aggregate the two until that is confirmed. Store as published, convert only
 at the point of display, and label the unit.
