@@ -423,8 +423,67 @@ solving on its own terms.
 
 ---
 
+## D-13 · Sensitive field handling — retain, don't strip; mask at the presentation layer — 2026-09-23
+
+**Question.** Several admitted-or-candidate parcel datasets carry a named-owner
+field — `PRIMARY_OWNER` on NYS Tax Parcels Public (Erie/Chautauqua/Wyoming/
+Genesee), `OwnrName`/`own_street_address`/`own_city_state_zip` on Niagara
+County's own parcel server, `OWNERNME1` on Rochester's TaxParcel2024, and
+(unverified but signalled by its own fee schedule) Cattaraugus's paid "with
+Real Property data attached" tier. A first pass at flagging these
+(`heavymap-planning/09-per-jurisdiction-dataset-catalog.xlsx`, sensitivity
+review 2026-09-23) recorded the instruction as "drop before any public-facing
+use." **That was wrong**, corrected the same day.
+
+**Why "drop the field" is the wrong answer.** In several of these source
+jurisdictions the owner-of-record is already public information, published by
+the jurisdiction itself for exactly this kind of lookup (NY Real Property Tax
+Law makes assessment rolls, including owner name, public record; Ontario's
+equivalent varies by dataset). Stripping the field at ingest destroys
+information the atlas is otherwise well-positioned to make more useful than
+the source portal does — the problem was never "this field is secret," it was
+"this field should not be the *default*, anonymous, no-login view."
+
+**Chosen: full precision at ingest, masking is a presentation-layer decision
+made later.** This is the same shape as D-5's disposition taxonomy (a layer's
+*storage* form and its *served* form are different decisions) applied to
+*access* instead of *size*. Concretely:
+
+- The parcel intelligence layer is built out to maximum information content —
+  owner-of-record included where the source jurisdiction makes it public —
+  not truncated at ingest to whatever the most permissive viewer should see.
+- Presentation-layer **masks** decide what a given audience sees: an
+  anonymous/logged-out view likely omits owner identity by default even where
+  it's technically public, matching reader expectation rather than the
+  jurisdiction's technical permissiveness; an authenticated view can show
+  more; a paid/licensed tier (nominal paywall, per the discussion that
+  produced this decision) could be the gate for the fullest detail on
+  sensitive layers specifically, independent of whatever tier gates the rest
+  of the atlas.
+- This is a **principle, not a mechanism** — the actual auth/paywall system,
+  the mask implementation, and which fields go in which tier are explicitly
+  **deferred to later development**, not decided here. What's locked in now
+  is that `sensitivity_flag` in the dataset catalog means "needs a tiering
+  decision," never "delete this column."
+
+**What this changes immediately.** The 8 rows in
+`09-per-jurisdiction-dataset-catalog.xlsx` flagged `property_ownership_pii`
+(and the 2 flagged `protected_class_business_data`) have their notes corrected
+from "drop before public-facing use" to point at this decision instead.
+
+**What would change this:** if a specific source jurisdiction's owner field
+turns out to be *not* public record there (unlike the NY Real Property Tax Law
+default), that field would need real suppression, not just tiering, for that
+jurisdiction — a per-source legal check the project hasn't done yet and should
+before shipping any owner-identity field in even the most gated tier.
+
+---
+
 ## Amendment log
 
+- **2026-09-23** — D-13 recorded: sensitive-field handling (owner-of-record on
+  several parcel datasets) is retain-and-mask, not strip-at-ingest. Corrects
+  guidance written the same day in the jurisdiction dataset catalog.
 - **2026-08-23** — Packages installed and each verified against real cached
   data; D-6 amended with measured results rather than assertion. See
   ENVIRONMENT.md §5.
