@@ -61,3 +61,11 @@ The column `dossier_bands` keeps the MCS header. In product language the bands b
 ## Worked parcels
 
 PCDP walks two **synthetic** units, one Canadian and one American. The other three documents reuse those identities. They are illustrations of the contract, not observations of real land.
+
+## Jurisdiction key notes
+
+Not a fifth concept, and not a replacement for the worked parcels above.
+
+| Place | Note | Linear |
+|---|---|---|
+| City of Rochester parcel local token | [rochester-parcel-local-token.md](rochester-parcel-local-token.md) | **NIA-80** |
