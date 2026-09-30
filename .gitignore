@@ -6,3 +6,6 @@
 /NA Docs/
 /NA Image Bin/
 /Niagara-Assembly-*.zip
+
+# Local pulls, generated outputs, and handoff artifacts stay out of Git.
+/local-data/
