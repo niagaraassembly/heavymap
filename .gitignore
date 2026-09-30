@@ -9,3 +9,4 @@
 
 # Local pulls, generated outputs, and handoff artifacts stay out of Git.
 /local-data/
+__pycache__/
