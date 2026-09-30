@@ -82,6 +82,8 @@ These are conceptual. Counts and field names below are prior-art observations in
 
 **County parcel keys, not an ARN.** New York tax parcels are keyed by county geography plus a section-block-lot (SBL) print key, with SWIS identifying the municipality. That pair does not match an Ontario roll number. The HeavyMap key may be minted from a county parcel id; the SBL stays in `native_keys`.
 
+**Rochester local token (recommendation, not locked).** How a City of Rochester parcel gets its permanent local token is specified in [rochester-parcel-local-token.md](rochester-parcel-local-token.md) (Linear **NIA-80**). The recommendation is the 20-character text SBL, not the print key. The Erie illustration below still uses a print-key-shaped local. It is not rewritten by that note. The SWIS reading of Monroe’s six-digit `countysbl` prefix remains unconfirmed.
+
 **The state parcel layer is not the map of v1.** Prior reconnaissance of NYS Tax Parcels Public found Erie County present and Niagara County, New York absent from that service, with Niagara County publishing its own parcel layer. The other v1 counties — Chautauqua, Cattaraugus, Wyoming, Genesee, Orleans, Monroe — each need their own coverage stamp: state layer, county layer, or neither. A county missing from the state service still has land. The identity band says which layer was not in coverage or not joined.
 
 **Property class is not a parcel id and not zoning.** The 700-series industrial class is an assessment classification. It may later fill `land_use`, with the stamp saying it is property class. It does not identify the parcel, and it does not stand in for a zoning by-law.
