@@ -28,7 +28,7 @@ Under that frame, the Master Control Spreadsheet records which datasets exist, a
 Work an issue only when all of these are true:
 
 1. The issue carries the label `agent-ready`.
-2. The issue carries your lane label: `agent:cloud`, `agent:claude`, `agent:copilot`, `agent:cursor`, or `agent:kiro`.
+2. The issue carries your lane label: `agent:cloud`, `agent:claude`, `agent:copilot`, `agent:cursor`, `agent:kiro`, or `agent:codex`.
 3. The description contains a complete Agent packet. When the work reads or writes dataset truth, it also contains an MCS contract block. Reprint that block from [AGENTS-MCS.md](AGENTS-MCS.md).
 
 If any item is missing, comment on the issue and stop. Leave the scope as written. `agent-ready` is applied by Morgen or the Chief of Staff.
@@ -48,6 +48,9 @@ Ordinary HeavyMap work stays in Linear. Open a GitHub pull request for the chang
 | Claude | `agent:claude` | Planning, normalize drafts, later UI |
 | Copilot | `agent:copilot` | A gated packet turned into a draft pull request |
 | Kiro | `agent:kiro` | Specialized process work |
+| Codex (CLI on Deb) | `agent:codex` | Individual research/writing tasks; run with `</dev/null`; output returned via files/PR/Linear comment by a human or Deb-side session |
+
+Codex may not reach Linear directly, so the human (or Deb-side session) posts its pickup and result comments. It names its Linear issue and never posts, sends or merges on its own.
 
 Framework labels (`fw:pcdp`, `fw:spine`, `fw:bands`, `fw:claims`) and work-kind labels (`data-prep`, `protocol`, `docs`, `assessment`) name the packet. They do not replace `agent-ready` or the lane.
 
@@ -69,7 +72,7 @@ Linear packets use this shape:
 
 ```markdown
 ## Agent packet
-- **Assignee agent:** Copilot | Cursor | Cloud Agent | Claude | Kiro | human
+- **Assignee agent:** Copilot | Cursor | Cloud Agent | Claude | Kiro | Codex | human
 - **Lane label:** `agent:…`
 - **Repo:** `niagaraassembly/heavymap` (paths: …)
 - **Framework:** PCDP | Spine | Bands | Claims | (n/a)
