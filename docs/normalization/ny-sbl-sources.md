@@ -19,12 +19,12 @@ Read before implementation on 2026-09-30. These are publisher definitions; recor
 
 | Pilot claim | Status after publisher research |
 |---|---|
-| Rochester `PARCELID` is text SBL20; Monroe `countysbl = 261400 + PARCELID` in 45/45 pilot matches | **Pilot verified only.** Recheck on pulled rows; no publisher source proves this cross-service equality. |
+| Rochester `PARCELID` is text SBL20; Monroe `countysbl = 261400 + PARCELID` in 45/45 pilot matches | **Measured beyond pilot:** live city 64,047/64,709 distinct IDs join to a `261400` county composite with equal print key; 2024 city 63,908/64,825 join and 63,890 have equal print keys. Different vintages explain why neither population is 100%; see [real-data evidence](ny-sbl-real-data-evidence.md). |
 | 6/4/6/4 storage split | **Verified field widths** by PTF layout; concatenation and every character still need data checks. |
 | Six-digit prefix is a SWIS code | **Verified** by ORPTS list for `261400`, and SWIS+SBL semantics by NYS GIS dictionary. |
-| `3.-1-1` Genesee shape | **Inferred** until a matching record is pulled. |
-| Refuse nonzero suffix and fractional lot | **Contradicted as a general absence claim** by ORPTS examples; actual rendering needs data tests. |
-| City/county padded, state unpadded | **Pilot observation only**; measure all available shapes and exceptions. |
-| SBL20 always digits | **Unverified**; PTF fields are digit-filled but utility guidance allows a letter in some local suffixes. Measure public values. |
+| `3.-1-1` Genesee shape | **Verified:** `00300000010010000000` has `3.-1-1` in the Genesee pull. |
+| Refuse nonzero suffix and fractional lot | **Contradicted:** 8,204 sublots and 803 suffixes in 2024 city; 11,428 sublots and 514 suffixes in Genesee. Common punctuation is implemented; residual publisher exceptions are counted in the evidence document. |
+| City/county padded, state unpadded | **Contradicted as a universal layer rule:** Rochester/Monroe use a three-digit section whole; Erie unpads it; Genesee has two subsection precisions keyed by SWIS; Chautauqua keeps three digits and two fraction digits. See per-source match counts. |
+| SBL20 always digits | **Contradicted:** 252 city 2024 identifiers and 418 Genesee identifiers contain non-digit characters, mostly letter suffixes; malformed punctuation and short values also occur. |
 
-**Must confirm before hard-coding:** exact publisher print-key rendering by shape and source; treatment of ambiguous/missing values; whether any letter-bearing 20-character values occur in these layers. No authoritative statewide rule found for removing leading/trailing zeros or for every exception in public `PRINT_KEY` exports.
+**Must confirm before expanding beyond measured forms:** treatment of short `SBL` values and malformed composites as join IDs; source exceptions where `PRINT_KEY` disagrees with a deterministic rendering; the Niagara County publisher's own identifier format. No authoritative statewide rule was found for removing leading/trailing zeros or for every exception in public `PRINT_KEY` exports.
