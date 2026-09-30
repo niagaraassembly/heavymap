@@ -15,9 +15,10 @@ from collections import defaultdict
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[1]  # misc/ (script moved to misc/scripts/)
+REPO = ROOT.parent
 ENDPOINT = "https://maps.monroecounty.gov/server/rest/services/Hosted/Parcels_Public/FeatureServer/0/query"
-CACHE = ROOT / "local-data" / "monroe-swis-aggregates.json"
+CACHE = REPO / "local-data" / "monroe-swis-aggregates.json"
 OUTPUT = ROOT / "docs" / "data" / "monroe-swis-crosswalk.csv"
 GROUP_FIELDS = "SUBSTRING(countysbl,1,6),swis,CHAR_LENGTH(countysbl)"
 STATS = json.dumps([{"statisticType": "count", "onStatisticField": "objectid", "outStatisticFieldName": "n"}])

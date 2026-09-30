@@ -2,7 +2,7 @@
 
 Documentary source of truth for the four-concept product frame. Tracked as Linear **NIA-11**. This tree specifies the contract. It does not implement a map, fetch municipal data, edit the Master Control Spreadsheet (MCS), or publish a site.
 
-Beta is the repository top level. [`niagara-atlas/`](../../niagara-atlas/) and the UK atlas (`babbworks/atlas`) are baseline references. Cite their patterns. Do not extend them as the product root, and do not add UK geography.
+Beta is the repository top level. [`misc/niagara-atlas/`](../../misc/niagara-atlas/) and the UK atlas (`babbworks/atlas`) are baseline references. Cite their patterns. Do not extend them as the product root, and do not add UK geography.
 
 ## The four concepts
 

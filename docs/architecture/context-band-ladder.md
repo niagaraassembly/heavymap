@@ -22,7 +22,7 @@ A later band may use an earlier one. It may not be shown as if it were the same 
 - Designing panels, typography, or Leaflet layers. Chrome is deferred. The ladder is not a wireframe.
 - Requiring every band to be full before any parcel can be shown. Empty bands are allowed.
 - Collapsing the six rungs into one score.
-- Treating the older eight-band dossier sketch in `niagara-atlas/` as this ladder. That panel is prior art.
+- Treating the older eight-band dossier sketch in `misc/niagara-atlas/` as this ladder. That panel is prior art.
 - Editing MCS cells. This document only names the tokens the `dossier_bands` column should use.
 
 ## How it relates to the other three
@@ -113,6 +113,6 @@ An empty-looking American activity rung and an empty-looking Canadian constraint
 
 ## Prior art
 
-`niagara-atlas/DOSSIER-TECHNICAL-REPORT.md` drew a fixed panel (subject, assertion, regulatory, physical, constraint, access, neighbours, history, evidence) and required unavailable bands to stay visible. That is the right instinct and the wrong noun list for Beta.
+`misc/niagara-atlas/DOSSIER-TECHNICAL-REPORT.md` drew a fixed panel (subject, assertion, regulatory, physical, constraint, access, neighbours, history, evidence) and required unavailable bands to stay visible. That is the right instinct and the wrong noun list for Beta.
 
 PCDP keeps the instinct: order is stable, and a missing rung is shown as missing. The Beta ladder is the six tokens above, so MCS `dossier_bands` has one vocabulary across Canadian and American datasets. Assertion state lives in the Claim & Refusal Contract, not in its own rung. Access distances and neighbour mixes, if they are built later, are `derived_readings` with methods, not extra rungs.

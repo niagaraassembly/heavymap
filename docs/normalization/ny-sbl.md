@@ -26,4 +26,4 @@ Examples from ID-only pulls: `04628000010050040000` → `046.28-1-5.004` (`padde
 
 `inspect_ids(values, kind)` reports every occurrence of repeated valid IDs with zero-based input positions and separately reports rejected rows with the refusal code. It never folds rows or chooses a polygon. Under NIA-80, a repeated City `PARCELID` mints **one** key; its outline remains `not_joined` until geometry is resolved. No part suffix is minted. The 2024 city layer has one four-row duplicate group; full Monroe has 20 duplicate `countysbl` groups, including 40 empty values. The empty values are rejected before duplicate reporting, so `inspect_ids` reports 19 valid county groups on that population.
 
-Run `python3 -m unittest discover -s tests -v </dev/null`. No MCS cells were changed. `niagara-atlas/` and `babbworks/atlas` are prior-art baselines only.
+Run `python3 -m unittest discover -s tests -v </dev/null`. No MCS cells were changed. `misc/niagara-atlas/` and `babbworks/atlas` are prior-art baselines only.

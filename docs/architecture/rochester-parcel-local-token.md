@@ -120,4 +120,4 @@ Synthetic. Not a pulled row. The local token is `04799000010010000000` (leading 
 - Pilot evidence: Epic 2 study, Rochester section and joins matrix, read live 2026-09-30. Sample ratios are hits/tested, not population rates.
 - NIA-79 normaliser, PR #53: `heavymap/ny_identifiers.py`, described in `docs/normalization/ny-sbl.md` on that branch. Referenced, not duplicated, and not required to be merged.
 - NIA-81 SWIS crosswalk, PR #54: `docs/data/README-monroe-swis-crosswalk.md` on that branch. Same caveat on the prefix. Not required to be merged.
-- Prior art only: `niagara-atlas/`, UK atlas (`babbworks/atlas`). No UK geography.
+- Prior art only: `misc/niagara-atlas/`, UK atlas (`babbworks/atlas`). No UK geography.

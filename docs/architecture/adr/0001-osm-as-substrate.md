@@ -17,7 +17,7 @@ The product frame is the four concepts in [docs/architecture/](../README.md):
 
 That frame says what a unit is, which bands it may carry, how it is presented, and when a statement is a stamped claim or a named refusal. A viewer still needs a visual floor under an outline or a point: roads, water, and place names. Planning locked that floor as configurable map tiles.
 
-The UK atlas (`babbworks/atlas`) is the baseline reference for a live OSM map. [`niagara-atlas/README.md`](../../../niagara-atlas/README.md) describes it as a Leaflet + OSM application, and [`niagara-atlas/map.js`](../../../niagara-atlas/map.js) keeps the same habit: a tile URL, requested for the view, with OpenStreetMap attribution. Learn that pattern. The product root stays the top of this repository. UK code and UK geography stay out of product paths.
+The UK atlas (`babbworks/atlas`) is the baseline reference for a live OSM map. [`misc/niagara-atlas/README.md`](../../../misc/niagara-atlas/README.md) describes it as a Leaflet + OSM application, and [`misc/niagara-atlas/map.js`](../../../misc/niagara-atlas/map.js) keeps the same habit: a tile URL, requested for the view, with OpenStreetMap attribution. Learn that pattern. The product root stays the top of this repository. UK code and UK geography stay out of product paths.
 
 Parcel intelligence is a separate store. It comes from licensed and open municipal and industrial sources, joined on the Spine and registered in the Master Control Spreadsheet (MCS).
 

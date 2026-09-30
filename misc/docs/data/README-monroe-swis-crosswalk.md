@@ -8,7 +8,7 @@ This is an **observed, inferred crosswalk**, not a Monroe-issued SWIS code table
 - Retrieved: **2026-09-30 07:41:03 UTC**. Counts are a live-layer observation at that time, not a frozen release.
 - Query: `SUBSTRING(countysbl,1,6), swis, CHAR_LENGTH(countysbl)` grouped with `COUNT(objectid)`, plus `returnCountOnly` checks for all rows, null `swis`, null `countysbl`, and empty `countysbl`. `returnGeometry=false`; only `countysbl` and `swis` were requested as data fields. No owner values, geometry, or parcel-level rows were read or retained.
 - [Crosswalk CSV](monroe-swis-crosswalk.csv): one row per observed `(prefix, name)` pair. `row_count` includes every key length, while `valid_sbl26_count` counts only 26-character keys with a six-digit prefix. `invalid_length_count` records the remaining rows. A blank `monroe_swis_name` means source null; a blank prefix means empty `countysbl`. Each row repeats endpoint, field, retrieval time, and the unconfirmed-code caveat.
-- Reproduce with `python3 scripts/monroe_swis_crosswalk.py` from the repository root. `--help` describes modes; `--dry-run` makes no request or write; `--cache` rebuilds from `local-data/monroe-swis-aggregates.json` without a request. The script refuses truncated or unreconciled aggregates. Raw aggregate responses stay in ignored `local-data/`.
+- Reproduce with `python3 misc/scripts/monroe_swis_crosswalk.py` from the repository root. `--help` describes modes; `--dry-run` makes no request or write; `--cache` rebuilds from `local-data/monroe-swis-aggregates.json` without a request. The script refuses truncated or unreconciled aggregates. Raw aggregate responses stay in ignored `local-data/`.
 
 ## Full-population checks
 

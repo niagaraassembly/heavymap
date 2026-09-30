@@ -63,4 +63,4 @@ The 16-character statewide strings are **real published identifiers**; the SBL20
 - Who owns the blank or contradictory publisher print keys, and should a future ingest use the source key or an explicitly stamped computed display fallback? This module keeps them separate.
 - NIA-81 should cite the ORPTS `261400` assignment while retaining its unresolved minority name/prefix pairs. NIA-80's duplicate geometry policy remains a separate decision.
 
-No MCS cells changed. MPAC remains `not_licensed`; NPCA-derived layers and UK geography were not ingested. `niagara-atlas/` and `babbworks/atlas` were prior-art baselines only.
+No MCS cells changed. MPAC remains `not_licensed`; NPCA-derived layers and UK geography were not ingested. `misc/niagara-atlas/` and `babbworks/atlas` were prior-art baselines only.
