@@ -1,0 +1,311 @@
+{
+  "synthetic": true,
+  "not_an_observation_of_real_land": true,
+  "do_not_publish_as_a_real_parcel": true,
+  "linear": "NIA-80",
+  "prose": "docs/architecture/rochester-parcel-local-token.md",
+  "vocabulary": "docs/architecture/vocab/pcdp.vocab.json",
+  "convention": "NIA-16 fixtures/parcels shape on PR #13. Those two walkthrough files are not copied here.",
+  "snapshot": "maximum",
+  "surfaces": ["dossier", "share", "export"],
+  "spine_key": "hm:us:ny:rochester:parcel:04799000010010000000",
+  "grain": "parcel",
+  "jurisdiction": {
+    "sentence": "City of Rochester, Monroe County, New York.",
+    "country": "us",
+    "region": "ny",
+    "slug": "rochester",
+    "inside_geography_v1": true,
+    "note": "Slug rochester is the NIA-80 recommendation because the city publishes this grain. It is not locked. Monroe is the geography-v1 county. The six-digit prefix does not mint the slug."
+  },
+  "native_keys": {
+    "sbl20": "04799000010010000000",
+    "printkey_padded": "047.99-1-1",
+    "printkey_unpadded_not_for_join": "47.99-1-1",
+    "countysbl": "26140004799000010010000000",
+    "swis_prefix_candidate": "261400",
+    "swis_name_as_published": "City of Rochester"
+  },
+  "duplicate_fold": {
+    "status": "rule_illustration",
+    "not_a_second_spine_unit": true,
+    "sbl20": "04799000010010000000",
+    "source_rows": ["synthetic-row-a", "synthetic-row-b"],
+    "minted_spine_keys": ["hm:us:ny:rochester:parcel:04799000010010000000"],
+    "outline": "not_joined",
+    "note": "Two synthetic rows share one validated SBL20. One key is minted. No part suffix. No geometry winner. Not a pulled duplicate."
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [-77.7, 43.1],
+        [-77.69, 43.1],
+        [-77.69, 43.11],
+        [-77.7, 43.11],
+        [-77.7, 43.1]
+      ]
+    ]
+  },
+  "geometry_note": "Synthetic parcel stub in WGS84. The box is about a kilometre on a side, on round coordinates near the Rochester area. It is not a survey and not a City of Rochester or Monroe County tax parcel.",
+  "bands": [
+    {
+      "band": "identity",
+      "status": "filled",
+      "claims": [
+        {
+          "about": "spine key",
+          "grade": "observed",
+          "assertion_state": "supported",
+          "value": "hm:us:ny:rochester:parcel:04799000010010000000",
+          "stamp": {
+            "source_name": "synthetic Rochester parcel illustration",
+            "publisher": "City of Rochester parcel layer (synthetic illustration)",
+            "licence": "synthetic illustration; not a DataROC or Monroe County licence",
+            "original_id": "04799000010010000000",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2024-01-01",
+            "note": "Illustrative dates, not a file retrieval. The local token is the 20-character SBL as text. The HeavyMap key copies that text under a named rule. It is not the print key."
+          }
+        },
+        {
+          "about": "grain",
+          "grade": "observed",
+          "assertion_state": "supported",
+          "value": "parcel",
+          "stamp": {
+            "source_name": "synthetic Rochester parcel illustration",
+            "publisher": "City of Rochester parcel layer (synthetic illustration)",
+            "licence": "synthetic illustration; not a DataROC or Monroe County licence",
+            "original_id": "04799000010010000000",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2024-01-01",
+            "note": "The unit is a parcel polygon. Illustrative dates, not a file retrieval."
+          }
+        },
+        {
+          "about": "jurisdiction",
+          "grade": "observed",
+          "assertion_state": "supported",
+          "value": "City of Rochester, Monroe County, New York.",
+          "stamp": {
+            "source_name": "HeavyMap geography v1",
+            "publisher": "HeavyMap architecture note NIA-80",
+            "licence": "synthetic illustration; not a county open-data licence",
+            "original_id": "04799000010010000000",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2026-01-01",
+            "note": "Monroe County is inside geography v1. The slug rochester is a recommendation, not a lock. Illustrative dates, not a file retrieval."
+          }
+        },
+        {
+          "about": "native key",
+          "name": "sbl20",
+          "grade": "observed",
+          "assertion_state": "supported",
+          "value": "04799000010010000000",
+          "stamp": {
+            "source_name": "synthetic Rochester parcel illustration",
+            "publisher": "City of Rochester parcel layer (synthetic illustration)",
+            "licence": "synthetic illustration; not a DataROC or Monroe County licence",
+            "original_id": "04799000010010000000",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2024-01-01",
+            "note": "PARCELID as 20-character text. Leading zeros are significant. Not stored as a number."
+          }
+        },
+        {
+          "about": "native key",
+          "name": "printkey_padded",
+          "grade": "observed",
+          "assertion_state": "supported",
+          "value": "047.99-1-1",
+          "stamp": {
+            "source_name": "synthetic Rochester parcel illustration",
+            "publisher": "City of Rochester parcel layer (synthetic illustration)",
+            "licence": "synthetic illustration; not a DataROC or Monroe County licence",
+            "original_id": "047.99-1-1",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2024-01-01",
+            "note": "Padded display form only. Not the local token. Not compared to an unpadded print key."
+          }
+        },
+        {
+          "about": "native key",
+          "name": "countysbl",
+          "grade": "observed",
+          "assertion_state": "supported",
+          "value": "26140004799000010010000000",
+          "stamp": {
+            "source_name": "synthetic Monroe county composite",
+            "publisher": "Monroe County parcel layer (synthetic illustration)",
+            "licence": "synthetic illustration; not a Monroe County licence",
+            "original_id": "26140004799000010010000000",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2024-01-01",
+            "note": "26-character text: six-digit prefix plus the same SBL20. The prefix is a candidate code. Its SWIS meaning is inferred, not confirmed."
+          }
+        }
+      ],
+      "refusals": [
+        {
+          "object": "official SWIS code for prefix 261400",
+          "grade": "refused",
+          "reason": "not_joined",
+          "must_not_conclude": "That the six digits are a confirmed Monroe SWIS code.",
+          "stamp": {
+            "source_name": "SWIS code table",
+            "publisher": "none confirmed for this prefix",
+            "licence": "none held",
+            "note": "The prefix matched the city id in the pilot as a concatenation. A Monroe code table was not the source. The municipality name stays a separate native value."
+          }
+        },
+        {
+          "object": "NYS statewide parcel layer for Monroe",
+          "grade": "refused",
+          "reason": "not_in_coverage",
+          "must_not_conclude": "That Monroe County has no parcels.",
+          "stamp": {
+            "source_name": "NYS Tax Parcels Public",
+            "publisher": "NYS ITS (statewide layer)",
+            "licence": "not used for this key",
+            "note": "The pilot read 0 Monroe features and 0 Niagara County features. The city and county layers are the coverage in hand."
+          }
+        },
+        {
+          "object": "1996 and 2012 float-stored SBL",
+          "grade": "refused",
+          "reason": "not_joined",
+          "must_not_conclude": "That the parcel had no earlier assessment.",
+          "stamp": {
+            "source_name": "Rochester assessment tables 1996 and 2012",
+            "publisher": "City of Rochester (tabular snapshots)",
+            "licence": "not joined by id",
+            "note": "SBL and SBL20 in those tables are floating-point values. Digits are lost. Do not cast or zero-pad them into this token."
+          }
+        },
+        {
+          "object": "MPAC roll and assessed value",
+          "grade": "refused",
+          "reason": "not_licensed",
+          "must_not_conclude": "That the land is unassessed.",
+          "stamp": {
+            "source_name": "MPAC assessment roll",
+            "publisher": "MPAC",
+            "licence": "not_licensed",
+            "note": "Ontario assessment is not this parcel's key. The refusal is about licence. No MPAC value is stored."
+          }
+        }
+      ]
+    },
+    {
+      "band": "land_use",
+      "status": "refused",
+      "claims": [],
+      "refusals": [
+        {
+          "object": "land_use",
+          "grade": "refused",
+          "reason": "not_joined",
+          "must_not_conclude": "That the parcel has no use classification in the world.",
+          "stamp": {
+            "source_name": "zoning or property class",
+            "publisher": "none joined in this illustration",
+            "licence": "none joined",
+            "note": "No class and no zoning label are invented for this key fixture."
+          }
+        }
+      ]
+    },
+    {
+      "band": "constraints",
+      "status": "refused",
+      "claims": [],
+      "refusals": [
+        {
+          "object": "constraints",
+          "grade": "refused",
+          "reason": "not_joined",
+          "must_not_conclude": "That the site is unconstrained.",
+          "stamp": {
+            "source_name": "constraint overlay",
+            "publisher": "none held for this key in the illustration",
+            "licence": "none held",
+            "note": "No constraint layer is held for this key."
+          }
+        }
+      ]
+    },
+    {
+      "band": "activity_registers",
+      "status": "refused",
+      "claims": [],
+      "refusals": [
+        {
+          "object": "activity_registers",
+          "grade": "refused",
+          "reason": "not_in_coverage",
+          "must_not_conclude": "That no activity exists on the land.",
+          "stamp": {
+            "source_name": "permits, violations, or licences",
+            "publisher": "none found in the city catalog in the pilot",
+            "licence": "none held",
+            "note": "The pilot found no permits, code-violation, or licence dataset in the Rochester catalog. Activity is not inferred from the parcel id."
+          }
+        }
+      ]
+    },
+    {
+      "band": "derived_readings",
+      "status": "refused",
+      "claims": [],
+      "refusals": [
+        {
+          "object": "derived_readings",
+          "grade": "refused",
+          "reason": "not_joined",
+          "must_not_conclude": "That a missing reading is zero.",
+          "stamp": {
+            "source_name": "derived reading",
+            "publisher": "none joined in this illustration",
+            "licence": "none joined",
+            "note": "This fixture specifies the token. It does not compute a reading."
+          }
+        }
+      ]
+    },
+    {
+      "band": "share_export",
+      "status": "filled",
+      "claims": [
+        {
+          "about": "packet",
+          "grade": "derived",
+          "assertion_state": "supported",
+          "value": "Packet includes the SBL20 token, the padded print key, the 26-character county composite, and the refused SWIS-code, statewide-layer, float-SBL, MPAC, land-use, constraints, activity, and derived-reading rows.",
+          "surfaces": ["share", "export"],
+          "inputs": [
+            "identity",
+            "land_use",
+            "constraints",
+            "activity_registers",
+            "derived_readings"
+          ],
+          "method": "repeat the same claims and the same refusals",
+          "stamp": {
+            "source_name": "HeavyMap synthetic PCDP packet",
+            "publisher": "HeavyMap architecture note NIA-80",
+            "licence": "synthetic illustration; not a data licence",
+            "original_id": "04799000010010000000",
+            "retrieved_on": "2026-01-01",
+            "observation_on": "2026-01-01",
+            "inputs": "identity, land_use, constraints, activity_registers, derived_readings",
+            "method": "repeat the same claims and the same refusals",
+            "note": "The packet has no owner name. Illustrative dates, not a publication. This packet is not a public site."
+          }
+        }
+      ],
+      "refusals": []
+    }
+  ]
+}

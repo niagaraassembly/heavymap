@@ -191,8 +191,8 @@ Those cells are examples of vocabulary only. This PR writes none of them into th
 
 ## Prior art
 
-- The dossier panel in `niagara-atlas/DOSSIER-TECHNICAL-REPORT.md` is a surface pattern: one unit, ordered bands, refusals kept on the panel, claims that can be disagreed with. PCDP is the protocol that surface has to obey. Beta does not promote “dossier” to the name of the whole product.
-- `niagara-atlas/PUBLICATION-MODEL.md` treats a share card and a local note as presentation ideas taken from the UK atlas. PCDP keeps share/export as a ladder rung with the same claims and refusals. It does not specify `html2canvas`, accounts, or a notes module.
-- `niagara-atlas/INTEGRATION.md` required uneven coverage to be shown. Minimum presentation is that requirement, stated as a contract instead of a map caption.
+- The dossier panel in `misc/niagara-atlas/DOSSIER-TECHNICAL-REPORT.md` is a surface pattern: one unit, ordered bands, refusals kept on the panel, claims that can be disagreed with. PCDP is the protocol that surface has to obey. Beta does not promote “dossier” to the name of the whole product.
+- `misc/niagara-atlas/PUBLICATION-MODEL.md` treats a share card and a local note as presentation ideas taken from the UK atlas. PCDP keeps share/export as a ladder rung with the same claims and refusals. It does not specify `html2canvas`, accounts, or a notes module.
+- `misc/niagara-atlas/INTEGRATION.md` required uneven coverage to be shown. Minimum presentation is that requirement, stated as a contract instead of a map caption.
 
 No public deployment follows from this document.

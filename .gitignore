@@ -6,3 +6,11 @@
 /NA Docs/
 /NA Image Bin/
 /Niagara-Assembly-*.zip
+
+# Local pulls, generated outputs, and handoff artifacts stay out of Git.
+/local-data/
+__pycache__/
+
+# Generated workbooks, tmp files and manifests with hashes stay local (hm guard enforces this).
+/build/
+*.tmp

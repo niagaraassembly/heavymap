@@ -24,10 +24,10 @@
       "type": "array",
       "prefixItems": [
         { "const": "docs/architecture/adr/0002-joining-concepts-and-terminology.md" },
-        { "const": "heavymap-planning/10-joining-concepts-v1.md" },
-        { "const": "heavymap-planning/11-synonym-parallel-ledger-v1.md" },
-        { "const": "heavymap-planning/11-synonym-parallel-ledger-v1.csv" },
-        { "const": "heavymap-planning/12-authority-scale-and-meta-proposals.md" }
+        { "const": "misc/heavymap-planning/10-joining-concepts-v1.md" },
+        { "const": "misc/heavymap-planning/11-synonym-parallel-ledger-v1.md" },
+        { "const": "misc/Spreadsheets/11-synonym-parallel-ledger-v1.csv" },
+        { "const": "misc/heavymap-planning/12-authority-scale-and-meta-proposals.md" }
       ],
       "items": false,
       "minItems": 5,
@@ -1015,7 +1015,7 @@
       ],
       "properties": {
         "source": {
-          "const": "heavymap-planning/11-synonym-parallel-ledger-v1.csv"
+          "const": "misc/Spreadsheets/11-synonym-parallel-ledger-v1.csv"
         },
         "observed_on": { "const": "2026-09-25" },
         "row_count": { "const": 118 },

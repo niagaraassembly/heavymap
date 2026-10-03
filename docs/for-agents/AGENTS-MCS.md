@@ -1,11 +1,13 @@
 # AGENTS-MCS.md
 
+> **Moved, content unchanged except links.** Original root file. **Open conflict:** this file says the MCS workbook is *not* in the repo and must not be added; the parked `misc/CONTRIBUTING.md` (PR #57) says it *is* tracked under `Spreadsheets/`, and PR #57 does track `02-dataset-inventory-v4.csv` (now at `misc/Spreadsheets/`). Until Morgen decides, follow this file. See `../for-humans/OPEN-DECISIONS.md` (item 5).
+
 How agents treat the Master Control Spreadsheet (MCS). This file is the in-repo guide. The workbook is not in this repository, and it is not checked in.
 
 **Status:** guide only. Linear **NIA-13**. This document changes no MCS cells and names no `dataset_id`.
 
 **Audience:** Cursor Cloud Agents, Claude, GitHub Copilot, Kiro, Codex, and humans driving Linear packets.
-**Canonical copy:** Morgen’s local `~/na/` (`.xlsx` and/or `.csv`). The filename is Morgen’s; a current working name is the dataset-inventory workbook `02-dataset-inventory-v4.xlsx` (or the matching `.csv`). That path is on Morgen’s machine. It is not a path under `docs/`, `niagara-atlas/`, or anywhere else in `heavymap`.
+**Canonical copy:** Morgen’s local `~/na/` (`.xlsx` and/or `.csv`). The filename is Morgen’s; a current working name is the dataset-inventory workbook `02-dataset-inventory-v4.xlsx` (or the matching `.csv`). That path is on Morgen’s machine. It is not a path under `docs/`, `misc/niagara-atlas/`, or anywhere else in `heavymap`.
 
 A Cloud Agent that cannot see `~/na/` leaves the workbook untouched. Comment on the issue and stop, unless the packet attached the rows to read. Do not reconstruct the sheet from memory, and do not add an xlsx or csv to this repo.
 
@@ -18,7 +20,7 @@ One spreadsheet with two jobs:
 1. **Presence register** — what each dataset is, its rights, its pipeline status, and its doc pointers.
 2. **Utilization control plane** — which joins, dossier bands, UI surfaces, and derived readings that dataset may feed.
 
-Part 2 headers used by the architecture docs are `dossier_bands`, `ui_surfaces`, and `derived_readings`. Definitions are in [docs/architecture/README.md](docs/architecture/README.md).
+Part 2 headers used by the architecture docs are `dossier_bands`, `ui_surfaces`, and `derived_readings`. Definitions are in [docs/architecture/README.md](../architecture/README.md).
 
 UK geographic datasets stay off the sheet. A UK capability pattern is a note in `uk_analogue` on an existing row. It is not a new geography row.
 

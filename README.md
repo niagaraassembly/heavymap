@@ -1,19 +1,22 @@
 # HeavyMap
 
-Beta for this repository is the **top level**. The `niagara-atlas/` tree is prior-art reference only. It is not the product root.
+Industrial intelligence for cross-border Niagara. This repository holds the **data registry and tooling** for deciding which public datasets HeavyMap may use: CSV tables are the source of truth, a small stdlib-only Python CLI (`hm`) validates and applies reviewed decisions, and a localhost review page lets a human make those decisions. Nothing here publishes a site or fetches data yet.
 
-How a parcel is known and shown is specified in [docs/architecture/](docs/architecture/README.md):
+| If you are... | Start here |
+|---|---|
+| a human (Morgen, a reviewer, a contributor) | [`docs/for-humans/README.md`](docs/for-humans/README.md) |
+| an AI agent | [`AGENTS.md`](AGENTS.md) then [`docs/for-agents/`](docs/for-agents/README.md) |
+| after the product frame | [`docs/architecture/README.md`](docs/architecture/README.md): Parcel Identity Spine, Context Band Ladder, PCDP, Claim & Refusal Contract |
+| looking for a folder | [`docs/FOLDER-MAP.md`](docs/FOLDER-MAP.md) |
 
-- Parcel Identity Spine
-- Context Band Ladder
-- Parcel Context Display Protocol (PCDP)
-- Claim & Refusal Contract
+Quick start (Python 3.9+, no installs):
 
-These documents do not publish a site, do not fetch data, and do not change the Master Control Spreadsheet.
+```bash
+./scripts/hm validate          # check every table
+./scripts/hm status            # counts, decisions, gate G6
+./scripts/hm demo /tmp/hm-demo # sandbox with SYNTHETIC rows to try the review UI
+./scripts/hm --root /tmp/hm-demo review   # http://127.0.0.1:8765/
+python3 -m unittest discover -s tests     # tests
+```
 
-## For agents
-
-Start from the repo. Linear project Industrial Atlas is the control plane. This repository is the code source of truth.
-
-- [AGENTS.md](AGENTS.md) — pickup contract: `agent-ready` plus a matching lane (`agent:cloud`, `agent:claude`, and the other `agent:*` lanes)
-- [AGENTS-MCS.md](AGENTS-MCS.md) — Master Control Spreadsheet hygiene. The workbook lives under Morgen’s `~/na/` (xlsx or csv). It is not in this repo.
+Prior art (the first Niagara atlas prototype, planning sheets, old docs) is kept under [`misc/`](misc/) and is not the product root.

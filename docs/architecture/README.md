@@ -2,7 +2,7 @@
 
 Documentary source of truth for the four-concept product frame. Tracked as Linear **NIA-11**. This tree specifies the contract. It does not implement a map, fetch municipal data, edit the Master Control Spreadsheet (MCS), or publish a site.
 
-Beta is the repository top level. [`niagara-atlas/`](../../niagara-atlas/) and the UK atlas (`babbworks/atlas`) are baseline references. Cite their patterns. Do not extend them as the product root, and do not add UK geography.
+Beta is the repository top level. [`misc/niagara-atlas/`](../../misc/niagara-atlas/) and the UK atlas (`babbworks/atlas`) are baseline references. Cite their patterns. Do not extend them as the product root, and do not add UK geography.
 
 ## The four concepts
 
@@ -61,3 +61,11 @@ The column `dossier_bands` keeps the MCS header. In product language the bands b
 ## Worked parcels
 
 PCDP walks two **synthetic** units, one Canadian and one American. The other three documents reuse those identities. They are illustrations of the contract, not observations of real land.
+
+## Jurisdiction key notes
+
+Not a fifth concept, and not a replacement for the worked parcels above.
+
+| Place | Note | Linear |
+|---|---|---|
+| City of Rochester parcel local token | [rochester-parcel-local-token.md](rochester-parcel-local-token.md) | **NIA-80** |
