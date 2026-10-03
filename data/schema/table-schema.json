@@ -1,0 +1,713 @@
+{
+  "schema_version": "1.0",
+  "note": "Ordered headers per table. Single source for validator, apply, review UI and docs. editable = fields review decisions may change (whitelist). Registry tables are written only by `hm apply`.",
+  "tables": {
+    "services": {
+      "stage": "registry",
+      "path": "data/registry/services.csv",
+      "description": "One row per publisher service (seeded from planning sheet 16-service-profile, plus run_id).",
+      "key": "service_id",
+      "columns": [
+        "service_id",
+        "publisher",
+        "jurisdiction",
+        "base_url",
+        "access_method",
+        "auth_required",
+        "paging_limit",
+        "default_encoding",
+        "default_crs_epsg",
+        "licence_text_url",
+        "licence_note",
+        "reliability_notes",
+        "layer_count_known",
+        "catalog_rows_covered",
+        "last_checked",
+        "profile_status",
+        "run_id",
+        "linear_id",
+        "evidence_urls",
+        "notes"
+      ],
+      "editable": [
+        "auth_required",
+        "licence_note",
+        "reliability_notes",
+        "profile_status",
+        "notes"
+      ],
+      "required": [
+        "service_id",
+        "publisher",
+        "linear_id"
+      ],
+      "patterns": {
+        "service_id": "^svc-[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "linear_id": "^NIA-\\d+$",
+        "default_crs_epsg": "^\\d{4,6}$"
+      },
+      "enums": {
+        "access_method": "access_method",
+        "auth_required": "auth_required",
+        "profile_status": "profile_status"
+      },
+      "dates": [
+        "last_checked"
+      ],
+      "urls": [
+        "base_url",
+        "licence_text_url",
+        "evidence_urls"
+      ],
+      "ints": [
+        "paging_limit",
+        "layer_count_known",
+        "catalog_rows_covered"
+      ],
+      "fk": {}
+    },
+    "layers": {
+      "stage": "registry",
+      "path": "data/registry/layers.csv",
+      "description": "One row per layer (seeded from 17-layer-profile). use_decision and join columns moved to use_decisions / join_tests; pii_owner_fields_names_only holds field NAMES only.",
+      "key": "layer_id",
+      "columns": [
+        "layer_id",
+        "service_id",
+        "catalog_row_ref",
+        "mcs_dataset_id",
+        "layer_name",
+        "endpoint",
+        "lifecycle_status",
+        "status_changed_date",
+        "profile_date",
+        "vintage",
+        "record_count",
+        "distinct_id_count",
+        "geometry_type",
+        "grain",
+        "id_field",
+        "id_type",
+        "id_length",
+        "id_charset",
+        "id_null_count",
+        "id_dup_count",
+        "id_pattern_examples",
+        "encoding",
+        "date_fields",
+        "date_format",
+        "tz_note",
+        "crs_epsg",
+        "null_conventions",
+        "pii_owner_fields_names_only",
+        "pagination_notes",
+        "field_list_ref",
+        "join_keys_to_spine",
+        "inherits_from_service",
+        "score_ref",
+        "run_id",
+        "evidence_urls",
+        "linear_id",
+        "notes"
+      ],
+      "editable": [
+        "lifecycle_status",
+        "grain",
+        "vintage",
+        "crs_epsg",
+        "id_field",
+        "join_keys_to_spine",
+        "null_conventions",
+        "mcs_dataset_id",
+        "notes"
+      ],
+      "required": [
+        "layer_id",
+        "service_id",
+        "lifecycle_status",
+        "linear_id"
+      ],
+      "patterns": {
+        "layer_id": "^lyr-[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "linear_id": "^NIA-\\d+$",
+        "crs_epsg": "^\\d{4,6}$"
+      },
+      "enums": {
+        "lifecycle_status": "lifecycle_status",
+        "grain": "grain",
+        "inherits_from_service": "yes_no"
+      },
+      "dates": [
+        "status_changed_date",
+        "profile_date"
+      ],
+      "urls": [
+        "endpoint",
+        "evidence_urls"
+      ],
+      "ints": [
+        "record_count",
+        "distinct_id_count",
+        "id_length",
+        "id_null_count",
+        "id_dup_count"
+      ],
+      "fk": {
+        "service_id": "services.service_id",
+        "score_ref": "scores.score_id"
+      }
+    },
+    "fields": {
+      "stage": "registry",
+      "path": "data/registry/fields.csv",
+      "description": "Field register per layer. Names only; owner_flag=yes marks owner-bearing fields. No values.",
+      "key": "field_id",
+      "columns": [
+        "field_id",
+        "layer_id",
+        "field_name",
+        "field_type",
+        "role",
+        "owner_flag",
+        "null_sentinel",
+        "domain_note",
+        "run_id",
+        "linear_id"
+      ],
+      "editable": [
+        "role",
+        "owner_flag",
+        "null_sentinel",
+        "domain_note"
+      ],
+      "required": [
+        "field_id",
+        "layer_id",
+        "field_name",
+        "owner_flag",
+        "linear_id"
+      ],
+      "patterns": {
+        "field_id": "^FLD-[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "linear_id": "^NIA-\\d+$"
+      },
+      "enums": {
+        "role": "field_role",
+        "owner_flag": "yes_no"
+      },
+      "dates": [],
+      "urls": [],
+      "ints": [],
+      "fk": {
+        "layer_id": "layers.layer_id"
+      }
+    },
+    "identifier_rules": {
+      "stage": "registry",
+      "path": "data/registry/identifier_rules.csv",
+      "description": "Identifier rules per layer id field: pattern, padding, float trap, normaliser (heavymap.ny_identifiers for NY).",
+      "key": "rule_id",
+      "columns": [
+        "rule_id",
+        "layer_id",
+        "id_field",
+        "id_kind",
+        "pattern",
+        "length",
+        "padding_note",
+        "float_trap",
+        "composite_of",
+        "normaliser",
+        "is_join_key",
+        "status",
+        "evidence_ref",
+        "run_id",
+        "linear_id"
+      ],
+      "editable": [
+        "pattern",
+        "padding_note",
+        "float_trap",
+        "composite_of",
+        "normaliser",
+        "is_join_key",
+        "status"
+      ],
+      "required": [
+        "rule_id",
+        "layer_id",
+        "id_field",
+        "linear_id"
+      ],
+      "patterns": {
+        "rule_id": "^IDR-[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "linear_id": "^NIA-\\d+$"
+      },
+      "enums": {
+        "id_kind": "id_kind",
+        "float_trap": "yes_no",
+        "is_join_key": "yes_no",
+        "status": "rule_status"
+      },
+      "dates": [],
+      "urls": [],
+      "ints": [
+        "length"
+      ],
+      "fk": {
+        "layer_id": "layers.layer_id"
+      }
+    },
+    "quirks": {
+      "stage": "registry",
+      "path": "data/registry/quirks.csv",
+      "description": "Quirks log (seeded from 18-quirks-log). Never overwritten; status changes go through review decisions.",
+      "key": "quirk_id",
+      "columns": [
+        "quirk_id",
+        "layer_id",
+        "field",
+        "quirk_type",
+        "count",
+        "example_id",
+        "impact",
+        "handling",
+        "status",
+        "evidence_ref",
+        "found_date",
+        "run_id",
+        "linear_id"
+      ],
+      "editable": [
+        "quirk_type",
+        "impact",
+        "handling",
+        "status"
+      ],
+      "required": [
+        "quirk_id",
+        "layer_id",
+        "quirk_type",
+        "status",
+        "linear_id"
+      ],
+      "patterns": {
+        "quirk_id": "^Q-[a-z0-9]+(?:-[a-z0-9]+)*-\\d{2}$",
+        "linear_id": "^NIA-\\d+$"
+      },
+      "enums": {
+        "quirk_type": "quirk_type",
+        "status": "quirk_status"
+      },
+      "dates": [
+        "found_date"
+      ],
+      "urls": [],
+      "ints": [
+        "count"
+      ],
+      "fk": {
+        "layer_id": "layers.layer_id"
+      }
+    },
+    "join_tests": {
+      "stage": "registry",
+      "path": "data/registry/join_tests.csv",
+      "description": "Layer x spine key x method with numeric hits/tested. grade scale is NIA-86 (undefined in repo; free token until defined).",
+      "key": "join_id",
+      "columns": [
+        "join_id",
+        "layer_id",
+        "spine_key",
+        "method",
+        "population",
+        "hits",
+        "tested",
+        "grade",
+        "failure_id_samples",
+        "test_date",
+        "evidence_ref",
+        "run_id",
+        "linear_id",
+        "notes"
+      ],
+      "editable": [
+        "method",
+        "population",
+        "grade",
+        "notes"
+      ],
+      "required": [
+        "join_id",
+        "layer_id",
+        "spine_key",
+        "method",
+        "hits",
+        "tested",
+        "linear_id"
+      ],
+      "patterns": {
+        "join_id": "^JT-[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "linear_id": "^NIA-\\d+$"
+      },
+      "enums": {
+        "method": "join_method",
+        "population": "population"
+      },
+      "dates": [
+        "test_date"
+      ],
+      "urls": [],
+      "ints": [
+        "hits",
+        "tested"
+      ],
+      "fk": {
+        "layer_id": "layers.layer_id"
+      }
+    },
+    "use_decisions": {
+      "stage": "registry",
+      "path": "data/registry/use_decisions.csv",
+      "description": "Latest use decision per layer: use | not_used | needs_more, plus licence status. A score never implies use.",
+      "key": "layer_id",
+      "columns": [
+        "layer_id",
+        "use_decision",
+        "licence_status",
+        "risks",
+        "decided_by",
+        "decided_date",
+        "evidence_ref",
+        "linear_id",
+        "notes"
+      ],
+      "editable": [
+        "use_decision",
+        "licence_status",
+        "risks",
+        "notes"
+      ],
+      "required": [
+        "layer_id",
+        "use_decision",
+        "linear_id"
+      ],
+      "patterns": {
+        "linear_id": "^NIA-\\d+$"
+      },
+      "enums": {
+        "use_decision": "use_decision",
+        "licence_status": "licence_status"
+      },
+      "dates": [
+        "decided_date"
+      ],
+      "urls": [],
+      "ints": [],
+      "fk": {
+        "layer_id": "layers.layer_id"
+      }
+    },
+    "scores": {
+      "stage": "registry",
+      "path": "data/registry/scores.csv",
+      "description": "One row per layer x formula_version with all components visible. Triage aid only; never approval, never shown on a map. Formula v1.0 weights are a proposal.",
+      "key": "score_id",
+      "columns": [
+        "score_id",
+        "layer_id",
+        "formula_version",
+        "c_joinability",
+        "c_coverage",
+        "c_grain",
+        "c_freshness",
+        "c_openness",
+        "c_quality",
+        "c_uniqueness",
+        "c_effort",
+        "total",
+        "computed_at",
+        "basis",
+        "override_reason",
+        "linear_id"
+      ],
+      "editable": [
+        "c_coverage",
+        "c_openness",
+        "override_reason"
+      ],
+      "required": [
+        "score_id",
+        "layer_id",
+        "formula_version",
+        "linear_id"
+      ],
+      "patterns": {
+        "score_id": "^SCR-[a-z0-9]+(?:-[a-z0-9]+)*-v\\d+(?:\\.\\d+)?$",
+        "linear_id": "^NIA-\\d+$"
+      },
+      "enums": {},
+      "dates": [
+        "computed_at"
+      ],
+      "urls": [],
+      "ints": [],
+      "fk": {
+        "layer_id": "layers.layer_id"
+      }
+    },
+    "claims": {
+      "stage": "registry",
+      "path": "data/registry/claims.csv",
+      "description": "Field-level evidence: fact, value summary (never owner values), URL, access date, live_read | documented_not_reread, locator.",
+      "key": "claim_id",
+      "columns": [
+        "claim_id",
+        "layer_id",
+        "fact",
+        "value_summary",
+        "source_url",
+        "access_date",
+        "evidence_label",
+        "locator",
+        "run_id",
+        "linear_id",
+        "notes"
+      ],
+      "editable": [
+        "evidence_label",
+        "notes"
+      ],
+      "required": [
+        "claim_id",
+        "layer_id",
+        "fact",
+        "source_url",
+        "access_date",
+        "evidence_label",
+        "linear_id"
+      ],
+      "patterns": {
+        "claim_id": "^CLM-[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "linear_id": "^NIA-\\d+$"
+      },
+      "enums": {
+        "evidence_label": "evidence_label"
+      },
+      "dates": [
+        "access_date"
+      ],
+      "urls": [
+        "source_url"
+      ],
+      "ints": [],
+      "fk": {
+        "layer_id": "layers.layer_id"
+      }
+    },
+    "deny_list": {
+      "stage": "registry",
+      "path": "data/registry/deny_list.csv",
+      "description": "Extra deny rules (regex on publisher / endpoint / layer name). Baseline MPAC and NPCA rules are built in (controlled-values.json hard_deny). Changed by PR, not by review decisions.",
+      "key": "deny_id",
+      "columns": [
+        "deny_id",
+        "match_type",
+        "pattern",
+        "reason",
+        "forced_use_decision",
+        "forced_lifecycle",
+        "linear_id",
+        "notes"
+      ],
+      "editable": [],
+      "required": [
+        "deny_id",
+        "match_type",
+        "pattern",
+        "reason",
+        "linear_id"
+      ],
+      "patterns": {
+        "deny_id": "^DENY-[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "linear_id": "^NIA-\\d+$"
+      },
+      "enums": {
+        "match_type": "deny_match_type",
+        "forced_use_decision": "use_decision",
+        "forced_lifecycle": "lifecycle_status"
+      },
+      "dates": [],
+      "urls": [],
+      "ints": [],
+      "fk": {}
+    },
+    "gates": {
+      "stage": "registry",
+      "path": "data/registry/gates.csv",
+      "description": "Gate flags G1..G6. A missing row means closed. G6 closed => nothing may be surfaced. Changed by PR by Morgen, not by review decisions.",
+      "key": "gate_id",
+      "columns": [
+        "gate_id",
+        "name",
+        "state",
+        "changed_date",
+        "changed_by",
+        "linear_id",
+        "notes"
+      ],
+      "editable": [],
+      "required": [
+        "gate_id",
+        "state",
+        "linear_id"
+      ],
+      "patterns": {
+        "gate_id": "^G\\d+$",
+        "linear_id": "^NIA-\\d+$"
+      },
+      "enums": {
+        "state": "gate_state"
+      },
+      "dates": [
+        "changed_date"
+      ],
+      "urls": [],
+      "ints": [],
+      "fk": {}
+    },
+    "candidates": {
+      "stage": "inbox",
+      "path": "data/inbox/candidates.csv",
+      "description": "Staging: discovered services/layers not yet in the registry. Agent-written; human fields (status) start as new.",
+      "key": "cand_id",
+      "columns": [
+        "cand_id",
+        "endpoint",
+        "publisher",
+        "jurisdiction",
+        "family",
+        "layer_name_hint",
+        "source_url",
+        "access_date",
+        "discovered_via",
+        "run_id",
+        "status",
+        "linear_id",
+        "notes"
+      ],
+      "editable": [
+        "status",
+        "notes"
+      ],
+      "required": [
+        "cand_id",
+        "endpoint",
+        "status",
+        "linear_id"
+      ],
+      "patterns": {
+        "cand_id": "^CAND-[0-9a-f]{8}$",
+        "linear_id": "^NIA-\\d+$"
+      },
+      "enums": {
+        "status": "candidate_status"
+      },
+      "dates": [
+        "access_date"
+      ],
+      "urls": [
+        "endpoint",
+        "source_url"
+      ],
+      "ints": [],
+      "fk": {}
+    },
+    "scan_runs": {
+      "stage": "runs",
+      "path": "data/runs/scan_runs.csv",
+      "description": "One row per scan/pull/profile run. A zero-result run is valid.",
+      "key": "run_id",
+      "columns": [
+        "run_id",
+        "kind",
+        "trigger",
+        "jurisdiction",
+        "started_at",
+        "ended_at",
+        "agent",
+        "workflow_version",
+        "prompt_path",
+        "commit_or_pr",
+        "services_probed",
+        "candidates_added",
+        "errors",
+        "status",
+        "linear_id",
+        "notes"
+      ],
+      "editable": [],
+      "required": [
+        "run_id",
+        "kind",
+        "linear_id"
+      ],
+      "patterns": {
+        "run_id": "^RUN-[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "linear_id": "^NIA-\\d+$"
+      },
+      "enums": {
+        "trigger": "trigger_type",
+        "status": "run_status"
+      },
+      "dates": [],
+      "urls": [],
+      "ints": [
+        "services_probed",
+        "candidates_added"
+      ],
+      "fk": {}
+    },
+    "review_decisions": {
+      "stage": "reviewed",
+      "path": "data/reviewed/review_decisions.csv",
+      "description": "APPEND-ONLY, field-level. Latest row per (table, record_id, field) wins. The only file humans (via the review UI) write.",
+      "key": "decision_id",
+      "columns": [
+        "decision_id",
+        "record_id",
+        "table",
+        "field",
+        "old_value",
+        "new_value",
+        "decision_code",
+        "note",
+        "reviewer",
+        "timestamp",
+        "linear_id"
+      ],
+      "editable": [],
+      "required": [
+        "decision_id",
+        "record_id",
+        "table",
+        "field",
+        "decision_code",
+        "reviewer",
+        "timestamp",
+        "linear_id"
+      ],
+      "patterns": {
+        "decision_id": "^DEC-[0-9A-HJKMNP-TV-Z]{26}$",
+        "linear_id": "^NIA-\\d+$",
+        "timestamp": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+      },
+      "enums": {},
+      "dates": [],
+      "urls": [],
+      "ints": [],
+      "fk": {}
+    }
+  }
+}

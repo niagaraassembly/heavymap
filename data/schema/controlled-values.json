@@ -1,0 +1,242 @@
+{
+  "schema_version": "1.0",
+  "workflow_version": "1.0",
+  "scoring_version": "1.0",
+  "decision_codes": {
+    "A": "Confirm",
+    "E": "Edit / correct",
+    "R": "Reject",
+    "D": "Retain with doubt",
+    "F": "Follow-up research",
+    "H": "Hold",
+    "X": "Conflicting evidence",
+    "N": "Not applicable"
+  },
+  "value_applying_codes": [
+    "A",
+    "E",
+    "R"
+  ],
+  "lifecycle_status": [
+    "catalogued",
+    "pulled",
+    "profiled",
+    "formatting_needed",
+    "format_resolved",
+    "spined",
+    "dormant",
+    "surfaced",
+    "blocked",
+    "not_used"
+  ],
+  "promotion_statuses": [
+    "dormant",
+    "surfaced"
+  ],
+  "promotion_reviewers": [
+    "morgen"
+  ],
+  "agent_reviewer_prefixes": [
+    "agent",
+    "bot",
+    "grok",
+    "codex",
+    "claude",
+    "cursor",
+    "copilot",
+    "kiro",
+    "gpt",
+    "llm"
+  ],
+  "use_decision": [
+    "use",
+    "not_used",
+    "needs_more"
+  ],
+  "licence_status": [
+    "found",
+    "not_found",
+    "restricted",
+    "not_licensed",
+    "unknown"
+  ],
+  "access_method": [
+    "arcgis_rest",
+    "dcat",
+    "ckan",
+    "bulk_file",
+    "api",
+    "other"
+  ],
+  "auth_required": [
+    "yes",
+    "no",
+    "unknown"
+  ],
+  "profile_status": [
+    "draft",
+    "profiled",
+    "verified"
+  ],
+  "grain": [
+    "parcel",
+    "footprint",
+    "address_point",
+    "zone_polygon",
+    "register_unit",
+    "jurisdiction_aggregate",
+    "other"
+  ],
+  "yes_no": [
+    "yes",
+    "no"
+  ],
+  "field_role": [
+    "id",
+    "geometry",
+    "date",
+    "attribute",
+    "owner",
+    "free_text",
+    "other"
+  ],
+  "id_kind": [
+    "sbl20",
+    "swis_sbl_id",
+    "swis6",
+    "print_key",
+    "objectid",
+    "other"
+  ],
+  "rule_status": [
+    "proposed",
+    "confirmed",
+    "rejected"
+  ],
+  "quirk_type": [
+    "float_stored_id",
+    "padding",
+    "truncation",
+    "null_sentinel",
+    "duplicate_id",
+    "encoding",
+    "crs_mismatch",
+    "date_format",
+    "free_text_risk",
+    "owner_bearing",
+    "auth_gated",
+    "count_drift",
+    "other"
+  ],
+  "quirk_status": [
+    "open",
+    "blocking",
+    "accepted",
+    "resolved",
+    "wontfix",
+    "rejected"
+  ],
+  "join_method": [
+    "identifier",
+    "normalized_address",
+    "point_in_polygon",
+    "containment",
+    "proximity",
+    "overlap"
+  ],
+  "population": [
+    "sample",
+    "full"
+  ],
+  "join_grades": {
+    "scale_defined": false,
+    "values": [],
+    "note": "NIA-86 join-grade scale is not defined in the repo. Until it is, grade is a free token matching ^[A-Za-z0-9_-]{1,16}$ and the validator warns."
+  },
+  "evidence_label": [
+    "live_read",
+    "documented_not_reread"
+  ],
+  "deny_match_type": [
+    "publisher",
+    "endpoint",
+    "layer_name"
+  ],
+  "gate_state": [
+    "open",
+    "closed"
+  ],
+  "candidate_status": [
+    "new",
+    "accepted",
+    "rejected",
+    "duplicate",
+    "blocked"
+  ],
+  "trigger_type": [
+    "scheduled",
+    "manual",
+    "followup"
+  ],
+  "run_status": [
+    "ok",
+    "partial",
+    "failed",
+    "empty"
+  ],
+  "hard_deny": [
+    {
+      "deny_id": "MPAC",
+      "match_type": "any",
+      "pattern": "\\bMPAC\\b",
+      "reason": "MPAC not_licensed",
+      "forced_use_decision": "not_used",
+      "forced_lifecycle": "not_used"
+    },
+    {
+      "deny_id": "NPCA",
+      "match_type": "any",
+      "pattern": "\\bNPCA\\b|d0ZCwU7eGKVeNiEE",
+      "reason": "NPCA-derived: noted, not ingested",
+      "forced_use_decision": "not_used",
+      "forced_lifecycle": "not_used"
+    }
+  ],
+  "owner_field_name_patterns": [
+    "^owner",
+    "ownernme",
+    "primary_?owner",
+    "^pstladdress$",
+    "^own_?(name|addr)",
+    "^mail(ing)?_?addr"
+  ],
+  "size_cap_bytes": 2000000,
+  "size_cap_exempt_prefixes": [
+    "docs/",
+    "misc/"
+  ],
+  "score_formula": {
+    "version": "1.0",
+    "status": "proposal",
+    "max_component": 3,
+    "weights": {
+      "c_joinability": 25,
+      "c_coverage": 15,
+      "c_grain": 10,
+      "c_freshness": 10,
+      "c_openness": 15,
+      "c_quality": 10,
+      "c_uniqueness": 10,
+      "c_effort": 5
+    },
+    "blank_total_if_blank_weight_at_least": 15,
+    "judgement_components": [
+      "c_coverage",
+      "c_openness"
+    ]
+  },
+  "owner_column_allowlist": [
+    "owner_flag",
+    "pii_owner_fields_names_only"
+  ]
+}
