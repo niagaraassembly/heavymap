@@ -1,4 +1,6 @@
-# AGENTS.md
+# Pickup contract (formerly the root AGENTS.md)
+
+> **Moved.** This is the unchanged pickup contract from `AGENTS.md` (NIA-13, NIA-74 Codex lane); only paths and links were updated for the fresh layout. The root `AGENTS.md` is now a short entry point that points into `docs/for-agents/`. Where this file says "this repository" it means `niagaraassembly/heavymap`.
 
 Pickup contract for agents working on HeavyMap. Read this before opening an issue or a pull request. Spreadsheet hygiene is in [AGENTS-MCS.md](AGENTS-MCS.md).
 
@@ -8,18 +10,18 @@ Pickup contract for agents working on HeavyMap. Read this before opening an issu
 **Control plane:** Linear project Industrial Atlas (priority, status, Agent packets).
 **Code source of truth:** this repository, `niagaraassembly/heavymap`.
 
-Beta is the repository top level. `niagara-atlas/` is prior-art reference only.
+Beta is the repository top level. `misc/niagara-atlas/` (was `niagara-atlas/`) is prior-art reference only.
 
 ## Four-concept frame
 
-The product frame lives under [docs/architecture/](docs/architecture/README.md) (Linear **NIA-11**):
+The product frame lives under [docs/architecture/](../architecture/README.md) (Linear **NIA-11**):
 
 | Concept | Document |
 |---|---|
-| Parcel Identity Spine | [parcel-identity-spine.md](docs/architecture/parcel-identity-spine.md) |
-| Context Band Ladder | [context-band-ladder.md](docs/architecture/context-band-ladder.md) |
-| Parcel Context Display Protocol (PCDP) | [PCDP.md](docs/architecture/PCDP.md) |
-| Claim & Refusal Contract | [claim-refusal-contract.md](docs/architecture/claim-refusal-contract.md) |
+| Parcel Identity Spine | [parcel-identity-spine.md](../architecture/parcel-identity-spine.md) |
+| Context Band Ladder | [context-band-ladder.md](../architecture/context-band-ladder.md) |
+| Parcel Context Display Protocol (PCDP) | [PCDP.md](../architecture/PCDP.md) |
+| Claim & Refusal Contract | [claim-refusal-contract.md](../architecture/claim-refusal-contract.md) |
 
 Under that frame, the Master Control Spreadsheet records which datasets exist, and D-5 names a dataset’s disposition: `ship`, `simplify`, `derive`, `tile`, or `link`. Neither is a fifth product name. The spreadsheet itself is outside this repo; see [AGENTS-MCS.md](AGENTS-MCS.md).
 
@@ -56,7 +58,7 @@ Framework labels (`fw:pcdp`, `fw:spine`, `fw:bands`, `fw:claims`) and work-kind 
 
 ## Prior art
 
-Cite `niagara-atlas/` and the UK atlas (`babbworks/atlas`) as baselines. The product root is the top level of this repository. UK geography is outside product scope. A UK capability pattern belongs in the MCS column `uk_analogue`, as described in [AGENTS-MCS.md](AGENTS-MCS.md).
+Cite `misc/niagara-atlas/` and the UK atlas (`babbworks/atlas`) as baselines. The product root is the top level of this repository. UK geography is outside product scope. A UK capability pattern belongs in the MCS column `uk_analogue`, as described in [AGENTS-MCS.md](AGENTS-MCS.md).
 
 ## Publish and chrome
 
