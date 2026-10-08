@@ -1,0 +1,26 @@
+# CODEOWNERS
+#
+# Requires GitHub branch protection ("Require review from Code Owners") to
+# actually enforce these as required reviewers — this file alone is advisory.
+#
+# TODO(Morgen): replace the placeholder handles below with real GitHub
+# usernames or a team (e.g. @niagaraassembly/core) before enabling branch
+# protection. Placeholder entries will not match anyone and silently fail
+# to assign a reviewer.
+
+# Default owners for anything not matched below.
+*                                   @REPLACE_WITH_MORGEN_GITHUB_HANDLE
+
+# The product's constitution: the four-concept frame, ADRs, and vocab.
+# Changes here redefine the product contract, not just an implementation.
+/docs/architecture/                @REPLACE_WITH_MORGEN_GITHUB_HANDLE @REPLACE_WITH_CHIEF_OF_STAFF_GITHUB_HANDLE
+
+# Agent pickup contract and MCS hygiene rules. Changing these changes how
+# every agent lane and every dataset PR is expected to behave.
+/AGENTS.md                         @REPLACE_WITH_MORGEN_GITHUB_HANDLE
+/AGENTS-MCS.md                     @REPLACE_WITH_MORGEN_GITHUB_HANDLE
+
+# Governance/process files.
+/CONTRIBUTING.md                   @REPLACE_WITH_MORGEN_GITHUB_HANDLE
+/CODEOWNERS                        @REPLACE_WITH_MORGEN_GITHUB_HANDLE
+/LICENSE                           @REPLACE_WITH_MORGEN_GITHUB_HANDLE

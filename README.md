@@ -1,6 +1,6 @@
 # HeavyMap
 
-Beta for this repository is the **top level**. The `niagara-atlas/` tree is prior-art reference only. It is not the product root.
+Beta for this repository is the **top level**. Prior-art work (the original `niagara-atlas/` prototype, now under [`first-attempts/niagara-atlas/`](first-attempts/niagara-atlas/)) is reference only. It is not the product root.
 
 How a parcel is known and shown is specified in [docs/architecture/](docs/architecture/README.md):
 
