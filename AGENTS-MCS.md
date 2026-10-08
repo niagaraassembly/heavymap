@@ -5,7 +5,7 @@ How agents treat the Master Control Spreadsheet (MCS). This file is the in-repo 
 **Status:** guide only. Linear **NIA-13**. This document changes no MCS cells and names no `dataset_id`.
 
 **Audience:** Cursor Cloud Agents, Claude, GitHub Copilot, Kiro, Codex, and humans driving Linear packets.
-**Canonical copy:** Morgen’s local `~/na/` (`.xlsx` and/or `.csv`). The filename is Morgen’s; a current working name is the dataset-inventory workbook `02-dataset-inventory-v4.xlsx` (or the matching `.csv`). That path is on Morgen’s machine. It is not a path under `docs/`, `niagara-atlas/`, or anywhere else in `heavymap`.
+**Canonical copy:** Morgen’s local `~/na/` (`.xlsx` and/or `.csv`). The filename is Morgen’s; a current working name is the dataset-inventory workbook `02-dataset-inventory-v4.xlsx` (or the matching `.csv`). That path is on Morgen’s machine. It is not a path under `docs/`, `first-attempts/niagara-atlas/`, or anywhere else in `heavymap`.
 
 A Cloud Agent that cannot see `~/na/` leaves the workbook untouched. Comment on the issue and stop, unless the packet attached the rows to read. Do not reconstruct the sheet from memory, and do not add an xlsx or csv to this repo.
 

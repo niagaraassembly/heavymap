@@ -1,8 +1,8 @@
-"""Conservative New York parcel identifier helpers for NIA-79.
+"""Evidence-based New York parcel identifier helpers for NIA-79.
 
 Inputs must be text. ``IdentifierRefusal.code`` is a stable, machine-readable
 stamp; no helper repairs numbers that may have lost leading or trailing digits.
-See docs/normalization/ny-sbl.md for the inferred print-key layout and limits.
+See docs/normalization/ny-sbl-real-data-evidence.md for coverage and limits.
 """
 
 from dataclasses import dataclass
@@ -17,7 +17,7 @@ class IdentifierRefusal(ValueError):
         super().__init__(code)
 
 
-def _digits(value: object, length: int, *, swis: bool = False) -> str:
+def _text(value: object, length: int, *, swis: bool = False) -> str:
     if isinstance(value, float):
         raise IdentifierRefusal("float_stored_input")
     if isinstance(value, str):
@@ -27,7 +27,9 @@ def _digits(value: object, length: int, *, swis: bool = False) -> str:
             raise IdentifierRefusal("swis_name_not_code")
         if len(value) != length:
             raise IdentifierRefusal("wrong_length")
-        if not value.isascii() or not value.isdecimal():
+        if not value.isascii() or not value.isalnum():
+            raise IdentifierRefusal("invalid_character")
+        if swis and not value.isdecimal():
             raise IdentifierRefusal("non_digit")
         return value
     if isinstance(value, (int, bool)):
@@ -36,15 +38,21 @@ def _digits(value: object, length: int, *, swis: bool = False) -> str:
 
 
 def validate_sbl20(value: object) -> str:
-    """Return an unchanged 20-digit text SBL, or refuse it."""
+    """Return an unchanged 20-character SBL, or refuse it.
 
-    return _digits(value, 20)
+    The numeric section/block/lot and alphanumeric sublot/suffix are observed.
+    """
+
+    identifier = _text(value, 20)
+    if not identifier[:13].isdecimal():
+        raise IdentifierRefusal("unsupported_sbl_shape")
+    return identifier
 
 
 def validate_swis6(value: object) -> str:
     """Return a six-digit code; municipality names are explicitly refused."""
 
-    return _digits(value, 6, swis=True)
+    return _text(value, 6, swis=True)
 
 
 def compose_swis_sbl(swis6: object, sbl20: object) -> str:
@@ -56,32 +64,69 @@ def compose_swis_sbl(swis6: object, sbl20: object) -> str:
 def validate_swis_sbl_id(value: object) -> str:
     """Validate a precomposed 26-character code without changing it."""
 
-    identifier = _digits(value, 26)
+    identifier = _text(value, 26)
     validate_swis6(identifier[:6])
     validate_sbl20(identifier[6:])
     return identifier
 
 
-def render_print_key(sbl20: object, style: Literal["padded", "unpadded"]) -> str:
-    """Render the limited, inferred 6/4/6/4 SBL shape in a layer's style.
+def render_print_key(
+    sbl20: object,
+    style: Literal["padded", "unpadded", "erie", "genesee", "chautauqua"],
+    *,
+    swis6: object = None,
+) -> str:
+    """Render observed publisher conventions for a 20-character SBL.
 
-    This is a display operation. It must never be used as a cross-layer join.
-    Nonzero suffixes and fractional lots are refused pending publisher evidence.
+    ``padded`` is Rochester/Monroe; ``erie`` is Erie's statewide form.
+    ``unpadded`` preserves the narrow pilot convention for compatibility.
+    Genesee needs
+    SWIS for nonzero subsection because two municipalities print it differently.
+    Print keys are display attributes, never cross-layer join keys.
     """
 
     sbl = validate_sbl20(sbl20)
-    if style not in ("padded", "unpadded"):
+    if style not in ("padded", "unpadded", "erie", "genesee", "chautauqua"):
         raise IdentifierRefusal("unknown_print_style")
-    section, block, lot, suffix = sbl[:6], sbl[6:10], sbl[10:16], sbl[16:]
-    if suffix != "0000":
-        raise IdentifierRefusal("unsupported_suffix")
-    if lot[3:] != "000":
-        raise IdentifierRefusal("unsupported_fractional_lot")
-    whole = section[:3] if style == "padded" else str(int(section[:3]))
-    fractional = section[3:].rstrip("0")
-    # The statewide example '3.-1-1' retains the dot for an empty fraction.
-    section_text = f"{whole}.{fractional}"
-    return f"{section_text}-{int(block)}-{int(lot[:3])}"
+    section, block, lot, sublot, suffix = sbl[:6], sbl[6:10], sbl[10:13], sbl[13:16], sbl[16:]
+    if not (section.isdecimal() and block.isdecimal() and lot.isdecimal()):
+        raise IdentifierRefusal("unsupported_print_components")
+    if swis6 is not None:
+        swis6 = validate_swis6(swis6)
+    whole = section[:3] if style in ("padded", "chautauqua") else str(int(section[:3]))
+    raw_fraction = section[3:]
+    if style == "genesee":
+        if raw_fraction == "000":
+            fractional = ""
+        elif swis6 == "180200":
+            fractional = raw_fraction
+        elif swis6 in ("182400", "184289"):
+            fractional = str(int(raw_fraction)).zfill(2)
+        else:
+            raise IdentifierRefusal("unknown_section_rendering")
+    elif style == "chautauqua":
+        fractional = str(int(raw_fraction)).zfill(2)
+    elif style == "unpadded" and raw_fraction == "000":
+        fractional = ""
+    else:
+        fractional = raw_fraction[:2] if raw_fraction[2] == "0" else raw_fraction
+    block_text = block if style == "padded" and block == "0000" else str(int(block))
+    lot_text = lot if style == "padded" and block == "0000" and lot == "000" else str(int(lot))
+    if sublot == "000":
+        sublot_text = ""
+    elif style == "padded":
+        sublot_text = sublot.rstrip("0")
+    elif style == "chautauqua":
+        sublot_text = sublot.lstrip("0") or "0"
+    else:
+        sublot_text = sublot.lstrip("0").rstrip("0") or "0"
+    suffix_text = suffix.lstrip("0") if suffix != "0000" else ""
+    rendered = f"{whole}.{fractional}-{block_text}-{lot_text}"
+    if sublot_text or suffix_text:
+        rendered += "." + sublot_text
+    if suffix_text:
+        rendered += ("." if style == "chautauqua" else "/") + suffix_text
+    return rendered
 
 
 @dataclass(frozen=True)

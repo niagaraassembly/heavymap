@@ -8,7 +8,7 @@ Pickup contract for agents working on HeavyMap. Read this before opening an issu
 **Control plane:** Linear project Industrial Atlas (priority, status, Agent packets).
 **Code source of truth:** this repository, `niagaraassembly/heavymap`.
 
-Beta is the repository top level. `niagara-atlas/` is prior-art reference only.
+Beta is the repository top level. The original `niagara-atlas/` prototype is prior-art reference only; it is archived at [`first-attempts/niagara-atlas/`](first-attempts/niagara-atlas/).
 
 ## Four-concept frame
 
@@ -56,7 +56,7 @@ Framework labels (`fw:pcdp`, `fw:spine`, `fw:bands`, `fw:claims`) and work-kind 
 
 ## Prior art
 
-Cite `niagara-atlas/` and the UK atlas (`babbworks/atlas`) as baselines. The product root is the top level of this repository. UK geography is outside product scope. A UK capability pattern belongs in the MCS column `uk_analogue`, as described in [AGENTS-MCS.md](AGENTS-MCS.md).
+Cite `first-attempts/niagara-atlas/` and the UK atlas (`babbworks/atlas`) as baselines. The product root is the top level of this repository. UK geography is outside product scope. A UK capability pattern belongs in the MCS column `uk_analogue`, as described in [AGENTS-MCS.md](AGENTS-MCS.md).
 
 ## Publish and chrome
 

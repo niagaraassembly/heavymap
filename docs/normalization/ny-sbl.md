@@ -1,50 +1,29 @@
 # New York SBL text normaliser (NIA-79)
 
-This small Python 3.11 module is at `heavymap/ny_identifiers.py`. It uses only the standard library and never fetches data. Examples in tests are synthetic identifier strings shaped after the NIA-79 pilot findings; there are no owner fields or live rows.
+`heavymap/ny_identifiers.py` is a standard-library helper for comparing NY parcel identifiers as text and rendering observed print-key conventions. Its [source notes](ny-sbl-sources.md) cite ORPTS and NYS GIS definitions; [real-data evidence](ny-sbl-real-data-evidence.md) states the measured coverage and residual disagreements. The module makes no network requests.
 
-```python
-from heavymap.ny_identifiers import (
-    IdentifierRefusal, compose_swis_sbl, inspect_ids,
-    render_print_key, validate_sbl20, validate_swis6,
-    validate_swis_sbl_id,
-)
+The ORPTS PTF layout gives `section[3] + subsection[3] + block[4] + lot[3] + sublot[3] + suffix[4]` (20 characters). `validate_sbl20` accepts a 20-character ASCII alphanumeric string with numeric first 13 characters. Real sublots and suffixes contain letters, so digit-only validation was wrong. Leading zeros and case are preserved. Shorter SBLs occur in the public layers, but this strict **SBL20** validator does not pad them or claim they form a 20-character join key. A float, integer, boolean, null, punctuation-bearing value, or unsupported width is refused with a code.
 
-sbl = validate_sbl20("04762000010220000000")
-join_id = compose_swis_sbl("261400", sbl)  # 26140004762000010220000000
-print_key = render_print_key(sbl, "padded")  # 047.62-1-22
-report = inspect_ids([sbl, sbl], "sbl20")  # duplicate positions (0, 1)
-```
+`validate_swis6` requires six digits. ORPTS defines the pairs as county, city/town, and village; its code list identifies `261400` as City of Rochester and `261500` as its separate County Roll code. `compose_swis_sbl` and `validate_swis_sbl_id` use 6+20 characters. Monroe's `swis` field holds municipality names, so it cannot enter either helper without an explicit name-to-code crosswalk. `countysbl` remains a source attribute; malformed or short values do not become a composite by padding. Print keys are for display, never cross-layer joins.
 
-All accepted identifiers remain text, including leading zeroes. `validate_swis_sbl_id` checks an existing 26-character value. For cross-layer comparison, use **SWIS6 + SBL20** only. There is deliberately no print-key equality or parsing function. The proposed Rochester spine key is `hm:us:ny:rochester:parcel:{SBL20}`; this module does not mint keys or resolve duplicate rows. Native `PARCELID`, `countysbl`, and `PRINTKEY` values remain separate source attributes in any later pipeline.
+## Print-key styles
 
-`inspect_ids(values, kind)` accepts `sbl20` or `swis_sbl_id`. It reports every occurrence of repeated valid IDs using zero-based input positions and separately reports invalid rows with refusal codes. It does not pick or fold a winner; that policy belongs to NIA-80. A repeated SBL20 across two SWIS codes is not a duplicate composite ID.
+`render_print_key(sbl20, style, *, swis6=None)` renders observed common forms. It does not replace the publisher's own print key when available.
 
-## Refusal stamps
+| Style | Measured source | Key differences |
+|---|---|---|
+| `padded` | Rochester city and Monroe county | Three-digit section whole; subsection at least two digits; sublot keeps leading zeros and trims trailing zeros; suffix uses `/`. |
+| `erie` | Statewide Erie | Unpadded section whole, at least two subsection digits including `00`; sublot trims leading/trailing zeros; suffix uses `/`. |
+| `genesee` | Statewide Genesee | Unpadded section whole, empty subsection after the dot for `000`; nonzero subsection needs `swis6`: `180200` keeps all three digits, while `182400` and `184289` display two-digit numeric form. Without a supported SWIS, refusal is `unknown_section_rendering`. |
+| `chautauqua` | Statewide Chautauqua | Three-digit section whole, two-digit numeric subsection, numeric sublot without left padding, dot before suffix. |
+| `unpadded` | Compatibility with the two pilot examples | An unpadded whole and empty fraction for `000`. It is not a general statewide style; use the named county style for measured parity. |
 
-Functions raise `IdentifierRefusal`, whose `code` is machine-readable. `inspect_ids` returns the same codes in `BatchReport.rejected`. These are **NIA-79 input-validation codes**, newly defined here. They are distinct from the architecture's claim refusals (`not_joined`, `not_in_coverage`, `not_licensed`), which describe the status of a source or join.
+Examples from ID-only pulls: `04628000010050040000` → `046.28-1-5.004` (`padded`); `04761000010030020101` → `047.61-1-3.002/101`; `0612900003017000HOME` → `061.29-3-17./HOME`; `00300000010010000000` → `3.-1-1` (`genesee`); `13100000030020010000` → `131.00-3-2.1` (`chautauqua`). Publisher exceptions and blank print keys still exist and are counted in the evidence document.
 
-| Code | Meaning |
-|---|---|
-| `float_stored_input` | Python float, including a damaged legacy SBL/SBL20 value; never cast or zero-pad |
-| `bare_number_type` | Integer or boolean supplied where text is required |
-| `empty_input` | Empty string |
-| `wrong_length` | Text length is not 20 for SBL, 6 for SWIS, or 26 for the composite |
-| `non_digit` | Text contains anything other than ASCII digits |
-| `unsupported_type` | Other type, including null |
-| `swis_name_not_code` | Municipality name supplied to the SWIS6 code validator |
-| `unknown_print_style` | Style is not `padded` or `unpadded` |
-| `unsupported_suffix` | Nonzero final four SBL characters; rendering is not established |
-| `unsupported_fractional_lot` | Nonzero final three characters of the six-character lot; rendering is not established |
-| `unknown_identifier_kind` | Batch kind is not `sbl20` or `swis_sbl_id` |
+## Refusal stamps and duplicate reporting
 
-A scientific-notation **string** is also refused (length or non-digit), never parsed. The 1996/2012 floating-point assessment fields cannot be repaired by padding; retain a refusal rather than inventing a join.
+`IdentifierRefusal.code` is an input or rendering stamp, separate from architecture claim refusals such as `not_joined`. Current codes are `float_stored_input`, `bare_number_type`, `unsupported_type`, `empty_input`, `wrong_length`, `invalid_character`, `unsupported_sbl_shape`, `non_digit` (SWIS only), `swis_name_not_code`, `unknown_print_style`, `unsupported_print_components`, `unknown_section_rendering`, and `unknown_identifier_kind`. A scientific-notation string is refused, never parsed. The 1996/2012 float-stored Rochester assessment fields cannot be repaired by padding.
 
-## Print-key inference and limits
+`inspect_ids(values, kind)` reports every occurrence of repeated valid IDs with zero-based input positions and separately reports rejected rows with the refusal code. It never folds rows or chooses a polygon. Under NIA-80, a repeated City `PARCELID` mints **one** key; its outline remains `not_joined` until geometry is resolved. No part suffix is minted. The 2024 city layer has one four-row duplicate group; full Monroe has 20 duplicate `countysbl` groups, including 40 empty values. The empty values are rejected before duplicate reporting, so `inspect_ids` reports 19 valid county groups on that population.
 
-The pilot examples support a provisional 20-character split of `section[6] + block[4] + lot[6] + suffix[4]`. The section appears to split `whole[3] + fraction[3]`; trailing fractional zeroes are removed. The block is rendered as an integer. For the supported lot shape, its first three digits render as an integer and the final three are zero. A zero suffix is omitted. This reproduces `04762000010220000000` → `047.62-1-22` in the city/county padded style and `04718000010330000000` → `47.18-1-33` in the statewide unpadded style. With a synthetic `00300000010010000000`, the unpadded renderer produces the observed shape `3.-1-1`; the exact source SBL for the observed Genesee key was not supplied, so that case does not verify the split.
-
-The padded style keeps the three-digit section whole; unpadded drops its leading zeroes. Both styles keep the section dot even when its fraction is empty. The renderers are display helpers, not authoritative publisher formatters. Nonzero suffixes and fractional lots are refused because the provided examples do not establish their punctuation or padding. Other section/block edge cases and the interpretation of each subfield need publisher confirmation before a general formatter is claimed.
-
-Monroe's `swis` attribute contains municipality **names**, such as `City of Rochester`, while statewide `SWIS` is a six-digit code. Names cannot enter `compose_swis_sbl`; a name-to-code crosswalk belongs to NIA-81. The Monroe `countysbl` prefix `261400` matches the Rochester pilot values, but its interpretation as an official SWIS code is **inferred from values, not confirmed by a Monroe code table**. Keep that caveat with any later use of the prefix. The supplied pilot counts and match rates are observations from Morgen's 2026-09-30 study, not a verification performed by this module.
-
-Run the tests with `python3 -m unittest discover -s tests -v`. No MCS cells or `dataset_id` values were changed. The `niagara-atlas/` and UK atlas (`babbworks/atlas`) are prior-art baselines only; this implementation adds no geography or dataset to either.
+Run `python3 -m unittest discover -s tests -v </dev/null`. No MCS cells were changed. `niagara-atlas/` and `babbworks/atlas` are prior-art baselines only.
