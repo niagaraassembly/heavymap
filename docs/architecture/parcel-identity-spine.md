@@ -66,13 +66,13 @@ One physical site may be knowable at more than one grain. v1 does not require th
 
 ## Canada — join and key problems
 
-These are conceptual. Counts and field names below are prior-art observations in `niagara-atlas/`, not a claim that Beta has loaded the layers.
+These are conceptual. Counts and field names below are prior-art observations in `first-attempts/niagara-atlas/`, not a claim that Beta has loaded the layers.
 
 **No single public provincial parcel key.** Ontario’s assessment roll (MPAC) is the usual cross-municipality parcel identifier, and it is fee-based. For v1 that native key is `not_licensed` unless a later decision says otherwise. Assessed value travels with the same refusal. The refusal is about licence, not about whether the land has an assessment.
 
 **Municipal fabrics are uneven inside Niagara-12.** Prior reconnaissance found public parcel polygons for some lower-tier cities (St. Catharines, Niagara Falls) and none for others (Welland’s open data had no parcel fabric; Hamilton’s open catalogue had no parcel layer). Haldimand, Norfolk, Brantford, and Brant are inside geography v1 and are not assumed to match either pattern. Until a layer is joined, those jurisdictions are `not_joined` at parcel grain, not “no industry” and not “no parcels in the world.”
 
-**The Region is both a government and a publisher.** Niagara Region is the upper-tier municipality of twelve lower tiers, and it publishes regional layers such as the Niagara Employment Inventory. A spine key names the lower tier the geometry sits in. “Niagara” alone is not a jurisdiction slug. The glossary rule in `niagara-atlas/GLOSSARY.md` is the pattern: Niagara Region, the peninsula, and the study area are different claims.
+**The Region is both a government and a publisher.** Niagara Region is the upper-tier municipality of twelve lower tiers, and it publishes regional layers such as the Niagara Employment Inventory. A spine key names the lower tier the geometry sits in. “Niagara” alone is not a jurisdiction slug. The glossary rule in `first-attempts/niagara-atlas/GLOSSARY.md` is the pattern: Niagara Region, the peninsula, and the study area are different claims.
 
 **Activity joins are not parcel joins.** Where the NEI is the activity source, the stable native key on that register is `nei_id`. Address text drifts across editions; an identifier join is a stronger method than a normalized address. Hamilton publishes no comparable business inventory. That gap is `not_in_coverage` for the activity band. It does not mean the spine has no Hamilton units, and it does not mean employment is zero.
 
@@ -116,9 +116,9 @@ The Welland footprint and the Erie parcel are both complete spine records. Compl
 
 Patterns, not the product root:
 
-- `niagara-atlas/INTEGRATION.md` — one cross-border subject, separate ingestion, no shared municipal identifier, original attributes kept beside the normalized reading.
-- `niagara-atlas/GLOSSARY.md` — Niagara Region versus the peninsula versus the study area.
-- `niagara-atlas/us/DATA-SOURCES.md` — New York public parcel coverage is county-uneven; Ontario assessment is not the same public object.
-- `niagara-atlas/DOSSIER-TECHNICAL-REPORT.md` — analysis units already existed at parcel, footprint, and address tiers, and a missing fabric was reported rather than dropped.
+- `first-attempts/niagara-atlas/INTEGRATION.md` — one cross-border subject, separate ingestion, no shared municipal identifier, original attributes kept beside the normalized reading.
+- `first-attempts/niagara-atlas/GLOSSARY.md` — Niagara Region versus the peninsula versus the study area.
+- `first-attempts/niagara-atlas/us/DATA-SOURCES.md` — New York public parcel coverage is county-uneven; Ontario assessment is not the same public object.
+- `first-attempts/niagara-atlas/DOSSIER-TECHNICAL-REPORT.md` — analysis units already existed at parcel, footprint, and address tiers, and a missing fabric was reported rather than dropped.
 
 Beta does not inherit that folder’s study-area boundary. Geography v1 is the list in the architecture index, which is wider than the old Hamilton-plus-Niagara-Region study area and includes the named New York counties.

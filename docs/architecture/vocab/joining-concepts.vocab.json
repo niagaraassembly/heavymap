@@ -7,7 +7,7 @@
     "docs/architecture/adr/0002-joining-concepts-and-terminology.md",
     "heavymap-planning/10-joining-concepts-v1.md",
     "heavymap-planning/11-synonym-parallel-ledger-v1.md",
-    "heavymap-planning/11-synonym-parallel-ledger-v1.csv",
+    "Spreadsheets/11-synonym-parallel-ledger-v1.csv",
     "heavymap-planning/12-authority-scale-and-meta-proposals.md"
   ],
   "rule": "ADR 0002 is the prose source of truth for Slice 1 decisions. Planning files 10, 11, and 12 are the inputs. If a locked decision and a planning proposal disagree, the ADR wins. This file encodes those decisions. It does not add bands, stamp fields, reading identifiers, or geographies. Display genres and lot_area_m2 stay in deferred.",
@@ -622,7 +622,7 @@
       }
     ],
     "ledger_provenance": {
-      "source": "heavymap-planning/11-synonym-parallel-ledger-v1.csv",
+      "source": "Spreadsheets/11-synonym-parallel-ledger-v1.csv",
       "observed_on": "2026-09-25",
       "row_count": 118,
       "first_ledger_id": "LG-001",

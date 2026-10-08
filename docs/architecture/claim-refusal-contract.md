@@ -181,7 +181,7 @@ The American activity refusal and the Canadian constraints refusal are the same 
 
 ## Prior art
 
-- `niagara-atlas/DOSSIER-TECHNICAL-REPORT.md` — attributed, dated, bounded, refusable; null is not zero; contested records both stay; “vacant” reserved for a register’s own word. Those rules are the pattern this contract keeps.
-- `niagara-atlas/README.md` — provenance travels with the feature; observation is not inference; a derived score is an indicator.
-- `niagara-atlas/INTEGRATION.md` — uneven coverage across Hamilton, Niagara Region, Erie, and Niagara County NY is a publishing fact. The map’s job is to say so.
+- `first-attempts/niagara-atlas/DOSSIER-TECHNICAL-REPORT.md` — attributed, dated, bounded, refusable; null is not zero; contested records both stay; “vacant” reserved for a register’s own word. Those rules are the pattern this contract keeps.
+- `first-attempts/niagara-atlas/README.md` — provenance travels with the feature; observation is not inference; a derived score is an indicator.
+- `first-attempts/niagara-atlas/INTEGRATION.md` — uneven coverage across Hamilton, Niagara Region, Erie, and Niagara County NY is a publishing fact. The map’s job is to say so.
 - UK atlas (`babbworks/atlas`) — derived indicators live in a scoring step separate from source modules. Beta may copy that separation. It does not copy UK geographies, UK ports, or UK scores.

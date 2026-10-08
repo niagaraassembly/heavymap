@@ -11,7 +11,7 @@ Linear **NIA-10** placed three planning artifacts on `main`. This record encodes
 | Input | Role here |
 |---|---|
 | [heavymap-planning/10-joining-concepts-v1.md](../../../heavymap-planning/10-joining-concepts-v1.md) | Thirty concept IDs, ground rules, and the two decisions Morgen locked on 2026-09-25 |
-| [heavymap-planning/11-synonym-parallel-ledger-v1.md](../../../heavymap-planning/11-synonym-parallel-ledger-v1.md) and [11-synonym-parallel-ledger-v1.csv](../../../heavymap-planning/11-synonym-parallel-ledger-v1.csv) | Relation set, evidence levels, and the ledger the concepts are checked against |
+| [heavymap-planning/11-synonym-parallel-ledger-v1.md](../../../heavymap-planning/11-synonym-parallel-ledger-v1.md) and [11-synonym-parallel-ledger-v1.csv](../../../Spreadsheets/11-synonym-parallel-ledger-v1.csv) | Relation set, evidence levels, and the ledger the concepts are checked against |
 | [heavymap-planning/12-authority-scale-and-meta-proposals.md](../../../heavymap-planning/12-authority-scale-and-meta-proposals.md) | Context for authority scale and for what this slice leaves alone |
 
 The product frame stays the four concepts in [docs/architecture/](../README.md):

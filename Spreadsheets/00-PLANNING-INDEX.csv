@@ -35,3 +35,4 @@ Spreadsheets/16-service-profile.csv,(whole file),"Service profile: one row per p
 Spreadsheets/17-layer-profile.csv,(whole file),"Layer profile: one row per layer with lifecycle_status and spine join (header only, 42 columns)",proposed,Grok Bot,data,2026-10-03,Template. mcs_dataset_id blank until assignment rule is decided.
 Spreadsheets/18-quirks-log.csv,(whole file),"Quirks log: one row per data quirk (header only, 12 columns)",proposed,Grok Bot,data,2026-10-03,Template.
 heavymap-planning/drafts/dataset-routine-SKILL.md,(whole file),"Draft dataset-profiling skill (not registered)",proposed,Grok Bot,draft,2026-10-03,"Mirrors DATASET-ROUTINE.md. Not registered with UpdateState."
+heavymap-planning/OPEN-DECISIONS.md,(whole file),"Open policy and vocabulary decisions carried over from PR #58",proposed,Grok Bot,living,2026-10-08,"Adapted from PR #58 (NIA-112) for the #57 layout. For Morgen."
