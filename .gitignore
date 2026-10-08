@@ -16,3 +16,4 @@ local-data/
 
 # Business document removed from tracking (kept locally only)
 /Spreadsheets/value-and-revenue.ods
+__pycache__/
