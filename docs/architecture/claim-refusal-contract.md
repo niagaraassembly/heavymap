@@ -1,6 +1,6 @@
 # Claim & Refusal Contract
 
-**Status:** architecture sketch, 2026-09-23. Linear **NIA-11**. Docs only.
+**Status:** architecture sketch, 2026-09-23. Linear **NA-11**. Docs only.
 
 ## Purpose
 
@@ -77,7 +77,7 @@ A refusal uses exactly one of:
 | Reason | Use it when |
 |---|---|
 | `not_in_coverage` | The layer, jurisdiction, or vintage is outside what v1 holds, or the responsible publisher does not release that object. Geography outside the v1 list is this reason. A city with no public parcel fabric is this reason for parcel grain. |
-| `not_licensed` | A source exists and HeavyMap is not allowed to use it. Ontario assessment via MPAC is the standing example. |
+| `not_licensed` | A source exists and HeavyMap is not allowed to use it. (MPAC was the standing example until HARD-RULES 4 was amended on 2026-10-17; it is no longer refused on licence while the site is password-protected.) |
 | `not_joined` | A usable source is in hand, or is expected in the joined set, and this key has no accepted join yet. |
 
 One reason only. If a layer is both unlicensed and unjoined, `not_licensed` wins: there is nothing to join. If a layer was never in the v1 set, `not_in_coverage` wins: do not imply a join is the remaining step.

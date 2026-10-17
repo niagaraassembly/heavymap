@@ -2,7 +2,7 @@
 
 How agents treat the Master Control Spreadsheet (MCS). This file is the in-repo guide. The workbook is not in this repository, and it is not checked in.
 
-**Status:** guide only. Linear **NIA-13**. This document changes no MCS cells and names no `dataset_id`.
+**Status:** guide only. Linear **NA-13**. This document changes no MCS cells and names no `dataset_id`.
 
 **Audience:** Cursor Cloud Agents, Claude, GitHub Copilot, Kiro, Codex, and humans driving Linear packets.
 **Canonical copy:** Morgen’s local `~/na/` (`.xlsx` and/or `.csv`). The filename is Morgen’s; a current working name is the dataset-inventory workbook `02-dataset-inventory-v4.xlsx` (or the matching `.csv`). That path is on Morgen’s machine. It is not a path under `docs/`, `first-attempts/niagara-atlas/`, or anywhere else in `heavymap`.
