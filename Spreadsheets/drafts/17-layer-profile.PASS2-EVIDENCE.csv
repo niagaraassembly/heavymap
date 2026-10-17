@@ -1,0 +1,815 @@
+layer_id,column,value,source_file_or_doc,locator
+welland-parcels-public-cache,layer_id,welland-parcels-public-cache,PASS2 convention (slug),file 15 W01
+welland-parcels-public-cache,service_id,welland-arcgisweb-serverprodpub,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 W01 / endpoint
+welland-parcels-public-cache,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"W01 / evidence | live read, no join measured (key-source layer)"
+welland-parcels-public-cache,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / evidence = 'live 2026-09-30'
+welland-parcels-public-cache,evidence_urls,https://arcgisweb.welland.ca/serverprodpub/rest/services/Base/IMS_Parcels_Public_Cache/MapServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+welland-parcels-public-cache,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+welland-parcels-public-cache,layer_name,Parcels public cache,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / dataset
+welland-parcels-public-cache,endpoint,arcgisweb.welland.ca/serverprodpub/rest/services/Base/IMS_Parcels_Public_Cache/MapServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / endpoint
+welland-parcels-public-cache,notes,file15 row W01,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / dataset_id
+welland-parcels-public-cache,notes,"Contradicts spine doc ""no parcel fabric"" (see PASS2-CONFLICTS)",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / notes
+welland-parcels-public-cache,notes,not in open.welland.ca data.json (72 datasets read 2026-09-30),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / notes
+welland-parcels-public-cache,notes,licence text not found | admission needs a Morgen decision (EPIC open decision 1),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / pii_or_mpac_flag | notes
+welland-parcels-public-cache,notes,"1,506 rows have null Address and null Range | Address can be a range (e.g. 800-816 Niagara Street)",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / notes
+welland-parcels-public-cache,notes,Parcel_No min 10 max 96293 | other fields Subdiv_Lot_No | Subdiv_Block_No | Subdiv_Plan_No | Address | Range,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / identifier_fields
+welland-parcels-public-cache,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+welland-parcels-public-cache,record_count,23541,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / record_count
+welland-parcels-public-cache,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / geometry
+welland-parcels-public-cache,grain,parcel,heavymap-planning/EPIC-02-spine-and-joins.md,"Recommended spine key mapping: Welland, parcel"
+welland-parcels-public-cache,id_field,Parcel_No,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"W01 / identifier_fields (Parcel_No (OID, int ...))"
+welland-parcels-public-cache,id_type,int,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / identifier_fields
+welland-parcels-public-cache,distinct_id_count,23541,heavymap-planning/EPIC-02-spine-and-joins.md,"Welland findings table: Parcels public cache, Parcel_No 'unique int' (derived = record_count)"
+welland-parcels-public-cache,id_dup_count,0,heavymap-planning/EPIC-02-spine-and-joins.md,derived: record_count 23541 - distinct 23541 ('unique int')
+welland-parcels-public-cache,id_pattern_examples,11205,heavymap-planning/EPIC-02-spine-and-joins.md,Recommended spine key mapping: e.g. hm:ca:on:welland:parcel:11205
+welland-parcels-public-cache,crs_epsg,26917,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / notes: CRS EPSG:26917
+welland-parcels-public-cache,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / pii_or_mpac_flag: no owner field | no ARN/roll field
+welland-parcels-public-cache,join_keys_to_spine,Parcel_No (key source for W06 | W07 | W08 | W10),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / join_method
+welland-civic-addresses,layer_id,welland-civic-addresses,PASS2 convention (slug),file 15 W02
+welland-civic-addresses,service_id,welland-arcgisweb-serverprodpub,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 W02 / endpoint
+welland-civic-addresses,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W02 / evidence | live read | join to parcel not measured
+welland-civic-addresses,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W02 / evidence = 'live 2026-09-30'
+welland-civic-addresses,evidence_urls,https://arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Civic_Addresses_Active/MapServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W02 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+welland-civic-addresses,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+welland-civic-addresses,layer_name,Civic address points,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W02 / dataset
+welland-civic-addresses,endpoint,arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Civic_Addresses_Active/MapServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W02 / endpoint
+welland-civic-addresses,notes,file15 row W02,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W02 / dataset_id
+welland-civic-addresses,notes,"13 duplicate address strings | Address 22,448 distinct",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W02 / notes | identifier_fields
+welland-civic-addresses,notes,AddId=AddId to W03 footprints exact 29/30 sample (equal address text) | fuzzy-text to W05 11/15 | R01 27/30 (not parcel joins),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W02 / exactness
+welland-civic-addresses,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+welland-civic-addresses,catalog_row_ref,09:Municipalities!R13,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,"Municipalities rows 13 and 50 (name match ""Civic Address Points""/""Welland Civic Address Points"" | no endpoint in catalog)"
+welland-civic-addresses,catalog_row_ref,09:Municipalities!R50,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,"Municipalities rows 13 and 50 (name match ""Civic Address Points""/""Welland Civic Address Points"" | no endpoint in catalog)"
+welland-civic-addresses,record_count,22461,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W02 / record_count
+welland-civic-addresses,geometry_type,point,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W02 / geometry
+welland-civic-addresses,grain,address,heavymap-planning/EPIC-02-spine-and-joins.md,"Recommended spine key mapping: Welland, address"
+welland-civic-addresses,id_field,AddId,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W02 / identifier_fields
+welland-civic-addresses,id_type,int,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"W02 / identifier_fields (AddId (int, unique: 22,461 distinct))"
+welland-civic-addresses,distinct_id_count,22461,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"W02 / identifier_fields: 22,461 distinct"
+welland-civic-addresses,id_dup_count,0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"derived: record_count 22461 - distinct 22461 (W02 identifier_fields ""unique"")"
+welland-civic-addresses,crs_epsg,26917,heavymap-planning/EPIC-02-spine-and-joins.md,Coordinate system: Welland civic points report EPSG:26917
+welland-civic-addresses,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W02 / pii_or_mpac_flag
+welland-civic-addresses,join_keys_to_spine,"none by id: no parcel id on the point (spatial or address text to W01 Parcel_No, not tested)",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W02 / notes | EPIC Joins matrix Welland: Civic points -> Parcels
+welland-building-footprints,layer_id,welland-building-footprints,PASS2 convention (slug),file 15 W03
+welland-building-footprints,service_id,welland-arcgisweb-serverprodpub,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 W03 / endpoint
+welland-building-footprints,lifecycle_status,spined,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W03 / evidence | spatial join to W01 parcels tested 18/18 (all hit)
+welland-building-footprints,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W03 / evidence = 'live 2026-09-30'
+welland-building-footprints,evidence_urls,https://arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Active_Building_Footprints/MapServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W03 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+welland-building-footprints,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+welland-building-footprints,layer_name,Active building footprints,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W03 / dataset
+welland-building-footprints,endpoint,arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Active_Building_Footprints/MapServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W03 / endpoint
+welland-building-footprints,notes,file15 row W03,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W03 / dataset_id
+welland-building-footprints,notes,"no building id: AddId is a foreign key (null on 2,214 | 16,847 distinct) | Address null on 2,289",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W03 / identifier_fields | key_type
+welland-building-footprints,notes,many footprints per AddId | OBJECTID stability not tested (assumption),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W03 / notes
+welland-building-footprints,notes,file15 exactness: exact for AddId where non-null | spatial otherwise,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W03 / exactness
+welland-building-footprints,notes,sample (18 points) not full population | multi-parcel or straddling footprints untested,heavymap-planning/EPIC-02-spine-and-joins.md,Joins matrix Welland: Footprints -> Parcels
+welland-building-footprints,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+welland-building-footprints,catalog_row_ref,09:Municipalities!R489,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R489 URL match (serverprod vs file 15 serverprodpub) | R10 and R48 name match
+welland-building-footprints,catalog_row_ref,09:Municipalities!R10,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R489 URL match (serverprod vs file 15 serverprodpub) | R10 and R48 name match
+welland-building-footprints,catalog_row_ref,09:Municipalities!R48,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R489 URL match (serverprod vs file 15 serverprodpub) | R10 and R48 name match
+welland-building-footprints,record_count,26027,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W03 / record_count
+welland-building-footprints,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W03 / geometry
+welland-building-footprints,grain,footprint,heavymap-planning/EPIC-02-spine-and-joins.md,"Recommended spine key mapping: Welland, footprint"
+welland-building-footprints,crs_epsg,26917,heavymap-planning/EPIC-02-spine-and-joins.md,Coordinate system: Welland footprints report EPSG:26917
+welland-building-footprints,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W03 / pii_or_mpac_flag
+welland-building-footprints,join_keys_to_spine,spatial point-in-polygon to W01 Parcel_No | AddId (FK to W02 civic),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W03 / join_method
+welland-building-footprints,spine_join_method,spatial,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W03 / join_method / exactness: spatial otherwise (18/18 sampled points landed in one parcel)
+welland-building-footprints,exactness_hits_tested,18/18,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W03 / exactness: 18/18 sampled points landed in one parcel
+welland-zoning-current,layer_id,welland-zoning-current,PASS2 convention (slug),file 15 W04
+welland-zoning-current,service_id,welland-arcgisweb-serverprodpub,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 W04 / endpoint
+welland-zoning-current,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W04 / evidence | live read | join to parcels not measured at volume
+welland-zoning-current,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W04 / evidence = 'live 2026-09-30'
+welland-zoning-current,evidence_urls,https://arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Consolidated_Zoning/MapServer/2,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W04 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+welland-zoning-current,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+welland-zoning-current,layer_name,Current zoning (By-law 2017-117),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W04 / dataset
+welland-zoning-current,endpoint,arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Consolidated_Zoning/MapServer/2,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W04 / endpoint
+welland-zoning-current,notes,file15 row W04,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W04 / dataset_id
+welland-zoning-current,notes,No id field | Zoning 139 distinct 4 null | 73 polygons have industrial ZoneCat,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W04 / notes | identifier_fields
+welland-zoning-current,notes,file15 exactness: fuzzy-spatial | polygons overlap (one point returned two polygons | one with null Zoning),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W04 / exactness
+welland-zoning-current,notes,"Old Zoning (2,014) is a second epoch in the same service | not read",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W04 / notes
+welland-zoning-current,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+welland-zoning-current,catalog_row_ref,09:Municipalities!R476,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R476 and R995 URL match (duplicate catalog rows) | R11 and R46 name match
+welland-zoning-current,catalog_row_ref,09:Municipalities!R995,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R476 and R995 URL match (duplicate catalog rows) | R11 and R46 name match
+welland-zoning-current,catalog_row_ref,09:Municipalities!R11,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R476 and R995 URL match (duplicate catalog rows) | R11 and R46 name match
+welland-zoning-current,catalog_row_ref,09:Municipalities!R46,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R476 and R995 URL match (duplicate catalog rows) | R11 and R46 name match
+welland-zoning-current,vintage,By-law 2017-117 (current epoch),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W04 / dataset
+welland-zoning-current,record_count,1981,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W04 / record_count
+welland-zoning-current,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W04 / geometry
+welland-zoning-current,crs_epsg,26917,heavymap-planning/EPIC-02-spine-and-joins.md,Coordinate system: Welland zoning reports EPSG:26917
+welland-zoning-current,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W04 / pii_or_mpac_flag
+welland-zoning-current,join_keys_to_spine,none (no id or parcel reference) | spatial only to W01,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W04 / join_method | notes
+welland-zoning-current,spine_join_method,spatial,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W04 / join_method
+welland-business-directory,layer_id,welland-business-directory,PASS2 convention (slug),file 15 W05
+welland-business-directory,service_id,welland-arcgisweb-serverprodpub,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 W05 / endpoint
+welland-business-directory,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / evidence | live read | join to parcels not measured
+welland-business-directory,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / evidence = 'live 2026-09-30'
+welland-business-directory,evidence_urls,https://arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Business_Layers/MapServer/2,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / endpoint (table | https added)
+welland-business-directory,evidence_urls,https://arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Business_Layers/MapServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / endpoint (points /0)
+welland-business-directory,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+welland-business-directory,layer_name,Business directory (table),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"W05 / dataset: ""Business directory (table plus point layer)"" - table half"
+welland-business-directory,endpoint,arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Business_Layers/MapServer/2,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / endpoint (table part only | points layer /0 in notes)
+welland-business-directory,notes,file15 row W05,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / dataset_id
+welland-business-directory,notes,COMBINED ROW: points layer /0 has 871 records | split into two layers in a later pass,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / record_count: 923 table | 871 points
+welland-business-directory,notes,Address null on 11,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / identifier_fields
+welland-business-directory,notes,Sector is free text not NAICS | NEI agreement ~29% documented not re-read,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / notes
+welland-business-directory,notes,file15 exactness: fuzzy-text (11/15 exact address hits to W02) | impossible exact vs R01,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / exactness
+welland-business-directory,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+welland-business-directory,catalog_row_ref,09:Municipalities!R12,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R12 and R49 name match (open.welland.ca | no endpoint in catalog)
+welland-business-directory,catalog_row_ref,09:Municipalities!R49,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R12 and R49 name match (open.welland.ca | no endpoint in catalog)
+welland-business-directory,record_count,923,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / record_count: 923 table
+welland-business-directory,geometry_type,none,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / geometry: none (table)
+welland-business-directory,grain,premises,heavymap-planning/EPIC-02-spine-and-joins.md,"Recommended spine key mapping: Welland, premises (activity) | directory ID is a native key"
+welland-business-directory,id_field,ID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / identifier_fields
+welland-business-directory,id_type,int,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / identifier_fields
+welland-business-directory,distinct_id_count,923,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / identifier_fields
+welland-business-directory,id_dup_count,0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,derived: record_count 923 - distinct 923
+welland-business-directory,pii_owner_fields_names_only,Telephone | Extension | Telephone2 | Fax | Email | WebSite,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"W05 / pii_or_mpac_flag: contact fields (business not owner PII, values not sampled)"
+welland-business-directory,join_keys_to_spine,none by id | address text to W02 | spatial to W01 via points layer /0 (not tested),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W05 / join_method
+welland-heritage-parcels,layer_id,welland-heritage-parcels,PASS2 convention (slug),file 15 W06
+welland-heritage-parcels,service_id,welland-arcgisweb-serverprodpub,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 W06 / endpoint
+welland-heritage-parcels,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / evidence | live read | join to W01 17/20 (misses undiagnosed) so not spined
+welland-heritage-parcels,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / evidence = 'live 2026-09-30'
+welland-heritage-parcels,evidence_urls,https://arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Heritage_Parcels/MapServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+welland-heritage-parcels,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+welland-heritage-parcels,layer_name,Designated heritage parcels,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / dataset
+welland-heritage-parcels,endpoint,arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Heritage_Parcels/MapServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / endpoint
+welland-heritage-parcels,notes,file15 row W06,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / dataset_id
+welland-heritage-parcels,notes,Parcel_No is a foreign key (31 rows | 30 distinct) so id_dup_count left blank,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / identifier_fields
+welland-heritage-parcels,notes,misses undiagnosed (11680 | 20199 | 14391 not in the fabric),heavymap-planning/EPIC-02-spine-and-joins.md,Joins matrix Welland: Heritage parcels -> Parcels
+welland-heritage-parcels,notes,Region layer lists 27 Welland points vs 31 polygons here | not reconciled,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / notes
+welland-heritage-parcels,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+welland-heritage-parcels,catalog_row_ref,09:Municipalities!R485,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R485 URL match
+welland-heritage-parcels,record_count,31,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / record_count
+welland-heritage-parcels,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / geometry
+welland-heritage-parcels,id_field,Parcel_No,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / identifier_fields (foreign key)
+welland-heritage-parcels,id_type,int,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / identifier_fields
+welland-heritage-parcels,distinct_id_count,30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / identifier_fields
+welland-heritage-parcels,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / pii_or_mpac_flag: none observed (no owner field)
+welland-heritage-parcels,join_keys_to_spine,Parcel_No=Parcel_No (W01),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / join_method
+welland-heritage-parcels,spine_join_method,exact,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / join_method
+welland-heritage-parcels,exactness_hits_tested,17/20,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W06 / exactness: exact (sample 17/20 found in W01)
+welland-site-plans,layer_id,welland-site-plans,PASS2 convention (slug),file 15 W07
+welland-site-plans,service_id,welland-arcgisweb-serverprodpub,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 W07 / endpoint
+welland-site-plans,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / evidence | live read | join to W01 25/30 (misses undiagnosed) so not spined
+welland-site-plans,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / evidence = 'live 2026-09-30'
+welland-site-plans,evidence_urls,https://arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Plan_SitePlans_Parcels/MapServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+welland-site-plans,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+welland-site-plans,layer_name,Site plans,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / dataset
+welland-site-plans,endpoint,arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Plan_SitePlans_Parcels/MapServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / endpoint
+welland-site-plans,notes,file15 row W07,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / dataset_id
+welland-site-plans,notes,Misses (5 of 30) not diagnosed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / notes
+welland-site-plans,notes,Parcel_No is a foreign key (721 rows | 411 distinct) so id_dup_count left blank,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / identifier_fields
+welland-site-plans,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+welland-site-plans,catalog_row_ref,09:Municipalities!R478,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R478 URL match
+welland-site-plans,record_count,721,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / record_count
+welland-site-plans,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / geometry
+welland-site-plans,id_field,Parcel_No,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / identifier_fields (foreign key)
+welland-site-plans,id_type,int,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / identifier_fields
+welland-site-plans,distinct_id_count,411,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / identifier_fields
+welland-site-plans,id_null_count,0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / identifier_fields: 0 null
+welland-site-plans,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / pii_or_mpac_flag
+welland-site-plans,join_keys_to_spine,Parcel_No=Parcel_No (W01),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / join_method
+welland-site-plans,spine_join_method,exact,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / join_method
+welland-site-plans,exactness_hits_tested,25/30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W07 / exactness: exact (sample 25/30 found in W01)
+welland-building-permits-pre-2019,layer_id,welland-building-permits-pre-2019,PASS2 convention (slug),file 15 W08
+welland-building-permits-pre-2019,service_id,welland-arcgisweb-serverprodpub,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 W08 / endpoint
+welland-building-permits-pre-2019,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / evidence | live read | join to W01 23/30 so not spined
+welland-building-permits-pre-2019,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / evidence = 'live 2026-09-30'
+welland-building-permits-pre-2019,evidence_urls,https://arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Building_Permits_Pre_May_2019/MapServer/1,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+welland-building-permits-pre-2019,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+welland-building-permits-pre-2019,layer_name,Building permits before May 2019 (table),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / dataset
+welland-building-permits-pre-2019,endpoint,arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Building_Permits_Pre_May_2019/MapServer/1,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / endpoint
+welland-building-permits-pre-2019,notes,file15 row W08,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / dataset_id
+welland-building-permits-pre-2019,notes,"parcelno int | 52 null | 5,491 distinct",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / identifier_fields
+welland-building-permits-pre-2019,notes,206 rows Industrial UseCategory | address text like 249 LEA CRES vs 249 Lea Crescent,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / notes
+welland-building-permits-pre-2019,notes,permits after May 2019 not in open data (CityView layer needs a token),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / notes
+welland-building-permits-pre-2019,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+welland-building-permits-pre-2019,vintage,before May 2019,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / dataset: Building permits before May 2019
+welland-building-permits-pre-2019,record_count,8862,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / record_count
+welland-building-permits-pre-2019,geometry_type,none,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / geometry: none (table)
+welland-building-permits-pre-2019,grain,permit,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / key_type: permit id plus parcel foreign key (judgment: grain label derived)
+welland-building-permits-pre-2019,id_field,PermitID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / identifier_fields: PermitID (unique)
+welland-building-permits-pre-2019,distinct_id_count,8862,heavymap-planning/EPIC-02-spine-and-joins.md,"Welland findings table: Building permits pre-May 2019 PermitID PermitNo both 8,862 distinct"
+welland-building-permits-pre-2019,id_dup_count,0,heavymap-planning/EPIC-02-spine-and-joins.md,derived: record_count 8862 - distinct 8862
+welland-building-permits-pre-2019,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / pii_or_mpac_flag
+welland-building-permits-pre-2019,join_keys_to_spine,parcelno=Parcel_No (W01) | address text fallback (uppercase abbreviations),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / join_method
+welland-building-permits-pre-2019,spine_join_method,exact,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / join_method
+welland-building-permits-pre-2019,exactness_hits_tested,23/30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W08 / exactness: exact where parcelno present (sample 23/30 found in W01)
+welland-business-licence-type-year,layer_id,welland-business-licence-type-year,PASS2 convention (slug),file 15 W09
+welland-business-licence-type-year,service_id,welland-arcgisweb-serverprodpub,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 W09 / endpoint
+welland-business-licence-type-year,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W09 / evidence | live read: table returns 0 rows
+welland-business-licence-type-year,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W09 / evidence = 'live 2026-09-30'
+welland-business-licence-type-year,evidence_urls,https://arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Business_License_Type_Year/MapServer/1,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W09 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+welland-business-licence-type-year,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+welland-business-licence-type-year,layer_name,"Business licences (type by year, counts only)",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W09 / dataset
+welland-business-licence-type-year,endpoint,arcgisweb.welland.ca/serverprodpub/rest/services/OpenData/OPENDATA_Business_License_Type_Year/MapServer/1,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W09 / endpoint
+welland-business-licence-type-year,notes,file15 row W09,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W09 / dataset_id
+welland-business-licence-type-year,notes,Table reads 0 rows on 2026-09-30 (companion layer is named _EMPTY),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W09 / notes
+welland-business-licence-type-year,notes,aggregate (type by year) only | no join possible,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W09 / join_to = none (aggregate) | join_method none | exactness impossible: no records
+welland-business-licence-type-year,notes,Ledger LG-054 said counts by type and year (see PASS2-CONFLICTS),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W09 / notes
+welland-business-licence-type-year,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+welland-business-licence-type-year,catalog_row_ref,09:Municipalities!R461,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R461 URL match (count 0) | R51 name match
+welland-business-licence-type-year,catalog_row_ref,09:Municipalities!R51,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R461 URL match (count 0) | R51 name match
+welland-business-licence-type-year,record_count,0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W09 / record_count
+welland-business-licence-type-year,geometry_type,none,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W09 / geometry
+welland-business-licence-type-year,id_field,id,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W09 / identifier_fields: id | Description | Year | Bus_count
+welland-business-licence-type-year,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W09 / pii_or_mpac_flag
+welland-ims-parcels,layer_id,welland-ims-parcels,PASS2 convention (slug),file 15 W10
+welland-ims-parcels,service_id,welland-arcgisweb-serverprodpub,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 W10 / endpoint
+welland-ims-parcels,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"W10 / evidence | live read | same 23,541 rows and key as W01 but no hits/tested stated"
+welland-ims-parcels,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W10 / evidence = 'live 2026-09-30'
+welland-ims-parcels,evidence_urls,https://arcgisweb.welland.ca/serverprodpub/rest/services/Base/IMS_Parcels/MapServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W10 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+welland-ims-parcels,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+welland-ims-parcels,layer_name,"IMS parcels (full attribute service, publicly reachable)",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W10 / dataset
+welland-ims-parcels,endpoint,arcgisweb.welland.ca/serverprodpub/rest/services/Base/IMS_Parcels/MapServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W10 / endpoint (first of two | sibling Base/Parcels_NoOwners/MapServer/0 in notes)
+welland-ims-parcels,notes,file15 row W10,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W10 / dataset_id
+welland-ims-parcels,notes,sibling endpoint Base/Parcels_NoOwners/MapServer/0 (23541 rows) shares this row,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W10 / endpoint
+welland-ims-parcels,notes,Named NoOwners but still carries Owner_Class | extra attributes vs W01 only | not proposed for ingestion,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W10 / notes
+welland-ims-parcels,notes,Municipality_Id (CoW) | Civic_Nos | Street_Name_Id | Landuse_Map | Planning_District | Parcel_Type | Parcel_Status,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W10 / identifier_fields
+welland-ims-parcels,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+welland-ims-parcels,record_count,23541,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W10 / record_count: 23541 (both)
+welland-ims-parcels,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W10 / geometry
+welland-ims-parcels,grain,parcel,heavymap-planning/EPIC-02-spine-and-joins.md,"Welland findings table: IMS parcels (sibling) polygon, Parcel_No"
+welland-ims-parcels,id_field,Parcel_No,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W10 / identifier_fields
+welland-ims-parcels,pii_owner_fields_names_only,Owner_Class | Comment | Research,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"W10 / pii_or_mpac_flag: Owner_Class category | free-text Comment and Research exist (not sampled, possible PII)"
+welland-ims-parcels,join_keys_to_spine,Parcel_No=Parcel_No (W01),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W10 / join_method
+welland-ims-parcels,spine_join_method,exact,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"W10 / join_method / exactness: exact (same 23,541 rows and key as W01)"
+welland-cityview-buildpermits-parcels,layer_id,welland-cityview-buildpermits-parcels,PASS2 convention (slug),file 15 W11
+welland-cityview-buildpermits-parcels,service_id,welland-arcgisweb-serverprod,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 W11 / endpoint
+welland-cityview-buildpermits-parcels,lifecycle_status,blocked,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W11 / evidence | endpoint returned Token Required 2026-09-30
+welland-cityview-buildpermits-parcels,evidence_urls,https://arcgisweb.welland.ca/serverprod/rest/services/Building/CityView_BuildPermits_Parcels/MapServer/4,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,Municipalities row 496 public_url
+welland-cityview-buildpermits-parcels,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+welland-cityview-buildpermits-parcels,layer_name,CityView BuildPermits Parcels,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W11 / dataset
+welland-cityview-buildpermits-parcels,endpoint,arcgisweb.welland.ca/serverprod/rest/services/Building/CityView_BuildPermits_Parcels/MapServer/4,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,"Municipalities row 496 public_url (file 15 form has "".../serverprodpub/rest/services/../serverprod/..."" - see PASS2-CONFLICTS)"
+welland-cityview-buildpermits-parcels,notes,file15 row W11,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W11 / dataset_id
+welland-cityview-buildpermits-parcels,notes,Listed in open.welland.ca data.json (modified 2023-06-27) but the service needs a token,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W11 / notes
+welland-cityview-buildpermits-parcels,notes,blocked reason: Token Required | unblocker not documented (needs a city grant or alternative source) | Morgen clears,heavymap-planning/DATASET-ROUTINE.md §5 blocked,side state: reason and unblocker named
+welland-cityview-buildpermits-parcels,notes,Welland serverprod folders Building and PropReports return Token Required,heavymap-planning/EPIC-02-spine-and-joins.md,Resume notes: Endpoint quirks
+welland-cityview-buildpermits-parcels,notes,not read (no count),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W11 / record_count blank
+welland-cityview-buildpermits-parcels,catalog_row_ref,09:Municipalities!R496,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R496 URL match
+niagara-region-nei-consolidated,layer_id,niagara-region-nei-consolidated,PASS2 convention (slug),file 15 R01
+niagara-region-nei-consolidated,service_id,niagara-region-arcgis-online,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 R01 / endpoint
+niagara-region-nei-consolidated,lifecycle_status,spined,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / evidence | spatial join to W01 parcels 15/15 landed in a parcel
+niagara-region-nei-consolidated,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / evidence = 'live 2026-09-30'
+niagara-region-nei-consolidated,evidence_urls,https://services1.arcgis.com/WxiLK82TWf8W3O3f/arcgis/rest/services/OpenData_Consolidated_NEI_Opendata/FeatureServer/45,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+niagara-region-nei-consolidated,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+niagara-region-nei-consolidated,layer_name,Consolidated NEI (all editions),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / dataset
+niagara-region-nei-consolidated,endpoint,services1.arcgis.com/WxiLK82TWf8W3O3f/arcgis/rest/services/OpenData_Consolidated_NEI_Opendata/FeatureServer/45,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / endpoint
+niagara-region-nei-consolidated,notes,file15 row R01,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / dataset_id
+niagara-region-nei-consolidated,notes,Welland subset 9741 rows (1299 each for 2022 and 2025) | 1605 distinct nei_id in Welland,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / record_count | identifier_fields
+niagara-region-nei-consolidated,notes,Four premises in the 15-row sample share parcel 77978 (800-816 Niagara Street): parcel to premises is one to many,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / notes
+niagara-region-nei-consolidated,notes,file15 exactness: exact within NEI | fuzzy-text to W02 (27/30),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / exactness
+niagara-region-nei-consolidated,notes,no ARN | no MPAC field seen,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / pii_or_mpac_flag
+niagara-region-nei-consolidated,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+niagara-region-nei-consolidated,catalog_row_ref,09:Counties!R594,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R594 URL match | R2 and R56 name match
+niagara-region-nei-consolidated,catalog_row_ref,09:Counties!R2,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R594 URL match | R2 and R56 name match
+niagara-region-nei-consolidated,catalog_row_ref,09:Counties!R56,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R594 URL match | R2 and R56 name match
+niagara-region-nei-consolidated,vintage,editions 2016-2019 | 2022-2025,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"R01 / notes: Long table of 8 editions (2016-2019, 2022-2025)"
+niagara-region-nei-consolidated,record_count,98065,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / record_count: 98065 total
+niagara-region-nei-consolidated,geometry_type,point,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / geometry
+niagara-region-nei-consolidated,grain,premises,heavymap-planning/EPIC-02-spine-and-joins.md,"Recommended spine key mapping: Welland, premises (activity)"
+niagara-region-nei-consolidated,id_field,nei_id + Year (composite),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / identifier_fields | key_type: premises register key (composite nei_id + Year)
+niagara-region-nei-consolidated,id_type,int,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / identifier_fields: nei_id (int)
+niagara-region-nei-consolidated,distinct_id_count,15846,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"R01 / identifier_fields: nei_id 15,846 distinct overall"
+niagara-region-nei-consolidated,id_null_count,0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / identifier_fields: no nulls
+niagara-region-nei-consolidated,null_conventions,indoorgfa: zero used for unknown (Welland rows: 4007 above 0 | 304 null | rest 0),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / notes
+niagara-region-nei-consolidated,pii_owner_fields_names_only,businessname,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / identifier_fields
+niagara-region-nei-consolidated,pii_owner_fields_names_only,businesswebsite,heavymap-planning/EPIC-02-spine-and-joins.md,Welland findings table: Niagara Consolidated NEI flags
+niagara-region-nei-consolidated,join_keys_to_spine,none by id (nei_id + Year is within-NEI only) | spatial point-in-polygon to W01 Parcel_No,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / join_method
+niagara-region-nei-consolidated,spine_join_method,spatial,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / exactness: spatial to W01 (15/15 landed in a parcel)
+niagara-region-nei-consolidated,exactness_hits_tested,15/15,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / exactness: spatial to W01 (15/15 landed in a parcel)
+niagara-region-address-points,layer_id,niagara-region-address-points,PASS2 convention (slug),file 15 R02
+niagara-region-address-points,service_id,niagara-region-arcgis-online,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 R02 / endpoint
+niagara-region-address-points,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / evidence | live read | no join measured
+niagara-region-address-points,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / evidence = 'live 2026-09-30'
+niagara-region-address-points,evidence_urls,https://services1.arcgis.com/WxiLK82TWf8W3O3f/arcgis/rest/services/OpenData_Address_Points/FeatureServer/43,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+niagara-region-address-points,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+niagara-region-address-points,layer_name,Address points,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / dataset
+niagara-region-address-points,endpoint,services1.arcgis.com/WxiLK82TWf8W3O3f/arcgis/rest/services/OpenData_Address_Points/FeatureServer/43,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / endpoint
+niagara-region-address-points,notes,file15 row R02,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / dataset_id
+niagara-region-address-points,notes,Welland subset 24412 vs city civic points 22461,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / record_count | notes
+niagara-region-address-points,notes,file15 exactness: impossible exact | fuzzy,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / exactness
+niagara-region-address-points,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+niagara-region-address-points,catalog_row_ref,09:Counties!R3,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R3 URL match | R58 name match
+niagara-region-address-points,catalog_row_ref,09:Counties!R58,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R3 URL match | R58 name match
+niagara-region-address-points,record_count,208079,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / record_count: 208079 total
+niagara-region-address-points,geometry_type,point,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / geometry
+niagara-region-address-points,grain,address,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / key_type: regional address point id
+niagara-region-address-points,id_field,GSmartID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / identifier_fields
+niagara-region-address-points,id_type,int,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / identifier_fields
+niagara-region-address-points,id_null_count,0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / identifier_fields: no nulls
+niagara-region-address-points,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / pii_or_mpac_flag
+niagara-region-address-points,join_keys_to_spine,none: GSmartID vs AddId share no id | address text or spatial,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R02 / join_method
+niagara-region-building-footprints,layer_id,niagara-region-building-footprints,PASS2 convention (slug),file 15 R03
+niagara-region-building-footprints,service_id,niagara-region-arcgis-online,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 R03 / endpoint
+niagara-region-building-footprints,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R03 / evidence | live read | no join measured
+niagara-region-building-footprints,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R03 / evidence = 'live 2026-09-30'
+niagara-region-building-footprints,evidence_urls,https://services1.arcgis.com/WxiLK82TWf8W3O3f/arcgis/rest/services/OpenData_Building_Footprints/FeatureServer/38,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R03 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+niagara-region-building-footprints,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+niagara-region-building-footprints,layer_name,Building footprints,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R03 / dataset
+niagara-region-building-footprints,endpoint,services1.arcgis.com/WxiLK82TWf8W3O3f/arcgis/rest/services/OpenData_Building_Footprints/FeatureServer/38,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R03 / endpoint
+niagara-region-building-footprints,notes,file15 row R03,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R03 / dataset_id
+niagara-region-building-footprints,notes,Welland subset not measured (no municipality field | needs a spatial clip),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R03 / record_count | notes
+niagara-region-building-footprints,notes,Layer | Collected | GlobalID also present,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R03 / identifier_fields
+niagara-region-building-footprints,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+niagara-region-building-footprints,catalog_row_ref,09:Counties!R630,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R630 URL match | R59 name match
+niagara-region-building-footprints,catalog_row_ref,09:Counties!R59,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R630 URL match | R59 name match
+niagara-region-building-footprints,record_count,225999,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R03 / record_count: 225999 total
+niagara-region-building-footprints,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R03 / geometry
+niagara-region-building-footprints,grain,footprint,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R03 / key_type: regional footprint id (UniqueID)
+niagara-region-building-footprints,id_field,UniqueID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R03 / identifier_fields
+niagara-region-building-footprints,id_type,double,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R03 / identifier_fields: UniqueID (double)
+niagara-region-building-footprints,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R03 / pii_or_mpac_flag
+niagara-region-building-footprints,join_keys_to_spine,none | spatial only to W03 (not tested),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R03 / join_method | exactness
+niagara-region-heritage-properties,layer_id,niagara-region-heritage-properties,PASS2 convention (slug),file 15 R04
+niagara-region-heritage-properties,service_id,niagara-region-arcgis-online,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 R04 / endpoint
+niagara-region-heritage-properties,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R04 / evidence | live read | no join measured
+niagara-region-heritage-properties,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R04 / evidence = 'live 2026-09-30'
+niagara-region-heritage-properties,evidence_urls,https://services1.arcgis.com/WxiLK82TWf8W3O3f/arcgis/rest/services/OpenData_Designated_Heritage_Properties/FeatureServer/35,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R04 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+niagara-region-heritage-properties,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+niagara-region-heritage-properties,layer_name,Designated heritage properties,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R04 / dataset
+niagara-region-heritage-properties,endpoint,services1.arcgis.com/WxiLK82TWf8W3O3f/arcgis/rest/services/OpenData_Designated_Heritage_Properties/FeatureServer/35,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R04 / endpoint
+niagara-region-heritage-properties,notes,file15 row R04,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R04 / dataset_id
+niagara-region-heritage-properties,notes,Welland subset 27 points vs 31 polygons in W06 | not reconciled,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R04 / record_count | notes
+niagara-region-heritage-properties,notes,SITE_NAME | ADDRESS | MUNICIPALITY,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R04 / identifier_fields
+niagara-region-heritage-properties,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+niagara-region-heritage-properties,catalog_row_ref,09:Counties!R607,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R607 URL match | R78 name match
+niagara-region-heritage-properties,catalog_row_ref,09:Counties!R78,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R607 URL match | R78 name match
+niagara-region-heritage-properties,record_count,318,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R04 / record_count: 318 total
+niagara-region-heritage-properties,geometry_type,point,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R04 / geometry
+niagara-region-heritage-properties,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R04 / pii_or_mpac_flag
+niagara-region-heritage-properties,join_keys_to_spine,none | address text or proximity to W06 (not tested),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R04 / key_type | join_method
+npca-assessment-parcels-cityview,layer_id,npca-assessment-parcels-cityview,PASS2 convention (slug),file 15 R05
+npca-assessment-parcels-cityview,service_id,npca-arcgis-online,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 R05 / endpoint
+npca-assessment-parcels-cityview,lifecycle_status,not_used,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / evidence | documented not re-read | rule NPCA-derived layers not ingested
+npca-assessment-parcels-cityview,evidence_urls,https://services1.arcgis.com/d0ZCwU7eGKVeNiEE,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / endpoint (https added | existence noted only)
+npca-assessment-parcels-cityview,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+npca-assessment-parcels-cityview,layer_name,NPCA Assessment Parcels and Parcels Cityview (MPAC-derived),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / dataset
+npca-assessment-parcels-cityview,endpoint,"services1.arcgis.com/d0ZCwU7eGKVeNiEE (Assessment_Parcels_Test/0, Parcels_Cityview/0)",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / endpoint
+npca-assessment-parcels-cityview,notes,file15 row R05,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / dataset_id
+npca-assessment-parcels-cityview,notes,COMBINED ROW: two layers (284250 and 265717 records) documented not re-read | record_count left blank,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / record_count
+npca-assessment-parcels-cityview,notes,NPCA-derived | not ingested | MPAC roll stays not_licensed,heavymap-planning/DATASET-ROUTINE.md §1 Purpose and rules,rows 'MPAC' and 'NPCA-derived layers'
+npca-assessment-parcels-cityview,notes,MPAC-derived | Owner field | licence unverified,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / pii_or_mpac_flag
+npca-assessment-parcels-cityview,notes,ARN | ASSESSMENT | PropCode | Owner | Legal_Txt,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / identifier_fields
+npca-assessment-parcels-cityview,notes,status not_used set by agent only because a rule forces it (NPCA) - Morgen to confirm,heavymap-planning/DATASET-ROUTINE.md §5,"not_used: Agent sets it only where a rule forces it (MPAC, NPCA)"
+npca-assessment-parcels-cityview,catalog_row_ref,09:Cross-Cutting Regional!R8,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,"R8 name match ""NPCA Assessment Parcels"" (no endpoint in catalog row)"
+npca-assessment-parcels-cityview,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / geometry
+npca-assessment-parcels-cityview,id_field,ARN,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / identifier_fields: ARN (MPAC assessment roll number)
+npca-assessment-parcels-cityview,pii_owner_fields_names_only,Owner,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / identifier_fields | pii_or_mpac_flag
+rochester-taxparcel-2024,layer_id,rochester-taxparcel-2024,PASS2 convention (slug),file 15 X01
+rochester-taxparcel-2024,service_id,rochester-maps-server2,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X01 / endpoint
+rochester-taxparcel-2024,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / evidence | live read | key-source layer | join to X15 45/45 but NA-79 full-population shows misses
+rochester-taxparcel-2024,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / evidence = 'live 2026-09-30'
+rochester-taxparcel-2024,evidence_urls,https://maps.cityofrochester.gov/server2/rest/services/Open_Data/TaxParcel2024/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+rochester-taxparcel-2024,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+rochester-taxparcel-2024,layer_name,Tax parcel snapshot 2024,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / dataset
+rochester-taxparcel-2024,endpoint,maps.cityofrochester.gov/server2/rest/services/Open_Data/TaxParcel2024/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / endpoint
+rochester-taxparcel-2024,notes,file15 row X01,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / dataset_id
+rochester-taxparcel-2024,notes,"64,828 rows but 64,825 distinct PARCELID and PRINTKEY so some ids repeat | 365 rows class 7xx (361 class 710) | BISZONING null on 1,067",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / notes
+rochester-taxparcel-2024,notes,file15 exactness: exact for X15 (45/45 sampled) and X07 (21/21) | spatial for X09/X10,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / exactness
+rochester-taxparcel-2024,notes,"NA-79 full population: 2024 city 63,908/64,825 distinct IDs join to a 261400 county composite | 63,890 equal print keys",heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,Pulls and coverage | What the records establish
+rochester-taxparcel-2024,notes,NA-79: 252 non-digit 20-char IDs | 1 refused wrong_length,heavymap-nia-79b/docs/normalization/ny-sbl-sources.md + heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,Verified/inferred table | residual failure table
+rochester-taxparcel-2024,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+rochester-taxparcel-2024,catalog_row_ref,09:Municipalities!R750,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R750 URL match | R33 URL match (roll-up row incl. historical snapshots)
+rochester-taxparcel-2024,catalog_row_ref,09:Municipalities!R33,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R750 URL match | R33 URL match (roll-up row incl. historical snapshots)
+rochester-taxparcel-2024,vintage,2024 snapshot (GISEXTDATE 2024-08-22 on first row),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / dataset | identifier_fields
+rochester-taxparcel-2024,record_count,64828,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / record_count
+rochester-taxparcel-2024,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / geometry
+rochester-taxparcel-2024,grain,parcel,heavymap-planning/EPIC-02-spine-and-joins.md,"Recommended spine key mapping: Rochester, parcel"
+rochester-taxparcel-2024,id_field,PARCELID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / identifier_fields
+rochester-taxparcel-2024,id_type,string,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / identifier_fields: PARCELID (20-char string)
+rochester-taxparcel-2024,id_length,20,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / identifier_fields
+rochester-taxparcel-2024,distinct_id_count,64825,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / identifier_fields
+rochester-taxparcel-2024,id_dup_count,3,heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,"derived: 64828 rows - 64825 distinct | ""one SBL occurs four times"" = 3 extra rows"
+rochester-taxparcel-2024,id_pattern_examples,04762000010220000000,heavymap-planning/EPIC-02-spine-and-joins.md,"Recommended spine key mapping: Rochester, parcel example"
+rochester-taxparcel-2024,pii_owner_fields_names_only,OWNERNME1 | PSTLADDRESS,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / pii_or_mpac_flag: OWNERNME1 and PSTLADDRESS (values not sampled)
+rochester-taxparcel-2024,join_keys_to_spine,"PARCELID (SBL20, spine local token proposal) | PRINTKEY (display only)",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / join_method | EPIC key mapping
+rochester-taxparcel-snapshots-2014-2023,layer_id,rochester-taxparcel-snapshots-2014-2023,PASS2 convention (slug),file 15 X02
+rochester-taxparcel-snapshots-2014-2023,service_id,rochester-maps-server2,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X02 / endpoint
+rochester-taxparcel-snapshots-2014-2023,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X02 / evidence | live read counts for all 10 | join by PARCELID not measured with hits/tested
+rochester-taxparcel-snapshots-2014-2023,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X02 / evidence = 'live 2026-09-30'
+rochester-taxparcel-snapshots-2014-2023,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+rochester-taxparcel-snapshots-2014-2023,evidence_urls,https://maps.cityofrochester.gov/server2/rest/services/Open_Data/,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X02 / endpoint (https added | truncated to folder because endpoint is a template or list)
+rochester-taxparcel-snapshots-2014-2023,layer_name,Tax parcel snapshots 2014-2023 (server2),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X02 / dataset
+rochester-taxparcel-snapshots-2014-2023,endpoint,maps.cityofrochester.gov/server2/rest/services/Open_Data/TaxParcel{2014..2023}/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X02 / endpoint
+rochester-taxparcel-snapshots-2014-2023,notes,file15 row X02,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X02 / dataset_id
+rochester-taxparcel-snapshots-2014-2023,notes,COMBINED ROW: 10 layers 2014-2023 | record_count left blank | counts: 2014 65923 | 2015 65794 | 2016 65784 | 2017 65486 | 2018 65351 | 2019 65211 | 2020 65076 | 2021 65002 | 2022 64920 | 2023 64826 | split in a later pass,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X02 / record_count
+rochester-taxparcel-snapshots-2014-2023,notes,file15 exactness: exact where the parcel is unchanged | changes through X14 | no hits/tested stated,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X02 / exactness
+rochester-taxparcel-snapshots-2014-2023,notes,Fields read for 2018-2024 only,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X02 / notes
+rochester-taxparcel-snapshots-2014-2023,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+rochester-taxparcel-snapshots-2014-2023,catalog_row_ref,09:Municipalities!R760,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match for 2018 | 2019 | 2020 | 2021 | 2022 | 2023 (no catalog rows found for 2014-2017)
+rochester-taxparcel-snapshots-2014-2023,catalog_row_ref,09:Municipalities!R756,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match for 2018 | 2019 | 2020 | 2021 | 2022 | 2023 (no catalog rows found for 2014-2017)
+rochester-taxparcel-snapshots-2014-2023,catalog_row_ref,09:Municipalities!R753,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match for 2018 | 2019 | 2020 | 2021 | 2022 | 2023 (no catalog rows found for 2014-2017)
+rochester-taxparcel-snapshots-2014-2023,catalog_row_ref,09:Municipalities!R757,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match for 2018 | 2019 | 2020 | 2021 | 2022 | 2023 (no catalog rows found for 2014-2017)
+rochester-taxparcel-snapshots-2014-2023,catalog_row_ref,09:Municipalities!R758,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match for 2018 | 2019 | 2020 | 2021 | 2022 | 2023 (no catalog rows found for 2014-2017)
+rochester-taxparcel-snapshots-2014-2023,catalog_row_ref,09:Municipalities!R759,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match for 2018 | 2019 | 2020 | 2021 | 2022 | 2023 (no catalog rows found for 2014-2017)
+rochester-taxparcel-snapshots-2014-2023,vintage,snapshots 2014-2023,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X02 / dataset
+rochester-taxparcel-snapshots-2014-2023,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X02 / geometry
+rochester-taxparcel-snapshots-2014-2023,grain,parcel,heavymap-planning/EPIC-02-spine-and-joins.md,"Rochester findings table: City snapshots polygon, PARCELID"
+rochester-taxparcel-snapshots-2014-2023,id_field,PARCELID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X02 / identifier_fields (fields confirmed for 2018-2024 only)
+rochester-taxparcel-snapshots-2014-2023,pii_owner_fields_names_only,OWNERNME1 | PSTLADDRESS,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X02 / pii_or_mpac_flag: same owner fields as X01
+rochester-taxparcel-snapshots-2014-2023,join_keys_to_spine,PARCELID=PARCELID across years,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X02 / join_method
+rochester-taxparcel-snapshots-2014-2023,spine_join_method,exact,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X02 / join_method
+rochester-tax-parcels-open-data-live,layer_id,rochester-tax-parcels-open-data-live,PASS2 convention (slug),file 15 X03
+rochester-tax-parcels-open-data-live,service_id,rochester-maps-server,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X03 / endpoint
+rochester-tax-parcels-open-data-live,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03 / evidence | live read | join expected exact but not tested
+rochester-tax-parcels-open-data-live,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03 / evidence = 'live 2026-09-30'
+rochester-tax-parcels-open-data-live,evidence_urls,https://maps.cityofrochester.gov/server/rest/services/Open_Data/Tax_Parcels_Open_Data/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+rochester-tax-parcels-open-data-live,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+rochester-tax-parcels-open-data-live,layer_name,"Tax parcels open data (live, no owner fields)",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03 / dataset
+rochester-tax-parcels-open-data-live,endpoint,maps.cityofrochester.gov/server/rest/services/Open_Data/Tax_Parcels_Open_Data/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03 / endpoint
+rochester-tax-parcels-open-data-live,notes,file15 row X03,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03 / dataset_id
+rochester-tax-parcels-open-data-live,notes,Better ingest candidate than X01 for the owner-of-record rule (D-13) | 119 fewer rows than X01,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03 / notes
+rochester-tax-parcels-open-data-live,notes,"NA-79 full population: live city 64,047/64,709 distinct IDs join to a 261400 county composite | all 64,047 share a print key",heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,What the records establish
+rochester-tax-parcels-open-data-live,notes,file15 exactness: expected exact | not tested at id level,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03 / exactness
+rochester-tax-parcels-open-data-live,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+rochester-tax-parcels-open-data-live,catalog_row_ref,09:Municipalities!R771,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R771 URL match
+rochester-tax-parcels-open-data-live,vintage,live (vs 2024 snapshot),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03 / notes: 119 fewer rows than X01 (live vs 2024 snapshot)
+rochester-tax-parcels-open-data-live,record_count,64709,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03 / record_count
+rochester-tax-parcels-open-data-live,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03 / geometry
+rochester-tax-parcels-open-data-live,grain,parcel,heavymap-planning/EPIC-02-spine-and-joins.md,Rochester findings table: City tax parcels open data (live) polygon
+rochester-tax-parcels-open-data-live,id_field,PARCELID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03 / identifier_fields
+rochester-tax-parcels-open-data-live,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03 / pii_or_mpac_flag: no OWNERNME1 or PSTLADDRESS in field list
+rochester-tax-parcels-open-data-live,join_keys_to_spine,PARCELID=PARCELID (X01) | PRINTKEY (display only),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03 / join_method
+rochester-tax-parcels-vacant-land,layer_id,rochester-tax-parcels-vacant-land,PASS2 convention (slug),file 15 X04
+rochester-tax-parcels-vacant-land,service_id,rochester-maps-server,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X04 / endpoint
+rochester-tax-parcels-vacant-land,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X04 / evidence | live read | join expected exact but not tested
+rochester-tax-parcels-vacant-land,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X04 / evidence = 'live 2026-09-30'
+rochester-tax-parcels-vacant-land,evidence_urls,https://maps.cityofrochester.gov/server/rest/services/Open_Data/Tax_Parcels_Vacant_Land_Open_Data/FeatureServer/3,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X04 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+rochester-tax-parcels-vacant-land,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+rochester-tax-parcels-vacant-land,layer_name,Tax parcels: vacant land (live),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X04 / dataset
+rochester-tax-parcels-vacant-land,endpoint,maps.cityofrochester.gov/server/rest/services/Open_Data/Tax_Parcels_Vacant_Land_Open_Data/FeatureServer/3,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X04 / endpoint
+rochester-tax-parcels-vacant-land,notes,file15 row X04,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X04 / dataset_id
+rochester-tax-parcels-vacant-land,notes,"Catalog says 4,730 (drift of 2)",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X04 / notes
+rochester-tax-parcels-vacant-land,notes,file15 exactness: expected exact | not tested,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X04 / exactness
+rochester-tax-parcels-vacant-land,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+rochester-tax-parcels-vacant-land,catalog_row_ref,09:Municipalities!R822,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R822 URL match (count 4730 - see PASS2-CONFLICTS)
+rochester-tax-parcels-vacant-land,record_count,4728,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X04 / record_count
+rochester-tax-parcels-vacant-land,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X04 / geometry
+rochester-tax-parcels-vacant-land,grain,parcel,heavymap-planning/EPIC-02-spine-and-joins.md,"Rochester findings table: City vacant land polygon, PARCELID"
+rochester-tax-parcels-vacant-land,id_field,PARCELID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X04 / identifier_fields
+rochester-tax-parcels-vacant-land,pii_owner_fields_names_only,OWNERNME1 | PSTLADDRESS,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X04 / pii_or_mpac_flag: OWNERNME1 and PSTLADDRESS present
+rochester-tax-parcels-vacant-land,join_keys_to_spine,PARCELID=PARCELID (X01/X03),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X04 / join_method
+rochester-tax-parcels-city-owned,layer_id,rochester-tax-parcels-city-owned,PASS2 convention (slug),file 15 X05
+rochester-tax-parcels-city-owned,service_id,rochester-maps-server,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X05 / endpoint
+rochester-tax-parcels-city-owned,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X05 / evidence | live read | join expected exact but not tested
+rochester-tax-parcels-city-owned,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X05 / evidence = 'live 2026-09-30'
+rochester-tax-parcels-city-owned,evidence_urls,https://maps.cityofrochester.gov/server/rest/services/Open_Data/Tax_Parcels_City_Owned_Land_Open_Data/FeatureServer/4,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X05 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+rochester-tax-parcels-city-owned,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+rochester-tax-parcels-city-owned,layer_name,Tax parcels: city owned land (live),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X05 / dataset
+rochester-tax-parcels-city-owned,endpoint,maps.cityofrochester.gov/server/rest/services/Open_Data/Tax_Parcels_City_Owned_Land_Open_Data/FeatureServer/4,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X05 / endpoint
+rochester-tax-parcels-city-owned,notes,file15 row X05,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X05 / dataset_id
+rochester-tax-parcels-city-owned,notes,Public owner is a city body | the fields are still owner-of-record,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X05 / notes
+rochester-tax-parcels-city-owned,notes,file15 exactness: expected exact | not tested,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X05 / exactness
+rochester-tax-parcels-city-owned,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+rochester-tax-parcels-city-owned,catalog_row_ref,09:Municipalities!R776,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R776 URL match
+rochester-tax-parcels-city-owned,record_count,2976,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X05 / record_count
+rochester-tax-parcels-city-owned,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X05 / geometry
+rochester-tax-parcels-city-owned,grain,parcel,heavymap-planning/EPIC-02-spine-and-joins.md,"Rochester findings table: City owned land polygon, PARCELID"
+rochester-tax-parcels-city-owned,id_field,PARCELID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X05 / identifier_fields
+rochester-tax-parcels-city-owned,pii_owner_fields_names_only,OWNERNME1 | PSTLADDRESS,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X05 / pii_or_mpac_flag
+rochester-tax-parcels-city-owned,join_keys_to_spine,PARCELID=PARCELID (X01/X03),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X05 / join_method
+rochester-housing-inventory-parcels,layer_id,rochester-housing-inventory-parcels,PASS2 convention (slug),file 15 X06
+rochester-housing-inventory-parcels,service_id,rochester-maps-server,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X06 / endpoint
+rochester-housing-inventory-parcels,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / evidence | live read | join to X01 14/15 (one miss undiagnosed) so not spined
+rochester-housing-inventory-parcels,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / evidence = 'live 2026-09-30'
+rochester-housing-inventory-parcels,evidence_urls,https://maps.cityofrochester.gov/server/rest/services/NBD/Housing_Inventory/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+rochester-housing-inventory-parcels,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+rochester-housing-inventory-parcels,layer_name,Housing inventory parcels (city owned real estate),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / dataset
+rochester-housing-inventory-parcels,endpoint,maps.cityofrochester.gov/server/rest/services/NBD/Housing_Inventory/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / endpoint
+rochester-housing-inventory-parcels,notes,file15 row X06,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / dataset_id
+rochester-housing-inventory-parcels,notes,One sampled SBL missing from X01 (not diagnosed),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / notes
+rochester-housing-inventory-parcels,notes,GISSBL unknown,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / exactness
+rochester-housing-inventory-parcels,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+rochester-housing-inventory-parcels,catalog_row_ref,09:Municipalities!R821,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R821 name match | catalog URL differs (Open_Data/Housing_Inventory_Parcels_Open_Data vs file 15 NBD/Housing_Inventory) - see PASS2-CONFLICTS
+rochester-housing-inventory-parcels,record_count,3387,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / record_count
+rochester-housing-inventory-parcels,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / geometry
+rochester-housing-inventory-parcels,grain,parcel,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / dataset: Housing inventory parcels
+rochester-housing-inventory-parcels,id_field,SBL,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / identifier_fields
+rochester-housing-inventory-parcels,id_length,20,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / identifier_fields: SBL (20-char)
+rochester-housing-inventory-parcels,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / pii_or_mpac_flag
+rochester-housing-inventory-parcels,join_keys_to_spine,SBL=PARCELID (X01) | GISSBL (10-char variant) not joinable directly,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / join_method
+rochester-housing-inventory-parcels,spine_join_method,exact,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / join_method
+rochester-housing-inventory-parcels,exactness_hits_tested,14/15,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X06 / exactness: exact (sample 14/15 found)
+rochester-address-parcels-lookup,layer_id,rochester-address-parcels-lookup,PASS2 convention (slug),file 15 X07
+rochester-address-parcels-lookup,service_id,rochester-maps-server,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X07 / endpoint
+rochester-address-parcels-lookup,lifecycle_status,spined,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / evidence | join to X01 PARCELID 21/21 found (sample)
+rochester-address-parcels-lookup,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / evidence = 'live 2026-09-30'
+rochester-address-parcels-lookup,evidence_urls,https://maps.cityofrochester.gov/server/rest/services/App_PropertyInformation/Address_Parcels_Lookup/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+rochester-address-parcels-lookup,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+rochester-address-parcels-lookup,layer_name,Address parcels lookup (address points with parcel attributes),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / dataset
+rochester-address-parcels-lookup,endpoint,maps.cityofrochester.gov/server/rest/services/App_PropertyInformation/Address_Parcels_Lookup/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / endpoint
+rochester-address-parcels-lookup,notes,file15 row X07,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / dataset_id
+rochester-address-parcels-lookup,notes,Best address to parcel bridge | many address points per parcel,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / notes
+rochester-address-parcels-lookup,notes,NYSStreetID | AddressLabel | PARCELID null on 164,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / identifier_fields
+rochester-address-parcels-lookup,notes,sample of 21 not full population | no catalog row found,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / exactness
+rochester-address-parcels-lookup,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+rochester-address-parcels-lookup,record_count,134137,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / record_count
+rochester-address-parcels-lookup,geometry_type,point,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / geometry
+rochester-address-parcels-lookup,grain,address,heavymap-planning/EPIC-02-spine-and-joins.md,"Recommended spine key mapping: Rochester, address"
+rochester-address-parcels-lookup,id_field,AddressPointID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / identifier_fields
+rochester-address-parcels-lookup,id_pattern_examples,MONR208416,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / identifier_fields: AddressPointID (e.g. MONR208416)
+rochester-address-parcels-lookup,pii_owner_fields_names_only,OWNERNME1 | PSTLADDRESS,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / pii_or_mpac_flag
+rochester-address-parcels-lookup,join_keys_to_spine,PARCELID=PARCELID (X01) (164 null) | PRINTKEY,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / join_method | identifier_fields
+rochester-address-parcels-lookup,spine_join_method,exact,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / join_method
+rochester-address-parcels-lookup,exactness_hits_tested,21/21,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X07 / exactness: exact (sample 21/21 found)
+rochester-taxparcel-centroids,layer_id,rochester-taxparcel-centroids,PASS2 convention (slug),file 15 X08
+rochester-taxparcel-centroids,service_id,rochester-maps-server,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X08 / endpoint
+rochester-taxparcel-centroids,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X08 / evidence | live read | join expected exact but not tested
+rochester-taxparcel-centroids,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X08 / evidence = 'live 2026-09-30'
+rochester-taxparcel-centroids,evidence_urls,https://maps.cityofrochester.gov/server/rest/services/Geodata/TaxParcel_Centroids/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X08 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+rochester-taxparcel-centroids,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+rochester-taxparcel-centroids,layer_name,Tax parcel centroids,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X08 / dataset
+rochester-taxparcel-centroids,endpoint,maps.cityofrochester.gov/server/rest/services/Geodata/TaxParcel_Centroids/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X08 / endpoint
+rochester-taxparcel-centroids,notes,file15 row X08,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X08 / dataset_id
+rochester-taxparcel-centroids,notes,Count matches X03 not X01,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X08 / notes
+rochester-taxparcel-centroids,notes,file15 exactness: expected exact | not tested,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X08 / exactness
+rochester-taxparcel-centroids,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+rochester-taxparcel-centroids,record_count,64709,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X08 / record_count
+rochester-taxparcel-centroids,geometry_type,point,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X08 / geometry
+rochester-taxparcel-centroids,grain,parcel,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X08 / dataset: Tax parcel centroids
+rochester-taxparcel-centroids,id_field,PARCELID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X08 / identifier_fields
+rochester-taxparcel-centroids,id_null_count,0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X08 / identifier_fields: PARCELID (0 null)
+rochester-taxparcel-centroids,pii_owner_fields_names_only,OWNERNME1 | PSTLADDRESS,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X08 / pii_or_mpac_flag
+rochester-taxparcel-centroids,join_keys_to_spine,PARCELID=PARCELID (X03),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X08 / join_method
+rochester-building-footprints,layer_id,rochester-building-footprints,PASS2 convention (slug),file 15 X09
+rochester-building-footprints,service_id,rochester-maps-server,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X09 / endpoint
+rochester-building-footprints,lifecycle_status,spined,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X09 / evidence | spatial join to X01 parcels 10/10 sampled points landed in one parcel
+rochester-building-footprints,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X09 / evidence = 'live 2026-09-30'
+rochester-building-footprints,evidence_urls,https://maps.cityofrochester.gov/server/rest/services/Open_Data/Building_Footprint_Open_Data/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X09 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+rochester-building-footprints,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+rochester-building-footprints,layer_name,Building footprints (live),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X09 / dataset
+rochester-building-footprints,endpoint,maps.cityofrochester.gov/server/rest/services/Open_Data/Building_Footprint_Open_Data/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X09 / endpoint
+rochester-building-footprints,notes,file15 row X09,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X09 / dataset_id
+rochester-building-footprints,notes,Demolition flags help vacancy readings (DEMOLISHED_TF | DATE_DEMOLISHED),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X09 / notes | identifier_fields
+rochester-building-footprints,notes,file15 exactness: fuzzy-spatial | sample of 10 not full population,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X09 / exactness
+rochester-building-footprints,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+rochester-building-footprints,catalog_row_ref,09:Municipalities!R815,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R815 URL match
+rochester-building-footprints,record_count,98449,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X09 / record_count
+rochester-building-footprints,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X09 / geometry
+rochester-building-footprints,grain,footprint,heavymap-planning/EPIC-02-spine-and-joins.md,"Recommended spine key mapping: Rochester, footprint"
+rochester-building-footprints,id_field,GlobalID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X09 / identifier_fields | notes: GlobalID is the only stable-looking id
+rochester-building-footprints,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X09 / pii_or_mpac_flag
+rochester-building-footprints,join_keys_to_spine,none (no parcel id | no address) | spatial to X01,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X09 / join_method
+rochester-building-footprints,spine_join_method,spatial,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X09 / join_method
+rochester-building-footprints,exactness_hits_tested,10/10,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X09 / exactness: fuzzy-spatial (10/10 sampled points landed in one parcel)
+rochester-zoning-districts,layer_id,rochester-zoning-districts,PASS2 convention (slug),file 15 X10
+rochester-zoning-districts,service_id,rochester-maps-server,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X10 / endpoint
+rochester-zoning-districts,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X10 / evidence | live read | parcel join not measured
+rochester-zoning-districts,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X10 / evidence = 'live 2026-09-30'
+rochester-zoning-districts,evidence_urls,https://maps.cityofrochester.gov/server/rest/services/Open_Data/Zoning_Districts_Open_Data/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X10 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+rochester-zoning-districts,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+rochester-zoning-districts,layer_name,Zoning districts,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X10 / dataset
+rochester-zoning-districts,endpoint,maps.cityofrochester.gov/server/rest/services/Open_Data/Zoning_Districts_Open_Data/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X10 / endpoint
+rochester-zoning-districts,notes,file15 row X10,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X10 / dataset_id
+rochester-zoning-districts,notes,LABEL 74 distinct | CATEGORY 13 distinct incl. Industrial | GlobalID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X10 / identifier_fields
+rochester-zoning-districts,notes,file15 exactness: fuzzy: BISZONING has 92 distinct values and many do not equal any LABEL (e.g. C1 vs C-1),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X10 / exactness
+rochester-zoning-districts,notes,Overlay (26) and preservation (10) districts are in ROC_Zoning layers 0 and 1 | counts documented | layer 0 not read,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X10 / notes
+rochester-zoning-districts,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+rochester-zoning-districts,catalog_row_ref,09:Municipalities!R774,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,"R774 URL match (R820 and R1004 are ROC_Zoning/FeatureServer/2, same count 421)"
+rochester-zoning-districts,record_count,421,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X10 / record_count
+rochester-zoning-districts,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X10 / geometry
+rochester-zoning-districts,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X10 / pii_or_mpac_flag
+rochester-zoning-districts,join_keys_to_spine,none by id | spatial (preferred) | BISZONING label text,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X10 / join_method
+rochester-development-ready-sites,layer_id,rochester-development-ready-sites,PASS2 convention (slug),file 15 X11
+rochester-development-ready-sites,service_id,rochester-maps-server,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X11 / endpoint
+rochester-development-ready-sites,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"X11 / evidence | live read | join fuzzy free text, no hits/tested"
+rochester-development-ready-sites,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X11 / evidence = 'live 2026-09-30'
+rochester-development-ready-sites,evidence_urls,https://maps.cityofrochester.gov/server/rest/services/NBD/Development_Ready_Sites/FeatureServer/1,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X11 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+rochester-development-ready-sites,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+rochester-development-ready-sites,layer_name,Development ready sites,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X11 / dataset
+rochester-development-ready-sites,endpoint,maps.cityofrochester.gov/server/rest/services/NBD/Development_Ready_Sites/FeatureServer/1,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X11 / endpoint
+rochester-development-ready-sites,notes,file15 row X11,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X11 / dataset_id
+rochester-development-ready-sites,notes,Format matches padded PRINTKEY (047.55-1-1.004),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X11 / notes
+rochester-development-ready-sites,notes,"catalog row R751 is an instant app, not this service - no catalog_row_ref",Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,Municipalities row 751
+rochester-development-ready-sites,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+rochester-development-ready-sites,record_count,10,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X11 / record_count
+rochester-development-ready-sites,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X11 / geometry
+rochester-development-ready-sites,id_field,Site_Num,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X11 / identifier_fields
+rochester-development-ready-sites,pii_owner_fields_names_only,Owner_Name,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X11 / pii_or_mpac_flag: Owner_Name present (not sampled)
+rochester-development-ready-sites,join_keys_to_spine,SBL_1 (print-key text | may hold several) parsed to PRINTKEY (X01),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X11 / join_method
+rochester-development-ready-sites,spine_join_method,fuzzy,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X11 / exactness: fuzzy (free text | multi-parcel)
+rochester-311-case-data,layer_id,rochester-311-case-data,PASS2 convention (slug),file 15 X12
+rochester-311-case-data,service_id,rochester-agol-services2,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X12 / endpoint
+rochester-311-case-data,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 / evidence | live read | no id join possible
+rochester-311-case-data,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 / evidence = 'live 2026-09-30'
+rochester-311-case-data,evidence_urls,https://services2.arcgis.com/yoz1ZtATTCokO9nU/arcgis/rest/services/311_Case_Data/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+rochester-311-case-data,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+rochester-311-case-data,layer_name,311 case data,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 / dataset
+rochester-311-case-data,endpoint,services2.arcgis.com/yoz1ZtATTCokO9nU/arcgis/rest/services/311_Case_Data/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 / endpoint
+rochester-311-case-data,notes,file15 row X12,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 / dataset_id
+rochester-311-case-data,notes,No address number and no parcel id | not a permits or code-violation feed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 / notes
+rochester-311-case-data,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+rochester-311-case-data,catalog_row_ref,09:Municipalities!R569,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R569 URL partial match (FeatureServer/1 vs file 15 /0) | R570 name match
+rochester-311-case-data,catalog_row_ref,09:Municipalities!R570,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R569 URL partial match (FeatureServer/1 vs file 15 /0) | R570 name match
+rochester-311-case-data,record_count,51721,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 / record_count
+rochester-311-case-data,geometry_type,point,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 / geometry
+rochester-311-case-data,id_field,ObjectId,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 / identifier_fields
+rochester-311-case-data,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 / pii_or_mpac_flag
+rochester-311-case-data,join_keys_to_spine,none by id | spatial only to X01,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 / join_method
+rochester-311-case-data,spine_join_method,spatial,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 / join_method: spatial only (exactness: impossible by id | fuzzy-spatial | no hits/tested)
+rochester-tax-parcel-snapshots-1996-2012,layer_id,rochester-tax-parcel-snapshots-1996-2012,PASS2 convention (slug),file 15 X13
+rochester-tax-parcel-snapshots-1996-2012,service_id,rochester-agol-services2,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X13 / endpoint
+rochester-tax-parcel-snapshots-1996-2012,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / evidence | live read | SBL stored as float so id join impossible (0/5 vs 2024 PARCELID)
+rochester-tax-parcel-snapshots-1996-2012,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / evidence = 'live 2026-09-30'
+rochester-tax-parcel-snapshots-1996-2012,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+rochester-tax-parcel-snapshots-1996-2012,evidence_urls,https://services2.arcgis.com/yoz1ZtATTCokO9nU/arcgis/rest/services/,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / endpoint (https added | truncated to folder because endpoint is a template or list)
+rochester-tax-parcel-snapshots-1996-2012,layer_name,"Tax parcel snapshots 1996, 2000, 2004, 2008, 2012 (tables)",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / dataset
+rochester-tax-parcel-snapshots-1996-2012,endpoint,services2.arcgis.com/yoz1ZtATTCokO9nU/arcgis/rest/services/Fixed_Assessment_Snapshot_1996 | City_of_Rochester_Tax_Parcel_Records_Snapshot_2000/2008/2012 (and _2008_fixed),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / endpoint
+rochester-tax-parcel-snapshots-1996-2012,notes,file15 row X13,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / dataset_id
+rochester-tax-parcel-snapshots-1996-2012,notes,COMBINED ROW: several tables | counts: 1996 68279 | 2012 66254 | others per catalog | record_count left blank,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / record_count
+rochester-tax-parcel-snapshots-1996-2012,notes,impossible by exact id: value returned as 4.62800001001e+18 (leading zero and trailing digits lost) | sample of 5 from 2012 SBL20: 0 of 5 matched a 2024 PARCELID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / exactness | notes
+rochester-tax-parcel-snapshots-1996-2012,notes,needs address-plus-house-number or a reconstruction rule,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / notes
+rochester-tax-parcel-snapshots-1996-2012,notes,quirk (float-stored id) not yet in 18-quirks-log | Stage 4 not done,heavymap-planning/DATASET-ROUTINE.md §4 Stage 4,status stays profiled by instruction
+rochester-tax-parcel-snapshots-1996-2012,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+rochester-tax-parcel-snapshots-1996-2012,catalog_row_ref,09:Municipalities!R765,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match for 1996 | 2012 | 2008 | 2008_fixed | 2000 (catalog titles and URLs disagree - see PASS2-CONFLICTS)
+rochester-tax-parcel-snapshots-1996-2012,catalog_row_ref,09:Municipalities!R768,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match for 1996 | 2012 | 2008 | 2008_fixed | 2000 (catalog titles and URLs disagree - see PASS2-CONFLICTS)
+rochester-tax-parcel-snapshots-1996-2012,catalog_row_ref,09:Municipalities!R766,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match for 1996 | 2012 | 2008 | 2008_fixed | 2000 (catalog titles and URLs disagree - see PASS2-CONFLICTS)
+rochester-tax-parcel-snapshots-1996-2012,catalog_row_ref,09:Municipalities!R769,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match for 1996 | 2012 | 2008 | 2008_fixed | 2000 (catalog titles and URLs disagree - see PASS2-CONFLICTS)
+rochester-tax-parcel-snapshots-1996-2012,catalog_row_ref,09:Municipalities!R767,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match for 1996 | 2012 | 2008 | 2008_fixed | 2000 (catalog titles and URLs disagree - see PASS2-CONFLICTS)
+rochester-tax-parcel-snapshots-1996-2012,vintage,snapshots 1996 | 2000 | 2004 | 2008 | 2012,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / dataset
+rochester-tax-parcel-snapshots-1996-2012,geometry_type,none,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / geometry
+rochester-tax-parcel-snapshots-1996-2012,grain,parcel,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / dataset: Tax parcel snapshots (tables)
+rochester-tax-parcel-snapshots-1996-2012,id_field,SBL (1996) | SBL20 (2012),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / identifier_fields: 1996 SBL | 2012 SBL_ID and SBL20
+rochester-tax-parcel-snapshots-1996-2012,id_type,double (floating point),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / identifier_fields | key_type: SBL stored as a floating-point number
+rochester-tax-parcel-snapshots-1996-2012,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / pii_or_mpac_flag
+rochester-tax-parcel-snapshots-1996-2012,join_keys_to_spine,none safe by id,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X13 / join_method
+rochester-parcel-lineage,layer_id,rochester-parcel-lineage,PASS2 convention (slug),file 15 X14
+rochester-parcel-lineage,service_id,rochester-agol-services2,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X14 / endpoint
+rochester-parcel-lineage,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X14 / evidence | live read | join exact stated without hits/tested
+rochester-parcel-lineage,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X14 / evidence = 'live 2026-09-30'
+rochester-parcel-lineage,evidence_urls,https://services2.arcgis.com/yoz1ZtATTCokO9nU/arcgis/rest/services/ParcelHistory/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X14 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+rochester-parcel-lineage,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+rochester-parcel-lineage,layer_name,Parcel lineage (splits and merges),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X14 / dataset
+rochester-parcel-lineage,endpoint,services2.arcgis.com/yoz1ZtATTCokO9nU/arcgis/rest/services/ParcelHistory/FeatureServer/0 (LineageParcels),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X14 / endpoint
+rochester-parcel-lineage,notes,file15 row X14,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X14 / dataset_id
+rochester-parcel-lineage,notes,PRINTKEY | YEAR | NewSBL | Split_Merge | NewParcelPrintKey (2 variants of field name across layers),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X14 / identifier_fields
+rochester-parcel-lineage,notes,Only 788 rows: covers a small share of ID changes across 2014-2024 snapshot counts (coverage not measured),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X14 / notes
+rochester-parcel-lineage,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+rochester-parcel-lineage,record_count,788,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X14 / record_count
+rochester-parcel-lineage,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X14 / geometry
+rochester-parcel-lineage,id_field,PARCELID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X14 / identifier_fields
+rochester-parcel-lineage,pii_owner_fields_names_only,OWNERNME1,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X14 / pii_or_mpac_flag: OWNERNME1 field present (not sampled)
+rochester-parcel-lineage,join_keys_to_spine,PARCELID or NewSBL (SBL20 to NewSBL),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X14 / join_method
+rochester-parcel-lineage,spine_join_method,exact,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X14 / exactness: exact (no hits/tested)
+monroe-parcels-public,layer_id,monroe-parcels-public,PASS2 convention (slug),file 15 X15
+monroe-parcels-public,service_id,monroe-county-maps,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X15 / endpoint
+monroe-parcels-public,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / evidence | live read | join to city 45/45 sample but NA-79/81 full population shows non-matching/short ids
+monroe-parcels-public,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / evidence = 'live 2026-09-30'
+monroe-parcels-public,evidence_urls,https://maps.monroecounty.gov/server/rest/services/Hosted/Parcels_Public/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+monroe-parcels-public,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+monroe-parcels-public,layer_name,Parcels_Public,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / dataset
+monroe-parcels-public,endpoint,maps.monroecounty.gov/server/rest/services/Hosted/Parcels_Public/FeatureServer/0,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / endpoint
+monroe-parcels-public,notes,file15 row X15,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / dataset_id
+monroe-parcels-public,notes,"swis is a municipality NAME (32 distinct | 544 null) | printkey 267,357 distinct | rollsection",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / identifier_fields
+monroe-parcels-public,notes,"64,629 rows swis=City of Rochester | 26 rows with 261400 prefix have null swis | 868 rows class 700-799",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / notes
+monroe-parcels-public,notes,"NA-81: 263,310 rows 26-char | 4,652 other lengths | 40 empty | 261400 prefix on 64,655 rows",heavymap-nia-81/docs/data/README-monroe-swis-crosswalk.md,Full-population checks | For Rochester
+monroe-parcels-public,notes,"NA-79: live city 64,047/64,709 distinct IDs join to a 261400 county composite | pilot 45/45 is a sample",heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,What the records establish
+monroe-parcels-public,notes,file15 exactness: print key not unique county-wide,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / exactness
+monroe-parcels-public,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+monroe-parcels-public,catalog_row_ref,09:Counties!R46,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,R46 URL match
+monroe-parcels-public,vintage,rollyear 2026 (sampled),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / identifier_fields
+monroe-parcels-public,record_count,267962,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / record_count
+monroe-parcels-public,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / geometry
+monroe-parcels-public,grain,parcel,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / dataset: Parcels_Public (Monroe County parcels)
+monroe-parcels-public,id_field,countysbl,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / identifier_fields
+monroe-parcels-public,id_type,string,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / identifier_fields: countysbl (26-char string)
+monroe-parcels-public,id_length,26,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"X15 / identifier_fields (see conflict: 4,652 rows are other lengths per NA-81)"
+monroe-parcels-public,distinct_id_count,267904,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / identifier_fields
+monroe-parcels-public,id_null_count,0,heavymap-nia-81/docs/data/README-monroe-swis-crosswalk.md,Full-population checks: Null countysbl 0 (40 are empty strings)
+monroe-parcels-public,id_dup_count,58,heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,"derived 267962-267904 | ""58 extra rows, of which 40 empty IDs contribute 39 extra rows"""
+monroe-parcels-public,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / pii_or_mpac_flag: no owner-name field in field list
+monroe-parcels-public,join_keys_to_spine,countysbl = 261400 + PARCELID for city parcels | printkey (not unique county-wide),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / join_method
+monroe-parcels-public,spine_join_method,exact,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / join_method
+monroe-parcels-public,exactness_hits_tested,45/45,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / exactness: exact by countysbl for city rows (45/45)
+nys-tax-parcels-public,layer_id,nys-tax-parcels-public,PASS2 convention (slug),file 15 X16
+nys-tax-parcels-public,service_id,nys-its-arcgis-online,"PASS2 convention (slug, see 16-service-profile.PASS2-DRAFT.csv)",file 15 X16 / endpoint
+nys-tax-parcels-public,lifecycle_status,profiled,heavymap-planning/DATASET-ROUTINE.md §5 + Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / evidence | live read | join impossible for Rochester/Monroe (0 features)
+nys-tax-parcels-public,profile_date,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / evidence = 'live 2026-09-30'
+nys-tax-parcels-public,evidence_urls,https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Tax_Parcels_Public/FeatureServer/1,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / endpoint (https:// scheme added | host form in catalog Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx and heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md)
+nys-tax-parcels-public,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header: Linear NA-24
+nys-tax-parcels-public,layer_name,NYS Tax Parcels Public,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / dataset
+nys-tax-parcels-public,endpoint,services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Tax_Parcels_Public/FeatureServer/1,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / endpoint
+nys-tax-parcels-public,notes,file15 row X16,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / dataset_id
+nys-tax-parcels-public,notes,"38 counties | Erie 370,424 | Genesee 28,266 | Chautauqua 88,396 | Wyoming 23,530 | absent: Monroe | Niagara | Orleans | Cattaraugus",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / notes
+nys-tax-parcels-public,notes,file15 exactness: impossible for Rochester and Monroe (0 features) | exact within covered counties (no hits/tested),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / exactness
+nys-tax-parcels-public,notes,"CITYTOWN_NAME=Rochester returns 4,889 Ulster County features (name collision)",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / notes
+nys-tax-parcels-public,notes,"NA-79 samples: Genesee 28,266 full | Erie 20,000 | Chautauqua 8,000 checked | SWIS_SBL_ID = SWIS + SBL in sampled rows",heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,Pulls and coverage table
+nys-tax-parcels-public,notes,pass2 partial profile: encoding | date formats | tz | null conventions | field list not read,heavymap-planning/DATASET-ROUTINE.md §4 Stage 3 gate,columns left blank by instruction (no new pulls)
+nys-tax-parcels-public,catalog_row_ref,09:Counties!R34,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match: Erie | Chautauqua | Wyoming | Genesee filter rows and Cross-Cutting R16 (Erie industrial)
+nys-tax-parcels-public,catalog_row_ref,09:Counties!R39,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match: Erie | Chautauqua | Wyoming | Genesee filter rows and Cross-Cutting R16 (Erie industrial)
+nys-tax-parcels-public,catalog_row_ref,09:Counties!R42,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match: Erie | Chautauqua | Wyoming | Genesee filter rows and Cross-Cutting R16 (Erie industrial)
+nys-tax-parcels-public,catalog_row_ref,09:Counties!R43,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match: Erie | Chautauqua | Wyoming | Genesee filter rows and Cross-Cutting R16 (Erie industrial)
+nys-tax-parcels-public,catalog_row_ref,09:Cross-Cutting Regional!R16,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,URL match: Erie | Chautauqua | Wyoming | Genesee filter rows and Cross-Cutting R16 (Erie industrial)
+nys-tax-parcels-public,record_count,3827530,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / record_count
+nys-tax-parcels-public,geometry_type,polygon,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / geometry
+nys-tax-parcels-public,grain,parcel,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / dataset: NYS Tax Parcels Public
+nys-tax-parcels-public,id_field,SWIS_SBL_ID,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / identifier_fields: SWIS_SBL_ID (26)
+nys-tax-parcels-public,id_length,26,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / identifier_fields
+nys-tax-parcels-public,pii_owner_fields_names_only,PRIMARY_OWNER | ADD_OWNER | MAIL_*,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / pii_or_mpac_flag | EPIC: MAIL_* present
+nys-tax-parcels-public,join_keys_to_spine,SWIS_SBL_ID or SWIS+SBL | PRINT_KEY (unpadded section),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / join_method
+service:welland-arcgisweb-serverprodpub,service_id,welland-arcgisweb-serverprodpub,PASS2 convention (slug),
+service:welland-arcgisweb-serverprodpub,publisher,City of Welland,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"W02..W10 / source (City of Welland Open Data | W01 ""City of Welland (public REST...)"")"
+service:welland-arcgisweb-serverprodpub,jurisdiction,welland,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / jurisdiction
+service:welland-arcgisweb-serverprodpub,base_url,https://arcgisweb.welland.ca/serverprodpub/rest/services,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,Municipalities rows 461 | 476 | 478 | 485 public_url prefix
+service:welland-arcgisweb-serverprodpub,access_method,ArcGIS REST (MapServer),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / endpoint .../MapServer/0 | EPIC Welland findings
+service:welland-arcgisweb-serverprodpub,auth_required,no,heavymap-planning/EPIC-02-spine-and-joins.md,"Welland headline: Base folder ""reachable without a token"" | Resume notes: serverprod folders Building and PropReports need a token"
+service:welland-arcgisweb-serverprodpub,licence_note,Open Data layers: OGL 2.0 per catalog (file 15 source column),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W02 / source
+service:welland-arcgisweb-serverprodpub,licence_note,Base-folder parcel layers (W01 | W10): licence text not found,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / pii_or_mpac_flag
+service:welland-arcgisweb-serverprodpub,reliability_notes,roster 07 says origin down 2026-08-22 | origin answered on 2026-09-30 reads,Spreadsheets/07-jurisdiction-roster-v1.csv,"welland row 13 vs EPIC conflicts table (07 roster, Welland)"
+service:welland-arcgisweb-serverprodpub,last_checked,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01-W10 / evidence = 'live 2026-09-30'
+service:welland-arcgisweb-serverprodpub,profile_status,partial,heavymap-planning/DATASET-ROUTINE.md §3 (vocab not defined for service profile_status | judgment),no enum defined
+service:welland-arcgisweb-serverprodpub,evidence_urls,https://arcgisweb.welland.ca/serverprodpub/rest/services,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,base_url
+service:welland-arcgisweb-serverprodpub,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header
+service:welland-arcgisweb-serverprodpub,notes,Pilot layers on this service: W01-W10 (W05 table + points | W10 two endpoints),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01..W10 / endpoint
+service:welland-arcgisweb-serverprod,service_id,welland-arcgisweb-serverprod,PASS2 convention (slug),
+service:welland-arcgisweb-serverprod,publisher,City of Welland,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W11 / source
+service:welland-arcgisweb-serverprod,jurisdiction,welland,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W11 / jurisdiction
+service:welland-arcgisweb-serverprod,base_url,https://arcgisweb.welland.ca/serverprod/rest/services,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,Municipalities row 496 public_url prefix
+service:welland-arcgisweb-serverprod,access_method,ArcGIS REST (MapServer),Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,Municipalities row 496 public_url (.../MapServer/4)
+service:welland-arcgisweb-serverprod,auth_required,yes (token),heavymap-planning/EPIC-02-spine-and-joins.md,Resume notes: Welland serverprod folders Building and PropReports return Token Required | F15 W11 notes
+service:welland-arcgisweb-serverprod,reliability_notes,Token Required 2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W11 / evidence
+service:welland-arcgisweb-serverprod,last_checked,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W11 / evidence = 'live 2026-09-30'
+service:welland-arcgisweb-serverprod,profile_status,blocked,heavymap-planning/DATASET-ROUTINE.md §5 (judgment: service-level use of layer side state),W11 token required
+service:welland-arcgisweb-serverprod,evidence_urls,https://arcgisweb.welland.ca/serverprod/rest/services,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,base_url
+service:welland-arcgisweb-serverprod,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header
+service:welland-arcgisweb-serverprod,notes,Only W11 sits here | DCAT lists it (modified 2023-06-27),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W11 / notes
+service:niagara-region-arcgis-online,service_id,niagara-region-arcgis-online,PASS2 convention (slug),
+service:niagara-region-arcgis-online,publisher,Niagara Region Open Data,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01..R04 / source
+service:niagara-region-arcgis-online,jurisdiction,niagara_region,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / jurisdiction (covers welland)
+service:niagara-region-arcgis-online,base_url,https://services1.arcgis.com/WxiLK82TWf8W3O3f/arcgis/rest/services,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,Counties rows 3 | 594 | 607 | 630 public_url prefix
+service:niagara-region-arcgis-online,access_method,ArcGIS REST (FeatureServer),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01 / endpoint .../FeatureServer/45
+service:niagara-region-arcgis-online,auth_required,no,heavymap-planning/EPIC-02-spine-and-joins.md,"Rules kept in this study: public HTTP GET, no keys or logins"
+service:niagara-region-arcgis-online,reliability_notes,niagaraopendata.ca CKAN API returned a Cloudflare challenge (403) 2026-09-30 | this ArcGIS service used instead,heavymap-planning/EPIC-02-spine-and-joins.md,Resume notes: Endpoint quirks
+service:niagara-region-arcgis-online,last_checked,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01-R04 / evidence = 'live 2026-09-30'
+service:niagara-region-arcgis-online,profile_status,partial,heavymap-planning/DATASET-ROUTINE.md,judgment
+service:niagara-region-arcgis-online,evidence_urls,https://services1.arcgis.com/WxiLK82TWf8W3O3f/arcgis/rest/services,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,base_url
+service:niagara-region-arcgis-online,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header
+service:niagara-region-arcgis-online,notes,Pilot layers: R01 NEI (FeatureServer/45) | R02 address points (/43) | R03 footprints (/38) | R04 heritage (/35),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R01..R04 / endpoint
+service:npca-arcgis-online,service_id,npca-arcgis-online,PASS2 convention (slug),
+service:npca-arcgis-online,publisher,NPCA (ArcGIS Online),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / source
+service:npca-arcgis-online,jurisdiction,niagara_region,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / jurisdiction
+service:npca-arcgis-online,base_url,services1.arcgis.com/d0ZCwU7eGKVeNiEE,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / endpoint (org id | catalog labels the same org id HCA - see PASS2-CONFLICTS)
+service:npca-arcgis-online,reliability_notes,"documented, not re-read",Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / evidence
+service:npca-arcgis-online,profile_status,not_profiled,heavymap-planning/DATASET-ROUTINE.md §1 rule: NPCA-derived layers not ingested,judgment
+service:npca-arcgis-online,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header
+service:npca-arcgis-online,notes,Existence noted only | MPAC-derived | not ingested,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,R05 / notes
+service:rochester-maps-server2,service_id,rochester-maps-server2,PASS2 convention (slug),
+service:rochester-maps-server2,publisher,City of Rochester,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / source
+service:rochester-maps-server2,jurisdiction,rochester_ny,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 / jurisdiction
+service:rochester-maps-server2,base_url,https://maps.cityofrochester.gov/server2/rest/services,heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,Pulls and coverage: city 2024 layer URL
+service:rochester-maps-server2,access_method,ArcGIS REST (FeatureServer),heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,Pulls and coverage: public ArcGIS query GET
+service:rochester-maps-server2,auth_required,no,heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,Pulls and coverage: public ArcGIS query GET
+service:rochester-maps-server2,licence_note,DCAT licence field holds HTML | text points to data.cityofrochester.gov/pages/terms (page not read in full) | EPIC open decision 9,heavymap-planning/EPIC-02-spine-and-joins.md,"Conflicts with existing docs: 07 roster, Rochester"
+service:rochester-maps-server2,last_checked,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01-X02 / evidence = 'live 2026-09-30'
+service:rochester-maps-server2,profile_status,partial,heavymap-planning/DATASET-ROUTINE.md,judgment
+service:rochester-maps-server2,evidence_urls,https://maps.cityofrochester.gov/server2/rest/services,heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,base_url
+service:rochester-maps-server2,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header
+service:rochester-maps-server2,notes,Pilot layers: X01 (TaxParcel2024) | X02 (TaxParcel2014-2023 snapshots). Platform is ArcGIS Hub not Socrata (see PASS2-CONFLICTS),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X01 | X02 / source | EPIC Rochester headline
+service:rochester-maps-server,service_id,rochester-maps-server,PASS2 convention (slug),
+service:rochester-maps-server,publisher,City of Rochester,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03..X11 / source
+service:rochester-maps-server,jurisdiction,rochester_ny,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03 / jurisdiction
+service:rochester-maps-server,base_url,https://maps.cityofrochester.gov/server/rest/services,heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,Pulls and coverage: city live layer URL
+service:rochester-maps-server,access_method,ArcGIS REST (FeatureServer),heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,Pulls and coverage
+service:rochester-maps-server,auth_required,no,heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,Pulls and coverage: public ArcGIS query GET
+service:rochester-maps-server,licence_note,DCAT licence field holds HTML | text points to data.cityofrochester.gov/pages/terms (page not read in full) | EPIC open decision 9,heavymap-planning/EPIC-02-spine-and-joins.md,"Conflicts with existing docs: 07 roster, Rochester"
+service:rochester-maps-server,last_checked,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03-X11 / evidence = 'live 2026-09-30'
+service:rochester-maps-server,profile_status,partial,heavymap-planning/DATASET-ROUTINE.md,judgment
+service:rochester-maps-server,evidence_urls,https://maps.cityofrochester.gov/server/rest/services,heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,base_url
+service:rochester-maps-server,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header
+service:rochester-maps-server,notes,Pilot layers: X03-X11 (X06 under NBD | X07 under App_PropertyInformation | X08 under Geodata | X11 under NBD | others Open_Data),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X03..X11 / endpoint
+service:rochester-agol-services2,service_id,rochester-agol-services2,PASS2 convention (slug),
+service:rochester-agol-services2,publisher,City of Rochester,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 | X13 | X14 / source
+service:rochester-agol-services2,jurisdiction,rochester_ny,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 / jurisdiction
+service:rochester-agol-services2,base_url,https://services2.arcgis.com/yoz1ZtATTCokO9nU/arcgis/rest/services,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,Municipalities rows 569 | 765 public_url prefix
+service:rochester-agol-services2,access_method,ArcGIS REST (FeatureServer),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12 / endpoint
+service:rochester-agol-services2,auth_required,no,heavymap-planning/EPIC-02-spine-and-joins.md,"Rules kept in this study: public HTTP GET, no keys or logins"
+service:rochester-agol-services2,reliability_notes,org lists 134 services | none matches permit | violation or licence names,heavymap-planning/EPIC-02-spine-and-joins.md,Rochester: Not in the catalog
+service:rochester-agol-services2,last_checked,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12-X14 / evidence = 'live 2026-09-30'
+service:rochester-agol-services2,profile_status,partial,heavymap-planning/DATASET-ROUTINE.md,judgment
+service:rochester-agol-services2,evidence_urls,https://services2.arcgis.com/yoz1ZtATTCokO9nU/arcgis/rest/services,Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,base_url
+service:rochester-agol-services2,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header
+service:rochester-agol-services2,notes,Pilot layers: X12 (311_Case_Data) | X13 (assessment snapshot tables) | X14 (ParcelHistory),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X12..X14 / endpoint
+service:monroe-county-maps,service_id,monroe-county-maps,PASS2 convention (slug),
+service:monroe-county-maps,publisher,Monroe County DES GIS,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / source
+service:monroe-county-maps,jurisdiction,monroe_county_ny,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / jurisdiction
+service:monroe-county-maps,base_url,https://maps.monroecounty.gov/server/rest/services,heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,Pulls and coverage: Monroe layer URL
+service:monroe-county-maps,access_method,ArcGIS REST (FeatureServer),heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,Pulls and coverage
+service:monroe-county-maps,auth_required,no,heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,Pulls and coverage: public ArcGIS query GET
+service:monroe-county-maps,licence_note,licenceInfo field blank on the portal item | Enterprise Portal terms page needs a check,Spreadsheets/07-jurisdiction-roster-v1.csv,monroe_county_ny row 32
+service:monroe-county-maps,last_checked,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X15 / evidence = 'live 2026-09-30'
+service:monroe-county-maps,profile_status,partial,heavymap-planning/DATASET-ROUTINE.md,judgment
+service:monroe-county-maps,evidence_urls,https://maps.monroecounty.gov/server/rest/services,heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,base_url
+service:monroe-county-maps,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header
+service:monroe-county-maps,notes,Self-hosted ArcGIS Enterprise | one pilot layer X15 (Hosted/Parcels_Public/FeatureServer/0),Spreadsheets/07-jurisdiction-roster-v1.csv,monroe_county_ny row 32
+service:nys-its-arcgis-online,service_id,nys-its-arcgis-online,PASS2 convention (slug),
+service:nys-its-arcgis-online,publisher,NYS ITS Geospatial Services (ArcGIS Online mirror),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / source
+service:nys-its-arcgis-online,jurisdiction,new_york_state,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,"X16 / jurisdiction (statewide layer | file 15 value ""erie_wyoming_genesee_chautauqua (statewide layer)"")"
+service:nys-its-arcgis-online,base_url,https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services,heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,Pulls and coverage: NYS statewide layer URL
+service:nys-its-arcgis-online,access_method,ArcGIS REST (FeatureServer),heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,Pulls and coverage
+service:nys-its-arcgis-online,auth_required,no,heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,Pulls and coverage: public ArcGIS query GET
+service:nys-its-arcgis-online,reliability_notes,statewide-layer queries are slow (30 to 60 seconds) | ROLL_YR distinct query timed out,heavymap-planning/EPIC-02-spine-and-joins.md,Resume notes: Method | Not read
+service:nys-its-arcgis-online,last_checked,2026-09-30,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / evidence = 'live 2026-09-30'
+service:nys-its-arcgis-online,profile_status,partial,heavymap-planning/DATASET-ROUTINE.md,judgment
+service:nys-its-arcgis-online,evidence_urls,https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services,heavymap-nia-79b/docs/normalization/ny-sbl-real-data-evidence.md,base_url
+service:nys-its-arcgis-online,evidence_urls,https://linear.app/niagaraassembly/issue/NA-24/epic-2-parcel-identity-spine-and-joins,heavymap-planning/EPIC-02-spine-and-joins.md,header
+service:nys-its-arcgis-online,notes,One pilot layer X16 (NYS_Tax_Parcels_Public/FeatureServer/1) | 38 counties | Monroe and Niagara have 0 features,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,X16 / notes
