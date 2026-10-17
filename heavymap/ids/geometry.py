@@ -12,6 +12,7 @@ import hashlib
 import json
 import math
 from dataclasses import dataclass
+from functools import cached_property
 from typing import Iterable, Sequence
 
 try:
@@ -42,13 +43,21 @@ def _close(ring: Sequence[Point]) -> list[Point]:
     return pts
 
 
+def _closed(ring: Sequence[Point]) -> Sequence[Point]:
+    """Fast path for hot loops: Geometry rings are stored closed already."""
+
+    if len(ring) >= 4 and ring[0] == ring[-1]:
+        return ring
+    return _close(ring)
+
+
 def _open(ring: Sequence[Point]) -> list[Point]:
     pts = _close(ring)
     return pts[:-1]
 
 
 def _signed_area(ring: Sequence[Point]) -> float:
-    pts = _close(ring)
+    pts = _closed(ring)
     total = 0.0
     for (x1, y1), (x2, y2) in zip(pts, pts[1:]):
         total += x1 * y2 - x2 * y1
@@ -101,17 +110,38 @@ class Geometry:
 
     parts: tuple[Ring, ...]
     kind: str = "polygon"  # polygon | point
+    # Interior rings per part, aligned with ``parts``. Empty tuple = no holes.
+    holes: tuple[tuple[Ring, ...], ...] = ()
 
     @staticmethod
-    def from_ring(ring: Sequence[Point]) -> "Geometry":
-        return Geometry(parts=(tuple(_close(ring)),), kind="polygon")
+    def from_ring(
+        ring: Sequence[Point], holes: Iterable[Sequence[Point]] = ()
+    ) -> "Geometry":
+        return Geometry.from_polygons([(ring, holes)])
 
     @staticmethod
     def from_rings(rings: Iterable[Sequence[Point]]) -> "Geometry":
-        parts = tuple(tuple(_close(ring)) for ring in rings)
+        return Geometry.from_polygons([(ring, ()) for ring in rings])
+
+    @staticmethod
+    def from_polygons(
+        polygons: Iterable[tuple[Sequence[Point], Iterable[Sequence[Point]]]]
+    ) -> "Geometry":
+        """Build from ``(outer_ring, [hole_ring, ...])`` pairs."""
+
+        parts: list[Ring] = []
+        holes: list[tuple[Ring, ...]] = []
+        for outer, inner in polygons:
+            parts.append(tuple(_close(outer)))
+            holes.append(tuple(tuple(_close(h)) for h in inner))
         if not parts:
             raise GeometryError("empty_geometry")
-        return Geometry(parts=parts, kind="polygon")
+        if not any(holes):
+            return Geometry(parts=tuple(parts), kind="polygon")
+        return Geometry(parts=tuple(parts), kind="polygon", holes=tuple(holes))
+
+    def holes_of(self, index: int) -> tuple[Ring, ...]:
+        return self.holes[index] if self.holes else ()
 
     @staticmethod
     def point(x: float, y: float) -> "Geometry":
@@ -132,7 +162,11 @@ class Geometry:
         parts = tuple(
             tuple((x + dx, y + dy) for x, y in ring) for ring in self.parts
         )
-        return Geometry(parts=parts, kind="polygon")
+        holes = tuple(
+            tuple(tuple((x + dx, y + dy) for x, y in ring) for ring in part)
+            for part in self.holes
+        )
+        return Geometry(parts=parts, kind="polygon", holes=holes)
 
     @property
     def x(self) -> float:
@@ -146,7 +180,11 @@ class Geometry:
             raise GeometryError("not_a_point")
         return self.parts[0][1]
 
-    @property
+    # Geometry is immutable, so bounds, area and the representative point are
+    # cached per instance (frozen dataclass without slots: cached_property
+    # writes straight to __dict__). Uncached, they dominated runtime at
+    # Hamilton scale (166k parcels, 214k buildings).
+    @cached_property
     def bounds(self) -> Bounds:
         if self.kind == "point":
             x, y = self.parts[0]
@@ -155,18 +193,37 @@ class Geometry:
         ys = [y for ring in self.parts for _, y in ring]
         return Bounds(min(xs), min(ys), max(xs), max(ys))
 
-    @property
+    @cached_property
     def area(self) -> float:
         if self.kind == "point":
             return 0.0
-        return sum(abs(_signed_area(ring)) for ring in self.parts)
+        return sum(
+            abs(_signed_area(ring))
+            - sum(abs(_signed_area(h)) for h in self.holes_of(i))
+            for i, ring in enumerate(self.parts)
+        )
 
     def contains_point(self, x: float, y: float) -> bool:
         if self.kind == "point":
             return self.x == x and self.y == y
-        return any(_point_in_ring(x, y, ring) for ring in self.parts)
+        for i, ring in enumerate(self.parts):
+            if not _point_in_ring(x, y, ring):
+                continue
+            # A point strictly inside a hole is outside the polygon; a point on
+            # the hole boundary counts as inside (boundary rule of _point_in_ring).
+            if any(_strictly_in_ring(x, y, h) for h in self.holes_of(i)):
+                continue
+            return True
+        return False
 
     def representative_point(self) -> Point:
+        cached = self.__dict__.get("_rep_point")
+        if cached is None:
+            cached = self._representative_point()
+            self.__dict__["_rep_point"] = cached
+        return cached
+
+    def _representative_point(self) -> Point:
         if self.kind == "point":
             return (self.x, self.y)
         ring = max(self.parts, key=lambda r: abs(_signed_area(r)))
@@ -191,7 +248,8 @@ class Geometry:
         if self.kind == "point":
             return math.hypot(self.x - x, self.y - y)
         best = float("inf")
-        for ring in self.parts:
+        rings = list(self.parts) + [h for part in self.holes for h in part]
+        for ring in rings:
             pts = _close(ring)
             for (ax, ay), (bx, by) in zip(pts, pts[1:]):
                 best = min(best, _point_segment_distance(x, y, ax, ay, bx, by))
@@ -200,7 +258,7 @@ class Geometry:
     def as_rect(self) -> Bounds | None:
         """Return bounds if this is a single axis-aligned rectangle."""
 
-        if self.kind != "polygon" or len(self.parts) != 1:
+        if self.kind != "polygon" or len(self.parts) != 1 or self.holes:
             return None
         pts = _open(self.parts[0])
         if len(pts) != 4:
@@ -217,15 +275,14 @@ class Geometry:
     def to_json(self) -> dict:
         if self.kind == "point":
             return {"type": "Point", "coordinates": [self.x, self.y]}
-        if len(self.parts) == 1:
-            return {
-                "type": "Polygon",
-                "coordinates": [[[x, y] for x, y in self.parts[0]]],
-            }
-        return {
-            "type": "MultiPolygon",
-            "coordinates": [[[[x, y] for x, y in ring]] for ring in self.parts],
-        }
+        polys = [
+            [[[x, y] for x, y in ring]]
+            + [[[x, y] for x, y in h] for h in self.holes_of(i)]
+            for i, ring in enumerate(self.parts)
+        ]
+        if len(polys) == 1:
+            return {"type": "Polygon", "coordinates": polys[0]}
+        return {"type": "MultiPolygon", "coordinates": polys}
 
     @staticmethod
     def from_json(data: dict) -> "Geometry":
@@ -234,12 +291,26 @@ class Geometry:
         if kind == "Point":
             return Geometry.point(coords[0], coords[1])
         if kind == "Polygon":
-            return Geometry.from_ring(tuple((c[0], c[1]) for c in coords[0]))
+            return Geometry.from_polygons([_polygon_rings(coords)])
         if kind == "MultiPolygon":
-            return Geometry.from_rings(
-                tuple((c[0], c[1]) for c in poly[0]) for poly in coords
+            return Geometry.from_polygons(
+                _polygon_rings(poly) for poly in coords if poly
             )
         raise GeometryError("unsupported_geojson_type", str(kind))
+
+
+def _polygon_rings(coords) -> tuple[tuple[Point, ...], tuple[tuple[Point, ...], ...]]:
+    """GeoJSON polygon coordinates -> (outer, holes). Degenerate holes are dropped."""
+
+    if not coords:
+        raise GeometryError("empty_geometry")
+    outer = tuple((float(c[0]), float(c[1])) for c in coords[0])
+    holes = []
+    for ring in coords[1:]:
+        pts = tuple((float(c[0]), float(c[1])) for c in ring)
+        if len(set(pts)) >= 3:
+            holes.append(pts)
+    return outer, tuple(holes)
 
 
 def _ring_centroid(ring: Sequence[Point]) -> Point:
@@ -258,7 +329,7 @@ def _ring_centroid(ring: Sequence[Point]) -> Point:
 
 
 def _point_in_ring(x: float, y: float, ring: Sequence[Point]) -> bool:
-    pts = _close(ring)
+    pts = _closed(ring)
     inside = False
     for (x1, y1), (x2, y2) in zip(pts, pts[1:]):
         if (y1 > y) != (y2 > y):
@@ -271,6 +342,16 @@ def _point_in_ring(x: float, y: float, ring: Sequence[Point]) -> bool:
         elif y1 == y == y2 and (min(x1, x2) <= x <= max(x1, x2)):
             return True
     return inside
+
+
+def _strictly_in_ring(x: float, y: float, ring: Sequence[Point]) -> bool:
+    """Inside the ring and not on its boundary."""
+
+    pts = _closed(ring)
+    for (x1, y1), (x2, y2) in zip(pts, pts[1:]):
+        if _point_segment_distance(x, y, x1, y1, x2, y2) == 0.0:
+            return False
+    return _point_in_ring(x, y, ring)
 
 
 def _point_segment_distance(
@@ -291,10 +372,27 @@ def _point_segment_distance(
 def geom_hash(geom: Geometry, ndigits: int = 3) -> str:
     """Stable hash of rounded, rotation-normalised rings. Duplicate detector."""
 
+    cache_key = f"_geom_hash_{ndigits}"
+    cached = geom.__dict__.get(cache_key)
+    if cached is not None:
+        return cached
+    value = _geom_hash(geom, ndigits)
+    geom.__dict__[cache_key] = value
+    return value
+
+
+def _geom_hash(geom: Geometry, ndigits: int) -> str:
+
     if geom.kind == "point":
         payload = ["P", round(geom.x, ndigits), round(geom.y, ndigits)]
     else:
         rings = [_canonical_open_ring(ring, ndigits) for ring in geom.parts]
+        if geom.holes:
+            # Hole-free geometries keep their original hash.
+            rings = [
+                (outer, sorted(_canonical_open_ring(h, ndigits) for h in geom.holes_of(i)))
+                for i, outer in enumerate(rings)
+            ]
         rings.sort()
         payload = rings
     blob = json.dumps(payload, separators=(",", ":"))
@@ -374,8 +472,8 @@ def _shapely_intersection_area(a: Geometry, b: Geometry) -> float | None:
 
 def _to_shapely(geom: Geometry):
     polys = []
-    for ring in geom.parts:
-        poly = ShapelyPolygon(ring)
+    for i, ring in enumerate(geom.parts):
+        poly = ShapelyPolygon(ring, geom.holes_of(i))
         if not poly.is_valid:
             poly = poly.buffer(0)
         polys.append(poly)

@@ -537,3 +537,123 @@ class FingerprintAidTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RealDataRegressionTests(unittest.TestCase):
+    """Bugs found validating PR #70 on the real Hamilton pull (2026-10-17, deb).
+
+    Synthetic shapes only; no real rows."""
+
+    def test_polygon_hole_excludes_points_and_area(self):
+        outer = [(OX, OY), (OX + 30, OY), (OX + 30, OY + 30), (OX, OY + 30), (OX, OY)]
+        hole = [(OX + 10, OY + 10), (OX + 20, OY + 10), (OX + 20, OY + 20), (OX + 10, OY + 20), (OX + 10, OY + 10)]
+        donut = Geometry.from_json(
+            {"type": "Polygon", "coordinates": [[list(p) for p in outer], [list(p) for p in hole]]}
+        )
+        self.assertFalse(donut.contains_point(OX + 15, OY + 15))
+        self.assertTrue(donut.contains_point(OX + 5, OY + 5))
+        self.assertTrue(donut.contains_point(OX + 10, OY + 15))  # hole boundary
+        self.assertAlmostEqual(donut.area, 900 - 100)
+        rx, ry = donut.representative_point()
+        self.assertTrue(donut.contains_point(rx, ry))
+        back = Geometry.from_json(donut.to_json())
+        self.assertEqual(back, donut)
+        self.assertNotEqual(geom_hash(donut), geom_hash(Geometry.from_ring(outer)))
+        self.assertAlmostEqual(donut.translate(1, 1).area, donut.area)
+        self.assertIsNone(donut.as_rect())
+
+    def test_hole_free_hash_is_unchanged(self):
+        # Pinned so the hole support does not move existing hashes.
+        self.assertEqual(geom_hash(box(0, 0, 10, 10)), geom_hash(Geometry.from_polygons([(box(0, 0, 10, 10).parts[0], ())])))
+
+    def test_courtyard_parcel_does_not_claim_inner_parcel_arn(self):
+        outer = [(0, 0), (30, 0), (30, 30), (0, 30), (0, 0)]
+        hole = [(10, 10), (20, 10), (20, 20), (10, 20), (10, 10)]
+        shift = lambda pts: [(OX + x, OY + y) for x, y in pts]
+        donut = Geometry.from_ring(shift(outer), holes=[shift(hole)])
+        inner = Geometry.from_ring(shift(hole))
+        city = [F("city_parcels", "1", donut), F("city_parcels", "2", inner)]
+        parcels = mint_parcels(city, factory(), HAMILTON, "run-a")
+        npca = [
+            F("npca_assessment_parcels_test", "n1", donut.translate(-0.297, 0.939), ARN="251800000000001"),
+            F("npca_assessment_parcels_test", "n2", inner.translate(-0.297, 0.939), ARN="251800000000002"),
+        ]
+        links = attach_arns(parcels, npca, HAMILTON)
+        by_parcel = {}
+        for link in links:
+            by_parcel.setdefault(link.hm_id, set()).add(link.arn)
+        self.assertEqual(sorted(len(v) for v in by_parcel.values()), [1, 1])
+        self.assertTrue(all(p.arn_grade == "exact_1to1" for p in parcels))
+
+    def test_loader_skips_non_unique_objectid(self):
+        fc = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {"OBJECTID": 0, "OBJECTID_1": i + 1, "ARN": f"25180000000000{i}"},
+                    "geometry": {"type": "Polygon", "coordinates": [[[OX + i * 20, OY], [OX + i * 20 + 10, OY], [OX + i * 20 + 10, OY + 10], [OX + i * 20, OY + 10], [OX + i * 20, OY]]]},
+                }
+                for i in range(3)
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "npca.geojson"
+            path.write_text(json.dumps(fc), encoding="utf-8")
+            feats = load_feature_collection(path, "npca_assessment_parcels_test")
+        self.assertEqual([f.source_id for f in feats], ["1", "2", "3"])
+        city = [F("city_parcels", str(i), Geometry.box(OX + i * 20, OY, OX + i * 20 + 10, OY + 10)) for i in range(3)]
+        parcels = mint_parcels(city, factory(), HAMILTON, "run-a")
+        links = attach_arns(parcels, feats, HAMILTON)
+        self.assertEqual(len({link.arn for link in links}), 3)
+
+    def test_far_from_coverage_and_address_fallback_stay_local(self):
+        """Parcels far from NPCA and addresses with no parcel must not scan
+        every feature (was O(n*m) at Hamilton scale)."""
+
+        import time
+
+        n = 1500
+        city = [F("city_parcels", str(i), box(i * 20, 0, i * 20 + 10, 10)) for i in range(n)]
+        parcels = mint_parcels(city, factory(), HAMILTON, "run-a")
+        npca = [
+            F("npca_assessment_parcels_test", f"n{i}", box(i * 20, 50_000, i * 20 + 10, 50_010), ARN=f"2518{i:011d}")
+            for i in range(n)
+        ]
+        addrs = mint_addresses(
+            [F("city_addresses", str(i), pt(i * 20 + 15, 5), NUMBER_COMPLETE=str(i), FULL_STREET_NAME="Test Street", COMMUNITY="Hamilton") for i in range(n)],
+            factory(),
+            HAMILTON,
+            "run-a",
+        )
+        t0 = time.perf_counter()
+        attach_arns(parcels, npca, HAMILTON)
+        link_addresses(addrs, parcels, HAMILTON)
+        elapsed = time.perf_counter() - t0
+        self.assertTrue(all(p.arn_grade == "not_in_coverage" for p in parcels))
+        # 5 m from the nearest parcel edge: inside the 10 m fallback.
+        self.assertTrue(all(a.link_method == "nearest_10m" for a in addrs))
+        self.assertLess(elapsed, 10.0)
+
+
+class WasteKeyTests(unittest.TestCase):
+    def test_waste_street_number_field_matches_address_key(self):
+        from heavymap.ids.registry import mark_waste_coverage
+
+        addrs = mint_addresses(
+            [
+                F("city_addresses", "1", pt(1, 1), NUMBER_COMPLETE="15", UNIT_NUMBER_COMPLETE="904", FULL_STREET_NAME="Test Drive", COMMUNITY="Hamilton"),
+                F("city_addresses", "2", pt(5, 5), NUMBER_COMPLETE="68", FULL_STREET_NAME="Sample Avenue", COMMUNITY="Hamilton"),
+            ],
+            factory(),
+            HAMILTON,
+            "run-a",
+        )
+        # Waste Collection by Address uses STREET_NUMBER / STREET_NAME / UNIT_NUMBER.
+        waste = [
+            F("waste_by_address", "w1", pt(1, 1), FULL_ADDRESS="904-15 Test Drive", STREET_NUMBER="15", STREET_NAME="Test Drive", UNIT_NUMBER="904", COMMUNITY="Hamilton"),
+        ]
+        mark_waste_coverage(addrs, waste)
+        seen = {a.civic_key: a.waste_seen for a in addrs}
+        self.assertEqual(seen["15|TEST DRIVE|HAMILTON|904"], "y")
+        self.assertEqual(seen["68|SAMPLE AVENUE|HAMILTON|"], "n")

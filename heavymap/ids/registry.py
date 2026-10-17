@@ -184,8 +184,9 @@ def attach_arns(
     for hid, feats in city_to_npca.items():
         for feat in feats:
             pair_keys[(hid, feat.source_id, feat.properties.get("ARN", ""))] = feat
+    npca_by_id = {f.source_id: f for f in npca}
     for sid, recs in npca_to_city.items():
-        feat = next(f for f in npca if f.source_id == sid)
+        feat = npca_by_id[sid]
         for parcel in recs:
             pair_keys[
                 (parcel.hm_id, feat.source_id, feat.properties.get("ARN", ""))
@@ -253,7 +254,9 @@ def attach_arns(
         if parcel.hm_id in parcel_grade:
             parcel.arn_grade = parcel_grade[parcel.hm_id]
             continue
-        nearest = _nearest_npca_distance(parcel, npca, nindex)
+        nearest = _nearest_npca_distance(
+            parcel, npca, nindex, config.coverage_buffer_m
+        )
         if nearest is None or nearest > config.coverage_buffer_m:
             parcel.arn_grade = "not_in_coverage"
         else:
@@ -265,19 +268,33 @@ def _nearest_npca_distance(
     parcel: ParcelRecord,
     npca: list[SourceFeature],
     nindex: GridIndex,
+    max_distance: float,
 ) -> float | None:
+    """Distance from the parcel's representative point to the nearest NPCA
+    parcel, searched only within ``max_distance``. ``None`` means none that
+    close. (A full scan here was O(parcels x NPCA) for the ~74k Hamilton
+    parcels outside NPCA coverage.)"""
+
     if not npca:
         return None
-    # Search expanding bbox around the representative point.
     rx, ry = parcel.rep_x, parcel.rep_y
-    buf = 50.0
-    keys = nindex.query_bbox(Bounds(rx - buf, ry - buf, rx + buf, ry + buf))
-    if not keys:
-        keys = [f.source_id for f in npca]
-        feats = npca
-    else:
-        feats = [nindex.get(k) for k in keys]  # type: ignore[misc]
-    best = min((f.geometry.distance_to_point(rx, ry) for f in feats), default=None)
+    keys = nindex.query_bbox(
+        Bounds(rx - max_distance, ry - max_distance, rx + max_distance, ry + max_distance)
+    )
+    best = None
+    for key in keys:
+        feat: SourceFeature = nindex.get(key)  # type: ignore[assignment]
+        b = feat.geometry.bounds
+        if (
+            rx < b.minx - max_distance
+            or rx > b.maxx + max_distance
+            or ry < b.miny - max_distance
+            or ry > b.maxy + max_distance
+        ):
+            continue
+        d = feat.geometry.distance_to_point(rx, ry)
+        if best is None or d < best:
+            best = d
     return best
 
 
@@ -295,6 +312,7 @@ def civic_key_from_properties(props: dict[str, str]) -> str:
         props.get("NUMBER_COMPLETE")
         or props.get("NUMBER")
         or props.get("STREET_NUM")
+        or props.get("STREET_NUMBER")  # Waste Collection by Address
         or ""
     )
     street = (
@@ -383,7 +401,9 @@ def link_addresses(
             continue
         nearest = None
         nearest_d = None
-        for parcel in active:
+        r = config.address_nearest_m
+        for hid in pindex.query_bbox(Bounds(rec.x - r, rec.y - r, rec.x + r, rec.y + r)):
+            parcel = by_id[hid]
             d = parcel.geometry.distance_to_point(rec.x, rec.y)
             if nearest_d is None or d < nearest_d:
                 nearest, nearest_d = parcel, d
@@ -552,14 +572,13 @@ def reconcile_parcels(
 
     used_old = set()
     used_new = set()
+    remaining_by_id = {p.hm_id: p for p in remaining_old}
     iou_pairs.sort(reverse=True)
     for _score, i, hid in iou_pairs:
         if i in used_new or hid in used_old:
             continue
-        geom, aliases = next(
-            (g, a) for j, g, a in remaining_new if j == i
-        )
-        old = next(p for p in remaining_old if p.hm_id == hid)
+        geom, aliases = new_units[i]
+        old = remaining_by_id[hid]
         used_old.add(hid)
         used_new.add(i)
         matched_old.add(hid)
@@ -597,8 +616,12 @@ def reconcile_parcels(
     # Overlap graph for splits / merges / replacements.
     overlaps: dict[int, list[tuple[float, ParcelRecord]]] = defaultdict(list)
     old_to_new: dict[str, list[int]] = defaultdict(list)
+    remaining_index = _index_parcels(remaining_old, config.grid_cell_m)
     for i, geom, aliases in remaining_new:
-        for old in remaining_old:
+        for hid in remaining_index.query_bbox(geom.bounds):
+            old = remaining_index.get(hid)
+            if not isinstance(old, ParcelRecord):
+                continue
             inter = intersection_area(geom, old.geometry)
             if inter <= 0:
                 continue
@@ -651,9 +674,7 @@ def reconcile_parcels(
         if len(unique_children) >= 2:
             consumed_old.add(old.hm_id)
             for i in unique_children:
-                geom, aliases = next(
-                    (g, a) for j, g, a in remaining_new if j == i
-                )
+                geom, aliases = new_units[i]
                 child = _mint(geom, aliases)
                 consumed_new.add(i)
                 lineage.append(
@@ -721,10 +742,11 @@ def reconcile_parcels(
             )
 
     retired_now = []
+    kept_now = {p.hm_id for p in kept}
     for old in old_active:
         if old.hm_id in matched_old:
             continue
-        if old.hm_id in consumed_old or old.hm_id not in {p.hm_id for p in kept}:
+        if old.hm_id in consumed_old or old.hm_id not in kept_now:
             retired_now.append(old.retire(run_id))
 
     # Old actives that were kept by match should not also appear retired.

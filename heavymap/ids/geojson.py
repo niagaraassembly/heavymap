@@ -26,19 +26,9 @@ def _geometry_from_geojson(data: dict) -> Geometry:
     coords = data.get("coordinates")
     if kind == "Point":
         return Geometry.point(float(coords[0]), float(coords[1]))
-    if kind == "Polygon":
-        if not coords:
-            raise GeometryError("empty_geometry")
-        return Geometry.from_ring(tuple((float(c[0]), float(c[1])) for c in coords[0]))
-    if kind == "MultiPolygon":
-        rings = []
-        for poly in coords or []:
-            if not poly:
-                continue
-            rings.append(tuple((float(c[0]), float(c[1])) for c in poly[0]))
-        if not rings:
-            raise GeometryError("empty_geometry")
-        return Geometry.from_rings(rings)
+    if kind in ("Polygon", "MultiPolygon"):
+        # Holes are kept: a point in a courtyard parcel's hole is not inside it.
+        return Geometry.from_json({"type": kind, "coordinates": coords})
     if kind == "MultiPoint":
         # Registry addresses are one point per feature; take the first.
         if not coords:
@@ -47,11 +37,21 @@ def _geometry_from_geojson(data: dict) -> Geometry:
     raise GeometryError("unsupported_geojson_type", str(kind))
 
 
-def _source_id(properties: dict[str, str], fallback: str) -> str:
-    for key in ("OBJECTID", "objectid", "FID", "fid", "SEGID"):
-        if properties.get(key):
-            return properties[key]
-    return fallback
+SOURCE_ID_FIELDS = ("OBJECTID", "objectid", "OBJECTID_1", "FID", "fid", "SEGID", "GlobalID")
+
+
+def _pick_source_id_field(rows: list[dict[str, str]]) -> str | None:
+    """First candidate id field that is filled and unique on every row.
+
+    NPCA Assessment_Parcels_Test carries OBJECTID=0 on 2,344 rows, so a fixed
+    OBJECTID choice would merge distinct parcels; OBJECTID_1 is unique there.
+    """
+
+    for key in SOURCE_ID_FIELDS:
+        values = [r.get(key, "") for r in rows]
+        if all(values) and len(set(values)) == len(values):
+            return key
+    return None
 
 
 def load_feature_collection(
@@ -62,7 +62,7 @@ def load_feature_collection(
     features = raw.get("features") if isinstance(raw, dict) else raw
     if not isinstance(features, list):
         raise ValueError("geojson_not_a_feature_collection")
-    out: list[SourceFeature] = []
+    parsed: list[tuple[int, Geometry, dict[str, str]]] = []
     for index, feat in enumerate(features):
         if not isinstance(feat, dict):
             continue
@@ -79,7 +79,11 @@ def load_feature_collection(
             for k, v in props_in.items()
             if not is_screened_field(str(k))
         }
-        sid = _source_id(props, f"row-{index}")
+        parsed.append((index, geometry, props))
+    id_field = _pick_source_id_field([props for _i, _g, props in parsed])
+    out: list[SourceFeature] = []
+    for index, geometry, props in parsed:
+        sid = props[id_field] if id_field else f"row-{index}"
         out.append(
             SourceFeature(
                 source_id=sid,
