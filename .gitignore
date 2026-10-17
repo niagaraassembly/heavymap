@@ -17,3 +17,6 @@ local-data/
 # Business document removed from tracking (kept locally only)
 /Spreadsheets/value-and-revenue.ods
 __pycache__/
+
+# UK atlas is a process reference only; no UK data in this repo
+first-attempts/uk-atlas/data/
