@@ -12,3 +12,4 @@ MCS cells changed: none <!-- or name each dataset_id and summarize cells changed
 - [ ] No owner or identifying values in any public output (tiles, site files, UI, exports); raw pulls with all fields stay in `local-data/` (HARD-RULES 1, 2).
 - [ ] Pull rights and use or publication rights have been considered separately.
 - [ ] Nothing is surfaced or published before G6; Morgen makes the gate and promotion decision.
+- [ ] Process insights logged in `Spreadsheets/19-process-insights.csv` (sources found, dead ends, data quirks, methods, effort estimates, gaps), or none this session.

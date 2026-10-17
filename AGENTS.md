@@ -10,6 +10,10 @@ Pickup contract for agents working on HeavyMap. Read this before opening an issu
 
 Beta is the repository top level. The original `niagara-atlas/` prototype is prior-art reference only; it is archived at [`first-attempts/niagara-atlas/`](first-attempts/niagara-atlas/).
 
+## Process insights (standing rule)
+
+Before finishing any session or pull request, every agent appends its process insights (sources found, dead ends ruled out, data quirks, method findings, effort estimates, gaps, licence notes) as new rows in [`Spreadsheets/19-process-insights.csv`](Spreadsheets/19-process-insights.csv), with live-verified evidence (URLs, counts, dates checked). The rows feed HeavyMap's published synthesized reports, so log dead ends and search scope too. Append only; never edit another session's row except its `status` or `linked_issue`. Agents that cannot write to the repo report them in their final message under the heading **Process insights** so a human or Grok Bot can log them. Columns, the insight / issue / decision split and etiquette: [heavymap-planning/PROCESS-INSIGHTS.md](heavymap-planning/PROCESS-INSIGHTS.md).
+
 ## Four-concept frame
 
 The product frame lives under [docs/architecture/](docs/architecture/README.md) (Linear **NA-11**):
@@ -86,6 +90,6 @@ Linear packets use this shape:
 ## Cursor Cloud specific instructions
 
 - Environment E3 (atlas): `.cursor/environment.json` runs `scripts/cloud-install.sh` (Python check, byte-compile, `python3 -m unittest discover -s tests`, `python3 scripts/check_index_paths.py`) and `scripts/cloud-start.sh` (nothing to start). Stdlib only; nothing to install.
-- Before a PR: run the two checks above. Never pull data into the repo; the VM is disposable, so record facts not rows.
+- Before a PR: run the two checks above and append your process insights to `Spreadsheets/19-process-insights.csv` (see Process insights above). Never pull data into the repo; the VM is disposable, so record facts not rows.
 - Skills in `.agents/skills/`: `heavymap-pcdp`, `heavymap-dataset-profiling`, `untrusted-web-text`. Rules in `.cursor/rules/`.
 - Setup notes and open questions: [docs/for-agents/CLOUD-ENVIRONMENT.md](docs/for-agents/CLOUD-ENVIRONMENT.md).
