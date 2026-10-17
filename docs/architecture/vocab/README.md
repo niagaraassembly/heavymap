@@ -1,6 +1,6 @@
 # PCDP vocabulary
 
-Machine-readable tokens for the architecture in the parent folder. Linear **NIA-14** for the PCDP catalog. Linear **NIA-22** for the joining-concept catalog. The prose documents are the source of truth (Linear **NIA-11** for the four-concept frame; [ADR 0002](../adr/0002-joining-concepts-and-terminology.md) for joining concepts). If this tree and the prose disagree, change this tree to match the prose.
+Machine-readable tokens for the architecture in the parent folder. Linear **NA-14** for the PCDP catalog. Linear **NA-22** for the joining-concept catalog. The prose documents are the source of truth (Linear **NA-11** for the four-concept frame; [ADR 0002](../adr/0002-joining-concepts-and-terminology.md) for joining concepts). If this tree and the prose disagree, change this tree to match the prose.
 
 This folder does not fetch parcels, edit the Master Control Spreadsheet, draw UI, or publish a site.
 
@@ -22,7 +22,7 @@ Normative groups, all taken from the prose:
 - Spine key grammar (`hm:{country}:{region}:{jurisdiction}:{grain}:{local}`) and the v1 part enums
 - D-5 dataset dispositions: `ship`, `simplify`, `derive`, `tile`, `link`
 - Geography v1 names, as the coverage fence. These are names, not spine-key slugs
-- Register words that may appear only as a quotation
+- Register and source-class words that may appear only as a quotation (HeavyMap must not assert vacancy on its own)
 - Source-stamp field names
 
 `dossier` is a surface. It is not a band. Evidence grade `refused`, rung status `refused`, and the assertion states are three different uses of the word. Dataset disposition `derive` is not evidence grade `derived`. The ladder token `derived_readings` belongs in `dossier_bands`; reading identifiers belong in the `derived_readings` column.
