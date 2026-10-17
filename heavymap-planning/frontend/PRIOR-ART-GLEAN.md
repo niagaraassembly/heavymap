@@ -1,5 +1,7 @@
 # Combined front-end prior-art glean
 
+**Owner update, 2026-10-17:** Morgen has reopened evaluation of some Overpass usage and particular OpenStreetMap elements. The blanket rejection below records the earlier architecture posture, not a current exclusion of those options. See [V0-SPEC.md](V0-SPEC.md#osm-competing-public-claims-and-bounded-live-options) for selected-element, bounded-query and snapshot alternatives. No live query or architecture migration is implemented by this note.
+
 **Status:** living assessment. Linear **NA-32** (EPIC 10 — Front end and map experience), with **NA-27** (dossier assembly), **NA-11** (PCDP), **NA-17** (OSM substrate), **NA-285** / **NA-286** (UK atlas folder as process reference).
 **Date:** 2026-10-17.
 **Author:** Cursor Cloud Agent.

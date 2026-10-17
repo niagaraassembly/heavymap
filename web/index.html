@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#f5f8fa" />
+    <title>HeavyMap · Hamilton field guide</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="wordmark" href="#">HeavyMap<span class="brand-dot">◒</span></a
+      ><span class="place"
+        >Hamilton, Ontario <span> / Field guide 001</span></span
+      ><span class="prototype">Synthetic local prototype</span>
+    </header>
+    <main>
+      <div
+        id="map"
+        aria-label="Schematic Hamilton map with three fictional sample parcels"
+      ></div>
+      <section class="intro" aria-label="Introduction">
+        <span class="eyebrow">A city encased by nature</span>
+        <h1>Land, with<br /><em>possibility.</em></h1>
+        <p>
+          Follow a signal. Open the evidence.<br />Decide what deserves a closer
+          look.
+        </p>
+      </section>
+      <button
+        id="tray-toggle"
+        class="mobile-toggle"
+        aria-expanded="false"
+        aria-controls="tray"
+      >
+        Explore lenses
+      </button>
+      <aside id="tray" class="tray" aria-label="Explore Hamilton samples">
+        <form id="search-form">
+          <label for="search">Find a sample</label>
+          <div class="search-row">
+            <input
+              id="search"
+              type="search"
+              placeholder="Sample, roll alias or key…"
+              autocomplete="off"
+            /><button aria-label="Search samples">Go</button>
+          </div>
+        </form>
+        <div class="tray-heading">
+          <h2>Opportunity lenses</h2>
+          <span>01 / Investigate</span>
+        </div>
+        <p class="subtext">
+          Vacant & underused: an evidence lens,<br />not a conclusion about the
+          land.
+        </p>
+        <div id="lenses"></div>
+        <details class="layers">
+          <summary>Context layers <span>＋</span></summary>
+          <div id="layers"></div>
+        </details>
+        <div class="samples-heading">
+          <h2>Places to begin</h2>
+          <span id="result-count"></span>
+        </div>
+        <div id="samples"></div>
+        <p id="search-status" role="status"></p>
+      </aside>
+      <div class="map-tools">
+        <label for="palette">Map study</label
+        ><select id="palette">
+          <option value="field">Quiet vector</option>
+          <option value="wash">Watercolour study</option></select
+        ><button id="home" title="Reset map view">
+          ⌂ <span>Hamilton</span>
+        </button>
+      </div>
+      <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+      <aside id="dossier" class="dossier" aria-label="Parcel dossier" hidden>
+        <div class="dossier-top">
+          <span class="eyebrow">Parcel field notes · synthetic</span
+          ><button id="close" aria-label="Close dossier">✕</button>
+        </div>
+        <div id="dossier-body"></div>
+      </aside>
+      <div id="map-status" class="map-status" role="status">
+        Loading local synthetic tiles…
+      </div>
+      <footer class="map-footer">
+        <div>
+          <span class="legend-dot nature"></span>Nature
+          <span class="legend-dot signal"></span>Investigative signal
+          <span class="legend-dot public"></span>Public claim
+        </div>
+        <span>Schematic geography · all records invented · no live feed</span>
+      </footer>
+    </main>
+    <noscript
+      >This local interactive prototype requires JavaScript. All sample records
+      are invented.</noscript
+    >
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>

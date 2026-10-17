@@ -77,11 +77,15 @@ First family: **Vacant & underused — evidence to investigate**. The name descr
 
 Each card has “Why it appears”, “What this cannot tell us” and “Next check”. Next checks may be verify source date, inspect servicing/frontage, review by-law and consult planning. No contact-owner feature. No inferred vacancy from missing footprints or registers. Missing inputs exclude a candidate with a visible explanation, never a negative judgement about that land.
 
-### OSM: competing public claims, not a replacement spine
+### OSM: competing public claims and bounded live options
 
-Owner intent is a live public-input view. ADR 0001 forbids bulk Overpass inventory/prefetch, and prior Niagara integration forbids public-API inventory calls from the browser. v0 therefore demonstrates synthetic OSM-style source quotations, visibly community input, alongside municipal claims, with a contested example and timestamps. It does not call Overpass or claim to be live OSM.
+Owner intent is a live public-input view. **Follow-up from Morgen, 2026-10-17 (verbatim):** "i no longer want to rule out using some aspects of Overpass or particular elements from open street amp". Overpass and selected OSM elements are therefore in scope for evaluation. This supersedes the prior-art glean's blanket rejection as a v0 design constraint. ADR 0001 and Niagara integration still describe the older architecture; an implementation should explicitly record how an adopted query mode changes that architecture rather than silently treating the older prohibition as current owner intent.
 
-Proposed later route for decision: separately toggled, view-scoped community tiles/service with source-object links, caching/vintage disclosure and independent attribution. No promotion to parcel truth and no silent overwrites. Dossier reads a versioned accepted snapshot; a newer public claim is displayed as a separate record. A source-object link is not a successful join. If an approved live provider is unavailable, display “Community layer unavailable” and retain municipal context. Decide provider, refresh cadence, ODbL treatment, moderation/refutation workflow and ADR change before enabling this. Do not add a proxy or publication mechanism in v0.
+Evaluate three complementary paths: (1) a selected OSM node/way/relation lookup with object version, timestamp and source link, (2) a user-triggered bounded viewport query at a minimum zoom with an explicit result cap, timeout, cache and freshness label, (3) dated snapshots or a view-scoped community tile provider for dependable broad context. Keep selected-element lookup separate from parcel-spine joins. Never infer occupancy from missing tags, a timeout, a truncated response or an absent object. Live results need an explicit field allowlist at the presentation boundary so owner/contact/person tags cannot leak into tooltips, dossiers or exports.
+
+Display community quotations independently alongside municipal claims. Never silently overwrite a municipal class or promote OSM to authoritative parcel identity. A newer public claim is a separate dated record, possibly contested; refutations retain both records. No automatic OSM edits, no background bulk prefetch, and no unbounded public-instance dependency. Show coverage, query extent, age, truncation and failures. Respect provider policies and ODbL attribution/derivative obligations. Choose instance/provider, refresh cadence, cache limits and moderation/refutation workflow before enabling live requests. A static frontend may use an approved CORS endpoint; do not add a hidden proxy by default.
+
+The local prototype still demonstrates synthetic OSM-style quotations and a contested example, with no Overpass calls or live-data claims. That is a fixture boundary for this prototype, not a rejection of live OSM. The next experiment can compare selected-element lookups and bounded queries against snapshots without committing real data or exposing personal tags.
 
 ## Basemap and visual direction
 
@@ -129,7 +133,7 @@ Verify fixture contract, export parity, lens eligibility, local range requests a
 
 1. Layout A, B or C? Is a bottom sheet acceptable on mobile, and should the left tray collapse once a dossier opens?
 2. Which default basemap direction: quiet vector or watercolour exploration? Is Stadia access returning, and which alternative should be costed?
-3. May a live view-scoped OSM community provider become an explicit architecture exception, or should we start with dated snapshots plus source links? What refresh and refutation policy?
+3. Which OSM experiment first: selected-element lookup, bounded user-triggered Overpass query, or community tiles/snapshots? Overpass is now an option. What refresh, cache, truncation and refutation policy should govern it?
 4. Approve the lens names and evidence-first breakdown? What coverage threshold and adjacency rule should be evaluated for production, without implying severance or rezoning feasibility?
 5. Keep “Tax class confirmed” or prefer “Tax class (assessment)” to avoid implying a present-use confirmation? Roll aliases and civic addresses are permitted already; how prominent should they be?
 6. Which initial source layers and accepted overlay joins are ready for dossier claims? How should citywide OP and Conservation Halton gaps be worded? Do not infer G6 readiness from this prototype.
