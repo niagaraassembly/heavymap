@@ -1,5 +1,7 @@
 # Industrial Atlas UK
 
+> **Note (2026-10-17):** The UK data files were removed; this folder is a process reference only (code, config and notes).
+
 A focused web-based discovery tool for workshops, manufacturing, industrial buildings, and productive urban spaces across the United Kingdom. Built on OpenStreetMap data via the Overpass API.
 
 ---
