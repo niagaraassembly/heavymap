@@ -78,6 +78,7 @@ OVERLAY_SPEC = {
     "share": NUM,
     "m2": NUM,
     "fid": STR,
+    "sliver": BOOL,
 }
 
 RECORD_SPEC: dict[str, Any] = {
