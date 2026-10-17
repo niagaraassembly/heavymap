@@ -42,4 +42,4 @@ Three names have multiple valid prefixes: `Town of Henrietta` (`233200`, `263200
 
 For Rochester, **64,655** rows have prefix `261400`: **64,629** have `swis = 'City of Rochester'` and **26** have null `swis`. All 26 null-name rows have 26-character keys, but their municipality name remains unresolved. Of the named Rochester rows, 64,085 have 26-character keys and 544 have shorter keys. The `261400` candidate code relationship is observed here and consistent with the pilot city-to-county SBL match; its SWIS-code meaning remains **inferred, not confirmed by a Monroe code table**.
 
-No MCS cells were changed; target `dataset_id`: none. `niagara-atlas/` and the UK atlas are prior-art baselines only; neither supplied data for this table. MPAC remains `not_licensed`. No site or map is published by this work.
+No MCS cells were changed; target `dataset_id`: none. `niagara-atlas/` and the UK atlas are prior-art baselines only; neither supplied data for this table. MPAC is not relevant to this New York table (Ontario-only, `not_in_coverage`). No site or map is published by this work.

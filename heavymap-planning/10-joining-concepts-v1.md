@@ -57,7 +57,7 @@ Format per concept: definition · bands it may feed · grain · labels · anchor
 - **Labels:** ca "Roll number" · us "SBL / print key" · neutral "Assessment roll parcel ID" · **default `neutral`** (label collision, §1).
 - **Anchor and examples:** NY `SBL` (20-char), `PRINT_KEY` (47.18-1-33), `SWIS_SBL_ID`; Monroe `countysbl` (26-digit), `printkey`; Rochester `PARCELID`, `PRINTKEY`; Ontario roll number (MPAC's **ARN**): St. Catharines `ROLL_NUMBER` (19-digit), Norfolk `ROLLNUMFUL` (19) plus three short forms, Haldimand `RollNumber` (15), NPCA `ARN` (15) and `ASSESSMENT` (20).
 - **Watch:** one key appears in several renderings (Norfolk publishes four in one layer; across Ontario sources the roll number now appears at 11, 15, 19 and 20 digits). Print-key zero-padding is county-specific. Cross-county string equality is not a join. Normalisation belongs to the normalize step, not to the ledger.
-- **Refusal hook:** Brant's parcel layer carries no roll number at all, so `not_in_coverage` there. See `12` §4: the roll number is openly published by several municipalities, and **NPCA publishes an MPAC-derived parcel fabric with ARN for its own area (all twelve Niagara municipalities plus parts of Hamilton and Haldimand)**, even though the spine treats MPAC data as `not_licensed`.
+- **Refusal hook:** Brant's parcel layer carries no roll number at all, so `not_in_coverage` there. See `12` §4: the roll number is openly published by several municipalities, and **NPCA publishes an MPAC-derived parcel fabric with ARN for its own area (all twelve Niagara municipalities plus parts of Hamilton and Haldimand)**. Under HARD-RULES 4/5 (amended 2026-10-17, #61) MPAC-derived data is usable, so the roll number from NPCA is a native key; where no join is accepted yet it is `not_joined`.
 
 #### `parcel_gis_key`
 - **Definition:** a publisher's GIS-side identifier for a parcel polygon, used to join that publisher's own parcel, land-use and zoning layers.
@@ -176,7 +176,7 @@ Format per concept: definition · bands it may feed · grain · labels · anchor
 
 #### `assessed_value`
 - **Definition:** a monetary value on the assessment roll, with facets `assessed`, `land`, `taxable`, `market_estimate`.
-- **Bands:** `land_use` (claim or refusal beside the class, as in the Welland fixture). **Default `us`** (Ontario's is `not_licensed`).
+- **Bands:** `land_use` (claim or refusal beside the class, as in the Welland fixture). **Default `us`** (Ontario's MPAC property class is usable under HARD-RULES 4/5 (amended 2026-10-17, #61); assessed value is `not_in_coverage` in the layers read).
 - **Anchor and examples:** NYS `TOTAL_AV`/`LAND_AV`; Monroe `totalassessedvalue`; Rochester `CURRENT_TOTAL_VALUE`.
 - **Watch:** `FULL_MARKET_VAL` and `CURRENT_TAXABLE_VALUE` are `near`, not assessed value. Keep apart in any calculation.
 
@@ -256,7 +256,7 @@ Other readings from `04-uk-capability-glean.md` (containment deltas, register-ag
 2. Confirm the default genres: `assessment_roll_key`, `parcel_gis_key`, `assessment_property_class` (**changed from `us`**) and `statistical_geography_code` default to `neutral`; `assessed_value` to `us`; everything else `ca`.
 3. ~~`planning_policy_overlay` band~~ **Decided 2026-09-25: `constraints`.**
 4. Is `lot_area_m2` welcome as a named reading?
-5. **NPCA's public MPAC-derived parcel fabric** (`12` §4): does OGL v2 as stated on the item actually cover HeavyMap's use? This decides whether the "MPAC roll `not_licensed`" wording, and the "no parcel fabric" statements for Welland and Hamilton, are revisited.
+5. **NPCA's public MPAC-derived parcel fabric** (`12` §4): does OGL v2 as stated on the item actually cover HeavyMap's use? Resolved 2026-10-17 by HARD-RULES 4/5 (amended 2026-10-17, #61): licences don't gate, so the MPAC roll is no longer `not_licensed`; the "no parcel fabric" statements for Welland and Hamilton should be revisited.
 
 ## 8. Evidence and method
 
