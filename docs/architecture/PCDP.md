@@ -1,6 +1,6 @@
 # Parcel Context Display Protocol (PCDP)
 
-**Status:** architecture sketch, 2026-09-23. Linear **NIA-11**. Docs only.
+**Status:** architecture sketch, 2026-09-23, vacant-display nuance 2026-10-17. Linear **NA-11**. Docs only.
 
 ## Purpose
 
@@ -41,7 +41,7 @@ In plain language, the minimum is:
 - one jurisdiction sentence a person can check against geography v1
 - a list of what is not spoken for, naming each refused rung or native key and one reason: not in coverage, not licensed, or not joined
 
-The minimum includes no score, no owner, no “vacant” or “available,” and no implication that a refused rung was inspected and found empty. A footprint is drawn as a footprint. A parcel is drawn as a parcel.
+The minimum includes no score, no owner, no HeavyMap-asserted “vacant” or “available,” and no implication that a refused rung was inspected and found empty. A footprint is drawn as a footprint. A parcel is drawn as a parcel. A source’s own class may still appear later on a filled rung if it is quoted and attributed (see the Claim & Refusal Contract). UI naming for those surfaced classes will be refined later. Display pattern, not final copy: MPAC tax or property class (public in Ontario, HARD-RULES 4) may be shown as a cross-confirmation signal such as `Tax class confirmed: industrial`.
 
 The minimum is allowed to be almost entirely refusals. That is still a valid presentation. It tells the truth that the key exists and that the rest of the ladder has not been earned.
 
@@ -161,7 +161,7 @@ Other v1 counties stay outside this key. The maximum below is a later snapshot, 
 | `identity` | Parcel polygon. Key. Grain `parcel`. “Erie County, New York.” SBL `SYN-999.00-1-1.1`, grade `observed`. SWIS refused `not_joined`. |
 | `land_use` | Property class `710` (synthetic), grade `observed`. Stamp says this is an assessment class, not zoning and not NAICS. Zoning itself is not invented to fill the gap. |
 | `constraints` | Refused. `not_in_coverage`. Not “unconstrained.” |
-| `activity_registers` | Refused. `not_joined`. Not “inactive,” not “vacant.” |
+| `activity_registers` | Refused. `not_joined`. Not “inactive.” Not a HeavyMap vacancy claim. A source register that itself uses “vacant” may be quoted on a filled rung, attributed, and labelled as that source’s class. |
 | `derived_readings` | `floor_area_m2` grade `derived` from synthetic `20000` square feet. Stamp keeps square feet, states the conversion, and labels the result a reading. |
 | `share_export` | The packet includes class `710`, the floor-area reading, and the refused constraints and activity rungs. It does not include an owner name. |
 

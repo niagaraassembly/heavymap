@@ -8,12 +8,19 @@ heavymap-planning/EPIC-01-source-catalog.md,Open decisions for Morgen,Checklist 
 heavymap-planning/07-jurisdiction-roster-v1.md,Dig queue and status tables,CA and US jurisdiction dig status and next steps,NIA-10,Claude,living,2026-09-25,CSV twin is source of truth
 Spreadsheets/07-jurisdiction-roster-v1.csv,(whole file),"32 jurisdictions with portal, catalog type, dig status",NIA-10,Claude,data,2026-09-25,
 Spreadsheets/08-parcel-contextual-dataset-assessment.xlsx,Dataset Assessment; Alternatives & Workarounds,Per-dataset quirks and sourcing alternatives,NIA-10,Claude,data,2026-09-25,"Scratchpad, nothing admitted"
-Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,Counties; Municipalities; Cross-Cutting Regional,Exhaustive dataset catalog with review_status,NIA-20,Claude,data,2026-09-25,Superset of the MCS
+Spreadsheets/09-per-jurisdiction-dataset-catalog.xlsx,Counties; Municipalities; Cross-Cutting Regional; README,Generated workbook. Do not hand-edit.,NA-20,Cloud Agent,data,2026-10-17,Regenerated from the 09-*-csv twins by scripts/rebuild_spreadsheet_workbooks.py
+Spreadsheets/09-per-jurisdiction-dataset-catalog-counties.csv,(whole file),Authoritative Counties sheet of catalog 09,NA-20,Cloud Agent,data,2026-10-17,CSV is source of truth
+Spreadsheets/09-per-jurisdiction-dataset-catalog-municipalities.csv,(whole file),Authoritative Municipalities sheet of catalog 09,NA-20,Cloud Agent,data,2026-10-17,CSV is source of truth
+Spreadsheets/09-per-jurisdiction-dataset-catalog-cross-cutting.csv,(whole file),Authoritative Cross-Cutting Regional sheet of catalog 09,NA-20,Cloud Agent,data,2026-10-17,CSV is source of truth
+Spreadsheets/09-per-jurisdiction-dataset-catalog-readme.csv,(whole file),Authoritative README sheet of catalog 09,NA-20,Cloud Agent,data,2026-10-17,CSV is source of truth
+scripts/rebuild_spreadsheet_workbooks.py,(whole file),Regenerates catalog 09 and inventory 02 xlsx from CSVs,NA-20,Cloud Agent,living,2026-10-17,Stdlib only. Never hand-edit the xlsx.
+scripts/xlsx_sheets.py,(whole file),Stdlib xlsx read/write used by the rebuild script,NA-20,Cloud Agent,living,2026-10-17,No third-party packages
 heavymap-planning/10-joining-concepts-v1.md,7. Open questions for Morgen,Open questions on joining concepts,NIA-22,Cursor,living,2026-09-25,Questions 1 and 3 decided
 heavymap-planning/11-synonym-parallel-ledger-v1.md,6. Rows to re-verify or complete,"Ledger rows still only documented, not live-read",NIA-10,Claude,living,2026-09-25,
 Spreadsheets/11-synonym-parallel-ledger-v1.csv,(whole file),Synonym and parallel ledger (118 rows),NIA-10,Claude,data,2026-09-25,
 heavymap-planning/12-authority-scale-and-meta-proposals.md,9. Ready for Cursor encode?,What is and is not ready to encode,NIA-22,Claude,living,2026-09-25,Roll number and MPAC section awaits Morgen
-Spreadsheets/02-dataset-inventory-v4.csv,(whole file),"Master Control Spreadsheet (MCS), admitted datasets",NIA-12,Morgen and agents per AGENTS-MCS.md,data,2026-09-28,xlsx twin in same folder
+Spreadsheets/02-dataset-inventory-v4.csv,(whole file),"Master Control Spreadsheet (MCS), admitted datasets",NA-12,Morgen and agents per AGENTS-MCS.md,data,2026-10-17,CSV is source of truth. xlsx is regenerated.
+Spreadsheets/02-dataset-inventory-v4-readme.csv,(whole file),Authoritative README sheet of inventory 02,NA-12,Cloud Agent,data,2026-10-17,CSV is source of truth
 docs/architecture/README.md,Four concepts; Platform decisions,Permanent architecture reference index,NIA-11,Cursor,reference,2026-09-28,"Promoted, not living"
 heavymap-planning/EPIC-02-spine-and-joins.md,Status; Welland and Rochester findings; Joins matrix; Proposed sub-issues; Open decisions,"Pilot study findings, spine key mapping, joins matrix, proposed NIA-24 sub-issue checklist (unticked), open decisions",NIA-24,Claude,living,2026-09-30,"Live reads 2026-09-30. Sub-issues proposed, none created."
 Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,(whole file),"One row per pilot dataset (33 rows): identifiers, key type, geometry, count, join_to, method, exactness",NIA-24,Claude,data,2026-09-30,Live reads 2026-09-30. Companion to EPIC-02 doc.

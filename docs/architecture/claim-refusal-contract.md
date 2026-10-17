@@ -1,6 +1,6 @@
 # Claim & Refusal Contract
 
-**Status:** architecture sketch, 2026-09-23. Linear **NA-11**. Docs only.
+**Status:** architecture sketch, 2026-09-23, vacant-display nuance 2026-10-17. Linear **NA-11**. Docs only.
 
 ## Purpose
 
@@ -11,7 +11,7 @@ The contract exists because a gap that looks like a measurement will be read as 
 ## Non-goals
 
 - Implementing refutation jobs, score formulas, or a claim database.
-- Publishing owner names, “available,” “failing,” or “vacant” as product language.
+- Publishing owner names, or using “available,” “failing,” or “vacant” as HeavyMap’s own product language. A source’s classification may be quoted and attributed (see below). UI naming for surfaced source classes will be refined later.
 - Deciding licence negotiations with MPAC or any other vendor.
 - Editing MCS. The `derived_readings` header is named here so later rows use it consistently.
 - Treating a UK atlas score module as Beta’s reading catalog.
@@ -82,13 +82,22 @@ A refusal uses exactly one of:
 
 One reason only. If a layer is both unlicensed and unjoined, `not_licensed` wins: there is nothing to join. If a layer was never in the v1 set, `not_in_coverage` wins: do not imply a join is the remaining step.
 
-Words that may appear only as a quotation of a register, with grade `observed` or `joined` and a stamp:
+Words that may appear only as a quotation of a source’s own classification or register, with grade `observed` or `joined` and a stamp:
 
 - vacant
 - empty
 - available
 - closed
 - departed
+
+HeavyMap must not assert on its own that land is vacant. It may display the source’s class, quoted and attributed. Examples of allowed display (not final UI copy):
+
+- `City class: Vacant Lands` — Hamilton Existing Land Use `PRIMARY_LA` value, labelled as the City’s class
+- a Vacant Building Registry row shown as that register’s entry, not as a HeavyMap vacancy finding
+
+UI naming conventions for surfaced source classes will be refined later.
+
+Display pattern, not final copy: an MPAC tax or property class (public in Ontario, HARD-RULES 4) may be surfaced as a cross-confirmation signal such as `Tax class confirmed: industrial`.
 
 Without that quotation they are forbidden, including as friendly summaries of a refusal. “Not joined” is not “vacant.” “Not licensed” is not “unassessed.” “Not in coverage” is not “no industrial activity.”
 
@@ -145,7 +154,7 @@ These are the same illustrations as in [PCDP.md](PCDP.md). They show the contrac
 | Object | Reason | What a reader must not conclude |
 |---|---|---|
 | Parcel polygon | `not_in_coverage` | That Welland has no lot here |
-| MPAC roll and assessed value | `not_licensed` | That the land is unassessed |
+| Assessed value (not yet joined from MPAC) | `not_joined` | That the land is unassessed |
 | `constraints` rung | `not_joined` | That the site is unconstrained |
 | `coverage_ratio` | `not_in_coverage` | That coverage is zero |
 

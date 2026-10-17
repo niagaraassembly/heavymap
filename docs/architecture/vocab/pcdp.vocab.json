@@ -59,7 +59,7 @@
         "Order is fixed. A later band may use an earlier one. It may not be shown as the same kind of fact.",
         "The MCS header stays dossier_bands. dossier is a ui_surfaces token, not a band.",
         "Do not invent regulatory, physical, neighbours, or dossier as band names.",
-        "A rung is empty only as a refusal. Empty never means vacant, idle, unconstrained, or unlicensed-as-a-fact-about-the-business."
+        "A rung is empty only as a refusal. Empty never means vacant, idle, unconstrained, or unlicensed-as-a-fact-about-the-business. HeavyMap must not assert vacancy on its own. A source class may be quoted and attributed on a filled rung (example: City class: Vacant Lands)."
       ]
     },
     "band_status": {
@@ -132,7 +132,7 @@
       ],
       "notes": [
         "One reason only.",
-        "Not joined is not vacant. Not licensed is not unassessed. Not in coverage is not no industrial activity.",
+        "Not joined is not vacant. Not licensed is not unassessed. Not in coverage is not no industrial activity. A source class such as City class: Vacant Lands may be quoted and attributed. UI naming for surfaced source classes will be refined later.",
         "There is no fourth refusal code for owner name. Owner name is not a v1 ladder object."
       ]
     },
@@ -332,7 +332,7 @@
     },
     "register_quotation_only": {
       "words": ["vacant", "empty", "available", "closed", "departed"],
-      "rule": "These words may appear only as a quotation of a register, with evidence grade observed or joined and a stamp. Without that quotation they are forbidden, including as summaries of a refusal."
+      "rule": "These words may appear only as a quotation of a source classification or register, with evidence grade observed or joined and a stamp. HeavyMap must not assert on its own that land is vacant. Allowed example, not final UI copy: City class: Vacant Lands, or a vacant-building-registry entry labelled as that register. Display pattern, not final copy: Tax class confirmed: industrial, using MPAC tax or property class (public in Ontario, HARD-RULES 4) as a cross-confirmation signal. Without that quotation the words are forbidden, including as summaries of a refusal. UI naming for surfaced source classes will be refined later."
     },
     "source_stamp_fields": {
       "fields": [

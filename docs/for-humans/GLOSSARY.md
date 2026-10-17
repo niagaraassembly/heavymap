@@ -18,5 +18,7 @@ Adapted from PR #58 (hm/fresh-foundation @ 15adec2) for the #57 layout; CLI/regi
 | **NPCA-derived** | Layers derived from NPCA data, including MPAC-derived parcels: may be pulled, used and published, all fields pulled, identifying fields screened from public view (HARD-RULES 2, 5). |
 | **G6** | The publication gate. Until Morgen decides it is open, nothing may be surfaced or published. |
 | **D-13** | Owner-field decision in `first-attempts/niagara-atlas/TECHNOLOGY-DECISIONS.md`. Record owner-bearing field **names only**, never values, in sheets, docs, PRs, or comments. The proposed presentation tiers do not authorize publishing owner values. |
-| **Linear ID (NA-xx)** | An existing Linear issue ID, cited in a PR when applicable under `CONTRIBUTING.md`. Agent pickup follows `AGENTS.md`. |
+| **Linear ID (NA-xx)** | An existing Linear issue ID, cited in a PR when applicable under `CONTRIBUTING.md`. Agent pickup follows `AGENTS.md`. Older `NIA-` prefixes are the same issues; use `NA-` on any file you touch. |
+| **Vacant / source class** | HeavyMap must not assert that land is vacant. A publisher’s own class may be shown quoted and attributed (example, not final copy: `City class: Vacant Lands`, or a vacant-building-registry entry labelled as that register). UI naming for surfaced source classes will be refined later. |
+| **Tax class display pattern** | MPAC tax or property class (public in Ontario, HARD-RULES 4) may be shown as a cross-confirmation signal for land nature (example, not final copy: `Tax class confirmed: industrial`). |
 | **Draft PR** | A pull request awaiting human review. Agents never merge; see `AGENTS.md`. |

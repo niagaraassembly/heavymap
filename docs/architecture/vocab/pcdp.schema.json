@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "pcdp.schema.json",
   "title": "HeavyMap PCDP vocabulary",
-  "description": "Closed tokens from docs/architecture. Prose is the source of truth (NIA-11). This schema locks pcdp.vocab.json to those tokens (NIA-14). Illustrative derived-reading identifiers are an open set: the schema requires the three documented examples and does not forbid later ones.",
+  "description": "Closed tokens from docs/architecture. Prose is the source of truth (NA-11). This schema locks pcdp.vocab.json to those tokens (NA-14). Illustrative derived-reading identifiers are an open set: the schema requires the three documented examples and does not forbid later ones.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -18,8 +18,8 @@
   "properties": {
     "id": { "const": "pcdp-vocabulary" },
     "schema_version": { "const": 1 },
-    "linear": { "const": "NIA-14" },
-    "prose_linear": { "const": "NIA-11" },
+    "linear": { "const": "NA-14" },
+    "prose_linear": { "const": "NA-11" },
     "source_of_truth": {
       "type": "array",
       "prefixItems": [

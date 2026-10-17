@@ -1,6 +1,6 @@
 # Context Band Ladder
 
-**Status:** architecture sketch, 2026-09-23. Linear **NIA-11**. Docs only.
+**Status:** architecture sketch, 2026-09-23, vacant-display nuance 2026-10-17. Linear **NA-11**. Docs only.
 
 ## Purpose
 
@@ -29,7 +29,7 @@ A later band may use an earlier one. It may not be shown as if it were the same 
 
 - **Parcel Identity Spine.** Supplies the unit and fills the `identity` rung: key, grain, jurisdiction, outline or point, native keys, and identity-level refusals.
 - **PCDP.** Minimum presentation is the identity rung plus an explicit list of rungs not spoken for. Maximum presentation is all six rungs, in this order, each filled or refused.
-- **Claim & Refusal Contract.** A rung is empty only as a refusal with a reason. A rung is filled only with stamped claims. “Empty” never means vacant, idle, unconstrained, or unlicensed-as-a-fact-about-the-business.
+- **Claim & Refusal Contract.** A rung is empty only as a refusal with a reason. A rung is filled only with stamped claims. “Empty” never means vacant, idle, unconstrained, or unlicensed-as-a-fact-about-the-business. HeavyMap still must not assert vacancy on its own. A source’s class such as `City class: Vacant Lands` may be shown as a quoted, attributed claim on a filled rung.
 
 ## The rungs
 

@@ -15,5 +15,6 @@ These apply to every agent on every task. If a task would break one, stop and re
 9. **No workaround for gated sources.** If access is blocked or login-walled, mark it blocked and stop. No tokens or scraping around authentication.
 10. **No secrets.** If one is found, report its path and type, never its value, and stop.
 11. **UK geography is out of scope.** Follow `AGENTS.md` and `AGENTS-MCS.md` for the UK analogue convention.
+12. **No unsupported vacancy claims.** HeavyMap must not assert on its own that land is vacant. A source’s own classification may be displayed quoted and attributed (for example `City class: Vacant Lands`). UI naming for surfaced source classes will be refined later. Display pattern, not final copy: MPAC tax or property class (public in Ontario, rule 4) may be shown as a cross-confirmation signal such as `Tax class confirmed: industrial`. See `docs/architecture/claim-refusal-contract.md`.
 
 For actual `Spreadsheets/` CSV edits, use UTF-8, LF line endings, RFC-4180 quoting, ISO dates (`YYYY-MM-DD`), text IDs, and no formula-leading cells. Do not put semicolons or newlines inside cells; separate multiple values with ` | `.
