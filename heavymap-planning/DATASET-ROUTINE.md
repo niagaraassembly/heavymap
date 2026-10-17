@@ -13,9 +13,9 @@ For write-ups at the verify stage, model them on the NA-79 evidence docs: `docs/
 | Purpose | Produce, per layer: a profile, a quirks log, a harmonization result, a spine-join grade, and a use decision. |
 | Pull needs no licence confirmation | Pulling is for profiling only. Licence and use are decided later (`not_used` or a use decision). |
 | Pulled data stays local | Raw pulls live in git-ignored `local-data/`, never in git. |
-| Owner and personal fields | Dropped at pull time (explicit `outFields`): owner names, owner mailing addresses, contact details, personal names on grant or registry tables. Record field names only, never values (D-13). |
+| Owner and personal fields | Pulled with everything else (`outFields=*`) and kept local. Screened out of anything public (tiles, site files, UI, exports) at the publish boundary, per D-13 and HARD-RULES 2. Record field names only, never values, in sheets, docs, PRs and comments. |
 | MPAC | May be pulled, used and published. In Ontario, roll numbers and tax or property class may be shown publicly (HARD-RULES 4). |
-| NPCA-derived layers | May be pulled, used and published, owner and personal fields dropped (HARD-RULES 5). |
+| NPCA-derived layers | May be pulled, used and published, all fields pulled, identifying fields screened from public view (HARD-RULES 2, 5). |
 | Publication | Nothing is published before G6. |
 | Repo hygiene | Docs and CSVs only on a branch and PR. No MCS edits, no secrets, no UK datasets. |
 

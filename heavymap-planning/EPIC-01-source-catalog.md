@@ -5,7 +5,7 @@
 
 ## What this epic is
 
-The full list of datasets by jurisdiction and layer family, with access method, format, refresh rate, licence and gaps. Prior recon and the MCS are baselines, not a backlog. UK is capability glean only. NPCA-derived and MPAC-derived parcel layers are in scope (HARD-RULES 4 and 5, amended 2026-10-17); owner and personal fields are dropped at pull time.
+The full list of datasets by jurisdiction and layer family, with access method, format, refresh rate, licence and gaps. Prior recon and the MCS are baselines, not a backlog. UK is capability glean only. NPCA-derived and MPAC-derived parcel layers are in scope (HARD-RULES 4 and 5, amended 2026-10-17); all fields are pulled and identifying fields are screened from public view (HARD-RULES 2).
 
 **Geography v1.** Canada: Niagara Region and its 12 lower-tier municipalities, Hamilton, Haldimand, Norfolk (Port Dover), Brantford, Brant. United States: Chautauqua, Cattaraugus, Erie, Niagara, Wyoming, Genesee, Orleans, Monroe. Halton and Burlington are out of core.
 
@@ -87,7 +87,7 @@ Items 7 and 8 are covered by NA-21 (Done). Row counts in items 2 and 3 predate t
 - [ ] Pass1 sign-off on the roster (closes G1).
 - [ ] Sourcing route for Cattaraugus and Orleans parcels (see `08` alternatives sheet: statewide layer, county GIS, Regrid, FOIL, Beacon bulk check, OSM proxy).
 - [ ] Ontario parcel ownership: accept the MPAC gap for v1?
-- [x] NPCA's MPAC-derived parcel fabric: decided 2026-10-17 by Morgen: MPAC- and NPCA-derived data may be pulled, used and published; roll numbers and tax class may be public; owner and personal information never. Original question: does its OGL v2 statement actually cover HeavyMap's use? (`12` section 4, and question 5 in `10`.)
+- [x] NPCA's MPAC-derived parcel fabric: decided 2026-10-17 by Morgen: MPAC- and NPCA-derived data may be pulled, used and published; roll numbers and tax class may be public; owner and personal information pulled but screened from public view. Original question: does its OGL v2 statement actually cover HeavyMap's use? (`12` section 4, and question 5 in `10`.)
 - [ ] Whether NA-10 is closed at sign-off, with follow-on work living under this epic.
 
 ## Suggested next steps

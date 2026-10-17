@@ -9,6 +9,6 @@ MCS cells changed: none <!-- or name each dataset_id and summarize cells changed
 ## Checks
 
 - [ ] No owner values, real personal data, secrets, or pulled data in this PR; owner field **names only** where needed.
-- [ ] MPAC-derived and NPCA-derived data, if pulled, had owner and personal fields dropped at pull time; only roll number and tax or property class are public (HARD-RULES 2, 4, 5).
+- [ ] No owner or identifying values in any public output (tiles, site files, UI, exports); raw pulls with all fields stay in `local-data/` (HARD-RULES 1, 2).
 - [ ] Pull rights and use or publication rights have been considered separately.
 - [ ] Nothing is surfaced or published before G6; Morgen makes the gate and promotion decision.
