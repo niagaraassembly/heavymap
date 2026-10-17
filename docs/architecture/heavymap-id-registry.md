@@ -43,8 +43,11 @@ Assigned to each City parcel when an NPCA layer is supplied. Reciprocal represen
 | `exact_1to1` | this parcel and this ARN point at each other only |
 | `one_to_many` | this ARN also attaches to other City parcels (City grain is finer) |
 | `many_to_one` | this City parcel holds more than one ARN |
+| `placeholder` | the attached value is a documented sentinel (all-zero ARN). It is recorded, not grouped with real ARNs, and not shown as a roll number |
 | `unmatched` | inside or within 5 m of NPCA coverage, no attachment |
 | `not_in_coverage` | farther than 5 m from any NPCA polygon (~46% of the city) |
+
+Placeholder detection runs **before** grouping by ARN (PI-0059). All-zero values used to grade `one_to_many` because the sentinel repeats. They now grade `placeholder` and feed ledger type `placeholder` ([data-gaps-ledger.md](data-gaps-ledger.md)). A non-Hamilton prefix with real digits (Grimsby `2615…`, Q-019) stays `non_city_prefix` and is not a placeholder. Re-running the registry does not change existing `heavymap_id` values: placeholders change the ARN grade, not identity.
 
 These are registry attachment grades. They are not the NA-86 `exact` / `good` / `weak` / `refused` scale (still open).
 

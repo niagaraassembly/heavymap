@@ -24,6 +24,13 @@ from pathlib import Path
 from typing import Any, Iterable, Iterator
 
 from heavymap.dossier.schema import SCHEMA_VERSION, pick, screen_record
+from heavymap.gaps import (
+    context_from_record,
+    is_placeholder_arn,
+    load_ledger,
+    manifest_ledger,
+    parcel_gap_ids,
+)
 
 APT = "LYR-NPCA-ASSESSMENT-PARCELS-TEST"
 CITYVIEW = "LYR-NPCA-PARCELS-CITYVIEW"
@@ -74,7 +81,12 @@ PROPERTY_CODE_FAMILIES = (
     (700, 799, "Special and exempt"),
 )
 
-ROLL_CONF = {"exact_1to1": "high", "one_to_many": "medium", "many_to_one": "medium"}
+ROLL_CONF = {
+    "exact_1to1": "high",
+    "one_to_many": "medium",
+    "many_to_one": "medium",
+    "placeholder": "low",
+}
 ADDRESS_CONF = {"pip": "high", "nearest_10m": "medium"}
 ADDRESS_LINKED = ("pip", "nearest_10m")
 
@@ -156,6 +168,7 @@ class Indexes:
     registry_manifest: dict[str, Any] = field(default_factory=dict)
     stats: Counter = field(default_factory=Counter)
     arn_re: Any = None
+    gaps_ledger: list = field(default_factory=list)
 
 
 def _split_civic(civic_key: str) -> tuple[str, str]:
@@ -191,7 +204,8 @@ def load_registry(idx: Indexes, run: Path) -> None:
     for row in _rows(run / "arn_links.csv"):
         link = {k: row.get(k, "") for k in ("arn", "npca_source_id", "grade", "iou", "method", "notes")}
         idx.arn_links[row["hm_id"]].append(link)
-        idx.arn_parcel_count[link["arn"]] += 1
+        if link["arn"] and not is_placeholder_arn(link["arn"]):
+            idx.arn_parcel_count[link["arn"]] += 1
 
 
 def _features(path: Path) -> Iterable[dict[str, Any]]:
@@ -271,6 +285,7 @@ def load_all(inputs: Inputs, arn_prefix: str = "2518") -> Indexes:
         load_cityview(idx, inputs.npca_cityview, arn_re)
     load_overlays(idx, inputs.overlay_run)
     idx.arn_re = arn_re
+    idx.gaps_ledger = load_ledger()
     return idx
 
 
@@ -297,7 +312,10 @@ def _roll_entries(idx: Indexes, links: list[dict[str, str]], arn_re: re.Pattern)
     for link in sorted(links, key=lambda l: l["arn"]):
         arn = link["arn"]
         grade = link["grade"]
-        valid = bool(arn_re.fullmatch(arn))
+        placeholder = is_placeholder_arn(arn) or "placeholder" in (link.get("notes") or "")
+        valid = bool(arn_re.fullmatch(arn)) and not placeholder
+        if placeholder:
+            grade = "placeholder"
         entry: dict[str, Any] = {
             "arn": arn if valid else None,
             "grade": grade,
@@ -307,7 +325,11 @@ def _roll_entries(idx: Indexes, links: list[dict[str, str]], arn_re: re.Pattern)
             "join": grade,
             "conf": ROLL_CONF.get(grade, "low"),
         }
-        if not valid:
+        if placeholder:
+            entry["flag"] = "placeholder"
+            entry["conf"] = "low"
+            entry["label"] = "NPCA roll value is a placeholder, not a Hamilton roll number"
+        elif not valid:
             entry["flag"] = link["notes"] or "invalid_arn"
             entry["conf"] = "low"
             entry["label"] = "NPCA roll value is not a Hamilton roll number; not shown"
@@ -431,6 +453,7 @@ def build_record(idx: Indexes, hm_id: str, max_addresses: int = 25) -> dict[str,
             "sliver_count": slivers,
         },
     }
+    record["gaps"] = parcel_gap_ids(context_from_record(record), idx.gaps_ledger)
     return dict(screen_record(record))
 
 
@@ -455,6 +478,7 @@ def write_dossier(
     coverage = Counter()
     sizes: dict[str, int] = {}
     counts = Counter()
+    gap_counts: Counter = Counter()
     sample_ids: dict[str, str] = {}
     for key in sorted(by_shard):
         records = {}
@@ -476,6 +500,12 @@ def write_dossier(
                     counts["rolls_with_property_code"] += 1
                 if r.get("arn") is None:
                     counts["rolls_flagged_invalid"] += 1
+                if r.get("flag") == "placeholder":
+                    counts["rolls_flagged_placeholder"] += 1
+            for gid in rec["gaps"]:
+                gap_counts[gid] += 1
+            if rec["gaps"]:
+                counts["parcels_with_gaps"] += 1
         payload = {
             "schema": SCHEMA_VERSION,
             "jurisdiction": jurisdiction,
@@ -532,6 +562,8 @@ def write_dossier(
         ],
         "confidence_words": CONFIDENCE_WORDS,
         "fields_unavailable": FIELDS_UNAVAILABLE,
+        "gaps_ledger": manifest_ledger(idx.gaps_ledger),
+        "gap_counts": dict(gap_counts),
         "screening": (
             "Output keys come from heavymap/dossier/schema.py RECORD_SPEC (allowlist). "
             "Only SOURCE_FIELDS are read from NPCA files. Owner names, mailing addresses "
