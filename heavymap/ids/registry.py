@@ -20,6 +20,7 @@ from heavymap.ids.geometry import (
     intersection_area,
     iou,
 )
+from heavymap.gaps import is_placeholder_arn
 from heavymap.ids.models import (
     AddressRecord,
     ArnLink,
@@ -143,7 +144,9 @@ def _normalise_arn(raw: str, expected_prefix: str) -> tuple[str, str]:
     else:
         arn = digits
     notes = ""
-    if arn and expected_prefix and not arn.startswith(expected_prefix):
+    if is_placeholder_arn(arn):
+        notes = "placeholder"
+    elif arn and expected_prefix and not arn.startswith(expected_prefix):
         notes = "non_city_prefix"
     return arn, notes
 
@@ -153,7 +156,11 @@ def attach_arns(
     npca_features: list[SourceFeature],
     config: RegistryConfig,
 ) -> list[ArnLink]:
-    """Attach ARN by representative-point containment after correction."""
+    """Attach ARN by representative-point containment after correction.
+
+    Placeholder ARNs (all zeros) are linked with grade ``placeholder`` and
+    excluded from one-to-many / many-to-one grouping.
+    """
 
     active = [p for p in parcels if p.status == "active"]
     if not active or not npca_features:
@@ -211,22 +218,31 @@ def attach_arns(
             )
         )
 
+    # Placeholder ARNs (all zeros, PI-0059) are recorded as links but must
+    # not enter the ARN grouping, or they grade as a fake one-to-many.
     city_arns: dict[str, set[str]] = defaultdict(set)
     arn_cities: dict[str, set[str]] = defaultdict(set)
+    placeholder_parcels: set[str] = set()
     for link in raw_links:
+        if is_placeholder_arn(link.arn):
+            placeholder_parcels.add(link.hm_id)
+            continue
         city_arns[link.hm_id].add(link.arn)
         arn_cities[link.arn].add(link.hm_id)
 
     graded: list[ArnLink] = []
     for link in raw_links:
-        n_arns = len(city_arns[link.hm_id])
-        n_cities = len(arn_cities[link.arn])
-        if n_arns > 1:
-            grade = "many_to_one"
-        elif n_cities > 1:
-            grade = "one_to_many"
+        if is_placeholder_arn(link.arn):
+            grade = "placeholder"
         else:
-            grade = "exact_1to1"
+            n_arns = len(city_arns[link.hm_id])
+            n_cities = len(arn_cities[link.arn])
+            if n_arns > 1:
+                grade = "many_to_one"
+            elif n_cities > 1:
+                grade = "one_to_many"
+            else:
+                grade = "exact_1to1"
         graded.append(
             ArnLink(
                 hm_id=link.hm_id,
@@ -253,6 +269,9 @@ def attach_arns(
     for parcel in active:
         if parcel.hm_id in parcel_grade:
             parcel.arn_grade = parcel_grade[parcel.hm_id]
+            continue
+        if parcel.hm_id in placeholder_parcels:
+            parcel.arn_grade = "placeholder"
             continue
         nearest = _nearest_npca_distance(
             parcel, npca, nindex, config.coverage_buffer_m
