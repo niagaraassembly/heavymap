@@ -8,7 +8,7 @@
 
 How a unit of land or a premises is identified in each place, and how the datasets in that place join to each other. The spine key grammar is in `../docs/architecture/parcel-identity-spine.md`. The joining concepts are in `10`, the ledger in `11` (`.md` and `.csv`), the authority and MPAC proposals in `12`. This doc records what a live read of two pilot places says about all of them.
 
-**Rules kept in this study.** Public HTTP GET only (ArcGIS REST `?f=json`, DCAT `data.json`, count and small sample queries with at most 5 records). No bulk download. No keys or logins. No owner-name values read anywhere. MPAC roll stays `not_licensed`. NPCA-derived MPAC parcel layers are noted and not ingested. Prior recon is a baseline, not truth. UK is out of scope. Nothing is published. No existing file, workbook or Linear issue was changed.
+**Rules kept in this study.** Public HTTP GET only (ArcGIS REST `?f=json`, DCAT `data.json`, count and small sample queries with at most 5 records). No bulk download. No keys or logins. No owner-name values read anywhere. MPAC roll stayed `not_licensed` and NPCA-derived MPAC parcel layers were not ingested at the time of this study; superseded by HARD-RULES 4/5 (amended 2026-10-17, #61): MPAC/NPCA data may be pulled, used and published, identifying fields screened at publish. Prior recon is a baseline, not truth. UK is out of scope. Nothing is published. No existing file, workbook or Linear issue was changed.
 
 **Evidence labels.** Every count and field below was read live on **2026-09-30** unless the row says "documented, not re-read". Sample-based join results are stated as `hits/tested` and are indicative, not rates.
 
@@ -212,7 +212,7 @@ Exactness scale: **exact** (shared identifier, tested); **exact-if-present** (sh
 
 ## Proposed sub-issues for NIA-24 (e)
 
-**None created.** For Morgen to approve. G2 has no numbered acceptance checks in the Linear milestone text ("join keys and crosswalks demonstrated on a chosen pilot slice; fixtures merged"). The check labels below are this study's proposal: **G2-a** key mapping approved per pilot place; **G2-b** crosswalk demonstrated with graded exactness; **G2-c** refusals stamped correctly (`not_licensed`, `not_joined`, `not_in_coverage`); **G2-d** fixtures merged (PR #13 or replacement); **G2-e** ledger and concepts reconciled with live reads.
+**None created.** For Morgen to approve. G2 has no numbered acceptance checks in the Linear milestone text ("join keys and crosswalks demonstrated on a chosen pilot slice; fixtures merged"). The check labels below are this study's proposal: **G2-a** key mapping approved per pilot place; **G2-b** crosswalk demonstrated with graded exactness; **G2-c** refusals stamped correctly (`not_joined`, `not_in_coverage`, and `not_licensed` only for sources still refused on licence; MPAC is not one); **G2-d** fixtures merged (PR #13 or replacement); **G2-e** ledger and concepts reconciled with live reads.
 
 - [ ] **Welland parcel fabric: licence and admission check** — find terms for `IMS_Parcels_Public_Cache`, ask the city if it is meant for public reuse, record a verdict. Lane: **claude**. Depends on: none. Supports **G2-c**.
 - [ ] **Amend spine doc and fixtures for Welland parcel grain** — replace "no parcel fabric" wording; add a parcel-grain Welland fixture beside the footprint one. Lane: **cursor cloud**. Depends on: the item above and open decision 1. Supports **G2-d**.
@@ -248,5 +248,5 @@ Exactness scale: **exact** (shared identifier, tested); **exact-if-present** (sh
 - **Sample sizes.** Join ratios came from 12 to 45 records per test. Re-run on full populations with count queries before quoting a rate.
 - **Method.** Field lists from `?f=json`; counts with `returnCountOnly=true`; distinct counts with `returnDistinctValues=true&returnCountOnly=true`; samples with `resultRecordCount<=5`. Statewide-layer queries are slow (30 to 60 seconds).
 - **Endpoint quirks.** Welland `serverprod` (not `serverprodpub`) folders `Building` and `PropReports` return Token Required. `niagaraopendata.ca` CKAN API returned a Cloudflare challenge (403) on 2026-09-30; the Region ArcGIS service was used instead.
-- **Rule reminders.** MPAC roll `not_licensed`. NPCA layers not ingested. No owner values sampled. UK out of scope. Nothing published.
+- **Rule reminders.** MPAC/NPCA data usable under HARD-RULES 4/5 (amended 2026-10-17, #61) (MPAC roll `not_joined` until a join is accepted); owner, legal description and personal info screened at publish. No owner values sampled. UK out of scope. Nothing published.
 - **Files.** `heavymap-planning/EPIC-02-spine-and-joins.md` (this file); `Spreadsheets/15-pilot-join-matrix-welland-rochester.csv`; two rows appended to `Spreadsheets/00-PLANNING-INDEX.csv`.
