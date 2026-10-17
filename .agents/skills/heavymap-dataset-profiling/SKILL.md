@@ -9,5 +9,6 @@ Pointer only. The routine is still being decided: follow `heavymap-planning/DATA
 
 - Sheets: `Spreadsheets/16-service-profile.csv`, `17-layer-profile.csv`, `18-quirks-log.csv`; baseline `15-pilot-join-matrix-welland-rochester.csv`.
 - Pulled data goes to git-ignored `local-data/` only. In a cloud agent it is lost when the VM ends: record facts (counts, id quirks, CRS, encoding), never the rows.
-- Owner fields: names only (D-13). MPAC `not_licensed`. NPCA-derived: note, don't ingest. Gated source: mark blocked, stop.
-- Cite the Linear slice issue (`NIA-…`) in the PR. Agents never merge.
+- Pull all fields; owner and identifying values never in sheets, docs or public output (HARD-RULES 2, D-13). MPAC- and NPCA-derived data may be used (HARD-RULES 4, 5). Gated source: mark blocked, stop.
+- Before finishing, append process insights (sources found, dead ends, quirks, methods, effort, gaps) to `Spreadsheets/19-process-insights.csv` (see `heavymap-planning/PROCESS-INSIGHTS.md`).
+- Cite the Linear slice issue (`NA-…`) in the PR. Agents never merge.

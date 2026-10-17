@@ -11,6 +11,8 @@ A Cloud Agent that cannot see `~/na/` leaves the workbook untouched. Comment on 
 
 Codex touches the `~/na/` MCS only if the Agent packet says so and Deb has the copy. Otherwise it leaves the workbook untouched and reports back via the human.
 
+**Process insights:** findings about sources, gaps, quirks and effort that come out of MCS work are logged in `Spreadsheets/19-process-insights.csv` before the session or PR ends (standing rule in [AGENTS.md](AGENTS.md#process-insights-standing-rule)). The MCS records dataset truth; the insights log records what was learned getting there.
+
 ## What the MCS is
 
 One spreadsheet with two jobs:
