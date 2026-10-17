@@ -68,7 +68,7 @@ One physical site may be knowable at more than one grain. v1 does not require th
 
 These are conceptual. Counts and field names below are prior-art observations in `first-attempts/niagara-atlas/`, not a claim that Beta has loaded the layers.
 
-**No single public provincial parcel key.** Ontario’s assessment roll (MPAC) is the usual cross-municipality parcel identifier, and it is fee-based. For v1 that native key was `not_licensed`; HARD-RULES 4 (amended 2026-10-17) lifts that, so the roll number may be carried as a native key, and shown publicly, where an MPAC-derived source (for example NPCA assessment parcels) provides it. The Welland illustrations in this folder still show the earlier refusal. Assessed value travels with the same refusal. The refusal is about licence, not about whether the land has an assessment.
+**No single public provincial parcel key.** Ontario’s assessment roll (MPAC) is the usual cross-municipality parcel identifier, and it is fee-based. For v1 that native key was `not_licensed`; HARD-RULES 4 (amended 2026-10-17) lifts that, so the roll number may be carried as a native key, and shown publicly, where an MPAC-derived source (for example NPCA assessment parcels) provides it. The Welland illustrations now refuse the roll as `not_joined` (no accepted join yet) and assessed value as `not_in_coverage` (no source read so far carries a value field). Neither refusal is about licence, and neither says whether the land has an assessment.
 
 **Municipal fabrics are uneven inside Niagara-12.** Prior reconnaissance found public parcel polygons for some lower-tier cities (St. Catharines, Niagara Falls) and none for others (Welland’s open data had no parcel fabric; Hamilton’s open catalogue had no parcel layer). Haldimand, Norfolk, Brantford, and Brant are inside geography v1 and are not assumed to match either pattern. Until a layer is joined, those jurisdictions are `not_joined` at parcel grain, not “no industry” and not “no parcels in the world.”
 
@@ -108,7 +108,7 @@ Full presentations are in [PCDP.md](PCDP.md). The table is the spine at the **ma
 | Why this grain | Illustration of a lower-tier city whose open data, in prior art, had no parcel fabric. Grain is the footprint. | Illustration of a v1 county where a public tax-parcel polygon is the pattern. Grain is the parcel. |
 | Jurisdiction sentence | City of Welland, lower-tier municipality of Niagara Region, Ontario | Erie County, New York. The municipality slug stays `erie` until a SWIS join names a city or town. |
 | Native keys | Parcel PIN: `not_in_coverage` (no fabric in the illustration). `nei_id`: `SYN-8130` joined by identifier. | SBL: `SYN-999.00-1-1.1`. SWIS: `not_joined`. |
-| What the key refuses | MPAC roll number and assessed value: `not_licensed`. | Other v1 counties stay outside this key. Wyoming, Niagara County NY, and Monroe are unstated. |
+| What the key refuses | MPAC roll number: `not_joined`; assessed value: `not_in_coverage`. | Other v1 counties stay outside this key. Wyoming, Niagara County NY, and Monroe are unstated. |
 
 The Welland footprint and the Erie parcel are both complete spine records. Completeness means the key, the grain, the jurisdiction, and the refusals are explicit.
 

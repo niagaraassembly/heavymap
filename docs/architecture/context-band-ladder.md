@@ -62,7 +62,7 @@ Two different negatives:
 - **Refused rung.** HeavyMap cannot speak. Example: no constraint layer is joined, so `constraints` is `not_joined`. The reader is not told the site is unconstrained.
 - **Filled negative.** A joined source states an absence inside its own coverage. Example: a joined zoning layer’s overlay table has no heritage designation for this key, and the stamp says so. That is an observation about that layer, quoted, not a refusal of the whole rung.
 
-A rung can be `filled` and still carry a separate refusal for something that rung does not have. The Welland illustration below fills `land_use` with a synthetic zoning claim and refuses assessed value as `not_licensed` inside the same rung.
+A rung can be `filled` and still carry a separate refusal for something that rung does not have. The Welland illustration below fills `land_use` with a synthetic zoning claim and refuses assessed value as `not_in_coverage` inside the same rung (no source read so far carries an assessed-value field).
 
 Minimum presentation does not draw six panels. It still accounts for every rung: identity is shown, and every rung without a claim is named in the “not spoken for” list with its reason. Maximum presentation shows the six rungs in order.
 
@@ -91,8 +91,8 @@ Illustrations only, at the **maximum** snapshot defined in [PCDP.md](PCDP.md). V
 
 | Rung | Status | Illustration |
 |---|---|---|
-| `identity` | filled | Footprint key in the City of Welland, Niagara Region, Ontario. Parcel polygon `not_in_coverage`. MPAC roll `not_licensed`. |
-| `land_use` | filled, with a refusal beside it | Synthetic zoning “L1 — Light Industrial”, joined by point-in-polygon. Assessed value `not_licensed`. |
+| `identity` | filled | Footprint key in the City of Welland, Niagara Region, Ontario. Parcel polygon `not_in_coverage`. MPAC roll `not_joined` (allowed under HARD-RULES 4; no accepted join from an MPAC-derived source yet). |
+| `land_use` | filled, with a refusal beside it | Synthetic zoning “L1 — Light Industrial”, joined by point-in-polygon. Assessed value `not_in_coverage`. |
 | `constraints` | refused | `not_joined`. |
 | `activity_registers` | filled | Synthetic NEI row `nei_id SYN-8130`, joined by identifier. Employment stays an interval if the source gave a band. No departure claim. |
 | `derived_readings` | refused | `not_in_coverage` for a coverage ratio: the illustration has no parcel area to divide by. The reading is absent. It is not zero. |
