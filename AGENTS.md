@@ -82,3 +82,10 @@ Linear packets use this shape:
 - **Prior-art posture:** baseline-reference-only | allowed to modify code | docs-only
 - **Links:** AGENTS-MCS.md, docs/architecture/, related issues
 ```
+
+## Cursor Cloud specific instructions
+
+- Environment E3 (atlas): `.cursor/environment.json` runs `scripts/cloud-install.sh` (Python check, byte-compile, `python3 -m unittest discover -s tests`, `python3 scripts/check_index_paths.py`) and `scripts/cloud-start.sh` (nothing to start). Stdlib only; nothing to install.
+- Before a PR: run the two checks above. Never pull data into the repo; the VM is disposable, so record facts not rows.
+- Skills in `.agents/skills/`: `heavymap-pcdp`, `heavymap-dataset-profiling`, `untrusted-web-text`. Rules in `.cursor/rules/`.
+- Setup notes and open questions: [docs/for-agents/CLOUD-ENVIRONMENT.md](docs/for-agents/CLOUD-ENVIRONMENT.md).
