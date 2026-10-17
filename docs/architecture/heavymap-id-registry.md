@@ -105,3 +105,36 @@ Identifying properties are stripped on load. Do not pass NPCA Parcels_Cityview a
 `python3 -m unittest tests.test_heavymap_ids -v`
 
 Synthetic metre-space boxes only. No real Hamilton rows in git.
+
+## Validation on real Hamilton data (2026-10-17, deb)
+
+The inputs were the 2026-10-17 pulls, reprojected to EPSG:26917 by `local-data/scripts/to_26917.py`. They live under `local-data/`, never in git. Runs used Python 3.11 with shapely 2.2 available.
+
+**Run 1 (initial mint):**
+- Runtime: 376 s wall, peak 2.7 GB RSS.
+- Parcels: 166,745 active from 166,828 rows. 83 stacked duplicates were collapsed into 23 alias groups.
+- ARN grades:
+  - `exact_1to1` 89,412
+  - `one_to_many` 2,803
+  - `many_to_one` 225
+  - `unmatched` 29
+  - `not_in_coverage` 74,276
+- 92,440 parcels carry an ARN. The overlap ratio (IoU) of the `exact_1to1` pairs is 0.9996 at the median.
+- Addresses: 273,955 IDs, matching the 273,955 distinct number + street + community + unit keys.
+  - `pip` 273,428
+  - `nearest_10m` 221
+  - `pip_ambiguous` 166
+  - `unmatched` 140
+- Buildings: 214,287 IDs, with 213,904 linked to a parcel.
+
+**Run 2 (same inputs over run 1):**
+- Runtime: 429 s wall, peak 3.9 GB RSS, because the previous registry is loaded as well.
+- Zero new IDs and zero retired IDs.
+- ARN links, address-to-parcel links and building-to-parcel links are identical to run 1.
+
+**Fixes made during validation:**
+- Polygon holes are kept. They were dropped before, so courtyard parcels claimed the parcel inside them.
+- The source id is the first unique id field. NPCA has `OBJECTID=0` on 2,344 rows, so it now uses `OBJECTID_1`.
+- Four O(n²) scans were removed: the NPCA lookup, the coverage test, the address 10 m fallback, and the re-pull overlap graph and pair lookups. The unfixed code sat in the NPCA lookup for over 10 minutes before being stopped.
+- Bounds, area, representative point and hash are cached per geometry.
+- The waste key now reads `STREET_NUMBER`. Before the fix, all addresses showed `waste_seen=n`; now 271,204 show `y`.
