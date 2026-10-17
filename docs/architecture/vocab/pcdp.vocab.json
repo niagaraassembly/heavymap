@@ -119,7 +119,7 @@
         },
         {
           "token": "not_licensed",
-          "use_when": "A source exists and HeavyMap is not allowed to use it. MPAC was the standing example until HARD-RULES 4 was amended on 2026-10-17; it is not refused on licence while the site is password-protected."
+          "use_when": "A source exists and HeavyMap is not allowed to use it. MPAC was the standing example until HARD-RULES 4 was amended on 2026-10-17; it is no longer refused on licence."
         },
         {
           "token": "not_joined",

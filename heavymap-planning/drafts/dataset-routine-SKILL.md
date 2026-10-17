@@ -19,7 +19,7 @@ DRAFT. Not registered. Mirrors `heavymap-planning/DATASET-ROUTINE.md`; if they d
 - Pulling needs no licence confirmation. Licence and use are decided later (`not_used` or a use decision).
 - Pulled data goes in git-ignored `local-data/`. Never commit it.
 - Owner fields: dropped at pull time; record field names only, never values (D-13).
-- MPAC-derived and NPCA-derived layers may be pulled and used; licences are not a gate while the site is password-protected (HARD-RULES 4, 5).
+- MPAC-derived and NPCA-derived layers may be pulled, used and published. In Ontario, roll numbers and tax or property class may be public; owner and personal information never (HARD-RULES 2, 4, 5).
 - Nothing is published before G6.
 - New files only. Do not edit the MCS, existing docs or existing CSVs. No secrets.
 - Slice size is 15 to 25 layers, per jurisdiction, service first. Order: parcels, address, footprints, zoning, permits/business, context. Priority: Welland, Rochester/Monroe, then other P0.

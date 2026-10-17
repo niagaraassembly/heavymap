@@ -669,7 +669,7 @@
       },
       {
         "id": "npca_mpac_licence_clearance",
-        "reason": "Superseded 2026-10-17 by HARD-RULES 4 and 5: MPAC-derived and NPCA parcel layers may be pulled and used while the site is password-protected. Owner fields are dropped at pull time and owner values stay unread. Planning file 12 section 4 keeps the licence analysis for a public release."
+        "reason": "Superseded 2026-10-17 by HARD-RULES 4 and 5: MPAC-derived and NPCA parcel layers may be pulled, used and published; roll numbers and tax or property class may be public in Ontario. Owner and personal fields are dropped at pull time and owner values stay unread. Planning file 12 section 4 keeps the earlier licence analysis as history."
       },
       {
         "id": "mcs_history_and_servicing",

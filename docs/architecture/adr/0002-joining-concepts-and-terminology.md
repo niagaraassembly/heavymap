@@ -58,7 +58,7 @@ These stay as recorded in the planning files. This slice does not make them norm
 | Claim and stamp meta from planning file 12 §2 | `concept_id`, native field and value, `ledger_id`, `facet`, `authority`, `authority_scale` on the stamp, `claim_grain` on the claim, `register_family` on the claim, `edition_label`, `access_tier`, `is_register_quotation`, and `display_label_key`. The enums above are closed here. The fields are not added to the source-stamp table or to fixtures. |
 | Sentinels from planning file 12 §3 | A per-source sentinel map is a later normalize artifact. A sentinel is not encoded as a claim field here. |
 | Fixture bumps | `fixtures/parcels/` and PR #13 stay as they are, including any Erie floor-area note. |
-| NPCA / MPAC licence clearance | Superseded 2026-10-17 by HARD-RULES 4 and 5: MPAC-derived and NPCA parcel layers may be pulled and used while the site is password-protected; owner values never. Planning file 12 §4 keeps the licence analysis for a public release. |
+| NPCA / MPAC licence clearance | Superseded 2026-10-17 by HARD-RULES 4 and 5: MPAC-derived and NPCA parcel layers may be pulled, used and published; roll numbers and tax or property class may be public in Ontario; owner and personal information never. Planning file 12 §4 keeps the earlier licence analysis as history. |
 | MCS `history` and `servicing` | Planning file 12 §5. No MCS cell changes. No `dataset_id` is named because none is edited. |
 
 ## Consequences
