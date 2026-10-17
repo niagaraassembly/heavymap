@@ -41,7 +41,7 @@ In plain language, the minimum is:
 - one jurisdiction sentence a person can check against geography v1
 - a list of what is not spoken for, naming each refused rung or native key and one reason: not in coverage, not licensed, or not joined
 
-The minimum includes no score, no owner, no HeavyMap-asserted “vacant” or “available,” and no implication that a refused rung was inspected and found empty. A footprint is drawn as a footprint. A parcel is drawn as a parcel. A source’s own class may still appear later on a filled rung if it is quoted and attributed (see the Claim & Refusal Contract). UI naming for those surfaced classes will be refined later. Display pattern, not final copy: if a licensed or otherwise permitted tax-class field is later available, it may be shown as a cross-confirmation signal such as `Tax class confirmed: industrial`. This does not relax MPAC `not_licensed` and does not authorize a pull.
+The minimum includes no score, no owner, no HeavyMap-asserted “vacant” or “available,” and no implication that a refused rung was inspected and found empty. A footprint is drawn as a footprint. A parcel is drawn as a parcel. A source’s own class may still appear later on a filled rung if it is quoted and attributed (see the Claim & Refusal Contract). UI naming for those surfaced classes will be refined later. Display pattern, not final copy: MPAC tax or property class (public in Ontario, HARD-RULES 4) may be shown as a cross-confirmation signal such as `Tax class confirmed: industrial`.
 
 The minimum is allowed to be almost entirely refusals. That is still a valid presentation. It tells the truth that the key exists and that the rest of the ladder has not been earned.
 

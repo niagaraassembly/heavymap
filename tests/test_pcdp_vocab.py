@@ -26,7 +26,7 @@ class PcdpVocabTests(unittest.TestCase):
         self.assertIn("must not assert on its own that land is vacant", rule)
         self.assertIn("City class: Vacant Lands", rule)
         self.assertIn("Tax class confirmed: industrial", rule)
-        self.assertIn("does not relax MPAC not_licensed", rule)
+        self.assertNotIn("does not relax MPAC not_licensed", rule)
         self.assertEqual(
             self.vocab["normative"]["register_quotation_only"]["words"],
             ["vacant", "empty", "available", "closed", "departed"],

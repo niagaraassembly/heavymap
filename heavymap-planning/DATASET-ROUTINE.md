@@ -4,7 +4,7 @@
 
 HeavyMap has a large source catalog and a small number of datasets that anyone has actually opened. This routine turns catalog rows into profiled, harmonized, join-tested layers, one slice at a time. It is built on the EPIC-02 pilot (`EPIC-02-spine-and-joins.md`), which showed that the useful facts are small and checkable: record count, id field and its quirks, encoding, CRS, and how the layer joins to the parcel spine. Agents do the reading and write it down. Morgen decides what is used and what is shown.
 
-For write-ups at the verify stage, model them on the NIA-79 evidence docs: `docs/normalization/ny-sbl-sources.md` and `docs/normalization/ny-sbl-real-data-evidence.md` (on PR #56).
+For write-ups at the verify stage, model them on the NA-79 evidence docs: `docs/normalization/ny-sbl-sources.md` and `docs/normalization/ny-sbl-real-data-evidence.md` (on PR #56).
 
 ## 1. Purpose and rules
 
@@ -13,9 +13,9 @@ For write-ups at the verify stage, model them on the NIA-79 evidence docs: `docs
 | Purpose | Produce, per layer: a profile, a quirks log, a harmonization result, a spine-join grade, and a use decision. |
 | Pull needs no licence confirmation | Pulling is for profiling only. Licence and use are decided later (`not_used` or a use decision). |
 | Pulled data stays local | Raw pulls live in git-ignored `local-data/`, never in git. |
-| Owner fields | Masked per D-13. Record field names only, never values. |
-| MPAC | `not_licensed`. Nothing from it is pulled or used. |
-| NPCA-derived layers | Not ingested. Note them, move on. |
+| Owner and personal fields | Pulled with everything else (`outFields=*`) and kept local. Screened out of anything public (tiles, site files, UI, exports) at the publish boundary, per D-13 and HARD-RULES 2. Record field names only, never values, in sheets, docs, PRs and comments. |
+| MPAC | May be pulled, used and published. In Ontario, roll numbers, tax or property class and parcel civic addresses may be shown publicly (HARD-RULES 4). |
+| NPCA-derived layers | May be pulled, used and published, all fields pulled, identifying fields screened from public view (HARD-RULES 2, 5). |
 | Publication | Nothing is published before G6. |
 | Repo hygiene | Docs and CSVs only on a branch and PR. No MCS edits, no secrets, no UK datasets. |
 
@@ -25,7 +25,7 @@ For write-ups at the verify stage, model them on the NIA-79 evidence docs: `docs
 |---|---|---|
 | Jurisdiction | Welland; Rochester/Monroe | From roster `07`. |
 | Layer family | parcels; address; footprints; zoning; permits/business; context | Fixed order, see Batching. |
-| Linear IDs | slice issue, parent epic, any NIA-86 grading issue | Every output cites one. |
+| Linear IDs | slice issue, parent epic, any NA-86 grading issue | Every output cites one. |
 | Catalog rows | `09-per-jurisdiction-dataset-catalog.xlsx` row refs | Written to `catalog_row_ref`. |
 | Prior recon | `15-pilot-join-matrix-welland-rochester.csv` | A baseline, not truth. |
 
@@ -64,7 +64,7 @@ Linear comment rule: **the agent doing a step posts its own comment on the slice
 | 3 | Profile | Layer profile filled; rows to `profiled` | All id, encoding, date, CRS, null and owner-name columns filled, with no owner values | `Profiled: <layer> id <field> <n> distinct / <n> null / <n> dup; encoding; CRS; owner fields (names only)` |
 | 4 | Quirks log | Rows in `18-quirks-log.csv`; layers with open quirks to `formatting_needed` | Each quirk has a type, count, example id and proposed handling | `Quirks: <n> new (<ids>). Blocking: <ids>. Example: <id>` |
 | 5 | Harmonize | Handling applied in a script or doc; rows to `format_resolved` | Each quirk is `resolved`, `accepted` or `wontfix`, with a re-run count | `Resolved: <ids>. Method: <how>. Before/after counts` |
-| 6 | Verify | Join test against the spine; method (exact, fuzzy, spatial) and grade (NIA-86); rows to `spined` | `hits/tested` stated, with the sample or full population named; evidence write-up in the NIA-79 style | `Spine join: <layer> -> <spine key> <method> <grade> <hits>/<tested>. Evidence: <url>` |
+| 6 | Verify | Join test against the spine; method (exact, fuzzy, spatial) and grade (NA-86); rows to `spined` | `hits/tested` stated, with the sample or full population named; evidence write-up in the NA-79 style | `Spine join: <layer> -> <spine key> <method> <grade> <hits>/<tested>. Evidence: <url>` |
 | 7 | Use decision | Recommendation: use, `not_used` or defer; licence status noted | Morgen records the decision | `Recommend: <use / not_used / defer>. Licence: <found / not found>. Risks: <list>` |
 | 8 | Promote | `dormant`, then `surfaced` | Morgen's call. `surfaced` is not allowed before G6 | `Promoted: <layer> to <status> by Morgen on <date>` |
 
@@ -79,11 +79,11 @@ Stored in `17-layer-profile.csv` `lifecycle_status`, with `status_changed_date`.
 | `profiled` | Profile columns filled. | Stage 3 | Agent |
 | `formatting_needed` | Open quirks block use. | Stage 4 | Agent |
 | `format_resolved` | Every blocking quirk is handled. | Stage 5 | Agent |
-| `spined` | Joined to the spine, with `spine_join_method` (exact, fuzzy, spatial) and `spine_join_grade` (NIA-86). | Stage 6 | Agent |
+| `spined` | Joined to the spine, with `spine_join_method` (exact, fuzzy, spatial) and `spine_join_grade` (NA-86). | Stage 6 | Agent |
 | `dormant` | In the live map, not shown to users. | Stage 8 | **Morgen** |
 | `surfaced` | Visible to users. **Not before G6.** | Stage 8 | **Morgen** |
 | `blocked` | Side state. Cannot proceed; reason and unblocker named. | Any stage | Agent sets, Morgen clears |
-| `not_used` | Side state. Will not be used (licence, MPAC, NPCA, no value). | Any stage | Morgen. Agent sets it only where a rule forces it (MPAC, NPCA) |
+| `not_used` | Side state. Will not be used (no value, or a Morgen decision). | Any stage | Morgen |
 
 A layer with no quirks goes from `profiled` to `spined`. Agents log every status move in a Linear comment.
 

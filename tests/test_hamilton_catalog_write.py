@@ -103,10 +103,11 @@ class HamiltonCatalogWriteTests(unittest.TestCase):
         self.assertNotIn("/fast/code", blob)
         self.assertNotIn("OWNER_VALUE", blob)
 
-    def test_npca_assessment_stays_not_ingested(self):
+    def test_npca_assessment_allowed_by_rule(self):
         row = next(r for r in self.inv if r["dataset_id"] == "npca_assessment_parcels")
-        self.assertEqual(row["status_in_product"], "blocked")
-        self.assertIn("not ingested", row["notes"])
+        self.assertNotEqual(row["status_in_product"], "blocked")
+        self.assertIn("HARD-RULES 4/5", row["notes"])
+        self.assertNotIn("not ingested", row["notes"])
 
     def test_catalog_has_all_hamilton_write_ids(self):
         county_ids = {row["mcs_dataset_id"] for row in self.counties}

@@ -1,12 +1,12 @@
 # ADR 0002 — Joining concepts and terminology
 
-**Status:** accepted for the Slice 1 decisions in this record, 2026-09-25. Linear **NIA-22**. Docs only.
+**Status:** accepted for the Slice 1 decisions in this record, 2026-09-25. Linear **NA-22**. Docs only.
 
 Items under [Deferred](#deferred) are outside this acceptance.
 
 ## Context
 
-Linear **NIA-10** placed three planning artifacts on `main`. This record encodes the locked terminology from those artifacts. It does not reopen the dig.
+Linear **NA-10** placed three planning artifacts on `main`. This record encodes the locked terminology from those artifacts. It does not reopen the dig.
 
 | Input | Role here |
 |---|---|
@@ -58,7 +58,7 @@ These stay as recorded in the planning files. This slice does not make them norm
 | Claim and stamp meta from planning file 12 §2 | `concept_id`, native field and value, `ledger_id`, `facet`, `authority`, `authority_scale` on the stamp, `claim_grain` on the claim, `register_family` on the claim, `edition_label`, `access_tier`, `is_register_quotation`, and `display_label_key`. The enums above are closed here. The fields are not added to the source-stamp table or to fixtures. |
 | Sentinels from planning file 12 §3 | A per-source sentinel map is a later normalize artifact. A sentinel is not encoded as a claim field here. |
 | Fixture bumps | `fixtures/parcels/` and PR #13 stay as they are, including any Erie floor-area note. |
-| NPCA / MPAC licence clearance | Planning file 12 §4. MPAC assessment data stays `not_licensed`. NPCA parcel layers are not ingested. |
+| NPCA / MPAC licence clearance | Superseded 2026-10-17 by HARD-RULES 4 and 5: MPAC-derived and NPCA parcel layers may be pulled, used and published; roll numbers, tax or property class and parcel civic addresses may be public in Ontario; owner and personal information pulled but screened from public view (D-13). Planning file 12 §4 keeps the earlier licence analysis as history. |
 | MCS `history` and `servicing` | Planning file 12 §5. No MCS cell changes. No `dataset_id` is named because none is edited. |
 
 ## Consequences

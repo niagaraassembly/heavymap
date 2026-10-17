@@ -1,8 +1,8 @@
 {
   "id": "joining-concepts-vocabulary",
   "schema_version": 1,
-  "linear": "NIA-22",
-  "inputs_linear": "NIA-10",
+  "linear": "NA-22",
+  "inputs_linear": "NA-10",
   "source_of_truth": [
     "docs/architecture/adr/0002-joining-concepts-and-terminology.md",
     "heavymap-planning/10-joining-concepts-v1.md",
@@ -184,7 +184,7 @@
         "alias": "establishment_register_key",
         "concept_id": "premises_register_key",
         "status": "superseded_working_name",
-        "note": "Working name from the NIA-10 extension comment. Morgen locked premises_register_key on 2026-09-25."
+        "note": "Working name from the NA-10 extension comment. Morgen locked premises_register_key on 2026-09-25."
       }
     ],
     "families": [
@@ -669,7 +669,7 @@
       },
       {
         "id": "npca_mpac_licence_clearance",
-        "reason": "Planning file 12 §4. MPAC assessment data stays not_licensed. NPCA parcel layers are not ingested. Owner values stay unread."
+        "reason": "Superseded 2026-10-17 by HARD-RULES 4 and 5: MPAC-derived and NPCA parcel layers may be pulled, used and published; roll numbers, tax or property class and parcel civic addresses may be public in Ontario. All fields are pulled; owner and personal fields are screened from public view at the publish boundary (D-13). Planning file 12 section 4 keeps the earlier licence analysis as history."
       },
       {
         "id": "mcs_history_and_servicing",

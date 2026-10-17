@@ -77,7 +77,7 @@ A refusal uses exactly one of:
 | Reason | Use it when |
 |---|---|
 | `not_in_coverage` | The layer, jurisdiction, or vintage is outside what v1 holds, or the responsible publisher does not release that object. Geography outside the v1 list is this reason. A city with no public parcel fabric is this reason for parcel grain. |
-| `not_licensed` | A source exists and HeavyMap is not allowed to use it. Ontario assessment via MPAC is the standing example. |
+| `not_licensed` | A source exists and HeavyMap is not allowed to use it. (MPAC was the standing example until HARD-RULES 4 was amended on 2026-10-17; it is no longer refused on licence.) |
 | `not_joined` | A usable source is in hand, or is expected in the joined set, and this key has no accepted join yet. |
 
 One reason only. If a layer is both unlicensed and unjoined, `not_licensed` wins: there is nothing to join. If a layer was never in the v1 set, `not_in_coverage` wins: do not imply a join is the remaining step.
@@ -97,7 +97,7 @@ HeavyMap must not assert on its own that land is vacant. It may display the sour
 
 UI naming conventions for surfaced source classes will be refined later.
 
-Display pattern, not final copy: an MPAC tax class, if a licensed or otherwise permitted field is later available, may be surfaced as a cross-confirmation signal such as `Tax class confirmed: industrial`. This does not relax MPAC `not_licensed` and does not authorize a pull.
+Display pattern, not final copy: an MPAC tax or property class (public in Ontario, HARD-RULES 4) may be surfaced as a cross-confirmation signal such as `Tax class confirmed: industrial`.
 
 Without that quotation they are forbidden, including as friendly summaries of a refusal. “Not joined” is not “vacant.” “Not licensed” is not “unassessed.” “Not in coverage” is not “no industrial activity.”
 
@@ -154,7 +154,7 @@ These are the same illustrations as in [PCDP.md](PCDP.md). They show the contrac
 | Object | Reason | What a reader must not conclude |
 |---|---|---|
 | Parcel polygon | `not_in_coverage` | That Welland has no lot here |
-| MPAC roll and assessed value | `not_licensed` | That the land is unassessed |
+| Assessed value (not yet joined from MPAC) | `not_joined` | That the land is unassessed |
 | `constraints` rung | `not_joined` | That the site is unconstrained |
 | `coverage_ratio` | `not_in_coverage` | That coverage is zero |
 
