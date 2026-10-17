@@ -65,7 +65,7 @@ class ConfigTests(unittest.TestCase):
         self.assertIn("LYR-HAM-ZONING", ids)
         self.assertIn("LYR-LIO-GREENBELT-DESIGNATION", ids)
         self.assertIn("LYR-LIO-NEP-DESIGNATION", ids)
-        self.assertIn("LYR-LIO-NEP-DEVELOPMENT-CONTROL", ids)
+        self.assertIn("LYR-HAM-NEP-DEVELOPMENT-CONTROL", ids)
         self.assertIn("LYR-NPCA-REGULATION-LANDS", ids)
         self.assertIn("LYR-HCA-REGULATED-AREAS", ids)
         self.assertIn("LYR-GRCA-REGULATION-LIMITS-WATERLOO", ids)
@@ -80,14 +80,27 @@ class ConfigTests(unittest.TestCase):
             self.assertIn(lyr.band, allowed)
             self.assertEqual(lyr.working_crs, "EPSG:26917")
 
-    def test_unknown_fields_are_todo_not_invented(self):
-        dca = HAMILTON.layer("LYR-LIO-NEP-DEVELOPMENT-CONTROL")
-        self.assertTrue(dca.endpoint_todo)
-        self.assertTrue(any("TODO" in item for item in dca.todo_fields))
+    def test_todos_filled_from_real_pulls(self):
+        dca = HAMILTON.layer("LYR-HAM-NEP-DEVELOPMENT-CONTROL")
+        self.assertFalse(dca.endpoint_todo)
+        self.assertIn("PolicyPlanning/MapServer/10", dca.endpoint)
+        self.assertEqual(dca.id_fields, ("OBJECTID",))
+        self.assertEqual(dca.constant_class, "development_control")
+        self.assertEqual(dca.todo_fields, ())
         secondary = HAMILTON.layer("LYR-HAM-SECONDARY-PLAN-LAND-USE")
-        self.assertTrue(secondary.feature_filter.todo)
-        self.assertEqual(secondary.feature_filter.exclude_values, ())
-        self.assertEqual(secondary.class_fields, ())
+        self.assertFalse(secondary.feature_filter.todo)
+        self.assertEqual(secondary.feature_filter.field, "SEC_PLAN_NAME")
+        self.assertEqual(len(secondary.feature_filter.exclude_values), 4)
+        self.assertTrue(all(v.startswith("Retired - ") for v in secondary.feature_filter.exclude_values))
+        self.assertEqual(secondary.class_fields, ("LANDUSE_CLASS",))
+        self.assertEqual(secondary.id_fields, ("OBJECTID",))
+        hca = HAMILTON.layer("LYR-HCA-REGULATED-AREAS")
+        self.assertEqual(hca.id_fields, ("OID",))
+        self.assertEqual(hca.class_fields, ())
+        for lyr in HAMILTON.layers:
+            self.assertFalse(any(t.startswith("TODO") and "dataset_id" not in t for t in lyr.todo_fields), lyr.layer_id)
+            self.assertIn("-2026-10-17/", lyr.default_rel, lyr.layer_id)
+            self.assertTrue(lyr.default_rel.endswith("-26917.geojson"), lyr.layer_id)
 
     def test_zoning_fields_come_from_profile(self):
         zoning = HAMILTON.layer("LYR-HAM-ZONING")
@@ -456,6 +469,98 @@ class PipelineCliTests(unittest.TestCase):
                 rows.append((manifest["counts"]["link_rows"], body))
             self.assertEqual(rows[0][0], 5)
             self.assertEqual(rows[0], rows[1])
+
+
+@skip_without_shapely()
+class RealDataRegressionTests(unittest.TestCase):
+    """Regressions from the 2026-10-17 deb validation (synthetic geometry only)."""
+
+    def setUp(self):
+        from heavymap.overlays.models import OverlayFeature, ParcelGeom
+        from shapely.geometry import Point, Polygon
+
+        self.OverlayFeature = OverlayFeature
+        self.ParcelGeom = ParcelGeom
+        self.Point = Point
+        self.Polygon = Polygon
+
+    def _parcel(self, hid, x0, y0, x1, y1):
+        geom = self.Polygon(box_coords(x0, y0, x1, y1))
+        return self.ParcelGeom(heavymap_id=hid, geom=geom, area_m2=float(geom.area))
+
+    def _big_feature(self):
+        # A 4,000-vertex disc stands in for a city-sized Greenbelt polygon.
+        geom = self.Point(OX + 500, OY + 500).buffer(400, quad_segs=1000)
+        return self.OverlayFeature(source_id="big", geom=geom, area_m2=float(geom.area), class_value="GB", quoted_label="GB")
+
+    def _parcels(self):
+        out = []
+        for i in range(0, 1000, 40):
+            for j in range(0, 1000, 40):
+                out.append(self._parcel(f"hm:{i}:{j}", i, j, i + 35, j + 35))
+        return out
+
+    def test_subdivided_areas_equal_whole_feature_areas(self):
+        from heavymap.overlays.linker import link_pairs
+
+        feat = self._big_feature()
+        parcels = self._parcels()
+        whole = list(link_pairs(parcels, [feat], "LYR-TEST", max_piece_vertices=10**9))
+        split = list(link_pairs(parcels, [feat], "LYR-TEST", max_piece_vertices=16))
+        self.assertGreater(len(whole), 300)
+        self.assertEqual([r["heavymap_id"] for r in whole], [r["heavymap_id"] for r in split])
+        for a, b in zip(whole, split):
+            self.assertAlmostEqual(float(a["area_m2"]), float(b["area_m2"]), places=4)
+            self.assertEqual(a["sliver"], b["sliver"])
+        self.assertEqual(len({r["feature_source_id"] for r in split}), 1)
+
+    def test_index_built_once_per_layer_and_pieces_reported(self):
+        from heavymap.overlays.linker import link_chunks
+
+        feat = self._big_feature()
+        parcels = self._parcels()
+        rows = []
+        counts = link_chunks([parcels[:300], parcels[300:]], [feat], "LYR-TEST", rows.append, max_piece_vertices=64)
+        self.assertGreater(counts["overlay_pieces"], 1)
+        self.assertEqual(counts["link_rows"], len(rows))
+        self.assertEqual(counts["parcels_seen"], len(parcels))
+
+    def test_contained_parcel_gets_full_area(self):
+        from heavymap.overlays.linker import link_pairs
+
+        rows = list(link_pairs([self._parcel("hm:in", 480, 480, 520, 520)], [self._big_feature()], "LYR-TEST"))
+        self.assertEqual(len(rows), 1)
+        self.assertAlmostEqual(float(rows[0]["parcel_share"]), 1.0, places=9)
+
+    def test_constant_field_is_not_used_as_class(self):
+        from heavymap.overlays.io import load_overlay_layer
+
+        hca = HAMILTON.layer("LYR-HCA-REGULATED-AREAS")
+        with tempfile.TemporaryDirectory() as tmp:
+            fc = collection([
+                {"type": "Feature", "properties": {"OID": 7, "Version": 0},
+                 "geometry": {"type": "Polygon", "coordinates": [box_coords(0, 0, 10, 10)]}},
+            ])
+            path = write_json(Path(tmp) / "hca.geojson", fc)
+            feats, _stats = load_overlay_layer(path, hca)
+        self.assertEqual(feats[0].class_value, "regulated")
+        self.assertEqual(feats[0].source_id, "7")
+
+    def test_retired_secondary_plans_filtered_by_config(self):
+        from heavymap.overlays.io import load_overlay_layer
+
+        cfg = HAMILTON.layer("LYR-HAM-SECONDARY-PLAN-LAND-USE")
+        with tempfile.TemporaryDirectory() as tmp:
+            fc = collection([
+                feature(1, box_coords(0, 0, 10, 10), SEC_PLAN_NAME="Retired - Greensville", LANDUSE_CLASS="Residential"),
+                feature(2, box_coords(0, 0, 10, 10), SEC_PLAN_NAME="Binbrook Village", LANDUSE_CLASS="Residential"),
+            ])
+            path = write_json(Path(tmp) / "spl.geojson", fc)
+            feats, stats = load_overlay_layer(path, cfg)
+        self.assertEqual(stats.filtered_out, 1)
+        self.assertEqual([f.source_id for f in feats], ["2"])
+        self.assertEqual(feats[0].class_value, "Residential")
+        self.assertEqual(feats[0].quoted_label, "Secondary plan (Binbrook Village): Residential")
 
 
 if __name__ == "__main__":
