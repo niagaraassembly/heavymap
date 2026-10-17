@@ -1,0 +1,6 @@
+---
+description: Architecture frame (Spine, Bands, PCDP, Claims)
+globs: docs/architecture/**,heavymap/**,fixtures/**
+alwaysApply: false
+---
+The four-concept frame lives in `docs/architecture/` (README first). Code in `heavymap/` is stdlib Python with tests in `tests/` (`python3 -m unittest discover -s tests`). Fixtures are synthetic (`SYN-` ids) and identifier-only: no owner fields, no raw row dumps. ADRs go in `docs/architecture/adr/`.

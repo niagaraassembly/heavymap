@@ -1,0 +1,15 @@
+{
+  "name": "E3 atlas (heavymap)",
+  "install": "bash scripts/cloud-install.sh",
+  "start": "bash scripts/cloud-start.sh",
+  "egressMode": "network_settings_only",
+  "egressAllowlist": [
+    "github.com",
+    "api.github.com",
+    "raw.githubusercontent.com",
+    "codeload.github.com",
+    "pypi.org",
+    "files.pythonhosted.org"
+  ],
+  "enable_testing": false
+}
