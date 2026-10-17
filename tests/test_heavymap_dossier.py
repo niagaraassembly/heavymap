@@ -303,16 +303,31 @@ class BuildTests(unittest.TestCase):
         self.assertTrue(m["truncated"])
         self.assertEqual(len(m["shown"]), 25)
 
-    def test_overlays_slivers_hidden_but_counted_and_alias(self):
+    def test_overlays_slivers_flagged_never_dropped_and_alias(self):
         o = self.records[P_EXACT]["overlays"]
         self.assertEqual(o["sliver_count"], 1)
         layers = [r["layer"] for r in o["rows"]]
-        self.assertEqual(layers, ["LYR-HAM-ZONING", "LYR-NPCA-APPROX-REGULATION-LANDS"])
-        self.assertNotIn("P7", [r["class"] for r in o["rows"]])
-        self.assertEqual(self.records[P_MANY]["overlays"]["sliver_count"], 2)
-        self.assertEqual(len(self.records[P_MANY]["overlays"]["rows"]), 1)
+        self.assertEqual(layers, ["LYR-HAM-ZONING", "LYR-HAM-ZONING", "LYR-NPCA-APPROX-REGULATION-LANDS"])
+        by_class = {r["class"]: r for r in o["rows"]}
+        self.assertIs(by_class["P7"].get("sliver"), True)
+        self.assertNotIn("sliver", by_class["C5"])
+        self.assertIn("1 flagged as sliver", o["label"])
+        many = self.records[P_MANY]["overlays"]
+        self.assertEqual(many["sliver_count"], 2)
+        self.assertEqual(len(many["rows"]), 3)
+        self.assertEqual(sum(1 for r in many["rows"] if r.get("sliver")), many["sliver_count"])
+        # every input link row appears in output
+        total = sum(len(r["overlays"]["rows"]) for r in self.records.values())
+        self.assertEqual(total, 6)
         self.assertIn("LYR-NPCA-APPROX-REGULATION-LANDS", self.manifest["sources"])
         self.assertNotIn("LYR-NPCA-REGULATION-LANDS", self.manifest["sources"])
+
+    def test_screen_refuses_non_bool_sliver(self):
+        rec = dict(self.records[P_EXACT])
+        rec["overlays"] = dict(rec["overlays"])
+        rec["overlays"]["rows"] = [dict(rec["overlays"]["rows"][0], sliver="y")]
+        with self.assertRaises(ScreeningError):
+            screen_record(rec)
 
     def test_area(self):
         self.assertEqual(self.records[P_EXACT]["area"]["m2"], 1200.5)

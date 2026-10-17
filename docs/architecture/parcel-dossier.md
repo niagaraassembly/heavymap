@@ -44,7 +44,8 @@ Public in Ontario and shown: roll number (ARN), MPAC property code, civic addres
  "addresses": {"src": "LYR-HAM-ADDRESSES", "join": "point_in_polygon", "label": "...", "count": 3, "truncated": false,
                "shown": [{"id": "hm:ca:on:hamilton:address:<ULID>", "text": "<number> <STREET>, <COMMUNITY>", "unit": "", "join": "pip", "conf": "high"}]},
  "overlays": {"src": "heavymap-overlays:<run>", "join": "area_share", "label": "...", "sliver_count": 5,
-              "rows": [{"layer": "LYR-HAM-ZONING", "class": "AA", "label": "City zoning: AA", "share": 0.8524, "m2": 125108.7, "fid": "<overlay feature id>"}]}
+              "rows": [{"layer": "LYR-HAM-ZONING", "class": "AA", "label": "City zoning: AA", "share": 0.8524, "m2": 125108.7, "fid": "<overlay feature id>"},
+                       {"layer": "LYR-HAM-ZONING", "class": "P7", "label": "City zoning: P7", "share": 0.0, "m2": 1.5, "fid": "<overlay feature id>", "sliver": true}]}
 }
 ```
 
@@ -71,7 +72,7 @@ Provisional UI words, not the NA-86 `exact` / `good` / `weak` / `refused` scale 
 
 Cityview `PropCode` joins by exact 15-digit ARN (`arn_exact`). If only a 20-digit Cityview ARN exists, it joins on its first 15 digits (`arn_prefix15`). The code is quoted as given. `family` names the MPAC range (1xx vacant land, 2xx farm, 3xx residential, 4xx commercial, 5xx industrial, 6xx institutional, 7xx special and exempt). The family is a range lookup, not a HeavyMap classification.
 
-**Tax class is not available.** Neither NPCA layer carries an MPAC tax class. `MPAC_TAXAT` holds the taxing municipality (`HAMILTON CITY`). The manifest lists this under `fields_unavailable`.
+**Tax class is not in this build.** NPCA has no tax class field; tax class is one possible input among several. `MPAC_TAXAT` holds the taxing municipality (`HAMILTON CITY`), not a class. The manifest lists this under `fields_unavailable`.
 
 ### Addresses
 
@@ -79,7 +80,9 @@ Only registry links `pip` and `nearest_10m` are attached. `pip_ambiguous` and `u
 
 ### Overlays and slivers
 
-Every non-sliver overlay link is shown, in overlay-manifest layer order, largest share first. Sliver rows use the overlay rule: share under 1% of the parcel **and** under 5 m². They are left out of `rows` but counted in `sliver_count`. The label says how many are hidden. Note that the v0 spec draft (PR #71) asks to show every intersection, including slivers; this build follows the dossier brief, and `sliver_count` keeps the count honest. `share` is rounded to 4 decimals and `m2` to 0.1 m². A row with `share` 0.0 and `m2` > 0 is "below 0.01%", not absent.
+**Flag, never extinguish.** Every overlay link from the overlay run is in `rows`, slivers included (Morgen, 2026-10-17: slivers are an interesting observation, and we do not build habits of removing them from view). A sliver row carries `"sliver": true`; on other rows the key is absent, which means not a sliver. `sliver_count` gives the per-parcel total, and the label reads like "11 zone or designation links, 5 flagged as slivers". The UI may style or group slivers, but must not drop them.
+
+The sliver rule comes from the overlay run: share under 1% of the parcel **and** under 5 m². Rows are in overlay-manifest layer order, largest share first, so slivers sort to the end of each layer. `share` is rounded to 4 decimals and `m2` to 0.1 m². A row with `share` 0.0 and `m2` > 0 is "below 0.01%", not absent.
 
 Layer ids follow sheet 17. Overlay run `20261017-val2` wrote `LYR-NPCA-REGULATION-LANDS`. The dossier maps it to `LYR-NPCA-APPROX-REGULATION-LANDS` (`LAYER_ALIASES`), and the overlay config now emits the sheet 17 id.
 
@@ -98,10 +101,10 @@ Each shard is `{"schema":1,"jurisdiction":"hamilton","shard":"KK","records":{"<h
 - **Not one file.** One file is about 250 MB. Two-character prefixes of a ULID are all `01` (the timestamp part), which is why the suffix is used.
 - **Startup payload** is `manifest.json` only (about 7 KB). Shards load on click.
 
-2026-10-17 run: 251,972,087 bytes raw in total (min 183 KB, median 245 KB, max 325 KB per shard). Gzip brings the total to about 24 MB, roughly 23 KB per shard, which is what GitHub Pages sends. Every file is far under the 100 MB limit. The raw median sits right at the v0 spec's 250 KB-per-response target, and the raw total is over its 40 MB dossier allocation (the transfer size is under both). If raw storage matters for G6, the next step is dictionary-encoding the repeated provenance strings and source feature ids into the manifest. Do not commit shards to git (history bloat); publish them as a Pages build artifact once G6 allows.
+2026-10-17 run, with every sliver kept: 280,129,576 bytes raw in total (min 200 KB, median 273 KB, max 360 KB per shard). Gzip brings the total to about 26.9 MB, roughly 26 KB per shard, which is what GitHub Pages sends. The earlier build that hid slivers was 252.0 MB raw and about 24 MB gzip. Every file is far under the 100 MB limit. The raw median is above the v0 spec's 250 KB-per-response target, and the raw total is over its 40 MB dossier allocation; the transfer size is under both. If raw storage matters for G6, the next step is dictionary-encoding the repeated provenance strings and source feature ids into the manifest. Do not commit shards to git (history bloat); publish them as a Pages build artifact once G6 allows.
 
-Runtime on deb: about 41 s end to end (13 s load, 18 s build and write, 10 s re-audit). Peak RSS was 798 MB, mostly the two NPCA GeoJSON parses. Stdlib only.
+Runtime on deb: about 48 s end to end (14 s load, 22 s build and write, 12 s re-audit). Peak RSS was 798 MB, mostly the two NPCA GeoJSON parses. Stdlib only.
 
 ## Tests
 
-`tests/test_heavymap_dossier.py`: screening (spec keys, source allowlist, injected keys at any depth, wrong value kinds), sentinel leak scan over every output byte, coverage split, roll provenance, the 20-digit ARN prefix join, address cap, sliver hiding and counting, the layer id alias, and the CLI end to end.
+`tests/test_heavymap_dossier.py`: screening (spec keys, source allowlist, injected keys at any depth, wrong value kinds), sentinel leak scan over every output byte, coverage split, roll provenance, the 20-digit ARN prefix join, address cap, slivers flagged and never dropped (every input link row reaches output), a non-boolean sliver value refused, the layer id alias, and the CLI end to end.

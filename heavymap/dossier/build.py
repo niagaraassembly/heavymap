@@ -81,8 +81,8 @@ ADDRESS_LINKED = ("pip", "nearest_10m")
 FIELDS_UNAVAILABLE = {
     "tax_class": (
         "Not in either NPCA layer. Assessment_Parcels_Test MPAC_TAXAT holds the "
-        "taxing municipality (HAMILTON CITY), not an MPAC tax class. Needs an "
-        "MPAC or City tax-class source."
+        "taxing municipality (HAMILTON CITY), not a tax class. Tax class is one "
+        "possible input among several."
     ),
 }
 
@@ -240,10 +240,10 @@ def load_overlays(idx: Indexes, run: Path) -> None:
             idx.layer_order[lid] = i
     for row in _rows(run / "overlay_links.csv"):
         pid = row["heavymap_id"]
-        if row.get("sliver", "").strip().lower() in ("y", "yes", "true", "1"):
+        sliver = row.get("sliver", "").strip().lower() in ("y", "yes", "true", "1")
+        if sliver:
             idx.slivers[pid] += 1
             idx.stats["overlay_slivers"] += 1
-            continue
         lid = LAYER_ALIASES.get(row["layer_id"], row["layer_id"])
         if lid != row["layer_id"]:
             idx.stats["overlay_layer_id_aliased"] += 1
@@ -255,9 +255,10 @@ def load_overlays(idx: Indexes, run: Path) -> None:
                 round(float(row.get("parcel_share") or 0.0), 4),
                 round(float(row.get("area_m2") or 0.0), 1),
                 row.get("feature_source_id", ""),
+                sliver,
             )
         )
-        idx.stats["overlay_rows_shown"] += 1
+        idx.stats["overlay_rows"] += 1
 
 
 def load_all(inputs: Inputs, arn_prefix: str = "2518") -> Indexes:
@@ -394,10 +395,13 @@ def build_record(idx: Indexes, hm_id: str, max_addresses: int = 25) -> dict[str,
         key=lambda r: (idx.layer_order.get(r[0], 999), -r[3], r[1]),
     )
     slivers = idx.slivers.get(hm_id, 0)
-    overlay_rows = [
-        {"layer": r[0], "class": r[1], "label": r[2], "share": r[3], "m2": r[4], "fid": r[5]} for r in rows
-    ]
-    sliver_txt = f"; {slivers} sliver{'s' if slivers != 1 else ''} hidden" if slivers else ""
+    overlay_rows = []
+    for r in rows:
+        item = {"layer": r[0], "class": r[1], "label": r[2], "share": r[3], "m2": r[4], "fid": r[5]}
+        if r[6]:
+            item["sliver"] = True
+        overlay_rows.append(item)
+    sliver_txt = f", {slivers} flagged as sliver{'s' if slivers != 1 else ''}" if slivers else ""
     run_id = idx.overlay_manifest.get("run_id", "")
 
     record = {
@@ -462,7 +466,7 @@ def write_dossier(
             counts["addresses_linked"] += rec["addresses"]["count"]
             counts["addresses_shown"] += len(rec["addresses"]["shown"])
             counts["overlay_rows"] += len(rec["overlays"]["rows"])
-            counts["sliver_rows_counted"] += rec["overlays"]["sliver_count"]
+            counts["sliver_rows_flagged"] += rec["overlays"]["sliver_count"]
             if rec["addresses"]["truncated"]:
                 counts["address_lists_truncated"] += 1
             if not rec["overlays"]["rows"]:
@@ -517,6 +521,10 @@ def write_dossier(
         },
         "max_addresses_shown": max_addresses,
         "sliver_rule": idx.overlay_manifest.get("sliver", {}),
+        "sliver_policy": (
+            "Flag, never extinguish. Every overlay link is in rows; slivers carry "
+            "sliver=true (absent means not a sliver) and are counted in sliver_count."
+        ),
         "layer_aliases": LAYER_ALIASES,
         "sources": sources,
         "property_code_families": [
