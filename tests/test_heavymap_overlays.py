@@ -66,7 +66,7 @@ class ConfigTests(unittest.TestCase):
         self.assertIn("LYR-LIO-GREENBELT-DESIGNATION", ids)
         self.assertIn("LYR-LIO-NEP-DESIGNATION", ids)
         self.assertIn("LYR-HAM-NEP-DEVELOPMENT-CONTROL", ids)
-        self.assertIn("LYR-NPCA-REGULATION-LANDS", ids)
+        self.assertIn("LYR-NPCA-APPROX-REGULATION-LANDS", ids)
         self.assertIn("LYR-HCA-REGULATED-AREAS", ids)
         self.assertIn("LYR-GRCA-REGULATION-LIMITS-WATERLOO", ids)
         self.assertIn("LYR-HAM-SECONDARY-PLAN-LAND-USE", ids)

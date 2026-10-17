@@ -216,7 +216,7 @@ HAMILTON_LAYERS: tuple[OverlayLayerConfig, ...] = (
         quirks=("Q-020",),
     ),
     OverlayLayerConfig(
-        layer_id="LYR-NPCA-REGULATION-LANDS",
+        layer_id="LYR-NPCA-APPROX-REGULATION-LANDS",
         catalog_row_ref="A09",
         source_name="npca_regulation_lands",
         publisher="Niagara Peninsula Conservation Authority",
