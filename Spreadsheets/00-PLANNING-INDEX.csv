@@ -47,3 +47,4 @@ Spreadsheets/19-process-insights.csv,(whole file),"Process insights inventory: o
 heavymap-planning/PROCESS-INSIGHTS.md,(whole file),"Process insights guide: why, insight vs issue vs decision, columns, etiquette",NA-13,Grok Bot,living,2026-10-17,Standing rule in AGENTS.md and CLAUDE.md (Morgen 2026-10-17)
 CLAUDE.md,(whole file),Claude Code pointer to AGENTS.md plus process-insights rule,NA-13,Grok Bot,living,2026-10-17,
 .github/copilot-instructions.md,(whole file),Copilot pointer to AGENTS.md plus process-insights rule,NA-13,Grok Bot,living,2026-10-17,
+heavymap-planning/focus/hamilton/SPINE-BASE-PULL-2026-10-17.md,(whole file),"Hamilton Tier 0/1 pull, layer profiles, first spine check (City parcels vs NPCA ARN) and ID registry next steps",NA-24,Grok Bot,living,2026-10-17,Stats only. Data and scripts on deb local-data. Rows in sheets 16-19.

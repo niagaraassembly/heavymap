@@ -11,5 +11,6 @@
 - `hamilton-datasets-not-relevant.csv`: the 237 `reviewed_not_relevant` rows, kept separately.
 - `mpac-data-inventory.csv`: MPAC data held versus only identified (2026-10-17).
 - `MPAC-NPCA-FINDINGS.md`: MPAC findings and the NPCA Assessment Parcels pull for Hamilton (2026-10-17).
+- `SPINE-BASE-PULL-2026-10-17.md`: Tier 0/1 pull, layer profiles, first spine check and ID registry next steps (2026-10-17).
 - `INSIGHTS.md`: one line per insight, in the form `date | source | band/view | insight`.
 - Decisions: `DECISIONS.md` (firm/provisional log). Insights: `INSIGHTS.md`.
