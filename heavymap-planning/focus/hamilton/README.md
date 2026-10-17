@@ -12,5 +12,6 @@
 - `mpac-data-inventory.csv`: MPAC data held versus only identified (2026-10-17).
 - `MPAC-NPCA-FINDINGS.md`: MPAC findings and the NPCA Assessment Parcels pull for Hamilton (2026-10-17).
 - `SPINE-BASE-PULL-2026-10-17.md`: Tier 0/1 pull, layer profiles, first spine check and ID registry next steps (2026-10-17).
+- ID registry (not in this folder): `docs/architecture/adr/0003-heavymap-id-format.md`, `docs/architecture/heavymap-id-registry.md`, code in `heavymap/ids/`.
 - `INSIGHTS.md`: one line per insight, in the form `date | source | band/view | insight`.
 - Decisions: `DECISIONS.md` (firm/provisional log). Insights: `INSIGHTS.md`.

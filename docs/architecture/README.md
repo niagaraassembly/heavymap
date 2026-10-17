@@ -28,7 +28,8 @@ Accepted records. Each one locks a platform choice beside the four concepts. A p
 | Decision | Document |
 |---|---|
 | OSM (or an equivalent tile service) is the visual map substrate. No bulk OSM prefetch as the parcel or intelligence corpus. | [adr/0001-osm-as-substrate.md](adr/0001-osm-as-substrate.md) (Linear **NIA-17**) |
-| Joining concepts sit above native field names. Relation, authority scale, claim grain, register family, and the thirty concept ids are closed sets. | [adr/0002-joining-concepts-and-terminology.md](adr/0002-joining-concepts-and-terminology.md) (Linear **NIA-22**) |
+| Joining concepts sit above native field names. Relation, authority scale, claim grain, register family, and the thirty concept ids are closed sets. | [adr/0002-joining-concepts-and-terminology.md](adr/0002-joining-concepts-and-terminology.md) (Linear **NA-22**) |
+| Proposed: Hamilton `{local}` is an opaque Crockford ULID. Geometry fingerprints and roll numbers are matching aids, never the ID. IDs are never reused. | [adr/0003-heavymap-id-format.md](adr/0003-heavymap-id-format.md) (Linear **NA-24**, review); operator notes [heavymap-id-registry.md](heavymap-id-registry.md) |
 
 ## Geography v1
 

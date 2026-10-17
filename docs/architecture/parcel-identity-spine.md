@@ -17,12 +17,13 @@ The spine does not interpret use, constraint, activity, or a reading. Those are 
 
 ## Non-goals
 
-- Shipping join code, a unit index, or a database.
-- Fetching municipal, provincial, state, or county layers.
-- Treating MPAC, a New York owner name, or an address string as the HeavyMap key.
+- Fetching municipal, provincial, state, or county layers into git (pulled rows stay in `local-data/`).
+- Treating MPAC, a New York owner name, or an address string as the HeavyMap key. Hamilton's roll number is a matching aid, never `{local}` ([ADR 0003](adr/0003-heavymap-id-format.md)).
 - Inventing one identifier that works on both sides of the border.
 - Editing MCS rows, drawing Chrome, or publishing a site.
 - Adding UK parcels or UK ports.
+
+Hamilton now has a tested ID registry (`heavymap/ids/`, first geography). That code is the unit index for Hamilton. It is not a public database and it does not publish. Other jurisdictions are not minted here.
 
 ## How it relates to the other three
 
@@ -44,9 +45,13 @@ hm:{country}:{region}:{jurisdiction}:{grain}:{local}
 | `region` | `on` or `ny` for v1 |
 | `jurisdiction` | The publishing government the grain comes from, in a stable slug. For a Niagara Region lower-tier municipality, the slug is the lower tier (for example `welland`), not the word Niagara. |
 | `grain` | `parcel`, `footprint`, or `address` |
-| `local` | A unique token inside that jurisdiction and grain. Synthetic examples use a `SYN-` prefix. |
+| `local` | A unique token inside that jurisdiction and grain. Synthetic examples use a `SYN-` prefix. Hamilton, which publishes no parcel key, mints an opaque Crockford ULID; see [ADR 0003](adr/0003-heavymap-id-format.md). Rochester still follows the SBL20 recommendation in [rochester-parcel-local-token.md](rochester-parcel-local-token.md). |
 
 The key is HeavyMap’s. Publishers keep their own keys in `native_keys`. A native key is never silently promoted to the spine key, because municipal parcel identifiers, assessment roll numbers, New York SWIS/SBL print keys, `nei_id`, and street addresses fail in different ways and do not survive a border crossing.
+
+### Hamilton (first geography)
+
+City of Hamilton parcels have no published stable id (`OBJECTID` only; Q-002). The registry mints one `hm:ca:on:hamilton:parcel:{ULID}` per distinct City geometry, collapses stacked duplicates as aliases, shifts NPCA geometry by the Q-004 translation before attaching ARN, and reconciles a re-pull by fingerprint then IoU ≥ 0.9. IDs are never reused. Operator notes: [heavymap-id-registry.md](heavymap-id-registry.md). Evidence: [SPINE-BASE-PULL-2026-10-17.md](../../heavymap-planning/focus/hamilton/SPINE-BASE-PULL-2026-10-17.md).
 
 A joining concept is a second handle for the job a native field does. The publisher’s field name stays on the claim. The closed catalog, the relation set, and `authority_scale` are in [ADR 0002](adr/0002-joining-concepts-and-terminology.md) and [vocab/joining-concepts.vocab.json](vocab/joining-concepts.vocab.json). Spine grain stays `parcel`, `footprint`, or `address`. Claim grain is a wider set and adds `register_unit`, `zone_polygon`, and `jurisdiction_aggregate`. The `nei_id` class is `premises_register_key`; `establishment_register_key` is an alias of that id. Two fields that share a concept still need their own join before either table can be linked.
 
