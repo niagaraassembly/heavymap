@@ -247,7 +247,7 @@
         },
         "local": {
           "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
-          "note": "Unique inside that jurisdiction and grain. Synthetic examples use a SYN- prefix. Dots are allowed so the Erie SBL illustration matches."
+          "note": "Unique inside that jurisdiction and grain. Synthetic examples use a SYN- prefix. Dots are allowed so the Erie SBL illustration matches. Hamilton mints a 26-character Crockford ULID (ADR 0003); that form already matches this pattern."
         }
       },
       "examples": [

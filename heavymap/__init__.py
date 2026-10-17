@@ -1,1 +1,1 @@
-"""Small, dependency-free HeavyMap normalization helpers."""
+"""Small, dependency-free HeavyMap helpers (NY identifiers, Hamilton ID registry)."""
