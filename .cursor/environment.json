@@ -1,5 +1,4 @@
 {
-  "$schema": "https://cursor.com/schemas/environment.schema.json",
   "name": "E3 atlas (heavymap)",
   "install": "bash scripts/cloud-install.sh",
   "start": "bash scripts/cloud-start.sh",
