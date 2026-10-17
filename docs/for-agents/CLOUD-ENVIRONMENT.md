@@ -7,7 +7,7 @@ Status: starter, 2026-10-16. The repo routines are still being decided, so this 
 | Repos | `niagaraassembly/heavymap` only (industrial-atlas later, if it becomes a repo) |
 | Build | `bash scripts/cloud-install.sh`: Python check, byte-compile, unit tests, planning-index path check. No installs (stdlib only), no data pulls |
 | Start | `bash scripts/cloud-start.sh`: nothing (no server; nothing published before G6) |
-| Network | environment allowlist only: GitHub hosts, PyPI (unused today), plus open-data hosts once named |
+| Network | set in `.cursor/environment.json`: `egressMode: network_settings_only` + `egressAllowlist` (GitHub hosts, PyPI); add open-data hosts there once named |
 | Secrets | none |
 
 ## Open questions tied to routines still being decided
