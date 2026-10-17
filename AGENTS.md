@@ -2,7 +2,7 @@
 
 Pickup contract for agents working on HeavyMap. Read this before opening an issue or a pull request. Spreadsheet hygiene is in [AGENTS-MCS.md](AGENTS-MCS.md).
 
-**Status:** agent pickup source of truth. Linear **NIA-13**. Docs only.
+**Status:** agent pickup source of truth. Linear **NA-13**. Docs only.
 
 **Product:** HeavyMap — industrial intelligence for cross-border Niagara.
 **Control plane:** Linear project Industrial Atlas (priority, status, Agent packets).
@@ -12,7 +12,7 @@ Beta is the repository top level. The original `niagara-atlas/` prototype is pri
 
 ## Four-concept frame
 
-The product frame lives under [docs/architecture/](docs/architecture/README.md) (Linear **NIA-11**):
+The product frame lives under [docs/architecture/](docs/architecture/README.md) (Linear **NA-11**):
 
 | Concept | Document |
 |---|---|
@@ -33,7 +33,7 @@ Work an issue only when all of these are true:
 
 If any item is missing, comment on the issue and stop. Leave the scope as written. `agent-ready` is applied by Morgen or the Chief of Staff.
 
-Prefer one Cloud Agent, plus follow-ups on that same run, for a documentary task. Cite the Linear ID (`NIA-…`) in the pull request body.
+Prefer one Cloud Agent, plus follow-ups on that same run, for a documentary task. Cite the Linear ID (`NA-…`) in the pull request body.
 
 Ordinary HeavyMap work stays in Linear. Open a GitHub pull request for the change. A GitHub issue is not the tracker for that work.
 

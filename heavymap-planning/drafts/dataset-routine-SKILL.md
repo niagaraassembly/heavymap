@@ -18,8 +18,8 @@ DRAFT. Not registered. Mirrors `heavymap-planning/DATASET-ROUTINE.md`; if they d
 
 - Pulling needs no licence confirmation. Licence and use are decided later (`not_used` or a use decision).
 - Pulled data goes in git-ignored `local-data/`. Never commit it.
-- Owner fields: record field names only, never values (D-13).
-- MPAC is `not_licensed`. NPCA-derived layers are not ingested.
+- Owner and identifying fields: pulled with everything (`outFields=*`), kept local, and screened from public view at the publish boundary (D-13, HARD-RULES 2). Record field names only, never values.
+- MPAC-derived and NPCA-derived layers may be pulled, used and published. In Ontario, roll numbers, tax or property class and parcel civic addresses may be public; owner and personal information is never public (HARD-RULES 2, 4, 5).
 - Nothing is published before G6.
 - New files only. Do not edit the MCS, existing docs or existing CSVs. No secrets.
 - Slice size is 15 to 25 layers, per jurisdiction, service first. Order: parcels, address, footprints, zoning, permits/business, context. Priority: Welland, Rochester/Monroe, then other P0.
@@ -35,7 +35,7 @@ DRAFT. Not registered. Mirrors `heavymap-planning/DATASET-ROUTINE.md`; if they d
 | 3 Profile | Fill id, encoding, date, CRS, null and owner-name columns | Complete layer row | `profiled` |
 | 4 Quirks log | One row per quirk in `18-quirks-log.csv` | Quirk ids on the layer row | `formatting_needed` (if blocking) |
 | 5 Harmonize | Apply and re-test each handling | Quirks resolved with counts | `format_resolved` |
-| 6 Verify | Join to the spine, grade it (NIA-86) | Evidence write-up in the NIA-79 style | `spined` |
+| 6 Verify | Join to the spine, grade it (NA-86) | Evidence write-up in the NA-79 style | `spined` |
 | 7 Use decision | Recommend use, `not_used` or defer | Recommendation comment | Morgen decides |
 | 8 Promote | Morgen only | | `dormant` or `surfaced` (not before G6) |
 
@@ -58,6 +58,6 @@ Post your own comment on the slice issue at every stage. Header: `Stage N / juri
 | Who | May move |
 |---|---|
 | Agents | `catalogued` to `spined`, and `blocked`. Log every move in Linear. |
-| Morgen | `dormant`, `surfaced`, `not_used` (agents set `not_used` only where MPAC or NPCA forces it) |
+| Morgen | `dormant`, `surfaced`, `not_used` |
 
-`spined` records `spine_join_method` (exact, fuzzy, spatial) and `spine_join_grade` (NIA-86).
+`spined` records `spine_join_method` (exact, fuzzy, spatial) and `spine_join_grade` (NA-86).

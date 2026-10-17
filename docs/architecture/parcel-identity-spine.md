@@ -1,6 +1,6 @@
 # Parcel Identity Spine
 
-**Status:** architecture sketch, 2026-09-23. Linear **NIA-11**. Docs only.
+**Status:** architecture sketch, 2026-09-23. Linear **NA-11**. Docs only.
 
 ## Purpose
 
@@ -68,7 +68,7 @@ One physical site may be knowable at more than one grain. v1 does not require th
 
 These are conceptual. Counts and field names below are prior-art observations in `first-attempts/niagara-atlas/`, not a claim that Beta has loaded the layers.
 
-**No single public provincial parcel key.** Ontario’s assessment roll (MPAC) is the usual cross-municipality parcel identifier, and it is fee-based. For v1 that native key is `not_licensed` unless a later decision says otherwise. Assessed value travels with the same refusal. The refusal is about licence, not about whether the land has an assessment.
+**No single public provincial parcel key.** Ontario’s assessment roll (MPAC) is the usual cross-municipality parcel identifier, and it is fee-based. For v1 that native key was `not_licensed`; HARD-RULES 4 (amended 2026-10-17) lifts that, so the roll number may be carried as a native key, and shown publicly, where an MPAC-derived source (for example NPCA assessment parcels) provides it. The Welland illustrations in this folder still show the earlier refusal. Assessed value travels with the same refusal. The refusal is about licence, not about whether the land has an assessment.
 
 **Municipal fabrics are uneven inside Niagara-12.** Prior reconnaissance found public parcel polygons for some lower-tier cities (St. Catharines, Niagara Falls) and none for others (Welland’s open data had no parcel fabric; Hamilton’s open catalogue had no parcel layer). Haldimand, Norfolk, Brantford, and Brant are inside geography v1 and are not assumed to match either pattern. Until a layer is joined, those jurisdictions are `not_joined` at parcel grain, not “no industry” and not “no parcels in the world.”
 
@@ -82,7 +82,7 @@ These are conceptual. Counts and field names below are prior-art observations in
 
 **County parcel keys, not an ARN.** New York tax parcels are keyed by county geography plus a section-block-lot (SBL) print key, with SWIS identifying the municipality. That pair does not match an Ontario roll number. The HeavyMap key may be minted from a county parcel id; the SBL stays in `native_keys`.
 
-**Rochester local token (recommendation, not locked).** How a City of Rochester parcel gets its permanent local token is specified in [rochester-parcel-local-token.md](rochester-parcel-local-token.md) (Linear **NIA-80**). The recommendation is the 20-character text SBL, not the print key. The Erie illustration below still uses a print-key-shaped local. It is not rewritten by that note. The SWIS reading of Monroe’s six-digit `countysbl` prefix remains unconfirmed.
+**Rochester local token (recommendation, not locked).** How a City of Rochester parcel gets its permanent local token is specified in [rochester-parcel-local-token.md](rochester-parcel-local-token.md) (Linear **NA-80**). The recommendation is the 20-character text SBL, not the print key. The Erie illustration below still uses a print-key-shaped local. It is not rewritten by that note. The SWIS reading of Monroe’s six-digit `countysbl` prefix remains unconfirmed.
 
 **The state parcel layer is not the map of v1.** Prior reconnaissance of NYS Tax Parcels Public found Erie County present and Niagara County, New York absent from that service, with Niagara County publishing its own parcel layer. The other v1 counties — Chautauqua, Cattaraugus, Wyoming, Genesee, Orleans, Monroe — each need their own coverage stamp: state layer, county layer, or neither. A county missing from the state service still has land. The identity band says which layer was not in coverage or not joined.
 
