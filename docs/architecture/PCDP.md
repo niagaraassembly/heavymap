@@ -108,7 +108,7 @@ The viewer sees a building outline, not a lot line.
 - `share_export` is filled with this same selection: key, jurisdiction, and the refusals below. There is no fuller packet yet.
 - Not spoken for:
   - parcel polygon — `not_in_coverage`
-  - assessment roll and assessed value — `not_licensed`
+  - assessment roll — `not_joined`; assessed value — `not_in_coverage`
   - `land_use` — `not_joined` until a zoning join is accepted
   - `constraints` — `not_joined`
   - `activity_registers` — `not_joined`
@@ -120,8 +120,8 @@ No occupancy headline. The maximum below is a later snapshot of the same key, af
 
 | Rung | What is shown |
 |---|---|
-| `identity` | Outline. Key. Grain `footprint`. Jurisdiction sentence. Native `nei_id SYN-8130` grade `joined`, method `identifier`. Parcel polygon refused `not_in_coverage`. MPAC roll refused `not_licensed`. |
-| `land_use` | `L1 — Light Industrial` (synthetic), grade `joined`, method `point_in_polygon`, publisher City of Welland, licence named, `retrieved_on` and `observation_on` both shown. Assessed value still `not_licensed` inside this rung. |
+| `identity` | Outline. Key. Grain `footprint`. Jurisdiction sentence. Native `nei_id SYN-8130` grade `joined`, method `identifier`. Parcel polygon refused `not_in_coverage`. MPAC roll refused `not_joined`. |
+| `land_use` | `L1 — Light Industrial` (synthetic), grade `joined`, method `point_in_polygon`, publisher City of Welland, licence named, `retrieved_on` and `observation_on` both shown. Assessed value still `not_in_coverage` inside this rung. |
 | `constraints` | Refused. `not_joined`. The rung is present. It does not say “no constraints.” |
 | `activity_registers` | Synthetic NEI row `SYN-8130`, grade `joined`, method `identifier`. Employment shown as the source band, for illustration `5–99`, grade `observed` on the band and `derived` only if `employment_interval` is also listed. No “departed,” no “operating today.” |
 | `derived_readings` | `coverage_ratio` refused, `not_in_coverage`, because parcel area is refused. Displayed as refused, not as `0`. |

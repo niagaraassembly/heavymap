@@ -187,13 +187,13 @@
         {
           "object": "MPAC roll and assessed value",
           "grade": "refused",
-          "reason": "not_licensed",
+          "reason": "not_in_coverage",
           "must_not_conclude": "That the land is unassessed.",
           "stamp": {
             "source_name": "MPAC assessment roll",
             "publisher": "MPAC",
-            "licence": "not_licensed",
-            "note": "Ontario assessment is not this parcel's key. The refusal is about licence. No MPAC value is stored."
+            "licence": "n/a",
+            "note": "MPAC covers Ontario only; this New York parcel is outside its coverage. NY assessment is a separate source. No MPAC value is stored."
           }
         }
       ]

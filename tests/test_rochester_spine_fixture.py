@@ -131,7 +131,7 @@ class RochesterFixtureTests(unittest.TestCase):
                 saw_state = any(refusal["reason"] == "not_in_coverage" and "statewide" in refusal["object"] for refusal in band["refusals"])
                 for refusal in band["refusals"]:
                     if "MPAC" in refusal["object"]:
-                        self.assertEqual(refusal["reason"], "not_licensed")
+                        self.assertEqual(refusal["reason"], "not_in_coverage")
                     if "float-stored" in refusal["object"]:
                         self.assertEqual(refusal["reason"], "not_joined")
         self.assertTrue(saw_mpac)

@@ -93,7 +93,7 @@ NIA-79 (`heavymap/ny_identifiers.py` on PR #53) can report repeated ids and refu
 | NYS statewide parcel layer for Monroe | `not_in_coverage` | That the county has no parcels |
 | Official SWIS code for prefix `261400` | `not_joined` | That the six digits are a confirmed code |
 | Permits, violations, licences | `not_in_coverage` | That no activity exists |
-| MPAC roll and assessed value | `not_licensed` | That the land is unassessed |
+| MPAC roll and assessed value | `not_in_coverage` (MPAC is Ontario-only; NY assessment is a different source) | That the land is unassessed |
 
 Owner-of-record fields (`OWNERNME1`, `PSTLADDRESS`, statewide `PRIMARY_OWNER`, `ADD_OWNER`, `MAIL_*`) are out of this token. They are not read, not stored on the fixture, and not required for the key. Masking at presentation follows D-13. Which Rochester layer is the ingest source (the owner-bearing snapshot versus the live open-data layer that has no owner fields) is Epic 2 decision 7, and it does not change `{local}`.
 
