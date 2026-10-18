@@ -29,6 +29,7 @@ One row is one gap. `gap_id` is the stable key (`GAP-` plus a zero-padded number
 | `source_pi_ids` | yes | `PI-` ids that back the row, ` \| `-separated. |
 | `parcel_attach` | yes | How a dossier record may cite this `gap_id`. Closed tokens below. |
 | `status` | yes | `open`, `provisional`, `actioned`, or `superseded`. |
+| `publish_priority` | yes | `must_solve_before_publish`, `label_and_ship`, or `later`. Class default lives in [sheet 21](../../Spreadsheets/21-issue-class-register.csv). A row may override its class. Morgen 2026-10-18. |
 | `notes` | no | Internal. Not UI copy. |
 
 CSV format follows HARD-RULES: UTF-8, LF, RFC-4180 quoting, ISO dates, text ids, no formula-leading cells, no semicolons or newlines inside cells, multiple values separated with ` | `.
@@ -98,7 +99,7 @@ The dossier still does not **read** those fields (`SOURCE_FIELDS` in [`heavymap/
 
 ## How it is wired
 
-1. **Sheet 20** is the inventory. Agents append rows. They do not rewrite another session’s row except `status`.
+1. **Sheet 20** is the inventory. Agents append rows. They do not rewrite another session’s row except `status` or `publish_priority`. Class defaults live in [`Spreadsheets/21-issue-class-register.csv`](../../Spreadsheets/21-issue-class-register.csv).
 2. **`heavymap.gaps.load_ledger`** reads the CSV at import-safe path `Spreadsheets/20-data-gaps-ledger.csv`. Unknown `gap_type`, `scope` or `parcel_attach` tokens fail the load.
 3. **Dossier manifest** includes every row whose `scope` is `dataset`, `layer` or `field`, under `gaps_ledger`. That is the dataset/layer-level ledger the front end loads once.
 4. **Each dossier record** has `gaps`: a list of `gap_id` strings, sorted, for tokens that match that parcel. The UI looks up copy from the manifest. Do not copy `reason` onto the record.

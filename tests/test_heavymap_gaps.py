@@ -10,6 +10,7 @@ from pathlib import Path
 from heavymap.gaps import (
     GAP_TYPES,
     LEDGER_COLUMNS,
+    PUBLISH_PRIORITIES,
     LedgerError,
     ParcelGapContext,
     context_from_record,
@@ -53,8 +54,19 @@ class LedgerLoadTests(unittest.TestCase):
             self.assertIn(row["gap_type"], GAP_TYPES)
             self.assertTrue(row["reason"])
             self.assertTrue(row["source_pi_ids"])
+            self.assertIn(row["publish_priority"], PUBLISH_PRIORITIES)
             self.assertNotIn(";", row["reason"])
             self.assertNotIn("\n", row["reason"])
+
+    def test_seeded_publish_priority_follows_section_4(self):
+        must = {"GAP-0008", "GAP-0009"}
+        for row in self.rows:
+            expected = (
+                "must_solve_before_publish"
+                if row["gap_id"] in must
+                else "label_and_ship"
+            )
+            self.assertEqual(row["publish_priority"], expected, row["gap_id"])
 
     def test_csv_columns_and_hygiene(self):
         with ledger_path().open(encoding="utf-8", newline="") as fh:
@@ -156,6 +168,7 @@ class LedgerLoadTests(unittest.TestCase):
                         "source_pi_ids": "PI-0001",
                         "parcel_attach": "manifest_only",
                         "status": "open",
+                        "publish_priority": "label_and_ship",
                         "notes": "",
                     }
                 )

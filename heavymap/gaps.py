@@ -42,6 +42,12 @@ ATTACH_EXACT = (
     "has_valid_arn+has_property_code",
 )
 
+PUBLISH_PRIORITIES = (
+    "must_solve_before_publish",
+    "label_and_ship",
+    "later",
+)
+
 LEDGER_COLUMNS = (
     "gap_id",
     "scope",
@@ -58,6 +64,7 @@ LEDGER_COLUMNS = (
     "source_pi_ids",
     "parcel_attach",
     "status",
+    "publish_priority",
     "notes",
 )
 
@@ -80,6 +87,7 @@ PUBLIC_ENTRY_KEYS = (
     "source_pi_ids",
     "parcel_attach",
     "status",
+    "publish_priority",
 )
 
 
@@ -157,6 +165,11 @@ def load_ledger(path: Path | None = None) -> list[dict[str, Any]]:
         status = (raw.get("status") or "").strip()
         if status not in STATUSES:
             raise LedgerError(f"line {i}: unknown status {status!r}")
+        publish_priority = (raw.get("publish_priority") or "").strip()
+        if publish_priority not in PUBLISH_PRIORITIES:
+            raise LedgerError(
+                f"line {i}: unknown publish_priority {publish_priority!r}"
+            )
         reason = (raw.get("reason") or "").strip()
         if not reason:
             raise LedgerError(f"line {i}: reason is blank")
@@ -189,6 +202,7 @@ def load_ledger(path: Path | None = None) -> list[dict[str, Any]]:
                 "source_pi_ids": list(pi_ids),
                 "parcel_attach": list(attach_tokens),
                 "status": status,
+                "publish_priority": publish_priority,
                 "notes": (raw.get("notes") or "").strip(),
             }
         )
