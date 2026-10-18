@@ -1,7 +1,7 @@
 # Process insights
 
 **Status:** living. Standing rule for every AI session and every human working on HeavyMap (Morgen, 2026-10-17).
-**Inventory:** [`Spreadsheets/19-process-insights.csv`](../Spreadsheets/19-process-insights.csv) (source of truth, append-only).
+**Atlas inventory:** [`Spreadsheets/19-process-insights.csv`](../Spreadsheets/19-process-insights.csv) (source of truth, append-only). Frontend uses `HM-PI-` and the destination/interim PR-report route in [WORKING-AGREEMENT.md](WORKING-AGREEMENT.md#insights-and-handoffs), with these same columns. This scoped routing supersedes references below to one shared inventory; do not duplicate findings across logs.
 
 ## Why this exists
 
