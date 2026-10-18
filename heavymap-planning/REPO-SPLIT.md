@@ -1,13 +1,13 @@
 # Repo split plan: `heavymap` → `industrial-atlas` + `heavymap`
 
-**Status:** reviewable plan. No files moved, no repo created, no merge.
+**Status:** reviewable plan. Section 6 decisions recorded 2026-10-18. No files moved, no repo created, no merge, no rename performed.
 **Date:** 2026-10-18.
-**Approved to plan now:** Morgen, 2026-10-18. This answers BETA-GATE question 10 ("When to split universal back-end publishing into a separate `industrial-atlas` repo") by writing the split, not by executing it.
-**Linear:** Industrial Atlas = back end after the split. HeavyMap.com = front end + human-facing documentation after the split. Closest existing issue: [NA-269](https://linear.app/niagaraassembly/issue/NA-269/define-g6-and-a-staged-pilot-publish-gate) (gate Q10). There is no dedicated Linear packet for the split itself.
-**Repo today:** public `niagaraassembly/heavymap` (created 2026-09-21). `niagaraassembly/industrial-atlas` does not exist (org search 2026-10-18 returned only `heavymap`).
-**This PR does not:** create the new repo, move or delete files, land PR #71, rewrite git history, or change Linear projects.
+**Approved to plan now:** Morgen, 2026-10-18. BETA-GATE §9 item 10 (split) is decided; this document is the execution plan, not the execution.
+**Linear:** Industrial Atlas = back end after the split. HeavyMap.com = front end + human-facing documentation after the split. Closest existing issue: [NA-269](https://linear.app/niagaraassembly/issue/NA-269/define-g6-and-a-staged-pilot-publish-gate). There is no dedicated Linear packet for the split itself.
+**Repos today:** public `niagaraassembly/heavymap` (created 2026-09-21, must stay public: GitHub Pages / account cannot make it private). Private `niagaraassembly/heavymap-restricted` exists (created 2026-10-18, empty, unused). `niagaraassembly/industrial-atlas` does not exist yet and will be **public**. Future private `ia-restricted` remains the concept for restricted back-end data (not created in this split).
+**This PR does not:** create the new repo, move or delete files, land PR #71, rewrite git history, rename the Python package or `hm:` ids, or change Linear projects.
 
-Inventory taken from `main` at `a6f24b9` (merge of PR #78, beta-gate Hamilton) plus the open draft PR [#71](https://github.com/niagaraassembly/heavymap/pull/71) on `codex/heavymap-v0-frontend` (33 files, `mergeable_state: dirty`). Tracked files on `main`: 259.
+Inventory taken from `main` at `b524f3e` (PR #79, beta-gate decisions) plus the open draft PR [#71](https://github.com/niagaraassembly/heavymap/pull/71) on `codex/heavymap-v0-frontend`.
 
 ---
 
@@ -19,7 +19,9 @@ Inventory taken from `main` at `a6f24b9` (merge of PR #78, beta-gate Hamilton) p
 | **`niagaraassembly/heavymap`** | Front end only. The v0 MapLibre / PMTiles site (PR #71 `web/` on `codex/heavymap-v0-frontend`), HeavyMap product / UX docs (PCDP display protocol, lenses, front-end notices), front-end Linear project docs. GitHub Pages and `CNAME` (`heavymap.com`) stay here. |
 | **Linear Industrial Atlas** | Back-end issues, packets, and MCS / pipeline work. |
 | **Linear HeavyMap.com** | Front-end + documentation issues (NA-32 and the public-site docs already listed there; NA-305 / NA-308 / NA-309 / NA-310 already sit here). |
-| **Off git, shared** | Deb `local-data/` at `/fast/code/making/na/local-data/`. Serves both repos. Never committed. A future private `ia-restricted` is for restricted raw / withheld material that must not live in a public git repo; it is not created in this split. |
+| **Off git, shared** | Deb `local-data/` at `/fast/code/making/na/local-data/`. Serves both public repos. Never committed. |
+| **Private `niagaraassembly/heavymap-restricted`** | Exists, empty, unused. For secretive / proprietary **front-end** code and info the heavymap site may draw on. Not the back-end restricted store. |
+| **Future private `ia-restricted`** | Restricted **back-end** data and operator notes. Not created in this split. Restricted material is split by **field**, not by dataset (see §4.4 and §6.1). |
 
 The four-concept frame is split by role, not copied wholesale:
 
@@ -64,10 +66,10 @@ Destination values:
 | `docs/` | (see §2.2) | Mixed. Split file by file. |
 | `first-attempts/` | (see §2.8) | Prior-art baseline for both products. |
 | `fixtures/` | industrial-atlas | Synthetic spine / identifier fixtures (`SYN-` ids). No UI. |
-| `heavymap/` | industrial-atlas | The Python pipeline package (ids, overlays, dossier, gaps, NY identifiers). Name of the package is an open question (§6.2). |
+| `heavymap/` | industrial-atlas | The Python pipeline package (ids, overlays, dossier, gaps, NY identifiers). Full Industrial Atlas rename is decided (§6.2) and listed in the rename map; not performed in this PR. |
 | `heavymap-planning/` | (see §2.3) | Mostly IA. `frontend/` stays on HM. |
 | `scripts/` | (see §2.5) | All current scripts are pipeline or cloud-install for Python. IA. |
-| `Spreadsheets/` | (see §2.4) | Catalog, inventory, gaps, insights. IA. Sheet numbering is an open question (§6.3). |
+| `Spreadsheets/` | (see §2.4) | Catalog, inventory, gaps, insights. IA. At execution the folder is renamed to `inventory/` with file numbers kept (§6.3). |
 | `tests/` | (see §2.6) | Current tests are Python pipeline / vocab. Most IA. PCDP vocab test follows PCDP to HM. |
 | `web/` | heavymap | MapLibre / PMTiles v0 site. **PR #71 only; not on `main`.** |
 
@@ -82,6 +84,7 @@ Destination values:
 | `docs/architecture/claim-refusal-contract.md` | industrial-atlas | Grades, stamps, refusal reasons. Strip the sentence that UI naming for surfaced source classes will be refined later, or move that sentence to an HM notice doc. |
 | `docs/architecture/parcel-dossier.md` | industrial-atlas | Dossier **build** contract (inputs, screening allowlist, shard rule, manifest). See §3 for UI-copy and "front end already has `heavymap_id`" sentences to strip. |
 | `docs/architecture/data-gaps-ledger.md` | industrial-atlas | Gap record schema. Public ledger. |
+| `docs/architecture/publish-visibility.md` | industrial-atlas | `publish_visibility` wording (PR #79). Update for field-level restricted sidecars (§4.4) at execution; do not specify heavymap.com chrome. |
 | `docs/architecture/heavymap-id-registry.md` | industrial-atlas | Mint / attach / reconcile operator notes. |
 | `docs/architecture/heavymap-overlays.md` | industrial-atlas | Overlay linker operator notes. |
 | `docs/architecture/rochester-parcel-local-token.md` | industrial-atlas | Spine key for Rochester. |
@@ -109,14 +112,14 @@ Destination values:
 
 ### 2.3 `heavymap-planning/`
 
-There is **no** `heavymap-planning/00-PLANNING-INDEX.csv`. The living index is `Spreadsheets/00-PLANNING-INDEX.csv` (see `scripts/check_index_paths.py`). This plan is added to that file.
+There is **no** `heavymap-planning/00-PLANNING-INDEX.csv`. The living index is `Spreadsheets/00-PLANNING-INDEX.csv` (see `scripts/check_index_paths.py`). After the split this file lives at `inventory/00-PLANNING-INDEX.csv` on IA. This plan is added to the current path.
 
 | Path | Destination | Reason |
 |---|---|---|
 | `heavymap-planning/REPO-SPLIT.md` | both/copy | This document. After execution, IA keeps the back-end half of the record; HM keeps a short "we consume IA artifacts" pointer plus the execution date. |
 | `heavymap-planning/DATASET-ROUTINE.md` | industrial-atlas | Discovery / profile / harmonise routine. |
 | `heavymap-planning/BETA-GATE-HAMILTON.md` | industrial-atlas | Universal gate, checks, run records, publish visibility. See §3 for front-end sentences to strip (browser notice, site size as a Pages concern, "how they appear on heavymap.com"). |
-| `heavymap-planning/PROCESS-INSIGHTS.md` | both/copy | Standing rule. IA copy: data insights inventory. HM copy: front-end insight inventory (or a thin pointer if Morgen keeps one sheet; see §6.5). |
+| `heavymap-planning/PROCESS-INSIGHTS.md` | both/copy | Standing rule. After the split the two copies name different logs and prefixes (§6.5): IA `inventory/19-process-insights.csv` (`PI-`); HM `heavymap-planning/frontend/19-process-insights.csv` (`HM-PI-`). |
 | `heavymap-planning/OPEN-DECISIONS.md` | both/copy | Split the list. IA keeps 1–7 (defer vs needs_more, MCS vs layer, D-13, join grade, MCS location, G6-as-data-gate, score formula). HM does not inherit those. New HM open questions live in the v0 spec / HeavyMap.com issues. Do not settle any of them here. |
 | `heavymap-planning/EPIC-01-source-catalog.md` | industrial-atlas | Source catalog epic. |
 | `heavymap-planning/EPIC-02-spine-and-joins.md` | industrial-atlas | Spine epic. |
@@ -136,13 +139,13 @@ There is **no** `heavymap-planning/00-PLANNING-INDEX.csv`. The living index is `
 | `heavymap-planning/frontend/V0-SPEC.md` | heavymap | v0 vision, layouts, lenses. **PR #71 only.** |
 | `heavymap-planning/frontend/mockups/` | heavymap | Excalidraw / PNG / SVG layout studies. **PR #71 only.** |
 
-### 2.4 `Spreadsheets/`
+### 2.4 `Spreadsheets/` (becomes `inventory/` at execution)
 
-All current sheets are back-end inventory. Process-insights rows that are front-end-only (for example PI-0021, PI-0022, PI-0011) stay in the IA inventory as historical findings and may be mirrored later on HM if Morgen wants a front-end sheet (open question §6.5). Sheet *numbers* are an open question (§6.3); this table uses today's names.
+All current sheets are back-end inventory. Folder rename `Spreadsheets/` → `inventory/` is decided (§6.3); file numbers stay. This table uses today's paths. Front-end-only insight rows already in sheet 19 stay there as historical `PI-` rows (append-only). New front-end insights go to the HM log with prefix `HM-PI-` (§6.5).
 
 | Path | Destination | Reason |
 |---|---|---|
-| `Spreadsheets/00-PLANNING-INDEX.csv` | industrial-atlas | Index of planning docs. HM gets a new, short index of front-end docs after the split (not this file with IA rows left in place). |
+| `Spreadsheets/00-PLANNING-INDEX.csv` | industrial-atlas | Index of planning docs. Becomes `inventory/00-PLANNING-INDEX.csv`. HM gets a new, short front-end index after the split. |
 | `Spreadsheets/02-dataset-inventory-v4.csv` | industrial-atlas | MCS CSV (source of truth in-repo). |
 | `Spreadsheets/02-dataset-inventory-v4-readme.csv` | industrial-atlas | MCS README sheet. |
 | `Spreadsheets/02-dataset-inventory-v4.xlsx` | industrial-atlas | Regenerated workbook. |
@@ -158,8 +161,11 @@ All current sheets are back-end inventory. Process-insights rows that are front-
 | `Spreadsheets/16-service-profile.csv` | industrial-atlas | Service profile. |
 | `Spreadsheets/17-layer-profile.csv` | industrial-atlas | Layer profile. |
 | `Spreadsheets/18-quirks-log.csv` | industrial-atlas | Quirks. |
-| `Spreadsheets/19-process-insights.csv` | industrial-atlas | Data / method insights that feed published reports. Front-end-only rows are not deleted (append-only). See §6.5. |
+| `Spreadsheets/19-process-insights.csv` | industrial-atlas | Back-end insights only after the split (`PI-`). Becomes `inventory/19-process-insights.csv`. See §6.5. |
 | `Spreadsheets/20-data-gaps-ledger.csv` | industrial-atlas | Public gap ledger. |
+| `Spreadsheets/21-issue-class-register.csv` | industrial-atlas | Class register (PR #79). |
+| `Spreadsheets/restricted/README.md` | industrial-atlas | Restricted-list mechanism. Live CSV stays gitignored. |
+| `Spreadsheets/restricted/RESTRICTED-DATASETS.template.csv` | industrial-atlas | Headers-only template. |
 | `Spreadsheets/drafts/16-service-profile.PASS2-DRAFT.csv` | industrial-atlas | Draft. |
 | `Spreadsheets/drafts/17-layer-profile.PASS2-DRAFT.csv` | industrial-atlas | Draft. |
 | `Spreadsheets/drafts/17-layer-profile.PASS2-EVIDENCE.csv` | industrial-atlas | Draft. |
@@ -169,7 +175,7 @@ All current sheets are back-end inventory. Process-insights rows that are front-
 
 | Path | Destination | Reason |
 |---|---|---|
-| `scripts/check_index_paths.py` | industrial-atlas | Validates `Spreadsheets/00-PLANNING-INDEX.csv`. HM will need its own path check if it keeps a front-end index. |
+| `scripts/check_index_paths.py` | industrial-atlas | Validates the planning index. Update the path constant to `inventory/00-PLANNING-INDEX.csv` at the folder rename. HM will need its own path check if it keeps a front-end index. |
 | `scripts/cloud-install.sh` | both/copy | IA copy: Python compile + unittest + index check. HM copy: `web/` install + contract / browser tests (once #71 lands). |
 | `scripts/cloud-start.sh` | both/copy | IA: nothing to start. HM: optional local Vite, still nothing published before the gate. |
 | `scripts/link_hamilton_overlays.py` | industrial-atlas | Overlay CLI wrapper. |
@@ -195,6 +201,7 @@ All current sheets are back-end inventory. Process-insights rows that are front-
 | `tests/test_rochester_spine_fixture.py` | industrial-atlas | Rochester fixture. |
 | `tests/test_hamilton_catalog_write.py` | industrial-atlas | Catalog write. |
 | `tests/test_xlsx_sheets.py` | industrial-atlas | xlsx helper. |
+| `tests/test_issue_class_register.py` | industrial-atlas | Sheet 21 register (PR #79). |
 | `tests/test_pcdp_vocab.py` | heavymap | Loads `docs/architecture/vocab/pcdp.*.json`. Follows PCDP. After the split, HM may keep this as a small Python check or rewrite it in Node next to `web/tests/contract.test.js` (PR #71). |
 
 ### 2.7 Agent-docs, Cursor, GitHub, skills
@@ -267,15 +274,15 @@ Unique path keys from §2.1–2.11. Reprint rows in §2.7 (the same `AGENTS.md` 
 
 | Destination | Unique paths on `main` | Paths PR #71 only |
 |---|---|---|
-| `industrial-atlas` | 96 | 0 |
+| `industrial-atlas` | 101 | 0 |
 | `heavymap` | 9 | 3 (`web/`, `V0-SPEC.md`, `mockups/`) |
 | `both/copy` | 27 | 0 |
 | `delete` | 2 | 0 |
-| **Total classified** | **134** | **3** |
+| **Total classified** | **139** | **3** |
 
-How the 96 / 9 / 27 / 2 break down:
+How the 101 / 9 / 27 / 2 break down:
 
-- `industrial-atlas` 96 = 93 simple-path rows + `heavymap-planning/focus/hamilton/` + `first-attempts/niagara-atlas/` pipeline half + `first-attempts/uk-atlas/scripts/`.
+- `industrial-atlas` 101 = previous 96 plus PR #79 paths `docs/architecture/publish-visibility.md`, `Spreadsheets/21-issue-class-register.csv`, `Spreadsheets/restricted/README.md`, `Spreadsheets/restricted/RESTRICTED-DATASETS.template.csv`, `tests/test_issue_class_register.py`.
 - `heavymap` 9 on `main` = `CNAME`, `PCDP.md`, two PCDP vocab files, `docs/pivot-from-paton.txt`, `test_pcdp_vocab.py`, `PRIOR-ART-GLEAN.md`, niagara-atlas UI half, uk-atlas UI half. After #71 lands, `web/` becomes the bulk of `heavymap`.
 - `both/copy` 27 = 26 agent / architecture / install copies + `first-attempts/niagara-atlas/data/` as prior-art only.
 - `delete` 2 = duplicate `docs/grok-bot-docs/04-uk-capability-glean.md` and `first-attempts/uk-atlas/CNAME`.
@@ -295,7 +302,7 @@ These files are in-scope for one destination but currently mention the other pro
 | `docs/architecture/PCDP.md` | heavymap | Keep. It already refuses Leaflet / basemap / chrome. Do not move pull or mint procedure here. |
 | `docs/architecture/adr/0001-osm-as-substrate.md` | both/copy | IA copy keeps "no bulk OSM prefetch as corpus". HM copy keeps "configurable tile endpoint as visual floor". Drop UK-atlas / Leaflet tour from the IA copy. |
 | `docs/architecture/data-gaps-ledger.md` | industrial-atlas | "the front end loads once" → "the public consumer loads `gaps_ledger` from the manifest once". No panel talk. |
-| `heavymap-planning/BETA-GATE-HAMILTON.md` | industrial-atlas | Strip §8 browser notice (NA-305 is HM). Strip "How they appear on heavymap.com is front-end work" as anything more than one sentence pointing at HeavyMap.com. Keep §6 size budgets that apply to **artifacts** (shard ≤ 50 KB p95, each `.pmtiles` ≤ 100 MB). Move "startup payload ≤ 50 KB" and "total site ≤ 1 GB (GitHub Pages)" to HM, because those are site-bundle rules. Q10 of §9 is answered by this plan; do not re-ask it. |
+| `heavymap-planning/BETA-GATE-HAMILTON.md` | industrial-atlas | Strip §8 browser notice (NA-305 is HM). Strip "How they appear on heavymap.com is front-end work" as anything more than one sentence pointing at HeavyMap.com. Keep §6 size budgets that apply to **artifacts** (shard ≤ 50 KB p95, each `.pmtiles` ≤ 100 MB). Move "startup payload ≤ 50 KB" and "total site ≤ 1 GB (GitHub Pages)" to HM, because those are site-bundle rules. Section 9 items 1–9 and 10 are decided in PR #79 (item 5 remains open with interim `manifest_entry`); do not re-ask them. |
 | `heavymap-planning/12-authority-scale-and-meta-proposals.md` | industrial-atlas | Strip "UI may group or filter by scale *within* a band" as a requirement. IA records `authority_scale` on the stamp. Grouping is HM. |
 | `heavymap-planning/focus/hamilton/INSIGHTS.md` | industrial-atlas (data lines) / heavymap (first-view line) | The 2026-10-17 "encased by nature" first-view line is HM (already mirrored as PI-0011 and in PRIOR-ART-GLEAN). Data lines stay IA. |
 | `heavymap-planning/focus/hamilton/DECISIONS.md` | industrial-atlas | Any provisional "map colour by dominant zone" row is HM; leave it listed as a pointer, do not specify palette. |
@@ -308,7 +315,7 @@ These files are in-scope for one destination but currently mention the other pro
 | `CONTRIBUTING.md` | both/copy | IA: datasets. HM: site. |
 | `.cursor/rules/architecture.mdc` | both/copy | See §2.7. |
 | `.agents/skills/heavymap-pcdp/SKILL.md` | both/copy | Split identifiers vs display. |
-| `Spreadsheets/19-process-insights.csv` | industrial-atlas | Append-only. Do not rewrite old front-end rows. New HM sessions log to the place Morgen picks in §6.5. |
+| `Spreadsheets/19-process-insights.csv` | industrial-atlas | Append-only. Do not rewrite old front-end rows. After the split, new HM sessions log `HM-PI-` rows on heavymap (§6.5). |
 | `heavymap/dossier/schema.py` | industrial-atlas | Code stays IA. Confidence words (`high` / `medium` / `low`) are currently labelled "Provisional UI words" in `parcel-dossier.md`. Keep them as **schema enums the build emits**. HM may display different reader copy later; it must not require a schema change to do that. |
 
 Unmerged branch `hm/fresh-foundation` (`15adec2`) is back-end CLI / registry work named in `CLOUD-ENVIRONMENT.md` question 5. It is an IA follow-up, not an HM branch. Do not fold it into `heavymap` as part of the split.
@@ -383,9 +390,15 @@ Versioning layers (all of them, not one):
 
 A site rollback is a pin revert. An IA schema bump without an HM pin bump must not deploy.
 
-### 4.4 Restricted data
+### 4.4 Restricted data (field split, not dataset split)
 
-Public IA (if Morgen chooses public, §6.1) holds code, sheets, gap ledger, and *screened* run records. Raw pulls, owner fields, and `internal_only` / `withheld` datasets stay in `/fast/code/making/na/local-data/` and, later, in a private `ia-restricted` if Morgen wants git for those operator notes. They never ship in the artifact bundle.
+Decided 2026-10-18. Design of the join endpoint is **deferred**. Record the rule so later work does not split whole datasets into a private repo.
+
+- **Public `industrial-atlas`** holds code, public inventory sheets, the gap ledger, and screened run records. A `.gitignore` list (today `Spreadsheets/restricted/RESTRICTED-DATASETS.csv`; after the folder rename `inventory/restricted/RESTRICTED-DATASETS.csv`) tracks files and folders that are **not** pushed to the public IA repo for now, because some nuanced decisions are not ready to be public.
+- **Restricted datasets are split by field, not by dataset.** The public layer (ID, geometry, allowlisted public attributes) ships in the public artifact. Restricted fields live in a **restricted sidecar** keyed by the same public ID (`ia_id` after the rename, `heavymap_id` until then). The sidecar is not in git.
+- **Private storage, not git.** Restricted field values stay in `/fast/code/making/na/local-data/` and, when a git home is needed for operator notes or infra, in the future private `ia-restricted` repo. They never ship in the public artifact bundle and never sit in `heavymap` Pages files.
+- **Display join is server-side and authenticated.** A static GitHub Pages site cannot hold tokens (HARD-RULES 10). Restricted fields are joined for display only through a later authenticated endpoint. That endpoint is not designed in this plan.
+- **`niagaraassembly/heavymap-restricted`** is a separate, already-created private repo for secretive / proprietary **front-end** code and info the site may draw on. It is empty and unused. It is not a substitute for `ia-restricted` and it is not a place to put raw parcel owner fields.
 
 ---
 
@@ -412,8 +425,9 @@ Do not run `filter-repo` in this PR. Execution sequence is §7.
 
 | PR | Action |
 |---|---|
-| [#71](https://github.com/niagaraassembly/heavymap/pull/71) `codex/heavymap-v0-frontend` | **Stays on `heavymap`.** Land it on `heavymap` (still draft; dirty vs `main`) either before or after the delete-commit. If after, rebase onto post-delete `main`; the `web/` and `heavymap-planning/frontend/` files do not collide with IA paths. Its reserved insight ids are PI-0070..0077. Do not close it as part of creating IA. |
-| No other open PRs (list 2026-10-18) | None to migrate. |
+| [#71](https://github.com/niagaraassembly/heavymap/pull/71) `codex/heavymap-v0-frontend` | **Stays on `heavymap`. Land it first (Morgen, §6.4 option E), then delete IA paths.** Still draft; dirty vs `main`. Its reserved insight ids are PI-0070..0077. Front-end insight rows that land with #71 are later copied or re-logged as `HM-PI-` on heavymap if they are UX findings; do not rewrite the reserved `PI-` numbers. Do not close #71 as part of creating IA. |
+| [#80](https://github.com/niagaraassembly/heavymap/pull/80) (this plan) | Documentary. Merge before execution. |
+| No other open PRs that must move | Back-end branches such as `hm/fresh-foundation` wait for IA. |
 
 Unmerged **branches** that are back-end (`hm/fresh-foundation`, various `cursor/*` already merged or stale) are not moved automatically. `hm/fresh-foundation` should be rebased onto IA after that repo exists, or left and cited.
 
@@ -447,79 +461,176 @@ Scripts that default to `../local-data` keep working if both checkouts sit next 
 
 ### 5.6 GitHub Pages
 
-Stays on `heavymap`. `CNAME` is `heavymap.com`. There is no `.github/workflows` on `main` today; the Pages workflow is added on HM at execution (BETA-GATE still needs HARD-RULES 3 relaxed before a deploy pipeline is built — that remains Morgen's, OPEN-DECISIONS 6 / BETA-GATE Q7). IA does not get Pages.
+Stays on `heavymap`. `CNAME` is `heavymap.com`. There is no `.github/workflows` on `main` today. HARD-RULES rule 3 (PR #79) now allows building and testing publish or deploy tooling; actually publishing still needs Morgen's per-jurisdiction sign-off. The Pages download-of-pinned-artifact workflow is therefore allowed to be written on HM at execution. IA does not get Pages. `heavymap` cannot be made private (Pages / account constraint).
 
 ---
 
-## 6. Open questions for Morgen
+## 6. Decisions (Morgen, 2026-10-18)
 
-Do not treat a recommendation in this section as a decision. Each question is written in full.
+These replace the open-question write-up in the first revision of this document. Options that were not chosen are kept only as history in git. **Do not execute the split or the rename from this PR.**
 
-### 6.1 Should `niagaraassembly/industrial-atlas` be public or private?
+### 6.1 Visibility — DECIDED
 
-**Context.** `heavymap` is public. Run records (screened) and the data-gaps ledger are meant to be public proofs of work (BETA-GATE §3, NA-308, sheet 20). Restricted and identifying material is *not* meant to live in that git repo. A future private `ia-restricted` is the planned home for withheld / internal-only operator material. Raw pulls already stay in `local-data/` off git.
+- **`niagaraassembly/heavymap` stays PUBLIC.** Necessity: it is the GitHub Pages site, and the account cannot make that repo private.
+- **`niagaraassembly/heavymap-restricted` exists** (created 2026-10-18, private, empty, unused). It is for secretive / proprietary **code and info the heavymap site may draw on**. It is not the back-end restricted store and it is not a place for raw owner-field values.
+- **`industrial-atlas` will be PUBLIC.** The `.gitignore` list of files and folders tracks what is not pushed there for now, because some nuanced decisions are not ready to be public (today: `Spreadsheets/restricted/RESTRICTED-DATASETS.csv`; after §6.3, `inventory/restricted/RESTRICTED-DATASETS.csv`).
+- **Keep the future `ia-restricted` concept** for restricted **back-end** data and infrastructure. It is not created in this split.
+- **Restricted datasets are split by FIELD, not by dataset.** Public layer plus a restricted sidecar keyed by the same public ID. Restricted fields live in private storage (not git) and are joined for display only through a later **server-side authenticated endpoint**. A static Pages site cannot hold tokens. That endpoint design is **deferred**. See §4.4.
 
-**Option P — public `industrial-atlas` (lean this way unless Morgen objects).** Anyone can read the catalog, the gap ledger, the pipeline code, and (once Releases exist) the screened artifact bundles. That matches "built in the open" in `CONTRIBUTING.md` and makes the HM pin download simple (no token). Consequence: every IA commit is world-readable, so HARD-RULES and the screening allowlist become the only wall. A leaked owner value in a commit is a public leak. `ia-restricted` must exist before anyone is tempted to commit withheld notes "just for operators" into the public tree.
+### 6.2 Package and ID naming — DECIDED option L, rename not performed
 
-**Option Q — private `industrial-atlas`.** Pipeline code and sheets are org-only. Consequence: the public proofs (gap ledger, screened run records) need a *second* publishing path or they vanish from public view. HM Pages cannot download a private Release without a token in Actions. That token is a secret (HARD-RULES 10). A public artifact bucket or a thin public `ia-public` repo then has to be invented anyway. Private also blocks outside reviewers from reading the foundation.
+Full rename to Industrial Atlas naming. Morgen will review the table in §6.2.1 before anyone changes code. Proposed on-the-wire prefix is `ia:` and proposed JSON field is `ia_id`. Those two cells are the ones most worth a red-pen; everything else follows from them.
 
-**Option R — public `industrial-atlas` for code and sheets, artifacts on a public bucket, private `ia-restricted` for withheld operator notes.** Same as P plus an explicit third home. Consequence: three places to look; clearest rights boundary.
+Do not change `hm:` or `heavymap_id` until that table is accepted.
 
-**This plan's working assumption for later steps:** P, with `ia-restricted` created only when there is withheld material that must be in git. Artifacts as GitHub Releases on the public IA repo. Confirm or replace this before execution step 1.
+### 6.2.1 Rename map (pending review)
 
-### 6.2 Should the Python package stay `heavymap` or be renamed (for example `industrial_atlas`)?
+Do not perform this rename in this PR or in the first `filter-repo` push. Apply it as a follow-up commit on `industrial-atlas` (and a coordinated pin bump on `heavymap`) after Morgen marks the table accepted or edits the "Proposed new" column.
 
-**Context.** On disk the package is `heavymap/` (`python3 -m heavymap.dossier`, `heavymap.ids`, `heavymap.overlays`). ADR 0003 and the registry docs say "HeavyMap ID". After the split, HeavyMap is the front-end product name and Industrial Atlas is the foundation name. Import paths appear in scripts, tests, operator notes, and Deb muscle memory.
+Blast-radius key: **code** = Python package / tests / scripts; **schema** = dossier / tile / overlay JSON contract (`SCHEMA_VERSION` bump, HM pin bump); **registry** = already-minted Hamilton IDs on Deb `local-data/` (ULIDs kept); **docs** = architecture, ADRs, glossary, operator notes; **agents** = AGENTS.md, skills, cloud-install.
 
-**Option K — keep the package name `heavymap`.** Zero import churn. Consequence: the back-end repo is `industrial-atlas` but `import heavymap` still reads as the product. New contributors will put UI code in the Python package. Docs will keep saying "HeavyMap ID" for a ULID minted by Industrial Atlas.
+| # | Kind | Old name | Proposed new | Blast radius |
+|---|---|---|---|---|
+| R1 | Python package directory | `heavymap/` | `industrial_atlas/` | **code.** Every import, `compileall`, and `python3 -m` path. |
+| R2 | Python import | `import heavymap` / `from heavymap…` | `import industrial_atlas` / `from industrial_atlas…` | **code.** `heavymap/ids`, `overlays`, `dossier`, `gaps.py`, `ny_identifiers.py`, all `tests/test_heavymap_*.py`. |
+| R3 | Module run — registry | `python3 -m heavymap.ids` | `python3 -m industrial_atlas.ids` | **code, docs.** `scripts/mint_hamilton_registry.py`, `heavymap-id-registry.md`, ADR 0003. |
+| R4 | Module run — overlays | `python3 -m heavymap.overlays` | `python3 -m industrial_atlas.overlays` | **code, docs.** `scripts/link_hamilton_overlays.py`, `heavymap-overlays.md`. |
+| R5 | Module run — dossier | `python3 -m heavymap.dossier` | `python3 -m industrial_atlas.dossier` | **code, docs.** `parcel-dossier.md`. |
+| R6 | ID prefix | `hm:` (`hm:{country}:{region}:{jurisdiction}:{grain}:{local}`) | `ia:` (`ia:{country}:{region}:{jurisdiction}:{grain}:{local}`) | **schema, registry, docs, agents.** `heavymap/ids/format.py` `SPINE_KEY_RE` and `SpineKey.__str__`; PCDP vocab `spine_key.template` / `regex`; every synthetic example (`hm:ca:on:welland:…`, `hm:us:ny:…`); tile and dossier strings. **Proposed, pending review.** |
+| R7 | Dossier / tile field | `heavymap_id` | `ia_id` | **schema.** `heavymap/dossier/schema.py` `RECORD_SPEC`; overlay CSV header; `scripts/tiles/prep_tiles_hamilton.py`; shard record keys; MapLibre feature property the #71 front end reads. **Proposed, pending review.** |
+| R8 | Overlay alias field | `hm_id` (read fallback in `heavymap/overlays/io.py`) | drop after migration, or read-only fallback to `ia_id` for one release | **code.** Small. Keep the fallback only if old overlay CSVs must still load. |
+| R9 | SCHEMA_VERSION (dossier, registry store, overlays) | `1` | `2` | **schema.** Breaking. HM pin must require `schema_version: 2`. Old shard files are not readable without a translator. Do not bump until R6 and R7 are applied. |
+| R10 | Already-minted registry IDs | `hm:ca:on:hamilton:{grain}:{ULID}` | `ia:ca:on:hamilton:{grain}:{ULID}` | **registry.** Keep the ULID `{local}` bytes unchanged. One migration run rewrites the prefix on every active and retired row, writes `legacy_hm_id` as an alias, and does not mint new ULIDs. Hamilton today: 166,745 parcel IDs plus address and footprint IDs in `local-data/heavymap-registry/hamilton/`. Re-pull reconcile must treat `legacy_hm_id` as a match key for one cycle. |
+| R11 | ADR 0003 title and path | `docs/architecture/adr/0003-heavymap-id-format.md` — "Opaque ULID local token for the HeavyMap ID" | `docs/architecture/adr/0003-industrial-atlas-id-format.md` — "Opaque ULID local token for the Industrial Atlas ID" | **docs.** Add a one-line stub at the old path pointing at the new file so old links do not 404. |
+| R12 | Registry operator doc | `docs/architecture/heavymap-id-registry.md` | `docs/architecture/industrial-atlas-id-registry.md` | **docs.** Same stub-at-old-path pattern. |
+| R13 | Overlay operator doc | `docs/architecture/heavymap-overlays.md` | `docs/architecture/industrial-atlas-overlays.md` | **docs.** Same stub-at-old-path pattern. |
+| R14 | Test module names | `tests/test_heavymap_ids.py`, `test_heavymap_overlays.py`, `test_heavymap_dossier.py`, `test_heavymap_gaps.py` | `tests/test_industrial_atlas_ids.py`, `test_industrial_atlas_overlays.py`, `test_industrial_atlas_dossier.py`, `test_industrial_atlas_gaps.py` | **code.** `unittest discover` follows the new names. Other tests (`test_ny_identifiers.py`, `test_issue_class_register.py`) keep their names unless they import `heavymap`. |
+| R15 | Glossary term | HeavyMap ID / HeavyMap spine key | Industrial Atlas ID / Industrial Atlas spine key | **docs.** `docs/for-humans/GLOSSARY.md` (HM copy may say "the ID the map receives from Industrial Atlas, field `ia_id`"). IA copy owns the grammar. |
+| R16 | Deb registry root | `local-data/heavymap-registry/` | `local-data/ia-registry/` | **registry.** Rename on Deb in the same migration run as R10. Update operator notes. Off git. |
+| R17 | Deb overlay root | `local-data/heavymap-overlays/` | `local-data/ia-overlays/` | **registry.** Same as R16. |
+| R18 | Fixture filename | `fixtures/parcels/hm-us-ny-rochester-parcel-SYN-04799.json` | `fixtures/parcels/ia-us-ny-rochester-parcel-SYN-04799.json` | **code, docs.** Update `test_rochester_spine_fixture.py` and the fixture README. |
+| R19 | Dataset-profiling skill | `.agents/skills/heavymap-dataset-profiling/` | `.agents/skills/ia-dataset-profiling/` | **agents.** IA repo only. |
+| R20 | PCDP skill | `.agents/skills/heavymap-pcdp/` | split: IA `.agents/skills/ia-spine/`; HM keeps `.agents/skills/heavymap-pcdp/` for display only | **agents.** Identifier half moves; display half stays on heavymap under the product name. |
+| R21 | Cloud environment display name | `E3 atlas (heavymap)` in `.cursor/environment.json` | `E3 atlas (industrial-atlas)` on the IA checkout; HM checkout may say `E3 site (heavymap)` | **agents.** |
+| R22 | Planning folder (optional, same decision family) | `heavymap-planning/` (IA half) | `ia-planning/` | **docs, agents.** Only the IA copy. HM keeps `heavymap-planning/frontend/`. Not required for the Python rename to land; listed so Morgen can accept or defer. |
+| R23 | Product / Pages names that do **not** change | repo `heavymap`, site `heavymap.com`, Linear project HeavyMap.com, `#71` `web/` | keep | Front-end product name is HeavyMap. The foundation name is Industrial Atlas. |
 
-**Option L — rename to `industrial_atlas` (or `ia`).** Matches the repo and Linear project. Consequence: every `python3 -m heavymap.*` wrapper, every test import, ADR 0003's title, `heavymap_id` in the dossier schema, and the `hm:` ID prefix become a coordinated rename. Changing `heavymap_id` / `hm:` is a **schema break** (`SCHEMA_VERSION` bump) and forces an HM pin bump. That is much larger than a Python package rename.
+Rows R6, R7, R9 and R10 are one coordinated cut. Doing R1–R5 without them leaves `import industrial_atlas` emitting `hm:` strings, which is option M and was rejected.
 
-**Option M — rename the Python package to `industrial_atlas`, keep the public id string `heavymap_id` / `hm:` as a stable on-the-wire name.** Imports change; the artifact contract does not. Consequence: mid-size code edit, no HM schema break, names disagree on purpose (documented).
+### 6.3 Sheet folder — DECIDED
 
-**This plan's working assumption:** M if Morgen wants the repo and the package to share a name; K if execution should be mechanical. Do not change `hm:` or `heavymap_id` in the first split.
+Rename `Spreadsheets/` → `inventory/`. **Keep file numbers** (`00`, `02`, `07`–`09`, `11`, `15`–`21`, plus `restricted/`). Update `scripts/check_index_paths.py`, `AGENTS.md`, `AGENTS-MCS.md`, `.cursor/rules/planning-and-sheets.mdc`, the dataset-profiling skill, `.gitignore` (`inventory/restricted/RESTRICTED-DATASETS.csv`), and every index `doc_path`. Do not renumber.
 
-### 6.3 Should `Spreadsheets/` sheet numbering be kept?
+### 6.4 PR #71 timing — DECIDED option E
 
-**Context.** Sheets are numbered `00`, `02`, `07`–`09`, `11`, `15`–`20` with gaps (`01`, `03`–`06`, `10`, `12`–`14` are planning-doc numbers, not sheets). Agents and the planning index cite those numbers. BETA-GATE proposes a possible sheet 21 (class register). Process insights are sheet 19.
+Land #71 on `heavymap` first, then delete IA paths. See §5.2 and §7 step 3.
 
-**Option S — keep the numbers.** Zero churn. Consequence: IA inherits an odd sequence and the "HeavyMap planning" mental model. New IA-only sheets continue the series (`21`, `22`, …).
+### 6.5 Process insights — DECIDED, two logs
 
-**Option T — renumber to a dense IA series.** Pretty. Consequence: every Linear packet, every `00-PLANNING-INDEX.csv` row, every narrative cite (`sheet 20`, `catalog 09`) breaks. Historical PRs become misleading. Reject unless Morgen wants a one-time encyclopedia rewrite.
+Back-end and front-end insights are logged **separately**. Agents must do this without being told per issue. Exact replacement lines to write at execution (not in this PR) follow. Until the split, this repo still has one log at `Spreadsheets/19-process-insights.csv` with `PI-` (this session included).
 
-**Option U — keep numbers, rename the folder** (for example `inventory/` or `ledgers/`) **without changing file prefixes.** Mild clarity. Consequence: path updates in `AGENTS.md`, `check_index_paths.py`, and the dataset-profiling skill; file names stay stable.
+| After the split | Path | Prefix |
+|---|---|---|
+| industrial-atlas (back end) | `inventory/19-process-insights.csv` | `PI-` |
+| heavymap (front end) | `heavymap-planning/frontend/19-process-insights.csv` | `HM-PI-` |
 
-**This plan's working assumption:** S. Folder name `Spreadsheets/` can stay or become `inventory/` later; do not renumber in the first split.
+Create the HM file at execution with the same columns as today's sheet 19. Start `HM-PI-0001`. Do not reuse `PI-` on heavymap. Do not write lens / layout / browser / Pages / PCDP-chrome findings into the IA log. Do not write pull / spine / licence / gap-ledger findings into the HM log. Historical front-end rows already in `PI-` (for example PI-0011, PI-0021, PI-0022) stay in the IA file (append-only).
 
-### 6.4 When should PR #71 land relative to the delete-commit?
+#### Lines to add — `industrial-atlas`
 
-**Option E — land #71 on `heavymap` first, then delete IA paths.** Front-end files exist on `main` before the tree is cut. Consequence: one rebase of #71 onto current `main` (it is already dirty). Split delete-commit is then a pure removal of IA paths.
+**`AGENTS.md`** — replace the current Process insights section with:
 
-**Option F — delete IA paths on `heavymap` first, then rebase #71.** Also works: #71's `web/` and `frontend/` files do not sit on IA paths. Consequence: #71's incidental edits to `Spreadsheets/00-PLANNING-INDEX.csv` and `Spreadsheets/19-process-insights.csv` will conflict, because those files are gone from HM. Those hunks must be replayed onto IA instead.
+```markdown
+## Process insights (standing rule)
 
-**This plan's working assumption:** E. Land (or at least rebase and isolate) #71 before the HM delete-commit, and replay its sheet hunks onto IA if they are still needed.
+Before finishing any session or pull request, every agent appends its back-end process insights (sources found, dead ends ruled out, data quirks, method findings, effort estimates, gaps, licence notes) as new rows in [`inventory/19-process-insights.csv`](inventory/19-process-insights.csv), with live-verified evidence (URLs, counts, dates checked). Insight ids use the prefix `PI-` plus a zero-padded number. Never write front-end insights (lenses, layout, browser, Pages, PCDP chrome) here; those belong in `niagaraassembly/heavymap` as `HM-PI-` rows. Append only; never edit another session's row except its `status` or `linked_issue`. Agents that cannot write to the repo report them in the final message under the heading **Process insights**. Columns and etiquette: [heavymap-planning/PROCESS-INSIGHTS.md](heavymap-planning/PROCESS-INSIGHTS.md) (or `ia-planning/PROCESS-INSIGHTS.md` if that folder rename is accepted).
+```
 
-### 6.5 Where do front-end process insights go after the split?
+**`CLAUDE.md`** — replace the Process insights paragraph with:
 
-**Context.** The standing rule writes every session into `Spreadsheets/19-process-insights.csv`, and that inventory is meant to feed published synthesized reports about sources and gaps. Some rows are front-end method findings (PI-0021 UK dossier shape, PI-0022 Niagara LAYERS table, PI-0011 first-view stack).
+```markdown
+## Process insights (standing rule)
 
-**Option V — one IA sheet, all insights.** Reports stay in one place. Consequence: HM agents need write access to IA or they dump insights in the PR text for a human to log (already allowed when a session cannot write the repo).
+Before finishing any session or PR, append back-end process insights as new rows in `inventory/19-process-insights.csv`, prefix `PI-`, with live-verified evidence. Append only. Never log front-end (lens, layout, browser, Pages, PCDP chrome) insights here; those go to `niagaraassembly/heavymap` as `HM-PI-`. Columns and etiquette: [heavymap-planning/PROCESS-INSIGHTS.md](heavymap-planning/PROCESS-INSIGHTS.md). If you were told not to commit, still write the rows and say so. If you cannot write to the repo, list them in your final message under the heading **Process insights**.
+```
 
-**Option W — IA keeps sheet 19 for data; HM starts `Spreadsheets/19-process-insights.csv` or a front-end-only file for UX / lens / browser findings.** Consequence: two append-only logs; published reports must say which sheet they read. PI numbers would collide if both keep `PI-` unless HM uses a different prefix (for example `HM-PI-`).
+**`.cursor/rules/hard-rules.mdc`** — replace the Process insights sentence with:
 
-**This plan's working assumption:** V for v0 (one public insights inventory, in IA), with HM sessions that cannot write IA reporting under **Process insights** in the PR, as `PROCESS-INSIGHTS.md` already allows.
+```text
+Process insights (standing rule): before finishing any session or PR, append back-end process insights as rows in `inventory/19-process-insights.csv` (prefix `PI-`) with live-verified evidence. Never write front-end insights here (`HM-PI-` belongs in niagaraassembly/heavymap). See `heavymap-planning/PROCESS-INSIGHTS.md`. If you cannot write to the repo, list them in your final message under the heading `Process insights`.
+```
 
-### 6.6 One Cursor environment or two?
+**`.cursor/rules/planning-and-sheets.mdc`** — replace the last sentence with:
 
-**Option X — one environment listing both repos.** Matches how Deb already has sibling checkouts. Consequence: install script must detect which repo it is in, or run both installs.
+```text
+Process insights go in `inventory/19-process-insights.csv` (prefix `PI-`, append only; see `heavymap-planning/PROCESS-INSIGHTS.md`). Front-end insights are `HM-PI-` rows in `niagaraassembly/heavymap` and must not be written here.
+```
 
-**Option Y — two environments (E3 atlas for IA, a new E4 site for HM).** Cleaner installs. Consequence: two dashboards to keep in sync; agents must be told which environment an issue uses.
+**`.github/copilot-instructions.md`** — replace the Process insights paragraph with:
 
-**This plan's working assumption:** X at first, with the install script branching on repo name; split to Y if the HM Node install becomes heavy.
+```markdown
+**Process insights (standing rule):** before finishing any session or PR, append back-end process insights as new rows in `inventory/19-process-insights.csv` (prefix `PI-`), with live-verified evidence. Append only. Never log front-end insights here; those are `HM-PI-` rows in `niagaraassembly/heavymap`. See [heavymap-planning/PROCESS-INSIGHTS.md](../heavymap-planning/PROCESS-INSIGHTS.md). If you cannot write to the repo, list them in your final message under the heading **Process insights**.
+```
 
-### 6.7 Already-open questions this plan does not touch
+**`.github/PULL_REQUEST_TEMPLATE.md`** — replace the process-insights checkbox with:
 
-`heavymap-planning/OPEN-DECISIONS.md` items 1–7 remain Morgen's: `defer` vs `needs_more`; MCS `dataset_id` vs layer `layer_id`; D-13 / future private ingest; NIA-86 join grade scale; MCS location conflict (`AGENTS-MCS.md` vs `CONTRIBUTING.md`); G6 / HARD-RULES 3 deploy-pipeline relaxation; score formula. BETA-GATE §9 items 1–9 remain open. This plan only answers BETA-GATE §9 item 10 (when to split): **now, as a planned execution after Morgen reviews this document and §6.1–6.6.**
+```markdown
+- [ ] Back-end process insights logged in `inventory/19-process-insights.csv` (prefix `PI-`: sources found, dead ends, data quirks, methods, effort estimates, gaps), or none this session. Front-end insights were not written here.
+```
+
+#### Lines to add — `heavymap`
+
+**`AGENTS.md`** — replace the current Process insights section with:
+
+```markdown
+## Process insights (standing rule)
+
+Before finishing any session or pull request, every agent appends its front-end process insights (UX, lenses, layout, browser, Pages, PCDP chrome, notices) as new rows in [`heavymap-planning/frontend/19-process-insights.csv`](heavymap-planning/frontend/19-process-insights.csv), with live-verified evidence. Insight ids use the prefix `HM-PI-` plus a zero-padded number (`HM-PI-0001`). Never write back-end insights (pulls, spine, joins, licences, gap ledger, run records) here; those belong in `niagaraassembly/industrial-atlas` as `PI-` rows. Append only; never edit another session's row except its `status` or `linked_issue`. Agents that cannot write to the repo report them in the final message under the heading **Process insights**. Columns and etiquette: [heavymap-planning/PROCESS-INSIGHTS.md](heavymap-planning/PROCESS-INSIGHTS.md).
+```
+
+**`CLAUDE.md`** — replace the Process insights paragraph with:
+
+```markdown
+## Process insights (standing rule)
+
+Before finishing any session or PR, append front-end process insights as new rows in `heavymap-planning/frontend/19-process-insights.csv`, prefix `HM-PI-`, with live-verified evidence. Append only. Never log back-end (pull, spine, licence, gap ledger) insights here; those go to `niagaraassembly/industrial-atlas` as `PI-`. Columns and etiquette: [heavymap-planning/PROCESS-INSIGHTS.md](heavymap-planning/PROCESS-INSIGHTS.md). If you were told not to commit, still write the rows and say so. If you cannot write to the repo, list them in your final message under the heading **Process insights**.
+```
+
+**`.cursor/rules/hard-rules.mdc`** — replace the Process insights sentence with:
+
+```text
+Process insights (standing rule): before finishing any session or PR, append front-end process insights as rows in `heavymap-planning/frontend/19-process-insights.csv` (prefix `HM-PI-`) with live-verified evidence. Never write back-end insights here (`PI-` belongs in niagaraassembly/industrial-atlas). See `heavymap-planning/PROCESS-INSIGHTS.md`. If you cannot write to the repo, list them in your final message under the heading `Process insights`.
+```
+
+**`.cursor/rules/` (HM planning rule, new or edited)** — include:
+
+```text
+Front-end process insights go in `heavymap-planning/frontend/19-process-insights.csv` (prefix `HM-PI-`, append only; see `heavymap-planning/PROCESS-INSIGHTS.md`). Back-end insights are `PI-` rows in `niagaraassembly/industrial-atlas` and must not be written here.
+```
+
+**`.github/copilot-instructions.md`** — replace the Process insights paragraph with:
+
+```markdown
+**Process insights (standing rule):** before finishing any session or PR, append front-end process insights as new rows in `heavymap-planning/frontend/19-process-insights.csv` (prefix `HM-PI-`), with live-verified evidence. Append only. Never log back-end insights here; those are `PI-` rows in `niagaraassembly/industrial-atlas`. See [heavymap-planning/PROCESS-INSIGHTS.md](../heavymap-planning/PROCESS-INSIGHTS.md). If you cannot write to the repo, list them in your final message under the heading **Process insights**.
+```
+
+**`.github/PULL_REQUEST_TEMPLATE.md`** — replace the process-insights checkbox with:
+
+```markdown
+- [ ] Front-end process insights logged in `heavymap-planning/frontend/19-process-insights.csv` (prefix `HM-PI-`: UX, lenses, layout, browser, Pages, PCDP chrome), or none this session. Back-end insights were not written here.
+```
+
+Create `heavymap-planning/frontend/19-process-insights.csv` at execution with the same header as today's sheet 19. Create or rewrite `heavymap-planning/PROCESS-INSIGHTS.md` on HM so `insight_id` is documented as `HM-PI-` plus a zero-padded number.
+
+### 6.6 Cursor environment — NOT ANSWERED (interim X)
+
+**Interim working assumption: option X** — one Cursor environment listing both public repos (`heavymap` and, once created, `industrial-atlas`). The install script branches on repo name. Split to two environments (Y) only if Morgen later says so or the HM Node install becomes heavy. `heavymap-restricted` stays out of the default environment list until it has files.
+
+### 6.7 Questions this plan does not re-open
+
+`heavymap-planning/OPEN-DECISIONS.md` items 1–5 and 7 remain Morgen's (`defer` vs `needs_more`; MCS `dataset_id` vs layer `layer_id`; D-13 / future private ingest; NIA-86 join grade scale; MCS location conflict; score formula). OPEN-DECISIONS item 6 (G6 / HARD-RULES 3) was decided in PR #79: tooling may be built and tested; public publish still needs per-jurisdiction sign-off.
+
+BETA-GATE §9 items **1–9 and 10 were DECIDED and merged in PR #79** (`b524f3e`). Only item **5 (`withheld_disclosure`) remains open**, with interim default `manifest_entry`. Do not re-ask items 1–4 or 6–10. Item 10's "timing pending" sentence in that merge is superseded by this plan: the split is planned now and executed only after Morgen accepts this document including the rename map.
 
 ---
 
@@ -527,27 +638,29 @@ Do not treat a recommendation in this section as a decision. Each question is wr
 
 Do not start these steps from this PR. Agents never merge. Morgen (or a later packet) runs or assigns each step.
 
-1. **Morgen answers §6.1–6.6** (visibility, package name, sheet numbers, #71 timing, insights home, Cursor env). Record the answers in `DECISIONS.md` / Linear, not by editing OPEN-DECISIONS in passing.
-2. **Create a dedicated Linear issue** on Industrial Atlas for the mechanical split, with an Agent packet and an MCS contract that says no MCS cells change. Child issue on HeavyMap.com for the HM-side delete and doc rewrite.
-3. **Land or isolate PR #71 on `heavymap`** (preferred: land, §6.4 option E). Keep PI-0070..0077 on that branch.
+1. **Morgen accepts or edits the rename map (§6.2.1).** Visibility, folder rename, #71 timing, and two insight logs are already decided. §6.6 stays interim X until answered.
+2. **Create a dedicated Linear issue** on Industrial Atlas for the mechanical split, with an Agent packet and an MCS contract that says no MCS cells change. Child issue on HeavyMap.com for the HM-side delete, `HM-PI-` log, and doc rewrite.
+3. **Land PR #71 on `heavymap` first** (§6.4 option E). Keep PI-0070..0077 on that branch.
 4. **Freeze `heavymap` `main` briefly.** No mixed BE/FE PRs during the cut.
-5. **Mirror `heavymap` locally.** `git clone --mirror` then `git filter-repo --paths-from-file ia-paths.txt` using every `industrial-atlas` and `both/copy` path in §2. Create empty GitHub repo `niagaraassembly/industrial-atlas` at the visibility from §6.1. Push the filtered history. Do not add a README through the GitHub UI (that forks history).
-6. **Rewrite `both/copy` files on IA** per §3 so the first IA commits on GitHub have no lens, layout, or heavymap.com chrome. Rename the Python package only if §6.2 says so, in a follow-up commit, not inside `filter-repo`.
-7. **On `heavymap`, one delete-commit** removing every `industrial-atlas` path. Leave `both/copy` files and rewrite them per §3 (PCDP stays; MCS guide goes). Keep `CNAME`. Add a short README that points at `industrial-atlas` for data.
+5. **Create public `niagaraassembly/industrial-atlas`.** Mirror `heavymap` locally, `git filter-repo --paths-from-file ia-paths.txt` using every `industrial-atlas` and `both/copy` path in §2. Push the filtered history. Do not add a README through the GitHub UI. Apply the public `.gitignore` so not-ready files are not pushed.
+6. **Rewrite `both/copy` files on IA** per §3. Install the IA process-insights lines from §6.5. Rename `Spreadsheets/` → `inventory/` (§6.3). Do **not** apply the §6.2.1 rename inside `filter-repo`; that is a follow-up commit after Morgen accepts the table.
+7. **On `heavymap`, one delete-commit** removing every `industrial-atlas` path. Install the HM process-insights lines from §6.5 and create `heavymap-planning/frontend/19-process-insights.csv`. Keep `CNAME`. Add a short README that points at `industrial-atlas` for data.
 8. **Create `/fast/code/making/na/industrial-atlas`** on Deb next to `heavymap`. Leave `/fast/code/making/na/local-data/` where it is. Point IA scripts at `../local-data` as today.
-9. **Add the HM pin file and a Pages download step** (after HARD-RULES 3 is relaxed). Produce the first artifact from Deb; do not commit it.
-10. **Update Cursor environment repo list** to include both repos. Split `cloud-install.sh` per §2.5.
+9. **Add the HM pin file and a Pages download step** (HARD-RULES 3 now allows the tooling; public deploy still needs sign-off). Produce the first artifact from Deb; do not commit it. Restricted fields stay out of the artifact (§4.4).
+10. **Update the Cursor environment repo list** to include both public repos (interim §6.6 option X). Do not add `heavymap-restricted` until it has files. Split `cloud-install.sh` per §2.5.
 11. **Retarget Linear:** Industrial Atlas description says `industrial-atlas` is code SoT for the foundation; HeavyMap.com description says `heavymap` is the site. Move NA-32 to HeavyMap.com. New packets name the correct repo.
-12. **CODEOWNERS / Copilot / CLAUDE.md / skills** rewritten in both repos. Register the IA dataset-profiling skill; register a thinner HM PCDP skill.
-13. **Verify:** IA `python3 -m unittest discover -s tests` and `python3 scripts/check_index_paths.py`. HM `#71` tests (`web/` contract + browser). No pulled data in either git tree. No owner values in the first IA Release.
-14. **Morgen reviews both trees and the first pin.** Only then is the split considered done. This plan PR stays documentary.
+12. **CODEOWNERS / Copilot / CLAUDE.md / skills** rewritten in both repos using the §6.5 lines. Register the IA dataset-profiling skill; register a thinner HM PCDP skill.
+13. **After Morgen accepts §6.2.1:** rename commit on IA (R1–R22 as accepted), registry prefix migration on Deb (R10, ULIDs kept), `SCHEMA_VERSION` 2, HM pin bump and `#71` field rename `heavymap_id` → `ia_id`.
+14. **Verify:** IA `python3 -m unittest discover -s tests` and `python3 scripts/check_index_paths.py` (path `inventory/`). HM `#71` tests (`web/` contract + browser). No pulled data in either public git tree. No owner values in the first IA Release.
+15. **Morgen reviews both trees and the first pin.** Only then is the split considered done. This plan PR stays documentary.
 
 ---
 
 ## 8. What this PR did
 
-- Added this file.
+- Added this file and recorded Morgen's 2026-10-18 §6 decisions (visibility, option L rename map pending review, `inventory/` folder rename, land #71 first, separate `PI-` / `HM-PI-` logs, interim one Cursor environment).
 - Added a row to `Spreadsheets/00-PLANNING-INDEX.csv` (there is no `heavymap-planning/00-PLANNING-INDEX.csv`).
-- Appended process insights starting at PI-0091 (PI-0070..0077 reserved for PR #71).
+- Appended process insights PI-0091..PI-0111 (PI-0070..0077 reserved for PR #71; PI-0081..0090 are PR #79).
+- Rebased onto `main` at `b524f3e` (PR #79).
 - Ran `python3 scripts/check_index_paths.py`.
-- Did not create `industrial-atlas`, move files, or merge.
+- Did not create `industrial-atlas`, move files, rename the package or `hm:` ids, or merge.
