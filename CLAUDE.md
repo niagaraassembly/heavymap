@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Claude Code reads this file. The agent instructions for this repository live in [AGENTS.md](AGENTS.md) (pickup contract, lanes, Agent packet), [AGENTS-MCS.md](AGENTS-MCS.md) and [docs/for-agents/HARD-RULES.md](docs/for-agents/HARD-RULES.md). Read them first; they win over this file.
+Claude Code reads this file. The agent instructions for this repository live in [AGENTS.md](AGENTS.md) (pickup contract, lanes, Agent packet), [AGENTS-MCS.md](AGENTS-MCS.md) and [docs/for-agents/HARD-RULES.md](docs/for-agents/HARD-RULES.md). Read them first; they win over this file. HARD-RULES 3: publish/deploy tooling may be built and tested; public publish or deploy still needs Morgen's per-jurisdiction beta-gate sign-off (NA-269).
 
 ## Process insights (standing rule)
 

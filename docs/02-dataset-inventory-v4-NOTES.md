@@ -16,9 +16,10 @@
 
 ## Header and counts
 
-- Total columns: **66** (`50` Part 1, 16 Part 2).
-- Data rows: **82** (same as v3).
+- Total columns: **67** as of 2026-10-18 (`51` Part 1, 16 Part 2). Was 66 at v4 creation.
+- Data rows: **108** (82 at v4 creation; later Hamilton catalog writes added rows).
 - Part 1 ends `... repo, docs_dir_rel, ..., doc_status, notes`; Part 2 starts `joins_with`.
+- 2026-10-18: `publish_visibility` added after `licence_clearance`. Closed values `public` / `restricted` / `withheld` / `internal_only`. Existing rows left `public`. See [docs/architecture/publish-visibility.md](architecture/publish-visibility.md).
 
 ## Fill policy
 

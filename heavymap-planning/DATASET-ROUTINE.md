@@ -16,7 +16,7 @@ For write-ups at the verify stage, model them on the NA-79 evidence docs: `docs/
 | Owner and personal fields | Pulled with everything else (`outFields=*`) and kept local. Screened out of anything public (tiles, site files, UI, exports) at the publish boundary, per D-13 and HARD-RULES 2. Record field names only, never values, in sheets, docs, PRs and comments. |
 | MPAC | May be pulled, used and published. In Ontario, roll numbers, tax or property class and parcel civic addresses may be shown publicly (HARD-RULES 4). |
 | NPCA-derived layers | May be pulled, used and published, all fields pulled, identifying fields screened from public view (HARD-RULES 2, 5). |
-| Publication | Nothing is published before G6. |
+| Publication | Public publish still needs Morgen's per-jurisdiction beta-gate sign-off (NA-269). Publish/deploy tooling may be built and tested (HARD-RULES 3). |
 | Repo hygiene | Docs and CSVs only on a branch and PR. No MCS edits, no secrets, no UK datasets. |
 
 ## 2. Inputs
@@ -66,7 +66,7 @@ Linear comment rule: **the agent doing a step posts its own comment on the slice
 | 5 | Harmonize | Handling applied in a script or doc; rows to `format_resolved` | Each quirk is `resolved`, `accepted` or `wontfix`, with a re-run count | `Resolved: <ids>. Method: <how>. Before/after counts` |
 | 6 | Verify | Join test against the spine; method (exact, fuzzy, spatial) and grade (NA-86); rows to `spined` | `hits/tested` stated, with the sample or full population named; evidence write-up in the NA-79 style | `Spine join: <layer> -> <spine key> <method> <grade> <hits>/<tested>. Evidence: <url>` |
 | 7 | Use decision | Recommendation: use, `not_used` or defer; licence status noted | Morgen records the decision | `Recommend: <use / not_used / defer>. Licence: <found / not found>. Risks: <list>` |
-| 8 | Promote | `dormant`, then `surfaced` | Morgen's call. `surfaced` is not allowed before G6 | `Promoted: <layer> to <status> by Morgen on <date>` |
+| 8 | Promote | `dormant`, then `surfaced` | Morgen's call. Public `surfaced` needs per-jurisdiction beta-gate sign-off (NA-269) | `Promoted: <layer> to <status> by Morgen on <date>` |
 
 ## 5. Lifecycle statuses
 
@@ -81,7 +81,7 @@ Stored in `17-layer-profile.csv` `lifecycle_status`, with `status_changed_date`.
 | `format_resolved` | Every blocking quirk is handled. | Stage 5 | Agent |
 | `spined` | Joined to the spine, with `spine_join_method` (exact, fuzzy, spatial) and `spine_join_grade` (NA-86). | Stage 6 | Agent |
 | `dormant` | In the live map, not shown to users. | Stage 8 | **Morgen** |
-| `surfaced` | Visible to users. **Not before G6.** | Stage 8 | **Morgen** |
+| `surfaced` | Visible to users. Public only after Morgen's per-jurisdiction beta-gate sign-off (NA-269). | Stage 8 | **Morgen** |
 | `blocked` | Side state. Cannot proceed; reason and unblocker named. | Any stage | Agent sets, Morgen clears |
 | `not_used` | Side state. Will not be used (no value, or a Morgen decision). | Any stage | Morgen |
 

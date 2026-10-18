@@ -47,7 +47,7 @@ When the work changes the truth about a dataset, update that same row:
 
 | You did… | Update at least… |
 |---|---|
-| Recon / licence check | `licence_clearance`, `last_verified`, `blocker`, `open_questions` |
+| Recon / licence check | `licence_clearance`, `publish_visibility`, `last_verified`, `blocker`, `open_questions` |
 | Ingest / cache pull | `ship_status` / `normalize_status`, `status_in_product`, `raw_cache_rel` |
 | Normalize implementation | `normalize_status`, `etl_shape`, `join_keys_*`, `normalize_doc_rel`, `tests_rel`, `related_code_rel` |
 | D-5 emit / thin ship | `disposition_d5`, `ship_artifact_rel`, `ship_status`, `cache_policy` |

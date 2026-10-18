@@ -21,6 +21,7 @@ Plumbing that is not a fifth product name:
 - **D-5** — disposition of a dataset: `ship`, `simplify`, `derive`, `tile`, or `link`.
 - **Joining concepts** — the job a published field does, so native names can share a job or keep a lookalike apart. Closed catalog: [adr/0002-joining-concepts-and-terminology.md](adr/0002-joining-concepts-and-terminology.md).
 - **Data-gaps ledger** — named absences and withheld fields for a transparent view mode. Not a fifth concept. [data-gaps-ledger.md](data-gaps-ledger.md) (**NA-27**).
+- **Publish visibility** — per-dataset `public` / `restricted` / `withheld` / `internal_only`. Restricted list is gitignored. [publish-visibility.md](publish-visibility.md) (**NA-269**).
 
 ## Platform decisions
 

@@ -64,7 +64,7 @@ Cite `first-attempts/niagara-atlas/` and the UK atlas (`babbworks/atlas`) as bas
 
 ## Publish and chrome
 
-The public site stays unpublished until data is reconciled. UI chrome stays deferred. Architecture docs may still specify PCDP surfaces (`selection`, `dossier`, `share`, `export`) without shipping a map.
+The public site stays unpublished until Morgen signs off the jurisdiction's beta gate (NA-269). Building and testing publish or deploy tooling is allowed (HARD-RULES 3). UI chrome stays deferred. Architecture docs may still specify PCDP surfaces (`selection`, `dossier`, `share`, `export`) without shipping a map.
 
 ## Secrets
 

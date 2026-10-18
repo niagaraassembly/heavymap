@@ -20,4 +20,7 @@ Read AGENTS-MCS.md before changing data or code. It is the shared MCS contract a
 Fill policy
 "v4 copies every v3 value, adds family_id blank, leaves doc paths blank unless directly obvious, sets doc_status=missing for all rows, and does not add UK geographic datasets."
 ""
+Publish visibility
+"publish_visibility sits after licence_clearance. Closed values: public (default), restricted (paid or unconfirmed licence), withheld, internal_only. Existing rows were left public when the column was added. A restricted dataset list exists; the live list is gitignored (Spreadsheets/restricted/RESTRICTED-DATASETS.csv). See docs/architecture/publish-visibility.md."
+""
 Schema: 05-control-plane-column-schema.md. Canonical file: 02-dataset-inventory-v4.csv (UTF-8). The xlsx is generated.
