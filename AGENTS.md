@@ -93,3 +93,5 @@ Linear packets use this shape:
 - Before a PR: run the two checks above and append your process insights to `Spreadsheets/19-process-insights.csv` (see Process insights above). Never pull data into the repo; the VM is disposable, so record facts not rows.
 - Skills in `.agents/skills/`: `heavymap-pcdp`, `heavymap-dataset-profiling`, `untrusted-web-text`. Rules in `.cursor/rules/`.
 - Setup notes and open questions: [docs/for-agents/CLOUD-ENVIRONMENT.md](docs/for-agents/CLOUD-ENVIRONMENT.md).
+
+Skills: for multi-step or repeated work, use a matching skill from `.agents/skills/` or the cross-repo index (`ai-authored/skills/INDEX.md` in machine-flows); afterwards propose a new skill or an edit. One-off asks skip this.
