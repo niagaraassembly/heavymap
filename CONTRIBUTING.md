@@ -10,7 +10,7 @@ HeavyMap is industrial intelligence for cross-border Niagara, built in the open.
 
 ## Two intake paths
 
-- **Internal work** is tracked in the Linear project *Industrial Atlas* and follows the `agent-ready` + lane-label pickup contract in [AGENTS.md](AGENTS.md). That gate exists to keep AI agent lanes from picking up half-specified work — it is not a barrier aimed at human contributors.
+- **Internal work** is tracked in *Industrial Atlas* (backend) or *HeavyMap.com* (frontend). Follow the pickup contract in [AGENTS.md](AGENTS.md), including the bounded direct-assignment route in [WORKING-AGREEMENT.md](heavymap-planning/WORKING-AGREEMENT.md). That gate exists to keep AI agent lanes from picking up half-specified work — it is not a barrier aimed at human contributors.
 - **External contributions** (an issue or PR from outside the core team) start as a GitHub issue or PR describing the problem and proposed change. A maintainer will confirm scope, or fold it into a Linear packet, before merge. If you're unsure whether something is in scope, open an issue first rather than a large PR.
 
 ## Making a change
@@ -23,7 +23,7 @@ HeavyMap is industrial intelligence for cross-border Niagara, built in the open.
 ## Scope boundaries
 
 - UK geography is out of product scope. A UK capability pattern is a note in the MCS `uk_analogue` column, not a new geography row or dataset.
-- The public site stays unpublished until data is reconciled. Don't add publish/deploy tooling ahead of that call.
+- Building and testing deploy tooling is allowed under HARD-RULES 3. Public publication requires Morgen's jurisdiction gate sign-off. Before merging, verify whether the changed paths trigger publication and whether jurisdiction approval applies.
 - Geography v1 (the jurisdictions the product may currently speak about) is listed in [docs/architecture/README.md](docs/architecture/README.md). A name outside that list is `not_in_coverage` until an explicit lock adds it.
 
 ## Secrets and sensitive data

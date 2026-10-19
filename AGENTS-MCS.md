@@ -91,7 +91,7 @@ Create that tree only when the packet says so. A family may later share one fold
 ## Out of scope
 
 - Marking Linear `agent-ready` (Morgen or Chief of Staff).
-- Publishing the public site. Publication waits until data is reconciled.
+- Publishing the public site. Follow HARD-RULES 3 and the per-jurisdiction beta gate (NA-269): Stage A is reconciliation and reproduction; Stage B requires actual-output checks and Morgen's sign-off. Building/testing tooling is allowed. Before merging, verify deployment triggers for the changed paths.
 - Checking the xlsx or csv into this repository.
 - Adding UK geographic datasets.
 - Starting a second MCS schema in parallel.
