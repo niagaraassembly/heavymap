@@ -10,7 +10,7 @@ These apply to every agent on every task. If a task would break one, stop and re
 4. **MPAC-derived data may be pulled, used and published** (Morgen, 2026-10-17). In Ontario, roll numbers (ARN or assessment number), MPAC tax or property class and parcel civic (street) addresses may be shown publicly. Rule 2 still applies: identifying or personal information is screened at the publish boundary.
 5. **NPCA-derived layers may be pulled, used and published**, including NPCA's MPAC-derived assessment parcels, under rule 4. All fields are pulled; identifying information is screened at the publish boundary (rule 2).
 6. **Pull permission and use or publication permission are separate.** Check access before pulling. Licences do not gate MPAC- or NPCA-derived data (rules 4 and 5). Record each layer's licence anyway, for provenance. See `heavymap-planning/DATASET-ROUTINE.md`.
-7. **Human review.** Agents do not approve or merge their work. Use the `agent-ready`, lane, and packet rules in `AGENTS.md`; cite an existing Linear ID in a PR when applicable under `CONTRIBUTING.md`.
+7. **Human review.** Agents do not approve or merge their work. Use the pickup and packet rules in `AGENTS.md`. Cite an existing Linear ID in a PR when applicable under `CONTRIBUTING.md`.
 8. **Unknown stays unknown.** Blank is not zero, and a zero-result scan is valid. Do not invent values to fill a sheet.
 9. **No workaround for gated sources.** If access is blocked or login-walled, mark it blocked and stop. No tokens or scraping around authentication.
 10. **No secrets.** If one is found, report its path and type, never its value, and stop.

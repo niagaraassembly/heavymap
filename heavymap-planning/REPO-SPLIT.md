@@ -523,11 +523,11 @@ Rename `Spreadsheets/` → `inventory/`. **Keep file numbers** (`00`, `02`, `07`
 
 ### 6.4 PR #71 timing — DECIDED option E
 
-Land #71 on `heavymap` first, then delete IA paths. See §5.2 and §7 step 3.
+For the future migration cut, land #71 on heavymap before deleting IA paths. This does not serialize current frontend and backend work or authorize the cut. See §5.2 and §7 step 3.
 
 ### 6.5 Process insights — DECIDED, two logs
 
-Back-end and front-end insights are logged **separately**. Agents must do this without being told per issue. Exact replacement lines to write at execution (not in this PR) follow. Until the split, this repo still has one log at `Spreadsheets/19-process-insights.csv` with `PI-` (this session included).
+Back-end and front-end insights are logged **separately**. Agents must do this without being told per issue. Exact replacement lines to write at execution (not in this PR) follow. Before execution, the working agreement supersedes the original single-log instruction: Atlas findings use Spreadsheets/19-process-insights.csv (PI-); frontend findings use the HM-PI destination or interim PR-report route in WORKING-AGREEMENT.md. The post-split destinations below remain the plan.
 
 | After the split | Path | Prefix |
 |---|---|---|
