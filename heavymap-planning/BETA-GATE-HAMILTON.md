@@ -11,7 +11,7 @@
 - **Per jurisdiction.** Each jurisdiction opens on its own checklist. Hamilton does not wait for Niagara, Western New York or any other area. A later jurisdiction reuses this document as a template.
 - **"Reconciled" means observed and labelled, not made clean.** Every known conflict, gap, sliver and contradiction is detected, classified, counted and labelled. Nothing is extinguished from view to make the data look tidier. Some classes are flagged as must-solve before publishing (section 4).
 - **Back end versus front end.** The checks, metrics, run records and labels are universal back-end work (Industrial Atlas). How they appear on heavymap.com is front-end work (HeavyMap.com project) and is out of scope here, apart from naming what must be surfaced.
-- **Repo split (pending Morgen confirmation of timing).** Keep everything in this repo for now. Move the back end to an `industrial-atlas` repo as soon as practical, leaving `heavymap` (local and GitHub) dedicated to the front end.
+- **Repo split (plan recorded in PR #80; execution separately assigned).** Keep everything in this repo during concurrent work. Do not create the new repository, move paths or rename identifiers without a separate bounded assignment. Frontend repair and backend validation proceed independently of migration timing.
 
 ## 2. Standardized spine and join checks
 

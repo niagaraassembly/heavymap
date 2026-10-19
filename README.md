@@ -13,7 +13,7 @@ These documents do not publish a site, do not fetch data, and do not change the 
 
 ## For agents
 
-Start from the repo. Linear project Industrial Atlas is the control plane. This repository is the code source of truth.
+Start from the repo. Linear projects Industrial Atlas (backend) and HeavyMap.com (frontend) own their independent backlogs. This repository remains the code and policy source of truth. Read the [working agreement](heavymap-planning/WORKING-AGREEMENT.md) and the relevant [frontend](heavymap-planning/frontend/HANDOFF-2026-10-18.md) or [Atlas](heavymap-planning/atlas/HANDOFF-2026-10-18.md) handoff. PR #80 records a split plan; execution and naming migration need a separate assignment.
 
 - [AGENTS.md](AGENTS.md) — pickup contract: `agent-ready` plus a matching lane (`agent:cloud`, `agent:claude`, and the other `agent:*` lanes)
 - [AGENTS-MCS.md](AGENTS-MCS.md) — Master Control Spreadsheet hygiene. The workbook lives under Morgen’s `~/na/` (xlsx or csv). It is not in this repo.

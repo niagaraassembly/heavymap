@@ -1,8 +1,10 @@
+> Working amendments (2026-10-18): [WORKING-AGREEMENT.md](../WORKING-AGREEMENT.md) and the living frontend handoff govern current coordination. This draft is not a task-status board. PR #80 records the merged plan; execution remains separately assigned; no task sequence here resumes the split. Historical deployment observations must be reverified for the changed paths before merging. Recommendations remain open decisions unless explicitly accepted.
+>
 > Reference for [HANDOFF-2026-10-18.md](HANDOFF-2026-10-18.md). Draft as written by HM Front on 2026-10-18; nothing here is created in Linear or sent to the HeavyMap bot.
 
 # HeavyMap.com front-end backlog: DRAFT for Morgen (not created in Linear)
 
-HM Front, 2026-10-18. Nothing here has been created or changed in Linear. Existing HeavyMap.com issues: NA-305, NA-308 (standing), NA-309, NA-310 (standing), NA-33…NA-42 (docs), NA-37 (attribution), NA-52. The front-end epic **NA-32 still sits on the Industrial Atlas project** (PR #80 §5.3 says to move it). Proposed: move NA-32 to HeavyMap.com and parent the new items below under it.
+HM Front, 2026-10-18. Nothing here has been created or changed in Linear. Existing HeavyMap.com issues: NA-305, NA-308 (standing), NA-309, NA-310 (standing), NA-33…NA-42 (docs), NA-37 (attribution), NA-52. Current task mapping: NA-32 is the HeavyMap.com frontend epic; NA-312 owns the bounded #71 repair (HM-01), NA-316 owns pinned-artifact integration. The HM rows below remain a capability catalogue, not a parallel status board. NA-313/314/315 own the Atlas batch, repeats and screened artifact.
 
 Legend: **Maps to** = existing issue, or **new**. **BE** = needs an Industrial Atlas contract item (see §3).
 
@@ -10,7 +12,7 @@ Legend: **Maps to** = existing issue, or **new**. **BE** = needs an Industrial A
 
 | ID | Title | Goal (one line) | Acceptance criteria | Depends on | Maps to |
 |---|---|---|---|---|---|
-| HM-01 | Land PR #71 before the split | Get the v0 prototype onto `main` cleanly under option E | B1 conflicts resolved (main's 02 xlsx kept, 09 xlsx hunk dropped); S1–S5 fixed; `npm test` + Playwright pass; Pages exposure handled per D1; Morgen merges | D1 | NA-32 (child) |
+| HM-01 | Prepare PR #71 for review | Deliver bounded B1/S1-S5 repairs and a B2 publication assessment; Morgen decides merge independently of the paused split | B1 conflicts resolved (main's 02 xlsx kept, 09 xlsx hunk dropped); S1–S5 fixed; `npm test` + Playwright pass; Pages exposure handled per D1; Morgen merges | D1 | NA-32 (child) |
 | HM-02 | Pages exposure guard | Stop merges to `main` from publishing the repo tree unreviewed | Either `_config.yml` excludes `web/` and mockups, or Pages source = GitHub Actions; verified by `curl` that `/web/` is not served; HTTPS enforced | D1 (Morgen sets repo setting) | new |
 | HM-03 | Dossier v1 adapter + lazy shard loader | Render the real record without changing the six-band display | Manifest (~7 KB) loaded at startup; click fetches `shards/` + `id.slice(-2)` + `.json` once (in-flight dedupe, bounded LRU); adapter maps `area/coverage/roll/addresses/overlays/gaps` → six bands; `share` fraction handled; `schema` ≠ pinned version → refuse with a named state; synthetic shard fixture tests; per-click transfer measured | BE-1, BE-2, BE-13 | NA-32 (child) |
 | HM-04 | Front-end screening and leak scan | Defence in depth behind the IA allowlist | Display and export allowlists (no generic `Object.entries` stamp dump, no whole-object export); `dist/` + bundled artifact scanned for withheld key tokens (`owner, legal, mail, postal, phone, email`) and IA sentinel values; fails the build | BE-1, NA-306 | new |
@@ -31,7 +33,7 @@ Legend: **Maps to** = existing issue, or **new**. **BE** = needs an Industrial A
 | HM-19 | Layout and basemap decision record | Close V0-SPEC Q1–Q2 | Morgen picks layout A/B/C and the default basemap direction; recorded in V0-SPEC | Morgen | new (small) |
 | HM-20 | Reader docs for the transparent view | Explain gaps, slivers, withheld, run records to humans | Coverage & limitations and the reader's guide cover the new UI elements | HM-05…HM-09 | **NA-38, NA-35** |
 
-Suggested order: HM-01/HM-02 (pre-split), then HM-18, HM-03, HM-04, HM-05, HM-07, HM-08, HM-13/14, HM-09, HM-06, HM-10, HM-12, HM-11, HM-15, HM-16, HM-17.
+Current order: prepare HM-01 and assess HM-02 as D1 permits. Other frontend fixture/design tasks may proceed on explicit branches with scoped dependencies. HM-18 remains unassigned migration execution and is not a prerequisite for all frontend work. Already-authorized Atlas validation proceeds concurrently.
 
 ## 2. Decisions for Morgen (written in full)
 
@@ -53,26 +55,31 @@ Suggested order: HM-01/HM-02 (pre-split), then HM-18, HM-03, HM-04, HM-05, HM-07
 
 **D4. `withheld_disclosure` default** (open; interim `manifest_entry`). It decides whether a `withheld` dataset is named in public output ("this source applies here and is held back") or omitted entirely. HM-06 will build both paths behind the setting. The choice is yours: `manifest_entry` or `none`.
 
-**D5. Front-end process-insight log.** The kickoff says front-end insights get their own heavymap log with the `HM-PI-` prefix. PR #80 §6.5 still assumes option V (one Industrial Atlas sheet for everything). Confirm `HM-PI-`, and pick a path on heavymap:
-- **A. (recommended)** `heavymap-planning/HM-PROCESS-INSIGHTS.csv`, with the same columns as sheet 19.
-- **B.** `inventory/hm-19-process-insights.csv`, mirroring the IA sheet numbering.
-- Until it exists, I'll keep HM-PI rows in my session reports.
+**D5. Front-end process-insight log (reconciled).** Use `HM-PI-` and `heavymap-planning/frontend/19-process-insights.csv`, with the same columns as Atlas sheet 19. Earlier alternatives `heavymap-planning/HM-PROCESS-INSIGHTS.csv` and `inventory/hm-19-process-insights.csv` are superseded. File creation is deferred; until it exists, report frontend insights in the PR for later transfer. This routing does not resume the split.
 
 **D6. Railway service `heavymap`** (project heavy-map-v1-railway) auto-deploys `main` on every push. The latest deploy FAILED at 2026-10-18 10:26 EDT. It has no domain, so nothing is public. Options:
 - **A. (recommended)** Disconnect or pause it until there is a server-side need (for example the authenticated restricted-sidecar endpoint).
 - **B.** Leave it as it is.
 
-**D7. HeavyMap.com Linear project description is stale.** It says "nothing from MPAC or NPCA-derived layers" (contradicts HARD-RULES 4/5), cites gates "G3 or G5" (now the per-jurisdiction beta gate, NA-269) and names "NIA-31". Proposed replacement for the Rules list:
-> * Architecture docs win on any conflict; data contracts live in Industrial Atlas.
-> * No public publish or deploy before Morgen's per-jurisdiction beta-gate sign-off (NA-269). Building and testing deploy tooling is allowed (HARD-RULES 3).
-> * Owner names, owner mailing addresses, legal descriptions and other personal information are never shown or shipped. Roll numbers, MPAC property/tax class and civic addresses may be shown (HARD-RULES 2, 4, 5).
-> * Every doc and UI element names its sources and licences.
-> * Agents draft; Morgen (or the coordinating bot) merges.
-Approve the text, and say whether you want me to apply it through the Linear connector.
+**D7. Linear project description — COMPLETE.** Morgen authorized updates to both projects; descriptions, resource links, milestones, issue packets and dated updates were applied. NA-32 now belongs to HeavyMap.com. Task status remains in Linear. Agents never merge.
 
 Reversible items I'll decide myself unless you object: S1–S5 fixes in #71, the property-code fixture in place of tax class (V0-SPEC Q5 stays open for a real tax-class source), and the backlog numbering and order. Still open from V0-SPEC, not blocking: layout A/B/C, basemap direction (HM-19), OSM experiment choice (deferred, NA-304).
 
 ## 3. Back-end contract asks for HeavyMap (Industrial Atlas)
+
+This is the initial interface dependency register, not a duplicate of Linear task status. As each ask is assigned, add its change owner, other-track reviewer, producer/consumer Linear links, contract/fixture reference, and exactly what waits. Existing HM references below are draft backlog IDs, not fabricated Linear issues. Agreement, implementation and consumer verification need evidence on the linked issues/PRs; an unassigned ask is not a backend promise. See the [working agreement](../WORKING-AGREEMENT.md#interface-dependencies) for blocking scope.
+
+Current issue links (scope only; read Linear for status):
+
+| Interface / capability | Producer | Consumer |
+|---|---|---|
+| Pinned screened artifact and full screened run record | NA-315; incremental checks NA-306 | NA-316; run-record UI standing NA-308 |
+| Address with no parcel tag/index | NA-313 | NA-309 |
+| Existing schema-v1 dossier adapter | Existing contract; changes assigned individually | NA-318 |
+| Gap/sliver presentation | BE-1 through BE-16 as applicable; changes assigned individually | NA-319 |
+| Desktop/mobile interaction and accessibility | No new producer capability assumed | NA-320 |
+
+Each preparing-task owner records the named other-track reviewer before changing an interface. These links do not accept every draft ask or create a blanket dependency. NA-321 records Hamilton Stage A/B decisions separately from NA-269's gate-definition completion.
 
 | ID | Ask | Why (HM item) |
 |---|---|---|
