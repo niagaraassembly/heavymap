@@ -4,7 +4,7 @@ Accepted direction: Morgen, 2026-10-18. This documentation change records the co
 
 ## Scope and authority
 
-HeavyMap.com and Industrial Atlas are independent work tracks in the existing repository. PR #80 remains paused: do not move files, create split repositories, or rename packages or wire identifiers without a separate assignment from Morgen.
+HeavyMap.com and Industrial Atlas are independent work tracks in the existing repository. PR #80 records the merged split plan, not its execution. Do not move files, create split repositories, or rename packages or wire identifiers without a separate assignment from Morgen. Its land-#71-first order concerns the future migration cut only; neither track waits for that cut.
 
 [HARD-RULES](../docs/for-agents/HARD-RULES.md) remains authoritative for data, screening, review and publication. Existing architecture contracts define data meaning. This agreement governs task coordination and the scoped frontend exceptions below. Recommendations in dated reviews and backlog snapshots are not accepted decisions.
 
@@ -24,11 +24,11 @@ Each task has one implementation owner and one branch or worktree. Other agents 
 
 ## Task packet and report
 
-Record: track; existing issue and outcome; owner; branch/worktree and base SHA; allowed scope and exclusions; environment/data; contract version; acceptance checks; evidence; dependencies; next action and handoff recipient. Refresh branch/PR state at task start.
+For implementation or handoff tasks, record: track; existing issue and outcome; owner; branch/worktree and base SHA; allowed scope and exclusions; environment/data; contract version; acceptance checks; evidence; dependencies; next action and handoff recipient. Refresh branch/PR state at task start. Small documentation-only tasks need outcome, scope, reviewer and applicable checks; do not require irrelevant data/artifact fields.
 
-Normal autonomous issue pickup retains AGENTS.md's agent-ready, lane and packet requirements. For this round, an explicit assignment from Morgen can supply the bounded packet in the PR/task record, citing the existing Linear issue where applicable. It does not mark an issue agent-ready, authorize unrelated work, or permit creating/updating Linear records without instruction. If essential scope or acceptance information is missing, prepare the packet before dependent implementation.
+Normal autonomous issue pickup retains AGENTS.md's agent-ready, lane and packet requirements. For this round, an explicit assignment from Morgen can supply the bounded packet in the PR/task record, citing the existing Linear issue where applicable. It does not mark an issue agent-ready, authorize unrelated work, or permit creating/updating Linear records without instruction. If essential scope or acceptance information is missing, prepare the packet before dependent implementation. The direct assignment applies only to its named task and ends at completion, cancellation or handoff; a new task needs a new assignment or normal autonomous pickup.
 
-Report: completed result; PR and head SHA; checks passed/failed/skipped/unrun with implications; evidence; exact blocker; decisions needed; next action. A reviewer assesses against the task's acceptance checks. Morgen retains merge decisions.
+Report: completed result; PR and head SHA; checks passed/failed/skipped/unrun with implications; evidence; exact blocker; decisions needed; next action. A reviewer assesses against the task's acceptance checks. Morgen retains merge decisions. NA-321 is the linked Hamilton Stage A/B acceptance record; NA-269 remains the gate-definition reference.
 
 ## Scoped frontend instructions
 
@@ -77,7 +77,7 @@ Keep these claims separate: frontend fixture-complete; backend fixture-tested; o
 
 Frontend fixture acceptance needs a build, applicable interaction/browser checks and visual evidence. Backend operational acceptance needs pinned input hashes, commands, code/environment identities, outputs, and byte/ID/metric comparisons required by the beta gate. Integration checks the actual pinned artifact in HeavyMap. The existing jurisdiction gate alone defines release approval.
 
-**Before merging, verify whether the changed paths trigger publication and whether jurisdiction approval applies.** Record the current configuration and evidence for the specific change. Historical Pages/Railway observations are snapshots, not proof of present behavior. Do not infer approval from a successful build, integration run or documentation-only diff. Agents never merge. Pages/Railway changes and public publication require their existing authorization.
+**Before merging, verify whether the changed paths trigger publication and whether jurisdiction approval applies.** Retargeting a PR does not itself publish; a merge or push may trigger a configured deployment. Record the current configuration and evidence for the specific change. Historical Pages/Railway observations are snapshots, not proof of present behavior. Do not infer approval from a successful build, integration run or documentation-only diff. Agents never merge. Pages/Railway changes and public publication require their existing authorization.
 
 ## Insights and handoffs
 

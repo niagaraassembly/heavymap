@@ -12,13 +12,11 @@ Beta is the repository top level. The original `niagara-atlas/` prototype is pri
 
 ## Concurrent frontend and Atlas work
 
-Read [WORKING-AGREEMENT.md](heavymap-planning/WORKING-AGREEMENT.md) for task ownership, direct-assignment packets, contract-change review, acceptance evidence and the scoped frontend exception to deferred UI chrome. Frontend and already-authorized backend validation proceed concurrently. PR #80 remains paused. Frontend tasks use synthetic contract fixtures; real-data work stays on Deb. The hard rules and publication gate still apply.
+Read [WORKING-AGREEMENT.md](heavymap-planning/WORKING-AGREEMENT.md) for task ownership, direct-assignment packets, contract-change review, acceptance evidence and the scoped frontend exception to deferred UI chrome. Frontend and already-authorized backend validation proceed concurrently. PR #80 records the merged split plan; split execution and identifier migration require a separate assignment from Morgen. Frontend tasks use synthetic contract fixtures; real-data work stays on Deb. The hard rules and publication gate still apply.
 
 ## Process insights (standing rule)
 
-For Atlas findings, use `Spreadsheets/19-process-insights.csv` with `PI-` IDs. Frontend findings use the destination and interim PR-report route in [WORKING-AGREEMENT.md](heavymap-planning/WORKING-AGREEMENT.md#insights-and-handoffs), overriding the shared-sheet destination below for frontend work only.
-
-Before finishing any session or pull request, every agent appends its process insights (sources found, dead ends ruled out, data quirks, method findings, effort estimates, gaps, licence notes) as new rows in [`Spreadsheets/19-process-insights.csv`](Spreadsheets/19-process-insights.csv), with live-verified evidence (URLs, counts, dates checked). The rows feed HeavyMap's published synthesized reports, so log dead ends and search scope too. Append only; never edit another session's row except its `status` or `linked_issue`. Agents that cannot write to the repo report them in their final message under the heading **Process insights** so a human or Grok Bot can log them. Columns, the insight / issue / decision split and etiquette: [heavymap-planning/PROCESS-INSIGHTS.md](heavymap-planning/PROCESS-INSIGHTS.md).
+Before finishing a session or PR, record reusable findings once with live-verified evidence. Atlas findings go to `Spreadsheets/19-process-insights.csv` with `PI-` IDs. Frontend findings use `heavymap-planning/frontend/19-process-insights.csv` with `HM-PI-` IDs; until that file exists, use the PR's Process insights section with the same columns. Never write frontend findings into Atlas sheet 19. Preserve reserved IDs and append-only etiquette. If unable to write, report findings in the final response for transfer. Columns and etiquette: [PROCESS-INSIGHTS.md](heavymap-planning/PROCESS-INSIGHTS.md).
 
 ## Four-concept frame
 
@@ -41,7 +39,7 @@ For autonomous issue pickup, work an issue only when all of these are true. Expl
 2. The issue carries your lane label: `agent:cloud`, `agent:claude`, `agent:copilot`, `agent:cursor`, `agent:kiro`, or `agent:codex`.
 3. The description contains a complete Agent packet. When the work reads or writes dataset truth, it also contains an MCS contract block. Reprint that block from [AGENTS-MCS.md](AGENTS-MCS.md).
 
-If any item is missing, comment on the issue and stop. Leave the scope as written. `agent-ready` is applied by Morgen or the Chief of Staff.
+For autonomous pickup, if any item is missing, comment on the issue and stop. Leave the scope as written. `agent-ready` is applied by Morgen or the Chief of Staff.
 
 Prefer one Cloud Agent, plus follow-ups on that same run, for a documentary task. Cite the Linear ID (`NA-…`) in the pull request body.
 
