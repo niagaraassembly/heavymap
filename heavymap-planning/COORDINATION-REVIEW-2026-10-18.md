@@ -15,6 +15,20 @@ Merging #81 or #82 onto `main` would republish the repo tree to heavymap.com. Th
 
 Linear was not edited during the review. Another agent was updating those projects at the same time.
 
+## Follow-up: verified remaining work (2026-10-18, Toronto evening)
+
+This remains the original review snapshot. Use this addendum and linked issues for the harmonization pass; do not repeat completed coordination setup.
+
+- HeavyMap already has HM1/HM2/HM3 milestones, NA-312's bounded repair packet and an October 18 project update. Atlas has IA1/IA2/IA3 and its own update. The former empty document now holds the coordination reference.
+- NA-32 now belongs to HeavyMap.com, with NA-312/316/309/305 attached. NA-318/319/320 bound the adapter, gap/sliver and responsive/accessibility follow-ons.
+- G2 includes NA-16's Canadian fixture. G4 now names backend assembly; G6 names gate definition. NA-321 records Hamilton Stage A/B decisions separately from implementation progress.
+- Linear Roadmap and Decision log bodies are reconciled with concurrent work and current per-jurisdiction policy. The existing autonomous agent-ready gate and bounded direct-assignment distinction are preserved.
+- PR #82 consolidates insight routing, updates handoffs/D7 and migration wording, reduces packet requirements for small docs tasks and shortens the PR template. Review its actual head for the proposed repository instructions.
+
+Remaining actions: review the harmonized instruction PR; claim NA-312 and NA-313/314 independently; perform fixture follow-ons; prepare NA-315 and run NA-316; record jurisdiction decisions on NA-321; complete native views/reminders/templates, Atlas date cleanup and scoped sync-routing inspection when browser access is available. Refresh deployment configuration before any merge decision. No merge, migration execution or public publication is performed by this pass.
+
+Clarification: #82 already made frontend insight routing an explicit override and retained agent-ready for autonomous pickup. Replacing the overlapping paragraphs improves clarity; it does not add a new permission. Retargeting a PR does not publish; merge/push deployment behavior depends on the current configuration.
+
 ## Publication check (before any merge)
 
 GitHub Pages for `niagaraassembly/heavymap`, checked 2026-10-18 via the Pages API:
@@ -26,7 +40,7 @@ GitHub Pages for `niagaraassembly/heavymap`, checked 2026-10-18 via the Pages AP
 - `https_enforced`: **false**
 - Latest successful build at review time: `main` at `b524f3e` (2026-10-18 14:27 UTC)
 
-There is no `_config.yml` and no Pages workflow. A merge to `main` rebuilds the whole tree. #82 currently targets #81’s branch (`hm-front/handoff-2026-10-18`), so merging #82 as stacked does **not** publish. Retargeting or merging either PR to `main` **does**.
+There is no `_config.yml` and no Pages workflow. A merge to `main` rebuilds the whole tree. #82 currently targets #81’s branch (`hm-front/handoff-2026-10-18`), so merging #82 as stacked does **not** publish. Retargeting alone does **not** publish. Merging to `main` triggers the branch-build configuration recorded in this snapshot; refresh that configuration before a merge decision.
 
 #82’s changed paths are agent/planning docs (`AGENTS.md`, `HARD-RULES.md`, `heavymap-planning/*`, PR template, index CSV). They are not `web/`, tiles, or dossiers. They would still become public URLs on heavymap.com after a `main` Pages rebuild.
 
