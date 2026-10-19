@@ -1,3 +1,4 @@
+import { ID_FIELD, ID_PREFIX } from "./contract.js";
 // Entirely invented records and geometry. No municipal/OSM rows are copied.
 export const bands = [
   "identity",
@@ -58,11 +59,12 @@ const sharedRefusals = () => [
 ];
 const overlap = (id, label, value, share, extra = {}) =>
   claim(id, label, value, "joined", {
-    share,
+    share: share / 100,
     comment:
       "Illustrative intersection / full parcel area; shares are constructed, not GIS measurements.",
     stamp: stamp(id, label, "joined", {
-      method: "Synthetic intersection area / synthetic full parcel area × 100",
+      method:
+        "Synthetic intersection area / synthetic full parcel area (fraction 0–1)",
       inputs: { intersection_m2: (10000 * share) / 100, parcel_m2: 10000 },
       note: "Independent overlay families may overlap. Do not sum them.",
     }),
@@ -86,7 +88,7 @@ const areaSignal = claim(
 );
 export const parcels = [
   {
-    id: "hm:ca:on:hamilton:parcel:SYN-001",
+    id: `${ID_PREFIX}SYN-001`,
     short: "01",
     name: "The source-class question",
     address: "SYN-001 Demonstration Way",
@@ -117,10 +119,26 @@ export const parcels = [
             comment:
               "Source-quoted classification example; competing community record retained below. HeavyMap makes no vacancy finding.",
           }),
-          claim("SYN-TAX-01", "Tax class confirmed", "industrial", "joined", {
-            comment:
-              "Assessment class only; does not confirm current activity.",
-          }),
+          claim(
+            "SYN-PROP-01",
+            "Property code (MPAC, 2020 snapshot)",
+            "590 · 5xx Industrial range",
+            "joined",
+            {
+              confidence: "Low confidence: illustrative stale/sparse snapshot",
+              comment:
+                "Synthetic property-code example; source vintage 2020. Stale/sparse limitations (GAP-0002/GAP-0003), not current-use confirmation. Tax class is unavailable (GAP-0001).",
+              stamp: stamp(
+                "SYN-PROP-01",
+                "MPAC property-code example",
+                "joined",
+                {
+                  observation_on: "2020-01-01",
+                  gap_codes: ["GAP-0002", "GAP-0003"],
+                },
+              ),
+            },
+          ),
           overlap("SYN-ZONE-01A", "Zoning", "Industrial example A", 72),
           overlap("SYN-ZONE-01B", "Zoning", "Business example B", 28),
         ],
@@ -180,7 +198,7 @@ export const parcels = [
     next: "Verify the classification date and register coverage. Compare the competing community claim before drawing a conclusion.",
   },
   {
-    id: "hm:ca:on:hamilton:parcel:SYN-002",
+    id: `${ID_PREFIX}SYN-002`,
     short: "02",
     name: "Room around the footprint",
     address: "SYN-002 Demonstration Way",
@@ -210,7 +228,7 @@ export const parcels = [
             65,
           ),
         ],
-        refusals: [...sharedRefusals(), refusal("Tax class")],
+        refusals: [...sharedRefusals(), refusal("Property code")],
       },
       constraints: {
         claims: [
@@ -239,7 +257,7 @@ export const parcels = [
     next: "Check yard use, frontage, access and servicing with planning staff. Footprint coverage alone cannot establish severance potential.",
   },
   {
-    id: "hm:ca:on:hamilton:parcel:SYN-003",
+    id: `${ID_PREFIX}SYN-003`,
     short: "03",
     name: "At the industrial edge",
     address: "SYN-003 Demonstration Way",
@@ -266,7 +284,6 @@ export const parcels = [
       land_use: {
         claims: [
           claim("SYN-CITY-03", "City class", "Rural"),
-          claim("SYN-TAX-03", "Tax class (assessment)", "farm"),
           overlap("SYN-ZONE-03", "Zoning", "Rural example R", 100),
         ],
         refusals: sharedRefusals(),
@@ -422,7 +439,12 @@ export function featureCollection(items) {
     features: items.map((p) => ({
       type: "Feature",
       geometry: p.geometry,
-      properties: { id: p.id, short: p.short, name: p.name, lens: p.lenses[0] },
+      properties: {
+        [ID_FIELD]: p.id,
+        short: p.short,
+        name: p.name,
+        lens: p.lenses[0],
+      },
     })),
   };
 }

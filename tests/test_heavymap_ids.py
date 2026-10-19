@@ -23,6 +23,7 @@ from heavymap.ids.geojson import load_feature_collection
 from heavymap.ids.geometry import Geometry, fingerprint, geom_hash, looks_like_lonlat
 from heavymap.ids.models import SourceFeature
 from heavymap.ids.pipeline import run_registry
+from heavymap.gaps import is_placeholder_arn
 from heavymap.ids.registry import (
     apply_correction,
     attach_arns,
@@ -187,6 +188,91 @@ class GradeTests(unittest.TestCase):
         self.assertEqual(grades["host"], "many_to_one")
         self.assertEqual(grades["near"], "unmatched")
         self.assertEqual(grades["far"], "not_in_coverage")
+
+    def test_placeholder_arns_not_graded_one_to_many(self):
+        city = [
+            F("city_parcels", "a", box(0, 0, 10, 10)),
+            F("city_parcels", "b", box(12, 0, 22, 10)),
+            F("city_parcels", "c", box(40, 0, 50, 10)),
+            F("city_parcels", "d", box(52, 0, 62, 10)),
+            F("city_parcels", "g", box(80, 0, 90, 10)),
+        ]
+        npca = [
+            F(
+                "npca_assessment_parcels_test",
+                "zeros",
+                box(0, 0, 22, 10),
+                ARN="000000000000000",
+            ),
+            F(
+                "npca_assessment_parcels_test",
+                "shared",
+                box(40, 0, 62, 10),
+                ARN="251800000000099",
+            ),
+            F(
+                "npca_assessment_parcels_test",
+                "grimsby",
+                box(80, 0, 90, 10),
+                ARN="261500000000001",
+            ),
+        ]
+        parcels = mint_parcels(city, factory(), HAMILTON, "run-a")
+        links = attach_arns(parcels, npca, HAMILTON)
+        grades = {p.source_ids[0]: p.arn_grade for p in parcels}
+        self.assertEqual(grades["a"], "placeholder")
+        self.assertEqual(grades["b"], "placeholder")
+        self.assertEqual(grades["c"], "one_to_many")
+        self.assertEqual(grades["d"], "one_to_many")
+        self.assertEqual(grades["g"], "exact_1to1")
+        zero_links = [lk for lk in links if is_placeholder_arn(lk.arn)]
+        self.assertEqual(len(zero_links), 2)
+        self.assertTrue(all(lk.grade == "placeholder" for lk in zero_links))
+        self.assertTrue(all(lk.notes == "placeholder" for lk in zero_links))
+        self.assertFalse(any(lk.grade == "one_to_many" for lk in zero_links))
+        grim = next(lk for lk in links if lk.arn.startswith("2615"))
+        self.assertEqual(grim.grade, "exact_1to1")
+        self.assertEqual(grim.notes, "non_city_prefix")
+
+    def test_placeholder_run_keeps_existing_heavymap_ids(self):
+        city = [
+            F("city_parcels", "a", box(0, 0, 10, 10)),
+            F("city_parcels", "b", box(12, 0, 22, 10)),
+        ]
+        npca = [
+            F(
+                "npca_assessment_parcels_test",
+                "zeros",
+                box(0, 0, 22, 10),
+                ARN="000000000000000",
+            )
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "reg"
+            first, _man, _dest = run_registry(
+                parcels=city,
+                npca=npca,
+                config=HAMILTON,
+                registry_dir=root,
+                factory=factory(),
+                run_id="run-1",
+            )
+            ids_first = [p.hm_id for p in first.active_parcels()]
+            self.assertEqual({p.arn_grade for p in first.active_parcels()}, {"placeholder"})
+            second, _man2, _dest2 = run_registry(
+                parcels=city,
+                npca=npca,
+                config=HAMILTON,
+                registry_dir=root,
+                factory=factory(),
+                run_id="run-2",
+            )
+            ids_second = [p.hm_id for p in second.active_parcels()]
+            self.assertEqual(ids_first, ids_second)
+            self.assertEqual(len(ids_first), 2)
+            self.assertEqual({p.arn_grade for p in second.active_parcels()}, {"placeholder"})
+            self.assertEqual(_man2["previous_run_id"], "run-1")
+            self.assertEqual(_man2["arn_grades"].get("placeholder"), 2)
 
 
 class AddressAndBuildingTests(unittest.TestCase):

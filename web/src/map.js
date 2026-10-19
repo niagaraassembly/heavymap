@@ -3,6 +3,7 @@ import { Protocol } from "pmtiles";
 import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 maplibregl.setWorkerUrl(workerUrl);
 import { featureCollection, matchesLens } from "./fixtures.js";
+import { ID_FIELD } from "./contract.js";
 const protocol = new Protocol();
 maplibregl.addProtocol("pmtiles", protocol.tile);
 const polygon = (coordinates) => ({
@@ -262,7 +263,9 @@ export class FieldMap {
         };
       });
       m.on("click", "parcels", (e) => {
-        const p = parcels.find((p) => p.id === e.features[0].properties.id);
+        const p = parcels.find(
+          (p) => p.id === e.features[0].properties[ID_FIELD],
+        );
         if (p) onSelect(p, canvas);
       });
       m.on("mouseenter", "parcels", () => {
@@ -381,7 +384,7 @@ export class FieldMap {
         : [
             "any",
             ["==", ["get", "lens"], lens],
-            ["==", ["get", "id"], this.selected?.id || ""],
+            ["==", ["get", ID_FIELD], this.selected?.id || ""],
           ];
     for (const id of ["parcels", "parcel-lines"])
       this.map.setFilter(id, filter);

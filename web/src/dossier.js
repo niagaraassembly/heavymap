@@ -1,4 +1,5 @@
 import { bands, labels, packet, refusalText } from "./fixtures.js";
+import { formatAreaShare } from "./contract.js";
 export function el(tag, text, className) {
   const node = document.createElement(tag);
   if (text !== undefined) node.textContent = text;
@@ -47,10 +48,14 @@ export function renderDossier(parcel, container) {
       if (claim.share !== undefined) {
         const meter = el("div", undefined, "share");
         const fill = el("span");
-        fill.style.width = `${claim.share}%`;
+        fill.style.width = `${claim.share * 100}%`;
         meter.append(fill);
         card.append(
-          el("p", `${claim.share.toFixed(1)}% of parcel area`, "share-label"),
+          el(
+            "p",
+            `${formatAreaShare(claim.share, claim.m2 ?? claim.stamp.inputs?.intersection_m2)} of parcel area`,
+            "share-label",
+          ),
           meter,
         );
       }

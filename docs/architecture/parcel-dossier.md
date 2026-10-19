@@ -45,7 +45,8 @@ Public in Ontario and shown: roll number (ARN), MPAC property code, civic addres
                "shown": [{"id": "hm:ca:on:hamilton:address:<ULID>", "text": "<number> <STREET>, <COMMUNITY>", "unit": "", "join": "pip", "conf": "high"}]},
  "overlays": {"src": "heavymap-overlays:<run>", "join": "area_share", "label": "...", "sliver_count": 5,
               "rows": [{"layer": "LYR-HAM-ZONING", "class": "AA", "label": "City zoning: AA", "share": 0.8524, "m2": 125108.7, "fid": "<overlay feature id>"},
-                       {"layer": "LYR-HAM-ZONING", "class": "P7", "label": "City zoning: P7", "share": 0.0, "m2": 1.5, "fid": "<overlay feature id>", "sliver": true}]}
+                       {"layer": "LYR-HAM-ZONING", "class": "P7", "label": "City zoning: P7", "share": 0.0, "m2": 1.5, "fid": "<overlay feature id>", "sliver": true}]},
+ "gaps": ["GAP-0001", "GAP-0002"]
 }
 ```
 
@@ -56,9 +57,13 @@ Public in Ontario and shown: roll number (ARN), MPAC property code, civic addres
 | `has_arn` | at least one valid Hamilton ARN (`2518` + 11 digits) attached | no |
 | `not_covered` | registry grade `not_in_coverage` (more than 5 m from any NPCA polygon) | **yes**, pending Morgen's decision on the ~46% outside NPCA roll data |
 | `in_coverage_unmatched` | inside NPCA coverage, no ARN attached | yes |
-| `arn_invalid` | only placeholder values attached (`000000000000000`, flag `non_city_prefix`); the value is not shown | no |
+| `arn_invalid` | only placeholder values attached (`000000000000000`, flag `placeholder`); the value is not shown | no |
 
 `not_covered` corresponds to the PCDP refusal reason `not_in_coverage` for the roll object.
+
+### Gaps (transparent view)
+
+Each record has `gaps`: a sorted list of ledger `gap_id` strings. The reason text, counts and screening notes live in the dossier manifest (`gaps_ledger`) and in [`Spreadsheets/20-data-gaps-ledger.csv`](../../Spreadsheets/20-data-gaps-ledger.csv). Do not repeat that copy on the record. `withheld_screened` rows (owner-name and legal-description fields) stay in the manifest only, so a parcel list cannot imply that this unit has a withheld value. Schema: [data-gaps-ledger.md](data-gaps-ledger.md). Overlay slivers stay on `overlays.rows` with `sliver: true` (flag, never extinguish) and are not gap ids.
 
 ### Confidence words
 
@@ -66,7 +71,7 @@ Provisional UI words, not the NA-86 `exact` / `good` / `weak` / `refused` scale 
 
 - `high`: one-to-one ARN match, point-in-polygon address, registry geometry.
 - `medium`: ARN shared across City parcels (`one_to_many`) or several ARNs on one parcel (`many_to_one`); nearest address within 10 m; coverage test.
-- `low`: exact ARN match against a stale or sparsely filled source (Cityview PropCode, last edited 2020); placeholder ARNs.
+- `low`: exact ARN match against a stale or sparsely filled source (Cityview PropCode, last edited 2020); placeholder ARNs (`grade` `placeholder`, not `one_to_many`).
 
 ### Property code
 
@@ -107,4 +112,4 @@ Runtime on deb: about 48 s end to end (14 s load, 22 s build and write, 12 s re-
 
 ## Tests
 
-`tests/test_heavymap_dossier.py`: screening (spec keys, source allowlist, injected keys at any depth, wrong value kinds), sentinel leak scan over every output byte, coverage split, roll provenance, the 20-digit ARN prefix join, address cap, slivers flagged and never dropped (every input link row reaches output), a non-boolean sliver value refused, the layer id alias, and the CLI end to end.
+`tests/test_heavymap_dossier.py`: screening (spec keys, source allowlist, injected keys at any depth, wrong value kinds), sentinel leak scan over every output byte, coverage split, roll provenance, the 20-digit ARN prefix join, address cap, slivers flagged and never dropped (every input link row reaches output), a non-boolean sliver value refused, the layer id alias, compact `gaps` lists (ledger ids only, withheld rows never on a parcel), and the CLI end to end. Ledger load: `tests/test_heavymap_gaps.py`.

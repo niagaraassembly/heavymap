@@ -130,6 +130,7 @@ def make_fixture(base: Path) -> Inputs:
             [P_MANY, "LYR-HAM-ZONING", "z3", "M2", "City zoning: M2", "5000", "1.0", "0.5", "n"],
             [P_MANY, "LYR-HAM-ZONING", "z4", "M3", "City zoning: M3", "0.1", "0.00002", "0.0", "y"],
             [P_MANY, "LYR-HAM-ZONING", "z5", "C1", "City zoning: C1", "0.2", "0.00004", "0.0", "y"],
+            [P_UNM, "LYR-HCA-REGULATED-AREAS", "h1", "regulated", "HCA regulated area", "100", "0.32", "0.01", "n"],
         ],
     )
 
@@ -194,6 +195,7 @@ class ScreeningTests(unittest.TestCase):
             "roll": [{"arn": "2518", "grade": "g", "method": "m", "iou": 1.0, "src": "s", "join": "j", "conf": "c", "label": "l"}],
             "addresses": {"src": "s", "join": "j", "label": "l", "count": 0, "truncated": False, "shown": []},
             "overlays": {"src": "s", "join": "j", "label": "l", "rows": [], "sliver_count": 0},
+            "gaps": [],
         }
 
     def test_screen_accepts_allowlisted_record(self):
@@ -222,6 +224,10 @@ class ScreeningTests(unittest.TestCase):
     def test_screen_requires_core_keys(self):
         rec = self._ok_record()
         del rec["coverage"]
+        with self.assertRaises(ScreeningError):
+            screen_record(rec)
+        rec = self._ok_record()
+        del rec["gaps"]
         with self.assertRaises(ScreeningError):
             screen_record(rec)
 
@@ -290,7 +296,8 @@ class BuildTests(unittest.TestCase):
         self.assertNotIn("roll_address", many[1])  # blank MPAC street
         bad = self.records[P_BAD]["roll"][0]
         self.assertIsNone(bad["arn"])
-        self.assertEqual(bad["flag"], "non_city_prefix")
+        self.assertEqual(bad["flag"], "placeholder")
+        self.assertEqual(bad["grade"], "placeholder")
 
     def test_addresses(self):
         a = self.records[P_EXACT]["addresses"]
@@ -318,7 +325,7 @@ class BuildTests(unittest.TestCase):
         self.assertEqual(sum(1 for r in many["rows"] if r.get("sliver")), many["sliver_count"])
         # every input link row appears in output
         total = sum(len(r["overlays"]["rows"]) for r in self.records.values())
-        self.assertEqual(total, 6)
+        self.assertEqual(total, 7)
         self.assertIn("LYR-NPCA-APPROX-REGULATION-LANDS", self.manifest["sources"])
         self.assertNotIn("LYR-NPCA-REGULATION-LANDS", self.manifest["sources"])
 
@@ -331,6 +338,40 @@ class BuildTests(unittest.TestCase):
 
     def test_area(self):
         self.assertEqual(self.records[P_EXACT]["area"]["m2"], 1200.5)
+
+    def test_gaps_cite_ledger_ids_not_copy(self):
+        withheld = {"GAP-0008", "GAP-0009", "GAP-0006", "GAP-0007"}
+        for rec in self.records.values():
+            self.assertIsInstance(rec["gaps"], list)
+            self.assertEqual(rec["gaps"], sorted(rec["gaps"]))
+            for gid in rec["gaps"]:
+                self.assertRegex(gid, r"^GAP-\d{4}$")
+            self.assertTrue(withheld.isdisjoint(rec["gaps"]), rec["gaps"])
+        exact = self.records[P_EXACT]["gaps"]
+        self.assertIn("GAP-0001", exact)
+        self.assertIn("GAP-0002", exact)
+        self.assertNotIn("GAP-0003", exact)
+        self.assertEqual(self.records[P_NOCOV]["gaps"], ["GAP-0010"])
+        self.assertEqual(self.records[P_BAD]["gaps"], ["GAP-0005"])
+        unm = self.records[P_UNM]["gaps"]
+        self.assertIn("GAP-0011", unm)
+        self.assertIn("GAP-0012", unm)
+        many = self.records[P_MANY]["gaps"]
+        self.assertIn("GAP-0001", many)
+        self.assertIn("GAP-0003", many)
+        self.assertIn("GAP-0004", many)
+        self.assertNotIn("GAP-0002", many)
+        ledger = self.manifest["gaps_ledger"]
+        ids = {row["gap_id"] for row in ledger["entries"]}
+        self.assertTrue({"GAP-0001", "GAP-0008", "GAP-0010"} <= ids)
+        owner_row = next(r for r in ledger["entries"] if r["gap_id"] == "GAP-0008")
+        self.assertEqual(owner_row["gap_type"], "withheld_screened")
+        self.assertEqual(owner_row["field"], "Owner")
+        self.assertNotIn("notes", owner_row)
+        for s in SENTINELS:
+            self.assertNotIn(s, owner_row["reason"])
+        self.assertEqual(self.manifest["gap_counts"]["GAP-0010"], 1)
+        self.assertEqual(self.manifest["gap_counts"]["GAP-0005"], 1)
 
 
 class HelperTests(unittest.TestCase):

@@ -12,6 +12,7 @@ ArnGrade = Literal[
     "exact_1to1",
     "one_to_many",
     "many_to_one",
+    "placeholder",
     "unmatched",
     "not_in_coverage",
     "",

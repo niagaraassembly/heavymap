@@ -1,6 +1,6 @@
 # HeavyMap architecture
 
-Documentary source of truth for the four-concept product frame. Tracked as Linear **NIA-11**. This tree specifies the contract. It does not implement a map, fetch municipal data, edit the Master Control Spreadsheet (MCS), or publish a site.
+Documentary source of truth for the four-concept product frame. Tracked as Linear **NA-11**. This tree specifies the contract. It does not implement a map, fetch municipal data, edit the Master Control Spreadsheet (MCS), or publish a site.
 
 Beta is the repository top level. [`first-attempts/niagara-atlas/`](../../first-attempts/niagara-atlas/) and the UK atlas (`babbworks/atlas`) are baseline references. Cite their patterns. Do not extend them as the product root, and do not add UK geography.
 
@@ -20,6 +20,8 @@ Plumbing that is not a fifth product name:
 - **MCS** — which datasets exist and which bands, surfaces, and readings they may feed.
 - **D-5** — disposition of a dataset: `ship`, `simplify`, `derive`, `tile`, or `link`.
 - **Joining concepts** — the job a published field does, so native names can share a job or keep a lookalike apart. Closed catalog: [adr/0002-joining-concepts-and-terminology.md](adr/0002-joining-concepts-and-terminology.md).
+- **Data-gaps ledger** — named absences and withheld fields for a transparent view mode. Not a fifth concept. [data-gaps-ledger.md](data-gaps-ledger.md) (**NA-27**).
+- **Publish visibility** — per-dataset `public` / `restricted` / `withheld` / `internal_only`. Restricted list is gitignored. [publish-visibility.md](publish-visibility.md) (**NA-269**).
 
 ## Platform decisions
 
@@ -27,9 +29,9 @@ Accepted records. Each one locks a platform choice beside the four concepts. A p
 
 | Decision | Document |
 |---|---|
-| OSM (or an equivalent tile service) is the visual map substrate. No bulk OSM prefetch as the parcel or intelligence corpus. | [adr/0001-osm-as-substrate.md](adr/0001-osm-as-substrate.md) (Linear **NIA-17**) |
+| OSM (or an equivalent tile service) is the visual map substrate. No bulk OSM prefetch as the parcel or intelligence corpus. | [adr/0001-osm-as-substrate.md](adr/0001-osm-as-substrate.md) (Linear **NA-17**) |
 | Joining concepts sit above native field names. Relation, authority scale, claim grain, register family, and the thirty concept ids are closed sets. | [adr/0002-joining-concepts-and-terminology.md](adr/0002-joining-concepts-and-terminology.md) (Linear **NA-22**) |
-| Proposed: Hamilton `{local}` is an opaque Crockford ULID. Geometry fingerprints and roll numbers are matching aids, never the ID. IDs are never reused. | [adr/0003-heavymap-id-format.md](adr/0003-heavymap-id-format.md) (Linear **NA-24**, review); operator notes [heavymap-id-registry.md](heavymap-id-registry.md); overlay joins [heavymap-overlays.md](heavymap-overlays.md) (**NA-27**, **NA-270**); parcel dossier [parcel-dossier.md](parcel-dossier.md) (**NA-27**) |
+| Proposed: Hamilton `{local}` is an opaque Crockford ULID. Geometry fingerprints and roll numbers are matching aids, never the ID. IDs are never reused. | [adr/0003-heavymap-id-format.md](adr/0003-heavymap-id-format.md) (Linear **NA-24**, review); operator notes [heavymap-id-registry.md](heavymap-id-registry.md); overlay joins [heavymap-overlays.md](heavymap-overlays.md) (**NA-27**, **NA-270**); parcel dossier [parcel-dossier.md](parcel-dossier.md) (**NA-27**); data-gaps ledger [data-gaps-ledger.md](data-gaps-ledger.md) |
 
 ## Geography v1
 
@@ -69,4 +71,4 @@ Not a fifth concept, and not a replacement for the worked parcels above.
 
 | Place | Note | Linear |
 |---|---|---|
-| City of Rochester parcel local token | [rochester-parcel-local-token.md](rochester-parcel-local-token.md) | **NIA-80** |
+| City of Rochester parcel local token | [rochester-parcel-local-token.md](rochester-parcel-local-token.md) | **NA-80** |

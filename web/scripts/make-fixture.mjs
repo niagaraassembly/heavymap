@@ -3,6 +3,7 @@
 import { writeFileSync } from "node:fs";
 import { zxyToTileId } from "pmtiles";
 import { parcels } from "../src/fixtures.js";
+import { ID_FIELD } from "../src/contract.js";
 const v = (n) => {
   const a = [];
   do {
@@ -30,13 +31,13 @@ const point = ([lon, lat]) => [
   ),
 ];
 const zig = (n) => (n < 0 ? -n * 2 - 1 : n * 2);
-const keys = ["id", "short", "name", "lens"];
+const keys = [ID_FIELD, "short", "name", "lens"];
 const values = [];
 const features = parcels.map((p, index) => {
   const tags = [];
   keys.forEach((k, i) => {
     tags.push(i, values.length);
-    values.push(k === "lens" ? p.lenses[0] : p[k]);
+    values.push(k === "lens" ? p.lenses[0] : k === ID_FIELD ? p.id : p[k]);
   });
   const ring = p.geometry.coordinates[0].slice(0, -1).reverse().map(point);
   let px = 0,
@@ -84,7 +85,7 @@ const metadata = Buffer.from(
       {
         id: "parcels",
         fields: {
-          id: "String",
+          [ID_FIELD]: "String",
           short: "String",
           name: "String",
           lens: "String",

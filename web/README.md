@@ -2,7 +2,7 @@
 
 The [spec](../heavymap-planning/frontend/V0-SPEC.md) was committed before prototype code. It records Morgen's vision, the later reopening of Overpass/selected OSM elements, layout alternatives, protocol mapping and questions. Related work: NA-32, NA-27, NA-11, NA-17. No MCS cells changed.
 
-Everything on this map is invented: three parcel rectangles, source-role quotations, shares, roll aliases, addresses, nature and water shapes. The composition suggests Hamilton but is **not real parcel, Greenbelt, regulation or OSM geometry**. The names of the place and source roles are orientation labels, not observations. No downloaded municipal or personal data. No external tiles, keys, fonts, public API calls, proxy, telemetry or deployment tooling. G6 remains closed.
+Everything on this map is invented: three parcel rectangles, source-role quotations, shares, roll aliases, addresses, nature and water shapes. The composition suggests Hamilton but is **not real parcel, Greenbelt, regulation or OSM geometry**. The names of the place and source roles are orientation labels, not observations. No downloaded municipal or personal data. No external tiles, keys, fonts, public API calls, proxy, telemetry or deployment tooling. Hamilton Stage B is not signed off (NA-269/NA-321). Building and testing deploy tooling is allowed; publication is separately approved.
 
 ## Run locally
 
@@ -48,4 +48,4 @@ python3 -m unittest discover -s tests
 python3 scripts/check_index_paths.py
 ```
 
-See [VALIDATION.md](VALIDATION.md) for measured local results and limits. There is no deployment script or Pages workflow. Before any future real data build, use an explicit display-field allowlist across map, tooltip, dossier and export. Review the spec's open questions and G6 separately.
+See [VALIDATION.md](VALIDATION.md) for measured local results and limits. There is no deployment script or Pages workflow. Before any future real data build, use an explicit display-field allowlist across map, tooltip, dossier and export. Review the spec's open questions and Hamilton Stage B separately.

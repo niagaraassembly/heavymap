@@ -4,9 +4,9 @@
 
 - Fun and delightful to explore, and it surprises with technical depth and honesty, without feeling expert-only.
 - Small, legible subtitles and subtext in the dossier and tooltips. They present information with authority and make our classification, joining and confidence levels visible, in the spirit of the na-research regional news scan (Western New York issue 1), where items carry labels and comments.
-- Source-quoted labels, e.g. "City class: Vacant Lands" or "Tax class confirmed: industrial". HeavyMap never asserts vacancy itself.
+- Source-quoted labels, e.g. "City class: Vacant Lands" or "Property code (MPAC, 2020 snapshot): 590 · 5xx Industrial range". HeavyMap never asserts vacancy itself.
 - New aesthetic: reuse function, not the look of either prototype. Inspired by Stadia's layers, including watercolour. We may get a Stadia API key again; suggest alternatives too.
-- MapLibre + PMTiles, static hosting on GitHub Pages later. The site stays under about 300 MB, each file under 100 MB, and the startup payload is small.
+- MapLibre + PMTiles, static hosting on GitHub Pages later. Accepted beta-gate budgets apply: site ≤1 GB, each PMTiles ≤100 MB, startup payload ≤50 KB compressed and dossier shards ≤50 KB compressed p95. D2 still defines what startup includes.
 - First view: Hamilton, Ontario framed by the Greenbelt and conservation layers, so the city appears encased by nature.
 - Layout: the desktop split of top/bottom bars and left/right panels is undecided, so propose options. The parcel dossier likely pops out on the right. The clicked parcel re-centres in the remaining map space, and the view snaps back when the panel closes, if the user hasn't moved the map.
 - The dossier shows every overlapping zone and designation with area shares, plus roll number and tax class where known.
@@ -18,7 +18,7 @@
 
 Draft for Morgen's review, 2026-10-17. This prompt explicitly authorizes a written spec followed by a local synthetic prototype, overriding older frontend-deferral notes only for this scope. Related existing work: NA-32 (front end), NA-27 (dossier), NA-11 (PCDP), NA-17 (OSM substrate), NA-24 / NA-270 / NA-276 (Hamilton spine and alignment). No new Linear assignment is invented. No MCS cells or dataset truth change.
 
-G6 remains closed. No publication, deployment tooling, Pages workflow, live municipal pulls, owner values, legal descriptions, personal information, or production data. Fixtures are invented geometry and records, visibly labelled on every surface. Civic addresses, roll aliases and tax classes are allowed in production under current HARD-RULES, but v0 uses unmistakably synthetic examples. A local server and a draft code PR are the only delivery surfaces.
+Hamilton Stage B is not signed off (NA-269/NA-321). Building and testing deploy tooling is allowed; publication is separately approved. No public publication, enabled Pages deployment workflow, live municipal pulls, owner values, legal descriptions, personal information, or production data. Fixtures are invented geometry and records, visibly labelled on every surface. Civic addresses, roll aliases and tax classes are allowed in production under current HARD-RULES, but v0 uses unmistakably synthetic examples. A local server and a draft code PR are the only delivery surfaces.
 
 Sources read: [prior-art glean](PRIOR-ART-GLEAN.md), archived [UK atlas](../../first-attempts/uk-atlas/README.md) and [Niagara atlas](../../first-attempts/niagara-atlas/README.md), [PCDP](../../docs/architecture/PCDP.md), [claim/refusal](../../docs/architecture/claim-refusal-contract.md), [ladder](../../docs/architecture/context-band-ladder.md), production per-parcel lookup [parcel-dossier.md](../../docs/architecture/parcel-dossier.md), [Hamilton decisions](../focus/hamilton/DECISIONS.md), [loading evidence](../focus/hamilton/fast-loading-evidence.md), [spine pull](../focus/hamilton/SPINE-BASE-PULL-2026-10-17.md) and [groupings](../focus/hamilton/hamilton-dataset-groupings.md). The na-research news scan was described in the prompt but was not supplied or independently inspected. The parcel-dossier record landed on main after this spec was first drafted; display bands below follow that format rather than inventing a second JSON shape.
 
@@ -65,7 +65,7 @@ Production numerator = area of accepted parcel/source intersection; denominator 
 
 ## Tooltip and subtitle language
 
-Three compact lines: **Sample 01 · parcel** / `City class: “Vacant Lands”` / `Joined · illustrative overlap · review required`. Dossier subtitles expand the same vocabulary, with sentence case and ordinary language. Attribute the classification in the label itself, not only the footer. Use quoted original values alongside normalized labels. Example: `Tax class confirmed: “industrial”` has a subtitle explaining that this is an assessment classification, not verification of present activity. The word “confirmed” is provisional pending Morgen's wording review.
+Three compact lines: **Sample 01 · parcel** / `City class: “Vacant Lands”` / `Joined · illustrative overlap · review required`. Dossier subtitles expand the same vocabulary, with sentence case and ordinary language. Attribute the classification in the label itself, not only the footer. Use quoted original values alongside normalized labels. Example: `Property code (MPAC, 2020 snapshot): “590” · 5xx Industrial range` carries stale/sparse limitations and is not verification of present activity. Tax-class copy remains Q5 for a future source.
 
 Use quiet slate text, purple for community input, rust for investigative signals, forest for nature; grade and state also use words/icons so colour is never the only cue. News-scan influence means an item has a label, a comment, and a source. It does not mean mimic a publication's aesthetic or invent editorial certainty. Avoid “high potential”, “ripe for redevelopment”, and vacancy-like shorthand.
 
@@ -109,21 +109,22 @@ Opening production extent: Hamilton municipal envelope with Greenbelt/NEP/woodla
 
 ## Data, tile and loading budgets
 
-These are proposed acceptance ceilings, not measured production performance. Site <300MB total, every file <100MB (decimal bytes), reject ≥100MB. Aim ≤250MB to leave revision headroom. No real data enters this PR. Publication/range tests on Pages wait for G6; local HTTP range tests can run now.
+Area shares in records and fixtures are fractions from 0 to 1. Render percentages at the UI boundary. A rounded-zero share with positive intersection area reads "below 0.01%"; other tiny shares remain explicit, never silently "0.0%".
 
-| Asset class | Proposed ceiling / strategy |
+The accepted ceilings are in [Hamilton beta gate §6](../BETA-GATE-HAMILTON.md): startup payload ≤50 KB compressed; per-click dossier shard ≤50 KB compressed p95; each PMTiles ≤100 MB; total site ≤1 GB. What counts as startup remains D2. The local app shell is approximately 459–461 KB compressed; no startup compliance is inferred. Previous finer allocations are planning targets, not alternative acceptance ceilings.
+
+| Asset class | Planning strategy within accepted ceilings |
 | --- | --- |
-| Initial app HTML/CSS/JS and map engine | ≤1.5MB compressed transfer; no remote fonts; production build measured |
-| First-view simplified nature + city frame | ≤1MB compressed, progressive; fine detail deferred |
-| Initial total including visible tiles | ≤3MB cold transfer target, excluding optional basemap variance documented separately |
-| Parcel / building / zoning archives | Planning allocations 40 / 35 / 30MB; each shard <80MB target, absolute <100MB |
-| Nature detail / water / regulation / policy tiles | 45MB combined planning allocation, simplify for display only |
-| Dossier and search shards | 40MB allocation; each response ≤250KB target, initial search index ≤50KB |
-| Other overlays, assets and reserve | 60MB; total allocation 250MB |
+| App HTML/CSS/JS and map engine | Measure separately; no remote fonts; D2 decides startup scope |
+| First-view nature and city frame | Progressive; defer fine detail and measure actual initial data |
+| Parcel / building / zoning archives | Planning allocations 40 / 35 / 30 MB; partition below the 100 MB ceiling |
+| Nature / water / regulation / policy tiles | 45 MB planning allocation; simplify only for display |
+| Dossier and search shards | Dossier p95 ≤50 KB compressed; lazy load and bound caches |
+| Other assets and reserve | 250 MB aggregate planning target; accepted total-site ceiling remains 1 GB |
 
 Parcels/buildings z13+, zoning z10+, detailed nature z12+ as initial hypotheses. Use low-zoom generalized nature, topology-aware keep-shapes simplification and feature-count checks. All analytical overlays use precise build-side geometry, never simplified display tiles. Parcel tiles carry stable key and minimal display fields; detailed claims load by the [parcel-dossier.md](../../docs/architecture/parcel-dossier.md) ULID-suffix shard (`shards/` + `id.slice(-2)` + `.json`), deduplicated in flight and cached with bounded memory. Search uses address/roll/key prefix shards, not 322MB addresses. Never send raw attribute dictionaries: allowlist display fields after screening, including exports and tooltips.
 
-PMTiles archives should be partitioned by layer or geographic shard if measured size requires it. Do not rely on Git LFS for eventual Pages. Record archive bytes, max tile bytes, zooms, feature counts and attribution. Validate local Range → 206, Content-Range and partial length; eventual hosting CORS/cache/range verification is a separate post-G6 task. No test Pages repository now.
+PMTiles archives should be partitioned by layer or geographic shard if measured size requires it. Do not rely on Git LFS for eventual Pages. Record archive bytes, max tile bytes, zooms, feature counts and attribution. Validate local Range → 206, Content-Range and partial length; eventual hosting CORS/cache/range verification is a separate Stage B deployment verification task. No test Pages repository now.
 
 Performance acceptance to measure later on a mid-range laptop and phone with stated network: first useful nature map ≤3s, selected dossier shell ≤150ms, cached record ≤300ms, cold record ≤1s, no long-task whole-city JSON parse. These are goals; synthetic fixture timing cannot validate Hamilton-scale throughput. Failed layer loading has retry and a named status. Dataset absence and HTTP failure remain separate.
 
@@ -140,6 +141,6 @@ Verify fixture contract, export parity, lens eligibility, local range requests a
 3. Which OSM experiment first: selected-element lookup, bounded user-triggered Overpass query, or community tiles/snapshots? Overpass is now an option. What refresh, cache, truncation and refutation policy should govern it?
 4. Approve the lens names and evidence-first breakdown? What coverage threshold and adjacency rule should be evaluated for production, without implying severance or rezoning feasibility?
 5. Keep “Tax class confirmed” or prefer “Tax class (assessment)” to avoid implying a present-use confirmation? Roll aliases and civic addresses are permitted already; how prominent should they be?
-6. Which initial source layers and accepted overlay joins are ready for dossier claims? How should citywide OP and Conservation Halton gaps be worded? Do not infer G6 readiness from this prototype.
+6. Which initial source layers and accepted overlay joins are ready for dossier claims? How should citywide OP and Conservation Halton gaps be worded? Do not infer Hamilton Stage B readiness from this prototype.
 7. Should local notes or a standalone readable dossier follow the JSON packet, and should a separate deep-link page be in the next iteration? All surfaces must preserve refusals.
-8. Who records the G6 decision and production confidence thresholds? These stay open in the existing decision log; this spec does not settle them.
+8. Morgen records per-jurisdiction Stage A/B decisions with run IDs (NA-269/NA-321). Accepted thresholds live in BETA-GATE-HAMILTON.md; this prototype does not establish production acceptance.

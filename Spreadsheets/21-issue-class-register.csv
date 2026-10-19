@@ -1,0 +1,43 @@
+class_code,sheet,source_column,source_value,definition,publish_priority,notes
+gap.contradictory,20,gap_type,contradictory,Two stamped sources can disagree. Both stay.,label_and_ship,Accepted 2026-10-18 from BETA-GATE-HAMILTON.md section 4.
+gap.empty,20,gap_type,empty,Field exists and is blank (or equivalent) on the counted rows.,label_and_ship,Accepted 2026-10-18 from BETA-GATE-HAMILTON.md section 4.
+gap.not_in_coverage,20,gap_type,not_in_coverage,The counted share sits outside what this source covers.,label_and_ship,Accepted 2026-10-18 from BETA-GATE-HAMILTON.md section 4.
+gap.not_present_in_source,20,gap_type,not_present_in_source,The publisher does not carry that object or field.,label_and_ship,Accepted 2026-10-18 from BETA-GATE-HAMILTON.md section 4.
+gap.placeholder,20,gap_type,placeholder,A documented sentinel stands in for a real value.,label_and_ship,Accepted 2026-10-18 from BETA-GATE-HAMILTON.md section 4.
+gap.sparse,20,gap_type,sparse,Field exists and is filled on only a small share of rows.,label_and_ship,Accepted 2026-10-18 from BETA-GATE-HAMILTON.md section 4.
+gap.stale,20,gap_type,stale,Layer or field is a known-old vintage relative to other sources in use.,label_and_ship,Accepted 2026-10-18 from BETA-GATE-HAMILTON.md section 4.
+gap.withheld_screened,20,gap_type,withheld_screened,Field exists in the pull and is screened at the publish/display boundary.,must_solve_before_publish,Accepted 2026-10-18 from BETA-GATE-HAMILTON.md section 4.
+quirk.constant_field,18,quirk_type,constant_field,A field is the same documented sentinel on every row.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.crs_storage,18,quirk_type,crs_storage,Hosted CRS differs from the analysis CRS used for joins.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.duplicate_geometry,18,quirk_type,duplicate_geometry,Distinct source rows share identical geometry.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.duplicate_id,18,quirk_type,duplicate_id,One identifier value appears on more than one feature.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.format,18,quirk_type,format,Identifier stored in a punctuated or hyphenated form.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.grain_mismatch,18,quirk_type,grain_mismatch,One feature of one fabric contains several features of another.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.invalid_geometry,18,quirk_type,invalid_geometry,Geometry fails validation as served.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.invalid_or_null_geometry,18,quirk_type,invalid_or_null_geometry,Mix of null and invalid geometries on one layer.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.misnamed_field,18,quirk_type,misnamed_field,Field name does not match the values it holds.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.missing_stable_id,18,quirk_type,missing_stable_id,"Layer has no published stable identifier, only a service row id.",,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.mixed_length,18,quirk_type,mixed_length,Identifier values appear at more than one documented length.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.multi_parcel_overlap,18,quirk_type,multi_parcel_overlap,A footprint overlaps more than one parcel by a measured area.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.no_geometry,18,quirk_type,no_geometry,Table has no geometry column.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.non_city_prefix,18,quirk_type,non_city_prefix,Identifier prefix is outside the jurisdiction.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.null_convention,18,quirk_type,null_convention,Blank text is stored as a space or other sentinel rather than null.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.null_geometry,18,quirk_type,null_geometry,Some rows have no geometry.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.offset,18,quirk_type,offset,Constant translation between two fabrics.,label_and_ship,Accepted 2026-10-18 as label_and_ship (already measured and corrected). S7 stays as the guard.
+quirk.outside_parcel,18,quirk_type,outside_parcel,Address or point falls in no parcel polygon.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.range_gzip,18,quirk_type,range_gzip,Host gzips binary tiles and applies Range to the compressed bytes.,label_and_ship,Accepted 2026-10-18 as label_and_ship. Browser notice NA-305.
+quirk.retired_values,18,quirk_type,retired_values,Layer still carries retired class or plan names.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.shared_location,18,quirk_type,shared_location,Many points occupy the same coordinate (stacked units).,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.source_gap,18,quirk_type,source_gap,Expected source is unpublished or only available as a web-map collection.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+quirk.whitespace,18,quirk_type,whitespace,Leading or trailing whitespace splits otherwise identical values.,,Present on sheet 18. Priority not in the 2026-10-18 suggested set. Left blank (HARD-RULES 8).
+insight.data_quirk,19,insight_type,data_quirk,"An oddity that affects joining, display or interpretation.",,Present on sheet 19. Process-insight class. Priority not a section 4 publish class. Left blank (HARD-RULES 8).
+insight.dead_end,19,insight_type,dead_end,A search path was ruled out.,,Present on sheet 19. Process-insight class. Priority not a section 4 publish class. Left blank (HARD-RULES 8).
+insight.effort_estimate,19,insight_type,effort_estimate,Time or cost to fill a gap.,,Present on sheet 19. Process-insight class. Priority not a section 4 publish class. Left blank (HARD-RULES 8).
+insight.gap,19,insight_type,gap,A named absence.,,Present on sheet 19. Process-insight class. Priority not a section 4 publish class. Left blank (HARD-RULES 8).
+insight.hosting,19,insight_type,hosting,A hosting-behavior finding. Used on existing rows. Not in the PROCESS-INSIGHTS closed list.,,Used on existing sheet 19 rows but not in the PROCESS-INSIGHTS.md closed list. Priority left blank.
+insight.licence_note,19,insight_type,licence_note,"A licence observation recorded for provenance, not as a gate.",,Present on sheet 19. Process-insight class. Priority not a section 4 publish class. Left blank (HARD-RULES 8).
+insight.method,19,insight_type,method,"A method that works, or a process finding.",,Present on sheet 19. Process-insight class. Priority not a section 4 publish class. Left blank (HARD-RULES 8).
+insight.performance,19,insight_type,performance,A timing or size finding.,,Present on sheet 19. Process-insight class. Priority not a section 4 publish class. Left blank (HARD-RULES 8).
+insight.source_discovery,19,insight_type,source_discovery,A source-discovery finding. Used on existing rows. Not in the PROCESS-INSIGHTS closed list.,,Used on existing sheet 19 rows but not in the PROCESS-INSIGHTS.md closed list. Priority left blank.
+insight.source_found,19,insight_type,source_found,A usable source was located.,,Present on sheet 19. Process-insight class. Priority not a section 4 publish class. Left blank (HARD-RULES 8).
+insight.tooling,19,insight_type,tooling,A tooling finding. Used on existing rows. Not in the PROCESS-INSIGHTS closed list.,,Used on existing sheet 19 rows but not in the PROCESS-INSIGHTS.md closed list. Priority left blank.

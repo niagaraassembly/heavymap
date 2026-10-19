@@ -116,6 +116,11 @@ class HamiltonCatalogWriteTests(unittest.TestCase):
         self.assertTrue(NEW_INV.issubset(catalog_ids), NEW_INV - catalog_ids)
         self.assertTrue(UPDATED_INV.issubset(catalog_ids), UPDATED_INV - catalog_ids)
 
+    def test_inventory_publish_visibility_default_public(self):
+        self.assertIn("publish_visibility", self.inv[0])
+        values = {row["publish_visibility"] for row in self.inv}
+        self.assertEqual(values, {"public"})
+
     def test_inventory_column_width_matches_header(self):
         with INV.open(encoding="utf-8", newline="") as fh:
             rows = list(csv.reader(fh))

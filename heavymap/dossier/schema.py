@@ -101,9 +101,19 @@ RECORD_SPEC: dict[str, Any] = {
         "rows": _list(OVERLAY_SPEC),
         "sliver_count": INT,
     },
+    # Compact per-parcel list of ledger gap_ids. Copy lives in the manifest.
+    "gaps": _list(STR),
 }
 
-REQUIRED_KEYS = ("heavymap_id", "area", "coverage", "roll", "addresses", "overlays")
+REQUIRED_KEYS = (
+    "heavymap_id",
+    "area",
+    "coverage",
+    "roll",
+    "addresses",
+    "overlays",
+    "gaps",
+)
 
 # Substrings that must never appear in an output key or an allowlisted source
 # field. ``audit_spec`` runs at import, so a careless edit fails loudly.

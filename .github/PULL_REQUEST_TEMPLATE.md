@@ -1,15 +1,21 @@
-<!-- Adapted from PR #58 (hm/fresh-foundation @ 15adec2) for the #57 layout; CLI/registry-specific parts deferred to a later code PR. -->
-<!-- Draft PRs until a human has reviewed. Agents never merge. See AGENTS.md and CONTRIBUTING.md. -->
+<!-- Agents prepare changes; Morgen decides merges. -->
 Linear: <!-- existing NA-… ID when applicable -->
+Track: <!-- HeavyMap / Atlas / shared -->
 Pulled data committed: none
-MCS cells changed: none <!-- or name each dataset_id and summarize cells changed; see AGENTS-MCS.md -->
+MCS cells changed: none <!-- or dataset IDs and cell summary -->
 
-## What a human must review
+## Result and review
 
-## Checks
+<!-- Outcome, bounded scope and decisions needed. Link the task packet. -->
 
-- [ ] No owner values, real personal data, secrets, or pulled data in this PR; owner field **names only** where needed.
-- [ ] No owner or identifying values in any public output (tiles, site files, UI, exports); raw pulls with all fields stay in `local-data/` (HARD-RULES 1, 2).
-- [ ] Pull rights and use or publication rights have been considered separately.
-- [ ] Nothing is surfaced or published before G6; Morgen makes the gate and promotion decision.
-- [ ] Process insights logged in `Spreadsheets/19-process-insights.csv` (sources found, dead ends, data quirks, methods, effort estimates, gaps), or none this session.
+## Evidence
+
+Acceptance: <!-- documentation-only / fixture-complete / operationally validated / integrated; publication approval requires explicit jurisdiction sign-off -->
+Checks: <!-- passed / failed / skipped / unrun, revision and evidence links -->
+Process insights: <!-- Atlas sheet 19 / frontend PR report until HM log exists / none -->
+
+## Publication check
+
+Before merging, verify whether the changed paths trigger publication and whether jurisdiction approval applies. Record current configuration evidence and any required Morgen decision. Retargeting alone does not publish.
+
+Confirm applicable [HARD-RULES](../docs/for-agents/HARD-RULES.md): no pulled data, personal values or secrets committed; public artifacts screened; pull and publication permissions considered separately. See [WORKING-AGREEMENT.md](../heavymap-planning/WORKING-AGREEMENT.md).
