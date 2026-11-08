@@ -113,6 +113,8 @@ Run over every output file of the build, fail closed:
 3. **Size budgets (ACCEPTED 2026-10-18):** startup payload ≤ 50 KB compressed; per-click dossier shard ≤ 50 KB compressed (p95); each `.pmtiles` ≤ 100 MB; total site ≤ 1 GB (the GitHub Pages limit). Accepted, and flagged as an ongoing optimization need. Future experience profiles that need meta-stamping of back-end elements: standing issue NA-310.
 4. **Reproducibility:** the repeat-run comparison from section 3.
 
+Increment 1 command (synthetic fixtures in git; real-data run on Deb): `python3 -m heavymap.prepublish <output-dir> [--reference <dir>] [--report <path>]`. Fail closed. Does not publish.
+
 Later increments: licence and attribution presence, gap-ledger completeness, a cross-browser smoke test, a load test, link checks.
 
 ## 7. Build output shipping
