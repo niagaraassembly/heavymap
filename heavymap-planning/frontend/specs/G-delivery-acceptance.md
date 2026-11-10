@@ -1,6 +1,6 @@
 # Spec G: delivery, accessibility and acceptance
 
-Status: **draft for Morgen's review**, 2026-11-10. Local issue HM-010. Written against branch `heavymap-mainsite-v1`.
+Status: **draft; open questions answered** (decisions 62–66), 2026-11-10. The section 4 step 1 merge guard is on this branch. Local issue HM-010. Written against branch `heavymap-mainsite-v1`.
 Depends on: specs [A](A-product-structure.md), [B](B-content-model.md), [C](C-reader-continuity.md), [D](D-visual-system-themes.md), [E](E-subscriptions.md) and [F](F-mapping-shell.md); decisions 1–61 (2026-11-10); `docs/for-agents/HARD-RULES.md` (rules 3 and 7); [`BETA-GATE-HAMILTON.md`](../../BETA-GATE-HAMILTON.md) sections 6–7; frontend backlog D1 and D6 ([`BACKLOG-DRAFT-2026-10-18.md`](../BACKLOG-DRAFT-2026-10-18.md)).
 
 This spec delivers two things:
@@ -217,12 +217,12 @@ The launch is ready when every box is ticked. **[M]** means only Morgen can tick
 5. **Devices:** the section 6 matrix, once, on the launch candidate.
 6. **Real flows (Morgen):** subscription test signups (spec E section 7 step 5), and the deploy dry run to a fresh tag before the real one.
 
-## 11. Open questions for Morgen
+## 11. Answers (Morgen, 2026-11-10)
 
-| ID | Question | Proposed answer |
+| ID | Question | Decision |
 | --- | --- | --- |
-| G-Q1 | Preview hosting | No hosted preview. Previews are local builds or downloaded CI artifacts, because anything on Pages is public |
-| G-Q2 | Before the first merge of this branch, add the `_config.yml` exclusion (backlog D1 option B)? | Yes. It keeps heavymap.com unchanged until launch |
-| G-Q3 | Enforce HTTPS on heavymap.com (currently off) | Yes, at launch. It could be turned on now, since it only redirects http to https |
-| G-Q4 | Does the editorial launch (with no Atlas data) need the NA-269 beta-gate sign-off, or a separate launch approval? | A separate launch approval by Morgen. Stage B applies per map geography |
-| G-Q5 | Store review screenshots in the repository (`heavymap-planning/frontend/evidence/`)? | Yes, small WebP files with a README |
+| G-Q1 | Preview hosting | Local only (62) |
+| G-Q2 | Merge guard before the first merge | Yes (63). Done on this branch: `_config.yml` and `404.html`. Checked with a local Jekyll 3.10 build: `web/`, `content/` and `heavymap-planning/frontend/` are absent, and other files are still served. **Note:** `web/` (the October prototype) and five frontend planning docs are live today, so they stop being served when this merges |
+| G-Q3 | Enforce HTTPS | Now (64), turned on by Morgen in the Pages settings |
+| G-Q4 | Launch sign-off | Morgen's recorded launch approval; Stage B per map geography (65) |
+| G-Q5 | Screenshots | In the repo, as small WebP files with a README; synthetic or published content only (66) |

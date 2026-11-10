@@ -1,0 +1,13 @@
+# GitHub Pages (legacy branch build) settings for heavymap.com.
+# Merge guard (spec G section 4 step 1, decision 63): keep the unbuilt HeavyMap
+# frontend, its content snapshot and its planning specs off heavymap.com until
+# the gated GitHub Actions deploy replaces this build at launch.
+exclude:
+  - web/
+  - content/
+  - heavymap-planning/frontend/
+  # Jekyll's defaults, restated because a custom exclude list replaces them.
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/
