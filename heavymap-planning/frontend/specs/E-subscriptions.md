@@ -1,6 +1,6 @@
 # Spec E: subscriptions and preferences
 
-Status: **draft for Morgen's review**, 2026-11-10. Local issue HM-008. Written against branch `heavymap-mainsite-v1`.
+Status: **draft; open questions answered** (decisions 42–53), 2026-11-10. Local issue HM-008. Written against branch `heavymap-mainsite-v1`.
 Depends on: [Spec A](A-product-structure.md) (`/subscribe/`, `/preferences/`, Desk registry); [Spec C](C-reader-continuity.md) section 6.1 (no subscription state in browser storage); the inspection of the current setup, [`../research/HM-007-kit-subscription-inspection.md`](../research/HM-007-kit-subscription-inspection.md); decisions 42–49 (2026-11-10).
 The round-two subscription screens in the prototype are illustrative only and aren't part of this contract.
 
@@ -85,7 +85,7 @@ The form posts with `no-cors`, so the browser can't see whether Apps Script or K
 
 ### 4.3 Apps Script
 
-- **Proposed: a separate `heavymap-join.gs`** on its own Google Form and response Sheet (E-Q9). Niagara Assembly's `join.gs` and its tags stay untouched. It reuses `_shared.gs` (`createIssue_`, `kitUpsertAndTag_`, `findKitTag_`).
+- **Decided (51): a separate `heavymap-join.gs`** on its own Google Form and response Sheet. Niagara Assembly's `join.gs` and its tags stay untouched. It reuses `_shared.gs` (`createIssue_`, `kitUpsertAndTag_`, `findKitTag_`).
 - **Desks question:** a checkbox question titled `Desks` whose option values are the Desk slugs. The script maps each slug to `hm-desk-<slug>`, ignores unknown slugs and logs them.
 - **Self-test:** `runSelfTest` fails if any Desk tag is missing in Kit, as today.
 - **GitHub issue (decision 46):** title `HeavyMap signup: <name> (<Desk names>)`, body as in `buildJoinBody`, label `heavymap-signup`. It goes **only to the existing private repo**. The issue contains personal data, so it must never be mirrored, quoted in public commits or copied to public trackers.
@@ -112,7 +112,7 @@ Signing up again with the same email upserts the subscriber and adds the chosen 
 ## 6. Failure check (decision 49)
 
 - **What:** a time-driven Apps Script trigger runs daily. It lists Sheet rows from the past 7 days whose Kit tagging failed, compared against Kit's tag membership, and opens or updates **one** private GitHub issue, "HeavyMap signup: Kit failures", with the affected email addresses.
-- **When:** daily, at 08:00 ET. *Proposed.*
+- **When:** daily, at 08:00 ET (decision 53).
 - **Recording:** it's a scheduled job, so when it's created, add it to `~/machine-flows/inventory/schedules/jobs.csv`. It runs in Google, not on a host.
 - **Fixing:** a person retags the subscriber in Kit and closes the entry. The script never retries silently into Kit.
 
@@ -131,11 +131,11 @@ Signing up again with the same email upserts the subscriber and adds the chosen 
 - Errors are announced through the status line. Focus moves to the first invalid field.
 - Checkbox and button targets are at least 24 × 24 px, and 44 px tall on touch layouts (spec D section 8).
 
-## 9. Open questions for Morgen
+## 9. Answers (Morgen, 2026-11-10)
 
-| ID | Question | Proposed answer |
+| ID | Question | Decision |
 | --- | --- | --- |
-| E-Q8 | Kit's sender name and address for HeavyMap Desk emails in the shared account | "HeavyMap" as the sender name, with the existing Niagara Assembly sending address |
-| E-Q9 | A separate HeavyMap Google Form, Sheet and script, or extend Niagara Assembly's join form? | Separate, so Niagara Assembly's flows don't change |
-| E-Q10 | Signup pitch copy (today: "Receive weekly WNY news direct to your inbox.") | Per Desk: "Get each <Desk> edition by email." |
-| E-Q11 | The daily failure check's time | 08:00 ET |
+| E-Q8 | Sender | "HeavyMap", using the existing sending address (50) |
+| E-Q9 | Form | A separate HeavyMap Google Form, Sheet and `heavymap-join.gs` (51) |
+| E-Q10 | Pitch copy | "Get each <Desk> edition by email." (52) |
+| E-Q11 | Failure check time | 08:00 ET daily (53) |
