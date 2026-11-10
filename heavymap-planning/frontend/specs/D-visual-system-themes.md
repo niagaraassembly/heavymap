@@ -114,7 +114,7 @@ component       --card-*, --dock-*, --chip-*, --masthead-*
 | Theme | Brief | State |
 | --- | --- | --- |
 | United States | the base design as selected | done |
-| Canada | **Northern palette** (decision 35): the base layout and type, with a cooler palette (spruce green, lake blue, birch white) and a red accent used sparingly. The red must not take over the stage or flag colours; it's an accent for the mark, rules and display moments. Avoid maple-leaf ornament as decoration. | to design |
+| Canada | **Northern palette** (decision 35): the base layout and type, with a cooler palette (spruce green, lake blue, birch white) and a red accent used sparingly. The red must not take over the stage or flag colours; it's an accent for the mark, rules and display moments. Avoid maple-leaf ornament as decoration. Draft values: [`../themes/ca-northern-palette-draft.md`](../themes/ca-northern-palette-draft.md). | draft palette |
 | Japan | Reference: the generated study (homepage and brief side by side), which was made from screenshots, not code. Translate it into tokens (palette, display typeface, rules and ornament), not new layouts. Review it for respectful, non-stereotyped use of cultural motifs. | to design |
 
 ## 5. Theme selector
@@ -176,7 +176,7 @@ Decided (32): the USA theme gets a dark variant in v1. The rest is **proposed**.
 - **Storage:** `heavymap-theme-v1` gains `"mode": "auto" | "light" | "dark"`, default `auto`. The mode is kept when the reader switches to a light-only theme and comes back into effect when they return to USA (decided, 39).
 - **First paint:** the same inline head script also sets `data-mode`, so dark readers see no light flash.
 - **What dark changes:** surface, text, rule, accent and illustration tokens. Stage and flag tokens get dark-specific values that keep the same roles and pass the same contrast checks.
-- **Map (D-Q9):** invariant 5 still applies, so map data styling doesn't change. The static Hamilton basemap in v1 stays as it is and sits in a frame styled with the dark chrome.
+- **Map (decided, 40):** invariant 5 still applies, so map data styling doesn't change. The static Hamilton basemap in v1 stays as it is and sits in a frame styled with the dark chrome.
 - **Never reads `na-theme`.** Niagara Assembly's light/dark choice isn't imported.
 
 ## 8. Accessibility across themes
@@ -220,4 +220,4 @@ Every theme must pass, on its own surfaces:
 | --- | --- | --- |
 | D-Q7 | Default mode for the USA theme | **Decided (38):** Automatic, following the device setting |
 | D-Q8 | Keep the mode setting while a light-only theme is active? | **Decided (39):** yes |
-| D-Q9 | Map basemap in dark mode | Unchanged (invariant 5); only the surrounding chrome goes dark |
+| D-Q9 | Map basemap in dark mode | **Decided (40):** unchanged; only the surrounding chrome goes dark |

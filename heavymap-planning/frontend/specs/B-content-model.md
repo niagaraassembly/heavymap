@@ -89,7 +89,7 @@ Rules:
   - amount type `charge`.
 - **Lane `excluded`** never reaches public pages.
 - **The build fails** on any value that isn't in the pinned MAKE file, and on any value without a label.
-- **Source kind** (`primary`, `company`, `secondary`) is **not** in MAKE's file. It appears to be produced by the site's export step. *Open (B-Q8):* trace where it is derived, then pin that definition.
+- **Source kind** (`primary`, `company`, `secondary`) is **not** in MAKE's file. The site's labels are "primary source", "company source" and "news report" (`wny.js` `SOURCE_KINDS`). *Decided (41), to confirm:* `primary` probably means a government or public-body source, `company` means the company's own material, and `secondary` means other reporting. HM-016 confirms how the export assigns them.
 
 **Upstream structured fields.** The full source record (`niagaraassembly/site` `data/wny/issue-one.json` at `9522b3e`, checked 2026-11-10) carries more than the prototype's frozen copy. *Proposed:* import these as upstream-owned, read-only fields and display them through label tables. HeavyMap does not edit them.
 
@@ -403,6 +403,6 @@ Lists use the **compact line**: Reader library, home "recent", Desk archive. The
 | B-Q5 | Source snapshots | Deferred past v1. |
 | B-Q6 | Issue One | All 10 items, `complete: true`. |
 | B-Q7 | `IEVT-2026-000009` and people | Mirror the original: include the item and the Mentions panel. |
-| B-Q8 | **Open:** origin of source kind (`primary`/`company`/`secondary`) | Trace in the site export step and pin it. |
+| B-Q8 | Origin of source kind | **Decided (41), to confirm:** primary = government/public body, company = company's own, secondary = other reporting ("news report"). HM-016 confirms the export rule. |
 | B-Q9 | **Open:** live sources behind the MAKE export | Confirm with MAKE's and Publish's owners. |
 | B-Q10 | Location of WNY Issue Two and Niagara–Brant Issue One | **Located (section 8.4).** Neither is approved or in a production export yet. Needs a service-owned approved export before migration. |
