@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#f5f4ee" />
+    <meta
+      name="description"
+      content="An alternate HeavyMap design: regional reporting, a unified Reader, and the geography behind the story."
+    />
+    <title>HeavyMap · The regional edition</title>
+  </head>
+  <body class="alternate">
+    <div
+      id="map-stage"
+      class="map-stage"
+      hidden
+      aria-label="Synthetic Hamilton mapping preview"
+    ></div>
+    <div class="alt-veneer" id="site-veneer">
+      <a class="skip-link" href="#alt-content">Skip to content</a>
+      <header class="alt-header">
+        <a class="wordmark" href="alternate.html"
+          >HeavyMap<span aria-hidden="true">◒</span></a
+        ><span class="alt-header-caption">A closer reading of place.</span>
+        <nav aria-label="Main navigation">
+          <a href="#/reader" class="reader-nav"
+            ><svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true">
+              <path
+                d="M10 4v13M10 4C7 2 4 2 2 3v12c3-1 5-1 8 2 3-3 5-3 8-2V3c-2-1-5-1-8 1Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.2"
+              /></svg
+            >Reader</a
+          ><a href="#/desks">The Desks</a
+          ><button type="button" data-open-map>
+            Mapping <span class="nav-soon">Preview</span>
+          </button>
+        </nav>
+        <a class="alt-follow" href="index.html#/subscribe"
+          >Follow your regions ↗</a
+        >
+      </header>
+      <main id="alt-content" tabindex="-1"></main>
+      <footer class="alt-footer">
+        <div>
+          <a class="wordmark" href="#/"
+            >HeavyMap<span aria-hidden="true">◒</span></a
+          >
+          <p>Regional reporting. Geographic intelligence.</p>
+        </div>
+        <nav aria-label="Footer">
+          <a href="#/reader">Open Reader</a
+          ><a href="index.html#/preferences">Manage subscriptions</a
+          ><a href="index.html#/credits">Sources & credits</a
+          ><a href="#/studies">Page studies</a>
+          <a href="#/studies/round-two">Round two</a>
+          <a href="index.html">Compare first design ↗</a>
+        </nav>
+        <span>Alternate design study · Nothing published</span>
+      </footer>
+    </div>
+    <div class="map-dock" id="map-dock" hidden>
+      <span class="wordmark">HeavyMap<span aria-hidden="true">◒</span></span>
+      <div>
+        <strong>Hamilton, Ontario</strong
+        ><span>Synthetic interaction preview · No live parcel data</span>
+      </div>
+      <button type="button" id="return-to-site">Return to reading ↑</button>
+    </div>
+    <noscript
+      ><p>
+        This design preview needs JavaScript.
+        <a href="index.html">Open the first design</a>.
+      </p></noscript
+    >
+    <script type="module" src="/src/editorial/alternate.js"></script>
+  </body>
+</html>
