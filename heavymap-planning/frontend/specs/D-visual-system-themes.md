@@ -172,8 +172,8 @@ component       --card-*, --dock-*, --chip-*, --masthead-*
 Decided (32): the USA theme gets a dark variant in v1. The rest is **proposed**.
 
 - **Mode control:** a small segmented control in the theme selector, below the theme list: Light · Dark · Automatic. It appears only when the active theme lists `dark` in `modes`. Otherwise the selector shows "This theme has a light look only".
-- **Default (D-Q7):** Automatic, which follows `prefers-color-scheme`. Unlike the theme hint, the system setting is a direct preference and doesn't need guessing.
-- **Storage:** `heavymap-theme-v1` gains `"mode": "auto" | "light" | "dark"`, default `auto`. The mode is kept when the reader switches to a light-only theme and comes back into effect when they return to USA (D-Q8).
+- **Default (decided, 38):** Automatic, which follows `prefers-color-scheme`. Unlike the theme hint, the system setting is a direct preference and doesn't need guessing.
+- **Storage:** `heavymap-theme-v1` gains `"mode": "auto" | "light" | "dark"`, default `auto`. The mode is kept when the reader switches to a light-only theme and comes back into effect when they return to USA (decided, 39).
 - **First paint:** the same inline head script also sets `data-mode`, so dark readers see no light flash.
 - **What dark changes:** surface, text, rule, accent and illustration tokens. Stage and flag tokens get dark-specific values that keep the same roles and pass the same contrast checks.
 - **Map (D-Q9):** invariant 5 still applies, so map data styling doesn't change. The static Hamilton basemap in v1 stays as it is and sits in a frame styled with the dark chrome.
@@ -218,6 +218,6 @@ Every theme must pass, on its own surfaces:
 
 | ID | Question | Proposed answer |
 | --- | --- | --- |
-| D-Q7 | Default mode for the USA theme | Automatic: follow `prefers-color-scheme` |
-| D-Q8 | Keep the mode setting while a light-only theme is active? | Yes; it applies again on return to USA |
+| D-Q7 | Default mode for the USA theme | **Decided (38):** Automatic, following the device setting |
+| D-Q8 | Keep the mode setting while a light-only theme is active? | **Decided (39):** yes |
 | D-Q9 | Map basemap in dark mode | Unchanged (invariant 5); only the surrounding chrome goes dark |
