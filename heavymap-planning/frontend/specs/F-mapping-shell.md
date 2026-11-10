@@ -1,6 +1,6 @@
 # Spec F: mapping shell and reading alongside the map
 
-Status: **draft for Morgen's review**, 2026-11-10. Local issues HM-009 (shell) and HM-018 (map introduction). Written against branch `heavymap-mainsite-v1`.
+Status: **draft; questions partly answered** (decisions 54–57), 2026-11-10. Local issues HM-009 (shell) and HM-018 (map introduction). Written against branch `heavymap-mainsite-v1`.
 Depends on: [Spec A](A-product-structure.md) (sections 3.3 capability states, 7.1 map introduction); [Spec C](C-reader-continuity.md) (reading position, Reader URL); [Spec D](D-visual-system-themes.md) (invariant 5: map data styling doesn't change with theme or mode; decision 40); decisions D4 (split pane / bottom sheet) and 17 (v1 map introduction).
 Backend contracts this spec consumes, without changing them:
 - [`docs/architecture/parcel-dossier.md`](../../../docs/architecture/parcel-dossier.md) (record schema v1, shards, manifest);
@@ -32,7 +32,7 @@ Most of this spec (sections 4 to 8) covers the workspace, so that it's ready whe
 │ HeavyMap◒   Desks  Reader  Map  About              [theme ▾] [Subscribe] │  ← shared header (spec A)
 ├────────────────────────────────────────────────────────────────────┤
 │                                                                    │
-│   static Hamilton basemap (no parcels, no lenses)                  │
+│   pannable Hamilton basemap (no parcels, no lenses, nothing clickable) │
 │        ┌──────────────────────────────────────────┐                │
 │        │  The map behind the news                 │ ← modal story  │
 │        │  …what HeavyMap's workspace will show…   │   (dialog)     │
@@ -45,15 +45,41 @@ Most of this spec (sections 4 to 8) covers the workspace, so that it's ready whe
 └────────────────────────────────────────────────────────────────────┘
 ```
 
-- **Basemap (F-Q1):** *proposed:* a **pre-rendered static image** of Hamilton, built from an OpenStreetMap-derived basemap (ADR 0001) at build time, served as AVIF/WebP with a PNG fallback, at two sizes (desktop and mobile) through `srcset`. No map engine loads on this page. The alternative is a pannable vector basemap (MapLibre plus a PMTiles basemap). That costs about 450 KB compressed (HM-PI-0002) for a page with nothing to click.
-- **Attribution:** "© OpenStreetMap contributors" stays visible on the image, and is also listed in `/about/credits/` (spec B section 6).
+- **Basemap (decided, 54): a pannable vector basemap.**
+  - MapLibre GL JS `6.14.0` with `pmtiles` `4.3.0`, the versions the prototype already pins.
+  - *Proposed (F-Q7):* a **self-hosted Protomaps basemap extract** for the Hamilton bounding box, cut with `pmtiles extract` from a dated Protomaps build. It's OpenStreetMap-derived (ADR 0001), served from the site's own origin with no third-party tile service, and well under the 100 MB per-file budget. The build records the build date and the SHA-256.
+  - **Bounded:** `maxBounds` set to Hamilton plus a margin, and zoom limited to about 9–16, so the map can't wander off into an empty world.
+  - **Nothing clickable:** no hover, click, tooltip or feature query. Readers can pan and zoom only, with keyboard pan and zoom through MapLibre's handlers.
+  - **The map is decorative for assistive technology.** The canvas has `aria-label="Basemap of Hamilton, Ontario. No HeavyMap data is shown."`, and the modal and dock carry the content.
+  - **Load order:** the HTML, header, dock and modal render first. MapLibre and the basemap load in parallel behind the modal. The app code is about 450 KB compressed, within the 500 KB app-shell budget (decision 56).
+  - **No WebGL:** a pre-rendered static image of the same view is shown instead, with the same attribution.
+- **Attribution:** "© OpenStreetMap contributors" stays visible on the map, and is also listed in `/about/credits/` (spec B section 6).
 - **Modal story:**
   - It's a `<dialog>` opened on page load. Focus goes to its heading, and Escape and Close both dismiss it.
   - Once closed, it stays closed for the session (`sessionStorage`, wrapped in try/catch). It can be reopened from the dock ("About the map").
-  - Copy is owned by Morgen (F-Q2). It must not promise a date (spec A section 7.1), and must not use "available", "vacant" or "failing" as HeavyMap's own words (claim-refusal contract non-goals).
+  - Copy: Claude drafts and Morgen edits (decision 55); the draft is in section 2.1. It must not promise a date (spec A section 7.1), and must not use "available", "vacant" or "failing" as HeavyMap's own words (claim-refusal contract non-goals).
 - **Dock in v1:** wordmark, then "Hamilton, Ontario · basemap only · in preparation", then "About the map" and "Back to reading ↑" (section 3.3).
 - **No parcel data, no Atlas identifiers, no lens names.** The page source contains none of them. The section 7.4 build check enforces this.
-- **Dark mode:** the image doesn't change (decision 40). The header, dock and modal follow the theme and mode.
+- **Dark mode:** the basemap style doesn't change (decision 40). The header, dock and modal follow the theme and mode.
+
+### 2.1 Modal story: draft copy (for Morgen to edit)
+
+> **The map behind the news**
+>
+> HeavyMap's Desks report what is being built, bought, funded and closed across Western New York and Niagara–Brant. The map is where that reporting will meet the land itself.
+>
+> We are preparing a working map of Hamilton, Ontario, parcel by parcel. For each parcel it will show what public records say, where each fact comes from, how it was matched to the land, and where the records are silent or disagree. When a source can't support a statement, the map will say so rather than guess.
+>
+> It isn't open yet. Each place opens only after its data has been checked and screened, and we'll announce it in the Desk editions.
+>
+> Until then, this is Hamilton as OpenStreetMap draws it. Move around; nothing here is HeavyMap data yet.
+>
+> [Read the latest editions]  [Close]
+
+Notes on the draft:
+- "parcel by parcel" and "where the records are silent or disagree" describe the dossier's coverage, gaps and refusals without naming internal terms.
+- It makes no date promise and doesn't use "vacant", "available" or "failing".
+- "we'll announce it in the Desk editions" implies an edition will carry the announcement. Delete it if that isn't intended.
 
 ## 3. The shell: header, dock and reveal
 
@@ -71,7 +97,7 @@ The prototype has two sets of chrome when the map is open:
 | --- | --- | --- |
 | Header "Map" | link | navigates to `/map/` (v1) or the geography index (workspace stage) |
 | Home map strip | link | the same, with the reveal (section 3.4) |
-| Desk or item page "See on map" (workspace stage only, and only with an accepted relationship, section 6) | link | `/map/<geography>/?focus=<heavymap_id>` |
+| Desk or item page "See on map" | **not built** (decision 57: no connections between items and the map yet) | n/a |
 
 The map is a **page**, not an iframe overlay on top of the reading page. The prototype's iframe pattern is replaced, because:
 - an iframe keeps two documents, two focus scopes and two scroll positions alive;
@@ -139,24 +165,21 @@ The dock is a `<nav aria-label="Map">`. In the reading-alongside layout it stays
 | Mobile | **bottom sheet** with three snap points: peek (96 px, title only), half (50% of the viewport), full (100% minus the dock) | `padding.bottom` = the sheet's current height. At full, the map is hidden from assistive technology (`inert`) |
 
 - **What the pane shows:** the same item rendering as the Reader pane (spec B section 10, "in HeavyMap's layout"), with Mark read/unread, position saving and the end marker. Spec C applies unchanged, and `via` records `reader`.
-- **Opening:** from the dock's Reader control, or from a "Read alongside" link in the dossier when a relationship exists (section 6).
+- **Opening:** from the dock's Reader control only. The dossier never offers a reading link (decision 57).
 - **Focus:** opening moves focus to the article heading. Closing returns focus to the control that opened it. Escape closes the sheet or pane first, then the dossier, and never leaves the page.
 - **Scrolling:** one scroll container per region (map, pane). On mobile, the sheet scrolls inside itself only when it's at full.
 
-## 6. Geographic association versus the reader's own juxtaposition
+## 6. No connections between items and the map (decision 57)
 
-Two different things can put an article next to a parcel, and the interface must never blur them.
+**Decided:** for now, news and other items have **no connection** to the map. That rules out:
+- "See on map" links from Desk, edition or item pages;
+- "Read alongside" links from a dossier;
+- highlighting an area because an item mentions it;
+- any statement in a dossier about an item, or in an item about a parcel.
 
-| | **Association** | **Juxtaposition** |
-| --- | --- | --- |
-| What it means | the item **is about** this place, through an accepted relationship in the content (spec B: `place`, `county`/`districts`, or a future `parcels: [heavymap_id]` field approved through MAKE) | the reader opened an item while looking at a parcel |
-| Shown as | "This story concerns <place>" with its source, plus a "See on map" link | no link between them; the pane header says "Reading" and the dossier says nothing about the article |
-| Map styling | may highlight the associated area (a district, not a parcel, unless the relationship names the parcel) | nothing highlighted |
+What stays, because the reader makes the choice: the Reader pane alongside the map (section 5). The pane header says "Reading", and the map and dossier don't react to what is open in it. This is juxtaposition, not association.
 
-**Rules:**
-1. An article is never linked to a **parcel** unless an accepted relationship names that parcel's `heavymap_id`. A place name or district association highlights the district, not the parcels in it.
-2. Reading an item while a dossier is open adds no statement to the dossier, and the dossier adds none to the item.
-3. **Proposed (F-Q3):** v1 content has no parcel-level relationships, so the workspace stage at first shows **district-level associations only**.
+**For when connections are reconsidered** (not in scope now), keep the principle: an item may be linked to a parcel only through an accepted relationship that names that parcel's `heavymap_id`, approved through MAKE. A place or district mention is never enough to point at a parcel.
 
 ## 7. Producer–consumer contract (the checklist the workspace build runs)
 
@@ -223,7 +246,10 @@ Accepted (BETA-GATE section 6, 2026-10-18):
 - **B:** 50 KB covers everything on first paint. That needs a light intro, with MapLibre loaded on first interaction.
 - **C:** A as the default and B as a "lite" profile (NA-310).
 
-**How the v1 intro relates:** with a static image (F-Q1), `/map/` loads no map engine. It fits option B's spirit today (HTML, CSS and the shared JS under 50 KB, with the image counted separately). The decision matters only for the workspace stage.
+**Decided (56): option A.**
+- The 50 KB covers start-up **data**: the manifest, gap ledger and first-view style and index.
+- App code has its own budget of ≤ 500 KB compressed.
+- In the v1 introduction the start-up data is the basemap style plus the PMTiles header and first-view tiles, and both budgets apply to it.
 
 **No whole-city performance claims from synthetic fixtures.** Budget checks run on the real Hamilton output on deb before Stage B.
 
@@ -231,7 +257,7 @@ Accepted (BETA-GATE section 6, 2026-10-18):
 
 | ID | Work |
 | --- | --- |
-| F-T1 | `/map/` introduction page: static basemap render step, modal story, v1 dock |
+| F-T1 | `/map/` introduction page: Hamilton basemap extract, bounded pannable map, static no-WebGL fallback, modal story, v1 dock |
 | F-T2 | Shared header and dock on map pages; remove the map app's own top bar |
 | F-T3 | Cross-document view transition with a reduced-motion bypass |
 | F-T4 | Workspace page `/map/<geography>/` with query view state (preview builds only) |
@@ -239,13 +265,14 @@ Accepted (BETA-GATE section 6, 2026-10-18):
 | F-T6 | Section 7 build checks and `map-artifacts.json` |
 | F-T7 | Section 8 failure states |
 
-## 11. Open questions for Morgen
+## 11. Answers and open questions
 
-| ID | Question | Proposed answer |
+| ID | Question | Status |
 | --- | --- | --- |
-| F-Q1 | v1 basemap: a static image, or a pannable vector basemap? | A static image (no map engine on `/map/` in v1) |
-| F-Q2 | Who writes the modal story copy? | Morgen, or a draft by Claude for Morgen to edit |
-| F-Q3 | Workspace associations: district level only until parcel relationships are approved in MAKE? | Yes |
-| F-Q4 | Who writes the run record with the artifact hashes that the build verifies? | The Atlas dossier/prepublish run on deb writes it next to the output; the frontend only verifies |
-| F-Q5 | Backlog D2: what does "startup payload ≤ 50 KB" cover? | Option A: data only, plus a ≤ 500 KB app-shell budget |
-| F-Q6 | Reveal: is a cross-document view transition acceptable as progressive enhancement (some browsers simply navigate)? | Yes |
+| F-Q1 | v1 basemap | **Decided (54):** a pannable vector basemap with nothing clickable |
+| F-Q2 | Modal story copy | **Decided (55):** Claude drafts (section 2.1) and Morgen edits |
+| F-Q3 | Item–map associations | **Superseded (57):** no connections between items and the map for now |
+| F-Q4 | Who writes the run record with artifact hashes? | **Open.** Proposed: the Atlas run on deb writes it; the frontend only verifies |
+| F-Q5 | Startup payload meaning (backlog D2) | **Decided (56):** option A, data ≤ 50 KB plus app ≤ 500 KB |
+| F-Q6 | Cross-document view transition for the reveal | **Open.** Proposed: yes, as progressive enhancement |
+| F-Q7 | Basemap source | **Open.** Proposed: a self-hosted Protomaps extract for Hamilton |
