@@ -129,7 +129,7 @@ The handoff described a map strip that reveals the workspace, with the editorial
 └────────────────────────────────────────────────────┘
         (once a geography is published)
                              ▼
-┌───────────────┐  pick item / "Read alongside"   ┌──────────────────────┐
+┌───────────────┐  dock "Reader" (reader picks)  ┌──────────────────────┐
 │  workspace    │ ───────────────────────────────►│ workspace + reading  │
 │  <geography>  │ ◄─────────────── close pane ────│ (split / sheet, §5)  │
 └──────┬────────┘                                 └──────────────────────┘
