@@ -1,5 +1,17 @@
 import { defineConfig } from "vite";
+import { fileURLToPath } from "node:url";
 
-// Local Range support lets the synthetic PMTiles exercise real partial reads.
-// There is deliberately no deploy configuration or publishing script.
-export default defineConfig({ base: "./", server: { host: "127.0.0.1" } });
+// Local design preview only; no deployment or publication configuration.
+export default defineConfig({
+  base: "./",
+  server: { host: "127.0.0.1" },
+  build: {
+    rollupOptions: {
+      input: {
+        site: fileURLToPath(new URL("./index.html", import.meta.url)),
+        alternate: fileURLToPath(new URL("./alternate.html", import.meta.url)),
+        map: fileURLToPath(new URL("./map.html", import.meta.url)),
+      },
+    },
+  },
+});

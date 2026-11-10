@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 async function ready(page) {
-  await page.goto("/");
+  await page.goto("/map.html");
   await expect(page.locator("#map-status")).toContainText(
     "Local synthetic PMTiles",
   );
@@ -157,7 +157,7 @@ test("small-screen keyboard route, no horizontal overflow, invalid key, reduced 
   ).toBe(true);
   await page.keyboard.press("Escape");
   await expect(page.locator("#dossier")).toBeHidden();
-  await page.goto("/#parcel=unknown");
+  await page.goto("/map.html#parcel=unknown");
   await expect(page.locator("#map-status")).toContainText("Unknown sample key");
   await expect(page.locator("#dossier")).toBeHidden();
 });
@@ -174,7 +174,7 @@ test("range reads work and failed tiles do not become empty evidence", async ({
   await page.route("**/synthetic-parcels.pmtiles", (r) =>
     r.fulfill({ status: 503, body: "Unavailable" }),
   );
-  await page.goto("/");
+  await page.goto("/map.html");
   await expect(page.locator("#map-status")).toContainText("failed");
   await page.locator("#samples button").first().click();
   await expect(page.locator(".band")).toHaveCount(6);

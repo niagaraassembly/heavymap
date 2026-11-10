@@ -1,104 +1,75 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="theme-color" content="#f5f8fa" />
-    <title>HeavyMap · Hamilton field guide</title>
+    <meta name="theme-color" content="#f5f4ee" />
+    <meta
+      name="description"
+      content="HeavyMap: regional reporting and geographic intelligence. Follow the Western New York and Niagara–Brant Desks."
+    />
+    <title>HeavyMap · A closer reading of place</title>
   </head>
   <body>
-    <header class="topbar">
-      <a class="wordmark" href="#">HeavyMap<span class="brand-dot">◒</span></a
-      ><span class="place"
-        >Hamilton, Ontario <span> / Field guide 001</span></span
-      ><span class="prototype">Synthetic local prototype</span>
-    </header>
-    <main>
-      <div
-        id="map"
-        aria-label="Schematic Hamilton map with three fictional sample parcels"
-      ></div>
-      <section class="intro" aria-label="Introduction">
-        <span class="eyebrow">A city encased by nature</span>
-        <h1>Land, with<br /><em>possibility.</em></h1>
-        <p>
-          Follow a signal. Open the evidence.<br />Decide what deserves a closer
-          look.
-        </p>
-      </section>
-      <button
-        id="tray-toggle"
-        class="mobile-toggle"
-        aria-expanded="false"
-        aria-controls="tray"
+    <a class="skip-link" href="#content">Skip to content</a>
+    <header class="site-header">
+      <a class="wordmark" href="#/" aria-label="HeavyMap home"
+        >HeavyMap<span aria-hidden="true">◒</span></a
       >
-        Explore lenses
-      </button>
-      <aside id="tray" class="tray" aria-label="Explore Hamilton samples">
-        <form id="search-form">
-          <label for="search">Find a sample</label>
-          <div class="search-row">
-            <input
-              id="search"
-              type="search"
-              placeholder="Sample, roll alias or key…"
-              autocomplete="off"
-            /><button aria-label="Search samples">Go</button>
-          </div>
-        </form>
-        <div class="tray-heading">
-          <h2>Opportunity lenses</h2>
-          <span>01 / Investigate</span>
-        </div>
-        <p class="subtext">
-          Vacant & underused: an evidence lens,<br />not a conclusion about the
-          land.
+      <nav aria-label="Main navigation">
+        <a href="#/desks" data-nav="desks">The Desks</a
+        ><a href="#/mapping" data-nav="mapping"
+          >Mapping <span class="nav-soon">Soon</span></a
+        ><a href="#/about" data-nav="about">Our approach</a>
+      </nav>
+      <a class="header-follow" href="#/subscribe"
+        >Follow your regions
+        <svg
+          class="arrow-icon"
+          viewBox="0 0 16 16"
+          width="13"
+          height="13"
+          aria-hidden="true"
+        >
+          <path
+            d="M3 13 13 3M3 3h10v10"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.3"
+          /></svg
+      ></a>
+    </header>
+    <main id="content" tabindex="-1"></main>
+    <footer class="site-footer">
+      <div class="footer-top">
+        <a class="wordmark" href="#/"
+          >HeavyMap<span aria-hidden="true">◒</span></a
+        >
+        <p>A closer reading of place.</p>
+        <a href="#/subscribe">Follow your regions →</a>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          Regional reporting. Geographic intelligence.<br />A Niagara Assembly
+          product.
         </p>
-        <div id="lenses"></div>
-        <details class="layers">
-          <summary>Context layers <span>＋</span></summary>
-          <div id="layers"></div>
-        </details>
-        <div class="samples-heading">
-          <h2>Places to begin</h2>
-          <span id="result-count"></span>
-        </div>
-        <div id="samples"></div>
-        <p id="search-status" role="status"></p>
-      </aside>
-      <div class="map-tools">
-        <label for="palette">Map study</label
-        ><select id="palette">
-          <option value="field">Quiet vector</option>
-          <option value="wash">Watercolour study</option></select
-        ><button id="home" title="Reset map view">
-          ⌂ <span>Hamilton</span>
-        </button>
+        <nav aria-label="Footer">
+          <a href="#/desks">The Desks</a><a href="#/about">Sources & approach</a
+          ><a href="#/preferences">Manage subscriptions</a
+          ><a href="#/credits">Credits</a>
+        </nav>
+        <span class="preview-label">Site design preview</span>
       </div>
-      <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
-      <aside id="dossier" class="dossier" aria-label="Parcel dossier" hidden>
-        <div class="dossier-top">
-          <span class="eyebrow">Parcel field notes · synthetic</span
-          ><button id="close" aria-label="Close dossier">✕</button>
-        </div>
-        <div id="dossier-body"></div>
-      </aside>
-      <div id="map-status" class="map-status" role="status">
-        Loading local synthetic tiles…
-      </div>
-      <footer class="map-footer">
-        <div>
-          <span class="legend-dot nature"></span>Nature
-          <span class="legend-dot signal"></span>Investigative signal
-          <span class="legend-dot public"></span>Public claim
-        </div>
-        <span>Schematic geography · all records invented · no live feed</span>
-      </footer>
-    </main>
+    </footer>
     <noscript
-      >This local interactive prototype requires JavaScript. All sample records
-      are invented.</noscript
+      ><p class="noscript">
+        This design preview needs JavaScript.
+        <a
+          href="https://niagaraassembly.com/desks/us/ny/western-new-york/issue/one/"
+          >Read the published Western New York issue.</a
+        >
+      </p></noscript
     >
-    <script type="module" src="/src/app.js"></script>
+    <script type="module" src="/src/editorial/site.js"></script>
   </body>
 </html>

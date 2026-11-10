@@ -1,0 +1,228 @@
+{
+  "title": "Issue One",
+  "published": "2026-10-10",
+  "coverage": "28 September – 9 October 2026",
+  "original": "https://niagaraassembly.com/desks/us/ny/western-new-york/issue/one/",
+  "sourceCommit": "9522b3ebd3b4686fab99634bd0e710c883bd1b00",
+  "summary": "Issue One covers Western New York investment and industry news from Sept. 28 to Oct. 9, 2026. Solstice Advanced Materials announced a $49M Buffalo R&D expansion and Goodyear said it will close its Niagara Falls chemical plant, while defense contracts touched Liverpool, Syracuse and Niagara Falls.",
+  "items": [
+    {
+      "id": "IEVT-2026-000001",
+      "headline": "Solstice to invest $49M expanding Buffalo R&D center",
+      "note": "Solstice will invest $49M to expand its Buffalo R&D center, adding 12 jobs, with up to $1.4M in state Excelsior tax credits. The governor's and company's announcements quote different spokespeople and name forms.",
+      "date": "2026-10-09",
+      "place": "Peabody Street, Buffalo",
+      "stage": "announced",
+      "lane": "production",
+      "sources": [
+        {
+          "article_id": "ART-2026-000027",
+          "title": "Governor Hochul Announces Solstice Advanced Materials to Expand in Buffalo",
+          "publisher": "Governor Kathy Hochul newsroom",
+          "url": "https://www.governor.ny.gov/news/governor-hochul-announces-solstice-advanced-materials-expand-buffalo",
+          "kind": "primary"
+        },
+        {
+          "article_id": "ART-2026-000028",
+          "title": "Solstice Announces $49 Million Investment to Expand Research and Development Capabilities in Buffalo, New York",
+          "publisher": "PR Newswire",
+          "url": "https://finance.yahoo.com/technology/articles/solstice-announces-49-million-investment-153200194.html",
+          "kind": "company"
+        }
+      ]
+    },
+    {
+      "id": "IEVT-2026-000002",
+      "headline": "Constellation Brands buys SpikedAde for $75M",
+      "note": "SpikedAde production location not disclosed.",
+      "date": "2026-10-06",
+      "place": "Rochester (buyer HQ)",
+      "stage": "completed",
+      "lane": "production",
+      "sources": [
+        {
+          "article_id": "ART-2026-000026",
+          "title": "Constellation Brands acquires SpikedAde for $75M",
+          "publisher": "Rochester Business Journal",
+          "url": "https://rbj.net/2026/10/07/constellation-brands-acquires-spikedade-rochester/",
+          "kind": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "IEVT-2026-000003",
+      "headline": "Wilbert's seeks approval for $6M Salt Road expansion",
+      "note": "Not an approved or under-construction project as of source date.",
+      "date": "2026-10-06",
+      "place": "Salt Road, Penfield or Webster",
+      "stage": "application",
+      "lane": "developing",
+      "sources": [
+        {
+          "article_id": "ART-2026-000025",
+          "title": "Wilbert’s plans expansion of auto parts facility in Penfield",
+          "publisher": "Rochester Business Journal",
+          "url": "https://rbj.net/2026/10/06/wilberts-expands-auto-parts-facility-penfield",
+          "kind": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "IEVT-2026-000004",
+      "headline": "Goodyear to close Niagara Falls chemical plant",
+      "note": "Goodyear plans to close its Niagara Falls chemical plant, with production expected to end Oct. 31, 2026. Sources differ on jobs: about 85 across two sites (SEC filing) vs. 60 local (Niagara Gazette).",
+      "date": "2026-09-29",
+      "place": "Niagara Falls, Niagara County",
+      "stage": "approved_plan",
+      "lane": "production",
+      "sources": [
+        {
+          "article_id": "ART-2026-000007",
+          "title": "The Goodyear Tire & Rubber Company Form 8-K: chemical facility closure plan",
+          "publisher": "SEC EDGAR / Goodyear",
+          "url": "https://www.sec.gov/Archives/edgar/data/42582/000162828026064270/gt-20260929.htm",
+          "kind": "primary"
+        },
+        {
+          "article_id": "ART-2026-000018",
+          "title": "Goodyear will exit chemical business in the Falls",
+          "publisher": "Niagara Gazette via CNHI",
+          "url": "https://www.cnhi.com/rss_feed/goodyear-will-exit-chemical-business-in-the-falls",
+          "kind": "secondary"
+        },
+        {
+          "article_id": "ART-2026-000008",
+          "title": "Goodyear Chemical shutting down Niagara Falls facility",
+          "publisher": "Spectrum News",
+          "url": "https://spectrumlocalnews.com/nys/buffalo/news/2026/10/01/goodyear-chemical-shutting-down-niagara-falls-facility",
+          "kind": "secondary"
+        },
+        {
+          "article_id": "ART-2026-000009",
+          "title": "Goodyear closing Niagara Falls plant at end of October",
+          "publisher": "WBEN / Audacy",
+          "url": "https://www.audacy.com/wben/news/business/goodyear-closing-niagara-falls-plant-at-end-of-october",
+          "kind": "secondary"
+        },
+        {
+          "article_id": "ART-2026-000010",
+          "title": "Goodyear's Niagara Falls chemical plant to close",
+          "publisher": "Buffalo Toronto Public Media",
+          "url": "https://www.btpm.org/local/2026-10-02/goodyears-niagara-falls-chemical-plant-to-close",
+          "kind": "secondary"
+        },
+        {
+          "article_id": "ART-2026-000032",
+          "title": "Community responds to Goodyear closing in Niagara Falls",
+          "publisher": "WKBW",
+          "url": "https://www.wkbw.com/niagara-county/community-responds-to-goodyear-closing-in-niagara-falls",
+          "kind": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "IEVT-2026-000005",
+      "headline": "Lockheed Martin's Liverpool radar work gets $18.9M contract change",
+      "note": "An $18.9M change to an existing Air Force radar contract with work in Liverpool. The ~$1B figure is the contract ceiling, not new spending.",
+      "date": "2026-09-28",
+      "place": "Liverpool, Onondaga County",
+      "stage": "award",
+      "lane": "production",
+      "sources": [
+        {
+          "article_id": "ART-2026-000022",
+          "title": "Contracts for Sept. 28, 2026",
+          "publisher": "Forth / War.gov mirror",
+          "url": "https://www.forth.news/lists/dod/CfWYYiypPGyjdvtXbEB1x",
+          "kind": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "IEVT-2026-000006",
+      "headline": "$11.2M radar-parts contract splits work between Liverpool and Lithuania",
+      "note": "An $11.2M radar-parts contract change with work in Liverpool and Lithuania; the Liverpool share is not disclosed.",
+      "date": "2026-09-28",
+      "place": "Liverpool, Lithuania",
+      "stage": "award",
+      "lane": "production",
+      "sources": [
+        {
+          "article_id": "ART-2026-000022",
+          "title": "Contracts for Sept. 28, 2026",
+          "publisher": "Forth / War.gov mirror",
+          "url": "https://www.forth.news/lists/dod/CfWYYiypPGyjdvtXbEB1x",
+          "kind": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "IEVT-2026-000007",
+      "headline": "Niagara Air Reserve Station awards base-support contract",
+      "note": "Base maintenance and logistics contract at Niagara Air Reserve Station: $38.8M ceiling, $14,317 obligated so far. Contractor identity is still being confirmed.",
+      "date": "2026-09-28",
+      "place": "Niagara Falls, Niagara County",
+      "stage": "award",
+      "lane": "corridor",
+      "sources": [
+        {
+          "article_id": "ART-2026-000022",
+          "title": "Contracts for Sept. 28, 2026",
+          "publisher": "Forth / War.gov mirror",
+          "url": "https://www.forth.news/lists/dod/CfWYYiypPGyjdvtXbEB1x",
+          "kind": "secondary"
+        },
+        {
+          "article_id": "ART-2026-000023",
+          "title": "Criterion Corporation — contractor identity profile",
+          "publisher": "HigherGov",
+          "url": "https://www.highergov.com/awardee/criterion-corporation-610600988",
+          "kind": "secondary"
+        },
+        {
+          "article_id": "ART-2026-000024",
+          "title": "Criterion Corporation — registration directory comparison",
+          "publisher": "Womyn Owned",
+          "url": "https://www.womynowned.com/vendor/criterion-corporation",
+          "kind": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "IEVT-2026-000008",
+      "headline": "SRC reports $37M Air Force prototype award",
+      "note": "SRC reports a $37M Air Force prototype award for its Ghost Mantis technology. No production commitment or local job count disclosed.",
+      "date": "2026-10-01",
+      "place": "Syracuse, Onondaga County",
+      "stage": "award",
+      "lane": "production",
+      "sources": [
+        {
+          "article_id": "ART-2026-000029",
+          "title": "SRC's Ghost Mantis Technology Selected for U.S. Air Force LASS Prototype OTA",
+          "publisher": "SRC, Inc.",
+          "url": "https://www.srcinc.com/news-and-events/press/2026/20261001-contract-airforce-lass-ghost-mantis-gen3.html",
+          "kind": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "IEVT-2026-000010",
+      "headline": "Gekko Photonics confirms Rochester office, plans local hiring",
+      "note": "Gekko Photonics says it has a Rochester office and plans local engineering hires and regional suppliers; no headcount or facility announced yet.",
+      "date": "2026-10-02",
+      "place": "Rochester, Finger Lakes",
+      "stage": "intent",
+      "lane": "developing",
+      "sources": [
+        {
+          "article_id": "ART-2026-000031",
+          "title": "Gekko Photonics wins the Company of the Year award at Luminate NY 2026",
+          "publisher": "Gekko Photonics",
+          "url": "https://gekkophotonics.com/en/gekko-photonics-company-of-the-year",
+          "kind": "secondary"
+        }
+      ]
+    }
+  ]
+}
