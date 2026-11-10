@@ -1,6 +1,6 @@
 # Spec F: mapping shell and reading alongside the map
 
-Status: **draft; questions partly answered** (decisions 54–57), 2026-11-10. Local issues HM-009 (shell) and HM-018 (map introduction). Written against branch `heavymap-mainsite-v1`.
+Status: **draft; open questions answered** (decisions 54–61), 2026-11-10. Local issues HM-009 (shell) and HM-018 (map introduction). Written against branch `heavymap-mainsite-v1`.
 Depends on: [Spec A](A-product-structure.md) (sections 3.3 capability states, 7.1 map introduction); [Spec C](C-reader-continuity.md) (reading position, Reader URL); [Spec D](D-visual-system-themes.md) (invariant 5: map data styling doesn't change with theme or mode; decision 40); decisions D4 (split pane / bottom sheet) and 17 (v1 map introduction).
 Backend contracts this spec consumes, without changing them:
 - [`docs/architecture/parcel-dossier.md`](../../../docs/architecture/parcel-dossier.md) (record schema v1, shards, manifest);
@@ -47,7 +47,7 @@ Most of this spec (sections 4 to 8) covers the workspace, so that it's ready whe
 
 - **Basemap (decided, 54): a pannable vector basemap.**
   - MapLibre GL JS `6.14.0` with `pmtiles` `4.3.0`, the versions the prototype already pins.
-  - *Proposed (F-Q7):* a **self-hosted Protomaps basemap extract** for the Hamilton bounding box, cut with `pmtiles extract` from a dated Protomaps build. It's OpenStreetMap-derived (ADR 0001), served from the site's own origin with no third-party tile service, and well under the 100 MB per-file budget. The build records the build date and the SHA-256.
+  - *Decided (61):* a **self-hosted Protomaps basemap extract** for the Hamilton bounding box, cut with `pmtiles extract` from a dated Protomaps build. It's OpenStreetMap-derived (ADR 0001), served from the site's own origin with no third-party tile service, and well under the 100 MB per-file budget. The build records the build date and the SHA-256.
   - **Bounded:** `maxBounds` set to Hamilton plus a margin, and zoom limited to about 9–16, so the map can't wander off into an empty world.
   - **Nothing clickable:** no hover, click, tooltip or feature query. Readers can pan and zoom only, with keyboard pan and zoom through MapLibre's handlers.
   - **The map is decorative for assistive technology.** The canvas has `aria-label="Basemap of Hamilton, Ontario. No HeavyMap data is shown."`, and the modal and dock carry the content.
@@ -113,7 +113,7 @@ The map is a **page**, not an iframe overlay on top of the reading page. The pro
 
 The handoff described a map strip that reveals the workspace, with the editorial page lowering into the bottom bar.
 
-- **Proposed:** a **cross-document view transition**. The home map strip and the map page share a `view-transition-name`, so the strip grows into the map while the header shrinks into the dock. It's progressive enhancement: browsers without cross-document view transitions simply navigate.
+- **Decided (60):** a **cross-document view transition**. The home map strip and the map page share a `view-transition-name`, so the strip grows into the map while the header shrinks into the dock. It's progressive enhancement: browsers without cross-document view transitions simply navigate.
 - **Reduced motion:** with `prefers-reduced-motion: reduce`, there's no transition at all; the page swaps instantly.
 - **Duration:** at most 400 ms. Nothing animates on its own after load.
 
@@ -177,7 +177,7 @@ The dock is a `<nav aria-label="Map">`. In the reading-alongside layout it stays
 - highlighting an area because an item mentions it;
 - any statement in a dossier about an item, or in an item about a parcel.
 
-What stays, because the reader makes the choice: the Reader pane alongside the map (section 5). The pane header says "Reading", and the map and dossier don't react to what is open in it. This is juxtaposition, not association.
+What stays, because the reader makes the choice (decision 58): the Reader pane alongside the map (section 5). The pane header says "Reading", and the map and dossier don't react to what is open in it. This is juxtaposition, not association.
 
 **For when connections are reconsidered** (not in scope now), keep the principle: an item may be linked to a parcel only through an accepted relationship that names that parcel's `heavymap_id`, approved through MAKE. A place or district mention is never enough to point at a parcel.
 
@@ -193,7 +193,7 @@ The workspace consumes screened Atlas artifacts. It extends the existing dossier
 | Producer run | dossier output folder date and run id; overlay run id (for example `20261017-val2`); registry `CURRENT` | recorded in the build's `map-artifacts.json` |
 | Producer revision | the industrial-atlas commit that produced the run | recorded; the build fails if it's missing |
 | Schema | dossier record schema `1`; shard `{"schema":1,…}` | the build refuses an unknown schema |
-| Hashes | SHA-256 of `manifest.json`, each shard and each `.pmtiles` | verified at build against a run record; **open: who writes the run record** (F-Q4) |
+| Hashes | SHA-256 of `manifest.json`, each shard and each `.pmtiles` | verified at build against the run record that the Atlas run on deb writes next to its output (decision 59) |
 | Allowed fields | `RECORD_SPEC` in `heavymap/dossier/schema.py` | the frontend reads only those keys; an extra key fails the build, not the page |
 | Visibility | `publish_visibility` per dataset (`publish-visibility.md`) | `withheld` datasets follow `withheld_disclosure` (backlog D4, still open); the build fails while D4 is unset |
 | Held identifying information | backlog D3 (coverage-based signal is the recommendation) | **open**; until it's decided, the dossier shows no held-information element |
@@ -272,7 +272,7 @@ Accepted (BETA-GATE section 6, 2026-10-18):
 | F-Q1 | v1 basemap | **Decided (54):** a pannable vector basemap with nothing clickable |
 | F-Q2 | Modal story copy | **Decided (55):** Claude drafts (section 2.1) and Morgen edits |
 | F-Q3 | Item–map associations | **Superseded (57):** no connections between items and the map for now |
-| F-Q4 | Who writes the run record with artifact hashes? | **Open.** Proposed: the Atlas run on deb writes it; the frontend only verifies |
+| F-Q4 | Who writes the run record with artifact hashes? | **Decided (59):** the Atlas run on deb writes it; the site build only verifies |
 | F-Q5 | Startup payload meaning (backlog D2) | **Decided (56):** option A, data ≤ 50 KB plus app ≤ 500 KB |
-| F-Q6 | Cross-document view transition for the reveal | **Open.** Proposed: yes, as progressive enhancement |
-| F-Q7 | Basemap source | **Open.** Proposed: a self-hosted Protomaps extract for Hamilton |
+| F-Q6 | Cross-document view transition for the reveal | **Decided (60):** yes, as progressive enhancement |
+| F-Q7 | Basemap source | **Decided (61):** a self-hosted Protomaps extract for Hamilton |
