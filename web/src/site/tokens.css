@@ -1,0 +1,91 @@
+/* HeavyMap design tokens (spec D section 2.2, D-T1).
+ * Semantic tokens are what components use. A theme or mode redefines them;
+ * layout and component rules never change per theme (spec D section 3).
+ * The USA theme is the base (no attribute needed). Dark applies only through
+ * data-mode="dark", which the head script sets only for a theme with a dark
+ * variant (decision 32: USA only in v1). */
+
+:root {
+  /* surfaces */
+  --surface: #f5f4ee;
+  --surface-raised: #ffffff;
+  --surface-tint: #e9ede6;
+  --surface-tint-strong: #e4ebde;
+  --surface-sunk: #dce3d4;
+  /* rules */
+  --rule-soft: #d5dbd4;
+  --rule-strong: #acbaa3;
+  /* text */
+  --text: #253f49;
+  --text-body: #435a60;
+  --text-muted: #596c71;
+  /* Was #8b9694 (2.57:1); raised to pass 4.5:1, so it now matches --text-muted in light. */
+  --text-faint: #596c71;
+  --text-hover: #3e5b61;
+  --on-ink: #ffffff;
+  --on-ink-muted: #c7d3d0;
+  /* accents */
+  --accent: #ae573b;
+  --accent-strong: #8f573d;
+  --accent-rule: #d5c3b4;
+  --green-strong: #346344;
+  --focus-ring: #253f49;
+  /* stages and flags (the original card's names, kept) */
+  --amount-done: #1f6b34;
+  --amount-announced: #7a6200;
+  --flag-warn: #8a5300;
+  --flag-info: #1d5a8c;
+  /* depth */
+  --shadow-soft: #30433b0a;
+  --shadow: #263e4220;
+  --photo-scrim: #1b3038a0;
+
+  /* legacy names used across the editorial sheets, as aliases */
+  --paper: var(--surface);
+  --ink: var(--text);
+  --muted: var(--text-muted);
+  --line: var(--rule-soft);
+  --rust: var(--accent);
+  --green: #4d6e5b;
+  color-scheme: light;
+}
+
+/* USA, dark (decision 32). Same roles; every text pair is checked in build step 7. */
+:root[data-mode="dark"] {
+  --surface: #162024;
+  --surface-raised: #1d292e;
+  --surface-tint: #1c2a2a;
+  --surface-tint-strong: #22332f;
+  --surface-sunk: #213029;
+  --rule-soft: #33454a;
+  --rule-strong: #4f6463;
+  --text: #e7ebe4;
+  --text-body: #cfd8d3;
+  --text-muted: #a9b7b3;
+  --text-faint: #8a9995;
+  --text-hover: #c7d3cf;
+  --on-ink: #162024;
+  --on-ink-muted: #33454a;
+  --accent: #e2906f;
+  --accent-strong: #eda98c;
+  --accent-rule: #6b4a3d;
+  --green: #8fbf9d;
+  --green-strong: #a3d2b0;
+  --focus-ring: #e7ebe4;
+  --amount-done: #7fcf93;
+  --amount-announced: #e3c65a;
+  --flag-warn: #e0a64a;
+  --flag-info: #8cbbe6;
+  --shadow-soft: #0000001f;
+  --shadow: #00000059;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--surface);
+  color: var(--text);
+}
+
+:focus-visible {
+  outline-color: var(--focus-ring);
+}

@@ -1,0 +1,28 @@
+/* Canada theme: northern palette, DRAFT (decision 35, HM-014).
+ * Values from heavymap-planning/frontend/themes/ca-northern-palette-draft.md.
+ * Status "design": loaded only in preview builds until Morgen approves it. */
+:root[data-theme="ca"] {
+  --surface: #f3f5f2;
+  --surface-raised: #fbfcfa;
+  --surface-tint: #e2ebe6;
+  --surface-tint-strong: #dbe6ec;
+  --surface-sunk: #c9d8d0;
+  --rule-soft: #cfd9d5;
+  --rule-strong: #9fb8ab;
+  --text: #1d3a34;
+  --text-body: #2c4740;
+  --text-muted: #4f625d;
+  --text-faint: #7d8f89;
+  --text-hover: #2c5a75;
+  --accent: #b3261e;
+  --accent-strong: #234b63;
+  --accent-rule: #dbc9c4;
+  --green: #2a6543;
+  --green-strong: #2a6543;
+  --focus-ring: #2c5a75;
+  --amount-done: #2a6543;
+  --amount-announced: #735a00;
+  --flag-warn: #8a4f00;
+  --flag-info: #1f5486;
+  --link: #2c5a75;
+}

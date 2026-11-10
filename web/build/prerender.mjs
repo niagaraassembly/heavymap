@@ -19,6 +19,8 @@ const web = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 export const PAGES_DIR = path.join(web, ".site");
 export const OUT_DIR = path.join(web, "dist-site");
 const CLIENT = path.join(web, "src/site/client.js");
+const SITE_SRC = path.join(web, "src/site");
+const PREVIEW_CSS = path.join(SITE_SRC, "preview.css");
 /* Static files the public site ships, copied as is. Only these: web/public also
  * holds prototype fixtures (synthetic-parcels.pmtiles) that must never ship. */
 export const STATIC_DIRS = ["editorial"];
@@ -48,16 +50,34 @@ export function brokenLinks(pages) {
   return broken;
 }
 
+/** Themes this build offers (spec D section 4): published ones, plus "design"
+ *  ones with a token sheet in preview builds only. */
+export function availableThemes(registry, { preview }) {
+  return registry.themes
+    .filter(
+      (t) =>
+        t.status === "published" ||
+        (preview &&
+          t.status === "design" &&
+          t.tokens &&
+          fs.existsSync(path.join(SITE_SRC, t.tokens))),
+    )
+    .map(({ id, country, name, modes }) => ({ id, country, name, modes }));
+}
+
 export function renderSite({ preview = false } = {}) {
   const content = loadContent(path.join(web, "../content"), {
     includePreview: preview,
   });
+  const themes = availableThemes(content.themes, { preview });
   const pages = allPages(content).map((page) => {
     const file = fileFor(page.path);
-    const rel = path
-      .relative(path.dirname(path.join(PAGES_DIR, file)), CLIENT)
-      .split(path.sep)
-      .join("/");
+    const fromPage = (target) =>
+      path
+        .relative(path.dirname(path.join(PAGES_DIR, file)), target)
+        .split(path.sep)
+        .join("/");
+    const rel = fromPage(CLIENT);
     return {
       ...page,
       file,
@@ -65,7 +85,9 @@ export function renderSite({ preview = false } = {}) {
         ...page,
         regions: content.regions,
         preview,
-        assets: { css: [], js: [rel] },
+        themes,
+        defaultTheme: content.themes.default,
+        assets: { css: preview ? [fromPage(PREVIEW_CSS)] : [], js: [rel] },
       }),
     };
   });

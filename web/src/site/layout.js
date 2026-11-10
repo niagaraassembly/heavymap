@@ -2,6 +2,7 @@
  * header, footer. Pure string rendering, used by build/prerender.mjs. */
 
 import { escapeHtml as esc } from "../desk/escape.js";
+import { headScript } from "./theme.js";
 
 export const SITE_ORIGIN = "https://heavymap.com";
 
@@ -23,13 +24,18 @@ const sectionOf = (path) =>
     ? "desks"
     : path.split("/")[1];
 
-function header(path) {
+function header(path, themes) {
   const current = sectionOf(path);
   const links = NAV.map(
     (n) =>
       `<a href="${n.href}"${n.section === current ? ' aria-current="page"' : ""}${n.icon ? ' class="reader-nav"' : ""}>${n.icon ?? ""}${n.label}</a>`,
   ).join("");
-  return `<header class="alt-header"><a class="wordmark" href="/">HeavyMap<span aria-hidden="true">◒</span></a><span class="alt-header-caption">A closer reading of place.</span><nav aria-label="Main navigation">${links}</nav><a class="alt-follow" href="/subscribe/"${current === "subscribe" ? ' aria-current="page"' : ""}>Follow your regions</a></header>`;
+  return `<header class="alt-header"><a class="wordmark" href="/">HeavyMap<span aria-hidden="true">◒</span></a><span class="alt-header-caption">A closer reading of place.</span><nav aria-label="Main navigation">${links}</nav>${themePicker(themes)}<a class="alt-follow" href="/subscribe/"${current === "subscribe" ? ' aria-current="page"' : ""}>Follow your regions</a></header>`;
+}
+
+/** Prebuilt picker markup; hidden until theme-picker.js enhances it (spec D section 5). */
+function themePicker(themes) {
+  return `<div class="hm-theme" data-theme-picker data-themes="${esc(JSON.stringify(themes))}" hidden><button type="button" class="hm-theme-button" data-theme-button aria-haspopup="listbox" aria-expanded="false" aria-controls="hm-theme-panel"><span data-theme-name>United States</span> <span aria-hidden="true">▾</span></button><div class="hm-theme-panel" id="hm-theme-panel" data-theme-panel hidden><ul role="listbox" tabindex="-1" aria-label="Site theme"></ul><fieldset class="hm-theme-modes" data-theme-modes><legend>Light or dark</legend><label><input type="radio" name="hm-mode" value="light"> Light</label><label><input type="radio" name="hm-mode" value="dark"> Dark</label><label><input type="radio" name="hm-mode" value="auto"> Automatic</label></fieldset><p class="hm-theme-note" data-theme-only-light hidden>This theme has a light look only.</p><p class="hm-theme-note">Themes change the look only.</p><button type="button" class="hm-theme-reset" data-theme-reset>Reset to automatic</button><p class="hm-visually-hidden" role="status"></p></div></div>`;
 }
 
 function footer(regions) {
@@ -50,7 +56,9 @@ function footer(regions) {
  * @param {object} o.assets      { css: string[], js: string[] } paths relative to this page
  * @param {string} [o.bodyClass]
  * @param {string} [o.after]     HTML after the footer (the map dock)
- * @param {boolean} [o.preview]  preview build banner (spec G section 3)
+ * @param {boolean} [o.preview]  preview build banner (spec D section 3)
+ * @param {object[]} o.themes    themes available in this build: { id, country, name, modes }
+ * @param {string} o.defaultTheme
  */
 export function renderPage(o) {
   const title = o.title ? `${o.title} · HeavyMap` : "HeavyMap";
@@ -72,6 +80,7 @@ export function renderPage(o) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+${headScript(o.themes, o.defaultTheme)}
 <meta name="theme-color" content="#f5f4ee">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(o.description)}">
@@ -80,7 +89,7 @@ ${css}${js}
 </head>
 <body class="alternate ${esc(o.bodyClass ?? "")}">
 ${banner}<a class="skip-link" href="#content">Skip to content</a>
-${header(o.path)}
+${header(o.path, o.themes)}
 <main id="content" tabindex="-1">${o.main}</main>
 ${footer(o.regions)}${o.after ?? ""}
 </body>

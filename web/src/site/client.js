@@ -1,6 +1,20 @@
 /* Client behaviour shared by every prebuilt page. Pages work without it;
  * this adds conveniences. Reader and history arrive in build step 4. */
 import "./styles.css";
+import { mountThemePicker } from "./theme-picker.js";
+
+const picker = document.querySelector("[data-theme-picker]");
+if (picker) {
+  try {
+    mountThemePicker(
+      picker,
+      JSON.parse(picker.dataset.themes),
+      document.documentElement.dataset.theme || "us",
+    );
+  } catch {
+    /* The page keeps the theme the head script chose. */
+  }
+}
 
 /* Edition cards: "Copy link" copies the card's permalink. */
 document.addEventListener("click", async (e) => {

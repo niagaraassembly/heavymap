@@ -1,5 +1,5 @@
 .alternate {
-  background: #f5f4ee;
+  background: var(--surface);
 }
 .alternate [hidden] {
   display: none !important;
@@ -57,7 +57,7 @@
 .alt-follow {
   margin-left: 15px;
   font-size: 11px;
-  border-bottom: 1px solid #788880;
+  border-bottom: 1px solid var(--rule-strong);
   padding: 10px 0;
   white-space: nowrap;
 }
@@ -132,7 +132,7 @@
   height: 255px;
   margin: auto;
   overflow: hidden;
-  background: #dce3d4;
+  background: var(--surface-sunk);
 }
 .map-strip > svg {
   position: absolute;
@@ -148,7 +148,7 @@
 }
 .map-strip-copy .eyebrow {
   font-size: 8px;
-  color: #4b6554;
+  color: var(--text-muted);
 }
 .map-strip h2 {
   font-size: 36px;
@@ -163,12 +163,12 @@
   display: flex;
   align-items: center;
   gap: 35px;
-  background: #f5f4eef2;
+  background: color-mix(in srgb, var(--surface) 95%, transparent);
   color: var(--ink);
-  border: 1px solid #c5d0bf;
+  border: 1px solid var(--rule-soft);
   padding: 17px 20px;
   text-align: left;
-  box-shadow: 0 5px 20px #30433b0a;
+  box-shadow: 0 5px 20px var(--shadow-soft);
 }
 .map-peek strong {
   display: block;
@@ -182,7 +182,7 @@
 }
 .map-peek-arrow {
   border-radius: 50%;
-  border: 1px solid #a9b9a5;
+  border: 1px solid var(--rule-strong);
   width: 33px;
   height: 33px;
   display: grid;
@@ -243,7 +243,7 @@
   content: "";
   position: absolute;
   inset: 50% 0 0;
-  background: linear-gradient(transparent, #223b41a0);
+  background: linear-gradient(transparent, var(--photo-scrim));
 }
 .lead-image > span {
   position: absolute;
@@ -252,7 +252,7 @@
   bottom: 17px;
   font-size: 9px;
   letter-spacing: 0.7px;
-  color: #fff;
+  color: var(--on-ink);
 }
 .lead-story > .eyebrow {
   font-size: 8px;
@@ -278,7 +278,7 @@
 }
 .archive-date {
   font-size: 9px;
-  color: #68756b;
+  color: var(--text-muted);
   margin: 16px 0 0;
 }
 .news-side {
@@ -326,13 +326,13 @@
   display: grid;
   grid-template-columns: 55px 1fr auto;
   gap: 25px;
-  background: #e9ede6;
+  background: var(--surface-tint);
   align-items: center;
 }
 .reader-symbol {
   height: 50px;
   width: 50px;
-  border: 1px solid #becbb9;
+  border: 1px solid var(--rule-soft);
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -542,8 +542,8 @@
 }
 .reader-library input[type="search"] {
   width: 100%;
-  background: #eeeee7;
-  border: 1px solid #d6dbd0;
+  background: var(--surface-tint);
+  border: 1px solid var(--rule-soft);
   border-radius: 0;
   font-size: 11px;
   padding: 12px;
@@ -583,7 +583,7 @@
   position: relative;
 }
 .library-item.selected {
-  background: #e6ecdf;
+  background: var(--surface-tint-strong);
   box-shadow: inset 2px 0 var(--green);
 }
 .library-item > span {
@@ -653,7 +653,7 @@
   min-height: 30px;
 }
 .document-navigation button:disabled {
-  color: #8b958e;
+  color: var(--text-faint);
   cursor: default;
 }
 .document-navigation > span {
@@ -702,8 +702,8 @@
   color: var(--ink);
 }
 .reader-context {
-  border-left: 2px solid #a9b6a0;
-  background: #eeefe7;
+  border-left: 2px solid var(--rule-strong);
+  background: var(--surface-tint);
   padding: 20px 22px;
   margin: 25px 0;
 }
@@ -725,7 +725,7 @@
   font-size: 16px;
   font-family: var(--serif);
   line-height: 1.8;
-  color: #435a60;
+  color: var(--text-body);
 }
 .reader-sources > a {
   display: block;
@@ -752,7 +752,7 @@
 .reading-end > span {
   display: block;
   width: 35px;
-  border-top: 1px solid #b3c0ad;
+  border-top: 1px solid var(--rule-strong);
   margin: 0 auto 17px;
 }
 .document-bottom {
@@ -806,7 +806,7 @@
   position: fixed;
   inset: 0 0 64px;
   z-index: 1;
-  background: #dce3d4;
+  background: var(--surface-sunk);
 }
 .map-stage iframe {
   width: 100%;
@@ -827,7 +827,7 @@
   padding: 0 30px;
   gap: 25px;
   border-top: 1px solid var(--line);
-  box-shadow: 0 -5px 25px #263e4220;
+  box-shadow: 0 -5px 25px var(--shadow);
 }
 .map-dock .wordmark {
   font-size: 23px;
@@ -848,7 +848,7 @@
 }
 .map-dock button {
   font-size: 11px;
-  border: 1px solid #a9b6a0;
+  border: 1px solid var(--rule-strong);
   padding: 11px 15px;
   background: none;
   color: var(--ink);

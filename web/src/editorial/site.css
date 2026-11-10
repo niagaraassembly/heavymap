@@ -1,14 +1,10 @@
+/* Design tokens (spec D, D-T1); also imported first by src/site/styles.css. */
+@import "../site/tokens.css";
 :root {
   font-family: Arial, Helvetica, sans-serif;
-  color: #253f49;
-  background: #f5f4ee;
+  color: var(--text);
+  background: var(--surface);
   font-synthesis: none;
-  --paper: #f5f4ee;
-  --ink: #253f49;
-  --muted: #596c71;
-  --line: #d5dbd4;
-  --rust: #ae573b;
-  --green: #4d6e5b;
   --serif: Georgia, "Times New Roman", serif;
 }
 * {
@@ -114,12 +110,12 @@ img {
 }
 .nav-soon {
   font-size: 9px;
-  border: 1px solid #d5dbd4;
+  border: 1px solid var(--rule-soft);
   border-radius: 12px;
   padding: 3px 6px;
   margin-left: 4px;
   vertical-align: middle;
-  color: #65716b;
+  color: var(--text-muted);
 }
 .header-follow {
   font-size: 12px;
@@ -144,7 +140,7 @@ img {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #5c8064;
+  background: var(--green);
   margin-right: 8px;
   vertical-align: middle;
 }
@@ -184,7 +180,7 @@ img {
   justify-content: space-between;
   gap: 40px;
   background: var(--ink);
-  color: #fff;
+  color: var(--on-ink);
   border: 1px solid var(--ink);
   padding: 17px 22px;
   font-size: 12px;
@@ -192,7 +188,7 @@ img {
   transition: background 0.15s;
 }
 .button:hover {
-  background: #3e5b61;
+  background: var(--text-hover);
 }
 .hero-art {
   align-self: stretch;
@@ -211,7 +207,7 @@ img {
   border-radius: 50% 50% 0 0;
   aspect-ratio: 1.16;
   object-fit: cover;
-  background: #dfe5d8;
+  background: var(--surface-sunk);
 }
 .art-index {
   display: flex;
@@ -296,7 +292,7 @@ img {
   display: block;
   position: relative;
   overflow: hidden;
-  background: #dde3dc;
+  background: var(--surface-sunk);
 }
 .desk-photo img {
   height: 100%;
@@ -310,7 +306,7 @@ img {
   content: "";
   position: absolute;
   inset: 50% 0 0;
-  background: linear-gradient(transparent, #172c35a0);
+  background: linear-gradient(transparent, var(--photo-scrim));
   pointer-events: none;
 }
 .photo-caption {
@@ -345,7 +341,7 @@ img {
 }
 .dot-separator {
   margin: 0 9px;
-  color: #8b9694;
+  color: var(--text-faint);
 }
 .desk-copy h3 {
   font-size: 35px;
@@ -386,7 +382,7 @@ img {
 .latest-section {
   max-width: 1312px;
   margin: 0 auto 78px;
-  background: #e9ede6;
+  background: var(--surface-tint);
   display: grid;
   grid-template-columns: 1fr 2.2fr;
   padding: 39px 40px;
@@ -409,7 +405,7 @@ img {
   display: flex;
   gap: 20px;
   padding: 22px 0;
-  border-bottom: 1px solid #cbd5ca;
+  border-bottom: 1px solid var(--rule-soft);
   align-items: start;
 }
 .story-row:first-child {
@@ -445,20 +441,20 @@ img {
 }
 .stage {
   display: inline-block;
-  border: 1px solid #c7cfc4;
+  border: 1px solid var(--rule-soft);
   border-radius: 3px;
   padding: 3px 6px;
-  color: #64705f;
+  color: var(--text-muted);
   font:
     9px/1.2 Arial,
     sans-serif;
   letter-spacing: 0.25px;
   text-transform: none;
-  background: #f5f4ee80;
+  background: color-mix(in srgb, var(--surface) 50%, transparent);
 }
 .stage.complete {
-  color: #346344;
-  background: #e6eee2;
+  color: var(--green-strong);
+  background: var(--surface-tint-strong);
 }
 .mapping-section {
   max-width: 1312px;
@@ -500,17 +496,17 @@ img {
 }
 .status-chip {
   font-size: 9px;
-  border: 1px solid #d5c3b4;
+  border: 1px solid var(--accent-rule);
   border-radius: 20px;
-  color: #8f573d;
+  color: var(--accent-strong);
   padding: 5px 9px;
   white-space: nowrap;
 }
 .mapping-art {
   position: relative;
-  border: 1px solid #d2dbd0;
+  border: 1px solid var(--rule-soft);
   padding: 12px;
-  background: #eef0e8;
+  background: var(--surface-tint);
 }
 .map-art-note {
   display: block;
@@ -521,7 +517,7 @@ img {
 }
 .follow-band {
   background: var(--ink);
-  color: #f6f4eb;
+  color: var(--on-ink);
   max-width: 1440px;
   margin: auto;
   padding: 48px 64px;
@@ -536,24 +532,24 @@ img {
   margin-bottom: 12px;
 }
 .follow-band .eyebrow {
-  color: #b8cbc1;
+  color: var(--on-ink-muted);
   font-size: 9px;
   margin-bottom: 11px;
 }
 .follow-band p:not(.eyebrow) {
   max-width: 500px;
   font-size: 12px;
-  color: #c7d3d0;
+  color: var(--on-ink-muted);
   margin-bottom: 0;
 }
 .button-light {
-  background: #f5f4ee;
+  background: var(--surface);
   color: var(--ink);
-  border-color: #f5f4ee;
+  border-color: var(--surface);
   white-space: nowrap;
 }
 .button-light:hover {
-  background: #dce5d8;
+  background: var(--surface-tint-strong);
 }
 .site-footer {
   max-width: 1440px;
@@ -598,7 +594,7 @@ img {
 .preview-label {
   font-size: 9px;
   white-space: nowrap;
-  color: #68756c;
+  color: var(--text-muted);
 }
 .skip-link {
   position: fixed;
@@ -734,7 +730,7 @@ img {
 }
 .big-number {
   font: 110px/0.9 var(--serif);
-  color: #8b9e8b;
+  color: var(--text-faint);
   letter-spacing: -8px;
   margin-bottom: 22px;
 }
@@ -767,7 +763,7 @@ img {
 .issue-seal {
   width: 150px;
   height: 150px;
-  border: 1px solid #bac7b8;
+  border: 1px solid var(--rule-soft);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -826,9 +822,9 @@ img {
 .archive-note {
   font-size: 11px;
   padding: 18px 21px;
-  border-left: 2px solid #a8b4a2;
-  background: #eaede6;
-  color: #566651;
+  border-left: 2px solid var(--rule-strong);
+  background: var(--surface-tint);
+  color: var(--text-muted);
   margin-bottom: 40px;
 }
 .lane-heading {
@@ -869,7 +865,7 @@ img {
 }
 .issue-story p {
   font-size: 14px;
-  color: #465d65;
+  color: var(--text-body);
 }
 .source-details {
   font-size: 11px;
@@ -943,7 +939,7 @@ img {
   max-width: 1312px;
   margin: 0 auto 75px;
   padding: 30px;
-  background: #e9ede6;
+  background: var(--surface-tint);
   display: flex;
   align-items: center;
   gap: 16px;
@@ -973,13 +969,13 @@ img {
   margin-bottom: 25px;
 }
 .subscribe-form {
-  background: #e9ede6;
+  background: var(--surface-tint);
   padding: 35px;
 }
 .form-preview {
   font-size: 10px;
-  color: #725b46;
-  border-bottom: 1px solid #ccd4c7;
+  color: var(--accent-strong);
+  border-bottom: 1px solid var(--rule-soft);
   padding-bottom: 20px;
   line-height: 1.6;
 }
@@ -997,11 +993,11 @@ img {
   align-items: center;
   gap: 15px;
   padding: 20px 0;
-  border-top: 1px solid #cbd4c7;
+  border-top: 1px solid var(--rule-soft);
   cursor: pointer;
 }
 .desk-option:last-child {
-  border-bottom: 1px solid #cbd4c7;
+  border-bottom: 1px solid var(--rule-soft);
 }
 .desk-option input {
   height: 18px;
@@ -1028,7 +1024,7 @@ img {
   margin-bottom: 10px;
 }
 .subscribe-form input[type="email"] {
-  border: 1px solid #aebaac;
+  border: 1px solid var(--rule-strong);
   background: var(--paper);
   padding: 15px;
   width: 100%;

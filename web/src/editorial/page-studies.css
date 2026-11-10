@@ -47,7 +47,7 @@
   background: var(--paper);
   border: 1px solid var(--line);
   min-width: 220px;
-  box-shadow: 0 8px 25px #283e4212;
+  box-shadow: 0 8px 25px var(--shadow);
 }
 .region-switch a {
   display: flex;
@@ -62,7 +62,7 @@
 }
 .region-switch [aria-current="page"] {
   color: var(--green);
-  background: #e8ede2;
+  background: var(--surface-tint);
 }
 .desk-masthead .eyebrow {
   font-size: 9px;
@@ -85,7 +85,7 @@
   gap: 25px;
   align-items: center;
   font-size: 11px;
-  border-bottom: 1px solid #aebbac;
+  border-bottom: 1px solid var(--rule-strong);
   padding: 13px 0;
   white-space: nowrap;
 }
@@ -203,7 +203,7 @@
   text-align: left;
 }
 .desk-reader-note {
-  background: #e9ede4;
+  background: var(--surface-tint);
   padding: 19px 17px !important;
   margin-top: 20px;
   border: 0 !important;
@@ -295,8 +295,8 @@
 .study-follow {
   max-width: 1330px;
   margin: 0 auto 45px;
-  background: #e8ede3;
-  border-top: 1px solid #d1dbcd;
+  background: var(--surface-tint);
+  border-top: 1px solid var(--rule-soft);
   padding: 34px 38px;
   display: flex;
   justify-content: space-between;
@@ -339,12 +339,12 @@
   gap: 28px;
   padding: 29px;
   border: 1px solid var(--line);
-  background: #eeefe7;
+  background: var(--surface-tint);
   margin-top: 40px;
 }
 .empty-edition-number {
   font: 40px var(--serif);
-  color: #8e9e87;
+  color: var(--text-faint);
 }
 .desk-empty-archive h2 {
   font-size: 28px;
@@ -474,7 +474,7 @@
 .edition-date-stamp {
   height: 135px;
   width: 135px;
-  border: 1px solid #acbba3;
+  border: 1px solid var(--rule-strong);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -534,8 +534,8 @@
   line-height: 1.8;
   color: var(--muted);
   padding: 18px 20px;
-  background: #e9ede4;
-  border-left: 2px solid #acbaa3;
+  background: var(--surface-tint);
+  border-left: 2px solid var(--rule-strong);
   margin: 22px 0 35px;
 }
 .edition-archive-label a {
@@ -572,7 +572,7 @@
 .edition-contents > div {
   margin: 25px 0 0;
   padding: 20px 19px;
-  background: #eeefe8;
+  background: var(--surface-tint);
 }
 .edition-contents > div .eyebrow {
   font-size: 8px;
@@ -645,7 +645,7 @@
 }
 .edition-brief > p:not(.eyebrow) {
   font: 17px/1.7 var(--serif);
-  color: #435b60;
+  color: var(--text-body);
   max-width: 780px;
 }
 .edition-brief > div {
@@ -776,8 +776,8 @@
 .reading-context-label {
   font-size: 10px;
   line-height: 1.8;
-  border-left: 2px solid #acbaa3;
-  background: #ebeee6;
+  border-left: 2px solid var(--rule-strong);
+  background: var(--surface-tint);
   padding: 17px 20px;
   color: var(--muted);
   margin-bottom: 30px;
@@ -865,7 +865,7 @@
 }
 .standalone-body > section:not(.standalone-sources, .publication-record) > p {
   font: 21px/1.85 var(--serif);
-  color: #3d555d;
+  color: var(--text-body);
   margin: 0;
 }
 .reading-section-number {
@@ -877,7 +877,7 @@
 .standalone-body blockquote {
   font: italic 32px/1.45 var(--serif);
   color: var(--green);
-  border-left: 2px solid #9aaa91;
+  border-left: 2px solid var(--rule-strong);
   padding: 5px 0 5px 25px;
   margin: 35px 0 15px;
 }
@@ -936,7 +936,7 @@
 .gallery-grid > a {
   border: 1px solid var(--line);
   padding: 27px;
-  background: #eeefe7;
+  background: var(--surface-tint);
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -963,7 +963,7 @@
 .review-questions {
   margin: 40px 0 0;
   padding: 30px;
-  background: #e4ebde;
+  background: var(--surface-tint-strong);
 }
 .review-questions .eyebrow {
   font-size: 8px;
