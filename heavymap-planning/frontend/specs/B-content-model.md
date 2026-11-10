@@ -247,8 +247,8 @@ content/
 | Material | Eligible | Notes |
 | --- | --- | --- |
 | WNY Issue One | **yes, all 10 items** (B-Q6) | `complete: true` |
-| WNY Issue Two | **yes, at launch** | Morgen 2026-11-10: material ready; source location to be provided (B-Q10) |
-| Niagara–Brant Issue One | **yes, at launch** | Morgen 2026-11-10: material ready; source location to be provided (B-Q10) |
+| WNY Issue Two | **yes, at launch, once approved and exported** | See 8.4: 8 `eligible` events exist only in the isolated Join bay |
+| Niagara–Brant Issue One | **yes, at launch, once approved and exported** | See 8.4: no Niagara–Brant events in any export |
 | Later Desk editions | yes, when approved | never invent |
 | HeavyMap documentation drafts (project scope list) | yes, as `preview` until approved | "What HeavyMap is", methodology, dossier guide, CA/US glossary (`docs/for-humans/GLOSSARY.md` exists), FAQ, licensing, coverage and limitations |
 | Other Niagara Assembly publications (magazines, unrelated Reader items) | **no** | excluded by direction |
@@ -274,6 +274,22 @@ Current known state (checked 2026-11-10 against `niagaraassembly/site` at `9522b
 - **Issue One has 10 items**, `IEVT-2026-000001` to `IEVT-2026-000010`, all `publish_status: approved`. Its upstream issue ID is `WNY-2026-001`; keep it as the edition's `upstream_id`.
 - The prototype includes 9 and **omits `IEVT-2026-000009`** (a research award to a named individual, flagged `research_only` and `not_wny_production`). The reason for leaving it out isn't recorded. See B-Q7.
 - `redirect_decision` stays `open` until A-Q3 is answered.
+
+### 8.4 Where launch material stands (service-data `5eb3e6c`, inspected 2026-11-10)
+
+Source: `niagaraassembly/service-data`, discovered via `manifests/data-products.json`, as the MacBook start brief directs. All three issue registers agree that only `WNY-2026-001` is published. The registers are `exports/legacy-views/production-intel/issues.csv`, `exports/legacy-views/approved-isolated-join-intel/issues.csv` and `originals/research/intel/issues.csv`.
+
+| Edition | Coverage window (`desk_issue_windows.csv`) | Events found | State |
+| --- | --- | --- | --- |
+| WNY Issue One | 2026-09-28 to 2026-10-09 | 10 in production-intel | `approved`, published 2026-10-10 |
+| WNY Issue 2 | from 2026-10-10 (week 2026-W44) | **8 extra WNY events, only in `approved-isolated-join-intel`** | `eligible`, not `approved`; the bay is **explicitly not merged into production** |
+| Niagara–Brant Issue 1 | from 2026-10-05 (NA-294 lookback) | **none in either export**; 12 `not_ready` candidates with no region in `originals/research/.../inbox/event_candidates.csv` | research or prepared-review material only |
+
+**Consequence.** These editions enter `content/` only when:
+1. the owning service promotes and approves them; and
+2. it produces an **export** that HeavyMap can pin and hash.
+
+Copying from the isolated bay or from research originals would promote unapproved material by copying it, which the brief forbids. The missing step is a service-owned export, not another pull (HM-015).
 
 ## 9. Example records
 
@@ -389,4 +405,4 @@ Lists use the **compact line**: Reader library, home "recent", Desk archive. The
 | B-Q7 | `IEVT-2026-000009` and people | Mirror the original: include the item and the Mentions panel. |
 | B-Q8 | **Open:** origin of source kind (`primary`/`company`/`secondary`) | Trace in the site export step and pin it. |
 | B-Q9 | **Open:** live sources behind the MAKE export | Confirm with MAKE's and Publish's owners. |
-| B-Q10 | **Open:** location of WNY Issue Two and Niagara–Brant Issue One | Not in the tracked `site`, `make`, `service-data` or `publish` repos as of 2026-11-10; Morgen to point to them. |
+| B-Q10 | Location of WNY Issue Two and Niagara–Brant Issue One | **Located (section 8.4).** Neither is approved or in a production export yet. Needs a service-owned approved export before migration. |
