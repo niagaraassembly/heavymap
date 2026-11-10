@@ -84,3 +84,7 @@ Recommended follow-up decisions, not completed infrastructure:
 - Provide a read-only “refresh/status” helper that fetches repos and reports drift/freshness, without mutating dirty branches or running expensive checks. Add periodic fetching only if requested; avoid automatic pulls/merges.
 - Make accepted service changes trigger or require the corresponding approved export/update, so MacBook access does not depend on a person remembering where the newest local data sits.
 - Separate GitHub access readiness from access to native services. Set up native-service connectivity only when a specific task needs it.
+
+## Frontend is now available on GitHub
+
+The earlier uncommitted frontend work, all design review images and the newer briefing/spec/data-location notes are now committed on `niagaraassembly/heavymap` branch `hm/desks-site-prototype`, draft PR https://github.com/niagaraassembly/heavymap/pull/85. Fetch this branch or PR for the latest continuation, rather than relying on the older transfer ZIP. Preserve any existing MacBook changes before checkout/reconciliation. No merge or publication has been performed.

@@ -1,6 +1,6 @@
 # HeavyMap frontend — handoff to Claude
 
-> **Repository preservation update:** The frontend source, planning/handoff documents and all available review images are being preserved on `hm/desks-site-prototype` for review. Images now have durable copies under `design-reviews/` beside this file. Earlier uncommitted/temporary-only statements describe the pre-push handoff; use the branch/PR status for the current revision. No merge or publication is authorized.
+> **Current repository status:** Work is committed and pushed on `hm/desks-site-prototype`, draft PR **[#85](https://github.com/niagaraassembly/heavymap/pull/85)**. Images have durable copies under `design-reviews/` beside this file. The specification plan is drafted and included. Earlier uncommitted/temporary-only or no-plan statements describe previous handoff stages; use this branch and its latest PR head. No merge or publication performed.
 
 Prepared 2026-11-10 from this Codex session. Read this before doing more work. This is a continuation briefing, not a specification plan or publication approval.
 
@@ -19,7 +19,7 @@ Prepared 2026-11-10 from this Codex session. Read this before doing more work. T
 
 ## Workspace and preservation
 
-Repo `/workspace/heavymap`; branch `hm/desks-site-prototype`, based on main `9a1c773`. Work from this session is **uncommitted**, including numerous untracked files. Do not reset, clean, reclone over it or switch away without preserving it. A fresh clone or branch checkout alone will not contain the work. Transfer the whole working tree or explicitly preserve a patch plus all untracked assets before changing machines. No PR opened or pushed.
+Repo `/workspace/heavymap`; branch `hm/desks-site-prototype`, based on main `9a1c773`. Work is now committed and pushed in draft PR #85. Fetch the branch (or PR) to continue on the MacBook; a default-branch clone alone will not contain it until merged. Durable code, briefs, photos and review images are on this branch. The earlier transfer ZIP is a historical copy, not the newest source. Do not overwrite another dirty working tree when fetching/checking out this work.
 
 Read root AGENTS.md and heavymap-planning/WORKING-AGREEMENT.md. This work is directly assigned by Morgen; no new Linear issue has been invented. Backend/data restrictions and publication gates still apply. Source repository `/workspace/site` was cloned read-only for reference at `9522b3ebd3b4686fab99634bd0e710c883bd1b00`; it was not modified. Do not access heavymap-restricted.
 
@@ -159,3 +159,7 @@ Current discovery starts in `niagaraassembly/service-data`: `originals/research/
 `niagaraassembly/na-research` preserves packet/candidate/review history and weekly PR context, notably PR #181 (WNY Issue Two/Niagara–Brant Issue One preparation), #175/#180 (weekly research), and #183 (ownership transfer). Historic paths include `research/news/packets/<week>/<region-id>/`, `research/news/inbox/`, and `research/news/reviewed/`. These are not all automatically publication-approved.
 
 `make` owns maintained processing implementations; `site`, `publish` and `heavymap` are site/publication sources, not the complete unpublished inventory. At inspection only WNY Issue One appeared as published in the exported issue registers. No finalized newer edition selection or up-to-the-minute native completeness is claimed. None of the unpublished research datasets was copied into this frontend branch.
+
+## Push completion
+
+The frontend work and source/data-location clarification were committed and pushed to `niagaraassembly/heavymap`, branch `hm/desks-site-prototype`, draft PR #85. Original implementation/preservation commit: `26f05b5`. This follow-up updates continuation instructions after PR creation. Reference checkouts `site` and `na-research` had no changes from this work. No tests/builds were run for preservation or push; no merge/publication performed.
