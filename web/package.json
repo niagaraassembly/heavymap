@@ -11,7 +11,10 @@
     "test:browser": "playwright test",
     "fixture": "node scripts/make-fixture.mjs",
     "content:manifest": "node build/content-manifest.mjs",
-    "content:snapshot": "node build/snapshot-issue-one.mjs --site ${NA_REPOS:-$HOME/github/niagaraassembly}/site --site-commit 9522b3e --make ${NA_REPOS:-$HOME/github/niagaraassembly}/make --make-commit d226deb && node build/content-manifest.mjs"
+    "content:snapshot": "node build/snapshot-issue-one.mjs --site ${NA_REPOS:-$HOME/github/niagaraassembly}/site --site-commit 9522b3e --make ${NA_REPOS:-$HOME/github/niagaraassembly}/make --make-commit d226deb && node build/content-manifest.mjs",
+    "build:site": "node build/prerender.mjs",
+    "build:site:preview": "node build/prerender.mjs --preview",
+    "serve:site": "python3 -m http.server -d dist-site 4173 --bind 127.0.0.1"
   },
   "dependencies": {
     "maplibre-gl": "6.14.0",

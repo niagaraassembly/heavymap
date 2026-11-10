@@ -1,0 +1,148 @@
+/* HeavyMap public site stylesheet. The selected design's sheets, the
+ * vendored Issue One card styles, and the few rules the prebuilt pages add.
+ * Tokenising the hard-coded colours is build step 3 (spec D, D-T1). */
+@import "../editorial/site.css";
+@import "../editorial/alternate.css";
+@import "../editorial/page-studies.css";
+@import "../desk/desk-publication.css";
+
+/* The original card's variables, mapped to HeavyMap tokens. */
+:root {
+  --sans: Arial, Helvetica, sans-serif;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --hand: var(--serif);
+  --ink-soft: var(--muted);
+  --rule: var(--line);
+  --field: var(--paper);
+}
+
+.preview-banner {
+  margin: 0;
+  padding: 0.35rem 1rem;
+  background: var(--ink);
+  color: var(--paper);
+  font: 0.8rem/1.4 var(--sans);
+  text-align: center;
+}
+
+/* Stage key: swatches plus names, never colour words (spec D section 3). */
+.hm-stage-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  font: 0.8rem/1.5 var(--sans);
+  color: var(--muted);
+}
+.hm-swatch {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-right: 0.35rem;
+  border-radius: 50%;
+  vertical-align: -0.05rem;
+  border: 1.5px solid var(--ink);
+}
+.hm-swatch--done {
+  background: var(--amount-done);
+  border-color: var(--amount-done);
+}
+.hm-swatch--announced {
+  background: var(--amount-announced);
+  border-color: var(--amount-announced);
+}
+.hm-swatch--hollow {
+  background: transparent;
+}
+
+.hm-desk-publication {
+  max-width: 52rem;
+}
+.hm-follow-line {
+  margin: 2rem 0;
+}
+
+/* Item page */
+.hm-item-meta {
+  font: 0.85rem/1.5 var(--sans);
+  color: var(--muted);
+}
+.hm-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.75rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.hm-facts dt {
+  font: 0.75rem/1.4 var(--sans);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.hm-facts dd {
+  margin: 0.15rem 0 0;
+}
+.hm-open-questions,
+.hm-stage-history {
+  margin: 2rem 0;
+}
+.hm-conflicts li,
+.hm-stage-history li {
+  margin: 0.35rem 0;
+}
+.hm-item-tools,
+.hm-also-in,
+.hm-provenance {
+  font: 0.9rem/1.5 var(--sans);
+}
+.hm-provenance {
+  color: var(--muted);
+}
+
+/* Reader shell (spec C fills it in build step 4) */
+.hm-reader-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.hm-reader-list a {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+}
+.hm-reader-list strong {
+  font: 1.1rem/1.35 var(--serif);
+}
+.hm-reader-list small {
+  font: 0.8rem/1.4 var(--sans);
+  color: var(--muted);
+}
+
+/* Map introduction (build step 5 adds the basemap) */
+.hm-map-intro .hm-map-canvas {
+  min-height: 60vh;
+  background: var(--line);
+}
+.hm-map-story {
+  max-width: 38rem;
+  margin: -40vh auto 2rem;
+  position: relative;
+  padding: 1.75rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+.hm-map-intro .map-dock {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  position: sticky;
+}
+
+.hm-not-found,
+.hm-about,
+.hm-subscribe,
+.hm-preferences {
+  padding-block: 3rem;
+}
