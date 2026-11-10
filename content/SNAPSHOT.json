@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "note": "v1 shortcut: reviewed snapshot behind an export-shaped loader (spec B section 7.1). Not the MAKE/Publish export.",
+  "inputs": [
+    {
+      "repo": "niagaraassembly/site",
+      "commit": "9522b3ebd3b4686fab99634bd0e710c883bd1b00",
+      "path": "data/wny/issue-one.json",
+      "sha256": "e3d1fe5dbd0f28fda22d628e14aea337ce0b7d25276f7eb9f775ccfbe4b21837",
+      "generated_at": "2026-10-10T23:13:54+00:00"
+    },
+    {
+      "repo": "niagaraassembly/make",
+      "commit": "d226deb0d9a0337df437e0deefc9651c29df0030",
+      "path": "domains/regional_news/resources/research/news/schema/controlled-values.json",
+      "sha256": "d87f6da65bbc9bcec5574df05393b19d50d6c01a96c41dbf739d93ea40e11441"
+    }
+  ],
+  "produced": {
+    "items": 10,
+    "editions": [
+      "western-new-york/issue-one"
+    ]
+  },
+  "tool": "web/build/snapshot-issue-one.mjs"
+}

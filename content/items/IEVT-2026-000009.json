@@ -1,0 +1,94 @@
+{
+  "id": "IEVT-2026-000009",
+  "type": "news",
+  "title": "Cornell's Peter McMahon receives $1.35M photonics research award",
+  "summary": "Research grant, not a production or hiring commitment: $1.35M over five years for programmable photonic chip research at Cornell.",
+  "regions": [
+    "us-ny-western-new-york"
+  ],
+  "publisher": "desk:us-ny-western-new-york",
+  "status": "published",
+  "published_on": "2026-10-10",
+  "editions": [
+    "western-new-york/issue-one"
+  ],
+  "reported_on": "2026-10-01",
+  "place": "Ithaca, Tompkins County",
+  "stage": "award",
+  "lane": "corridor",
+  "event_type": "grant_or_incentive",
+  "money": {
+    "amount": 1350000,
+    "amount_type": "grant",
+    "ceiling_amount": null,
+    "regional_amount": null,
+    "currency": "USD"
+  },
+  "jobs": {
+    "added": null,
+    "lost": null
+  },
+  "flags": [
+    {
+      "type": "research_only",
+      "detail": ""
+    },
+    {
+      "type": "not_wny_production",
+      "detail": ""
+    }
+  ],
+  "conflicts": [],
+  "stage_history": [
+    {
+      "stage": "award",
+      "date": "2026-10-01",
+      "url": "https://news.cornell.edu/stories/2026/10/mcmahon-gets-moore-foundation-award-programmable-photonic-chips"
+    }
+  ],
+  "incentive": null,
+  "next_step": null,
+  "county": "Tompkins",
+  "county_source": "record",
+  "districts": {
+    "places": [
+      "Ithaca"
+    ],
+    "congress": [
+      "19"
+    ],
+    "senate": [
+      "52"
+    ],
+    "assembly": [
+      "125"
+    ]
+  },
+  "entity": {
+    "id": "E0034",
+    "name": "Cornell University"
+  },
+  "sources": [
+    {
+      "article_id": "ART-2026-000030",
+      "title": "McMahon gets Moore Foundation award for programmable photonic chips",
+      "publisher": "Cornell Chronicle",
+      "url": "https://news.cornell.edu/stories/2026/10/mcmahon-gets-moore-foundation-award-programmable-photonic-chips",
+      "kind": "secondary"
+    }
+  ],
+  "corrections": [],
+  "provenance": {
+    "source": "niagaraassembly/site",
+    "commit": "9522b3ebd3b4686fab99634bd0e710c883bd1b00",
+    "path": "data/wny/issue-one.json",
+    "upstream": {
+      "repo": "niagaraassembly/na-research",
+      "commit": "805fbc2"
+    },
+    "upstream_id": "IEVT-2026-000009",
+    "candidate_id": "EVT-2026-000023",
+    "review_state": "approved",
+    "publish_status": "approved"
+  }
+}

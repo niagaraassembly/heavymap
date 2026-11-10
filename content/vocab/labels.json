@@ -1,0 +1,155 @@
+{
+  "_source": "Ported from niagaraassembly/site assets/js/wny.js at 9522b3e (LANES, STAGES, FLAGS, TYPE_LABELS, SOURCE_KINDS). Paths in new_wording are HeavyMap wording for MAKE values the site never labelled (decision 21) and need Morgen's review.",
+  "new_wording": [
+    "flags.correction",
+    "flags.update",
+    "flags.clarification",
+    "flags.retraction",
+    "flags.unconfirmed",
+    "amount_types.charge"
+  ],
+  "types": {
+    "news": "News",
+    "finding": "Finding",
+    "documentation": "Documentation",
+    "editorial": "Editorial"
+  },
+  "lanes": {
+    "production": "Investment and industry",
+    "developing": "In development",
+    "corridor": "Corridor news"
+  },
+  "lane_order": [
+    "production",
+    "developing",
+    "corridor"
+  ],
+  "stages": {
+    "intent": "Stated intent",
+    "application": "Application only",
+    "announced": "Announced",
+    "approved_plan": "Plan approved",
+    "award": "Contract or award",
+    "under_way": "Under way",
+    "completed": "Completed",
+    "reported_only": "Reported"
+  },
+  "event_types": {
+    "capital_investment": "Capital investment",
+    "equipment_investment": "Equipment",
+    "funding_round": "Funding round",
+    "grant_or_incentive": "Grant",
+    "acquisition": "Acquisition",
+    "divestiture": "Divestiture",
+    "ownership_change": "Ownership change",
+    "major_contract": "Contract",
+    "production_partnership": "Partnership",
+    "facility_opening": "Opening",
+    "facility_expansion": "Expansion",
+    "facility_closure": "Closure",
+    "manufacturing_capacity": "Capacity",
+    "workforce_expansion": "Hiring",
+    "layoff": "Layoffs",
+    "bankruptcy_or_restructuring": "Restructuring",
+    "startup_formation": "Startup",
+    "research_commercialization": "Commercialization",
+    "product_or_process_launch": "Launch",
+    "certification": "Certification",
+    "other_material_update": "Update"
+  },
+  "flags": {
+    "conflict": {
+      "name": "Sources disagree",
+      "tone": "warn",
+      "text": "Sources disagree on {d}"
+    },
+    "gap": {
+      "name": "Not disclosed",
+      "tone": "plain",
+      "text": "{D} not disclosed"
+    },
+    "follow_up": {
+      "name": "Being confirmed",
+      "tone": "plain",
+      "text": "Being confirmed: {d}"
+    },
+    "company_reported": {
+      "name": "Company-reported",
+      "tone": "info",
+      "text": "Company-reported; not independently confirmed"
+    },
+    "secondary_source": {
+      "name": "Secondary listing",
+      "tone": "plain",
+      "text": "From a secondary listing; original notice not accessed"
+    },
+    "ceiling_not_obligation": {
+      "name": "Contract ceiling",
+      "tone": "plain",
+      "text": "Contract ceiling, not money committed or spent"
+    },
+    "identity_unresolved": {
+      "name": "Identity being confirmed",
+      "tone": "warn",
+      "text": "Company identity still being confirmed"
+    },
+    "research_only": {
+      "name": "Research funding",
+      "tone": "info",
+      "text": "Research funding, not a production or hiring commitment"
+    },
+    "not_wny_production": {
+      "name": "Not counted in production totals",
+      "tone": "plain",
+      "text": "Not counted in WNY production totals"
+    },
+    "correction": {
+      "name": "Corrected",
+      "tone": "warn",
+      "text": "Corrected: {d}"
+    },
+    "update": {
+      "name": "Updated",
+      "tone": "info",
+      "text": "Updated: {d}"
+    },
+    "clarification": {
+      "name": "Clarified",
+      "tone": "plain",
+      "text": "Clarified: {d}"
+    },
+    "retraction": {
+      "name": "Retracted",
+      "tone": "warn",
+      "text": "Retracted: {d}"
+    },
+    "unconfirmed": {
+      "name": "Unconfirmed",
+      "tone": "warn",
+      "text": "Not yet confirmed: {d}"
+    }
+  },
+  "amount_types": {
+    "investment": "Investment",
+    "transaction": "Transaction",
+    "proposed": "Proposed",
+    "obligated": "Obligated",
+    "award": "Award",
+    "grant": "Grant",
+    "charge": "Charge"
+  },
+  "incentive_types": {
+    "tax_credit": "Tax credit",
+    "grant": "Grant",
+    "loan": "Loan",
+    "equity_investment": "Equity investment",
+    "accelerator_award": "Accelerator award",
+    "abatement": "Abatement",
+    "other": "Other"
+  },
+  "source_kinds": {
+    "primary": "primary source",
+    "company": "company source",
+    "secondary": "news report"
+  }
+}

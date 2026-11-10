@@ -1,0 +1,136 @@
+{
+  "key": "western-new-york/issue-one",
+  "desk": "us-ny-western-new-york",
+  "slug": "issue-one",
+  "title": "Issue One",
+  "upstream_id": "WNY-2026-001",
+  "status": "published",
+  "complete": true,
+  "coverage": {
+    "start": "2026-09-28",
+    "end": "2026-10-09"
+  },
+  "published_on": "2026-10-10",
+  "summary": "Issue One covers Western New York investment and industry news from Sept. 28 to Oct. 9, 2026. Solstice Advanced Materials announced a $49M Buffalo R&D expansion and Goodyear said it will close its Niagara Falls chemical plant, while defense contracts touched Liverpool, Syracuse and Niagara Falls.",
+  "items": [
+    "IEVT-2026-000001",
+    "IEVT-2026-000002",
+    "IEVT-2026-000003",
+    "IEVT-2026-000004",
+    "IEVT-2026-000005",
+    "IEVT-2026-000006",
+    "IEVT-2026-000007",
+    "IEVT-2026-000008",
+    "IEVT-2026-000009",
+    "IEVT-2026-000010"
+  ],
+  "mentions": [
+    {
+      "name": "David Sewell",
+      "role": "President and CEO",
+      "organization": "Solstice Advanced Materials",
+      "events": [
+        "IEVT-2026-000001"
+      ],
+      "sources": [
+        {
+          "source": "PR Newswire",
+          "url": "https://finance.yahoo.com/technology/articles/solstice-announces-49-million-investment-153200194.html"
+        }
+      ]
+    },
+    {
+      "name": "Kathy Hochul",
+      "role": "Governor of New York",
+      "organization": "State of New York",
+      "events": [
+        "IEVT-2026-000001"
+      ],
+      "sources": [
+        {
+          "source": "Governor Kathy Hochul newsroom",
+          "url": "https://www.governor.ny.gov/news/governor-hochul-announces-solstice-advanced-materials-expand-buffalo"
+        }
+      ]
+    },
+    {
+      "name": "Nicholas Fink",
+      "role": "President and CEO",
+      "organization": "Constellation Brands",
+      "events": [
+        "IEVT-2026-000002"
+      ],
+      "sources": [
+        {
+          "source": "Rochester Business Journal",
+          "url": "https://rbj.net/2026/10/07/constellation-brands-acquires-spikedade-rochester/"
+        }
+      ]
+    },
+    {
+      "name": "Peter McMahon",
+      "role": "Award recipient (Cornell researcher; title not stated in source)",
+      "organization": "Cornell University",
+      "events": [
+        "IEVT-2026-000009"
+      ],
+      "sources": [
+        {
+          "source": "Cornell Chronicle",
+          "url": "https://news.cornell.edu/stories/2026/10/mcmahon-gets-moore-foundation-award-programmable-photonic-chips"
+        }
+      ]
+    },
+    {
+      "name": "Robert Restaino",
+      "role": "Mayor of Niagara Falls",
+      "organization": "City of Niagara Falls",
+      "events": [
+        "IEVT-2026-000004"
+      ],
+      "sources": [
+        {
+          "source": "Niagara Gazette via CNHI",
+          "url": "https://www.cnhi.com/rss_feed/goodyear-will-exit-chemical-business-in-the-falls"
+        }
+      ]
+    },
+    {
+      "name": "Ryan Hulse",
+      "role": "Senior Director for R&D",
+      "organization": "Solstice Advanced Materials",
+      "events": [
+        "IEVT-2026-000001"
+      ],
+      "sources": [
+        {
+          "source": "Governor Kathy Hochul newsroom",
+          "url": "https://www.governor.ny.gov/news/governor-hochul-announces-solstice-advanced-materials-expand-buffalo"
+        }
+      ]
+    },
+    {
+      "name": "Tom Isberg",
+      "role": "Vice President, R&D",
+      "organization": "Solstice Advanced Materials",
+      "events": [
+        "IEVT-2026-000001"
+      ],
+      "sources": [
+        {
+          "source": "PR Newswire",
+          "url": "https://finance.yahoo.com/technology/articles/solstice-announces-49-million-investment-153200194.html"
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "source": "niagaraassembly/site",
+    "commit": "9522b3ebd3b4686fab99634bd0e710c883bd1b00",
+    "path": "data/wny/issue-one.json",
+    "upstream": {
+      "repo": "niagaraassembly/na-research",
+      "commit": "805fbc2"
+    }
+  }
+}

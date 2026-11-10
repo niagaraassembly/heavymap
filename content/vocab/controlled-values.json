@@ -1,0 +1,192 @@
+{
+  "workflow_version": "1.0",
+  "scoring_version": "1.0",
+  "prompt_template_version": "1.0",
+  "decisions": [
+    "A",
+    "E",
+    "R",
+    "D",
+    "F",
+    "H",
+    "X",
+    "N"
+  ],
+  "decision_labels": {
+    "A": "Approve",
+    "E": "Edit/correct",
+    "R": "Reject",
+    "D": "Retain with doubt",
+    "F": "Follow-up research",
+    "H": "Hold",
+    "X": "Conflicting evidence",
+    "N": "Not applicable"
+  },
+  "event_types": [
+    "startup_formation",
+    "capital_investment",
+    "facility_opening",
+    "facility_expansion",
+    "facility_closure",
+    "equipment_investment",
+    "manufacturing_capacity",
+    "funding_round",
+    "grant_or_incentive",
+    "acquisition",
+    "divestiture",
+    "ownership_change",
+    "major_contract",
+    "production_partnership",
+    "research_commercialization",
+    "certification",
+    "workforce_expansion",
+    "layoff",
+    "bankruptcy_or_restructuring",
+    "product_or_process_launch",
+    "other_material_update"
+  ],
+  "confidence": [
+    "low",
+    "medium",
+    "high"
+  ],
+  "publish_status": [
+    "not_ready",
+    "eligible",
+    "drafted",
+    "approved",
+    "published"
+  ],
+  "match_status": [
+    "proposed",
+    "unresolved",
+    "no_match",
+    "new_entity",
+    "facility",
+    "alias",
+    "incidental"
+  ],
+  "follow_up_status": [
+    "open",
+    "assigned",
+    "resolved",
+    "cancelled"
+  ],
+  "trigger_types": [
+    "scheduled",
+    "manual_scan",
+    "manual_url",
+    "follow_up",
+    "saturday_resolution"
+  ],
+  "lanes": [
+    "production",
+    "developing",
+    "corridor",
+    "excluded"
+  ],
+  "stages": [
+    "intent",
+    "application",
+    "announced",
+    "approved_plan",
+    "award",
+    "under_way",
+    "completed",
+    "reported_only"
+  ],
+  "flag_types": [
+    "conflict",
+    "gap",
+    "follow_up",
+    "company_reported",
+    "secondary_source",
+    "ceiling_not_obligation",
+    "identity_unresolved",
+    "research_only",
+    "not_wny_production",
+    "correction",
+    "update",
+    "clarification",
+    "retraction",
+    "unconfirmed"
+  ],
+  "flag_type_definitions": {
+    "conflict": "Two sources disagree on the same fact and both still stand. Stelco employment-undertaking compliance (union vs company) stays conflict.",
+    "gap": "A required field is missing (amount, jobs, date).",
+    "follow_up": "An open question for a later pass (FUP- id when minted).",
+    "company_reported": "The company is the source; treat as attributed, not independently confirmed.",
+    "secondary_source": "Coverage is not the primary record (news recap of a filing).",
+    "ceiling_not_obligation": "A contract ceiling is not money in hand.",
+    "identity_unresolved": "Legal entity or site is not matched (TCS Electronics vs E0027).",
+    "research_only": "Useful context that must not become a digest finding.",
+    "not_wny_production": "Not in-region production for the Western New York desk.",
+    "correction": "Later or more precise information replaces an earlier stated fact or its scope. Stelco export_decline_scope (58% is Canadian cold-rolled and coated steel to the US, not company-only or all steel) is correction, detail exports_scope — not conflict.",
+    "update": "New information adds to a still-valid earlier claim without saying it was wrong (further layoff counts on the same Stelco event).",
+    "clarification": "Wording or context restated; the numeric fact is unchanged.",
+    "retraction": "The original claim is withdrawn. Stronger than correction. Flags digest items that carried it (SI-026).",
+    "unconfirmed": "Attributed, not established. Use detail county for SI-003 multi-site county (Fathom Farmington / Ontario County). Not a finding-confidence word."
+  },
+  "amount_types": [
+    "investment",
+    "transaction",
+    "proposed",
+    "obligated",
+    "award",
+    "grant",
+    "charge"
+  ],
+  "incentive_types": [
+    "tax_credit",
+    "grant",
+    "loan",
+    "equity_investment",
+    "accelerator_award",
+    "abatement",
+    "other"
+  ],
+  "region_types": [
+    "editorial"
+  ],
+  "public_source_types": [
+    "aggregator",
+    "broadcast",
+    "business_news",
+    "company",
+    "directory",
+    "economic_development",
+    "government",
+    "industry_association",
+    "mirror",
+    "news",
+    "newswire",
+    "procurement",
+    "public_notices",
+    "regulatory_filings",
+    "trade_press",
+    "union",
+    "university"
+  ],
+  "article_types": [
+    "government_release",
+    "company_release",
+    "regulatory_filing",
+    "news_report",
+    "trade_press",
+    "media_advisory",
+    "announcement",
+    "university_announcement",
+    "union_statement",
+    "procurement_notice",
+    "other"
+  ],
+  "tools": [
+    "codex",
+    "grok",
+    "cursor",
+    "claude",
+    "chatgpt",
+    "manual",
+    "fake"
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "id": "IEVT-2026-000004",
+  "type": "news",
+  "title": "Goodyear to close Niagara Falls chemical plant",
+  "summary": "Goodyear plans to close its Niagara Falls chemical plant, with production expected to end Oct. 31, 2026. Sources differ on jobs: about 85 across two sites (SEC filing) vs. 60 local (Niagara Gazette).",
+  "regions": [
+    "us-ny-western-new-york"
+  ],
+  "publisher": "desk:us-ny-western-new-york",
+  "status": "published",
+  "published_on": "2026-10-10",
+  "editions": [
+    "western-new-york/issue-one"
+  ],
+  "reported_on": "2026-09-29",
+  "place": "Niagara Falls, Niagara County",
+  "stage": "approved_plan",
+  "lane": "production",
+  "event_type": "facility_closure",
+  "money": {
+    "amount": null,
+    "amount_type": null,
+    "ceiling_amount": null,
+    "regional_amount": null,
+    "currency": null
+  },
+  "jobs": {
+    "added": null,
+    "lost": null
+  },
+  "flags": [
+    {
+      "type": "conflict",
+      "detail": "jobs_lost"
+    },
+    {
+      "type": "conflict",
+      "detail": "other_site"
+    },
+    {
+      "type": "gap",
+      "detail": "warn_notice"
+    }
+  ],
+  "conflicts": [
+    {
+      "field": "jobs_lost",
+      "values": [
+        {
+          "value": "About 85 jobs across Niagara Falls and Bayport, Texas combined; no Niagara Falls-only figure",
+          "source": "SEC EDGAR / Goodyear",
+          "url": "https://www.sec.gov/Archives/edgar/data/42582/000162828026064270/gt-20260929.htm"
+        },
+        {
+          "value": "60 local jobs",
+          "source": "Niagara Gazette via CNHI",
+          "url": "https://www.cnhi.com/rss_feed/goodyear-will-exit-chemical-business-in-the-falls"
+        },
+        {
+          "value": "Niagara Falls-only headcount not confirmed",
+          "source": "WKBW",
+          "url": "https://www.wkbw.com/niagara-county/community-responds-to-goodyear-closing-in-niagara-falls"
+        }
+      ]
+    },
+    {
+      "field": "other_site",
+      "values": [
+        {
+          "value": "Bayport, Texas",
+          "source": "SEC EDGAR / Goodyear",
+          "url": "https://www.sec.gov/Archives/edgar/data/42582/000162828026064270/gt-20260929.htm"
+        },
+        {
+          "value": "Pasadena, Texas",
+          "source": "Niagara Gazette via CNHI",
+          "url": "https://www.cnhi.com/rss_feed/goodyear-will-exit-chemical-business-in-the-falls"
+        }
+      ]
+    }
+  ],
+  "stage_history": [
+    {
+      "stage": "approved_plan",
+      "date": "2026-10-01",
+      "url": "https://www.sec.gov/Archives/edgar/data/42582/000162828026064270/gt-20260929.htm"
+    }
+  ],
+  "incentive": null,
+  "next_step": {
+    "text": "Production ends; decommissioning follows",
+    "date": "2026-10-31"
+  },
+  "county": "Niagara",
+  "county_source": "record",
+  "districts": {
+    "places": [
+      "Niagara Falls"
+    ],
+    "congress": [
+      "26"
+    ],
+    "senate": [
+      "62"
+    ],
+    "assembly": [
+      "145"
+    ]
+  },
+  "entity": {
+    "id": "E0148",
+    "name": "The Goodyear Tire & Rubber Company"
+  },
+  "sources": [
+    {
+      "article_id": "ART-2026-000007",
+      "title": "The Goodyear Tire & Rubber Company Form 8-K: chemical facility closure plan",
+      "publisher": "SEC EDGAR / Goodyear",
+      "url": "https://www.sec.gov/Archives/edgar/data/42582/000162828026064270/gt-20260929.htm",
+      "kind": "primary"
+    },
+    {
+      "article_id": "ART-2026-000018",
+      "title": "Goodyear will exit chemical business in the Falls",
+      "publisher": "Niagara Gazette via CNHI",
+      "url": "https://www.cnhi.com/rss_feed/goodyear-will-exit-chemical-business-in-the-falls",
+      "kind": "secondary"
+    },
+    {
+      "article_id": "ART-2026-000008",
+      "title": "Goodyear Chemical shutting down Niagara Falls facility",
+      "publisher": "Spectrum News",
+      "url": "https://spectrumlocalnews.com/nys/buffalo/news/2026/10/01/goodyear-chemical-shutting-down-niagara-falls-facility",
+      "kind": "secondary"
+    },
+    {
+      "article_id": "ART-2026-000009",
+      "title": "Goodyear closing Niagara Falls plant at end of October",
+      "publisher": "WBEN / Audacy",
+      "url": "https://www.audacy.com/wben/news/business/goodyear-closing-niagara-falls-plant-at-end-of-october",
+      "kind": "secondary"
+    },
+    {
+      "article_id": "ART-2026-000010",
+      "title": "Goodyear's Niagara Falls chemical plant to close",
+      "publisher": "Buffalo Toronto Public Media",
+      "url": "https://www.btpm.org/local/2026-10-02/goodyears-niagara-falls-chemical-plant-to-close",
+      "kind": "secondary"
+    },
+    {
+      "article_id": "ART-2026-000032",
+      "title": "Community responds to Goodyear closing in Niagara Falls",
+      "publisher": "WKBW",
+      "url": "https://www.wkbw.com/niagara-county/community-responds-to-goodyear-closing-in-niagara-falls",
+      "kind": "secondary"
+    }
+  ],
+  "corrections": [],
+  "provenance": {
+    "source": "niagaraassembly/site",
+    "commit": "9522b3ebd3b4686fab99634bd0e710c883bd1b00",
+    "path": "data/wny/issue-one.json",
+    "upstream": {
+      "repo": "niagaraassembly/na-research",
+      "commit": "805fbc2"
+    },
+    "upstream_id": "IEVT-2026-000004",
+    "candidate_id": "EVT-2026-000005",
+    "review_state": "approved",
+    "publish_status": "approved"
+  }
+}

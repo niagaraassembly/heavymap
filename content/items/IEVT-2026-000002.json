@@ -1,0 +1,96 @@
+{
+  "id": "IEVT-2026-000002",
+  "type": "news",
+  "title": "Constellation Brands buys SpikedAde for $75M",
+  "summary": "SpikedAde production location not disclosed.",
+  "regions": [
+    "us-ny-western-new-york"
+  ],
+  "publisher": "desk:us-ny-western-new-york",
+  "status": "published",
+  "published_on": "2026-10-10",
+  "editions": [
+    "western-new-york/issue-one"
+  ],
+  "reported_on": "2026-10-06",
+  "place": "Rochester (buyer HQ)",
+  "stage": "completed",
+  "lane": "production",
+  "event_type": "acquisition",
+  "money": {
+    "amount": 75000000,
+    "amount_type": "transaction",
+    "ceiling_amount": null,
+    "regional_amount": null,
+    "currency": "USD"
+  },
+  "jobs": {
+    "added": null,
+    "lost": null
+  },
+  "flags": [
+    {
+      "type": "gap",
+      "detail": "production_location"
+    }
+  ],
+  "conflicts": [],
+  "stage_history": [
+    {
+      "stage": "completed",
+      "date": "2026-10-07",
+      "url": "https://rbj.net/2026/10/07/constellation-brands-acquires-spikedade-rochester/"
+    }
+  ],
+  "incentive": null,
+  "next_step": {
+    "text": "SpikedAde team moves into Constellation's Beer Division",
+    "date": ""
+  },
+  "county": "Monroe",
+  "county_source": "record",
+  "districts": {
+    "places": [
+      "Rochester"
+    ],
+    "congress": [
+      "25"
+    ],
+    "senate": [
+      "56",
+      "55"
+    ],
+    "assembly": [
+      "137",
+      "136",
+      "138"
+    ]
+  },
+  "entity": {
+    "id": "E0145",
+    "name": "Constellation Brands"
+  },
+  "sources": [
+    {
+      "article_id": "ART-2026-000026",
+      "title": "Constellation Brands acquires SpikedAde for $75M",
+      "publisher": "Rochester Business Journal",
+      "url": "https://rbj.net/2026/10/07/constellation-brands-acquires-spikedade-rochester/",
+      "kind": "secondary"
+    }
+  ],
+  "corrections": [],
+  "provenance": {
+    "source": "niagaraassembly/site",
+    "commit": "9522b3ebd3b4686fab99634bd0e710c883bd1b00",
+    "path": "data/wny/issue-one.json",
+    "upstream": {
+      "repo": "niagaraassembly/na-research",
+      "commit": "805fbc2"
+    },
+    "upstream_id": "IEVT-2026-000002",
+    "candidate_id": "EVT-2026-000019",
+    "review_state": "approved",
+    "publish_status": "approved"
+  }
+}
