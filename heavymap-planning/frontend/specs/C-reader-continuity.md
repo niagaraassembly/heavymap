@@ -1,6 +1,6 @@
 # Spec C: Reader and reading continuity
 
-Status: **draft for Morgen's review**, 2026-11-10. Local issue HM-005. Written against branch `heavymap-mainsite-v1`.
+Status: **draft; open questions answered** (decisions 27–31), 2026-11-10. Local issue HM-005. Written against branch `heavymap-mainsite-v1`.
 Depends on: [Spec A](A-product-structure.md) (surfaces, URLs, Reader query parameters in section 5.3); [Spec B](B-content-model.md) (item types, IDs, status, presentation in section 10); the frontend v1 decisions of 2026-11-10 (D9 to D12).
 Reference implementation: `web/src/editorial/reader-state.js` (`heavymap-reader-v1`) and the Reader code in `alternate.js`. They are a starting point, not the contract.
 
@@ -39,12 +39,12 @@ Unchanged from the earlier direction:
 
 | Event | Trigger | Effect |
 | --- | --- | --- |
-| `opened` | Item page or Reader pane shows the item's body. **Proposed** for edition cards: the card has been at least 50% visible for at least 2 seconds. | sets `lastOpened` |
+| `opened` | Item page or Reader pane shows the item's body. **Decided (27)** for edition cards: the card has been at least 50% visible for at least 2 seconds. | sets `lastOpened` |
 | `progressed` | scroll settles (debounced, as the prototype does) | sets `position` (section 3.1) |
 | `endReached` | the item's **end marker** (the prototype's `.reading-end`; on edition cards, the card's bottom edge) has been visible for at least 1 second | sets `readAt`, unless suppressed (section 3.2) |
 | `markedRead` / `markedUnread` | explicit button | sets `readAt` or `unreadAt`; explicit actions always win |
 
-**Why dwell thresholds.** A full edition page has every card open (spec B section 10.1). Without a dwell rule, flicking down the page would mark everything read. The thresholds are proposals to confirm when the page is built (C-Q1).
+**Why dwell thresholds.** A full edition page has every card open (spec B section 10.1). Without a dwell rule, flicking down the page would mark everything read. The thresholds are decided as a starting point and get tuned once the page is built (decision 27).
 
 ### 3.1 Position that survives layout changes
 
@@ -68,7 +68,7 @@ Here a block is a section heading or paragraph group, or a fact/flag/source bloc
 1. Take the most recent `opened` entry across all surfaces.
 2. If it is an **item** that isn't read and is still eligible, the cue reads: "You left off with *{title}*. Continue reading →". It links to the surface last used: `/read/<id>/` or `/reader/?item=<id>`.
 3. If it is an **edition position**, the cue reads: "You left off in *{Desk} {Edition}*. Continue →". It links to the edition at that card's anchor.
-4. If the most recent item is already read, there is **no cue**. The home page doesn't suggest "next unread", to stay unobtrusive (C-Q2).
+4. If the most recent item is already read, there is **no cue**. The home page doesn't suggest "next unread", to stay unobtrusive (decision 28).
 5. Retired, removed or ineligible targets produce no cue. Their history entry is kept (section 7).
 
 The cue includes **"Forget history"**, as in the prototype (section 6.4).
@@ -106,7 +106,7 @@ The filters are never cleared silently. (The prototype clears the "unread only" 
 
 ### 5.3 Order and previous/next
 
-- **Library order:** newest first, by `published_on`, then edition section order, then ID. *Proposed.* The Reader is not an edition; it never claims edition order.
+- **Library order:** newest first, by `published_on`, then edition section order, then ID. *Decided (30).* The Reader is not an edition; it never claims edition order.
 - **Previous/next** moves through the **currently filtered** library order and says so: "3 of 12 · News · Western New York".
 - **Edition pages** have their own order (spec B section 3) and no previous/next across editions in v1.
 
@@ -188,7 +188,12 @@ Timestamps are kept to the minute. They are local, never sent anywhere, and only
 ### 6.4 Forgetting
 
 - **"Forget reading history"** removes `heavymap-reading-v2` entirely, including saved filters. It never touches the theme key or anything subscription-related. *Proposed* confirmation copy: "Forget what you've read on this device? Your theme stays as it is."
-- **Per-item removal** isn't offered in v1 (C-Q3).
+- **Per-item removal** is offered in v1 (decision 29):
+  - each library entry that has history gets a "Remove from history" control in its overflow menu, and the item page gets the same control next to Mark read/unread;
+  - removal deletes that item's entry (`o`, `p`, `via`, `r`, `u`); if `last` points to it, `last` is cleared, so the cue disappears;
+  - it removes the item from *history*, not from the library: the item stays listed, as unread;
+  - no confirmation dialog; the `role="status"` region announces "Removed from your history" with an Undo action for the rest of the page view;
+  - edition positions are removed only by "Forget reading history".
 
 ### 6.5 Migration from the prototype (`heavymap-reader-v1`)
 
@@ -207,7 +212,7 @@ The prototype was never public, so this migration exists mainly for reviewers.
 
 | Change | Effect on history |
 | --- | --- |
-| `updated_on` later than the reader's `r` | the library and item page show a quiet "Updated since you read it" line. `r` stays. *Proposed.* |
+| `updated_on` later than the reader's `r` | the library and item page show a quiet "Updated since you read it" line. `r` stays. *Decided (31).* |
 | Item retired | entry kept and hidden; any cue pointing to it disappears |
 | Item body restructured | the position falls back to the start (section 3.1) |
 | Item removed from the catalogue without a tombstone | not allowed; spec B section 5 requires retirement, not deletion |
@@ -218,15 +223,16 @@ These are the behaviours a focused check must show. They aren't a test plan:
 - Every row in sections 3, 5.2 and 6.3.
 - A shared Reader URL leaves the recipient's saved filters unchanged.
 - "Forget" leaves the theme unchanged.
+- Removing one item clears its entry and any cue pointing to it, and Undo restores it.
 - Fast scrolling through an edition doesn't mark cards read.
 - An item opened on `/read/` and later in the Reader resumes at the same block.
 
-## 9. Open questions for Morgen
+## 9. Answers (Morgen, 2026-11-10)
 
-| ID | Question | Proposed answer |
+| ID | Question | Decision |
 | --- | --- | --- |
-| C-Q1 | Dwell thresholds on edition cards: 50% visible for 2 s to count as opened, and the bottom edge visible for 1 s to count as read? | Accept for now; tune once the page is built |
-| C-Q2 | When the last item is already read, show no cue, or "Next unread: …"? | No cue (unobtrusive) |
-| C-Q3 | Should individual items be removable from history in v1? | No; one "Forget reading history" control |
-| C-Q4 | Library order newest first by publication date, with edition order as the tie-break? | Yes |
-| C-Q5 | Show "Updated since you read it"? | Yes, quietly |
+| C-Q1 | Edition dwell thresholds | 50% visible for 2 s = opened; bottom edge for 1 s = read; tune later (27) |
+| C-Q2 | Cue when the last item is read | No cue (28) |
+| C-Q3 | Per-item history removal | **Yes**, alongside "Forget reading history" (29; section 6.4) |
+| C-Q4 | Library order | Newest first by publication date, edition order as tie-break (30) |
+| C-Q5 | "Updated since you read it" | Yes, quietly; the item stays read (31) |
