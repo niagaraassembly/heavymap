@@ -1,6 +1,6 @@
 # Spec B: content model, provenance and migration scope
 
-Status: **draft for Morgen's review**, 2026-11-10. Local issue HM-004. Written against branch `heavymap-mainsite-v1` (commit 49957f8).
+Status: **draft for Morgen's review**, 2026-11-10; B-Q1 to B-Q7 answered the same day, and news presentation added (section 10). Local issue HM-004. Written against branch `heavymap-mainsite-v1` (commit 49957f8).
 Depends on: [SPEC-PLAN.md](../SPEC-PLAN.md) section 3B; [Spec A](A-product-structure.md); the frontend v1 decisions recorded 2026-11-10 (D3, D9 to D11).
 Authoritative constraints: [HARD-RULES](../../../docs/for-agents/HARD-RULES.md), in particular rules 2, 8 and 12, and [publish-visibility.md](../../../docs/architecture/publish-visibility.md).
 
@@ -81,7 +81,15 @@ Rules:
 | `stage` | yes | vocabulary owned by the research system and consumed as-is. Values seen: `intent`, `announced`, `application`, `approved_plan`, `award`, `completed`. |
 | `lane` | yes | research-system vocabulary, consumed as-is. Values seen: `production`, `developing`, `corridor`. |
 
-HeavyMap **does not redefine** `stage` or `lane`. Their authoritative definitions belong to the MAKE research system. Display labels for them are a frontend table. *Open (B-Q4):* where the authoritative vocabulary file lives, so the build can validate against it instead of against values seen.
+**Vocabulary authority (decided, B-Q4).**
+- **Values:** MAKE's `domains/regional_news/resources/research/news/schema/controlled-values.json` (pinned revision; `d226deb` checked 2026-11-10) is authoritative for stages, event types, lanes, flag types, amount types, incentive types and publish status.
+- **Display wording:** HeavyMap's `content/vocab/labels.json`, ported from the source site's `wny.js` (`STAGES`, `TYPE_LABELS`, `FLAGS`, `SOURCE_KINDS`).
+- **Gaps in the ported wording** that need new text:
+  - flag types `correction`, `update`, `clarification`, `retraction` and `unconfirmed`;
+  - amount type `charge`.
+- **Lane `excluded`** never reaches public pages.
+- **The build fails** on any value that isn't in the pinned MAKE file, and on any value without a label.
+- **Source kind** (`primary`, `company`, `secondary`) is **not** in MAKE's file. It appears to be produced by the site's export step. *Open (B-Q8):* trace where it is derived, then pin that definition.
 
 **Upstream structured fields.** The full source record (`niagaraassembly/site` `data/wny/issue-one.json` at `9522b3e`, checked 2026-11-10) carries more than the prototype's frozen copy. *Proposed:* import these as upstream-owned, read-only fields and display them through label tables. HeavyMap does not edit them.
 
@@ -93,9 +101,14 @@ HeavyMap **does not redefine** `stage` or `lane`. Their authoritative definition
 | `flags` | `flags` | e.g. `ceiling_not_obligation`, `conflict:<field>`, `gap:<field>`, `secondary_source`, `company_reported`, `identity_unresolved`, `not_wny_production`, `research_only`. These drive the source-aware labels. |
 | `conflicts` | `conflicts` | per-field competing values with their source. Shown, never resolved by HeavyMap. |
 | `stage_history` | `stage_history` | dated stages with source URL. Each entry is historical. |
-| `county`, `districts`, `lng` (and any coordinates) | not imported in v1 | geographic association belongs to spec F; no map pins from news in v1 |
+| `incentive` | `incentive` | public support (`amount`, `type`, `program`). Never added to dollar figures, never summed. |
+| `next_step` | `next_step` | `{ text, date }`, with a partial date allowed (`YYYY`, `YYYY-MM`). Feeds "Coming up". |
+| `county`, `districts` | `county`, `districts` | feed the "By district" panel (section 9). Matched by town, not exact address, as the original states. |
+| `lng` (and any coordinates) | not imported in v1 | no map pins from news in v1; geographic association belongs to spec F |
 | `entity_id`, `entity_name` | `entity` | company or organisation reference |
-| `people` (top-level table) | **not imported** | see B-Q7 |
+| `people` (top-level table) | `mentions` (edition level) | **Decided (B-Q7):** mirror the original "Mentions" panel. Import `name`, `role`, `organization`, `source`, `url`, and the `event_id` link, only for people on **published** items, one entry per name, as the source site's `mentionsFor()` does. |
+
+**On HARD-RULES 2.** Morgen decided on 2026-11-10 that people named in published Desk news are shown as the original issue shows them. This applies to editorially published news only. It doesn't extend to parcel, owner, registry or grant **data tables** from the Atlas, which stay screened.
 | `publish_status`, `review_state` | checked at migration | only `approved`/`approved` items are eligible |
 
 **`finding`**: a HeavyMap evidence reading from mapping work.
@@ -213,7 +226,19 @@ content/
 
 **Out:** no crawling or import from niagaraassembly.com at build time. Migration (section 8) is a one-off, reviewed conversion into `content/`.
 
-*Open (B-Q1):* whether `content/` lives in the heavymap frontend repo (proposed) or comes from MAKE as a pinned export.
+### 7.1 Data source: target and v1 shortcut (decided, B-Q1)
+
+**Target.** Content arrives as a **hashed export produced by the MAKE research system**. A Publish service (`niagaraassembly/publish`, still in development) delivers it, probably drawing on several stored sources. HeavyMap is coded against that interface, but v1 doesn't wait for it.
+
+**v1 shortcut: snapshot into `content/`.**
+1. A one-off, reviewed conversion takes the existing published data into `content/`:
+   - `niagaraassembly/site` `data/wny/issue-one.json` at a pinned commit;
+   - the ready editions listed in section 8;
+   - MAKE's `controlled-values.json`.
+2. Each snapshot records its source (repo or path, commit, and the SHA-256 of each input) in `content/SNAPSHOT.json`.
+3. The build reads `content/` through a **loader interface shaped like the future export**: a manifest with hashes, plus per-entity record files. When the Publish service exists, only the loader changes.
+
+*Open (B-Q9):* the actual live sources behind the MAKE export (which stored locations, which formats) need confirming with MAKE's and Publish's owners before the loader is final.
 
 ## 8. Migration scope
 
@@ -221,8 +246,10 @@ content/
 
 | Material | Eligible | Notes |
 | --- | --- | --- |
-| WNY Desk editions and their items | **yes** | starting with Issue One |
-| Niagara–Brant Desk editions | yes, when they exist | none exist; never invent |
+| WNY Issue One | **yes, all 10 items** (B-Q6) | `complete: true` |
+| WNY Issue Two | **yes, at launch** | Morgen 2026-11-10: material ready; source location to be provided (B-Q10) |
+| Niagara–Brant Issue One | **yes, at launch** | Morgen 2026-11-10: material ready; source location to be provided (B-Q10) |
+| Later Desk editions | yes, when approved | never invent |
 | HeavyMap documentation drafts (project scope list) | yes, as `preview` until approved | "What HeavyMap is", methodology, dossier guide, CA/US glossary (`docs/for-humans/GLOSSARY.md` exists), FAQ, licensing, coverage and limitations |
 | Other Niagara Assembly publications (magazines, unrelated Reader items) | **no** | excluded by direction |
 | Desk photos | yes, with credits | two current assets |
@@ -311,14 +338,55 @@ Section keys and headings must be taken from the original edition during migrati
 }
 ```
 
-## 10. Open questions for Morgen
+## 10. News item presentation (decided 2026-11-10)
 
-| ID | Question | Proposed answer |
+News items mirror, in the details they reveal, how the original WNY Issue One shows them on niagaraassembly.com. The reference is `assets/js/wny.js` `renderItem()`, `renderCompact()` and the issue-page panels at `9522b3e`.
+
+### 10.1 Edition page: the original card, in full
+
+Every news item on an edition page is a **full card**, with no click needed to reveal it. The blocks appear in the original's order:
+
+| # | Block | Content | Rules |
+| --- | --- | --- | --- |
+| 1 | Top line | stage label; amount with its `amount_type`; contract ceiling as a separate "Contract ceiling $X" | amount tone follows stage; a ceiling is never shown as the amount |
+| 2 | Headline | `title` | **links to `/read/<id>/`** (D10). The original linked to the first source; on HeavyMap the sources stay in block 8. |
+| 3 | Meta | event type · `reported_on` · place · entity | skip blanks; never fill them in |
+| 4 | Note | `summary` | |
+| 5 | Facts | Jobs (added/lost) · Public support · Next (text, partial date) · Districts · Stage history (`Announced Oct 9 → …`) | each row shown only when the data has it |
+| 6 | Flags | `warn`/`info` flags as chips; `plain` flags as one sentence line | wording from `labels.json` |
+| 7 | Conflicts | "Sources disagree on {field}", listing each value with its source | never resolved |
+| 8 | Sources | "Source(s): publisher (kind); …" | source kind wording from `labels.json` |
+| 9 | Tools | Copy link (copies `/read/<id>/`) | |
+
+**Edition-level panels**, all mirroring the original:
+- **Lane sections:** Investment and industry (`production`), In development (`developing`), Corridor news (`corridor`), with the original's one-line descriptions.
+- **Stage key:** green = completed, yellow = announced, hollow = in development.
+- **Coming up:** dated next steps, soonest first, each linking to its card.
+- **Dollar figures:** grouped by kind of money; contract ceilings left out; "each figure is its own kind of money"; no sum across kinds.
+- **Jobs:** figures as the sources state them; where sources disagree, each figure is shown.
+- **Public support:** incentives kept apart from the dollar figures.
+- **Mentions:** people named, with role and organisation (section 2.3).
+- **By district:** districts covering the story places, matched by town, each opening its stories; includes the "How districts are matched" note.
+
+### 10.2 Item page and Reader pane: same information, HeavyMap layout
+
+`/read/<id>/` and the Reader pane show **all of blocks 1 and 3 to 9** (the headline is the page title), styled in the selected HeavyMap design rather than as the original card. Nothing the edition card reveals is dropped.
+
+### 10.3 Lists
+
+Lists use the **compact line**: Reader library, home "recent", Desk archive. The line is the headline, then stage · type · date · place · entity, as in the original's `renderCompact()`.
+
+## 11. Answers and remaining questions
+
+| ID | Question | Decision (Morgen, 2026-11-10) or proposal |
 | --- | --- | --- |
-| B-Q1 | Where do `content/` files live? | heavymap frontend repo, reviewed by PR |
-| B-Q2 | Finding and editorial ID forms | `HMF-YYYY-NNNNNN` and `HME-YYYY-NNNNNN`; documentation uses slugs |
-| B-Q3 | Should news briefs carry a byline? | No byline unless the original published one; the publisher is the Desk |
-| B-Q4 | Where is the authoritative `stage` / `lane` / source `kind` vocabulary? | Point the build at the MAKE research-system definition; ask MAKE's owner |
-| B-Q5 | Should sources be archived (snapshots) at publication? | Desirable; defer to after v1 unless the research system already stores them |
-| B-Q6 | Should Issue One be migrated in full before launch (`complete: true`), or launched as the nine selected items? | Migrate in full; partial editions confuse redirects |
-| B-Q7 | Is `IEVT-2026-000009` (a named researcher's grant) eligible, and should the upstream `people` table ever be imported? HARD-RULES 2 screens "personal names on grant or registry tables"; this is published editorial text, not a data table, but it is close to that line. | Include the item as published text; never import `people` as structured data; Morgen to confirm |
+| B-Q1 | Where content comes from | Target: hashed MAKE export via Publish. v1: snapshot into `content/` behind an export-shaped loader (section 7.1). |
+| B-Q2 | Finding and editorial IDs | `HMF-YYYY-NNNNNN` and `HME-YYYY-NNNNNN`; documentation uses slugs. |
+| B-Q3 | News bylines | Only when the original carried one; the publisher is the Desk. |
+| B-Q4 | Vocabulary authority | MAKE values plus HeavyMap labels (section 2.3). |
+| B-Q5 | Source snapshots | Deferred past v1. |
+| B-Q6 | Issue One | All 10 items, `complete: true`. |
+| B-Q7 | `IEVT-2026-000009` and people | Mirror the original: include the item and the Mentions panel. |
+| B-Q8 | **Open:** origin of source kind (`primary`/`company`/`secondary`) | Trace in the site export step and pin it. |
+| B-Q9 | **Open:** live sources behind the MAKE export | Confirm with MAKE's and Publish's owners. |
+| B-Q10 | **Open:** location of WNY Issue Two and Niagara–Brant Issue One | Not in the tracked `site`, `make`, `service-data` or `publish` repos as of 2026-11-10; Morgen to point to them. |

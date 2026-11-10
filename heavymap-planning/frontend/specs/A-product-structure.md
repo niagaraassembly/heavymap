@@ -1,6 +1,6 @@
 # Spec A: product structure and regional availability
 
-Status: **draft for Morgen's review**, 2026-11-10. Local issue HM-003. Written against branch `heavymap-mainsite-v1` (commit 49957f8).
+Status: **draft for Morgen's review**, 2026-11-10; open questions A-Q1 to A-Q5 answered the same day (section 7). Local issue HM-003. Written against branch `heavymap-mainsite-v1` (commit 49957f8).
 Depends on: [SPEC-PLAN.md](../SPEC-PLAN.md) section 3A, and the frontend v1 decisions recorded 2026-11-10 (`~/inbox/projects/heavymap/decisions/2026-11-10-frontend-v1-decisions.md`, copied into section 1 below).
 Companion: [Spec B: content model](B-content-model.md). Spec B defines the terms used here (Desk, edition, item, region, geography).
 
@@ -84,7 +84,7 @@ One hand-maintained file, `content/regions.json`, read by the build (spec B sect
       "country": "CA",
       "subdivision": "CA-ON",
       "coverage": "Industrial economies across the Niagara Peninsula, Hamilton and Brantford.",
-      "desk": { "status": "preparing", "since": null },
+      "desk": { "status": "published", "since": null },
       "geographies": [
         { "id": "hm:ca:on:hamilton", "slug": "hamilton", "name": "City of Hamilton", "map": { "status": "preparing" } }
       ]
@@ -95,7 +95,7 @@ One hand-maintained file, `content/regions.json`, read by the build (spec B sect
 
 The coverage sentences are copied from the source site's `desks.json`.
 
-Niagara–Brant `desk.status` is shown as `preparing` because the source site lists the Desk with `data: null` and no editions. Confirm whether it counts as published, since its Desk page exists live on niagaraassembly.com. (**Open**, see A-Q2.)
+Niagara–Brant `desk.status` is `published` (A-Q2). `since` stays `null` until its Issue One date is known. The source site still lists the Desk with `data: null`.
 
 ### 3.3 Capability states (proposed vocabulary)
 
@@ -120,10 +120,10 @@ Rules:
 
 | Region | Desk | Editions | Map geographies |
 | --- | --- | --- | --- |
-| Western New York | published (Issue One, 2026-10-10) | 1 known | none planned |
-| Niagara–Brant | preparing (A-Q2) | 0 | Hamilton: preparing |
+| Western New York | published (Issue One, 2026-10-10) | Issue One published; **Issue Two ready** for launch | none planned |
+| Niagara–Brant | published (A-Q2) | **Issue One ready** for launch | Hamilton: preparing (map introduction only, section 7.1) |
 
-This matrix records known facts only. It makes no readiness claim.
+"Ready" is Morgen's statement of 2026-11-10. The source files haven't been located in the tracked repos yet (spec B section 8). This matrix makes no map-readiness claim.
 
 ## 4. Page states
 
@@ -174,7 +174,7 @@ All pages are prebuilt (D1) and served as directory indexes with trailing slashe
 | `/editions/<desk-slug>/<edition-slug>/` | Edition | `issue-one`; keeps the prototype's shape |
 | `/read/<item-id>/` | Item page (canonical, D10) | ID as defined in spec B, e.g. `IEVT-2026-000001`, `reading-the-evidence` |
 | `/reader/` | Reader workspace | client-side state in query (section 5.3) |
-| `/map/` | Map landing | lists published geographies; only generated once one exists |
+| `/map/` | Map introduction (v1) and later the map landing | basemap-only Hamilton view plus HeavyMap story modal (section 7.1); later lists published geographies |
 | `/map/<geography-slug>/` | Map workspace | `hamilton`; deep-link parameters belong to spec F |
 | `/subscribe/` and `/preferences/` | Subscription flow | paths for later steps and secure-link handling belong to spec E; **no subscriber tokens in paths** |
 | `/about/` | About index | links to documentation items |
@@ -207,13 +207,13 @@ Rules:
 
 | Original | Target | Status |
 | --- | --- | --- |
-| `/desks/us/ny/western-new-york/` | `heavymap.com/desks/western-new-york/` | Open (A-Q3) |
-| `/desks/us/ny/western-new-york/issue/one/` | `heavymap.com/editions/western-new-york/issue-one/` | Open (A-Q3) |
-| `/desks/us/ny/western-new-york/issue/one/sources/` | Edition page, sources section | Open (A-Q3) |
-| `/desks/ca/on/niagara-brant/` | `heavymap.com/desks/niagara-brant/` | Open (A-Q3) |
-| `/desks/us/ny/`, `/desks/ca/on/` | `heavymap.com/desks/` | Open (A-Q3) |
+| `/desks/us/ny/western-new-york/` | `heavymap.com/desks/western-new-york/` | not in v1 (A-Q3) |
+| `/desks/us/ny/western-new-york/issue/one/` | `heavymap.com/editions/western-new-york/issue-one/` | not in v1 (A-Q3) |
+| `/desks/us/ny/western-new-york/issue/one/sources/` | Edition page, sources section | not in v1 (A-Q3) |
+| `/desks/ca/on/niagara-brant/` | `heavymap.com/desks/niagara-brant/` | not in v1 (A-Q3) |
+| `/desks/us/ny/`, `/desks/ca/on/` | `heavymap.com/desks/` | not in v1 (A-Q3) |
 
-Whether these become permanent redirects or stay as published pages with cross-links is a publication decision for niagaraassembly/site. It isn't decided by this spec. Either way, migrated items keep their original URL in `provenance.original_url` (spec B).
+**Decided (A-Q3): leave niagaraassembly.com as it is for now.** This table is kept as the candidate mapping for a later decision. Migrated items keep their original URL in `provenance.original_url` (spec B).
 
 ## 6. Navigation
 
@@ -221,7 +221,7 @@ Whether these become permanent redirects or stay as published pages with cross-l
 - Wordmark with the ◒ interim mark (D8), linking to `/`
 - Desks
 - Reader
-- Map: present only if at least one geography is `published`. Otherwise the header shows nothing, and the home strip carries the preparatory note.
+- Map: always present in v1, linking to the `/map/` introduction (section 7.1). It links straight to a workspace once a geography is `published`.
 - Follow (subscribe)
 - Theme selector (spec D)
 
@@ -246,18 +246,33 @@ There are no review links in the footer.
    │      └─► Reader (/reader/?item=…) ───── permalink ───┘                │
    │                                                                       │
    └─► map strip ─► Map workspace (/map/<geo>/) ⇄ dock: Reader · ← site    │
-                                     * only when a geography is published
+               * v1: /map/ introduction (basemap + story modal); workspace once published
 ```
 
-## 7. Open questions for Morgen
+## 7. Answers (Morgen, 2026-11-10)
 
-| ID | Question | Proposed answer |
+| ID | Question | Decision |
 | --- | --- | --- |
-| A-Q1 | Flat Desk URLs (`/desks/western-new-york/`) or the source site's nested ones (`/desks/us/ny/western-new-york/`)? | Flat |
-| A-Q2 | Is Niagara–Brant's Desk `published` (its page exists on niagaraassembly.com) or `preparing` (no editions)? | `published` Desk with zero editions, so the Desk page is public with an empty archive |
-| A-Q3 | Should niagaraassembly.com Desk URLs redirect to heavymap.com, or keep their pages and cross-link? | Redirect once heavymap.com is live and the edition is migrated in full; until then, cross-link |
-| A-Q4 | Should `/about/` be a hand-written index over documentation items, or a separate set of pages? | Index over items |
-| A-Q5 | When no geography is published, should the header omit Map entirely or show it greyed with "in preparation"? | Omit; the home strip carries the note |
+| A-Q1 | Desk URL shape | **Flat**: `/desks/western-new-york/`. |
+| A-Q2 | Niagara–Brant Desk status | **`published`**. Its Issue One is ready for launch (spec B section 8), so the empty-archive state in section 4.2 is a fallback, not the launch state. |
+| A-Q3 | niagaraassembly.com Desk URLs | **Leave them as they are for now.** No redirects and no changes to niagaraassembly/site. Migrated items still record `provenance.original_url`. Revisit after launch. |
+| A-Q4 | `/about/` | **Index over documentation items.** |
+| A-Q5 | Map in navigation | **Map is in the header in v1**, linking to the `/map/` introduction (section 7.1). |
+
+### 7.1 Map introduction in v1
+
+`/map/` is a public **introduction page**, not a geography workspace:
+- A static **basemap-only** view of Hamilton (OpenStreetMap-derived basemap, credited), with **no Atlas parcel data, lenses or dossiers**.
+- On top of it, a **modal story about HeavyMap**: what the mapping workspace is and what it will show, with Hamilton described as in preparation. It doesn't commit to a date.
+- Closing the modal leaves the static view and the dock (spec F). The dock offers "Back to reading".
+
+Why this needs no beta-gate sign-off: the basemap isn't Atlas output, so HARD-RULES 3 doesn't apply. Parcel tiles and `/map/hamilton/` are generated only once Hamilton is `published` (section 3.3 rule 1).
+
+The section 3.3 vocabulary is unchanged: Hamilton stays `preparing`. The introduction page is a page about the map capability, not the capability itself, so the "no links to unpublished capabilities" check allows a header link to `/map/` and still forbids links to `/map/hamilton/`.
+
+Design references:
+- The basemap source and the modal copy belong to spec F and spec D.
+- The OpenStreetMap substrate follows ADR 0001.
 
 ## 8. Out of scope here
 
