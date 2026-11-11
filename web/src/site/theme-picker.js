@@ -41,6 +41,8 @@ export function mountThemePicker(root, themes, fallback) {
     html.dataset.themeSource = r.source;
     const name = byId[r.theme].name;
     button.querySelector("[data-theme-name]").textContent = name;
+    const flag = button.querySelector("[data-theme-flag]");
+    if (flag && byId[r.theme].flag) flag.src = `/${byId[r.theme].flag}`;
     button.setAttribute("aria-label", `Site theme: ${name}`);
     modeBox.hidden = !byId[r.theme].modes.includes("dark");
     root.querySelector("[data-theme-only-light]").hidden = !modeBox.hidden;
@@ -57,7 +59,7 @@ export function mountThemePicker(root, themes, fallback) {
     if (!recent.length) recent = ["us", "ca"].filter((id) => byId[id]);
     const showRecent = !(recent.length === 1 && recent[0] === currentId);
     const option = (t, prefix) =>
-      `<li role="option" id="hm-theme-${prefix}-${esc(t.id)}" data-id="${esc(t.id)}" aria-selected="${t.id === currentId}">${esc(t.name)}</li>`;
+      `<li role="option" id="hm-theme-${prefix}-${esc(t.id)}" data-id="${esc(t.id)}" aria-selected="${t.id === currentId}">${t.flag ? `<img class="hm-flag" src="/${esc(t.flag)}" alt="" height="12">` : ""}${esc(t.name)}</li>`;
     const all = [...themes].sort((a, b) => a.name.localeCompare(b.name));
     list.innerHTML =
       (showRecent

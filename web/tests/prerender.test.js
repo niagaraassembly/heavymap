@@ -67,6 +67,6 @@ test("the link check catches a link to a page that isn't generated", () => {
 });
 
 test("only the editorial photos ship as static files, never prototype fixtures", () => {
-  assert.deepEqual(STATIC_DIRS, ["editorial", "map"]);
+  assert.deepEqual(STATIC_DIRS, ["editorial", "map", "flags"]);
   assert.ok(!pages.some((p) => /pmtiles|synthetic/i.test(p.html)));
 });

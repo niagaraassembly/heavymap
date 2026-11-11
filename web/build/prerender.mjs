@@ -34,7 +34,7 @@ const SITE_SRC = path.join(web, "src/site");
 const PREVIEW_CSS = path.join(SITE_SRC, "preview.css");
 /* Static files the public site ships, copied as is. Only these: web/public also
  * holds prototype fixtures (synthetic-parcels.pmtiles) that must never ship. */
-export const STATIC_DIRS = ["editorial", "map"];
+export const STATIC_DIRS = ["editorial", "map", "flags"];
 const STATIC_ROOT = path.join(web, "public");
 
 /** "/" -> "index.html", "/a/b/" -> "a/b/index.html", "/404.html" -> "404.html". */
@@ -73,7 +73,13 @@ export function availableThemes(registry, { preview }) {
           t.tokens &&
           fs.existsSync(path.join(SITE_SRC, t.tokens))),
     )
-    .map(({ id, country, name, modes }) => ({ id, country, name, modes }));
+    .map(({ id, country, name, modes, flag }) => ({
+      id,
+      country,
+      name,
+      modes,
+      flag,
+    }));
 }
 
 export function renderSite({ preview = false } = {}) {

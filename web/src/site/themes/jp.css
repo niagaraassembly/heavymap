@@ -1,0 +1,29 @@
+/* Japan theme, DRAFT (decision 7, HM-014). Colours translated from the
+ * generated study in the handoff (review-images/optional-theme-study):
+ * washi paper, indigo-black ink, vermilion accent, moss green. Tokens only:
+ * no motifs, ornament, layout or language changes (spec D section 3).
+ * Status "design": loaded only in preview builds until Morgen approves it. */
+:root[data-theme="jp"] {
+  --surface: #f6f2ea;
+  --surface-raised: #fbf8f2;
+  --surface-tint: #ece7dc;
+  --surface-tint-strong: #e4ddcf;
+  --surface-sunk: #dfe5d8;
+  --rule-soft: #d9d2c4;
+  --rule-strong: #b4ab98;
+  --text: #1b2a3a;
+  --text-body: #33414f;
+  --text-muted: #59616c;
+  --text-faint: #59616c;
+  --text-hover: #2d4a6b;
+  --accent: #c2412d;
+  --accent-strong: #a3321f;
+  --accent-rule: #e3b8ac;
+  --green: #4f6b45;
+  --green-strong: #3e5a36;
+  --focus-ring: #1b2a3a;
+  --amount-done: #2f6b3a;
+  --amount-announced: #775a00;
+  --flag-warn: #8a4700;
+  --flag-info: #2a4f80;
+}

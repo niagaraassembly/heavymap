@@ -225,7 +225,7 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  max-height: 14rem;
+  max-height: 20rem;
   overflow: auto;
   outline: none;
 }
@@ -461,4 +461,25 @@
 .hm-edition-signup,
 .hm-desk-signup {
   margin: 2.5rem 0;
+}
+
+.hm-flag {
+  height: 0.75rem;
+  width: auto;
+  margin-right: 0.45rem;
+  vertical-align: -0.05rem;
+  box-shadow: 0 0 0 1px var(--rule-soft);
+}
+.hm-theme-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.1rem;
+  white-space: nowrap;
+}
+.hm-theme-button .hm-flag,
+.hm-theme-panel .hm-flag {
+  flex: none;
+}
+.hm-reading-tools {
+  margin-bottom: 1.25rem;
 }
