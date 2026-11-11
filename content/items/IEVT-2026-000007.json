@@ -1,0 +1,123 @@
+{
+  "id": "IEVT-2026-000007",
+  "type": "news",
+  "title": "Niagara Air Reserve Station awards base-support contract",
+  "summary": "Base maintenance and logistics contract at Niagara Air Reserve Station: $38.8M ceiling, $14,317 obligated so far. Contractor identity is still being confirmed.",
+  "regions": [
+    "us-ny-western-new-york"
+  ],
+  "publisher": "desk:us-ny-western-new-york",
+  "status": "published",
+  "published_on": "2026-10-10",
+  "editions": [
+    "western-new-york/issue-one"
+  ],
+  "reported_on": "2026-09-28",
+  "place": "Niagara Falls, Niagara County",
+  "stage": "award",
+  "lane": "corridor",
+  "event_type": "major_contract",
+  "money": {
+    "amount": 14317,
+    "amount_type": "obligated",
+    "ceiling_amount": 38753314,
+    "regional_amount": null,
+    "currency": "USD"
+  },
+  "jobs": {
+    "added": null,
+    "lost": null
+  },
+  "flags": [
+    {
+      "type": "identity_unresolved",
+      "detail": ""
+    },
+    {
+      "type": "follow_up",
+      "detail": "contractor_identity"
+    },
+    {
+      "type": "ceiling_not_obligation",
+      "detail": ""
+    },
+    {
+      "type": "secondary_source",
+      "detail": ""
+    },
+    {
+      "type": "not_wny_production",
+      "detail": ""
+    }
+  ],
+  "conflicts": [],
+  "stage_history": [
+    {
+      "stage": "award",
+      "date": "2026-09-28",
+      "url": "https://www.forth.news/lists/dod/CfWYYiypPGyjdvtXbEB1x"
+    }
+  ],
+  "incentive": null,
+  "next_step": {
+    "text": "Contract work expected to finish",
+    "date": "2031-11-30"
+  },
+  "county": "Niagara",
+  "county_source": "record",
+  "districts": {
+    "places": [
+      "Niagara Falls"
+    ],
+    "congress": [
+      "26"
+    ],
+    "senate": [
+      "62"
+    ],
+    "assembly": [
+      "145"
+    ]
+  },
+  "entity": {
+    "id": "E0151",
+    "name": "Criterion Corporation"
+  },
+  "sources": [
+    {
+      "article_id": "ART-2026-000022",
+      "title": "Contracts for Sept. 28, 2026",
+      "publisher": "Forth / War.gov mirror",
+      "url": "https://www.forth.news/lists/dod/CfWYYiypPGyjdvtXbEB1x",
+      "kind": "secondary"
+    },
+    {
+      "article_id": "ART-2026-000023",
+      "title": "Criterion Corporation — contractor identity profile",
+      "publisher": "HigherGov",
+      "url": "https://www.highergov.com/awardee/criterion-corporation-610600988",
+      "kind": "secondary"
+    },
+    {
+      "article_id": "ART-2026-000024",
+      "title": "Criterion Corporation — registration directory comparison",
+      "publisher": "Womyn Owned",
+      "url": "https://www.womynowned.com/vendor/criterion-corporation",
+      "kind": "secondary"
+    }
+  ],
+  "corrections": [],
+  "provenance": {
+    "source": "niagaraassembly/site",
+    "commit": "9522b3ebd3b4686fab99634bd0e710c883bd1b00",
+    "path": "data/wny/issue-one.json",
+    "upstream": {
+      "repo": "niagaraassembly/na-research",
+      "commit": "805fbc2"
+    },
+    "upstream_id": "IEVT-2026-000007",
+    "candidate_id": "EVT-2026-000017",
+    "review_state": "approved",
+    "publish_status": "approved"
+  }
+}

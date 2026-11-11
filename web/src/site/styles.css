@@ -1,0 +1,485 @@
+/* HeavyMap public site stylesheet. The selected design's sheets, the
+ * vendored Issue One card styles, and the few rules the prebuilt pages add.
+ * Tokenising the hard-coded colours is build step 3 (spec D, D-T1). */
+@import "./tokens.css";
+@import "../editorial/site.css";
+@import "../editorial/alternate.css";
+@import "../editorial/page-studies.css";
+@import "../desk/desk-publication.css";
+
+/* The original card's variables, mapped to HeavyMap tokens. */
+:root {
+  --sans: Arial, Helvetica, sans-serif;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --hand: var(--serif);
+  --ink-soft: var(--muted);
+  --rule: var(--line);
+  --field: var(--paper);
+}
+
+.preview-banner {
+  margin: 0;
+  padding: 0.35rem 1rem;
+  background: var(--ink);
+  color: var(--paper);
+  font: 0.8rem/1.4 var(--sans);
+  text-align: center;
+}
+
+/* Stage key: swatches plus names, never colour words (spec D section 3). */
+.hm-stage-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  font: 0.8rem/1.5 var(--sans);
+  color: var(--muted);
+}
+.hm-swatch {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-right: 0.35rem;
+  border-radius: 50%;
+  vertical-align: -0.05rem;
+  border: 1.5px solid var(--ink);
+}
+.hm-swatch--done {
+  background: var(--amount-done);
+  border-color: var(--amount-done);
+}
+.hm-swatch--announced {
+  background: var(--amount-announced);
+  border-color: var(--amount-announced);
+}
+.hm-swatch--hollow {
+  background: transparent;
+}
+
+.hm-desk-publication {
+  max-width: 52rem;
+}
+.hm-follow-line {
+  margin: 2rem 0;
+}
+
+/* Item page */
+.hm-item-meta {
+  font: 0.85rem/1.5 var(--sans);
+  color: var(--muted);
+}
+.hm-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.75rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.hm-facts dt {
+  font: 0.75rem/1.4 var(--sans);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.hm-facts dd {
+  margin: 0.15rem 0 0;
+}
+.hm-open-questions,
+.hm-stage-history {
+  margin: 2rem 0;
+}
+.hm-conflicts li,
+.hm-stage-history li {
+  margin: 0.35rem 0;
+}
+.hm-item-tools,
+.hm-also-in,
+.hm-provenance {
+  font: 0.9rem/1.5 var(--sans);
+}
+.hm-provenance {
+  color: var(--muted);
+}
+
+/* Reader shell (spec C fills it in build step 4) */
+.hm-reader-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.hm-reader-list a {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+}
+.hm-reader-list strong {
+  font: 1.1rem/1.35 var(--serif);
+}
+.hm-reader-list small {
+  font: 0.8rem/1.4 var(--sans);
+  color: var(--muted);
+}
+
+/* Map introduction: a still map (decision 67) */
+.map-strip-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
+}
+.map-strip .map-strip-copy {
+  position: relative;
+  z-index: 1;
+}
+.map-strip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--surface) 0%,
+    color-mix(in srgb, var(--surface) 70%, transparent) 38%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+.map-strip .map-peek {
+  z-index: 2;
+}
+.hm-map-figure {
+  position: relative;
+  margin: 0;
+}
+.hm-map-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.hm-map-figure figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.4rem 1rem;
+  font: 0.75rem/1.4 var(--sans);
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--rule-soft);
+}
+.hm-map-story {
+  max-width: 38rem;
+  margin: -14rem auto 2rem;
+  position: relative;
+  padding: 1.75rem;
+  background: var(--surface);
+  border: 1px solid var(--rule-soft);
+  box-shadow: 0 0.6rem 1.5rem var(--shadow);
+}
+.hm-map-intro .map-dock {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+}
+@media (max-width: 700px) {
+  .hm-map-story {
+    margin: 0 1rem 2rem;
+  }
+}
+
+.hm-not-found,
+.hm-about,
+.hm-subscribe,
+.hm-preferences {
+  padding-block: 3rem;
+}
+
+/* Theme selector (spec D section 5) */
+.hm-theme {
+  position: relative;
+}
+.hm-theme-button {
+  min-height: 2.25rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--rule-soft);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--text);
+  font: 0.85rem/1.2 var(--sans);
+  cursor: pointer;
+}
+.hm-theme-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.4rem);
+  z-index: 20;
+  width: 16rem;
+  padding: 0.75rem;
+  background: var(--surface-raised);
+  color: var(--text);
+  border: 1px solid var(--rule-soft);
+  box-shadow: 0 0.6rem 1.5rem var(--shadow);
+  font: 0.9rem/1.4 var(--sans);
+}
+.hm-theme-panel [role="listbox"] {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 20rem;
+  overflow: auto;
+  outline: none;
+}
+.hm-theme-panel [role="listbox"]:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+.hm-theme-group {
+  margin-top: 0.4rem;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.hm-theme-panel [role="option"] {
+  min-height: 2.25rem;
+  display: flex;
+  align-items: center;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+}
+.hm-theme-panel [role="option"][aria-selected="true"]::after {
+  content: "✓";
+  margin-left: auto;
+}
+.hm-theme-panel [role="option"].is-active,
+.hm-theme-panel [role="option"]:hover {
+  background: var(--surface-tint);
+}
+.hm-theme-modes {
+  margin: 0.75rem 0 0;
+  padding: 0.5rem 0 0;
+  border: 0;
+  border-top: 1px solid var(--rule-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.9rem;
+}
+.hm-theme-modes legend {
+  padding: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.hm-theme-modes label {
+  min-height: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.hm-theme-note {
+  margin: 0.6rem 0 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.hm-theme-reset {
+  margin-top: 0.5rem;
+  padding: 0.3rem 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  text-decoration: underline;
+  font: inherit;
+  cursor: pointer;
+}
+.hm-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0s !important;
+  }
+}
+
+/* Reader (spec C section 5) */
+.hm-reader-notice {
+  margin: 0.5rem 0;
+  padding: 0.5rem 0.65rem;
+  background: var(--surface-tint);
+  font: 0.8rem/1.5 var(--sans);
+}
+.hm-reader-notice button,
+.reader-storage button,
+[data-forget-confirm] button,
+.return-line button {
+  padding: 0.35rem 0;
+  min-height: 2rem;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.reader-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.reader-list a.library-item {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.hm-reading-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-top: 1rem;
+  font: 0.85rem/1.4 var(--sans);
+}
+.hm-reading-tools button {
+  min-height: 2.25rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+.hm-reading-tools button[aria-pressed="true"] {
+  background: var(--surface-tint);
+}
+.hm-updated {
+  margin: 0;
+  color: var(--accent-strong);
+}
+.hm-card-end {
+  display: block;
+  height: 1px;
+}
+.reader-library-toggle {
+  display: none;
+}
+@media (max-width: 800px) {
+  .hm-reader .reader-workspace {
+    display: block;
+    height: auto;
+    min-height: 0;
+    border-bottom: 0;
+  }
+  .hm-reader .reader-library {
+    padding: 1rem 0;
+    border-right: 0;
+  }
+  .hm-reader .reader-document {
+    padding-left: 0;
+  }
+  .hm-reader .reader-scroll {
+    overflow: visible;
+    padding-right: 0;
+  }
+  .reader-library-toggle:not([hidden]) {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 44px;
+    margin: 1rem 0 0;
+    padding: 0.9rem;
+    background: var(--surface-tint);
+    border: 1px solid var(--rule-soft);
+    color: var(--text);
+    font: 0.8rem/1.2 var(--sans);
+  }
+}
+
+/* Signup (spec E section 4) */
+.hm-signup {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 28rem;
+  margin: 1rem 0 2rem;
+  padding: 1.25rem;
+  background: var(--surface-tint);
+  font: 0.9rem/1.4 var(--sans);
+}
+.hm-signup-desks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  border: 0;
+}
+.hm-signup-desks legend {
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+.hm-signup-desks label {
+  min-height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.hm-signup input[type="email"],
+.hm-signup input:not([type]) {
+  min-height: 2.5rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--rule-strong);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+.hm-signup input[aria-invalid="true"] {
+  border-color: var(--flag-warn);
+}
+.hm-signup button[type="submit"] {
+  justify-self: start;
+  min-height: 2.75rem;
+  margin-top: 0.5rem;
+}
+.hm-signup-status {
+  min-height: 1.4em;
+  margin: 0;
+}
+.hm-signup-status[data-state="error"] {
+  color: var(--flag-warn);
+}
+.hm-signup-note {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.hm-edition-signup,
+.hm-desk-signup {
+  margin: 2.5rem 0;
+}
+
+.hm-flag {
+  height: 0.75rem;
+  width: auto;
+  margin-right: 0.45rem;
+  vertical-align: -0.05rem;
+  box-shadow: 0 0 0 1px var(--rule-soft);
+}
+.hm-theme-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.1rem;
+  white-space: nowrap;
+}
+.hm-theme-button .hm-flag,
+.hm-theme-panel .hm-flag {
+  flex: none;
+}
+.hm-reading-tools {
+  margin-bottom: 1.25rem;
+}

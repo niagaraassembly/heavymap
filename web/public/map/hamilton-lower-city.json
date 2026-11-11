@@ -1,0 +1,53 @@
+{
+  "subject": "Hamilton, Ontario: lower city and harbourfront",
+  "requested_bounds": [
+    -79.905,
+    43.243,
+    -79.825,
+    43.29
+  ],
+  "source": {
+    "archive": "https://build.protomaps.com/20261109.pmtiles",
+    "build": "20261109",
+    "data": "OpenStreetMap contributors (ODbL), via Protomaps"
+  },
+  "style": "web/build/map/style.js",
+  "outputs": [
+    {
+      "file": "hamilton-lower-city-wide.webp",
+      "width": 2000,
+      "height": 1250,
+      "bytes": 193842,
+      "sha256": "1a39644a10dd83310e01f3e3d6ae8aa8ec16a4ddb49286771c65387a485b736d",
+      "zoom": 13.733,
+      "bounds": [
+        [
+          -79.91663604095358,
+          43.24299999999991
+        ],
+        [
+          -79.81336395904835,
+          43.289999999999736
+        ]
+      ]
+    },
+    {
+      "file": "hamilton-lower-city-tall.webp",
+      "width": 900,
+      "height": 1100,
+      "bytes": 82678,
+      "sha256": "0d4ce7c96ba637d502c08762062835f340ac7419a9ce9fc2d854d3c40e01f141",
+      "zoom": 12.949,
+      "bounds": [
+        [
+          -79.90499999999948,
+          43.230894530018105
+        ],
+        [
+          -79.82499999999926,
+          43.3020937227017
+        ]
+      ]
+    }
+  ]
+}

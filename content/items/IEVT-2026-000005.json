@@ -1,0 +1,97 @@
+{
+  "id": "IEVT-2026-000005",
+  "type": "news",
+  "title": "Lockheed Martin's Liverpool radar work gets $18.9M contract change",
+  "summary": "An $18.9M change to an existing Air Force radar contract with work in Liverpool. The ~$1B figure is the contract ceiling, not new spending.",
+  "regions": [
+    "us-ny-western-new-york"
+  ],
+  "publisher": "desk:us-ny-western-new-york",
+  "status": "published",
+  "published_on": "2026-10-10",
+  "editions": [
+    "western-new-york/issue-one"
+  ],
+  "reported_on": "2026-09-28",
+  "place": "Liverpool, Onondaga County",
+  "stage": "award",
+  "lane": "production",
+  "event_type": "major_contract",
+  "money": {
+    "amount": 18899971,
+    "amount_type": "obligated",
+    "ceiling_amount": 1010243938,
+    "regional_amount": null,
+    "currency": "USD"
+  },
+  "jobs": {
+    "added": null,
+    "lost": null
+  },
+  "flags": [
+    {
+      "type": "ceiling_not_obligation",
+      "detail": ""
+    },
+    {
+      "type": "secondary_source",
+      "detail": ""
+    }
+  ],
+  "conflicts": [],
+  "stage_history": [
+    {
+      "stage": "award",
+      "date": "2026-09-28",
+      "url": "https://www.forth.news/lists/dod/CfWYYiypPGyjdvtXbEB1x"
+    }
+  ],
+  "incentive": null,
+  "next_step": {
+    "text": "Contract work expected to finish",
+    "date": "2029-06-30"
+  },
+  "county": "Onondaga",
+  "county_source": "record",
+  "districts": {
+    "places": [
+      "Liverpool"
+    ],
+    "congress": [
+      "22"
+    ],
+    "senate": [
+      "50"
+    ],
+    "assembly": [
+      "128"
+    ]
+  },
+  "entity": {
+    "id": "E0149",
+    "name": "Lockheed Martin Rotary and Mission Systems"
+  },
+  "sources": [
+    {
+      "article_id": "ART-2026-000022",
+      "title": "Contracts for Sept. 28, 2026",
+      "publisher": "Forth / War.gov mirror",
+      "url": "https://www.forth.news/lists/dod/CfWYYiypPGyjdvtXbEB1x",
+      "kind": "secondary"
+    }
+  ],
+  "corrections": [],
+  "provenance": {
+    "source": "niagaraassembly/site",
+    "commit": "9522b3ebd3b4686fab99634bd0e710c883bd1b00",
+    "path": "data/wny/issue-one.json",
+    "upstream": {
+      "repo": "niagaraassembly/na-research",
+      "commit": "805fbc2"
+    },
+    "upstream_id": "IEVT-2026-000005",
+    "candidate_id": "EVT-2026-000015",
+    "review_state": "approved",
+    "publish_status": "approved"
+  }
+}

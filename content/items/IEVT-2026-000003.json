@@ -1,0 +1,111 @@
+{
+  "id": "IEVT-2026-000003",
+  "type": "news",
+  "title": "Wilbert's seeks approval for $6M Salt Road expansion",
+  "summary": "Not an approved or under-construction project as of source date.",
+  "regions": [
+    "us-ny-western-new-york"
+  ],
+  "publisher": "desk:us-ny-western-new-york",
+  "status": "published",
+  "published_on": "2026-10-10",
+  "editions": [
+    "western-new-york/issue-one"
+  ],
+  "reported_on": "2026-10-06",
+  "place": "Salt Road, Penfield or Webster",
+  "stage": "application",
+  "lane": "developing",
+  "event_type": "facility_expansion",
+  "money": {
+    "amount": 6000000,
+    "amount_type": "proposed",
+    "ceiling_amount": null,
+    "regional_amount": null,
+    "currency": "USD"
+  },
+  "jobs": {
+    "added": null,
+    "lost": null
+  },
+  "flags": [
+    {
+      "type": "conflict",
+      "detail": "municipality"
+    }
+  ],
+  "conflicts": [
+    {
+      "field": "municipality",
+      "values": [
+        {
+          "value": "Salt Road, Penfield",
+          "source": "Rochester Business Journal",
+          "url": "https://rbj.net/2026/10/06/wilberts-expands-auto-parts-facility-penfield"
+        },
+        {
+          "value": "1272 Salt Rd, Webster, NY 14580",
+          "source": "Wilbert's Premium Auto Parts website",
+          "url": "https://www.wilberts.com/premium-auto-parts/about-us/"
+        }
+      ]
+    }
+  ],
+  "stage_history": [
+    {
+      "stage": "application",
+      "date": "2026-10-06",
+      "url": "https://rbj.net/2026/10/06/wilberts-expands-auto-parts-facility-penfield"
+    }
+  ],
+  "incentive": null,
+  "next_step": {
+    "text": "Penfield Planning Board decision on the application",
+    "date": ""
+  },
+  "county": "Monroe",
+  "county_source": "record",
+  "districts": {
+    "places": [
+      "Penfield",
+      "Webster"
+    ],
+    "congress": [
+      "25"
+    ],
+    "senate": [
+      "55"
+    ],
+    "assembly": [
+      "135",
+      "130"
+    ]
+  },
+  "entity": {
+    "id": "E0147",
+    "name": "Wilbert's Premium Auto Parts"
+  },
+  "sources": [
+    {
+      "article_id": "ART-2026-000025",
+      "title": "Wilbert’s plans expansion of auto parts facility in Penfield",
+      "publisher": "Rochester Business Journal",
+      "url": "https://rbj.net/2026/10/06/wilberts-expands-auto-parts-facility-penfield",
+      "kind": "secondary"
+    }
+  ],
+  "corrections": [],
+  "provenance": {
+    "source": "niagaraassembly/site",
+    "commit": "9522b3ebd3b4686fab99634bd0e710c883bd1b00",
+    "path": "data/wny/issue-one.json",
+    "upstream": {
+      "repo": "niagaraassembly/na-research",
+      "commit": "805fbc2"
+    },
+    "upstream_id": "IEVT-2026-000003",
+    "candidate_id": "EVT-2026-000018",
+    "review_state": "approved",
+    "publish_status": "approved"
+  }
+}

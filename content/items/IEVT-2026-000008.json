@@ -1,0 +1,94 @@
+{
+  "id": "IEVT-2026-000008",
+  "type": "news",
+  "title": "SRC reports $37M Air Force prototype award",
+  "summary": "SRC reports a $37M Air Force prototype award for its Ghost Mantis technology. No production commitment or local job count disclosed.",
+  "regions": [
+    "us-ny-western-new-york"
+  ],
+  "publisher": "desk:us-ny-western-new-york",
+  "status": "published",
+  "published_on": "2026-10-10",
+  "editions": [
+    "western-new-york/issue-one"
+  ],
+  "reported_on": "2026-10-01",
+  "place": "Syracuse, Onondaga County",
+  "stage": "award",
+  "lane": "production",
+  "event_type": "major_contract",
+  "money": {
+    "amount": 37000000,
+    "amount_type": "award",
+    "ceiling_amount": null,
+    "regional_amount": null,
+    "currency": "USD"
+  },
+  "jobs": {
+    "added": null,
+    "lost": null
+  },
+  "flags": [
+    {
+      "type": "company_reported",
+      "detail": ""
+    }
+  ],
+  "conflicts": [],
+  "stage_history": [
+    {
+      "stage": "award",
+      "date": "2026-10-01",
+      "url": "https://www.srcinc.com/news-and-events/press/2026/20261001-contract-airforce-lass-ghost-mantis-gen3.html"
+    }
+  ],
+  "incentive": null,
+  "next_step": {
+    "text": "Air Force prototype evaluation",
+    "date": ""
+  },
+  "county": "Onondaga",
+  "county_source": "record",
+  "districts": {
+    "places": [
+      "Syracuse"
+    ],
+    "congress": [
+      "22"
+    ],
+    "senate": [
+      "48"
+    ],
+    "assembly": [
+      "129",
+      "128"
+    ]
+  },
+  "entity": {
+    "id": "E0153",
+    "name": "SRC, Inc."
+  },
+  "sources": [
+    {
+      "article_id": "ART-2026-000029",
+      "title": "SRC's Ghost Mantis Technology Selected for U.S. Air Force LASS Prototype OTA",
+      "publisher": "SRC, Inc.",
+      "url": "https://www.srcinc.com/news-and-events/press/2026/20261001-contract-airforce-lass-ghost-mantis-gen3.html",
+      "kind": "secondary"
+    }
+  ],
+  "corrections": [],
+  "provenance": {
+    "source": "niagaraassembly/site",
+    "commit": "9522b3ebd3b4686fab99634bd0e710c883bd1b00",
+    "path": "data/wny/issue-one.json",
+    "upstream": {
+      "repo": "niagaraassembly/na-research",
+      "commit": "805fbc2"
+    },
+    "upstream_id": "IEVT-2026-000008",
+    "candidate_id": "EVT-2026-000022",
+    "review_state": "approved",
+    "publish_status": "approved"
+  }
+}

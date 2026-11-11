@@ -1,0 +1,144 @@
+{
+  "id": "IEVT-2026-000001",
+  "type": "news",
+  "title": "Solstice to invest $49M expanding Buffalo R&D center",
+  "summary": "Solstice will invest $49M to expand its Buffalo R&D center, adding 12 jobs, with up to $1.4M in state Excelsior tax credits. The governor's and company's announcements quote different spokespeople and name forms.",
+  "regions": [
+    "us-ny-western-new-york"
+  ],
+  "publisher": "desk:us-ny-western-new-york",
+  "status": "published",
+  "published_on": "2026-10-10",
+  "editions": [
+    "western-new-york/issue-one"
+  ],
+  "reported_on": "2026-10-09",
+  "place": "Peabody Street, Buffalo",
+  "stage": "announced",
+  "lane": "production",
+  "event_type": "facility_expansion",
+  "money": {
+    "amount": 49000000,
+    "amount_type": "investment",
+    "ceiling_amount": null,
+    "regional_amount": null,
+    "currency": "USD"
+  },
+  "jobs": {
+    "added": 12,
+    "lost": null
+  },
+  "flags": [
+    {
+      "type": "conflict",
+      "detail": "spokesperson"
+    },
+    {
+      "type": "conflict",
+      "detail": "legal_name"
+    }
+  ],
+  "conflicts": [
+    {
+      "field": "spokesperson",
+      "values": [
+        {
+          "value": "Ryan Hulse, Senior Director for R&D",
+          "source": "Governor Kathy Hochul newsroom",
+          "url": "https://www.governor.ny.gov/news/governor-hochul-announces-solstice-advanced-materials-expand-buffalo"
+        },
+        {
+          "value": "Tom Isberg, Vice President, R&D",
+          "source": "PR Newswire",
+          "url": "https://finance.yahoo.com/technology/articles/solstice-announces-49-million-investment-153200194.html"
+        }
+      ]
+    },
+    {
+      "field": "legal_name",
+      "values": [
+        {
+          "value": "Solstice Advanced Materials US, Inc.",
+          "source": "Governor Kathy Hochul newsroom",
+          "url": "https://www.governor.ny.gov/news/governor-hochul-announces-solstice-advanced-materials-expand-buffalo"
+        },
+        {
+          "value": "Solstice Advanced Materials (Nasdaq: SOLS)",
+          "source": "PR Newswire",
+          "url": "https://finance.yahoo.com/technology/articles/solstice-announces-49-million-investment-153200194.html"
+        }
+      ]
+    }
+  ],
+  "stage_history": [
+    {
+      "stage": "announced",
+      "date": "2026-10-09",
+      "url": "https://www.governor.ny.gov/news/governor-hochul-announces-solstice-advanced-materials-expand-buffalo"
+    }
+  ],
+  "incentive": {
+    "program": "Excelsior Jobs Program",
+    "amount": 1400000,
+    "type": "tax_credit"
+  },
+  "next_step": {
+    "text": "12 new full-time jobs due",
+    "date": "2027-06"
+  },
+  "county": "Erie",
+  "county_source": "record",
+  "districts": {
+    "places": [
+      "Buffalo"
+    ],
+    "congress": [
+      "26"
+    ],
+    "senate": [
+      "63",
+      "61"
+    ],
+    "assembly": [
+      "149",
+      "141",
+      "142",
+      "140",
+      "143"
+    ]
+  },
+  "entity": {
+    "id": "E0144",
+    "name": "Solstice Advanced Materials"
+  },
+  "sources": [
+    {
+      "article_id": "ART-2026-000027",
+      "title": "Governor Hochul Announces Solstice Advanced Materials to Expand in Buffalo",
+      "publisher": "Governor Kathy Hochul newsroom",
+      "url": "https://www.governor.ny.gov/news/governor-hochul-announces-solstice-advanced-materials-expand-buffalo",
+      "kind": "primary"
+    },
+    {
+      "article_id": "ART-2026-000028",
+      "title": "Solstice Announces $49 Million Investment to Expand Research and Development Capabilities in Buffalo, New York",
+      "publisher": "PR Newswire",
+      "url": "https://finance.yahoo.com/technology/articles/solstice-announces-49-million-investment-153200194.html",
+      "kind": "company"
+    }
+  ],
+  "corrections": [],
+  "provenance": {
+    "source": "niagaraassembly/site",
+    "commit": "9522b3ebd3b4686fab99634bd0e710c883bd1b00",
+    "path": "data/wny/issue-one.json",
+    "upstream": {
+      "repo": "niagaraassembly/na-research",
+      "commit": "805fbc2"
+    },
+    "upstream_id": "IEVT-2026-000001",
+    "candidate_id": "EVT-2026-000020",
+    "review_state": "approved",
+    "publish_status": "approved"
+  }
+}

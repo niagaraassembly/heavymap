@@ -1,0 +1,100 @@
+{
+  "id": "IEVT-2026-000010",
+  "type": "news",
+  "title": "Gekko Photonics confirms Rochester office, plans local hiring",
+  "summary": "Gekko Photonics says it has a Rochester office and plans local engineering hires and regional suppliers; no headcount or facility announced yet.",
+  "regions": [
+    "us-ny-western-new-york"
+  ],
+  "publisher": "desk:us-ny-western-new-york",
+  "status": "published",
+  "published_on": "2026-10-10",
+  "editions": [
+    "western-new-york/issue-one"
+  ],
+  "reported_on": "2026-10-02",
+  "place": "Rochester, Finger Lakes",
+  "stage": "intent",
+  "lane": "developing",
+  "event_type": "other_material_update",
+  "money": {
+    "amount": null,
+    "amount_type": null,
+    "ceiling_amount": null,
+    "regional_amount": null,
+    "currency": null
+  },
+  "jobs": {
+    "added": null,
+    "lost": null
+  },
+  "flags": [
+    {
+      "type": "company_reported",
+      "detail": ""
+    }
+  ],
+  "conflicts": [],
+  "stage_history": [
+    {
+      "stage": "intent",
+      "date": "2026-10-02",
+      "url": "https://gekkophotonics.com/en/gekko-photonics-company-of-the-year"
+    }
+  ],
+  "incentive": {
+    "program": "Luminate NY (state-backed accelerator)",
+    "amount": 1000000,
+    "type": "accelerator_award"
+  },
+  "next_step": {
+    "text": "Local engineering and support hiring (no headcount given)",
+    "date": ""
+  },
+  "county": "Monroe",
+  "county_source": "record",
+  "districts": {
+    "places": [
+      "Rochester"
+    ],
+    "congress": [
+      "25"
+    ],
+    "senate": [
+      "56",
+      "55"
+    ],
+    "assembly": [
+      "137",
+      "136",
+      "138"
+    ]
+  },
+  "entity": {
+    "id": "E0152",
+    "name": "Gekko Photonics"
+  },
+  "sources": [
+    {
+      "article_id": "ART-2026-000031",
+      "title": "Gekko Photonics wins the Company of the Year award at Luminate NY 2026",
+      "publisher": "Gekko Photonics",
+      "url": "https://gekkophotonics.com/en/gekko-photonics-company-of-the-year",
+      "kind": "secondary"
+    }
+  ],
+  "corrections": [],
+  "provenance": {
+    "source": "niagaraassembly/site",
+    "commit": "9522b3ebd3b4686fab99634bd0e710c883bd1b00",
+    "path": "data/wny/issue-one.json",
+    "upstream": {
+      "repo": "niagaraassembly/na-research",
+      "commit": "805fbc2"
+    },
+    "upstream_id": "IEVT-2026-000010",
+    "candidate_id": "EVT-2026-000024",
+    "review_state": "approved",
+    "publish_status": "approved"
+  }
+}

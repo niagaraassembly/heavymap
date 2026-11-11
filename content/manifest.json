@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "records": [
+    {
+      "kind": "edition",
+      "path": "editions/western-new-york/issue-one.json",
+      "sha256": "8974dd16975969f50a7d292fd3dca2eb06d106ff744e483766d2540bd43e8361"
+    },
+    {
+      "kind": "item",
+      "path": "items/IEVT-2026-000001.json",
+      "sha256": "7be17a5887a1ec18fd69638fce3f9159ede584fef2d6843ec8c80e321b586050"
+    },
+    {
+      "kind": "item",
+      "path": "items/IEVT-2026-000002.json",
+      "sha256": "60ac228bb2e6b5f73b1a666d14812a31427c1565b4390c14e00d05cc034755d5"
+    },
+    {
+      "kind": "item",
+      "path": "items/IEVT-2026-000003.json",
+      "sha256": "6dcea5f2bff2fcc8b1a4c049934fb46909779d7135392553afa823f032c1795d"
+    },
+    {
+      "kind": "item",
+      "path": "items/IEVT-2026-000004.json",
+      "sha256": "1396a6425338fd8e4dd7efd5ae3d889c1b76513a96712ecc35035107cef1eb80"
+    },
+    {
+      "kind": "item",
+      "path": "items/IEVT-2026-000005.json",
+      "sha256": "ba0dcd2c72739bb1614bdc85f886cf06928d9f5b09ceb2095111389730458a8d"
+    },
+    {
+      "kind": "item",
+      "path": "items/IEVT-2026-000006.json",
+      "sha256": "031e9b078e0ce4d0d3ff5945f79c7bbd1434efbc52e26d421d950e24c34f1a54"
+    },
+    {
+      "kind": "item",
+      "path": "items/IEVT-2026-000007.json",
+      "sha256": "71cf2356248f54e6c0533350ad6740b77d99ee9e71389fe56bd22189801d9d3b"
+    },
+    {
+      "kind": "item",
+      "path": "items/IEVT-2026-000008.json",
+      "sha256": "b837e40f2aec6b7f55ea2f54b4b3b68b56fde9a78500ce822a6c6fccc12da6e4"
+    },
+    {
+      "kind": "item",
+      "path": "items/IEVT-2026-000009.json",
+      "sha256": "f4b1263bb0f6c8605459f2d43d043b42d36aefca78589cd296c5e1bf1203049b"
+    },
+    {
+      "kind": "item",
+      "path": "items/IEVT-2026-000010.json",
+      "sha256": "25540bbf0be88ef60c5513e0eb9de42f50974f894c5f45023986f9c96cc3c087"
+    },
+    {
+      "kind": "regions",
+      "path": "regions.json",
+      "sha256": "208d648d271f26423c1300655112abdb8f27171ce3f0e3f0190ab3b68b1a3d7b"
+    },
+    {
+      "kind": "snapshot",
+      "path": "SNAPSHOT.json",
+      "sha256": "84c30ca30c016b127871c5d3e8150d142619fcc3ac0fb14b4c951d11c2596326"
+    },
+    {
+      "kind": "themes",
+      "path": "themes.json",
+      "sha256": "2e6dbb59f8037dff0d5658f025d7457b7a08b2c49177940e6fbd43120e8dcdd3"
+    },
+    {
+      "kind": "vocab",
+      "path": "vocab/controlled-values.json",
+      "sha256": "d87f6da65bbc9bcec5574df05393b19d50d6c01a96c41dbf739d93ea40e11441"
+    },
+    {
+      "kind": "labels",
+      "path": "vocab/labels.json",
+      "sha256": "a7a97c8f514ce828a1ba7bdbc55265d6e94280a7b758e7b28ddbb5a3a0982087"
+    }
+  ]
+}
