@@ -11,4 +11,7 @@
 export const SIGNUP = {
   action: null,
   entries: { name: null, email: null, desks: null },
+  /* Decision 70: launch with the form shown disabled. Delete this line once
+   * action and entries are filled in, so the launch gate checks them again. */
+  closedAtLaunch: true,
 };

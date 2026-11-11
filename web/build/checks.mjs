@@ -165,7 +165,7 @@ export function budgetReport(outDir) {
 const kb = (n) => `${(n / 1024).toFixed(1)} KB`;
 
 /** Things a public build must never contain. */
-export function publicHygiene(outDir, { preview }) {
+export function publicHygiene(outDir, { preview, unpublished = [] }) {
   const problems = [];
   const files = walk(outDir).map((f) =>
     path.relative(outDir, f).split(path.sep).join("/"),
@@ -181,8 +181,13 @@ export function publicHygiene(outDir, { preview }) {
       const text = fs.readFileSync(path.join(outDir, f), "utf8");
       if (text.includes("Preview · not public"))
         problems.push(`${f}: preview banner in a public build`);
-      if (/data-theme="(ca|jp)"|data-theme=(ca|jp)\b/.test(text))
-        problems.push(`${f}: a design-status theme sheet in a public build`);
+      const theme = unpublished.find(
+        (id) =>
+          text.includes(`data-theme="${id}"`) ||
+          new RegExp(`data-theme=${id}\\b`).test(text),
+      );
+      if (theme)
+        problems.push(`${f}: unpublished theme "${theme}" in a public build`);
     }
   }
   return problems;
@@ -226,7 +231,11 @@ export function launchProblems({ themes, signup }) {
       problems.push(
         `theme ${t.id} is "${t.status}"; decision 36 needs all three themes published at launch (HM-014)`,
       );
-  if (!signup.action || Object.values(signup.entries).some((v) => !v))
+  // Decision 70: launch with the form shown disabled until Morgen's setup; closedAtLaunch records that choice.
+  if (
+    !signup.closedAtLaunch &&
+    (!signup.action || Object.values(signup.entries).some((v) => !v))
+  )
     problems.push(
       "signup-config.js is not filled in (web/apps-script/README.md step 2)",
     );

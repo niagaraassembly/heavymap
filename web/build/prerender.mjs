@@ -31,7 +31,6 @@ export const PAGES_DIR = path.join(web, ".site");
 export const OUT_DIR = path.join(web, "dist-site");
 const CLIENT = path.join(web, "src/site/client.js");
 const SITE_SRC = path.join(web, "src/site");
-const PREVIEW_CSS = path.join(SITE_SRC, "preview.css");
 /* Static files the public site ships, copied as is. Only these: web/public also
  * holds prototype fixtures (synthetic-parcels.pmtiles) that must never ship. */
 export const STATIC_DIRS = ["editorial", "map", "flags"];
@@ -73,12 +72,13 @@ export function availableThemes(registry, { preview }) {
           t.tokens &&
           fs.existsSync(path.join(SITE_SRC, t.tokens))),
     )
-    .map(({ id, country, name, modes, flag }) => ({
+    .map(({ id, country, name, modes, flag, tokens }) => ({
       id,
       country,
       name,
       modes,
       flag,
+      tokens,
     }));
 }
 
@@ -106,7 +106,13 @@ export function renderSite({ preview = false } = {}) {
         themes,
         catalogue,
         defaultTheme: content.themes.default,
-        assets: { css: preview ? [fromPage(PREVIEW_CSS)] : [], js: [rel] },
+        // Token sheets for every theme this build offers (spec D section 4).
+        assets: {
+          css: themes
+            .filter((t) => t.tokens)
+            .map((t) => fromPage(path.join(SITE_SRC, t.tokens))),
+          js: [rel],
+        },
       }),
     };
   });
@@ -200,7 +206,12 @@ async function main() {
   fail("size budgets (decision 56, BETA-GATE section 6)", budgets.problems);
   fail(
     "public build hygiene (spec G section 3)",
-    publicHygiene(OUT_DIR, { preview }),
+    publicHygiene(OUT_DIR, {
+      preview,
+      unpublished: content.themes.themes
+        .filter((t) => t.status !== "published")
+        .map((t) => t.id),
+    }),
   );
   fail(
     "map checks (spec F section 7.4)",

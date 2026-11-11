@@ -78,7 +78,7 @@ test("public builds reject tiles, preview banners and design themes", () => {
     "index.html": "Preview · not public",
     "assets/a.css": ':root[data-theme="ca"]{}',
   });
-  const p = publicHygiene(dir, { preview: false });
+  const p = publicHygiene(dir, { preview: false, unpublished: ["ca"] });
   assert.equal(p.length, 3);
   assert.equal(
     publicHygiene(tmp({ "index.html": "Preview · not public" }), {
