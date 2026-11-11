@@ -9,6 +9,8 @@
 import { escapeHtml as esc, safeHttpUrl } from "../desk/escape.js";
 import * as wny from "../desk/wny.js";
 import { arrow } from "./layout.js";
+import { SIGNUP } from "./signup-config.js";
+import { MESSAGES } from "./signup.js";
 
 const NA_ORIGIN = "https://niagaraassembly.com";
 const ORIGINALS = {
@@ -167,7 +169,7 @@ export function deskPage(c, region) {
     path: `/desks/${region.slug}/`,
     title: `${region.name} Desk`,
     description: region.coverage,
-    main: `<section class="study-desk study-wrap"><div class="study-topline">${crumb([{ text: "The Desks", href: "/desks/" }, { text: region.name }])}</div><header class="desk-masthead"><p class="eyebrow">The ${esc(region.name)} Desk</p><div><h1>${esc(region.name)}</h1><a class="desk-follow-link" href="/subscribe/?desk=${esc(region.slug)}">Follow this Desk ${arrow}</a></div><p class="hm-coverage">${esc(region.coverage)}</p></header>${latestHtml}${archive}${maps}</section>`,
+    main: `<section class="study-desk study-wrap"><div class="study-topline">${crumb([{ text: "The Desks", href: "/desks/" }, { text: region.name }])}</div><header class="desk-masthead"><p class="eyebrow">The ${esc(region.name)} Desk</p><div><h1>${esc(region.name)}</h1><a class="desk-follow-link" href="/subscribe/?desk=${esc(region.slug)}">Follow this Desk ${arrow}</a></div><p class="hm-coverage">${esc(region.coverage)}</p></header>${latestHtml}${archive}${maps}<section class="hm-desk-signup" aria-labelledby="desk-signup-title"><h2 id="desk-signup-title">Get each ${esc(region.name)} edition by email.</h2>${signupForm(c, { desk: region.slug, id: "desk-signup" })}</section></section>`,
   };
 }
 
@@ -229,7 +231,7 @@ ${panel("coming", "Coming up", "Dated next steps in this issue’s stories, soon
 ${money}
 ${panel("jobs", "Jobs", "Job figures as the sources state them. Where they disagree, the story shows each one.", wny.renderJobs(items))}
 ${panel("support", "Public support", "Tax credits and other public awards tied to these stories. Kept apart from the dollar figures.", wny.renderIncentives(items))}
-<p class="hm-follow-line"><a class="text-link" href="/subscribe/?desk=${esc(region.slug)}">Get each ${esc(region.name)} edition by email ${arrow}</a></p>
+<section class="hm-edition-signup" aria-labelledby="edition-signup-title"><h2 id="edition-signup-title">Get each ${esc(region.name)} edition by email.</h2>${signupForm(c, { desk: region.slug, id: "edition-signup" })}</section>
 ${lanes}
 ${panel("mentions", "Mentions", "People named in this issue’s stories, with the role and organization the sources give.", wny.renderMentions(mentions), "wny-companies", "wny-company-list")}
 ${districts.length ? `<section class="wny-companies" data-wny="districts"><h2>By district</h2><p class="wny-lane__banner">Districts covering the places in this issue’s stories, matched by town rather than exact address. <a href="${METHODS_URL}#districts">How districts are matched</a>.</p><ul class="wny-districts">${wny.renderDistricts(districts)}</ul></section>` : ""}
@@ -411,21 +413,40 @@ export function mapIntro() {
   };
 }
 
-/* ---- subscriptions (spec E); the form arrives in build step 6 ------------- */
+/* ---- per-Desk signup form (spec E section 4) ------------------------------ */
+
+/** With a configured form, inputs carry the Google entry ids so it also posts without JavaScript. */
+export function signupForm(
+  c,
+  { desk = null, id = "signup", config = SIGNUP } = {},
+) {
+  const on = Boolean(config.action);
+  const n = (field) => (on ? config.entries[field] : field);
+  const desks = c.regions.filter((r) => r.desk.status === "published");
+  const boxes = desks
+    .map(
+      (r) =>
+        `<label><input type="checkbox" name="${esc(n("desks"))}" value="${esc(r.slug)}" data-field="desk"${r.slug === desk ? " checked data-default" : ""}${on ? "" : " disabled"}> ${esc(r.name)}</label>`,
+    )
+    .join("");
+  return `<form class="hm-signup" data-signup id="${esc(id)}"${on ? ` action="${esc(config.action)}" method="post" target="_blank"` : ""} novalidate><fieldset class="hm-signup-desks" data-desk-boxes><legend>Desks to follow</legend>${boxes}</fieldset><label for="${esc(id)}-name">Name</label><input id="${esc(id)}-name" name="${esc(n("name"))}" data-field="name" autocomplete="name" required${on ? "" : " disabled"}><label for="${esc(id)}-email">Email</label><input id="${esc(id)}-email" name="${esc(n("email"))}" data-field="email" type="email" autocomplete="email" required${on ? "" : " disabled"}><button type="submit" class="button"${on ? "" : " disabled"}>Subscribe</button><p class="hm-signup-status" role="status">${on ? "" : esc(MESSAGES.closed)}</p><p class="hm-signup-note">Each Desk sends its own edition. Every email has a link to stop that Desk only.</p></form>`;
+}
+
+/* ---- subscriptions (spec E) ------------------------------------------------ */
 
 export function subscribePage(c) {
-  const desks = c.regions
+  const desksList = `<ul class="hm-subscribe-desks">${c.regions
     .filter((r) => r.desk.status === "published")
     .map(
       (r) =>
         `<li><h2>${esc(r.name)}</h2><p>Get each ${esc(r.name)} edition by email.</p></li>`,
     )
-    .join("");
+    .join("")}</ul>`;
   return {
     path: "/subscribe/",
     title: "Follow your regions",
     description: "Get each Desk's editions by email, one Desk at a time.",
-    main: `<section class="study-wrap hm-subscribe">${crumb([{ text: "Follow your regions" }])}<h1>Follow your <em>regions.</em></h1><p>Each Desk sends its own edition. Follow one or both; you can stop either one at any time from its emails.</p><ul class="hm-subscribe-desks" data-signup>${desks}</ul></section>`,
+    main: `<section class="study-wrap hm-subscribe">${crumb([{ text: "Follow your regions" }])}<h1>Follow your <em>regions.</em></h1><p>Each Desk sends its own edition. Follow one or both; you can stop either one at any time from its emails.</p>${desksList}${signupForm(c, { id: "signup" })}</section>`,
   };
 }
 

@@ -9,6 +9,8 @@ import {
   mountResume,
 } from "./reading-surfaces.js";
 import { createStore, readCatalogue } from "./reading-store.js";
+import { SIGNUP } from "./signup-config.js";
+import { mountSignup } from "./signup.js";
 
 const picker = document.querySelector("[data-theme-picker]");
 if (picker) {
@@ -49,4 +51,21 @@ if (catalogue) {
   else if (article) attachArticle(store, article, { via: "read" });
   if (edition) attachEdition(store, edition);
   if (resume) mountResume(store, resume);
+}
+
+/* Per-Desk signup forms (spec E). /subscribe/?desk=<slug> ticks that Desk. */
+const wanted = new URLSearchParams(location.search).get("desk");
+for (const form of document.querySelectorAll("[data-signup]")) {
+  const knownDesks = [...form.querySelectorAll('[data-field="desk"]')].map(
+    (i) => i.value,
+  );
+  if (wanted && knownDesks.includes(wanted))
+    form.querySelector(
+      `[data-field="desk"][value="${CSS.escape(wanted)}"]`,
+    ).checked = true;
+  mountSignup(form, {
+    action: SIGNUP.action,
+    entries: SIGNUP.entries,
+    knownDesks,
+  });
 }

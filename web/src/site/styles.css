@@ -400,3 +400,65 @@
     font: 0.8rem/1.2 var(--sans);
   }
 }
+
+/* Signup (spec E section 4) */
+.hm-signup {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 28rem;
+  margin: 1rem 0 2rem;
+  padding: 1.25rem;
+  background: var(--surface-tint);
+  font: 0.9rem/1.4 var(--sans);
+}
+.hm-signup-desks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  border: 0;
+}
+.hm-signup-desks legend {
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+.hm-signup-desks label {
+  min-height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.hm-signup input[type="email"],
+.hm-signup input:not([type]) {
+  min-height: 2.5rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--rule-strong);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+.hm-signup input[aria-invalid="true"] {
+  border-color: var(--flag-warn);
+}
+.hm-signup button[type="submit"] {
+  justify-self: start;
+  min-height: 2.75rem;
+  margin-top: 0.5rem;
+}
+.hm-signup-status {
+  min-height: 1.4em;
+  margin: 0;
+}
+.hm-signup-status[data-state="error"] {
+  color: var(--flag-warn);
+}
+.hm-signup-note {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.hm-edition-signup,
+.hm-desk-signup {
+  margin: 2.5rem 0;
+}
