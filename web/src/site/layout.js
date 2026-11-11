@@ -91,6 +91,7 @@ ${css}${js}
 ${banner}<a class="skip-link" href="#content">Skip to content</a>
 ${header(o.path, o.themes)}
 <main id="content" tabindex="-1">${o.main}</main>
+${o.catalogue ? `<script type="application/json" id="hm-catalogue">${JSON.stringify(o.catalogue).replace(/</g, "\\u003c")}</script>` : ""}
 ${footer(o.regions)}${o.after ?? ""}
 </body>
 </html>

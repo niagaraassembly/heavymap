@@ -219,7 +219,7 @@ export function editionPage(c, ed) {
     description: ed.summary,
     bodyClass: "hm-edition",
     main: `<div class="study-edition study-wrap">${crumb([{ text: region.name, href: `/desks/${region.slug}/` }, { text: ed.title }])}<header class="edition-masthead"><p class="eyebrow">The ${esc(region.name)} Desk</p><h1>${esc(ed.title)}</h1><p class="issue-stamp">${esc([wny.apDate(ed.published_on), span ? `News from ${span}` : ""].filter(Boolean).join(" · "))}</p></header>
-<div class="hm-desk-publication">
+<div class="hm-desk-publication" data-edition="${esc(ed.key)}">
 <p class="wny-lede">${esc(ed.summary)}</p>
 <p class="issue-intro">Reviewed news from the Niagara River to Syracuse: who is investing, building, hiring and starting up. Every story has passed Niagara Assembly’s source review, and each one carries our reading of it: how far along it is, and what is still unconfirmed.</p>
 <p class="wny-source">Read about the <a href="${METHODS_URL}">news research methods</a>.${original ? ` First published on <a href="${esc(original)}">niagaraassembly.com</a>.` : ""}</p>
@@ -355,7 +355,7 @@ export function itemPage(c, item) {
     path: `/read/${item.id}/`,
     title: item.title,
     description: item.summary,
-    main: `<article class="standalone-reading study-wrap" data-item-id="${esc(item.id)}">${crumb(parts)}<header class="standalone-heading"><p class="eyebrow">${esc(region?.name ?? "HeavyMap")}${ed ? ` <span class="dot-separator">/</span> ${esc(ed.title)}` : ""}${stageChip(item)}</p><h1>${esc(item.title)}</h1><p class="hm-item-meta">${meta}</p></header><div class="hm-reading-body"><p class="standalone-summary">${esc(item.summary)}</p>${itemFacts(item)}${itemFlags(item)}${itemHistory(item)}${itemSources(item)}<p class="hm-item-tools"><a class="text-link" href="/reader/?item=${encodeURIComponent(item.id)}">Open in Reader ${arrow}</a></p>${alsoIn}<p class="hm-provenance">First published ${esc(longDate(item.published_on))}${ed ? ` in ${esc(region?.name ?? "")} ${esc(ed.title)}` : ""}. Story notes are as published; no later status update is implied.</p><span class="reading-end" aria-hidden="true"></span></div></article>`,
+    main: `<article class="standalone-reading study-wrap" data-item-id="${esc(item.id)}">${crumb(parts)}<header class="standalone-heading"><p class="eyebrow">${esc(region?.name ?? "HeavyMap")}${ed ? ` <span class="dot-separator">/</span> ${esc(ed.title)}` : ""}${stageChip(item)}</p><h1>${esc(item.title)}</h1><p class="hm-item-meta">${meta}</p><div class="hm-reading-tools" data-reading-tools hidden><button type="button" data-mark-read aria-pressed="false">Mark as read</button><button type="button" data-remove-history>Remove from history</button><p class="hm-updated" data-updated hidden>Updated since you read it</p><p class="hm-visually-hidden" role="status" data-reading-status></p></div></header><div class="hm-reading-body"><p class="standalone-summary">${esc(item.summary)}</p>${itemFacts(item)}${itemFlags(item)}${itemHistory(item)}${itemSources(item)}<p class="hm-item-tools"><a class="text-link" href="/reader/?item=${encodeURIComponent(item.id)}">Open in Reader ${arrow}</a></p>${alsoIn}<p class="hm-provenance">First published ${esc(longDate(item.published_on))}${ed ? ` in ${esc(region?.name ?? "")} ${esc(ed.title)}` : ""}. Story notes are as published; no later status update is implied.</p><span class="reading-end" aria-hidden="true"></span></div></article>`,
   };
 }
 
@@ -374,16 +374,25 @@ export function readerPage(c) {
   const list = newsNewestFirst(c)
     .map((i) => {
       const ed = c.editions.get(i.editions?.[0]);
-      return `<li data-item="${esc(i.id)}"><a href="/read/${esc(i.id)}/"><span class="eyebrow">${esc(i.place ?? "")}${stageChip(i)}</span><strong>${esc(i.title)}</strong><small>${esc(ed ? `${regionOf(c, ed.desk)?.name} · ${ed.title}` : "")}</small></a></li>`;
+      return `<li><a class="library-item" href="/read/${esc(i.id)}/" data-id="${esc(i.id)}"><span>${esc(ed ? `${regionOf(c, ed.desk)?.name} · ${ed.title}` : "HeavyMap")}<i>${esc(c.labels.types[i.type])}</i></span><strong>${esc(i.title)}</strong><small>${esc(longDate(i.published_on))}</small></a></li>`;
     })
     .join("");
+  const kinds = ["news", "finding", "documentation", "editorial", "all"];
+  const kindLabel = { ...c.labels.types, all: "All" };
+  const regionOptions = [
+    `<option value="all">All regions</option>`,
+    ...c.regions.map(
+      (r) => `<option value="${esc(r.slug)}">${esc(r.name)}</option>`,
+    ),
+    `<option value="heavymap">HeavyMap</option>`,
+  ].join("");
   return {
     path: "/reader/",
     title: "Reader",
     description:
       "Every HeavyMap story in one place, with your place kept in this browser.",
     bodyClass: "hm-reader",
-    main: `<section class="reader-page study-wrap"><header class="reader-heading"><div><p class="eyebrow">A single door into HeavyMap</p><h1>Reader</h1></div><p>News first. Reading history stays in this browser; no account needed.</p></header><div class="hm-reader-layout" data-reader><ol class="hm-reader-list" id="reader-list">${list}</ol><div class="hm-reader-pane" id="reader-article" aria-live="polite"></div></div></section>`,
+    main: `<section class="reader-page study-wrap" data-reader><header class="reader-heading"><div><p class="eyebrow">A single door into HeavyMap</p><h1>Reader</h1></div><p>News first; findings, editorials and documentation when you want to go deeper. Your place is remembered in this browser only.</p></header><div class="reader-types" role="group" aria-label="Material" data-reader-controls hidden>${kinds.map((k) => `<button type="button" data-kind="${k}" aria-pressed="false">${esc(kindLabel[k])}</button>`).join("")}</div><button type="button" class="reader-library-toggle" id="reader-library-toggle" aria-expanded="true" aria-controls="reader-library" hidden>Browse &amp; filter <span aria-hidden="true">−</span></button><div class="reader-workspace"><aside id="reader-library" class="reader-library" aria-label="Reader library"><div data-reader-controls hidden><div class="reader-filter-row"><label for="reader-region">Region</label><select id="reader-region">${regionOptions}</select></div><label class="hm-visually-hidden" for="reader-search">Search the library</label><input id="reader-search" type="search" maxlength="120" placeholder="Search the library…" autocomplete="off"><label class="unread-option"><input id="reader-unread" type="checkbox"> Unread only</label></div><p class="hm-reader-notice" data-reader-notice hidden></p><div class="library-count" id="library-count" role="status"></div><ol id="reader-list" class="reader-list">${list}</ol><div class="reader-storage" data-reader-controls hidden><p data-storage-note>Your place and filters stay on this device.</p><button type="button" data-forget>Forget reading history</button><div data-forget-confirm hidden><p>Forget what you've read on this device? Your theme stays as it is.</p><button type="button" data-forget-yes>Forget</button> <button type="button" data-forget-no>Cancel</button></div></div></aside><div class="reader-document" data-reader-document hidden><div class="document-navigation"><button type="button" id="reader-prev">← Previous</button><span id="reader-position"></span><button type="button" id="reader-next">Next →</button></div><div id="reader-scroll" class="reader-scroll" tabindex="-1" aria-label="Reading pane"><div id="reader-article"></div></div></div></div></section>`,
   };
 }
 
@@ -458,6 +467,45 @@ export function notFound() {
     title: "Not found",
     description: "This page doesn't exist.",
     main: `<section class="study-wrap hm-not-found"><h1>Not <em>found.</em></h1><p>This page doesn't exist, or it has moved.</p><ul><li><a href="/">Home</a></li><li><a href="/desks/">The Desks</a></li><li><a href="/reader/">Reader</a></li></ul></section>`,
+  };
+}
+
+/** The small catalogue the client needs for history, the cue and the Reader. */
+export function clientCatalogue(c) {
+  const slugOf = (id) => regionOf(c, id)?.slug ?? "heavymap";
+  return {
+    regions: c.regions.map((r) => ({ slug: r.slug, name: r.name })),
+    editions: Object.fromEntries(
+      [...c.editions.values()].map((e) => [
+        e.key,
+        {
+          title: e.title,
+          deskName: regionOf(c, e.desk)?.name ?? "",
+          href: editionHref(e.key),
+          items: e.items,
+        },
+      ]),
+    ),
+    items: [...c.items.values()].map((i) => ({
+      id: i.id,
+      type: i.type,
+      title: i.title,
+      summary: i.summary,
+      regions: (i.regions ?? []).map((r) =>
+        r === "heavymap" ? "heavymap" : slugOf(r),
+      ),
+      place: i.place ?? null,
+      entity: i.entity?.name ?? null,
+      publisher:
+        i.sources
+          ?.map((s) => s.publisher)
+          .filter(Boolean)
+          .join(" ") ?? "",
+      published_on: i.published_on,
+      updated_on: i.updated_on ?? null,
+      edition: i.editions?.[0] ?? null,
+    })),
+    retired: [...c.retired.keys()],
   };
 }
 

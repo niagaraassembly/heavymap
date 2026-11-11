@@ -236,3 +236,10 @@ These are the behaviours a focused check must show. They aren't a test plan:
 | C-Q3 | Per-item history removal | **Yes**, alongside "Forget reading history" (29; section 6.4) |
 | C-Q4 | Library order | Newest first by publication date, edition order as tie-break (30) |
 | C-Q5 | "Updated since you read it" | Yes, quietly; the item stays read (31) |
+
+## 10. Implementation notes (build step 4, 2026-11-10)
+
+Two changes from the schema in section 6.2, found while building:
+- **Timestamps are kept to the second, not the minute.** At minute precision, marking an item read and then unread within the same minute can't be ordered, and the merge with another tab would bring the stale "read" back. A new read or unread mark is always stored at least one second after the opposite mark.
+- **Removals are recorded (`removed: { <id>: <time> }`).** Without a record, saving merges with the copy still in storage, so a removed item reappears. The merge drops any entry last opened before its removal; opening the item later records it again. Undo deletes the record and restores the entry. The record is capped at 500 entries, like items.
+

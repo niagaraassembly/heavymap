@@ -2,6 +2,13 @@
  * this adds conveniences. Reader and history arrive in build step 4. */
 import "./styles.css";
 import { mountThemePicker } from "./theme-picker.js";
+import { mountReader } from "./reader-page.js";
+import {
+  attachArticle,
+  attachEdition,
+  mountResume,
+} from "./reading-surfaces.js";
+import { createStore, readCatalogue } from "./reading-store.js";
 
 const picker = document.querySelector("[data-theme-picker]");
 if (picker) {
@@ -29,3 +36,17 @@ document.addEventListener("click", async (e) => {
     button.textContent = url;
   }
 });
+
+/* Reading history on every reading surface (spec C, D11). */
+const catalogue = readCatalogue();
+if (catalogue) {
+  const store = createStore(catalogue);
+  const reader = document.querySelector("[data-reader]");
+  const article = document.querySelector("main article[data-item-id]");
+  const edition = document.querySelector("[data-edition]");
+  const resume = document.querySelector("[data-resume]");
+  if (reader) mountReader(store, reader);
+  else if (article) attachArticle(store, article, { via: "read" });
+  if (edition) attachEdition(store, edition);
+  if (resume) mountResume(store, resume);
+}
