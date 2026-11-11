@@ -14,6 +14,17 @@ import { fileURLToPath } from "node:url";
 import { loadContent } from "./content-loader.mjs";
 import { allPages, clientCatalogue } from "../src/site/pages.js";
 import { renderPage } from "../src/site/layout.js";
+import { SIGNUP } from "../src/site/signup-config.js";
+import {
+  budgetReport,
+  contrastProblems,
+  launchProblems,
+  mapProblems,
+  publicHygiene,
+  themeVariants,
+} from "./checks.mjs";
+import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 
 const web = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 export const PAGES_DIR = path.join(web, ".site");
@@ -113,9 +124,49 @@ export function writePages(pages) {
   }
 }
 
+function fail(title, problems) {
+  if (!problems.length) return;
+  throw new Error(`${title}:\n- ${problems.join("\n- ")}`);
+}
+
+const sha256 = (file) =>
+  createHash("sha256").update(fs.readFileSync(file)).digest("hex");
+const git = (...args) => {
+  try {
+    return execFileSync("git", ["-C", web, ...args], {
+      encoding: "utf8",
+    }).trim();
+  } catch {
+    return null;
+  }
+};
+
 async function main() {
   const argv = process.argv.slice(2);
   const preview = argv.includes("--preview");
+  const launch = argv.includes("--launch");
+  if (launch && preview) throw new Error("--launch and --preview don't mix");
+  const content = loadContent(path.join(web, "../content"), {
+    includePreview: preview,
+  });
+  const themes = availableThemes(content.themes, { preview });
+
+  // Gates that need no output first, so a bad build fails fast.
+  if (launch)
+    fail(
+      "launch gates (spec G section 9)",
+      launchProblems({ themes: content.themes, signup: SIGNUP }),
+    );
+  fail(
+    "contrast (spec D section 8)",
+    contrastProblems(
+      themeVariants(
+        SITE_SRC,
+        content.themes.themes.filter((t) => themes.some((a) => a.id === t.id)),
+      ),
+    ),
+  );
+
   const pages = renderSite({ preview });
   writePages(pages);
   console.log(`prerender: ${pages.length} pages${preview ? " (preview)" : ""}`);
@@ -138,7 +189,54 @@ async function main() {
     fs.cpSync(path.join(STATIC_ROOT, dir), path.join(OUT_DIR, dir), {
       recursive: true,
     });
-  console.log(`built: ${path.relative(web, OUT_DIR)}/`);
+
+  const budgets = budgetReport(OUT_DIR);
+  fail("size budgets (decision 56, BETA-GATE section 6)", budgets.problems);
+  fail(
+    "public build hygiene (spec G section 3)",
+    publicHygiene(OUT_DIR, { preview }),
+  );
+  fail(
+    "map checks (spec F section 7.4)",
+    mapProblems(OUT_DIR, content.regions),
+  );
+
+  const record = {
+    kind: preview ? "preview" : launch ? "launch" : "public",
+    commit: git("rev-parse", "HEAD"),
+    uncommitted_changes: Boolean(git("status", "--porcelain")),
+    content_manifest_sha256: sha256(path.join(web, "../content/manifest.json")),
+    snapshot: content.snapshot?.inputs ?? [],
+    map: JSON.parse(
+      fs.readFileSync(
+        path.join(STATIC_ROOT, "map/hamilton-lower-city.json"),
+        "utf8",
+      ),
+    ),
+    themes: themes.map((t) => t.id),
+    pages: pages.length,
+    sizes_compressed: {
+      startup_data: budgets.sizes.startupData,
+      app_code: budgets.sizes.appCode,
+    },
+    total_bytes: budgets.sizes.total,
+    checks: [
+      "content",
+      "links",
+      "contrast",
+      "budgets",
+      "hygiene",
+      "map",
+      ...(launch ? ["launch"] : []),
+    ],
+  };
+  fs.writeFileSync(
+    path.join(OUT_DIR, "build-record.json"),
+    JSON.stringify(record, null, 2) + "\n",
+  );
+  console.log(
+    `built: ${path.relative(web, OUT_DIR)}/ · data ${(budgets.sizes.startupData / 1024).toFixed(1)} KB · app ${(budgets.sizes.appCode / 1024).toFixed(1)} KB compressed · ${budgets.sizes.files} files`,
+  );
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

@@ -235,7 +235,7 @@
 }
 .study-order {
   font-size: 9px;
-  color: var(--rust);
+  color: var(--accent-strong);
   padding-top: 4px;
 }
 .study-dispatch .eyebrow {
@@ -278,7 +278,7 @@
   color: var(--muted);
 }
 .archive-row > span:first-child {
-  color: var(--rust);
+  color: var(--accent-strong);
 }
 .archive-row > div {
   flex: 1;
@@ -566,7 +566,7 @@
 }
 .edition-contents > a > span {
   font-size: 9px;
-  color: var(--rust);
+  color: var(--accent-strong);
   padding-top: 2px;
 }
 .edition-contents > div {
@@ -610,7 +610,7 @@
 }
 .edition-lane-heading > span {
   font-size: 10px;
-  color: var(--rust);
+  color: var(--accent-strong);
   padding-top: 9px;
 }
 .edition-lane-heading h2 {
@@ -770,7 +770,7 @@
 }
 .reading-margin nav > a > span {
   font-size: 9px;
-  color: var(--rust);
+  color: var(--accent-strong);
   padding-top: 2px;
 }
 .reading-context-label {
@@ -820,7 +820,7 @@
 }
 .source-sequence {
   font-size: 9px;
-  color: var(--rust);
+  color: var(--accent-strong);
   padding-top: 4px;
 }
 .standalone-sources > a > div {
@@ -870,7 +870,7 @@
 }
 .reading-section-number {
   display: block;
-  color: var(--rust);
+  color: var(--accent-strong);
   font-size: 9px;
   margin-bottom: 16px;
 }

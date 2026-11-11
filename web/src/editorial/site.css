@@ -106,7 +106,7 @@ img {
 }
 .site-header nav a:hover,
 .site-header [aria-current="page"] {
-  color: var(--rust);
+  color: var(--accent-strong);
 }
 .nav-soon {
   font-size: 9px;
@@ -232,7 +232,7 @@ img {
 .edition-strip > .eyebrow {
   margin: 0;
   white-space: nowrap;
-  color: var(--rust);
+  color: var(--accent-strong);
 }
 .edition-strip > a {
   display: flex;
@@ -280,7 +280,7 @@ img {
   letter-spacing: 0;
   align-self: start;
   margin-top: 9px;
-  color: var(--rust);
+  color: var(--accent-strong);
 }
 .desk-grid {
   display: grid;
@@ -422,7 +422,7 @@ img {
 .story-index {
   font-size: 10px;
   padding-top: 4px;
-  color: var(--rust);
+  color: var(--accent-strong);
 }
 .story-row .eyebrow {
   font-size: 8px;

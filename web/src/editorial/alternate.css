@@ -52,7 +52,7 @@
   font-size: 12px;
 }
 .reader-nav[aria-current="page"] {
-  color: var(--rust);
+  color: var(--accent-strong);
 }
 .alt-follow {
   margin-left: 15px;
@@ -292,7 +292,7 @@
 }
 .dispatch-number {
   font-size: 10px;
-  color: var(--rust);
+  color: var(--accent-strong);
   padding-top: 3px;
 }
 .dispatch .eyebrow {

@@ -11,6 +11,7 @@ This is a proposal for colour values only. The layout, type and every invariant 
 | `--surface-raised` | cards, dock | `#fbfcfa` | n/a | n/a |
 | `--text` | ink (deep spruce) | `#1d3a34` | 11.22:1 | 11.95:1 |
 | `--text-muted` | metadata | `#4f625d` | 5.92:1 | 6.30:1 |
+| `--text-faint` | disabled and minor text; same value as `--text-muted`, because any lighter grey fails 4.5:1 (found by the build's contrast check) | `#4f625d` | 5.92:1 | 6.30:1 |
 | `--accent` / `--link` | lake blue; links stay underlined | `#2c5a75` | 6.78:1 | 7.22:1 |
 | `--accent-strong` | small accent text | `#234b63` | 8.48:1 | 9.04:1 |
 | `--accent-red` | the ◒ mark, rules, display moments only (sparingly) | `#b3261e` | 5.96:1 | 6.35:1 |
