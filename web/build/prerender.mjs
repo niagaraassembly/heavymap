@@ -12,7 +12,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadContent } from "./content-loader.mjs";
-import { allPages } from "../src/site/pages.js";
+import { allPages, clientCatalogue } from "../src/site/pages.js";
 import { renderPage } from "../src/site/layout.js";
 
 const web = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -23,7 +23,7 @@ const SITE_SRC = path.join(web, "src/site");
 const PREVIEW_CSS = path.join(SITE_SRC, "preview.css");
 /* Static files the public site ships, copied as is. Only these: web/public also
  * holds prototype fixtures (synthetic-parcels.pmtiles) that must never ship. */
-export const STATIC_DIRS = ["editorial"];
+export const STATIC_DIRS = ["editorial", "map"];
 const STATIC_ROOT = path.join(web, "public");
 
 /** "/" -> "index.html", "/a/b/" -> "a/b/index.html", "/404.html" -> "404.html". */
@@ -70,6 +70,7 @@ export function renderSite({ preview = false } = {}) {
     includePreview: preview,
   });
   const themes = availableThemes(content.themes, { preview });
+  const catalogue = clientCatalogue(content);
   const pages = allPages(content).map((page) => {
     const file = fileFor(page.path);
     const fromPage = (target) =>
@@ -86,6 +87,7 @@ export function renderSite({ preview = false } = {}) {
         regions: content.regions,
         preview,
         themes,
+        catalogue,
         defaultTheme: content.themes.default,
         assets: { css: preview ? [fromPage(PREVIEW_CSS)] : [], js: [rel] },
       }),

@@ -27,6 +27,8 @@ Most of this spec (sections 4 to 8) covers the workspace, so that it's ready whe
 
 ## 2. v1 map introduction (`/map/`)
 
+> **Changed by decision 67 (2026-11-10):** the v1 map is a **static image** of Hamilton's lower city and harbourfront, not a pannable basemap. `web/build/map/render-hamilton.mjs` renders it once from Protomaps' dated build (OpenStreetMap data) with HeavyMap's colours (`web/build/map/style.js`), and writes two sizes plus a provenance record (`hamilton-lower-city.json`: build URL, bounds, zoom, SHA-256) to `web/public/map/`. No map engine or tiles ship, so the no-WebGL fallback and the app-code budget don't apply to `/map/` in v1. The basemap bullets below describe the superseded plan.
+
 ```
 ┌────────────────────────────────────────────────────────────────────┐
 │ HeavyMap◒   Desks  Reader  Map  About              [theme ▾] [Subscribe] │  ← shared header (spec A)

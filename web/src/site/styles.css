@@ -121,24 +121,70 @@
   color: var(--muted);
 }
 
-/* Map introduction (build step 5 adds the basemap) */
-.hm-map-intro .hm-map-canvas {
-  min-height: 60vh;
-  background: var(--line);
+/* Map introduction: a still map (decision 67) */
+.map-strip-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
+}
+.map-strip .map-strip-copy {
+  position: relative;
+  z-index: 1;
+}
+.map-strip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--surface) 0%,
+    color-mix(in srgb, var(--surface) 70%, transparent) 38%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+.map-strip .map-peek {
+  z-index: 2;
+}
+.hm-map-figure {
+  position: relative;
+  margin: 0;
+}
+.hm-map-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.hm-map-figure figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.4rem 1rem;
+  font: 0.75rem/1.4 var(--sans);
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--rule-soft);
 }
 .hm-map-story {
   max-width: 38rem;
-  margin: -40vh auto 2rem;
+  margin: -14rem auto 2rem;
   position: relative;
   padding: 1.75rem;
-  background: var(--paper);
-  border: 1px solid var(--line);
+  background: var(--surface);
+  border: 1px solid var(--rule-soft);
+  box-shadow: 0 0.6rem 1.5rem var(--shadow);
 }
 .hm-map-intro .map-dock {
   position: sticky;
   bottom: 0;
   display: flex;
-  position: sticky;
+}
+@media (max-width: 700px) {
+  .hm-map-story {
+    margin: 0 1rem 2rem;
+  }
 }
 
 .hm-not-found,
