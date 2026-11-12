@@ -31,7 +31,7 @@
 
 /* Issue stamp: Vol. / No. / date on the issue index. */
 .issue-stamp {
-  font: .75rem/1 var(--mono);
+  font: .75rem/1.5 var(--mono);
   color: var(--ink-soft);
   letter-spacing: .06em;
   margin: 0 0 2.5rem;
@@ -624,7 +624,7 @@ dialog.sparks-dialog::backdrop {
 
 /* "All articles in this issue": a full-width bar under the corridor line
    that opens in place to the issue's one-line index. */
-.wny-allbar { margin: -1.25rem 0 2.5rem; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.wny-allbar { margin: .75rem 0 2.5rem; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
 .wny-allbar summary {
   padding: .6rem 0;
   font: 600 .9375rem/1.4 var(--sans);

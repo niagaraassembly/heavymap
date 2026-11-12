@@ -71,18 +71,20 @@
   gap: 35px;
 }
 .edition-top .eyebrow {
-  font-size: 9px;
+  font-size: 0.6875rem;
 }
 .edition-top h1 {
   font-size: 65px;
   line-height: 1.02;
   letter-spacing: -2.8px;
+  text-wrap: balance;
   margin: 18px 0 0;
 }
 .edition-top > p {
-  font-size: 13px;
-  line-height: 1.8;
+  font-size: 1.0625rem;
+  line-height: 1.6;
   color: var(--muted);
+  max-width: 34rem;
   margin: 0 5px 3px 0;
 }
 .return-line {
@@ -147,7 +149,7 @@
   top: 32px;
 }
 .map-strip-copy .eyebrow {
-  font-size: 8px;
+  font-size: 0.6875rem;
   color: var(--text-muted);
 }
 .map-strip h2 {
@@ -177,7 +179,7 @@
   margin-bottom: 8px;
 }
 .map-peek small {
-  font-size: 9px;
+  font-size: 0.6875rem;
   color: var(--muted);
 }
 .map-peek-arrow {
@@ -212,7 +214,7 @@
   gap: 25px;
 }
 .alt-section-head .eyebrow {
-  font-size: 8px;
+  font-size: 0.6875rem;
   margin-bottom: 9px;
 }
 .alt-section-head h2 {
@@ -255,7 +257,7 @@
   color: var(--on-ink);
 }
 .lead-story > .eyebrow {
-  font-size: 8px;
+  font-size: 0.6875rem;
   display: flex;
   gap: 17px;
   align-items: center;
@@ -268,7 +270,7 @@
   margin-bottom: 17px;
 }
 .lead-story > p:not(.eyebrow, .archive-date) {
-  font-size: 13px;
+  font-size: 0.9375rem;
   line-height: 1.75;
   color: var(--muted);
   max-width: 550px;
@@ -277,7 +279,7 @@
   font-size: 11px;
 }
 .archive-date {
-  font-size: 9px;
+  font-size: 0.6875rem;
   color: var(--text-muted);
   margin: 16px 0 0;
 }
@@ -296,7 +298,7 @@
   padding-top: 3px;
 }
 .dispatch .eyebrow {
-  font-size: 8px;
+  font-size: 0.6875rem;
   letter-spacing: 0.9px;
   display: flex;
   flex-wrap: wrap;
@@ -311,7 +313,7 @@
   margin-bottom: 11px;
 }
 .dispatch p:not(.eyebrow) {
-  font-size: 12px;
+  font-size: 0.875rem;
   color: var(--muted);
   margin-bottom: 10px;
   line-height: 1.65;
@@ -343,7 +345,7 @@
   width: 25px;
 }
 .reader-invitation .eyebrow {
-  font-size: 8px;
+  font-size: 0.6875rem;
   margin-bottom: 12px;
 }
 .reader-invitation h2 {
@@ -389,7 +391,7 @@
   padding-left: 40px;
 }
 .region-pair .eyebrow {
-  font-size: 8px;
+  font-size: 0.6875rem;
 }
 .region-pair h3 {
   font-size: 33px;
@@ -397,7 +399,7 @@
   margin-bottom: 15px;
 }
 .region-pair p {
-  font-size: 12px;
+  font-size: 0.875rem;
   color: var(--muted);
   max-width: 430px;
 }
@@ -464,7 +466,7 @@
   padding-bottom: 28px;
 }
 .reader-heading .eyebrow {
-  font-size: 8px;
+  font-size: 0.6875rem;
   margin-bottom: 10px;
 }
 .reader-heading h1 {
@@ -480,9 +482,10 @@
   margin-top: 10px;
 }
 .reader-heading > p {
-  font-size: 11px;
+  font-size: 0.9375rem;
   color: var(--muted);
   line-height: 1.7;
+  max-width: 34rem;
   margin: 0 auto 0 15px;
 }
 .reader-heading > .text-link {
@@ -682,7 +685,7 @@
   margin-bottom: 25px;
 }
 .reader-scroll .eyebrow {
-  font-size: 8px;
+  font-size: 0.6875rem;
   margin-bottom: 15px;
 }
 .reader-scroll h2 {
@@ -1082,14 +1085,14 @@
     display: block;
   }
   .edition-top .eyebrow {
-    font-size: 8px;
+    font-size: 0.6875rem;
   }
   .edition-top h1 {
-    font-size: 57px;
+    font-size: 48px;
     letter-spacing: -2.5px;
   }
   .edition-top > p {
-    font-size: 12px;
+    font-size: 0.9375rem;
     margin: 23px 0 0;
   }
   .edition-top > p br {

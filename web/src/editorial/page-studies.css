@@ -65,7 +65,7 @@
   background: var(--surface-tint);
 }
 .desk-masthead .eyebrow {
-  font-size: 9px;
+  font-size: 0.6875rem;
   margin-bottom: 20px;
 }
 .desk-masthead > div {
@@ -92,6 +92,7 @@
 .desk-masthead > p:last-child {
   font: italic 24px/1.4 var(--serif);
   color: var(--green);
+  max-width: 44rem;
   margin: 20px 0 27px;
 }
 .desk-panorama {
@@ -131,7 +132,7 @@
   margin-bottom: 24px;
 }
 .edition-kicker .eyebrow {
-  font-size: 9px;
+  font-size: 0.6875rem;
   margin: 0;
 }
 .edition-kicker > span:last-child {
@@ -451,7 +452,7 @@
   padding-bottom: 45px;
 }
 .edition-masthead > .eyebrow {
-  font-size: 9px;
+  font-size: 0.6875rem;
   margin-bottom: 22px;
 }
 .edition-title-line {
@@ -687,11 +688,32 @@
 .standalone-reading {
   padding-bottom: 45px;
 }
+
+/* Brief pages: the lede and prose read at a measure, not the full
+ * 1440px container. The summary previously had no rule at all and
+ * rendered at browser-default size across the whole width. */
+.standalone-summary {
+  font: 1.125rem/1.65 var(--sans);
+  max-width: 42rem;
+  margin: 0 0 1.5rem;
+}
+.standalone-reading > h2,
+.standalone-reading > h3,
+.standalone-reading > ul,
+.standalone-reading > p:not(.standalone-summary),
+.standalone-reading .hm-stage-history,
+.standalone-reading .hm-open-questions,
+.standalone-reading .standalone-sources,
+.standalone-reading .hm-item-tools,
+.standalone-reading .hm-also-in,
+.standalone-reading .hm-provenance {
+  max-width: 42rem;
+}
 .standalone-heading {
   max-width: 1100px;
 }
 .standalone-heading > .eyebrow {
-  font-size: 9px;
+  font-size: 0.6875rem;
   margin-bottom: 22px;
 }
 .standalone-heading h1 {
@@ -802,7 +824,7 @@
   margin: 0;
 }
 .standalone-sources > .eyebrow {
-  font-size: 8px;
+  font-size: 0.6875rem;
   margin-bottom: 11px;
 }
 .standalone-body h2 {
@@ -827,7 +849,7 @@
   flex: 1;
 }
 .standalone-sources .eyebrow {
-  font-size: 8px;
+  font-size: 0.6875rem;
   margin-bottom: 9px;
   display: block;
   line-height: 1.8;
@@ -1649,7 +1671,7 @@
     padding: 21px 0;
   }
   .standalone-sources .eyebrow {
-    font-size: 7px;
+    font-size: 0.6875rem;
     letter-spacing: 1px;
     line-height: 1.9;
   }
