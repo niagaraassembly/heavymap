@@ -526,7 +526,7 @@ dialog.sparks-dialog::backdrop {
 .wny-money__what:hover, .wny-money__line.is-pointed .wny-money__what { text-decoration: underline; }
 .wny-money__meta { font: .75rem/1.4 var(--sans); color: var(--ink-soft); text-align: right; }
 @media (max-width: 34rem) {
-  .wny-money__line { grid-template-columns: 5.5rem minmax(0, 1fr); }
+  .wny-money__line { grid-template-columns: 7.5rem minmax(0, 1fr); }
   .wny-money__meta { grid-column: 2; white-space: normal; }
   .wny-conflict li { grid-template-columns: 1fr; gap: 0; }
   .wny-conflict__source { margin-bottom: .3rem; }

@@ -1313,11 +1313,14 @@
     padding-bottom: 8px;
     scroll-snap-type: x proximity;
   }
-  .library-item {
+  .reader-list > li {
     flex: 0 0 240px;
+    scroll-snap-align: start;
+  }
+  .library-item {
     border: 1px solid var(--line);
     padding: 13px;
-    scroll-snap-align: start;
+    height: 100%;
   }
   .library-item > strong {
     font-size: 17px;
