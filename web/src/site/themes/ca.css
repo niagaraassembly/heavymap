@@ -1,6 +1,8 @@
-/* Canada theme: northern palette, DRAFT (decision 35, HM-014).
+/* Canada theme: northern palette (decision 35, HM-014).
  * Values from heavymap-planning/frontend/themes/ca-northern-palette-draft.md.
- * Status "design": loaded only in preview builds until Morgen approves it. */
+ * Status in content/themes.json is "published" (decision 36), so it loads in
+ * public builds. The "DRAFT" header this replaced was stale: the registry,
+ * not this comment, is what the build reads. */
 :root[data-theme="ca"] {
   --surface: #f3f5f2;
   --surface-raised: #fbfcfa;
@@ -24,5 +26,4 @@
   --amount-announced: #735a00;
   --flag-warn: #8a4f00;
   --flag-info: #1f5486;
-  --link: #2c5a75;
 }

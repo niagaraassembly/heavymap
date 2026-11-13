@@ -50,8 +50,11 @@
   color-scheme: light;
 }
 
-/* USA, dark (decision 32). Same roles; every text pair is checked in build step 7. */
-:root[data-mode="dark"] {
+/* USA, dark (decision 32). Same roles; every text pair is checked in build step 7.
+ * Scoped to the USA theme: a dark palette belongs to its theme, so a future
+ * Canada or Japan dark needs its own block (and "dark" in its modes) rather
+ * than silently inheriting this one. */
+:root[data-theme="us"][data-mode="dark"] {
   --surface: #162024;
   --surface-raised: #1d292e;
   --surface-tint: #1c2a2a;
