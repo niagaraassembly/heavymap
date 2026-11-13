@@ -18,6 +18,25 @@ const ORIGINALS = {
   "niagara-brant": `${NA_ORIGIN}/desks/ca/on/niagara-brant/`,
   "western-new-york/issue-one": `${NA_ORIGIN}/desks/us/ny/western-new-york/issue/one/`,
 };
+/** Archival photograph for each Desk's panorama (credits: /about/credits/). */
+const DESK_PHOTOS = {
+  "western-new-york": {
+    src: "/editorial/buffalo-grain-elevators.jpg",
+    width: 669,
+    height: 1000,
+    alt: "Historic grain elevators along the Buffalo waterfront",
+    caption: "Buffalo, New York · Archival regional photograph",
+    portrait: true,
+  },
+  "niagara-brant": {
+    src: "/editorial/hamilton-steel-mills.jpg",
+    width: 1200,
+    height: 900,
+    alt: "Hamilton steel mills along the industrial waterfront",
+    caption: "Hamilton, Ontario · Archival regional photograph",
+    portrait: false,
+  },
+};
 const METHODS_URL = `${NA_ORIGIN}/research/methods/news/`;
 
 /** "10 October 2026", HeavyMap's long date (the edition keeps the original's AP style). */
@@ -105,7 +124,7 @@ export function home(c) {
   const leadEd = lead && c.editions.get(lead.editions?.[0]);
   const leadDesk = leadEd && regionOf(c, leadEd.desk);
   const fromDesks = lead
-    ? `<div class="news-layout"><article class="lead-story"><a class="lead-image" href="/read/${esc(lead.id)}/"><img src="/editorial/buffalo-grain-elevators.jpg" alt="Buffalo grain elevators, archival regional photograph" width="1200" height="800"><span>${esc(leadDesk?.name ?? "")} / ${esc(leadEd?.title ?? "")}</span></a><p class="eyebrow">${esc(lead.place ?? "")}${stageChip(lead)}</p><h3><a href="/read/${esc(lead.id)}/">${esc(lead.title)}</a></h3><p>${esc(lead.summary)}</p><a class="text-link" href="/read/${esc(lead.id)}/">Read the story ${arrow}</a><p class="archive-date">From ${esc(leadEd?.title ?? "")} · ${esc(longDate(lead.published_on))}</p></article><div class="news-side">${rest
+    ? `<div class="news-layout"><article class="lead-story"><a class="lead-image" href="/read/${esc(lead.id)}/"><img src="/editorial/buffalo-grain-elevators.jpg" alt="Buffalo grain elevators, archival regional photograph" width="669" height="1000"><span>${esc(leadDesk?.name ?? "")} / ${esc(leadEd?.title ?? "")}</span></a><p class="eyebrow">${esc(lead.place ?? "")}${stageChip(lead)}</p><h3><a href="/read/${esc(lead.id)}/">${esc(lead.title)}</a></h3><p>${esc(lead.summary)}</p><a class="text-link" href="/read/${esc(lead.id)}/">Read the story ${arrow}</a><p class="archive-date">From ${esc(leadEd?.title ?? "")} · ${esc(longDate(lead.published_on))}</p></article><div class="news-side">${rest
         .slice(0, 3)
         .map(
           (s, i) =>
@@ -165,11 +184,15 @@ export function deskPage(c, region) {
   const maps = region.geographies.length
     ? `<section class="hm-desk-maps"><h2>Mapping</h2><ul>${region.geographies.map((g) => `<li>${esc(g.name)}: ${esc(MAP_STATUS_WORDS[g.map.status] ?? "not yet mapped")}. <a href="/map/">About the map</a></li>`).join("")}</ul></section>`
     : "";
+  const photo = DESK_PHOTOS[region.slug];
+  const panorama = photo
+    ? `<figure class="desk-panorama${photo.portrait ? " desk-panorama--portrait" : ""}"><img src="${photo.src}" alt="${esc(photo.alt)}" width="${photo.width}" height="${photo.height}"><figcaption><span>${esc(photo.caption)}</span><a href="/about/credits/">Photograph credits</a></figcaption></figure>`
+    : "";
   return {
     path: `/desks/${region.slug}/`,
     title: `${region.name} Desk`,
     description: region.coverage,
-    main: `<section class="study-desk study-wrap"><div class="study-topline">${crumb([{ text: "The Desks", href: "/desks/" }, { text: region.name }])}</div><header class="desk-masthead"><p class="eyebrow">The ${esc(region.name)} Desk</p><div><h1>${esc(region.name)}</h1><a class="desk-follow-link" href="/subscribe/?desk=${esc(region.slug)}">Follow this Desk ${arrow}</a></div><p class="hm-coverage">${esc(region.coverage)}</p></header>${latestHtml}${archive}${maps}<section class="hm-desk-signup" aria-labelledby="desk-signup-title"><h2 id="desk-signup-title">Get each ${esc(region.name)} edition by email.</h2>${signupForm(c, { desk: region.slug, id: "desk-signup" })}</section></section>`,
+    main: `<section class="study-desk study-wrap"><div class="study-topline">${crumb([{ text: "The Desks", href: "/desks/" }, { text: region.name }])}</div><header class="desk-masthead"><p class="eyebrow">The ${esc(region.name)} Desk</p><div><h1>${esc(region.name)}</h1><a class="desk-follow-link" href="/subscribe/?desk=${esc(region.slug)}">Follow this Desk ${arrow}</a></div><p class="hm-coverage">${esc(region.coverage)}</p></header>${panorama}${latestHtml}${archive}${maps}<section class="hm-desk-signup" aria-labelledby="desk-signup-title"><h2 id="desk-signup-title">Get each ${esc(region.name)} edition by email.</h2>${signupForm(c, { desk: region.slug, id: "desk-signup" })}</section></section>`,
   };
 }
 
