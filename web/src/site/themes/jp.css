@@ -1,8 +1,10 @@
-/* Japan theme, DRAFT (decision 7, HM-014). Colours translated from the
+/* Japan theme (decision 7, HM-014). Colours translated from the
  * generated study in the handoff (review-images/optional-theme-study):
  * washi paper, indigo-black ink, vermilion accent, moss green. Tokens only:
  * no motifs, ornament, layout or language changes (spec D section 3).
- * Status "design": loaded only in preview builds until Morgen approves it. */
+ * Status in content/themes.json is "published" (decision 36), so it loads in
+ * public builds. The "DRAFT" header this replaced was stale: the registry,
+ * not this comment, is what the build reads. */
 :root[data-theme="jp"] {
   --surface: #f6f2ea;
   --surface-raised: #fbf8f2;

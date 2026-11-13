@@ -94,19 +94,27 @@ export function themeVariants(siteSrc, themes) {
   const variants = [];
   for (const t of themes) {
     let vars = { ...light };
-    if (t.tokens)
-      vars = {
-        ...vars,
-        ...(tokenBlocks(fs.readFileSync(path.join(siteSrc, t.tokens), "utf8"))[
-          `:root[data-theme="${t.id}"]`
-        ] ?? {}),
-      };
+    let sheet = {};
+    if (t.tokens) {
+      sheet = tokenBlocks(fs.readFileSync(path.join(siteSrc, t.tokens), "utf8"));
+      vars = { ...vars, ...(sheet[`:root[data-theme="${t.id}"]`] ?? {}) };
+    }
     variants.push({ name: `${t.id}/light`, vars });
-    if (t.modes.includes("dark"))
+    if (t.modes.includes("dark")) {
+      // A theme's dark palette lives in its own sheet; the USA one lives in
+      // tokens.css. A theme with "dark" in modes but no dark block renders
+      // its light tokens in dark mode — add the block before adding the mode.
+      const ownDark =
+        sheet[`:root[data-theme="${t.id}"][data-mode="dark"]`] ?? {};
+      const baseDark =
+        t.id === "us"
+          ? (base[':root[data-theme="us"][data-mode="dark"]'] ?? {})
+          : {};
       variants.push({
         name: `${t.id}/dark`,
-        vars: { ...vars, ...(base[':root[data-mode="dark"]'] ?? {}) },
+        vars: { ...vars, ...ownDark, ...baseDark },
       });
+    }
   }
   return variants;
 }
