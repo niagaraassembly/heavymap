@@ -102,6 +102,9 @@
   object-position: center 52%;
   filter: saturate(0.65);
 }
+.desk-panorama--portrait img {
+  object-position: center 22%;
+}
 .desk-panorama figcaption {
   display: flex;
   justify-content: space-between;
