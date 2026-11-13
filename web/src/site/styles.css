@@ -1,6 +1,7 @@
 /* HeavyMap public site stylesheet. The selected design's sheets, the
  * vendored Issue One card styles, and the few rules the prebuilt pages add.
  * Tokenising the hard-coded colours is build step 3 (spec D, D-T1). */
+@import "./fonts.css";
 @import "./tokens.css";
 @import "../editorial/site.css";
 @import "../editorial/alternate.css";
@@ -9,7 +10,7 @@
 
 /* The original card's variables, mapped to HeavyMap tokens. */
 :root {
-  --sans: Arial, Helvetica, sans-serif;
+  --sans: "IBM Plex Sans", Arial, Helvetica, sans-serif;
   --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --hand: var(--serif);
   --ink-soft: var(--muted);
