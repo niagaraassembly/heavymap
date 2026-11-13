@@ -55,7 +55,6 @@ function footer(regions) {
  * @param {object[]} o.regions   content regions, for the footer
  * @param {object} o.assets      { css: string[], js: string[] } paths relative to this page
  * @param {string} [o.bodyClass]
- * @param {string} [o.after]     HTML after the footer (the map dock)
  * @param {boolean} [o.preview]  preview build banner (spec D section 3)
  * @param {object[]} o.themes    themes available in this build: { id, country, name, modes }
  * @param {string} o.defaultTheme
@@ -92,7 +91,7 @@ ${banner}<a class="skip-link" href="#content">Skip to content</a>
 ${header(o.path, o.themes)}
 <main id="content" tabindex="-1">${o.main}</main>
 ${o.catalogue ? `<script type="application/json" id="hm-catalogue">${JSON.stringify(o.catalogue).replace(/</g, "\\u003c")}</script>` : ""}
-${footer(o.regions)}${o.after ?? ""}
+${footer(o.regions)}
 </body>
 </html>
 `;
