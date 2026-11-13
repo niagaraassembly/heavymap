@@ -1,11 +1,11 @@
 /* Design tokens (spec D, D-T1); also imported first by src/site/styles.css. */
 @import "../site/tokens.css";
 :root {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--sans);
   color: var(--text);
   background: var(--surface);
   font-synthesis: none;
-  --serif: Georgia, "Times New Roman", serif;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
 }
 * {
   box-sizing: border-box;
@@ -126,7 +126,7 @@ img {
   margin-left: 22px;
 }
 .eyebrow {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--sans);
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 1.8px;
@@ -275,7 +275,7 @@ img {
   margin: 0 0 4px;
 }
 .count {
-  font-family: Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 11px;
   letter-spacing: 0;
   align-self: start;
