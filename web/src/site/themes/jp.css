@@ -27,3 +27,37 @@
   --flag-warn: #8a4700;
   --flag-info: #2a4f80;
 }
+
+/* Japan, dark: indigo night. Same roles as the light washi palette —
+ * deep indigo surfaces, warm washi-white text, the vermilion lightened
+ * to hold 3:1 and the moss green lightened with it.
+ * Every text pair is checked in build step 7. */
+:root[data-theme="jp"][data-mode="dark"] {
+  --surface: #131824;
+  --surface-raised: #1a2130;
+  --surface-tint: #182030;
+  --surface-tint-strong: #1f2a3d;
+  --surface-sunk: #1c2436;
+  --rule-soft: #2f3a4d;
+  --rule-strong: #4d5c74;
+  --text: #ece7db;
+  --text-body: #d2ccbf;
+  --text-muted: #a9a495;
+  --text-faint: #9d988c;
+  --text-hover: #c2d2e0;
+  --on-ink: #131824;
+  --on-ink-muted: #2f3a4d;
+  --accent: #e0785f;
+  --accent-strong: #f0917a;
+  --accent-rule: #5f4038;
+  --green: #9db894;
+  --green-strong: #b0cba6;
+  --focus-ring: #ece7db;
+  --amount-done: #82c78f;
+  --amount-announced: #e3c65a;
+  --flag-warn: #e0a64a;
+  --flag-info: #8cbbe6;
+  --shadow-soft: #0000001f;
+  --shadow: #00000059;
+  color-scheme: dark;
+}

@@ -26,3 +26,37 @@
   --flag-info: #1f5486;
   --link: #2c5a75;
 }
+
+/* Canada, dark: spruce night. Same roles as the light northern palette —
+ * deep spruce surfaces, birch-white text, the red lightened to hold 3:1
+ * and the lake-blue accent-strong kept as the small-text accent.
+ * Every text pair is checked in build step 7. */
+:root[data-theme="ca"][data-mode="dark"] {
+  --surface: #121f1b;
+  --surface-raised: #182622;
+  --surface-tint: #16241f;
+  --surface-tint-strong: #1c2e28;
+  --surface-sunk: #1a2a25;
+  --rule-soft: #2e423b;
+  --rule-strong: #4a6357;
+  --text: #e9ede8;
+  --text-body: #ccd6cb;
+  --text-muted: #a6b5aa;
+  --text-faint: #8b9a90;
+  --text-hover: #bcd4dd;
+  --on-ink: #121f1b;
+  --on-ink-muted: #2e423b;
+  --accent: #e07a70;
+  --accent-strong: #9cc3d8;
+  --accent-rule: #5a3a36;
+  --green: #93c4a4;
+  --green-strong: #a8d5b8;
+  --focus-ring: #e9ede8;
+  --amount-done: #82d19a;
+  --amount-announced: #e3c65a;
+  --flag-warn: #e0a64a;
+  --flag-info: #8cbbe6;
+  --shadow-soft: #0000001f;
+  --shadow: #00000059;
+  color-scheme: dark;
+}
