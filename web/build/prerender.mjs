@@ -33,7 +33,7 @@ const CLIENT = path.join(web, "src/site/client.js");
 const SITE_SRC = path.join(web, "src/site");
 /* Static files the public site ships, copied as is. Only these: web/public also
  * holds prototype fixtures (synthetic-parcels.pmtiles) that must never ship. */
-export const STATIC_DIRS = ["editorial", "map", "flags"];
+export const STATIC_DIRS = ["editorial", "map", "flags", "fonts"];
 const STATIC_ROOT = path.join(web, "public");
 
 /** "/" -> "index.html", "/a/b/" -> "a/b/index.html", "/404.html" -> "404.html". */
