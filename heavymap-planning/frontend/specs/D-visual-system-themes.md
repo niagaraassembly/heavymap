@@ -97,16 +97,16 @@ component       --card-*, --dock-*, --chip-*, --masthead-*
   "default": "us",
   "themes": [
     { "id": "us", "country": "US", "name": "United States", "flag": "flags/us.svg", "tokens": null,            "modes": ["light", "dark"], "status": "published" },
-    { "id": "ca", "country": "CA", "name": "Canada",        "flag": "flags/ca.svg", "tokens": "themes/ca.css", "modes": ["light"],         "status": "design" },
-    { "id": "jp", "country": "JP", "name": "Japan",         "flag": "flags/jp.svg", "tokens": "themes/jp.css", "modes": ["light"],         "status": "design" }
+    { "id": "ca", "country": "CA", "name": "Canada",        "flag": "flags/ca.svg", "tokens": "themes/ca.css", "modes": ["light", "dark"], "status": "published" },
+    { "id": "jp", "country": "JP", "name": "Japan",         "flag": "flags/jp.svg", "tokens": "themes/jp.css", "modes": ["light", "dark"], "status": "published" }
   ]
 }
 ```
 
 - **`us` is the base.** It is the selected design with no override sheet. The "American look" fallback is the base look, not a new design.
 - **`status`** controls exposure: `design` themes appear only in preview builds, and `published` ones appear publicly.
-- **Launch gate (decision 36).** The public launch build fails unless all three themes are `published`. Canada and Japan move from `design` to `published` only on Morgen's design approval (HM-014), so HM-014 blocks launch.
-- **`modes`** lists the variants a theme has; `dark` exists only for `us` in v1.
+- **Launch gate (decision 36).** The public launch build fails unless all three themes are `published`. Canada and Japan moved from `design` to `published` on Morgen's design approval (HM-014, approved 2026-11-13), so the gate is satisfied.
+- **`modes`** lists the variants a theme has; `dark` exists for all three themes (USA in v1; Canada and Japan dark palettes landed with PR #92).
 - **Flags are HeavyMap's own SVG files** with their sources recorded in the asset credits (spec B section 6). The source site's PNG flags (`assets/img/flags/us.png`) are not hot-linked.
 
 ### 4.1 Theme briefs (design subjects, not designs)
@@ -114,8 +114,8 @@ component       --card-*, --dock-*, --chip-*, --masthead-*
 | Theme | Brief | State |
 | --- | --- | --- |
 | United States | the base design as selected | done |
-| Canada | **Northern palette** (decision 35): the base layout and type, with a cooler palette (spruce green, lake blue, birch white) and a red accent used sparingly. The red must not take over the stage or flag colours; it's an accent for the mark, rules and display moments. Avoid maple-leaf ornament as decoration. Draft values: [`../themes/ca-northern-palette-draft.md`](../themes/ca-northern-palette-draft.md). | draft palette |
-| Japan | Reference: the generated study (homepage and brief side by side), which was made from screenshots, not code. Translate it into tokens (palette, display typeface, rules and ornament), not new layouts. Review it for respectful, non-stereotyped use of cultural motifs. | to design |
+| Canada | **Northern palette** (decision 35): the base layout and type, with a cooler palette (spruce green, lake blue, birch white) and a red accent used sparingly. The red must not take over the stage or flag colours; it's an accent for the mark, rules and display moments. Avoid maple-leaf ornament as decoration. Draft values: [`../themes/ca-northern-palette-draft.md`](../themes/ca-northern-palette-draft.md). | published |
+| Japan | Reference: the generated study (homepage and brief side by side), which was made from screenshots, not code. Translate it into tokens (palette, display typeface, rules and ornament), not new layouts. Review it for respectful, non-stereotyped use of cultural motifs. | published |
 
 ## 5. Theme selector
 
@@ -199,7 +199,7 @@ Every theme must pass, on its own surfaces:
 | D-T2 | Swatch-based stage legend (section 3) |
 | D-T3 | Theme registry, selector, inline head script, `heavymap-theme-v1` |
 | D-T4 | Contrast check script |
-| D-T5 | Canada and Japan token sheets (after HM-014 design approval); **launch-blocking** (decision 36) |
+| D-T5 | Canada and Japan token sheets (after HM-014 design approval — approved 2026-11-13, sheets live); **launch-blocking** (decision 36) |
 | D-T6 | Consolidate the map header and dock chrome into the shared shell (with spec F) |
 | D-T7 | Dark variant of the USA theme: tokens, mode control, head script, contrast check (section 7.1) |
 
