@@ -394,7 +394,7 @@ export function parcelDrawerElement(summary, labels, { geometry, releaseId, feed
   ];
   for (const row of attentionRows) {
     const li = el("li");
-    const open = el("button", undefined, "parcel-mini");
+    const open = el("button", undefined, "parcel-mini parcel-row-btn");
     open.append(el("span", row.label));
     open.append(el("em", String(row.count)));
     if (row.warn) open.classList.add("parcel-warn");
