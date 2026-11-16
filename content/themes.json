@@ -2,7 +2,7 @@
   "default": "us",
   "themes": [
     { "id": "us", "country": "US", "name": "United States", "flag": "flags/us.svg", "tokens": null,            "modes": ["light", "dark"], "status": "published" },
-    { "id": "ca", "country": "CA", "name": "Canada",        "flag": "flags/ca.svg", "tokens": "themes/ca.css", "modes": ["light"],         "status": "published" },
-    { "id": "jp", "country": "JP", "name": "Japan",         "flag": "flags/jp.svg", "tokens": "themes/jp.css", "modes": ["light"],         "status": "published" }
+    { "id": "ca", "country": "CA", "name": "Canada",        "flag": "flags/ca.svg", "tokens": "themes/ca.css", "modes": ["light", "dark"], "status": "published" },
+    { "id": "jp", "country": "JP", "name": "Japan",         "flag": "flags/jp.svg", "tokens": "themes/jp.css", "modes": ["light", "dark"], "status": "published" }
   ]
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Prepare line-delimited GeoJSON (EPSG:4326) for the first Hamilton PMTiles build (2026-10-17).
 Usage: prep_tiles_hamilton.py <layer> where layer is parcels | buildings | zoning | nature
-Public fields only. Parcels carry heavymap_id (registry CURRENT run), ARN and grade. Never Owner or Legal_Txt
+Public fields only. Parcels carry ia_id (registry CURRENT run), ARN and grade. Never Owner or Legal_Txt
 (those live only on NPCA Parcels_Cityview, which is not read here). Data stays local, never in git."""
 import csv, datetime, json, os, sys
 csv.field_size_limit(1 << 30)
@@ -25,14 +25,14 @@ def by_source(csvname, extra):
     with open(f'{REG}/runs/{RUN}/{csvname}', newline='') as f:
         for r in csv.DictReader(f):
             if r['status'] != 'active': continue
-            for s in r['source_ids'].split(' | '): m[s.strip()] = (r['hm_id'], {k: r[k] for k in extra})
+            for s in r['source_ids'].split(' | '): m[s.strip()] = (r['ia_id'], {k: r[k] for k in extra})
     return m
 lay = sys.argv[1]
 if lay == 'parcels':
     ids = by_source('parcels.csv', ['arn_grade', 'area_m2'])
     arns = {}
     with open(f'{REG}/runs/{RUN}/arn_links.csv', newline='') as f:
-        for r in csv.DictReader(f): arns.setdefault(r['hm_id'], set()).add(r['arn'])
+        for r in csv.DictReader(f): arns.setdefault(r['ia_id'], set()).add(r['arn'])
     seen, rows, miss = set(), [], 0
     for f in load('hamilton-city/assessment-parcel-hamilton-2026-10-17/assessment-parcel.geojson'):
         k = ids.get(str(f['properties']['OBJECTID']))
@@ -40,20 +40,20 @@ if lay == 'parcels':
         hm, x = k
         if hm in seen: continue  # stacked duplicate geometry (alias), one feature per HeavyMap ID
         seen.add(hm); a = sorted(arns.get(hm, ()))
-        p = {'heavymap_id': hm, 'arn_grade': x['arn_grade'], 'area_m2': round(float(x['area_m2']), 1), 'arn_count': len(a)}
+        p = {'ia_id': hm, 'arn_grade': x['arn_grade'], 'area_m2': round(float(x['area_m2']), 1), 'arn_count': len(a)}
         if a: p['arn'] = a[0]
         if len(a) > 1: p['arn_all'] = ' | '.join(a[:10])
         rows.append((p, f['geometry']))
     print('parcels unmatched source rows', miss)
     write('parcels', rows)
 elif lay == 'buildings':
-    ids = by_source('buildings.csv', ['parcel_hm_id', 'area_m2'])
+    ids = by_source('buildings.csv', ['parcel_ia_id', 'area_m2'])
     seen, rows = set(), []
     for f in load('hamilton-city/buildings-hamilton-2026-10-17/buildings.geojson'):
         k = ids.get(str(f['properties']['OBJECTID']))
         if not k or k[0] in seen: continue
-        seen.add(k[0]); p = {'heavymap_id': k[0], 'area_m2': round(float(k[1]['area_m2']), 1)}
-        if k[1]['parcel_hm_id']: p['parcel_heavymap_id'] = k[1]['parcel_hm_id']
+        seen.add(k[0]); p = {'ia_id': k[0], 'area_m2': round(float(k[1]['area_m2']), 1)}
+        if k[1]['parcel_ia_id']: p['parcel_ia_id'] = k[1]['parcel_ia_id']
         if f['properties'].get('NAME'): p['name'] = f['properties']['NAME']
         rows.append((p, f['geometry']))
     write('buildings', rows)

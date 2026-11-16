@@ -1,12 +1,20 @@
 # Deploys the HeavyMap site to heavymap.com (spec G section 4).
 #
-# Manual only: Actions > "Deploy heavymap.com" > Run workflow. Morgen starts
-# it and approves the `heavymap-public` environment; agents never do
-# (HARD-RULES 3 and 7). Needs Settings > Pages > Source: GitHub Actions.
-# Every build check runs first (spec G section 2); a failure stops the deploy.
+# SOLO-PREVIEW MODE (D-073, 2026-11-16): a push to main that touches web/ or
+# this workflow deploys to heavymap.com with no approval click. Morgen pushes
+# main, or approves an agent's push to main, one push at a time. The manual
+# run below is kept for redeploys. Every build check runs first (spec G
+# section 2) and push runs always use the launch gates; a failure stops the
+# deploy and the previous site stays up. Needs Settings > Pages > Source:
+# GitHub Actions. Process and the switch back to team mode: docs/DEPLOY.md.
 name: Deploy heavymap.com
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "web/**"
+      - ".github/workflows/deploy-site.yml"
   workflow_dispatch:
     inputs:
       launch_gates:
@@ -29,6 +37,12 @@ jobs:
         working-directory: web
     steps:
       - uses: actions/checkout@v4
+      - name: Check out the pinned Industrial Atlas release
+        uses: actions/checkout@v4
+        with:
+          repository: niagaraassembly/industrial-atlas-data
+          ref: ca-on-hamilton-2026-11-16-d070
+          path: industrial-atlas-data
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -37,7 +51,9 @@ jobs:
       - run: npm ci
       - run: npm test
       - name: Build with every check
-        run: node build/prerender.mjs ${{ inputs.launch_gates && '--launch' || '' }}
+        env:
+          HM_ATLAS_RELEASE_DIR: ${{ github.workspace }}/industrial-atlas-data/releases/ca-on-hamilton/2026-11-16-d070
+        run: node build/prerender.mjs ${{ (github.event_name == 'push' || inputs.launch_gates) && '--launch' || '' }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -55,3 +71,18 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: Record the deploy
+        env:
+          SHA: ${{ github.sha }}
+          REF_NAME: ${{ github.ref_name }}
+          EVENT: ${{ github.event_name }}
+          ACTOR: ${{ github.actor }}
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          {
+            echo "### Deployed heavymap.com"
+            echo "- Commit: \`$SHA\` on \`$REF_NAME\`"
+            echo "- Trigger: $EVENT by $ACTOR"
+            echo "- Atlas release: ca-on-hamilton/2026-11-16-d070"
+            echo "- URL: $PAGE_URL"
+          } >> "$GITHUB_STEP_SUMMARY"

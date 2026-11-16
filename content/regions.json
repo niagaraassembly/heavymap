@@ -8,7 +8,10 @@
       "subdivision": "US-NY",
       "upstream_id": "wny",
       "coverage": "Reviewed news on investment, facilities, jobs and new ventures from the Niagara River to Syracuse.",
-      "desk": { "status": "published", "since": "2026-10-10" },
+      "desk": {
+        "status": "published",
+        "since": "2026-10-10"
+      },
       "geographies": []
     },
     {
@@ -19,9 +22,19 @@
       "subdivision": "CA-ON",
       "upstream_id": "niagara-brant",
       "coverage": "Industrial economies across the Niagara Peninsula, Hamilton and Brantford.",
-      "desk": { "status": "published", "since": null },
+      "desk": {
+        "status": "published",
+        "since": null
+      },
       "geographies": [
-        { "id": "hm:ca:on:hamilton", "slug": "hamilton", "name": "City of Hamilton", "map": { "status": "preparing" } }
+        {
+          "id": "ia:ca:on:hamilton",
+          "slug": "hamilton",
+          "name": "City of Hamilton",
+          "map": {
+            "status": "preview"
+          }
+        }
       ]
     }
   ]

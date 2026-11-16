@@ -87,7 +87,7 @@ The column describes datasets. A parcel’s refused rung is a PCDP fact, not a b
 
 Illustrations only, at the **maximum** snapshot defined in [PCDP.md](PCDP.md). Values are not observations. Stamps are abbreviated; grade and stamp rules are in the claims document. The minimum snapshot is identity plus a refusal for every rung that has no claim yet.
 
-### `hm:ca:on:welland:footprint:SYN-0142`
+### `ia:ca:on:welland:footprint:SYN-0142`
 
 | Rung | Status | Illustration |
 |---|---|---|
@@ -98,7 +98,7 @@ Illustrations only, at the **maximum** snapshot defined in [PCDP.md](PCDP.md). V
 | `derived_readings` | refused | `not_in_coverage` for a coverage ratio: the illustration has no parcel area to divide by. The reading is absent. It is not zero. |
 | `share_export` | filled | Packet repeats the rows above, including both refusals. |
 
-### `hm:us:ny:erie:parcel:SYN-999.00-1-1.1`
+### `ia:us:ny:erie:parcel:SYN-999.00-1-1.1`
 
 | Rung | Status | Illustration |
 |---|---|---|

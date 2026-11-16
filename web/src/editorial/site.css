@@ -127,7 +127,7 @@ img {
 }
 .eyebrow {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 1.8px;
   line-height: 1.7;
@@ -301,6 +301,9 @@ img {
 }
 .desk-photo:hover img {
   transform: scale(1.025);
+}
+.desk-photo--portrait img {
+  object-position: center 22%;
 }
 .desk-photo:after {
   content: "";

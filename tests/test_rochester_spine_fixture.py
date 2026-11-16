@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FIXTURE = ROOT / "fixtures" / "parcels" / "hm-us-ny-rochester-parcel-SYN-04799.json"
+FIXTURE = ROOT / "fixtures" / "parcels" / "ia-us-ny-rochester-parcel-SYN-04799.json"
 SPEC = ROOT / "docs" / "architecture" / "rochester-parcel-local-token.md"
 SCHEMA = ROOT / "docs" / "architecture" / "vocab" / "pcdp.schema.json"
 VOCAB = ROOT / "docs" / "architecture" / "vocab" / "pcdp.vocab.json"
@@ -16,7 +16,7 @@ PREFIX = "261400"
 COUNTY = PREFIX + SBL20
 PADDED = "047.99-1-1"
 UNPADDED = "47.99-1-1"
-SPINE = f"hm:us:ny:rochester:parcel:{SBL20}"
+SPINE = f"ia:us:ny:rochester:parcel:{SBL20}"
 PILOT_CITY_ID = "04762000010220000000"
 BANDS = [
     "identity",
@@ -145,7 +145,7 @@ class RochesterFixtureTests(unittest.TestCase):
 
     def test_spec_records_recommendation_and_unconfirmed_prefix(self):
         text = SPEC.read_text(encoding="utf-8")
-        self.assertIn("hm:us:ny:rochester:parcel:{SBL20}", text)
+        self.assertIn("ia:us:ny:rochester:parcel:{SBL20}", text)
         self.assertIn("inferred", text.lower())
         self.assertIn("not confirmed", text.lower())
         self.assertIn(SBL20, text)

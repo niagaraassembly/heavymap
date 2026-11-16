@@ -218,8 +218,8 @@
       ]
     },
     "spine_key": {
-      "template": "hm:{country}:{region}:{jurisdiction}:{grain}:{local}",
-      "regex": "^hm:(ca|us):(on|ny):[a-z0-9]+(?:-[a-z0-9]+)*:(parcel|footprint|address):[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "template": "ia:{country}:{region}:{jurisdiction}:{grain}:{local}",
+      "regex": "^ia:(ca|us):(on|ny):[a-z0-9]+(?:-[a-z0-9]+)*:(parcel|footprint|address):[A-Za-z0-9][A-Za-z0-9._-]*$",
       "regex_note": "Mechanical reading of the parts table for v1. Country is ca or us. Region is on or ny. Jurisdiction is a lowercase slug (hyphens allowed). Grain is parcel, footprint, or address. Local is the remainder, may include digits, hyphens, and dots, and must not contain a colon. Synthetic examples use a SYN- prefix; the prefix is not required for every key.",
       "parts": {
         "country": {
@@ -252,7 +252,7 @@
       },
       "examples": [
         {
-          "key": "hm:ca:on:welland:footprint:SYN-0142",
+          "key": "ia:ca:on:welland:footprint:SYN-0142",
           "status": "synthetic",
           "country": "ca",
           "region": "on",
@@ -262,7 +262,7 @@
           "note": "Illustration of a lower-tier city whose open data, in prior art, had no parcel fabric. Not an observation of real land."
         },
         {
-          "key": "hm:us:ny:erie:parcel:SYN-999.00-1-1.1",
+          "key": "ia:us:ny:erie:parcel:SYN-999.00-1-1.1",
           "status": "synthetic",
           "country": "us",
           "region": "ny",

@@ -19,7 +19,7 @@ Normative groups, all taken from the prose:
 - Evidence grades: `observed`, `joined`, `derived`, `refused`
 - Join methods: `identifier`, `normalized_address`, `point_in_polygon`, `containment`, `proximity`, `overlap`
 - Assertion states, when an assertion is filled: `supported`, `contested`, `refuted`
-- Spine key grammar (`hm:{country}:{region}:{jurisdiction}:{grain}:{local}`) and the v1 part enums
+- Spine key grammar (`ia:{country}:{region}:{jurisdiction}:{grain}:{local}`) and the v1 part enums
 - D-5 dataset dispositions: `ship`, `simplify`, `derive`, `tile`, `link`
 - Geography v1 names, as the coverage fence. These are names, not spine-key slugs
 - Register and source-class words that may appear only as a quotation (HeavyMap must not assert vacancy on its own)
@@ -32,7 +32,7 @@ Normative groups, all taken from the prose:
 Not a closed catalog. [pcdp.vocab.json](pcdp.vocab.json) sets `illustrative.closed_catalog` to `false`.
 
 - Derived-reading identifiers from the claims document: `floor_area_m2`, `employment_interval`, `coverage_ratio`. A new identifier may be added when a reading is specified. The schema requires these three and does not treat the list as exhaustive.
-- Spine key examples `hm:ca:on:welland:footprint:SYN-0142` and `hm:us:ny:erie:parcel:SYN-999.00-1-1.1` are the synthetic walkthrough units from the architecture. They show the grammar. They are not observations of real land and not a parcel index.
+- Spine key examples `ia:ca:on:welland:footprint:SYN-0142` and `ia:us:ny:erie:parcel:SYN-999.00-1-1.1` are the synthetic walkthrough units from the architecture. They show the grammar. They are not observations of real land and not a parcel index.
 
 ## Joining concepts
 

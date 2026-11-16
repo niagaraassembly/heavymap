@@ -156,6 +156,8 @@ The dock is a `<nav aria-label="Map">`. In the reading-alongside layout it stays
 
 - **URL:** `/map/<geography>/`. Its view state goes in the query string: `?focus=<heavymap_id>&lens=<lens>&read=<item id>`. Like Reader URLs, these are shareable and not saved (spec C section 5.1).
 - **Keep the prototype's app logic:** lenses, context layers, search, the dossier panel, tooltips, the "flag, never extinguish" treatment of slivers, refusal copy. The prototype was not redesigned, and its interaction model stays. Only the chrome changes (section 3.1).
+- **Dossier sidebar chrome:** pinned identity header (name, address, grain · jurisdiction, spine key) with a band index that jumps without touching `#parcel=`; raised claim cards; rust-flagged refusals. A real record carries no name, so its first civic address is the title and the address line is skipped when it duplicates it. Claim headings wrap long keys (`overflow-wrap: anywhere`).
+- **Map chrome:** the tray's layers are a visible section, not a collapsed disclosure; the map status lives in the footer, not pasted over the map; the map's tokens are scoped to `.map-workspace` so the site's themes cannot wash the map's text out (in dark mode the site's light text on the map's light panels was unreadable).
 - **Geography switching:** the dock lists only `published` geographies (spec A registry). With one geography, there's no switcher.
 - **The identifier rename stays paused.** The workspace reads `heavymap_id` with the `hm:ca:on:hamilton:parcel:` prefix as it exists today (`src/contract.js`), and doesn't implement the rename or carry out the repo split.
 

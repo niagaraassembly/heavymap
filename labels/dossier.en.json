@@ -1,0 +1,560 @@
+{
+ "schema": 1,
+ "domain": "dossier",
+ "locale": "en",
+ "entries": {
+  "dossier.addresses": {
+   "text": {
+    "one": "{n} City address point in this parcel",
+    "other": "{n} City address points in this parcel"
+   },
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.overlays": {
+   "text": {
+    "one": "{n} zone or designation link",
+    "other": "{n} zone or designation links"
+   },
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.overlays_slivers": {
+   "text": {
+    "one": "{n} flagged as sliver",
+    "other": "{n} flagged as slivers"
+   },
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code": {
+   "text": "NPCA Cityview PropCode: {code}{family_part}; layer last edited 2020",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code_family_part": {
+   "text": " ({family} range)",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code.family.vacant_land": {
+   "text": "Vacant land",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code.family.farm": {
+   "text": "Farm",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code.family.residential": {
+   "text": "Residential",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code.family.commercial": {
+   "text": "Commercial",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code.family.industrial": {
+   "text": "Industrial",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code.family.institutional": {
+   "text": "Institutional",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code.family.special_and_exempt": {
+   "text": "Special and exempt",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.source.LYR-HAM-PARCEL": {
+   "text": "Hamilton Assessment Parcel (City of Hamilton)",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.source.LYR-HAM-ADDRESSES": {
+   "text": "Addresses (City of Hamilton)",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.source.LYR-NPCA-ASSESSMENT-PARCELS-TEST": {
+   "text": "Assessment_Parcels_Test (Niagara Peninsula Conservation Authority)",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.source.LYR-NPCA-PARCELS-CITYVIEW": {
+   "text": "Parcels_Cityview (Niagara Peninsula Conservation Authority)",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.band.identity": {
+   "text": "Identity",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.band.land_use": {
+   "text": "Land & use",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.band.constraints": {
+   "text": "Nature & constraints",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.band.activity_registers": {
+   "text": "Registers & public claims",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.band.derived_readings": {
+   "text": "Opportunity signals",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.band.share_export": {
+   "text": "Take the evidence",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.parcel": {
+   "text": "Parcel",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.spine_key": {
+   "text": "Spine key",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.area": {
+   "text": "Parcel area",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.roll_coverage": {
+   "text": "Assessment roll coverage",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.civic_address": {
+   "text": "Civic address",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.addresses": {
+   "text": "Addresses",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.assessment_roll": {
+   "text": "Assessment roll",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.property_code": {
+   "text": "Source property code",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.overlay": {
+   "text": "Overlay",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.activity_registers": {
+   "text": "Activity registers",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.derived_readings": {
+   "text": "Derived readings",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.share_export": {
+   "text": "Share and export",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.geometry_grain": {
+   "text": "parcel",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.jurisdiction.hamilton": {
+   "text": "City of Hamilton, Ontario",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.provenance.not_yet_captured": {
+   "text": "Not yet captured",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.grade.observed": {
+   "text": "Observed",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.grade.joined": {
+   "text": "Joined",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.grade.derived": {
+   "text": "Derived",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.grade.exact_1to1": {
+   "text": "One-to-one match",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.grade.one_to_many": {
+   "text": "Shared across parcels",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.grade.many_to_one": {
+   "text": "Multiple roll numbers",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.grade.placeholder": {
+   "text": "Placeholder value",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.grade.unmatched": {
+   "text": "Unmatched",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.grade.not_in_coverage": {
+   "text": "Not in coverage",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.source_id": {
+   "text": "Source id",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.source": {
+   "text": "Source",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.join_method": {
+   "text": "Join method",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.confidence": {
+   "text": "Confidence",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.retrieved_on": {
+   "text": "Retrieved on",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.licence": {
+   "text": "Licence",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.archive_reference": {
+   "text": "Archive reference",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.record_path": {
+   "text": "Record address",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.crs": {
+   "text": "Coordinate reference system",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.provisional": {
+   "text": "Provisional",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.method": {
+   "text": "Method",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.iou": {
+   "text": "Intersection over union",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.other_parcels": {
+   "text": "Other parcels",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.address_id": {
+   "text": "Address id",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.source_feature_id": {
+   "text": "Source feature id",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.area_m2": {
+   "text": "Overlay area (m²)",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.stamp.sliver": {
+   "text": "Sliver",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.roll_address": {
+   "text": "Assessment roll address",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.overlay_count": {
+   "text": "Overlay rows",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.refusal_state": {
+   "text": "Refusal state",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.gap_codes": {
+   "text": "Data gap codes",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "dossier.field.address_count": {
+   "text": "Address record count",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  }
+ }
+}

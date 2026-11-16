@@ -36,7 +36,7 @@ The minimum is what a viewer gets as soon as a spine record exists, even when ev
 In plain language, the minimum is:
 
 - the outline or the point that is this unit
-- the HeavyMap spine key
+- the Industrial Atlas spine key
 - the grain of that geometry
 - one jurisdiction sentence a person can check against geography v1
 - a list of what is not spoken for, naming each refused rung or native key and one reason: not in coverage, not licensed, or not joined
@@ -95,7 +95,7 @@ Regardless of surface:
 
 **Synthetic.** Not an observation of a real property. Chosen so the Canadian spine problems are visible: footprint grain, no public parcel key in the illustration, regional employment id, unlicensed assessment.
 
-**Spine key:** `hm:ca:on:welland:footprint:SYN-0142`  
+**Spine key:** `ia:ca:on:welland:footprint:SYN-0142`  
 **Jurisdiction:** City of Welland, a lower-tier municipality of Niagara Region, Ontario. Inside geography v1.  
 **Grain:** footprint.
 
@@ -103,7 +103,7 @@ Regardless of surface:
 
 The viewer sees a building outline, not a lot line.
 
-- Key `hm:ca:on:welland:footprint:SYN-0142`
+- Key `ia:ca:on:welland:footprint:SYN-0142`
 - City of Welland, Niagara Region, Ontario
 - `share_export` is filled with this same selection: key, jurisdiction, and the refusals below. There is no fuller packet yet.
 - Not spoken for:
@@ -133,7 +133,7 @@ A partial presentation is the same table with `land_use` still refused and the N
 
 **Synthetic.** Not an observation of a real Erie County parcel. Chosen so the American spine problems are visible: public parcel grain, SBL native key, property class rather than zoning, county named while the municipal SWIS is unjoined, activity not inferred from land class.
 
-**Spine key:** `hm:us:ny:erie:parcel:SYN-999.00-1-1.1`  
+**Spine key:** `ia:us:ny:erie:parcel:SYN-999.00-1-1.1`  
 **Jurisdiction:** Erie County, New York. Inside geography v1. No city or town is named, because SWIS is `not_joined`.  
 **Grain:** parcel.
 
@@ -141,7 +141,7 @@ A partial presentation is the same table with `land_use` still refused and the N
 
 The viewer sees a parcel polygon.
 
-- Key `hm:us:ny:erie:parcel:SYN-999.00-1-1.1`
+- Key `ia:us:ny:erie:parcel:SYN-999.00-1-1.1`
 - Erie County, New York
 - Native SBL `SYN-999.00-1-1.1` on the stamp of the parcel source (synthetic)
 - `share_export` is filled with this selection and the refusals below.

@@ -113,12 +113,12 @@
       "enum": ["regulatory", "physical", "neighbours", "dossier"]
     },
     "spineKey": {
-      "description": "HeavyMap spine key for v1. Template hm:{country}:{region}:{jurisdiction}:{grain}:{local}.",
+      "description": "HeavyMap spine key for v1. Template ia:{country}:{region}:{jurisdiction}:{grain}:{local}.",
       "type": "string",
-      "pattern": "^hm:(ca|us):(on|ny):[a-z0-9]+(?:-[a-z0-9]+)*:(parcel|footprint|address):[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "pattern": "^ia:(ca|us):(on|ny):[a-z0-9]+(?:-[a-z0-9]+)*:(parcel|footprint|address):[A-Za-z0-9][A-Za-z0-9._-]*$",
       "examples": [
-        "hm:ca:on:welland:footprint:SYN-0142",
-        "hm:us:ny:erie:parcel:SYN-999.00-1-1.1"
+        "ia:ca:on:welland:footprint:SYN-0142",
+        "ia:us:ny:erie:parcel:SYN-999.00-1-1.1"
       ]
     },
     "derivedReadingIdentifier": {
@@ -618,9 +618,9 @@
           "additionalProperties": false,
           "required": ["template", "regex", "regex_note", "parts", "examples", "notes"],
           "properties": {
-            "template": { "const": "hm:{country}:{region}:{jurisdiction}:{grain}:{local}" },
+            "template": { "const": "ia:{country}:{region}:{jurisdiction}:{grain}:{local}" },
             "regex": {
-              "const": "^hm:(ca|us):(on|ny):[a-z0-9]+(?:-[a-z0-9]+)*:(parcel|footprint|address):[A-Za-z0-9][A-Za-z0-9._-]*$"
+              "const": "^ia:(ca|us):(on|ny):[a-z0-9]+(?:-[a-z0-9]+)*:(parcel|footprint|address):[A-Za-z0-9][A-Za-z0-9._-]*$"
             },
             "regex_note": { "type": "string", "minLength": 1 },
             "parts": {
@@ -753,7 +753,7 @@
                     "type": "object",
                     "required": ["key"],
                     "properties": {
-                      "key": { "const": "hm:ca:on:welland:footprint:SYN-0142" }
+                      "key": { "const": "ia:ca:on:welland:footprint:SYN-0142" }
                     }
                   }
                 },
@@ -762,7 +762,7 @@
                     "type": "object",
                     "required": ["key"],
                     "properties": {
-                      "key": { "const": "hm:us:ny:erie:parcel:SYN-999.00-1-1.1" }
+                      "key": { "const": "ia:us:ny:erie:parcel:SYN-999.00-1-1.1" }
                     }
                   }
                 }

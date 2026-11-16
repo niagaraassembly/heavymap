@@ -6,9 +6,9 @@ test("home, both Desks, archive and source disclosures form a working reading pa
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
-  await expect(page).toHaveTitle(/A closer reading of place/);
+  await expect(page).toHaveTitle("HeavyMap");
   await expect(
-    page.getByRole("heading", { name: "A closer reading of place." }),
+    page.getByRole("heading", { name: "Places change. Keep a closer eye." }),
   ).toBeVisible();
   await page.getByRole("link", { name: "Find your Desk" }).click();
   await expect(page.locator(".desk-card")).toHaveCount(2);
@@ -52,7 +52,7 @@ test("mapping has no unpublished app link and unknown routes have a recovery act
   await expect(page.locator('a[href="#"]')).toHaveCount(0);
   await page.goto("/#/not-a-page");
   await page.getByRole("link", { name: "Back to HeavyMap" }).click();
-  await expect(page).toHaveTitle(/A closer reading of place/);
+  await expect(page).toHaveTitle("HeavyMap");
 });
 
 test("subscription preview selects independent Desks without network writes or saved email", async ({
@@ -125,5 +125,5 @@ test("all editorial routes fit mobile and navigation stays keyboard accessible",
   ).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.locator("#content")).toBeFocused();
-  await expect(page).toHaveTitle(/A closer reading of place/);
+  await expect(page).toHaveTitle("HeavyMap");
 });

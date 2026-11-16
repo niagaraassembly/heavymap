@@ -2,7 +2,7 @@
 
 ## Bounded repair verification — 2026-10-18 (Toronto)
 
-Merged current main into the prototype tree, preserving main inventory/catalog workbooks and all current index/insight rows; retained PI-0070–0077. The 786-byte invented PMTiles fixture now uses heavymap_id consistently with GeoJSON. Shares are fractions; rounded-zero intersections remain labelled. Property-code fixtures carry 2020 stale/sparse limits.
+Merged current main into the prototype tree, preserving main inventory/catalog workbooks and all current index/insight rows; retained PI-0070–0077. The 786-byte invented PMTiles fixture now uses ia_id consistently with GeoJSON. Shares are fractions; rounded-zero intersections remain labelled. Property-code fixtures carry 2020 stale/sparse limits.
 
 - npm ci: passed.
 - npm test: 5 passed, including wire-field and small-share boundary checks.

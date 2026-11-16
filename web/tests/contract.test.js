@@ -70,7 +70,7 @@ test("synthetic PMTiles archive contains an actual MVT tile with expected bounds
   assert.equal(await archive.getZxy(8, 70, 93), undefined);
   assert.equal((await archive.getMetadata()).vector_layers[0].id, "parcels");
   assert.equal(
-    (await archive.getMetadata()).vector_layers[0].fields.heavymap_id,
+    (await archive.getMetadata()).vector_layers[0].fields.ia_id,
     "String",
   );
   assert.equal(

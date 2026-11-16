@@ -6,7 +6,7 @@ The ledger is the machine-readable list of what was absent from a source or with
 
 This is plumbing under the four-concept frame. It is not a fifth product name. Absence on a ladder rung is still a Claim & Refusal [refusal reason](claim-refusal-contract.md). Gap types below are a finer honesty vocabulary for held data and for screened fields. They do not add a fourth refusal reason.
 
-Inventory: [`Spreadsheets/20-data-gaps-ledger.csv`](../../Spreadsheets/20-data-gaps-ledger.csv) (source of truth). Loader: [`heavymap/gaps.py`](../../heavymap/gaps.py). Per-parcel ids travel on the [dossier](parcel-dossier.md) record; repeated text stays in the ledger and the dossier manifest.
+Inventory: [`Spreadsheets/20-data-gaps-ledger.csv`](../../Spreadsheets/20-data-gaps-ledger.csv) (source of truth). Loader: [`industrial_atlas/gaps.py`](../../heavymap/gaps.py). Per-parcel ids travel on the [dossier](parcel-dossier.md) record; repeated text stays in the ledger and the dossier manifest.
 
 ## Record schema
 
@@ -93,7 +93,7 @@ Forbidden on the row, in the manifest, and in any dossier byte:
 - owner names, mailing addresses, legal-description text, contact details
 - an output key whose name contains `owner`, `legal`, `mail`, `postal`, `name`, `phone` or `email`
 
-The dossier still does not **read** those fields (`SOURCE_FIELDS` in [`heavymap/dossier/schema.py`](../../heavymap/dossier/schema.py)). The ledger records their existence so the transparent view can say “this source has an owner-name field, and HeavyMap withholds it,” without the loader ever passing a value through.
+The dossier still does not **read** those fields (`SOURCE_FIELDS` in [`industrial_atlas/dossier/schema.py`](../../heavymap/dossier/schema.py)). The ledger records their existence so the transparent view can say “this source has an owner-name field, and HeavyMap withholds it,” without the loader ever passing a value through.
 
 `PostalCode` on Cityview is a different type (`empty`): the field exists and is blank on every row (PI-0064). It is also excluded from `SOURCE_FIELDS` because the key contains `postal`. That row is `manifest_only`.
 
@@ -103,7 +103,7 @@ The dossier still does not **read** those fields (`SOURCE_FIELDS` in [`heavymap/
 2. **`heavymap.gaps.load_ledger`** reads the CSV at import-safe path `Spreadsheets/20-data-gaps-ledger.csv`. Unknown `gap_type`, `scope` or `parcel_attach` tokens fail the load.
 3. **Dossier manifest** includes every row whose `scope` is `dataset`, `layer` or `field`, under `gaps_ledger`. That is the dataset/layer-level ledger the front end loads once.
 4. **Each dossier record** has `gaps`: a list of `gap_id` strings, sorted, for tokens that match that parcel. The UI looks up copy from the manifest. Do not copy `reason` onto the record.
-5. **Registry** (`heavymap/ids`) classifies placeholder ARNs **before** grouping by ARN, so all-zero values are `placeholder` rather than `one_to_many`. That grade feeds `roll_flag=placeholder` and ledger type `placeholder`. Re-running a registry does not change existing `heavymap_id` values (geometry reconcile is unchanged).
+5. **Registry** (`industrial_atlas/ids`) classifies placeholder ARNs **before** grouping by ARN, so all-zero values are `placeholder` rather than `one_to_many`. That grade feeds `roll_flag=placeholder` and ledger type `placeholder`. Re-running a registry does not change existing `ia_id` values (geometry reconcile is unchanged).
 
 ## Relation to Claim & Refusal
 
@@ -137,4 +137,4 @@ Twelve rows, Hamilton, verified against PRs #74 and #75 and PI-0056..PI-0064 plu
 
 ## Tests
 
-`tests/test_heavymap_gaps.py` loads the real CSV, checks enums and PI citations, and checks that `withheld_screened` never attaches to a parcel. Dossier tests assert compact `gaps` lists and a manifest ledger. Registry tests assert placeholder ARNs are not graded `one_to_many` and that a second run keeps the same `heavymap_id` values.
+`tests/test_heavymap_gaps.py` loads the real CSV, checks enums and PI citations, and checks that `withheld_screened` never attaches to a parcel. Dossier tests assert compact `gaps` lists and a manifest ledger. Registry tests assert placeholder ARNs are not graded `one_to_many` and that a second run keeps the same `ia_id` values.

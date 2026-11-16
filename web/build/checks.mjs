@@ -94,19 +94,27 @@ export function themeVariants(siteSrc, themes) {
   const variants = [];
   for (const t of themes) {
     let vars = { ...light };
-    if (t.tokens)
-      vars = {
-        ...vars,
-        ...(tokenBlocks(fs.readFileSync(path.join(siteSrc, t.tokens), "utf8"))[
-          `:root[data-theme="${t.id}"]`
-        ] ?? {}),
-      };
+    let sheet = {};
+    if (t.tokens) {
+      sheet = tokenBlocks(fs.readFileSync(path.join(siteSrc, t.tokens), "utf8"));
+      vars = { ...vars, ...(sheet[`:root[data-theme="${t.id}"]`] ?? {}) };
+    }
     variants.push({ name: `${t.id}/light`, vars });
-    if (t.modes.includes("dark"))
+    if (t.modes.includes("dark")) {
+      // A theme's dark palette lives in its own sheet; the USA one lives in
+      // tokens.css. A theme with "dark" in modes but no dark block renders
+      // its light tokens in dark mode — add the block before adding the mode.
+      const ownDark =
+        sheet[`:root[data-theme="${t.id}"][data-mode="dark"]`] ?? {};
+      const baseDark =
+        t.id === "us"
+          ? (base[':root[data-theme="us"][data-mode="dark"]'] ?? {})
+          : {};
       variants.push({
         name: `${t.id}/dark`,
-        vars: { ...vars, ...(base[':root[data-mode="dark"]'] ?? {}) },
+        vars: { ...vars, ...ownDark, ...baseDark },
       });
+    }
   }
   return variants;
 }
@@ -165,13 +173,16 @@ export function budgetReport(outDir) {
 const kb = (n) => `${(n / 1024).toFixed(1)} KB`;
 
 /** Things a public build must never contain. */
-export function publicHygiene(outDir, { preview, unpublished = [] }) {
+export function publicHygiene(
+  outDir,
+  { preview, unpublished = [], allowedPmtiles = [] },
+) {
   const problems = [];
   const files = walk(outDir).map((f) =>
     path.relative(outDir, f).split(path.sep).join("/"),
   );
   for (const f of files) {
-    if (/\.pmtiles$/.test(f))
+    if (/\.pmtiles$/.test(f) && !allowedPmtiles.includes(f))
       problems.push(`${f}: map tiles must not ship in v1`);
     if (/^(studies|compare|alternate|site)\b|round-two/.test(f))
       problems.push(`${f}: review-only page in output`);
@@ -200,8 +211,8 @@ export function mapProblems(outDir, regions) {
   if (fs.existsSync(intro)) {
     const html = fs.readFileSync(intro, "utf8");
     for (const [re, what] of [
-      [/heavymap_id/, "heavymap_id"],
-      [/\bhm:[a-z]{2}:/, "an hm: identifier"],
+      [/ia_id/, "ia_id"],
+      [/\bia:[a-z]{2}:/, "an ia: identifier"],
       [/\bLYR-[A-Z]/, "an Atlas layer id"],
       [/\blens(es)?\b/i, "a lens name"],
     ]) {

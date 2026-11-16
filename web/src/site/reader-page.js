@@ -14,7 +14,9 @@ export function mountReader(store, root) {
   const count = $("#library-count");
   const notice = $("[data-reader-notice]");
   const doc = $("[data-reader-document]");
+  const nav = doc.querySelector(".document-navigation");
   const pane = $("#reader-article");
+  const emptyPane = pane.innerHTML;
   const scroller = $("#reader-scroll");
   const toggle = $("#reader-library-toggle");
   const library = $("#reader-library");
@@ -165,7 +167,8 @@ export function mountReader(store, root) {
     detach();
     if (!store.byId.has(id)) {
       currentId = null;
-      doc.hidden = true;
+      nav.hidden = true;
+      pane.innerHTML = emptyPane;
       renderNotice(
         catalogue.retired?.includes(id)
           ? "That item has been withdrawn."
@@ -177,6 +180,7 @@ export function mountReader(store, root) {
     writeUrl();
     renderList();
     doc.hidden = false;
+    nav.hidden = false;
     pane.innerHTML = `<p class="library-count">Loading…</p>`;
     let article = null;
     try {

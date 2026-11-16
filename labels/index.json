@@ -1,0 +1,23 @@
+{
+ "schema": 1,
+ "files": [
+  {
+   "path": "dossier.en.json",
+   "domain": "dossier",
+   "locale": "en",
+   "sha256": "16a2e6c120d87c2af2d8719e0c0c6f389a46c1f051027468eb82210c90f2be7f"
+  },
+  {
+   "path": "layers.en.json",
+   "domain": "layers",
+   "locale": "en",
+   "sha256": "62efeb3c32f2c345a17b2196d6beabc4f2a20e9ca80422d03591522773368b7f"
+  },
+  {
+   "path": "states.en.json",
+   "domain": "states",
+   "locale": "en",
+   "sha256": "24cf9332415cef255d559310df581cc63c9c19e2282c8c5a0de108497bc38ba3"
+  }
+ ]
+}

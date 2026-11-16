@@ -37,7 +37,7 @@ test("alternate keeps version A available and Reader defaults to Desk news only"
   );
   await page.getByRole("link", { name: "Visit the existing Desk" }).isVisible();
   await page.getByRole("link", { name: "Compare first design" }).click();
-  await expect(page).toHaveTitle(/A closer reading of place/);
+  await expect(page).toHaveTitle("HeavyMap");
 });
 test("Reader remembers item, progress and filters; can forget only its own history", async ({
   page,

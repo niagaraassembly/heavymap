@@ -6,7 +6,7 @@ import csv
 import unittest
 from pathlib import Path
 
-from heavymap.gaps import PUBLISH_PRIORITIES
+from industrial_atlas.gaps import PUBLISH_PRIORITIES
 
 ROOT = Path(__file__).resolve().parents[1]
 SHEET21 = ROOT / "Spreadsheets" / "21-issue-class-register.csv"

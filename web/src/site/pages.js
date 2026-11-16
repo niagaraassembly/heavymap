@@ -8,7 +8,7 @@
 
 import { escapeHtml as esc, safeHttpUrl } from "../desk/escape.js";
 import * as wny from "../desk/wny.js";
-import { arrow } from "./layout.js";
+import { arrow, bookIcon } from "./layout.js";
 import { SIGNUP } from "./signup-config.js";
 import { MESSAGES } from "./signup.js";
 
@@ -17,6 +17,39 @@ const ORIGINALS = {
   "western-new-york": `${NA_ORIGIN}/desks/us/ny/western-new-york/`,
   "niagara-brant": `${NA_ORIGIN}/desks/ca/on/niagara-brant/`,
   "western-new-york/issue-one": `${NA_ORIGIN}/desks/us/ny/western-new-york/issue/one/`,
+};
+/** Archival photograph for each Desk's panorama (credits: /about/credits/). */
+const DESK_PHOTOS = {
+  "western-new-york": {
+    src: "/editorial/buffalo-grain-elevators.jpg",
+    width: 669,
+    height: 1000,
+    alt: "Historic grain elevators along the Buffalo waterfront",
+    caption: "Buffalo, New York · Archival regional photograph",
+    portrait: true,
+  },
+  "niagara-brant": {
+    src: "/editorial/hamilton-steel-mills.jpg",
+    width: 1200,
+    height: 900,
+    alt: "Hamilton steel mills along the industrial waterfront",
+    caption: "Hamilton, Ontario · Archival regional photograph",
+    portrait: false,
+  },
+};
+
+/** Desk card photo: the first design's linked `.desk-photo` (site.css), caption overlaid. */
+const deskCardPhoto = (region) => {
+  const photo = DESK_PHOTOS[region.slug];
+  if (!photo) return "";
+  return `<a class="desk-photo${photo.portrait ? " desk-photo--portrait" : ""}" href="/desks/${esc(region.slug)}/" aria-label="Open the ${esc(region.name)} Desk"><img src="${photo.src}" alt="${esc(photo.alt)}" width="${photo.width}" height="${photo.height}" loading="lazy"><span class="photo-caption">${esc(photo.caption)}</span></a>`;
+};
+
+/** Desk panorama figure for edition pages: the `.desk-panorama` pattern (page-studies.css). */
+const deskPanorama = (region) => {
+  const photo = DESK_PHOTOS[region.slug];
+  if (!photo) return "";
+  return `<figure class="desk-panorama${photo.portrait ? " desk-panorama--portrait" : ""}"><img src="${photo.src}" alt="${esc(photo.alt)}" width="${photo.width}" height="${photo.height}"><figcaption><span>${esc(photo.caption)}</span><a href="/about/credits/">Photograph credits</a></figcaption></figure>`;
 };
 const METHODS_URL = `${NA_ORIGIN}/research/methods/news/`;
 
@@ -105,7 +138,7 @@ export function home(c) {
   const leadEd = lead && c.editions.get(lead.editions?.[0]);
   const leadDesk = leadEd && regionOf(c, leadEd.desk);
   const fromDesks = lead
-    ? `<div class="news-layout"><article class="lead-story"><a class="lead-image" href="/read/${esc(lead.id)}/"><img src="/editorial/buffalo-grain-elevators.jpg" alt="Buffalo grain elevators, archival regional photograph" width="1200" height="800"><span>${esc(leadDesk?.name ?? "")} / ${esc(leadEd?.title ?? "")}</span></a><p class="eyebrow">${esc(lead.place ?? "")}${stageChip(lead)}</p><h3><a href="/read/${esc(lead.id)}/">${esc(lead.title)}</a></h3><p>${esc(lead.summary)}</p><a class="text-link" href="/read/${esc(lead.id)}/">Read the story ${arrow}</a><p class="archive-date">From ${esc(leadEd?.title ?? "")} · ${esc(longDate(lead.published_on))}</p></article><div class="news-side">${rest
+    ? `<div class="news-layout"><article class="lead-story"><a class="lead-image" href="/read/${esc(lead.id)}/"><img src="/editorial/buffalo-grain-elevators.jpg" alt="Buffalo grain elevators, archival regional photograph" width="669" height="1000"><span>${esc(leadDesk?.name ?? "")} / ${esc(leadEd?.title ?? "")}</span></a><p class="eyebrow">${esc(lead.place ?? "")}${stageChip(lead)}</p><h3><a href="/read/${esc(lead.id)}/">${esc(lead.title)}</a></h3><p>${esc(lead.summary)}</p><a class="text-link" href="/read/${esc(lead.id)}/">Read the story ${arrow}</a><p class="archive-date">From ${esc(leadEd?.title ?? "")} · ${esc(longDate(lead.published_on))}</p></article><div class="news-side">${rest
         .slice(0, 3)
         .map(
           (s, i) =>
@@ -116,7 +149,7 @@ export function home(c) {
   const desks = c.regions
     .map(
       (r, i) =>
-        `<article><span class="eyebrow">0${i + 1} / ${esc(r.country === "US" ? "New York, United States" : "Ontario, Canada")}</span><h3>${esc(r.name)}</h3><p>${esc(r.coverage)}</p><div><a class="text-link" href="/desks/${esc(r.slug)}/">Read the Desk ${arrow}</a><a href="/subscribe/?desk=${esc(r.slug)}">Subscribe +</a></div></article>`,
+        `<article>${deskCardPhoto(r)}<span class="eyebrow">0${i + 1} / ${esc(r.country === "US" ? "New York, United States" : "Ontario, Canada")}</span><h3>${esc(r.name)}</h3><p>${esc(r.coverage)}</p><div><a class="text-link" href="/desks/${esc(r.slug)}/">Read the Desk ${arrow}</a><a href="/subscribe/?desk=${esc(r.slug)}">Subscribe +</a></div></article>`,
     )
     .join("");
   return {
@@ -124,7 +157,7 @@ export function home(c) {
     title: "",
     description:
       "Regional reporting on industry and investment, with the evidence in view.",
-    main: `<section class="edition-top"><div><span class="eyebrow">The regional edition</span><h1>Places change.<br><em>Keep a closer eye.</em></h1></div><p>Industry, investment and the land behind them. Regional reporting and geographic intelligence, with the evidence left in view.</p></section><div class="return-line" data-resume hidden></div><section class="map-strip" aria-labelledby="map-strip-title"><img class="map-strip-image" src="/map/hamilton-lower-city-wide.webp" width="2000" height="1250" alt="" loading="lazy"><div class="map-strip-copy"><p class="eyebrow">A different view of the region</p><h2 id="map-strip-title">The geography<br>behind the story.</h2></div><a class="map-peek" href="/map/"><span><strong>Hamilton, Ontario</strong><small>In preparation · About the map</small></span><span class="map-peek-arrow" aria-hidden="true">↗</span></a></section><section class="alt-news-section"><div class="alt-section-head"><div><p class="eyebrow">On the record</p><h2>From the Desks</h2></div><a class="text-link" href="/reader/">All news in Reader ${arrow}</a></div>${fromDesks}</section><section class="alt-region-section" id="desks"><div class="alt-section-head"><div><p class="eyebrow">Choose your field of view</p><h2>Your regional Desks</h2></div><a class="text-link" href="/subscribe/">Follow one or both ${arrow}</a></div><div class="region-pair">${desks}</div></section>`,
+    main: `<section class="edition-top"><div><span class="eyebrow">The regional edition</span><h1>Places change.<br><em>Keep a closer eye.</em></h1></div><p>Industry, investment and the land behind them. Regional reporting and geographic intelligence, with the evidence left in view.</p></section><div class="return-line" data-resume hidden></div><section class="map-strip" aria-labelledby="map-strip-title"><picture><source media="(max-width: 700px)" srcset="/map/hamilton-lower-city-tall.webp" width="900" height="1100"><img class="map-strip-image" src="/map/hamilton-lower-city-wide.webp" width="2000" height="1250" alt="" loading="lazy"></picture><div class="map-strip-copy"><p class="eyebrow">A different view of the region</p><h2 id="map-strip-title">The geography<br>behind the story.</h2></div><a class="map-peek" href="/map/"><span><strong>Hamilton, Ontario</strong><small>Public preview · Open the map</small></span><span class="map-peek-arrow" aria-hidden="true">↗</span></a></section><section class="alt-news-section"><div class="alt-section-head"><div><p class="eyebrow">On the record</p><h2>From the Desks</h2></div><a class="text-link" href="/reader/">All news in Reader ${arrow}</a></div>${fromDesks}</section><section class="alt-region-section" id="desks"><div class="alt-section-head"><div><p class="eyebrow">Choose your field of view</p><h2>Your regional Desks</h2></div><a class="text-link" href="/subscribe/">Follow one or both ${arrow}</a></div><div class="region-pair">${desks}</div></section>`,
   };
 }
 
@@ -134,7 +167,7 @@ export function deskDirectory(c) {
   const list = c.regions
     .map((r) => {
       const latest = editionsOfDesk(c, r.id)[0];
-      return `<article><h2><a href="/desks/${esc(r.slug)}/">${esc(r.name)}</a></h2><p>${esc(r.coverage)}</p><p class="eyebrow">${latest ? `Latest: ${esc(latest.title)} · ${esc(longDate(latest.published_on))}` : "Editions will appear here"}</p></article>`;
+      return `<article>${deskCardPhoto(r)}<h2><a href="/desks/${esc(r.slug)}/">${esc(r.name)}</a></h2><p>${esc(r.coverage)}</p><p class="eyebrow">${latest ? `Latest: ${esc(latest.title)} · ${esc(longDate(latest.published_on))}` : "Editions will appear here"}</p></article>`;
     })
     .join("");
   return {
@@ -165,11 +198,15 @@ export function deskPage(c, region) {
   const maps = region.geographies.length
     ? `<section class="hm-desk-maps"><h2>Mapping</h2><ul>${region.geographies.map((g) => `<li>${esc(g.name)}: ${esc(MAP_STATUS_WORDS[g.map.status] ?? "not yet mapped")}. <a href="/map/">About the map</a></li>`).join("")}</ul></section>`
     : "";
+  const photo = DESK_PHOTOS[region.slug];
+  const panorama = photo
+    ? `<figure class="desk-panorama${photo.portrait ? " desk-panorama--portrait" : ""}"><img src="${photo.src}" alt="${esc(photo.alt)}" width="${photo.width}" height="${photo.height}"><figcaption><span>${esc(photo.caption)}</span><a href="/about/credits/">Photograph credits</a></figcaption></figure>`
+    : "";
   return {
     path: `/desks/${region.slug}/`,
     title: `${region.name} Desk`,
     description: region.coverage,
-    main: `<section class="study-desk study-wrap"><div class="study-topline">${crumb([{ text: "The Desks", href: "/desks/" }, { text: region.name }])}</div><header class="desk-masthead"><p class="eyebrow">The ${esc(region.name)} Desk</p><div><h1>${esc(region.name)}</h1><a class="desk-follow-link" href="/subscribe/?desk=${esc(region.slug)}">Follow this Desk ${arrow}</a></div><p class="hm-coverage">${esc(region.coverage)}</p></header>${latestHtml}${archive}${maps}<section class="hm-desk-signup" aria-labelledby="desk-signup-title"><h2 id="desk-signup-title">Get each ${esc(region.name)} edition by email.</h2>${signupForm(c, { desk: region.slug, id: "desk-signup" })}</section></section>`,
+    main: `<section class="study-desk study-wrap"><div class="study-topline">${crumb([{ text: "The Desks", href: "/desks/" }, { text: region.name }])}</div><header class="desk-masthead"><p class="eyebrow">The ${esc(region.name)} Desk</p><div><h1>${esc(region.name)}</h1><a class="desk-follow-link" href="/subscribe/?desk=${esc(region.slug)}">Follow this Desk ${arrow}</a></div><p class="hm-coverage">${esc(region.coverage)}</p></header>${panorama}${latestHtml}${archive}${maps}<section class="hm-desk-signup" aria-labelledby="desk-signup-title"><h2 id="desk-signup-title">Get each ${esc(region.name)} edition by email.</h2>${signupForm(c, { desk: region.slug, id: "desk-signup" })}</section></section>`,
   };
 }
 
@@ -220,7 +257,7 @@ export function editionPage(c, ed) {
     title: `${region.name} — ${ed.title}`,
     description: ed.summary,
     bodyClass: "hm-edition",
-    main: `<div class="study-edition study-wrap">${crumb([{ text: region.name, href: `/desks/${region.slug}/` }, { text: ed.title }])}<header class="edition-masthead"><p class="eyebrow">The ${esc(region.name)} Desk</p><h1>${esc(ed.title)}</h1><p class="issue-stamp">${esc([wny.apDate(ed.published_on), span ? `News from ${span}` : ""].filter(Boolean).join(" · "))}</p></header>
+    main: `<div class="study-edition study-wrap">${crumb([{ text: region.name, href: `/desks/${region.slug}/` }, { text: ed.title }])}<header class="edition-masthead"><p class="eyebrow">The ${esc(region.name)} Desk</p><h1>${esc(ed.title)}</h1><p class="issue-stamp">${esc([wny.apDate(ed.published_on), span ? `News from ${span}` : ""].filter(Boolean).join(" · "))}</p></header>${deskPanorama(region)}
 <div class="hm-desk-publication" data-edition="${esc(ed.key)}">
 <p class="wny-lede">${esc(ed.summary)}</p>
 <p class="issue-intro">Reviewed news from the Niagara River to Syracuse: who is investing, building, hiring and starting up. Every story has passed Niagara Assembly’s source review, and each one carries our reading of it: how far along it is, and what is still unconfirmed.</p>
@@ -231,11 +268,11 @@ ${panel("coming", "Coming up", "Dated next steps in this issue’s stories, soon
 ${money}
 ${panel("jobs", "Jobs", "Job figures as the sources state them. Where they disagree, the story shows each one.", wny.renderJobs(items))}
 ${panel("support", "Public support", "Tax credits and other public awards tied to these stories. Kept apart from the dollar figures.", wny.renderIncentives(items))}
-<section class="hm-edition-signup" aria-labelledby="edition-signup-title"><h2 id="edition-signup-title">Get each ${esc(region.name)} edition by email.</h2>${signupForm(c, { desk: region.slug, id: "edition-signup" })}</section>
 ${lanes}
 ${panel("mentions", "Mentions", "People named in this issue’s stories, with the role and organization the sources give.", wny.renderMentions(mentions), "wny-companies", "wny-company-list")}
 ${districts.length ? `<section class="wny-companies" data-wny="districts"><h2>By district</h2><p class="wny-lane__banner">Districts covering the places in this issue’s stories, matched by town rather than exact address. <a href="${METHODS_URL}#districts">How districts are matched</a>.</p><ul class="wny-districts">${wny.renderDistricts(districts)}</ul></section>` : ""}
 <p class="wny-method">How this news is found, checked and approved: <a href="${METHODS_URL}">news research methods</a>.</p>
+<section class="hm-edition-signup" aria-labelledby="edition-signup-title"><h2 id="edition-signup-title">Get each ${esc(region.name)} edition by email.</h2>${signupForm(c, { desk: region.slug, id: "edition-signup" })}</section>
 </div></div>`,
   };
 }
@@ -394,22 +431,22 @@ export function readerPage(c) {
     description:
       "Every HeavyMap story in one place, with your place kept in this browser.",
     bodyClass: "hm-reader",
-    main: `<section class="reader-page study-wrap" data-reader><header class="reader-heading"><div><p class="eyebrow">A single door into HeavyMap</p><h1>Reader</h1></div><p>News first; findings, editorials and documentation when you want to go deeper. Your place is remembered in this browser only.</p></header><div class="reader-types" role="group" aria-label="Material" data-reader-controls hidden>${kinds.map((k) => `<button type="button" data-kind="${k}" aria-pressed="false">${esc(kindLabel[k])}</button>`).join("")}</div><button type="button" class="reader-library-toggle" id="reader-library-toggle" aria-expanded="true" aria-controls="reader-library" hidden>Browse &amp; filter <span aria-hidden="true">−</span></button><div class="reader-workspace"><aside id="reader-library" class="reader-library" aria-label="Reader library"><div data-reader-controls hidden><div class="reader-filter-row"><label for="reader-region">Region</label><select id="reader-region">${regionOptions}</select></div><label class="hm-visually-hidden" for="reader-search">Search the library</label><input id="reader-search" type="search" maxlength="120" placeholder="Search the library…" autocomplete="off"><label class="unread-option"><input id="reader-unread" type="checkbox"> Unread only</label></div><p class="hm-reader-notice" data-reader-notice hidden></p><div class="library-count" id="library-count" role="status"></div><ol id="reader-list" class="reader-list">${list}</ol><div class="reader-storage" data-reader-controls hidden><p data-storage-note>Your place and filters stay on this device.</p><button type="button" data-forget>Forget reading history</button><div data-forget-confirm hidden><p>Forget what you've read on this device? Your theme stays as it is.</p><button type="button" data-forget-yes>Forget</button> <button type="button" data-forget-no>Cancel</button></div></div></aside><div class="reader-document" data-reader-document hidden><div class="document-navigation"><button type="button" id="reader-prev">← Previous</button><span id="reader-position"></span><button type="button" id="reader-next">Next →</button></div><div id="reader-scroll" class="reader-scroll" tabindex="-1" aria-label="Reading pane"><div id="reader-article"></div></div></div></div></section>`,
+    main: `<section class="reader-page study-wrap" data-reader><header class="reader-heading"><div><p class="eyebrow">A single door into HeavyMap</p><h1>Reader</h1></div><p>News first; findings, editorials and documentation when you want to go deeper. Your place is remembered in this browser only.</p></header><div class="reader-types" role="group" aria-label="Material" data-reader-controls hidden>${kinds.map((k) => `<button type="button" data-kind="${k}" aria-pressed="false">${esc(kindLabel[k])}</button>`).join("")}</div><button type="button" class="reader-library-toggle" id="reader-library-toggle" aria-expanded="true" aria-controls="reader-library" hidden>Browse &amp; filter <span aria-hidden="true">−</span></button><div class="reader-workspace"><aside id="reader-library" class="reader-library" aria-label="Reader library"><div data-reader-controls hidden><div class="reader-filter-row"><label for="reader-region">Region</label><select id="reader-region">${regionOptions}</select></div><label class="hm-visually-hidden" for="reader-search">Search the library</label><input id="reader-search" type="search" maxlength="120" placeholder="Search the library…" autocomplete="off"><label class="unread-option"><input id="reader-unread" type="checkbox"> Unread only</label></div><p class="hm-reader-notice" data-reader-notice hidden></p><div class="library-count" id="library-count" role="status"></div><ol id="reader-list" class="reader-list">${list}</ol><div class="reader-storage" data-reader-controls hidden><p data-storage-note>Your place and filters stay on this device.</p><button type="button" data-forget>Forget reading history</button><div data-forget-confirm hidden><p>Forget what you've read on this device? Your theme stays as it is.</p><button type="button" data-forget-yes>Forget</button> <button type="button" data-forget-no>Cancel</button></div></div></aside><div class="reader-document" data-reader-document><div class="document-navigation" hidden><button type="button" id="reader-prev">← Previous</button><span id="reader-position"></span><button type="button" id="reader-next">Next →</button></div><div id="reader-scroll" class="reader-scroll" tabindex="-1" aria-label="Reading pane"><div id="reader-article"><div class="reader-empty"><p class="eyebrow">Start here</p><h2>Choose a story from the list.</h2><p class="reader-lede">News first; findings, editorials and documentation when you want to go deeper. Your place is remembered in this browser only.</p></div></div></div></div></div></section>`,
   };
 }
 
 /* ---- map introduction (decision 17, spec F section 2) -------------------- */
 
 export function mapIntro() {
-  // Decision 67: a still map of Hamilton's lower city and harbourfront, rendered once from OpenStreetMap data.
+  // D-070: retain the still map as fallback and layer key-only Hamilton parcels from zoom 14.
   return {
     path: "/map/",
     title: "The map",
     description:
-      "HeavyMap's map of Hamilton, Ontario, in preparation: the lower city and harbourfront.",
+      "Explore City of Hamilton parcel boundaries and inspect their verified public records.",
     bodyClass: "hm-map-intro",
-    main: `<figure class="hm-map-figure"><picture><source media="(max-width: 700px)" srcset="/map/hamilton-lower-city-tall.webp" width="900" height="1100"><img src="/map/hamilton-lower-city-wide.webp" width="2000" height="1250" alt="Map of Hamilton's lower city and harbourfront: the west harbour and Bayfront Park, the North End and its piers, downtown, Strathcona, Durand and Corktown below the escarpment, and the industrial bayfront to the east. No HeavyMap data is shown."></picture><figcaption><span>Hamilton, Ontario · lower city and harbourfront</span><span>© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></span></figcaption></figure><section class="hm-map-story" aria-labelledby="map-story-title"><h1 id="map-story-title">The map behind the news</h1><p>HeavyMap's Desks report what is being built, bought, funded and closed across Western New York and Niagara–Brant. The map is where that reporting will meet the land itself.</p><p>We are preparing a working map of Hamilton, Ontario, parcel by parcel. For each parcel it will show what public records say, where each fact comes from, how it was matched to the land, and where the records are silent or disagree. When a source can't support a statement, the map will say so rather than guess.</p><p>It isn't open yet. Each place opens only after its data has been checked and screened.</p><p>Until then, this is Hamilton's lower city and harbourfront as OpenStreetMap draws it. Nothing on it is HeavyMap data yet.</p><p><a class="button" href="/desks/">Read the latest editions ${arrow}</a></p></section>`,
-    after: `<nav class="map-dock" aria-label="Map"><span class="wordmark">HeavyMap<span aria-hidden="true">◒</span></span><div><strong>Hamilton, Ontario</strong><span>Lower city and harbourfront · in preparation</span></div><a href="/" data-back-to-reading>Back to reading ↑</a></nav>`,
+    main: `<div class="map-workspace"><div id="map" aria-label="City of Hamilton map with parcel selection at close zoom"></div><section class="intro" aria-label="Introduction"><span class="eyebrow">A city encased by nature</span><h1>Land, with<br><em>possibility.</em></h1><p>Follow a signal. Open the evidence.<br>Decide what deserves a closer look.</p></section><button id="tray-toggle" class="mobile-toggle" aria-expanded="false" aria-controls="tray">Map options</button><aside id="tray" class="tray" aria-label="Hamilton map controls"><div class="tray-heading"><h2>Hamilton parcels</h2><span id="parcel-count">Loading</span></div><p class="subtext">Zoom in to see parcel outlines. Select any outline to open its evidence record.</p><section class="layers" aria-label="Map layers"><div class="tray-heading"><h2>Map layers</h2></div><label class="layer"><input id="parcels-visible" type="checkbox" checked><span><strong>Hamilton parcels</strong><small>Key-only tiles · zoom 14–16</small></span></label></section><div class="samples-heading"><h2>Selection</h2><span id="result-count"></span></div><div id="samples"></div><p id="search-status" role="status"></p></aside><div class="map-tools"><button id="home" title="Reset map view">⌂ <span>Hamilton</span></button></div><aside id="dossier" class="dossier" aria-label="Parcel dossier" hidden><div class="dossier-top"><span class="eyebrow">Parcel field notes · D-070 release</span><button id="close" aria-label="Close dossier">✕</button></div><div id="dossier-body"></div></aside><div class="map-footer"><div class="legend"><span class="legend-dot signal"></span>Hamilton parcel boundary</div><span id="map-status" class="map-status" role="status">Loading Hamilton map…</span><span class="honesty">Still image fallback · parcel selection from zoom 14</span></div></div>`,
+    after: `<div class="hm-map-context"><span>Hamilton, Ontario · City parcel preview</span><span>Still image © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></span><span>D-070 public data release</span></div><div class="hm-map-bar" data-map-bars><a class="wordmark" href="/">HeavyMap<span aria-hidden="true">◒</span></a><div class="hm-desks-split" data-desks-menu><a href="/desks/">Desks</a><button type="button" data-desks-toggle aria-haspopup="true" aria-expanded="false" aria-controls="hm-desks-panel"><span aria-hidden="true">▴</span><span class="hm-visually-hidden">Site menu</span></button><div class="hm-desks-panel" id="hm-desks-panel" data-desks-panel hidden><ul><li role="presentation" class="hm-desks-group">Desks</li><li><a href="/desks/western-new-york/">Western New York</a></li><li><a href="/desks/niagara-brant/">Niagara–Brant</a></li><li role="presentation" class="hm-desks-group">HeavyMap</li><li><a href="/reader/">Reader</a></li><li><a href="/map/" aria-current="page">Map</a></li><li><a href="/about/">About</a></li><li><a href="/about/credits/">Credits</a></li><li><a href="/preferences/">Email preferences</a></li><li><a href="/subscribe/">Follow your regions</a></li></ul></div></div><a class="hm-reader-icon" href="/reader/" aria-label="Reader">${bookIcon}</a><span class="hm-map-bar-status">Hamilton, Ontario · Public map preview</span><a class="hm-map-bar-back" href="/">Back to reading ↑</a></div>`,
   };
 }
 
@@ -429,7 +466,7 @@ export function signupForm(
         `<label><input type="checkbox" name="${esc(n("desks"))}" value="${esc(r.slug)}" data-field="desk"${r.slug === desk ? " checked data-default" : ""}${on ? "" : " disabled"}> ${esc(r.name)}</label>`,
     )
     .join("");
-  return `<form class="hm-signup" data-signup id="${esc(id)}"${on ? ` action="${esc(config.action)}" method="post" target="_blank"` : ""} novalidate><fieldset class="hm-signup-desks" data-desk-boxes><legend>Desks to follow</legend>${boxes}</fieldset><label for="${esc(id)}-name">Name</label><input id="${esc(id)}-name" name="${esc(n("name"))}" data-field="name" autocomplete="name" required${on ? "" : " disabled"}><label for="${esc(id)}-email">Email</label><input id="${esc(id)}-email" name="${esc(n("email"))}" data-field="email" type="email" autocomplete="email" required${on ? "" : " disabled"}><button type="submit" class="button"${on ? "" : " disabled"}>Subscribe</button><p class="hm-signup-status" role="status">${on ? "" : esc(MESSAGES.closed)}</p><p class="hm-signup-note">Each Desk sends its own edition. Every email has a link to stop that Desk only.</p></form>`;
+  return `<form class="hm-signup" data-signup id="${esc(id)}"${on ? ` action="${esc(config.action)}" method="post" target="_blank"` : ""} novalidate><p class="hm-signup-status" role="status">${on ? "" : esc(MESSAGES.closed)}</p><fieldset class="hm-signup-desks" data-desk-boxes><legend>Desks to follow</legend>${boxes}</fieldset><label for="${esc(id)}-name">Name</label><input id="${esc(id)}-name" name="${esc(n("name"))}" data-field="name" autocomplete="name" required${on ? "" : " disabled"}><label for="${esc(id)}-email">Email</label><input id="${esc(id)}-email" name="${esc(n("email"))}" data-field="email" type="email" autocomplete="email" required${on ? "" : " disabled"}><button type="submit" class="button"${on ? "" : " disabled"}>Subscribe</button><p class="hm-signup-note">Each Desk sends its own edition. Every email has a link to stop that Desk only.</p></form>`;
 }
 
 /* ---- subscriptions (spec E) ------------------------------------------------ */
@@ -467,7 +504,7 @@ export function aboutPage(c) {
     path: "/about/",
     title: "About",
     description: "What HeavyMap is and how it works.",
-    main: `<section class="study-wrap hm-about">${crumb([{ text: "About" }])}<h1>About <em>HeavyMap.</em></h1><p>HeavyMap follows industry and investment across Western New York and Niagara–Brant. Its regional Desks publish reviewed news with the sources, stages and open questions left in view, and its map of Hamilton is in preparation.</p>${docs.length ? `<h2>Documentation</h2><ul>${docs.map((d) => `<li><a href="/read/${esc(d.id)}/">${esc(d.title)}</a></li>`).join("")}</ul>` : ""}<p><a href="/about/credits/">Sources and credits</a></p></section>`,
+    main: `<section class="study-wrap hm-about">${crumb([{ text: "About" }])}<h1>About <em>HeavyMap.</em></h1><p>HeavyMap follows industry and investment across Western New York and Niagara–Brant. Its regional Desks publish reviewed news with the sources, stages and open questions left in view, and its map of Hamilton is in public preview.</p>${docs.length ? `<h2>Documentation</h2><ul>${docs.map((d) => `<li><a href="/read/${esc(d.id)}/">${esc(d.title)}</a></li>`).join("")}</ul>` : ""}<p><a href="/about/credits/">Sources and credits</a></p></section>`,
   };
 }
 

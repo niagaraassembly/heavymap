@@ -30,12 +30,39 @@ function header(path, themes) {
     (n) =>
       `<a href="${n.href}"${n.section === current ? ' aria-current="page"' : ""}${n.icon ? ' class="reader-nav"' : ""}>${n.icon ?? ""}${n.label}</a>`,
   ).join("");
-  return `<header class="alt-header"><a class="wordmark" href="/">HeavyMap<span aria-hidden="true">◒</span></a><span class="alt-header-caption">A closer reading of place.</span><nav aria-label="Main navigation">${links}</nav>${themePicker(themes)}<a class="alt-follow" href="/subscribe/"${current === "subscribe" ? ' aria-current="page"' : ""}>Follow your regions</a></header>`;
+  return `<header class="alt-header"><a class="wordmark" href="/">HeavyMap<span aria-hidden="true">◒</span></a><nav aria-label="Main navigation">${links}</nav><a class="alt-follow" href="/subscribe/"${current === "subscribe" ? ' aria-current="page"' : ""}>Follow your regions</a>${themePicker(themes)}</header>`;
 }
 
-/** Prebuilt picker markup; hidden until theme-picker.js enhances it (spec D section 5). */
+/* Map status words, as in pages.js: the selector names a place with its status. */
+const MAP_STATUS_WORDS = {
+  preparing: "in preparation",
+  preview: "in preview",
+  published: "open",
+};
+
+/**
+ * The /map/ header: thin, no wordmark, no main nav (both live in the bottom
+ * bar). The place selector, search and Save/Make/profile slots reserve the
+ * space their services will grow into; until then they are disabled with
+ * the reason in the title. The theme picker stays at the far right.
+ */
+function mapHeader(themes, regions) {
+  const geos = regions.flatMap((r) =>
+    (r.geographies ?? []).map((g) => ({ ...g, region: r.name })),
+  );
+  const current = geos[0];
+  const options = geos
+    .map(
+      (g) =>
+        `<li><span${g === current ? ' aria-current="true"' : ""}>${esc(g.name)} · ${esc(g.region)}</span><small>Map ${esc(MAP_STATUS_WORDS[g.map.status] ?? "not yet mapped")}</small></li>`,
+    )
+    .join("");
+  return `<header class="alt-header alt-header--map"><div class="hm-place" data-place-selector><button type="button" class="hm-place-button" data-place-button aria-haspopup="true" aria-expanded="false" aria-controls="hm-place-panel"><span>${current ? `${esc(current.name)} · ${esc(current.region)}` : "No place yet"}</span> <span aria-hidden="true">▾</span></button><div class="hm-place-panel" id="hm-place-panel" data-place-panel hidden><ul>${options}</ul><p><a href="/about/">About HeavyMap</a></p><p><a href="/desks/">Desks &amp; places</a></p></div></div><div class="hm-map-search" role="search"><label class="hm-visually-hidden" for="hm-map-search">Find a Hamilton parcel by key</label><input id="hm-map-search" type="search" placeholder="Paste a Hamilton parcel key" title="Open a Hamilton parcel record"></div><button type="button" class="hm-tool-slot" disabled title="Save — coming with accounts">Save</button><button type="button" class="hm-tool-slot" disabled title="Make — document types coming soon">Make</button><button type="button" class="hm-tool-slot hm-tool-profile" disabled title="Account — sign-in coming with Identity enrolment" aria-label="Account"><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="6.5" r="3.2" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 17c1-3.5 3.5-5 6.5-5s5.5 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button><a class="alt-follow" href="/subscribe/">Follow your regions</a>${themePicker(themes)}</header>`;
+}
+
+/** Prebuilt picker markup; hidden until theme-picker.js enhances it (spec D section 5). The button shows the flag only; the name is in the panel and the button's accessible name. */
 function themePicker(themes) {
-  return `<div class="hm-theme" data-theme-picker data-themes="${esc(JSON.stringify(themes))}" hidden><button type="button" class="hm-theme-button" data-theme-button aria-haspopup="listbox" aria-expanded="false" aria-controls="hm-theme-panel"><img class="hm-flag" data-theme-flag src="/flags/us.svg" alt="" height="12"> <span data-theme-name>United States</span> <span aria-hidden="true">▾</span></button><div class="hm-theme-panel" id="hm-theme-panel" data-theme-panel hidden><ul role="listbox" tabindex="-1" aria-label="Site theme"></ul><fieldset class="hm-theme-modes" data-theme-modes><legend>Light or dark</legend><label><input type="radio" name="hm-mode" value="light"> Light</label><label><input type="radio" name="hm-mode" value="dark"> Dark</label><label><input type="radio" name="hm-mode" value="auto"> Automatic</label></fieldset><p class="hm-theme-note" data-theme-only-light hidden>This theme has a light look only.</p><p class="hm-theme-note">Themes change the look only.</p><button type="button" class="hm-theme-reset" data-theme-reset>Reset to automatic</button><p class="hm-visually-hidden" role="status"></p></div></div>`;
+  return `<div class="hm-theme" data-theme-picker data-themes="${esc(JSON.stringify(themes))}" hidden><button type="button" class="hm-theme-button" data-theme-button aria-haspopup="listbox" aria-expanded="false" aria-controls="hm-theme-panel"><img class="hm-flag" data-theme-flag src="/flags/us.svg" alt="" height="12"> <span aria-hidden="true">▾</span></button><div class="hm-theme-panel" id="hm-theme-panel" data-theme-panel hidden><ul role="listbox" tabindex="-1" aria-label="Site theme"></ul><fieldset class="hm-theme-modes" data-theme-modes><legend>Light or dark</legend><label><input type="radio" name="hm-mode" value="light"> Light</label><label><input type="radio" name="hm-mode" value="dark"> Dark</label><label><input type="radio" name="hm-mode" value="auto"> Automatic</label></fieldset><p class="hm-theme-note" data-theme-only-light hidden>This theme has a light look only.</p><p class="hm-theme-note">Themes change the look only.</p><button type="button" class="hm-theme-reset" data-theme-reset>Reset to automatic</button><p class="hm-visually-hidden" role="status"></p></div></div>`;
 }
 
 function footer(regions) {
@@ -55,7 +82,7 @@ function footer(regions) {
  * @param {object[]} o.regions   content regions, for the footer
  * @param {object} o.assets      { css: string[], js: string[] } paths relative to this page
  * @param {string} [o.bodyClass]
- * @param {string} [o.after]     HTML after the footer (the map dock)
+ * @param {string} [o.after]     HTML after the footer (the map's context strip and bottom bar)
  * @param {boolean} [o.preview]  preview build banner (spec D section 3)
  * @param {object[]} o.themes    themes available in this build: { id, country, name, modes }
  * @param {string} o.defaultTheme
@@ -89,7 +116,7 @@ ${css}${js}
 </head>
 <body class="alternate ${esc(o.bodyClass ?? "")}">
 ${banner}<a class="skip-link" href="#content">Skip to content</a>
-${header(o.path, o.themes)}
+${o.path === "/map/" ? mapHeader(o.themes, o.regions) : header(o.path, o.themes)}
 <main id="content" tabindex="-1">${o.main}</main>
 ${o.catalogue ? `<script type="application/json" id="hm-catalogue">${JSON.stringify(o.catalogue).replace(/</g, "\\u003c")}</script>` : ""}
 ${footer(o.regions)}${o.after ?? ""}
