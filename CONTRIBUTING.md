@@ -15,6 +15,7 @@ HeavyMap is industrial intelligence for cross-border Niagara, built in the open.
 
 ## Making a change
 
+- Branch names, how changes land on `main` and how the site is deployed: [BRANCHING.md](BRANCHING.md) and [docs/DEPLOY.md](docs/DEPLOY.md).
 - Keep pull requests scoped to one concern. For dataset work, prefer one `dataset_id` per PR unless the change is a genuine family.
 - Cite the relevant Linear ID (`NA-…`) in the PR body when one exists.
 - If your PR changes any Master Control Spreadsheet cell, name the `dataset_id`(s) and summarize which cells changed, per [AGENTS-MCS.md](AGENTS-MCS.md). If it changes none, say so.
