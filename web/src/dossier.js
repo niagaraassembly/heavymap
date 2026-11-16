@@ -59,8 +59,8 @@ export function renderDossier(parcel, container) {
 
   for (const [index, band] of order.entries()) {
     const section = el("section", undefined, "band");
-    section.dataset.band = band;
     section.id = `band-${band}`;
+    section.dataset.band = band;
     section.append(
       el("span", String(index + 1).padStart(2, "0"), "band-number"),
       el("h3", bandLabels[band]),
