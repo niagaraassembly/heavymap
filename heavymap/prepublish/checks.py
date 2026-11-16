@@ -7,6 +7,7 @@ import gzip
 import hashlib
 import io
 import json
+import re
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
@@ -21,6 +22,10 @@ SKIP = "skip"
 
 class CheckError(ValueError):
     """A pre-publish check could not run."""
+
+
+# <prefix>:<country>:<region>:<jurisdiction>:parcel:<26-character Crockford ULID>
+RECORD_ID = re.compile(r"^[a-z]{2,3}:[a-z]{2}:[a-z]{2}:[a-z][a-z-]*:parcel:[0-9A-HJKMNP-TV-Z]{26}$")
 
 
 def _rel(root: Path, path: Path) -> str:
@@ -138,7 +143,20 @@ def _leak_findings(
             # Record ids are the keys of ``records``. They are random ULIDs and can
             # contain a forbidden substring by chance, so they are not field names.
             keys.update(str(k) for k in parsed if k != "records")
-            for rec in (parsed.get("records") or {}).values():
+            records = parsed.get("records") or {}
+            if not isinstance(records, Mapping):
+                records = {}
+            for rec_id, rec in records.items():
+                # Only a well-formed id is exempt from the field-name scan, and it
+                # must agree with the record's own key and with the shard.
+                well_formed = bool(RECORD_ID.fullmatch(str(rec_id)))
+                same_key = kind == "dossier_detail" or (
+                    isinstance(rec, Mapping) and rec.get("key") == rec_id
+                )
+                in_shard = str(rec_id)[-2:] == str(parsed.get("shard"))
+                if not (well_formed and same_key and in_shard):
+                    findings.append({"path": rel, "kind": "bad_record_id", "name": str(rec_id)})
+                    keys.add(str(rec_id))
                 _walk_keys(rec, keys)
         elif parsed is not None:
             _walk_keys(parsed, keys)

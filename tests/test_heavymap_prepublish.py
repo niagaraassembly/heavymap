@@ -19,7 +19,7 @@ from heavymap.prepublish.cli import main
 ROOT = Path(__file__).resolve().parents[1]
 PFX = "hm:ca:on:hamilton:parcel:01M54B6G6TGKK2T9HZECVVHX"
 P_ONE = PFX + "A0"
-P_TWO = PFX + "B1"
+P_TWO = PFX[:-1] + "Z" + "A0"  # same shard as P_ONE (last two characters)
 SENTINELS = (
     "ZZOWNER SENTINEL HOLDINGS",
     "99 MAILING SENTINEL LANE",
@@ -151,6 +151,26 @@ class PrepublishTests(unittest.TestCase):
             path.write_text(json.dumps(payload), encoding="utf-8")
         report = run_checks(self.out, reference=None, withheld_values=SENTINELS)
         self.assertEqual(report["checks"]["leak"]["status"], "pass", report["checks"]["leak"])
+
+    def test_malformed_record_id_is_not_exempt(self):
+        # A key that is not a ULID id cannot hide a forbidden field name.
+        for sub in ("shards", "detail"):
+            path = self.out / sub / "A0.json"
+            payload = json.loads(path.read_text())
+            payload["records"]["owner"] = payload["records"].pop(P_ONE)
+            path.write_text(json.dumps(payload), encoding="utf-8")
+        report = run_checks(self.out, reference=None, withheld_values=SENTINELS)
+        self.assertEqual(report["checks"]["leak"]["status"], "fail")
+        kinds = {f["kind"] for f in report["checks"]["leak"]["findings"]}
+        self.assertIn("bad_record_id", kinds)
+
+    def test_record_key_must_match_map_key_and_shard(self):
+        path = self.out / "shards" / "A0.json"
+        payload = json.loads(path.read_text())
+        payload["records"][P_ONE]["key"] = P_TWO  # disagrees with its map key
+        path.write_text(json.dumps(payload), encoding="utf-8")
+        report = run_checks(self.out, reference=None, withheld_values=SENTINELS)
+        self.assertEqual(report["checks"]["leak"]["status"], "fail")
 
     def test_clean_tree_passes_with_reference(self):
         reference = self.base / "ref"
