@@ -302,6 +302,9 @@ img {
 .desk-photo:hover img {
   transform: scale(1.025);
 }
+.desk-photo--portrait img {
+  object-position: center 22%;
+}
 .desk-photo:after {
   content: "";
   position: absolute;

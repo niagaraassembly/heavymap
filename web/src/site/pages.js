@@ -37,6 +37,20 @@ const DESK_PHOTOS = {
     portrait: false,
   },
 };
+
+/** Desk card photo: the first design's linked `.desk-photo` (site.css), caption overlaid. */
+const deskCardPhoto = (region) => {
+  const photo = DESK_PHOTOS[region.slug];
+  if (!photo) return "";
+  return `<a class="desk-photo${photo.portrait ? " desk-photo--portrait" : ""}" href="/desks/${esc(region.slug)}/" aria-label="Open the ${esc(region.name)} Desk"><img src="${photo.src}" alt="${esc(photo.alt)}" width="${photo.width}" height="${photo.height}" loading="lazy"><span class="photo-caption">${esc(photo.caption)}</span></a>`;
+};
+
+/** Desk panorama figure for edition pages: the `.desk-panorama` pattern (page-studies.css). */
+const deskPanorama = (region) => {
+  const photo = DESK_PHOTOS[region.slug];
+  if (!photo) return "";
+  return `<figure class="desk-panorama${photo.portrait ? " desk-panorama--portrait" : ""}"><img src="${photo.src}" alt="${esc(photo.alt)}" width="${photo.width}" height="${photo.height}"><figcaption><span>${esc(photo.caption)}</span><a href="/about/credits/">Photograph credits</a></figcaption></figure>`;
+};
 const METHODS_URL = `${NA_ORIGIN}/research/methods/news/`;
 
 /** "10 October 2026", HeavyMap's long date (the edition keeps the original's AP style). */
@@ -135,7 +149,7 @@ export function home(c) {
   const desks = c.regions
     .map(
       (r, i) =>
-        `<article><span class="eyebrow">0${i + 1} / ${esc(r.country === "US" ? "New York, United States" : "Ontario, Canada")}</span><h3>${esc(r.name)}</h3><p>${esc(r.coverage)}</p><div><a class="text-link" href="/desks/${esc(r.slug)}/">Read the Desk ${arrow}</a><a href="/subscribe/?desk=${esc(r.slug)}">Subscribe +</a></div></article>`,
+        `<article>${deskCardPhoto(r)}<span class="eyebrow">0${i + 1} / ${esc(r.country === "US" ? "New York, United States" : "Ontario, Canada")}</span><h3>${esc(r.name)}</h3><p>${esc(r.coverage)}</p><div><a class="text-link" href="/desks/${esc(r.slug)}/">Read the Desk ${arrow}</a><a href="/subscribe/?desk=${esc(r.slug)}">Subscribe +</a></div></article>`,
     )
     .join("");
   return {
@@ -143,7 +157,7 @@ export function home(c) {
     title: "",
     description:
       "Regional reporting on industry and investment, with the evidence in view.",
-    main: `<section class="edition-top"><div><span class="eyebrow">The regional edition</span><h1>Places change.<br><em>Keep a closer eye.</em></h1></div><p>Industry, investment and the land behind them. Regional reporting and geographic intelligence, with the evidence left in view.</p></section><div class="return-line" data-resume hidden></div><section class="map-strip" aria-labelledby="map-strip-title"><img class="map-strip-image" src="/map/hamilton-lower-city-wide.webp" width="2000" height="1250" alt="" loading="lazy"><div class="map-strip-copy"><p class="eyebrow">A different view of the region</p><h2 id="map-strip-title">The geography<br>behind the story.</h2></div><a class="map-peek" href="/map/"><span><strong>Hamilton, Ontario</strong><small>In preparation · About the map</small></span><span class="map-peek-arrow" aria-hidden="true">↗</span></a></section><section class="alt-news-section"><div class="alt-section-head"><div><p class="eyebrow">On the record</p><h2>From the Desks</h2></div><a class="text-link" href="/reader/">All news in Reader ${arrow}</a></div>${fromDesks}</section><section class="alt-region-section" id="desks"><div class="alt-section-head"><div><p class="eyebrow">Choose your field of view</p><h2>Your regional Desks</h2></div><a class="text-link" href="/subscribe/">Follow one or both ${arrow}</a></div><div class="region-pair">${desks}</div></section>`,
+    main: `<section class="edition-top"><div><span class="eyebrow">The regional edition</span><h1>Places change.<br><em>Keep a closer eye.</em></h1></div><p>Industry, investment and the land behind them. Regional reporting and geographic intelligence, with the evidence left in view.</p></section><div class="return-line" data-resume hidden></div><section class="map-strip" aria-labelledby="map-strip-title"><picture><source media="(max-width: 700px)" srcset="/map/hamilton-lower-city-tall.webp" width="900" height="1100"><img class="map-strip-image" src="/map/hamilton-lower-city-wide.webp" width="2000" height="1250" alt="" loading="lazy"></picture><div class="map-strip-copy"><p class="eyebrow">A different view of the region</p><h2 id="map-strip-title">The geography<br>behind the story.</h2></div><a class="map-peek" href="/map/"><span><strong>Hamilton, Ontario</strong><small>In preparation · About the map</small></span><span class="map-peek-arrow" aria-hidden="true">↗</span></a></section><section class="alt-news-section"><div class="alt-section-head"><div><p class="eyebrow">On the record</p><h2>From the Desks</h2></div><a class="text-link" href="/reader/">All news in Reader ${arrow}</a></div>${fromDesks}</section><section class="alt-region-section" id="desks"><div class="alt-section-head"><div><p class="eyebrow">Choose your field of view</p><h2>Your regional Desks</h2></div><a class="text-link" href="/subscribe/">Follow one or both ${arrow}</a></div><div class="region-pair">${desks}</div></section>`,
   };
 }
 
@@ -153,7 +167,7 @@ export function deskDirectory(c) {
   const list = c.regions
     .map((r) => {
       const latest = editionsOfDesk(c, r.id)[0];
-      return `<article><h2><a href="/desks/${esc(r.slug)}/">${esc(r.name)}</a></h2><p>${esc(r.coverage)}</p><p class="eyebrow">${latest ? `Latest: ${esc(latest.title)} · ${esc(longDate(latest.published_on))}` : "Editions will appear here"}</p></article>`;
+      return `<article>${deskCardPhoto(r)}<h2><a href="/desks/${esc(r.slug)}/">${esc(r.name)}</a></h2><p>${esc(r.coverage)}</p><p class="eyebrow">${latest ? `Latest: ${esc(latest.title)} · ${esc(longDate(latest.published_on))}` : "Editions will appear here"}</p></article>`;
     })
     .join("");
   return {
@@ -243,7 +257,7 @@ export function editionPage(c, ed) {
     title: `${region.name} — ${ed.title}`,
     description: ed.summary,
     bodyClass: "hm-edition",
-    main: `<div class="study-edition study-wrap">${crumb([{ text: region.name, href: `/desks/${region.slug}/` }, { text: ed.title }])}<header class="edition-masthead"><p class="eyebrow">The ${esc(region.name)} Desk</p><h1>${esc(ed.title)}</h1><p class="issue-stamp">${esc([wny.apDate(ed.published_on), span ? `News from ${span}` : ""].filter(Boolean).join(" · "))}</p></header>
+    main: `<div class="study-edition study-wrap">${crumb([{ text: region.name, href: `/desks/${region.slug}/` }, { text: ed.title }])}<header class="edition-masthead"><p class="eyebrow">The ${esc(region.name)} Desk</p><h1>${esc(ed.title)}</h1><p class="issue-stamp">${esc([wny.apDate(ed.published_on), span ? `News from ${span}` : ""].filter(Boolean).join(" · "))}</p></header>${deskPanorama(region)}
 <div class="hm-desk-publication" data-edition="${esc(ed.key)}">
 <p class="wny-lede">${esc(ed.summary)}</p>
 <p class="issue-intro">Reviewed news from the Niagara River to Syracuse: who is investing, building, hiring and starting up. Every story has passed Niagara Assembly’s source review, and each one carries our reading of it: how far along it is, and what is still unconfirmed.</p>
