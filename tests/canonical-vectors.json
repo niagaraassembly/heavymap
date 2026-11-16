@@ -1,0 +1,190 @@
+{
+ "about": "Generated with web/src/canonical.js (ECMAScript Number formatting is the oracle); Python must match. Regenerate only on purpose.",
+ "vectors": [
+  {
+   "input_json": "1.0",
+   "canonical": "1",
+   "sha256": "sha256:6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+  },
+  {
+   "input_json": "100",
+   "canonical": "100",
+   "sha256": "sha256:ad57366865126e55649ecb23ae1d48887544976efea46a48eb5d85a6eeb4d306"
+  },
+  {
+   "input_json": "0.5",
+   "canonical": "0.5",
+   "sha256": "sha256:d2cbad71ff333de67d07ec676e352ab7f38248eb69c942950157220607c55e84"
+  },
+  {
+   "input_json": "1e-05",
+   "canonical": "0.00001",
+   "sha256": "sha256:661710915adfa7c40b5dbd6b2122dfa65b1accb57a8b7cdee05423ecfe14b0c7"
+  },
+  {
+   "input_json": "0.000001",
+   "canonical": "0.000001",
+   "sha256": "sha256:159fb29a827ad04b260aa6c8ab6d8637f8f2b38af5c4f3cb49d6a21205e040f8"
+  },
+  {
+   "input_json": "1e-7",
+   "canonical": "1e-7",
+   "sha256": "sha256:5b33e02f2c5103a05d32f6ba9cb058294452bfbf393967f68bb30c1bdcbbab22"
+  },
+  {
+   "input_json": "1.2345e-6",
+   "canonical": "0.0000012345",
+   "sha256": "sha256:30602aa80d023eb60b729958aa517f09cdf4e64ce0a8104376bf82267a5d4556"
+  },
+  {
+   "input_json": "1.2345e-7",
+   "canonical": "1.2345e-7",
+   "sha256": "sha256:774270be23059df9e4439ec06ac0ced4ff8dbe3cd8ecc9c4d9cde84feb6768bb"
+  },
+  {
+   "input_json": "1e20",
+   "canonical": "100000000000000000000",
+   "sha256": "sha256:c344e9487bfbd5c4e03c9fb90d62a5dde5e00b54d55c46e9f4a803aea162b80c"
+  },
+  {
+   "input_json": "1e21",
+   "canonical": "1e+21",
+   "sha256": "sha256:241c4643fa70b1dcde1205b71be4e3bebb17e9f880c8e1a33d0ead6c27271d3c"
+  },
+  {
+   "input_json": "1e22",
+   "canonical": "1e+22",
+   "sha256": "sha256:814a97daeb45416e24befc0ae9a6414ac2f41f269a9f2f019fc65a0d03725f34"
+  },
+  {
+   "input_json": "1.2345678901234568e20",
+   "canonical": "123456789012345680000",
+   "sha256": "sha256:725abf175290195635e55a971cf88e02a46d6d56e964ec2d8bc47614b9559062"
+  },
+  {
+   "input_json": "5e-324",
+   "canonical": "5e-324",
+   "sha256": "sha256:c46e7ca1be4c8734f373a56530787288fa2058d73d07855e9247e949f811a42a"
+  },
+  {
+   "input_json": "1.5e300",
+   "canonical": "1.5e+300",
+   "sha256": "sha256:ba5b9d007ed3bac3aed4e53fff4395ec6e034ab008e90969287e3b8860c31b12"
+  },
+  {
+   "input_json": "0.30000000000000004",
+   "canonical": "0.30000000000000004",
+   "sha256": "sha256:06bad31060c1212ae832de4c031f7b31e3b48aed57858294478cb19450cf34ca"
+  },
+  {
+   "input_json": "4051.2",
+   "canonical": "4051.2",
+   "sha256": "sha256:b23e5db3f5f8710b4c0347510fb4a8091750e35fa342f0751e2b8671fccdc9a6"
+  },
+  {
+   "input_json": "40508.6",
+   "canonical": "40508.6",
+   "sha256": "sha256:9e133af333b332419cb2d02e0fe5760921039fe81b37baf804bf26eb9e9b24a2"
+  },
+  {
+   "input_json": "0.00003",
+   "canonical": "0.00003",
+   "sha256": "sha256:47efeb85b1c156a5a526260605eb1ca5640a6b557a3bd342e550d15359ddf358"
+  },
+  {
+   "input_json": "-0.0",
+   "canonical": "0",
+   "sha256": "sha256:5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+  },
+  {
+   "input_json": "-1.5",
+   "canonical": "-1.5",
+   "sha256": "sha256:37c2b212b94e5372b33df924ea2a91182d90c237d0bf942c1768e794ebef2376"
+  },
+  {
+   "input_json": "0",
+   "canonical": "0",
+   "sha256": "sha256:5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+  },
+  {
+   "input_json": "\"plain\"",
+   "canonical": "\"plain\"",
+   "sha256": "sha256:945603a8f587786b463c3f94fce115c0fae88fac2728cc96ddf5981cf7f61741"
+  },
+  {
+   "input_json": "\"quote \\\" back \\\\ slash\"",
+   "canonical": "\"quote \\\" back \\\\ slash\"",
+   "sha256": "sha256:2d90fd84271b1bc8ab2a6cdb8b24444f8c8a7ab99c21c2f55c738ec07d9e5786"
+  },
+  {
+   "input_json": "\"tab\\t nl\\n cr\\r bs\\b ff\\f\"",
+   "canonical": "\"tab\\t nl\\n cr\\r bs\\b ff\\f\"",
+   "sha256": "sha256:affd0aebb0a3feca3e2e2a56955af0863d65f4a68196dc4e126438e7d96e10c3"
+  },
+  {
+   "input_json": "\"ctl \\u0001 \\u001f\"",
+   "canonical": "\"ctl \\u0001 \\u001f\"",
+   "sha256": "sha256:50f8ea38f6f1c6dbd1fa9fd8b7c3d63cb58019d1e211c1ee61fbec157ee97a66"
+  },
+  {
+   "input_json": "\"del \\u007f\"",
+   "canonical": "\"del \"",
+   "sha256": "sha256:719ae277e213d72bb476efd0a26c8b818a95aed3e872b1cf01b919e45933976d"
+  },
+  {
+   "input_json": "\"é ü 東京 😀\"",
+   "canonical": "\"é ü 東京 😀\"",
+   "sha256": "sha256:7656f283a866ab4ce968c74c00d2fe6e3033560878756a68fe9896250c32f574"
+  },
+  {
+   "input_json": "\"line sep \\u2028 \\u2029\"",
+   "canonical": "\"line sep    \"",
+   "sha256": "sha256:fa0e566f28de547f885ee9f3639ab499831b8ac4c3f43183813d4a495bc730b4"
+  },
+  {
+   "input_json": "true",
+   "canonical": "true",
+   "sha256": "sha256:b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+  },
+  {
+   "input_json": "false",
+   "canonical": "false",
+   "sha256": "sha256:fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+  },
+  {
+   "input_json": "null",
+   "canonical": "null",
+   "sha256": "sha256:74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+  },
+  {
+   "input_json": "[]",
+   "canonical": "[]",
+   "sha256": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  {
+   "input_json": "{}",
+   "canonical": "{}",
+   "sha256": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  },
+  {
+   "input_json": "[1,[2,[3]],{}]",
+   "canonical": "[1,[2,[3]],{}]",
+   "sha256": "sha256:8fa07fd2f9ff0f8ab49b086cbc12e0c4d654d5114f3b01c43f956b3072d599f1"
+  },
+  {
+   "input_json": "{\"b\":1,\"a\":2,\"A\":3,\"é\":4}",
+   "canonical": "{\"A\":3,\"a\":2,\"b\":1,\"é\":4}",
+   "sha256": "sha256:ca9f168d69998811210ad50587b77e5c9395f10faa78e2083bb79d8012b8f8d3"
+  },
+  {
+   "input_json": "{\"\\uffff\":1,\"\\ud83d\\ude00\":2,\"z\":3}",
+   "canonical": "{\"z\":3,\"￿\":1,\"😀\":2}",
+   "sha256": "sha256:5811547c43661f72cf25d740524378003c58cef1459de27ea0057a2d1e26b1e8"
+  },
+  {
+   "input_json": "{\"area\":{\"value\":4051.2,\"unit\":\"m2\",\"crs\":\"EPSG:26917\",\"src\":\"LYR-HAM-PARCEL\",\"join\":\"registry_geometry\",\"conf\":\"high\"},\"overlays\":{\"rows\":[{\"layer\":\"LYR-HAM-ZONING\",\"class\":\"P8\",\"share\":1.0,\"area_m2\":4051.2},{\"layer\":\"X\",\"class\":\"y\",\"share\":0.00003,\"area_m2\":0.1}],\"row_count\":2,\"sliver_count\":0,\"src\":\"s\",\"join\":\"area_share\"},\"key\":\"hm:ca:on:hamilton:parcel:01ARZ3NDEKTSV4RRFFQ69G5FAV\",\"gaps\":[]}",
+   "canonical": "{\"area\":{\"conf\":\"high\",\"crs\":\"EPSG:26917\",\"join\":\"registry_geometry\",\"src\":\"LYR-HAM-PARCEL\",\"unit\":\"m2\",\"value\":4051.2},\"gaps\":[],\"key\":\"hm:ca:on:hamilton:parcel:01ARZ3NDEKTSV4RRFFQ69G5FAV\",\"overlays\":{\"join\":\"area_share\",\"row_count\":2,\"rows\":[{\"area_m2\":4051.2,\"class\":\"P8\",\"layer\":\"LYR-HAM-ZONING\",\"share\":1},{\"area_m2\":0.1,\"class\":\"y\",\"layer\":\"X\",\"share\":0.00003}],\"sliver_count\":0,\"src\":\"s\"}}",
+   "sha256": "sha256:18362f5a48157fb110831fa4c4399277316c1082cee7726a3f5ddd6d25c898fb"
+  }
+ ]
+}
