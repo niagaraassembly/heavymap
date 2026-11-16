@@ -107,13 +107,8 @@ def write_clean_tree(base: Path) -> Path:
     ndjson.mkdir()
     feature = {
         "type": "Feature",
-        "properties": {
-            "ia_id": P_ONE,
-            "arn_grade": "exact_1to1",
-            "area_m2": 1.0,
-            "arn_count": 1,
-            "arn": "251899900000100",
-        },
+        # CN-03 / D-070: parcel tile features carry only the record key.
+        "properties": {"key": P_ONE},
         "geometry": {"type": "Point", "coordinates": [0, 0]},
     }
     (ndjson / "parcels.ndjson").write_text(json.dumps(feature) + "\n", encoding="utf-8")
@@ -183,6 +178,21 @@ class PrepublishTests(unittest.TestCase):
         self.assertTrue(report["ok"])
         for name in ("leak", "allowlist", "size", "reproducibility"):
             self.assertIn(report["checks"][name]["status"], {"pass", "warn"})
+
+    def test_pre_d070_parcel_tile_properties_fail_allowlist(self):
+        """The old tile properties (ia_id, arn, area_m2 ...) must be refused."""
+        feature = {
+            "type": "Feature",
+            "properties": {"key": P_ONE, "arn": "251899900000100", "area_m2": 1.0},
+            "geometry": {"type": "Point", "coordinates": [0, 0]},
+        }
+        (self.out / "tiles" / "parcels.ndjson").write_text(
+            json.dumps(feature) + "\n", encoding="utf-8"
+        )
+        report = run_checks(self.out, withheld_values=SENTINELS)
+        self.assertFalse(report["ok"])
+        names = {f.get("name") for f in report["checks"]["allowlist"]["findings"]}
+        self.assertTrue({"arn", "area_m2"} <= names)
 
     def test_seeded_owner_field_fails_leak(self):
         payload = json.loads((self.out / "shards" / "A0.json").read_text())
