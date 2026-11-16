@@ -16,6 +16,63 @@
   --rust: #a25138;
   --sage: #618574;
   --violet: #796094;
+  /* Dossier and tray tokens: the map chrome's surfaces, all in one place. */
+  --surface: #f8fafc;
+  --surface-raised: #ffffff;
+  --surface-tint: #eaf0f5;
+  --rule-soft: #d1dee7;
+  --rule-mid: #a3b5c0;
+  --deep: #294d60;
+  --meter-track: #e1e8ed;
+  --meter-fill: #9caeaa;
+  --next-tint: #f4ece8;
+  --claim-ink: #46677c;
+  --link-soft: #3e6077;
+  --rust-tint: #d8b8aa;
+  --marker: #98482f;
+  --marker-bg: #f9f4ef;
+  --marker-shadow: #78432926;
+  --halo: #edf4f1;
+  --intro-accent: #456957;
+  --intro-text: #425e69;
+  --shadow: #23425721;
+  --focus-ring: #626ca7;
+}
+/* The map chrome keeps its own tokens, scoped to the workspace: the site's
+ * themes redefine these same names on :root, and in dark mode that turned
+ * the map's light panels' text near-white while the panels stayed light.
+ * Re-asserting them on .map-workspace (nearer than :root to everything
+ * inside it) keeps the map legible in every theme. The color is set here
+ * too: the chrome inherits its text color, and the site's themed body
+ * color would otherwise win over the scoped variables. */
+.map-workspace {
+  color: #233e4c;
+  --ink: #233e4c;
+  --muted: #506573;
+  --line: #dbe3e8;
+  --rust: #a25138;
+  --sage: #618574;
+  --violet: #796094;
+  --surface: #f8fafc;
+  --surface-raised: #ffffff;
+  --surface-tint: #eaf0f5;
+  --rule-soft: #d1dee7;
+  --rule-mid: #a3b5c0;
+  --deep: #294d60;
+  --meter-track: #e1e8ed;
+  --meter-fill: #9caeaa;
+  --next-tint: #f4ece8;
+  --claim-ink: #46677c;
+  --link-soft: #3e6077;
+  --rust-tint: #d8b8aa;
+  --marker: #98482f;
+  --marker-bg: #f9f4ef;
+  --marker-shadow: #78432926;
+  --halo: #edf4f1;
+  --intro-accent: #456957;
+  --intro-text: #425e69;
+  --shadow: #23425721;
+  --focus-ring: #626ca7;
 }
 * {
   box-sizing: border-box;
@@ -85,10 +142,10 @@ button:hover {
 .prototype {
   margin-left: auto;
   font-size: 12px;
-  border: 1px solid #cbd9e4;
+  border: 1px solid var(--rule-soft);
   padding: 7px 12px;
   border-radius: 30px;
-  background: #edf2f7;
+  background: var(--surface-tint);
 }
 .map-workspace {
   position: relative;
@@ -118,6 +175,14 @@ button:hover {
   text-transform: uppercase;
   color: var(--muted);
 }
+.intro .eyebrow,
+.intro p {
+  /* The intro sits over the map; the halo keeps small text legible
+   * wherever the map is dark underneath. */
+  text-shadow:
+    0 1px 8px var(--halo),
+    0 0 3px var(--halo);
+}
 h1 {
   font-family: Georgia, serif;
   font-size: clamp(40px, 4.7vw, 70px);
@@ -125,16 +190,16 @@ h1 {
   font-weight: 400;
   line-height: 0.97;
   margin: 16px 0 18px;
-  text-shadow: 0 2px 12px #edf4f1;
+  text-shadow: 0 2px 12px var(--halo);
 }
 h1 em {
-  color: #456957;
+  color: var(--intro-accent);
   font-weight: 400;
 }
 .intro p {
   font-size: 14px;
   line-height: 1.6;
-  color: #425e69;
+  color: var(--intro-text);
 }
 .tray {
   position: absolute;
@@ -142,10 +207,10 @@ h1 em {
   bottom: 83px;
   left: 22px;
   width: 278px;
-  background: #f8fafcef;
-  border: 1px solid #dce5eb;
+  background: var(--surface);
+  border: 1px solid var(--rule-soft);
   border-radius: 16px;
-  box-shadow: 0 12px 35px #23425712;
+  box-shadow: 0 12px 35px var(--shadow);
   overflow-y: auto;
   padding: 22px 18px;
   z-index: 3;
@@ -156,7 +221,7 @@ form label {
 }
 .search-row {
   display: flex;
-  border-bottom: 1px solid #b6c6d2;
+  border-bottom: 1px solid var(--line);
   margin-top: 3px;
   margin-bottom: 26px;
 }
@@ -218,17 +283,17 @@ h2 {
   top: 16px;
   width: 10px;
   height: 10px;
-  border: 1px solid #a3b5c0;
+  border: 1px solid var(--rule-mid);
   border-radius: 50%;
 }
 .lens[aria-pressed="true"] {
-  background: #eaf0f5;
-  border-color: #d4dee8;
+  background: var(--surface-tint);
+  border-color: var(--rule-soft);
 }
 .lens[aria-pressed="true"]:before {
-  background: #46677c;
-  border-color: #46677c;
-  box-shadow: inset 0 0 0 2px #eaf0f5;
+  background: var(--claim-ink);
+  border-color: var(--claim-ink);
+  box-shadow: inset 0 0 0 2px var(--surface-tint);
 }
 .lens > span {
   font-size: 13px;
@@ -240,18 +305,16 @@ h2 {
   margin-top: 5px;
   color: var(--muted);
 }
+/* Map layers are a visible section, not a collapsed disclosure:
+ * the layer list is the tray's working surface, and hiding it behind
+ * a summary made the sidebar read as half-empty. */
 .layers {
   margin: 20px 0;
   border-block: 1px solid var(--line);
   padding: 13px 0;
 }
-.layers summary {
-  font-size: 12px;
-  font-weight: 600;
-  padding: 5px 0;
-}
-.layers summary span {
-  float: right;
+.layers .tray-heading {
+  margin-bottom: 4px;
 }
 .layer {
   display: flex;
@@ -290,7 +353,7 @@ h2 {
 .sample-number {
   color: var(--rust);
   font-size: 12px;
-  border: 1px solid #d8b8aa;
+  border: 1px solid var(--rust-tint);
   display: grid;
   place-items: center;
   min-width: 24px;
@@ -321,9 +384,9 @@ h2 {
 .map-tools select,
 .map-tools button {
   height: 44px;
-  border: 1px solid #c4d3dc;
+  border: 1px solid var(--rule-soft);
   border-radius: 8px;
-  background: #f8fafc;
+  background: var(--surface);
   padding: 0 10px;
   font-size: 12px;
 }
@@ -340,7 +403,7 @@ h2 {
   right: 0;
   min-height: 47px;
   padding: 10px 25px;
-  background: #f8fafcef;
+  background: var(--surface);
   border-top: 1px solid var(--line);
   display: flex;
   align-items: center;
@@ -348,6 +411,16 @@ h2 {
   gap: 12px;
   font-size: 12px;
   z-index: 2;
+}
+/* The map status lives in the footer, not pasted over the map: a
+ * semi-transparent pill over the parcels fails contrast wherever the
+ * map runs dark underneath. */
+.map-status {
+  flex: 1;
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  min-width: 0;
 }
 .legend-dot {
   display: inline-block;
@@ -369,34 +442,22 @@ h2 {
 .public {
   background: var(--violet);
 }
-.map-status {
-  position: absolute;
-  bottom: 62px;
-  left: 342px;
-  background: #f8fafcd9;
-  padding: 7px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  color: var(--muted);
-  max-width: 430px;
-  z-index: 2;
-}
 .parcel-marker {
-  border: 1px solid #98482f;
+  border: 1px solid var(--marker);
   border-radius: 50%;
   min-height: 44px;
   height: 44px;
   width: 44px;
-  background: #f9f4ef;
-  color: #98482f;
+  background: var(--marker-bg);
+  color: var(--marker);
   font-weight: 700;
   font-size: 12px;
-  box-shadow: 0 3px 15px #78432926;
+  box-shadow: 0 3px 15px var(--marker-shadow);
 }
 .parcel-marker.active {
-  background: #233e4c;
-  color: #fff;
-  border-color: #fff;
+  background: var(--ink);
+  color: var(--surface-raised);
+  border-color: var(--surface-raised);
 }
 .maplibregl-ctrl-bottom-right {
   bottom: 60px;
@@ -409,11 +470,11 @@ h2 {
 .tooltip {
   position: fixed;
   width: 290px;
-  background: #f8fafc;
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 10px;
   padding: 12px;
-  box-shadow: 0 5px 20px #233e4c20;
+  box-shadow: 0 5px 20px var(--shadow);
   z-index: 8;
   pointer-events: none;
 }
@@ -439,10 +500,10 @@ h2 {
   top: 16px;
   bottom: 64px;
   width: 410px;
-  background: #f8fafc;
-  border: 1px solid #d1dee7;
+  background: var(--surface);
+  border: 1px solid var(--rule-soft);
   border-radius: 16px;
-  box-shadow: -8px 10px 45px #23425721;
+  box-shadow: -8px 10px 45px var(--shadow);
   z-index: 4;
   display: flex;
   flex-direction: column;
@@ -461,8 +522,39 @@ h2 {
 }
 #dossier-body {
   overflow-y: auto;
-  padding: 6px 25px 25px;
+  padding: 0 25px 25px;
   scrollbar-width: thin;
+}
+/* The identity stays put while the bands scroll under it: the parcel
+ * name, address and spine key are the reader's anchor, and the band
+ * index under them is the way down. Negative side margins let the
+ * header span the panel edge to edge. */
+.dossier-identity {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface);
+  margin: 0 -25px;
+  padding: 12px 25px;
+}
+.dossier-bands {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0 0;
+}
+.dossier-band-link {
+  border: 1px solid var(--rule-soft);
+  background: var(--surface-raised);
+  color: var(--muted);
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.dossier-band-link:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
 }
 .dossier-title {
   font-family: Georgia, serif;
@@ -483,7 +575,7 @@ h2 {
   color: var(--muted);
 }
 .sample-note {
-  background: #eaf0f5;
+  background: var(--surface-tint);
   border-radius: 10px;
   padding: 13px;
   margin-top: 18px;
@@ -498,6 +590,8 @@ h2 {
   border-top: 1px solid var(--line);
   padding-top: 20px;
   margin-top: 24px;
+  /* Band jumps land below the pinned identity header. */
+  scroll-margin-top: 180px;
 }
 .band-number {
   font-size: 12px;
@@ -511,9 +605,13 @@ h2 {
 }
 .claim {
   margin-bottom: 20px;
+  background: var(--surface-raised);
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  padding: 12px;
 }
 .claim-meta {
-  color: #46677c;
+  color: var(--claim-ink);
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -522,6 +620,8 @@ h2 {
   font-size: 14px;
   line-height: 1.45;
   margin: 7px 0;
+  /* A spine key is one long token; without this it runs past the panel. */
+  overflow-wrap: anywhere;
 }
 .claim-comment {
   font-size: 12px;
@@ -541,14 +641,14 @@ h2 {
 .share {
   height: 4px;
   width: 100%;
-  background: #e1e8ed;
+  background: var(--meter-track);
   border-radius: 5px;
   overflow: hidden;
 }
 .share span {
   height: 100%;
   display: block;
-  background: #9caeaa;
+  background: var(--meter-fill);
 }
 .community {
   border-left: 3px solid var(--violet);
@@ -563,7 +663,7 @@ h2 {
 }
 .evidence summary {
   font-size: 12px;
-  color: #3e6077;
+  color: var(--link-soft);
   padding: 5px 0;
 }
 .evidence dl {
@@ -573,7 +673,7 @@ h2 {
   font-size: 12px;
   line-height: 1.6;
   margin: 8px 0;
-  background: #edf2f6;
+  background: var(--surface-tint);
   padding: 10px;
   border-radius: 6px;
 }
@@ -584,9 +684,12 @@ h2 {
   margin: 0;
   overflow-wrap: anywhere;
 }
+/* A refusal is flagged, never extinguished: rust edge, tinted ground,
+ * and the reason code in rust so the gap stays visible. */
 .refusal {
-  border-left: 2px solid #b8c5ce;
-  padding-left: 12px;
+  border-left: 3px solid var(--rust);
+  background: var(--surface-tint);
+  padding: 10px 12px;
   margin: 16px 0;
   font-size: 12px;
 }
@@ -597,10 +700,10 @@ h2 {
 }
 .refusal code {
   font-size: 12px;
-  color: #506573;
+  color: var(--rust);
 }
 .next-check {
-  background: #f4ece8;
+  background: var(--next-tint);
   padding: 15px;
   border-radius: 10px;
   font-size: 12px;
@@ -611,7 +714,7 @@ h2 {
 }
 .export {
   width: 100%;
-  background: #294d60;
+  background: var(--deep);
   color: #fff;
   border: 0;
   border-radius: 8px;
@@ -628,9 +731,6 @@ h2 {
 .has-dossier .map-tools button span {
   display: none;
 }
-.has-dossier .map-status {
-  max-width: calc(100% - 800px);
-}
 .mobile-toggle {
   display: none;
 }
@@ -638,8 +738,7 @@ h2 {
   .tray {
     width: 300px;
   }
-  .intro,
-  .map-status {
+  .intro {
     left: 365px;
   }
   .dossier {
@@ -671,9 +770,6 @@ h2 {
 }
 @media (max-width: 1100px) and (min-width: 901px) {
   .has-dossier .map-tools {
-    display: none;
-  }
-  .has-dossier .map-status {
     display: none;
   }
   .dossier {
@@ -732,8 +828,8 @@ h2 {
     position: absolute;
     top: 16px;
     left: 16px;
-    background: #f8fafc;
-    border: 1px solid #c4d3dc;
+    background: var(--surface);
+    border: 1px solid var(--rule-soft);
     border-radius: 8px;
     padding: 0 12px;
     font-size: 12px;
@@ -767,24 +863,32 @@ h2 {
   #dossier-body {
     padding-inline: 20px;
   }
+  .dossier-identity {
+    margin-inline: -20px;
+    padding-inline: 20px;
+  }
+  .dossier-bands {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
   .dossier-title {
     font-size: 25px;
   }
   .map-footer {
     font-size: 10px;
     padding: 10px 15px;
+    flex-wrap: wrap;
   }
-  .map-footer > span {
+  .map-footer .honesty {
     max-width: 160px;
   }
-  .map-status {
-    left: 15px;
-    bottom: 62px;
-    max-width: calc(100% - 90px);
-    font-size: 12px;
-  }
-  .has-dossier .map-status {
-    display: none;
+  /* On the sheet the status drops to its own line under the legend
+   * and the honesty note, so the footer never crowds. */
+  .map-footer .map-status {
+    order: 3;
+    flex-basis: 100%;
+    text-align: left;
+    font-size: 10px;
   }
   .has-dossier .map-tools {
     right: 16px;
@@ -802,10 +906,10 @@ h2 {
     bottom: auto;
     top: 70px;
   }
-  .has-dossier .map-footer > div {
+  .has-dossier .map-footer .legend {
     display: none;
   }
-  .has-dossier .map-footer > span {
+  .has-dossier .map-footer .honesty {
     max-width: none;
   }
 }
@@ -834,10 +938,10 @@ h2 {
   .map-footer {
     gap: 6px;
   }
-  .map-footer > span {
+  .map-footer .honesty {
     max-width: 115px;
   }
-  .map-footer > div {
+  .map-footer .legend {
     max-width: 225px;
     line-height: 1.8;
   }

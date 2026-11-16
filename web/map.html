@@ -54,13 +54,15 @@
           Zoom in to see parcel outlines. Select any outline to open its
           evidence record.
         </p>
-        <details class="layers">
-          <summary>Map layers <span>＋</span></summary>
+        <section class="layers" aria-label="Map layers">
+          <div class="tray-heading">
+            <h2>Map layers</h2>
+          </div>
           <label class="layer">
             <input id="parcels-visible" type="checkbox" checked />
             <span><strong>Hamilton parcels</strong><small>Key-only tiles · zoom 14–16</small></span>
           </label>
-        </details>
+        </section>
         <div class="samples-heading">
           <h2>Selection</h2>
           <span id="result-count"></span>
@@ -81,14 +83,16 @@
         </div>
         <div id="dossier-body"></div>
       </aside>
-      <div id="map-status" class="map-status" role="status">
-        Loading Hamilton map…
-      </div>
       <footer class="map-footer">
-        <div>
+        <div class="legend">
           <span class="legend-dot signal"></span>Hamilton parcel boundary
         </div>
-        <span>Still image fallback · parcel selection from zoom 14</span>
+        <span id="map-status" class="map-status" role="status">
+          Loading Hamilton map…
+        </span>
+        <span class="honesty"
+          >Still image fallback · parcel selection from zoom 14</span
+        >
       </footer>
     </main>
     <noscript

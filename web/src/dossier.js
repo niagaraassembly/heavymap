@@ -11,12 +11,43 @@ export function el(tag, text, className) {
 
 export function renderDossier(parcel, container) {
   container.replaceChildren();
-  container.append(
-    el("h2", parcel.name, "dossier-title"),
-    el("p", parcel.address, "address"),
+  // Identity header: pinned while the bands scroll, with the band index
+  // under it. Buttons, not links: an href="#band-x" would clobber the
+  // #parcel= deep link.
+  const order = parcel.bandOrder ?? bands;
+  const bandLabels = parcel.bandLabels ?? labels;
+  const identity = el("header", undefined, "dossier-identity");
+  identity.append(el("h2", parcel.name, "dossier-title"));
+  // The address line is skipped when the title already is the address
+  // (real records carry no name, so the address is the title).
+  if (parcel.address && parcel.address !== parcel.name) {
+    identity.append(el("p", parcel.address, "address"));
+  }
+  identity.append(
     el("p", `${parcel.grain} · ${parcel.jurisdiction}`, "subtext"),
     el("p", parcel.id, "spine-key"),
   );
+  const nav = el("nav", undefined, "dossier-bands");
+  nav.setAttribute("aria-label", "Dossier bands");
+  for (const [index, band] of order.entries()) {
+    const link = el(
+      "button",
+      `${String(index + 1).padStart(2, "0")} ${bandLabels[band]}`,
+      "dossier-band-link",
+    );
+    link.addEventListener("click", () => {
+      const section = container.querySelector(`[data-band="${band}"]`);
+      if (!section) return;
+      section.scrollIntoView({
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+      });
+    });
+    nav.append(link);
+  }
+  identity.append(nav);
+  container.append(identity);
   if (parcel.synthetic) {
     const note = el("div", undefined, "sample-note");
     note.append(
@@ -26,11 +57,10 @@ export function renderDossier(parcel, container) {
     container.append(note);
   }
 
-  const order = parcel.bandOrder ?? bands;
-  const bandLabels = parcel.bandLabels ?? labels;
   for (const [index, band] of order.entries()) {
     const section = el("section", undefined, "band");
     section.dataset.band = band;
+    section.id = `band-${band}`;
     section.append(
       el("span", String(index + 1).padStart(2, "0"), "band-number"),
       el("h3", bandLabels[band]),
