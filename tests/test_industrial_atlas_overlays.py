@@ -176,7 +176,7 @@ class LinkerShareTests(unittest.TestCase):
                 tmp,
                 [feature(1, box_coords(0, 0, 10, 5), CLASS="A")],
             )
-            rows = link_layer([self._parcel("hm:p1", 0, 0, 10, 10)], feats, "LYR-TEST")
+            rows = link_layer([self._parcel("ia:p1", 0, 0, 10, 10)], feats, "LYR-TEST")
         self.assertEqual(len(rows), 1)
         self.assertAlmostEqual(float(rows[0]["area_m2"]), 50.0, places=4)
         self.assertAlmostEqual(float(rows[0]["parcel_share"]), 0.5, places=6)
@@ -192,7 +192,7 @@ class LinkerShareTests(unittest.TestCase):
                 [feature(1, box_coords(0, 0, 1, 1), CLASS="edge")],
             )
             rows = link_layer(
-                [self._parcel("hm:p1", 0, 0, 100, 100)], feats, "LYR-TEST"
+                [self._parcel("ia:p1", 0, 0, 100, 100)], feats, "LYR-TEST"
             )
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["sliver"], "y")
@@ -210,14 +210,14 @@ class LinkerShareTests(unittest.TestCase):
             )
             rows = link_layer(
                 [
-                    self._parcel("hm:left", 1, 1, 2, 2),
-                    self._parcel("hm:right", 51, 1, 52, 2),
+                    self._parcel("ia:left", 1, 1, 2, 2),
+                    self._parcel("ia:right", 51, 1, 52, 2),
                 ],
                 feats,
                 "LYR-TEST",
             )
         by_id = {r["ia_id"]: r["class"] for r in rows}
-        self.assertEqual(by_id, {"hm:left": "left", "hm:right": "right"})
+        self.assertEqual(by_id, {"ia:left": "left", "ia:right": "right"})
 
     def test_multi_overlap_keeps_every_zone(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -228,7 +228,7 @@ class LinkerShareTests(unittest.TestCase):
                     feature(2, box_coords(4, 0, 10, 10), CLASS="M2"),
                 ],
             )
-            rows = link_layer([self._parcel("hm:p1", 0, 0, 10, 10)], feats, "LYR-TEST")
+            rows = link_layer([self._parcel("ia:p1", 0, 0, 10, 10)], feats, "LYR-TEST")
         classes = sorted(r["class"] for r in rows)
         self.assertEqual(classes, ["M1", "M2"])
         self.assertEqual(len(rows), 2)
@@ -261,7 +261,7 @@ class LinkerShareTests(unittest.TestCase):
         self.assertEqual(stats.repaired, 1)
         self.assertEqual(stats.missing_geometry, 1)
         self.assertEqual(len(feats), 1)
-        rows = link_layer([self._parcel("hm:p1", 0, 0, 10, 10)], feats, "LYR-TEST")
+        rows = link_layer([self._parcel("ia:p1", 0, 0, 10, 10)], feats, "LYR-TEST")
         self.assertEqual(len(rows), 1)
         self.assertGreater(float(rows[0]["area_m2"]), 0)
 
@@ -303,7 +303,7 @@ class LinkerShareTests(unittest.TestCase):
                     feature(2, box_coords(5, 0, 10, 10), CLASS="Mixed Use"),
                 ],
             )
-            rows = link_layer([self._parcel("hm:p1", 0, 0, 10, 10)], feats, "LYR-TEST")
+            rows = link_layer([self._parcel("ia:p1", 0, 0, 10, 10)], feats, "LYR-TEST")
         self.assertEqual(len(rows), 2)
         self.assertEqual({r["feature_source_id"] for r in rows}, {"1", "2"})
         self.assertTrue(all(r["class"] == "Mixed Use" for r in rows))
@@ -322,7 +322,7 @@ class LinkerShareTests(unittest.TestCase):
                 ],
             )
         self.assertEqual(feats[0].class_value, "M1")
-        rows = link_layer([self._parcel("hm:p1", 0, 0, 10, 10)], feats, "LYR-TEST")
+        rows = link_layer([self._parcel("ia:p1", 0, 0, 10, 10)], feats, "LYR-TEST")
         blob = json.dumps(rows)
         self.assertNotIn("MUST-NOT-BE-COPIED", blob)
 
@@ -437,7 +437,7 @@ class PipelineCliTests(unittest.TestCase):
             [
                 {
                     "type": "Feature",
-                    "properties": {"ia_id": f"hm:p{i}"},
+                    "properties": {"ia_id": f"ia:p{i}"},
                     "geometry": {
                         "type": "Polygon",
                         "coordinates": [box_coords(i * 20, 0, i * 20 + 10, 10)],
@@ -528,7 +528,7 @@ class RealDataRegressionTests(unittest.TestCase):
     def test_contained_parcel_gets_full_area(self):
         from industrial_atlas.overlays.linker import link_pairs
 
-        rows = list(link_pairs([self._parcel("hm:in", 480, 480, 520, 520)], [self._big_feature()], "LYR-TEST"))
+        rows = list(link_pairs([self._parcel("ia:in", 480, 480, 520, 520)], [self._big_feature()], "LYR-TEST"))
         self.assertEqual(len(rows), 1)
         self.assertAlmostEqual(float(rows[0]["parcel_share"]), 1.0, places=9)
 

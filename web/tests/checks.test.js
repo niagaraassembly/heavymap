@@ -55,7 +55,7 @@ test("a low-contrast text token fails, through var() aliases; UI tokens need onl
 
 test("map introduction: Atlas identifiers and unpublished workspace pages fail (spec F 7.4)", () => {
   const dir = tmp({
-    "map/index.html": "<p>hm:ca:on:hamilton:parcel:01X</p>",
+    "map/index.html": "<p>ia:ca:on:hamilton:parcel:01X</p>",
     "map/hamilton/index.html": "x",
   });
   const p = mapProblems(dir, [

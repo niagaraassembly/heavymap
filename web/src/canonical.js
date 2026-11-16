@@ -1,5 +1,5 @@
 /* Canonical JSON for record hashes (RFC 8785 subset). Twin of
- * heavymap/dossier/canonical.py; tests/canonical-vectors.json pins both.
+ * industrial_atlas/dossier/canonical.py; tests/canonical-vectors.json pins both.
  * Keys sort by Unicode code point, not by JavaScript's default UTF-16 order. */
 
 export class CanonicalError extends Error {}

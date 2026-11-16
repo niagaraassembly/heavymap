@@ -184,7 +184,7 @@
   {
    "input_json": "{\"area\":{\"value\":4051.2,\"unit\":\"m2\",\"crs\":\"EPSG:26917\",\"src\":\"LYR-HAM-PARCEL\",\"join\":\"registry_geometry\",\"conf\":\"high\"},\"overlays\":{\"rows\":[{\"layer\":\"LYR-HAM-ZONING\",\"class\":\"P8\",\"share\":1.0,\"area_m2\":4051.2},{\"layer\":\"X\",\"class\":\"y\",\"share\":0.00003,\"area_m2\":0.1}],\"row_count\":2,\"sliver_count\":0,\"src\":\"s\",\"join\":\"area_share\"},\"key\":\"ia:ca:on:hamilton:parcel:01ARZ3NDEKTSV4RRFFQ69G5FAV\",\"gaps\":[]}",
    "canonical": "{\"area\":{\"conf\":\"high\",\"crs\":\"EPSG:26917\",\"join\":\"registry_geometry\",\"src\":\"LYR-HAM-PARCEL\",\"unit\":\"m2\",\"value\":4051.2},\"gaps\":[],\"key\":\"ia:ca:on:hamilton:parcel:01ARZ3NDEKTSV4RRFFQ69G5FAV\",\"overlays\":{\"join\":\"area_share\",\"row_count\":2,\"rows\":[{\"area_m2\":4051.2,\"class\":\"P8\",\"layer\":\"LYR-HAM-ZONING\",\"share\":1},{\"area_m2\":0.1,\"class\":\"y\",\"layer\":\"X\",\"share\":0.00003}],\"sliver_count\":0,\"src\":\"s\"}}",
-   "sha256": "sha256:18362f5a48157fb110831fa4c4399277316c1082cee7726a3f5ddd6d25c898fb"
+   "sha256": "sha256:15d2521e5d506a27e947ce8bddc1b0c8faaa66469a8678cffa6846ec8839b489"
   }
  ]
 }

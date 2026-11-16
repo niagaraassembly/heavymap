@@ -98,7 +98,7 @@ test("nothing loads before a pin", async () => {
   assert.deepEqual(await l.core(KEY), { ok: false, reason: "not_pinned" });
 });
 
-// Real Hamilton build (set HM_RELEASE_DIR to a directory written by `python3 -m heavymap.dossier`).
+// Real Hamilton build (set HM_RELEASE_DIR to a directory written by `python3 -m industrial_atlas.dossier`).
 const REAL = process.env.HM_RELEASE_DIR;
 test("real Hamilton release: pin, then every sampled record loads and hashes", { skip: !REAL }, async () => {
   const l = createDossierLoader({ base: "r/", fetchBytes: async (u) => new Uint8Array(fs.readFileSync(path.join(REAL, u.replace(/^r\//, "")))) });

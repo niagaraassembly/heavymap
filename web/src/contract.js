@@ -1,6 +1,6 @@
 // Supported wire names. Synthetic local IDs below are illustrative, not registry ULIDs.
-export const ID_FIELD = "heavymap_id";
-export const ID_PREFIX = "hm:ca:on:hamilton:parcel:";
+export const ID_FIELD = "ia_id";
+export const ID_PREFIX = "ia:ca:on:hamilton:parcel:";
 
 export function formatAreaShare(share, areaM2 = 0) {
   if (!Number.isFinite(share) || share < 0 || share > 1) {

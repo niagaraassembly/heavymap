@@ -208,8 +208,8 @@ export function mapProblems(outDir, regions) {
   if (fs.existsSync(intro)) {
     const html = fs.readFileSync(intro, "utf8");
     for (const [re, what] of [
-      [/heavymap_id/, "heavymap_id"],
-      [/\bhm:[a-z]{2}:/, "an hm: identifier"],
+      [/ia_id/, "ia_id"],
+      [/\bia:[a-z]{2}:/, "an ia: identifier"],
       [/\bLYR-[A-Z]/, "an Atlas layer id"],
       [/\blens(es)?\b/i, "a lens name"],
     ]) {
