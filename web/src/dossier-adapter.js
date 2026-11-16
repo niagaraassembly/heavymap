@@ -270,7 +270,9 @@ export function adaptDossierRecord(core, detail, labels) {
   return {
     id: core.key,
     short: core.key.slice(-2),
-    name: label(labels, "dossier.field.parcel", {}, "Parcel"),
+    // Real records carry no name, so the first civic address is the
+    // title; renderDossier skips the address line when it duplicates it.
+    name: fullAddresses[0]?.text ?? label(labels, "dossier.field.parcel", {}, "Parcel"),
     address: fullAddresses[0]?.text ?? label(labels, "dossier.provenance.not_yet_captured", {}, "Not yet captured"),
     grain: label(labels, "dossier.field.geometry_grain", {}, "parcel"),
     jurisdiction: label(labels, "dossier.jurisdiction.hamilton", {}, "City of Hamilton, Ontario"),

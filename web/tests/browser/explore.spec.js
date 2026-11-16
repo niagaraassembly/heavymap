@@ -51,7 +51,6 @@ test("map, lenses, evidence export, layers, styles and deep link", async ({
   expect(exported.bands.identity.refusals[0].object).toBe("Roll alias");
   await page.keyboard.press("Escape");
   await page.locator("[data-lens=all]").click();
-  await page.locator(".layers summary").click();
   await page.locator("[data-layer=community]").check();
   expect(
     await page.evaluate(() =>
