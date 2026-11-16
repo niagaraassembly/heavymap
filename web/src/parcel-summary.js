@@ -114,6 +114,7 @@ function landRow(labels, row) {
   const isBoundary = LAND_LAYERS.boundary.includes(row.layer);
   return {
     layer: row.layer,
+    layerName: layerName(labels, row.layer),
     class: row.class,
     value: isBoundary
       ? label(labels, `parcel.setting.${row.class}`, {}, row.class)
