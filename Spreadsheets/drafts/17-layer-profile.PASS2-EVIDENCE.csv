@@ -21,7 +21,7 @@ welland-parcels-public-cache,id_field,Parcel_No,Spreadsheets/15-pilot-join-matri
 welland-parcels-public-cache,id_type,int,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / identifier_fields
 welland-parcels-public-cache,distinct_id_count,23541,heavymap-planning/EPIC-02-spine-and-joins.md,"Welland findings table: Parcels public cache, Parcel_No 'unique int' (derived = record_count)"
 welland-parcels-public-cache,id_dup_count,0,heavymap-planning/EPIC-02-spine-and-joins.md,derived: record_count 23541 - distinct 23541 ('unique int')
-welland-parcels-public-cache,id_pattern_examples,11205,heavymap-planning/EPIC-02-spine-and-joins.md,Recommended spine key mapping: e.g. hm:ca:on:welland:parcel:11205
+welland-parcels-public-cache,id_pattern_examples,11205,heavymap-planning/EPIC-02-spine-and-joins.md,Recommended spine key mapping: e.g. ia:ca:on:welland:parcel:11205
 welland-parcels-public-cache,crs_epsg,26917,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / notes: CRS EPSG:26917
 welland-parcels-public-cache,pii_owner_fields_names_only,none observed,Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / pii_or_mpac_flag: no owner field | no ARN/roll field
 welland-parcels-public-cache,join_keys_to_spine,Parcel_No (key source for W06 | W07 | W08 | W10),Spreadsheets/15-pilot-join-matrix-welland-rochester.csv,W01 / join_method

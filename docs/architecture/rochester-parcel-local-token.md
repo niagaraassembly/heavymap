@@ -11,7 +11,7 @@ This note says how a City of Rochester parcel gets the `{local}` part of its Hea
 Use the **20-character section-block-lot as text** (`SBL20`). On the city layer that string is `PARCELID`. Copy it unchanged into the local token.
 
 ```text
-hm:us:ny:rochester:parcel:{SBL20}
+ia:us:ny:rochester:parcel:{SBL20}
 ```
 
 Example of the **shape**, from the 2026-09-30 pilot (a real city id, cited as evidence, not loaded as a fixture row): city `PARCELID` `04762000010220000000`, padded print key `047.62-1-22`, Monroe `countysbl` `26140004762000010220000000`. The fixture in this repo uses a different 20-digit string so the file is not that parcel.
@@ -55,7 +55,7 @@ A null `swis` on a `261400` county row does not mint a second municipality and d
 
 `rochester` is the recommended jurisdiction slug for **city-published** parcel polygons. The spine slug is the publishing government of the grain. The City of Rochester publishes `PARCELID`. Monroe County is the geography-v1 county name and the publisher of `countysbl`, which stays a native key.
 
-This does **not** assign slugs to other Monroe municipalities. Their prefixes are a separate crosswalk, and the code meaning is still inferred. A single `monroe` slug for every town would hide the city publisher. Whether those other municipalities wait, or use `monroe` until a confirmed code table exists, is an open decision (Epic 2 decision 3). This note mints no `hm:us:ny:monroe:…` key.
+This does **not** assign slugs to other Monroe municipalities. Their prefixes are a separate crosswalk, and the code meaning is still inferred. A single `monroe` slug for every town would hide the city publisher. Whether those other municipalities wait, or use `monroe` until a confirmed code table exists, is an open decision (Epic 2 decision 3). This note mints no `ia:us:ny:monroe:…` key.
 
 ## Native keys that stay
 
@@ -77,13 +77,13 @@ Housing-inventory `SBL` matched city `PARCELID` on 14/15 pilot samples. Where th
 City `TaxParcel2024`: 64,828 rows, 64,825 distinct `PARCELID`. Monroe: 267,962 rows, 267,904 distinct `countysbl`. Fold the **key** before minting. Do not fold by picking a polygon.
 
 1. Accept only a 20-character ASCII digit string. Leading zeros stay. A float, an int, a bool, null, an empty string, a scientific-notation string, or any other length or non-digit does not mint. The source row is `not_joined`. Do not repair it.
-2. Group city rows by that exact string. One group mints one key, `hm:us:ny:rochester:parcel:{SBL20}`.
+2. Group city rows by that exact string. One group mints one key, `ia:us:ny:rochester:parcel:{SBL20}`.
 3. Do not append a part suffix, an `OBJECTID`, or a row index to `{local}`. A second key would change when the extract’s order changed.
 4. One row in the group: that polygon may be the outline.
 5. More than one row in the group: still one key. Do not choose a winning polygon. The outline is `not_joined` until a later rule says the parts are one multipolygon or several units. The key exists either way.
 6. County duplicates follow the same rule on the 26-character composite. A county composite mints a `rochester` key only by joining to a city `SBL20` that already minted under the rules above.
 
-NIA-79 (`heavymap/ny_identifiers.py` on PR #53) can report repeated ids and refuse a float. It does not choose a winner. This note is that policy. This change does not import that module. The duplicate-geometry question (condo or multi-part polygon versus two units) stays open.
+NIA-79 (`industrial_atlas/ny_identifiers.py` on PR #53) can report repeated ids and refuse a float. It does not choose a winner. This note is that policy. This change does not import that module. The duplicate-geometry question (condo or multi-part polygon versus two units) stays open.
 
 ## Refusals on this key
 
@@ -101,7 +101,7 @@ Snapshots **2014–2024** join on `PARCELID` when the parcel was not split or me
 
 ## Fixture
 
-[fixtures/parcels/hm-us-ny-rochester-parcel-SYN-04799.json](../../fixtures/parcels/hm-us-ny-rochester-parcel-SYN-04799.json)
+[fixtures/parcels/ia-us-ny-rochester-parcel-SYN-04799.json](../../fixtures/parcels/ia-us-ny-rochester-parcel-SYN-04799.json)
 
 Synthetic. Not a pulled row. The local token is `04799000010010000000` (leading zero kept). Padded display print key `047.99-1-1`. Unpadded contrast `47.99-1-1` is stored only to show why print keys are not compared. County composite `26140004799000010010000000`. All three identifiers are JSON strings. The file follows the NIA-16 parcel-fixture shape (PR #13): ladder order, stamped claims, one refusal reason each. Those NIA-16 files are not copied onto this branch.
 
@@ -118,6 +118,6 @@ Synthetic. Not a pulled row. The local token is `04799000010010000000` (leading 
 
 - Spine grammar: [parcel-identity-spine.md](parcel-identity-spine.md). Vocabulary: [vocab/](vocab/README.md). Claim refusals: [claim-refusal-contract.md](claim-refusal-contract.md).
 - Pilot evidence: Epic 2 study, Rochester section and joins matrix, read live 2026-09-30. Sample ratios are hits/tested, not population rates.
-- NIA-79 normaliser, PR #53: `heavymap/ny_identifiers.py`, described in `docs/normalization/ny-sbl.md` on that branch. Referenced, not duplicated, and not required to be merged.
+- NIA-79 normaliser, PR #53: `industrial_atlas/ny_identifiers.py`, described in `docs/normalization/ny-sbl.md` on that branch. Referenced, not duplicated, and not required to be merged.
 - NIA-81 SWIS crosswalk, PR #54: `docs/data/README-monroe-swis-crosswalk.md` on that branch. Same caveat on the prefix. Not required to be merged.
 - Prior art only: `niagara-atlas/`, UK atlas (`babbworks/atlas`). No UK geography.

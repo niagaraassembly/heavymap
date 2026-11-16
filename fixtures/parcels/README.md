@@ -10,7 +10,7 @@ The NIA-16 walkthrough units (Welland footprint `SYN-0142`, Erie parcel `SYN-999
 
 | File | Spine key | Grain | Linear |
 |---|---|---|---|
-| [`hm-us-ny-rochester-parcel-SYN-04799.json`](hm-us-ny-rochester-parcel-SYN-04799.json) | `hm:us:ny:rochester:parcel:04799000010010000000` | `parcel` | **NIA-80** |
+| [`ia-us-ny-rochester-parcel-SYN-04799.json`](ia-us-ny-rochester-parcel-SYN-04799.json) | `ia:us:ny:rochester:parcel:04799000010010000000` | `parcel` | **NIA-80** |
 
 The filename stops at `SYN-04799`. The body carries the full spine key. `{local}` is a 20-character digit string, not a `SYN-` prefix: the recommendation under test is that the permanent token is the text SBL. Synthetic-ness is the file flag.
 

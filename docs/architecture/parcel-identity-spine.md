@@ -23,7 +23,7 @@ The spine does not interpret use, constraint, activity, or a reading. Those are 
 - Editing MCS rows, drawing Chrome, or publishing a site.
 - Adding UK parcels or UK ports.
 
-Hamilton now has a tested ID registry (`heavymap/ids/`, first geography). That code is the unit index for Hamilton. It is not a public database and it does not publish. Other jurisdictions are not minted here.
+Hamilton now has a tested ID registry (`industrial_atlas/ids/`, first geography). That code is the unit index for Hamilton. It is not a public database and it does not publish. Other jurisdictions are not minted here.
 
 ## How it relates to the other three
 
@@ -36,7 +36,7 @@ Hamilton now has a tested ID registry (`heavymap/ids/`, first geography). That c
 Every unit in v1 gets one key of the form:
 
 ```text
-hm:{country}:{region}:{jurisdiction}:{grain}:{local}
+ia:{country}:{region}:{jurisdiction}:{grain}:{local}
 ```
 
 | Part | Meaning |
@@ -51,7 +51,7 @@ The key is HeavyMap’s. Publishers keep their own keys in `native_keys`. A nati
 
 ### Hamilton (first geography)
 
-City of Hamilton parcels have no published stable id (`OBJECTID` only; Q-002). The registry mints one `hm:ca:on:hamilton:parcel:{ULID}` per distinct City geometry, collapses stacked duplicates as aliases, shifts NPCA geometry by the Q-004 translation before attaching ARN, and reconciles a re-pull by fingerprint then IoU ≥ 0.9. IDs are never reused. Operator notes: [heavymap-id-registry.md](heavymap-id-registry.md). Evidence: [SPINE-BASE-PULL-2026-10-17.md](../../heavymap-planning/focus/hamilton/SPINE-BASE-PULL-2026-10-17.md).
+City of Hamilton parcels have no published stable id (`OBJECTID` only; Q-002). The registry mints one `ia:ca:on:hamilton:parcel:{ULID}` per distinct City geometry, collapses stacked duplicates as aliases, shifts NPCA geometry by the Q-004 translation before attaching ARN, and reconciles a re-pull by fingerprint then IoU ≥ 0.9. IDs are never reused. Operator notes: [heavymap-id-registry.md](heavymap-id-registry.md). Evidence: [SPINE-BASE-PULL-2026-10-17.md](../../heavymap-planning/focus/hamilton/SPINE-BASE-PULL-2026-10-17.md).
 
 A joining concept is a second handle for the job a native field does. The publisher’s field name stays on the claim. The closed catalog, the relation set, and `authority_scale` are in [ADR 0002](adr/0002-joining-concepts-and-terminology.md) and [vocab/joining-concepts.vocab.json](vocab/joining-concepts.vocab.json). Spine grain stays `parcel`, `footprint`, or `address`. Claim grain is a wider set and adds `register_unit`, `zone_polygon`, and `jurisdiction_aggregate`. The `nei_id` class is `premises_register_key`; `establishment_register_key` is an alias of that id. Two fields that share a concept still need their own join before either table can be linked.
 
@@ -109,7 +109,7 @@ Full presentations are in [PCDP.md](PCDP.md). The table is the spine at the **ma
 
 | | Canadian illustration | American illustration |
 |---|---|---|
-| Spine key | `hm:ca:on:welland:footprint:SYN-0142` | `hm:us:ny:erie:parcel:SYN-999.00-1-1.1` |
+| Spine key | `ia:ca:on:welland:footprint:SYN-0142` | `ia:us:ny:erie:parcel:SYN-999.00-1-1.1` |
 | Why this grain | Illustration of a lower-tier city whose open data, in prior art, had no parcel fabric. Grain is the footprint. | Illustration of a v1 county where a public tax-parcel polygon is the pattern. Grain is the parcel. |
 | Jurisdiction sentence | City of Welland, lower-tier municipality of Niagara Region, Ontario | Erie County, New York. The municipality slug stays `erie` until a SWIS join names a city or town. |
 | Native keys | Parcel PIN: `not_in_coverage` (no fabric in the illustration). `nei_id`: `SYN-8130` joined by identifier. | SBL: `SYN-999.00-1-1.1`. SWIS: `not_joined`. |

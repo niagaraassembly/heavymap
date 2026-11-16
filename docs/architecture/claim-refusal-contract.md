@@ -133,7 +133,7 @@ A new identifier may be added when a reading is specified. It needs a method som
 
 These are the same illustrations as in [PCDP.md](PCDP.md). They show the contract, not real parcels.
 
-### Canadian — `hm:ca:on:welland:footprint:SYN-0142`
+### Canadian — `ia:ca:on:welland:footprint:SYN-0142`
 
 **Filled claim, grade `joined`.**
 
@@ -158,7 +158,7 @@ These are the same illustrations as in [PCDP.md](PCDP.md). They show the contrac
 | `constraints` rung | `not_joined` | That the site is unconstrained |
 | `coverage_ratio` | `not_in_coverage` | That coverage is zero |
 
-### American — `hm:us:ny:erie:parcel:SYN-999.00-1-1.1`
+### American — `ia:us:ny:erie:parcel:SYN-999.00-1-1.1`
 
 **Filled claim, grade `observed`.**
 

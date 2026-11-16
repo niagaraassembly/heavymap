@@ -2,7 +2,7 @@
 
 import unittest
 
-from heavymap.ny_identifiers import (
+from industrial_atlas.ny_identifiers import (
     BatchReport,
     Duplicate,
     IdentifierRefusal,

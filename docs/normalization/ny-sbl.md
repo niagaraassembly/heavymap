@@ -1,6 +1,6 @@
 # New York SBL text normaliser (NIA-79)
 
-`heavymap/ny_identifiers.py` is a standard-library helper for comparing NY parcel identifiers as text and rendering observed print-key conventions. Its [source notes](ny-sbl-sources.md) cite ORPTS and NYS GIS definitions; [real-data evidence](ny-sbl-real-data-evidence.md) states the measured coverage and residual disagreements. The module makes no network requests.
+`industrial_atlas/ny_identifiers.py` is a standard-library helper for comparing NY parcel identifiers as text and rendering observed print-key conventions. Its [source notes](ny-sbl-sources.md) cite ORPTS and NYS GIS definitions; [real-data evidence](ny-sbl-real-data-evidence.md) states the measured coverage and residual disagreements. The module makes no network requests.
 
 The ORPTS PTF layout gives `section[3] + subsection[3] + block[4] + lot[3] + sublot[3] + suffix[4]` (20 characters). `validate_sbl20` accepts a 20-character ASCII alphanumeric string with numeric first 13 characters. Real sublots and suffixes contain letters, so digit-only validation was wrong. Leading zeros and case are preserved. Shorter SBLs occur in the public layers, but this strict **SBL20** validator does not pad them or claim they form a 20-character join key. A float, integer, boolean, null, punctuation-bearing value, or unsupported width is refused with a code.
 

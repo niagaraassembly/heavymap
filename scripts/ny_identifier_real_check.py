@@ -9,7 +9,7 @@ from pathlib import Path
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from heavymap.ny_identifiers import IdentifierRefusal, render_print_key, validate_sbl20
+from industrial_atlas.ny_identifiers import IdentifierRefusal, render_print_key, validate_sbl20
 
 
 SOURCES = {

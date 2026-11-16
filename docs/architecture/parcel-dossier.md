@@ -5,7 +5,7 @@
 The dossier is the per-parcel lookup the v0 front end reads when a parcel is clicked. There is one record per active HeavyMap parcel ID. Every field says where it came from, how it was joined, how sure we are, and quotes the source in a short label, matching the UI copy style (classification · join · confidence).
 
 ```
-python3 -m heavymap.dossier --data-root ../local-data \
+python3 -m industrial_atlas.dossier --data-root ../local-data \
   --out-dir ../local-data/dossier/hamilton/2026-10-17 [--core-addresses 5] [--release-id ID]
 ```
 
@@ -20,7 +20,7 @@ python3 -m heavymap.dossier --data-root ../local-data \
 
 ## Screening (allowlist, not denylist)
 
-Owner names, owner mailing addresses, `Legal_Txt` / legal descriptions and any other personal information never appear in the output. Two allowlists in [`heavymap/dossier/schema.py`](../../heavymap/dossier/schema.py) enforce this:
+Owner names, owner mailing addresses, `Legal_Txt` / legal descriptions and any other personal information never appear in the output. Two allowlists in [`industrial_atlas/dossier/schema.py`](../../heavymap/dossier/schema.py) enforce this:
 
 1. **`SOURCE_FIELDS`** names the only properties read from each NPCA file. The loader keeps those keys and drops the rest of each feature at once. A field added upstream later is dropped too, without anyone listing it.
 2. **`RECORD_SPEC`** is the only shape a record may take. `screen_record` walks every record before it is written. It raises `ScreeningError` on any key not in the spec, at any depth, or a value of the wrong kind (for example an object where a string label belongs). After writing, `audit_output` reads every shard back and screens every record again.
@@ -35,7 +35,7 @@ Draft contract: `drafts/wave-1/seam-contract-dossier.md` in the private `heavyma
 
 - **Layout:** `shards/<KK>.json` (core), `detail/<KK>.json` (on demand), `provenance/sources.json`, `label-seed.json`, `files.json` (path, bytes, SHA-256 of every file) and a small `manifest.json` that holds `files_sha256`, `release {unit, id}` and `contract_revisions`. File hashes live in `files.json` because a hash per file made the manifest about 98 KB compressed against the 50 KB start-up budget.
 - **No display text.** No `label` key at any depth (`assert_no_display_keys`). Counts that labels used to spell out are data: `roll[].other_parcels`, `addresses.count`, `overlays.row_count`. Property-code families are tokens (`residential`, `vacant_land`, ...). The old `confidence_words` moved to `label-seed.json` as a seed for the label register.
-- **Names:** `heavymap_id` is `key`; `area.m2` is `area.value` with `unit` and `crs`; overlay `m2` is `area_m2`.
+- **Names:** `ia_id` is `key`; `area.m2` is `area.value` with `unit` and `crs`; overlay `m2` is `area_m2`.
 - **Core and detail:** the core record holds at most `--core-addresses` (default 5) addresses and `addresses.complete`; the detail record holds every address (no cap, D-023) and `feature_ids` keyed by JSON Pointer into the core record (`/overlays/rows/3`). The core list is always a prefix of the full list.
 - **Verification:** `audit_output` checks `files.json` against the manifest, every file hash, the exact file set, every record against `RECORD_SPEC` and `DETAIL_SPEC`, key/shard agreement, address counts and prefix, and the record count. Builds are byte-identical on repeat (only `generated_at` in the manifest differs).
 - **Prepublish gate** understands the new files; record ids (random ULIDs) are no longer treated as field names.
@@ -48,7 +48,7 @@ The `hm:` prefix is unchanged here; the rename to `ia:` is a separate step (`hea
 
 ```json
 {
- "heavymap_id": "hm:ca:on:hamilton:parcel:<ULID>",
+ "ia_id": "ia:ca:on:hamilton:parcel:<ULID>",
  "area":     {"m2": 146779.9, "src": "LYR-HAM-PARCEL", "join": "registry_geometry", "conf": "high", "label": "..."},
  "coverage": {"status": "has_arn", "provisional": false, "grade": "exact_1to1", "src": "...", "join": "...", "conf": "...", "label": "..."},
  "roll": [{"arn": "2518xxxxxxxxxxx", "grade": "exact_1to1", "method": "representative_point", "iou": 0.9994,
@@ -57,7 +57,7 @@ The `hm:` prefix is unchanged here; the rename to `ia:` is a separate step (`hea
            "property_code": {"code": "590", "family": "Industrial", "src": "LYR-NPCA-PARCELS-CITYVIEW",
                              "join": "arn_exact", "conf": "low", "label": "..."}}],
  "addresses": {"src": "LYR-HAM-ADDRESSES", "join": "point_in_polygon", "label": "...", "count": 3, "truncated": false,
-               "shown": [{"id": "hm:ca:on:hamilton:address:<ULID>", "text": "<number> <STREET>, <COMMUNITY>", "unit": "", "join": "pip", "conf": "high"}]},
+               "shown": [{"id": "ia:ca:on:hamilton:address:<ULID>", "text": "<number> <STREET>, <COMMUNITY>", "unit": "", "join": "pip", "conf": "high"}]},
  "overlays": {"src": "heavymap-overlays:<run>", "join": "area_share", "label": "...", "sliver_count": 5,
               "rows": [{"layer": "LYR-HAM-ZONING", "class": "AA", "label": "City zoning: AA", "share": 0.8524, "m2": 125108.7, "fid": "<overlay feature id>"},
                        {"layer": "LYR-HAM-ZONING", "class": "P7", "label": "City zoning: P7", "share": 0.0, "m2": 1.5, "fid": "<overlay feature id>", "sliver": true}]},
@@ -111,12 +111,12 @@ Layer ids follow sheet 17. Overlay run `20261017-val2` wrote `LYR-NPCA-REGULATIO
 ```
 local-data/dossier/hamilton/<date>/
   manifest.json          # ~7 KB: schema, shard rule, counts, sources, confidence words, unavailable fields
-  shards/{KK}.json       # 1,024 files, KK = last two characters of the heavymap_id
+  shards/{KK}.json       # 1,024 files, KK = last two characters of the ia_id
 ```
 
-Each shard is `{"schema":1,"jurisdiction":"hamilton","shard":"KK","records":{"<heavymap_id>": {...}}}`.
+Each shard is `{"schema":1,"jurisdiction":"hamilton","shard":"KK","records":{"<ia_id>": {...}}}`.
 
-- **Key-hash sharding by ULID suffix.** The last two characters come from the ULID's 80-bit random part, so 166,745 parcels spread evenly: 120 to about 200 per shard. The front end already has `heavymap_id` from the clicked PMTiles feature. It fetches `shards/` + `id.slice(-2)` + `.json` with no index and no hash code in JS. One click is one small request, cached per shard.
+- **Key-hash sharding by ULID suffix.** The last two characters come from the ULID's 80-bit random part, so 166,745 parcels spread evenly: 120 to about 200 per shard. The front end already has `ia_id` from the clicked PMTiles feature. It fetches `shards/` + `id.slice(-2)` + `.json` with no index and no hash code in JS. One click is one small request, cached per shard.
 - **Not tile-aligned.** Parcels cross tile edges, and a tile scheme would tie the dossier to one PMTiles zoom and rebuild. Key shards are stable across tile rebuilds.
 - **Not one file.** One file is about 250 MB. Two-character prefixes of a ULID are all `01` (the timestamp part), which is why the suffix is used.
 - **Startup payload** is `manifest.json` only (about 7 KB). Shards load on click.
