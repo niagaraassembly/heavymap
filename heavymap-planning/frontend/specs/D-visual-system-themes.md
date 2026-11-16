@@ -137,7 +137,7 @@ component       --card-*, --dock-*, --chip-*, --masthead-*
 ```
 
 - The pattern is a **listbox button**: arrow keys move, Enter selects, Escape closes and returns focus, and typing a letter jumps to that name.
-- The **name is always visible**. The flag is decorative (`alt=""`), so the control works for people who can't distinguish flags.
+- The **name is shown in the panel** (and in the button's accessible name); the button itself shows the flag only, so the header stays thin. The flag is decorative (`alt=""`), so the control works for people who can't distinguish flags.
 - The **recent group** never shows the same theme twice, and hides when it would only repeat the current theme alone.
 - **"Reset to automatic"** clears the explicit choice, going back to section 6 step 2. It keeps the recent list.
 - The line "Themes change the look only" makes invariant 1 explicit to readers.

@@ -40,7 +40,9 @@ export function mountThemePicker(root, themes, fallback) {
     html.dataset.mode = r.mode;
     html.dataset.themeSource = r.source;
     const name = byId[r.theme].name;
-    button.querySelector("[data-theme-name]").textContent = name;
+    /* The button shows the flag only; the name lives in the panel and here. */
+    const nameEl = button.querySelector("[data-theme-name]");
+    if (nameEl) nameEl.textContent = name;
     const flag = button.querySelector("[data-theme-flag]");
     if (flag && byId[r.theme].flag) flag.src = `/${byId[r.theme].flag}`;
     button.setAttribute("aria-label", `Site theme: ${name}`);
