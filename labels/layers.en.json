@@ -1,0 +1,183 @@
+{
+ "schema": 1,
+ "domain": "layers",
+ "locale": "en",
+ "entries": {
+  "layers.LYR-HAM-ZONING.name": {
+   "text": "City zoning",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "layers.LYR-HAM-ZONING.row": {
+   "text": "{name}: {class}",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": "Template for an overlay row; {class} is the source value, quoted as given."
+  },
+  "layers.LYR-LIO-GREENBELT-DESIGNATION.name": {
+   "text": "Greenbelt designation",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "layers.LYR-LIO-GREENBELT-DESIGNATION.row": {
+   "text": "{name}: {class}",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": "Template for an overlay row; {class} is the source value, quoted as given."
+  },
+  "layers.LYR-GRCA-REGULATION-LIMITS-WATERLOO.name": {
+   "text": "GRCA regulation limit",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "layers.LYR-GRCA-REGULATION-LIMITS-WATERLOO.row": {
+   "text": "{name}: {class}",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": "Template for an overlay row; {class} is the source value, quoted as given."
+  },
+  "layers.LYR-HAM-RURAL-BOUNDARY.name": {
+   "text": "City rural boundary",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "layers.LYR-HAM-RURAL-BOUNDARY.row": {
+   "text": "{name}",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": "Template for an overlay row; {class} is the source value, quoted as given."
+  },
+  "layers.LYR-HCA-REGULATED-AREAS.name": {
+   "text": "HCA regulated area",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "layers.LYR-HCA-REGULATED-AREAS.row": {
+   "text": "{name}: {class}",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": "Template for an overlay row; {class} is the source value, quoted as given."
+  },
+  "layers.LYR-HAM-SECONDARY-PLAN-LAND-USE.name": {
+   "text": "Secondary plan",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "layers.LYR-HAM-SECONDARY-PLAN-LAND-USE.row": {
+   "text": "{name} ({class})",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": "Template for an overlay row; {class} is the source value, quoted as given."
+  },
+  "layers.LYR-HAM-URBAN-BOUNDARY.name": {
+   "text": "City urban boundary",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "layers.LYR-HAM-URBAN-BOUNDARY.row": {
+   "text": "{name}",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": "Template for an overlay row; {class} is the source value, quoted as given."
+  },
+  "layers.LYR-LIO-NEP-DESIGNATION.name": {
+   "text": "NEP designation",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "layers.LYR-LIO-NEP-DESIGNATION.row": {
+   "text": "{name}: {class}",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": "Template for an overlay row; {class} is the source value, quoted as given."
+  },
+  "layers.LYR-HAM-NEP-DEVELOPMENT-CONTROL.name": {
+   "text": "NEP Development Control Area",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "layers.LYR-HAM-NEP-DEVELOPMENT-CONTROL.row": {
+   "text": "{name} ({class})",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": "Template for an overlay row; {class} is the source value, quoted as given."
+  },
+  "layers.LYR-HAM-EMPLOYMENT-LANDS.name": {
+   "text": "City employment lands",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "layers.LYR-HAM-EMPLOYMENT-LANDS.row": {
+   "text": "{name}",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": "Template for an overlay row; {class} is the source value, quoted as given."
+  },
+  "layers.LYR-NPCA-APPROX-REGULATION-LANDS.name": {
+   "text": "NPCA approximate regulation lands",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "layers.LYR-NPCA-APPROX-REGULATION-LANDS.row": {
+   "text": "{name}",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": "Template for an overlay row; {class} is the source value, quoted as given."
+  }
+ }
+}

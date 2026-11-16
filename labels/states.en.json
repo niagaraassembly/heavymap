@@ -1,0 +1,178 @@
+{
+ "schema": 1,
+ "domain": "states",
+ "locale": "en",
+ "entries": {
+  "states.coverage.has_arn": {
+   "text": {
+    "one": "NPCA roll data: {n} roll number",
+    "other": "NPCA roll data: {n} roll numbers"
+   },
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.coverage.arn_invalid": {
+   "text": "NPCA roll value is a placeholder, not a Hamilton roll number",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.coverage.in_coverage_unmatched": {
+   "text": "Inside NPCA roll coverage, no roll number attached",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.coverage.not_covered": {
+   "text": "Not covered by NPCA roll data (provisional)",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.roll.exact_1to1": {
+   "text": "NPCA roll {arn}, one-to-one parcel match",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.roll.one_to_many": {
+   "text": "NPCA roll {arn}, also on {other_parcels} other City parcel(s)",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.roll.many_to_one": {
+   "text": "NPCA roll {arn}, one of {n} rolls on this parcel",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.roll.placeholder": {
+   "text": "NPCA roll value is a placeholder, not a Hamilton roll number",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.roll.invalid": {
+   "text": "NPCA roll value is not a Hamilton roll number; not shown",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.conf.high": {
+   "text": "one-to-one or point-in-polygon join on current sources",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.conf.medium": {
+   "text": "join holds but is shared, nearest-within-10 m, or a coverage test",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.conf.low": {
+   "text": "exact key match against a stale or sparsely filled source",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.join.registry_geometry": {
+   "text": "Area of the City parcel polygon (EPSG:26917)",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.join.point_in_polygon": {
+   "text": "point in parcel",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.join.pip": {
+   "text": "point in parcel",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.join.nearest_10m": {
+   "text": "nearest parcel within 10 m",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.join.area_share": {
+   "text": "share of parcel area",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.join.representative_point": {
+   "text": "parcel representative point",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.join.coverage_test_5m": {
+   "text": "coverage test (5 m)",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.join.arn_exact": {
+   "text": "roll number, exact match",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "states.sliver": {
+   "text": "flagged as sliver",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  }
+ }
+}

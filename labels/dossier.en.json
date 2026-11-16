@@ -1,0 +1,144 @@
+{
+ "schema": 1,
+ "domain": "dossier",
+ "locale": "en",
+ "entries": {
+  "dossier.addresses": {
+   "text": {
+    "one": "{n} City address point in this parcel",
+    "other": "{n} City address points in this parcel"
+   },
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.overlays": {
+   "text": {
+    "one": "{n} zone or designation link",
+    "other": "{n} zone or designation links"
+   },
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.overlays_slivers": {
+   "text": {
+    "one": "{n} flagged as sliver",
+    "other": "{n} flagged as slivers"
+   },
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code": {
+   "text": "NPCA Cityview PropCode: {code}{family_part}; layer last edited 2020",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code_family_part": {
+   "text": " ({family} range)",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code.family.vacant_land": {
+   "text": "Vacant land",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code.family.farm": {
+   "text": "Farm",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code.family.residential": {
+   "text": "Residential",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code.family.commercial": {
+   "text": "Commercial",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code.family.industrial": {
+   "text": "Industrial",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code.family.institutional": {
+   "text": "Institutional",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.property_code.family.special_and_exempt": {
+   "text": "Special and exempt",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.source.LYR-HAM-PARCEL": {
+   "text": "Hamilton Assessment Parcel (City of Hamilton)",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.source.LYR-HAM-ADDRESSES": {
+   "text": "Addresses (City of Hamilton)",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.source.LYR-NPCA-ASSESSMENT-PARCELS-TEST": {
+   "text": "Assessment_Parcels_Test (Niagara Peninsula Conservation Authority)",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  },
+  "dossier.source.LYR-NPCA-PARCELS-CITYVIEW": {
+   "text": "Parcels_Cityview (Niagara Peninsula Conservation Authority)",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-15",
+   "note": ""
+  }
+ }
+}
