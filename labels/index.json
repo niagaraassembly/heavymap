@@ -5,7 +5,7 @@
    "path": "dossier.en.json",
    "domain": "dossier",
    "locale": "en",
-   "sha256": "7b527bb0d9453ff253c6654dcd80994485da192e7211d31818b8c171e7d9afd0"
+   "sha256": "16a2e6c120d87c2af2d8719e0c0c6f389a46c1f051027468eb82210c90f2be7f"
   },
   {
    "path": "layers.en.json",
@@ -17,7 +17,7 @@
    "path": "states.en.json",
    "domain": "states",
    "locale": "en",
-   "sha256": "dbd2ce5cdd67913d1c6ea3a007502b11f471f712fd41a906243047358ac7f198"
+   "sha256": "24cf9332415cef255d559310df581cc63c9c19e2282c8c5a0de108497bc38ba3"
   }
  ]
 }

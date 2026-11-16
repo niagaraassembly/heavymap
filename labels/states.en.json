@@ -173,6 +173,78 @@
    "reviewer": null,
    "changed_at": "2026-11-15",
    "note": ""
+  },
+  "states.refusal.not_joined": {
+   "text": "Not joined — no accepted match for this parcel.",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "states.refusal.not_in_coverage": {
+   "text": "Outside held coverage — this object is not held for this unit.",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "states.refusal.not_licensed": {
+   "text": "Not licensed — this source is not permitted for this use.",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "states.join.exact_1to1": {
+   "text": "exact one-to-one roll match",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "states.join.one_to_many": {
+   "text": "roll shared across City parcels",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "states.join.many_to_one": {
+   "text": "multiple roll numbers on this parcel",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "states.join.unmatched": {
+   "text": "unmatched parcel",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "states.join.not_in_coverage": {
+   "text": "outside roll coverage",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
+  },
+  "states.join.placeholder": {
+   "text": "placeholder roll value",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": ""
   }
  }
 }
