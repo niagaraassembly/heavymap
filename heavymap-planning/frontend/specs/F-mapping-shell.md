@@ -156,6 +156,7 @@ The dock is a `<nav aria-label="Map">`. In the reading-alongside layout it stays
 
 - **URL:** `/map/<geography>/`. Its view state goes in the query string: `?focus=<heavymap_id>&lens=<lens>&read=<item id>`. Like Reader URLs, these are shareable and not saved (spec C section 5.1).
 - **Keep the prototype's app logic:** lenses, context layers, search, the dossier panel, tooltips, the "flag, never extinguish" treatment of slivers, refusal copy. The prototype was not redesigned, and its interaction model stays. Only the chrome changes (section 3.1).
+- **Dossier sidebar chrome:** the parcel identity (name, address, grain and jurisdiction, spine key) pins at the top of the sidebar while the bands scroll; a band index jumps between bands without touching the `#parcel=` deep link; claims render as raised cards; refusals carry a rust flag edge and a tinted ground, never dropped.
 - **Geography switching:** the dock lists only `published` geographies (spec A registry). With one geography, there's no switcher.
 - **The identifier rename stays paused.** The workspace reads `heavymap_id` with the `hm:ca:on:hamilton:parcel:` prefix as it exists today (`src/contract.js`), and doesn't implement the rename or carry out the repo split.
 
