@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
-from heavymap.dossier.schema import ScreeningError, screen_record
+from heavymap.dossier.schema import ScreeningError, screen_detail, screen_record
 from heavymap.prepublish import config
 
 PASS = "pass"
@@ -42,6 +42,14 @@ def file_kind(rel: str) -> str:
         return "pmtiles"
     if "shards" in parts and suffix == ".json":
         return "dossier_shard"
+    if "detail" in parts and suffix == ".json":
+        return "dossier_detail"
+    if "provenance" in parts and suffix == ".json":
+        return "dossier_provenance"
+    if name == "files.json":
+        return "dossier_files"
+    if name == "label-seed.json":
+        return "dossier_label_seed"
     if name == "manifest.json":
         return "dossier_manifest"
     if name == "run-record.json":
@@ -126,12 +134,18 @@ def _leak_findings(
             continue
         text, parsed, headers = _parse_text(path)
         keys: set[str] = set(headers)
-        if parsed is not None:
+        if kind in {"dossier_shard", "dossier_detail"} and isinstance(parsed, Mapping):
+            # Record ids are the keys of ``records``. They are random ULIDs and can
+            # contain a forbidden substring by chance, so they are not field names.
+            keys.update(str(k) for k in parsed if k != "records")
+            for rec in (parsed.get("records") or {}).values():
+                _walk_keys(rec, keys)
+        elif parsed is not None:
             _walk_keys(parsed, keys)
         for name in keys:
             if name in config.FORBIDDEN_FIELD_NAMES:
                 findings.append({"path": rel, "kind": "field_name", "name": name})
-            if kind == "dossier_shard":
+            if kind in {"dossier_shard", "dossier_detail"}:
                 low = name.lower()
                 for part in config.DOSSIER_FORBIDDEN_KEY_PARTS:
                     if part in low:
@@ -148,6 +162,14 @@ def _leak_findings(
 def _allowlist_for(kind: str) -> frozenset[str] | None:
     if kind == "dossier_shard":
         return config.DOSSIER_SHARD_ENVELOPE | config.DOSSIER_RECORD_KEYS
+    if kind == "dossier_detail":
+        return config.DOSSIER_SHARD_ENVELOPE | config.DOSSIER_DETAIL_KEYS
+    if kind == "dossier_files":
+        return config.DOSSIER_FILES_KEYS
+    if kind == "dossier_provenance":
+        return config.DOSSIER_PROVENANCE_KEYS
+    if kind == "dossier_label_seed":
+        return config.DOSSIER_LABEL_SEED_KEYS
     if kind == "dossier_manifest":
         return config.DOSSIER_MANIFEST_KEYS
     if kind == "run_record":
@@ -177,7 +199,8 @@ def _allowlist_findings(root: Path, files: Iterable[Path]) -> list[dict[str, str
                 }
             )
             continue
-        if kind == "dossier_shard":
+        if kind in {"dossier_shard", "dossier_detail"}:
+            screen = screen_record if kind == "dossier_shard" else screen_detail
             payload = json.loads(path.read_text(encoding="utf-8"))
             extra = set(payload) - config.DOSSIER_SHARD_ENVELOPE
             for name in sorted(extra):
@@ -190,7 +213,7 @@ def _allowlist_findings(root: Path, files: Iterable[Path]) -> list[dict[str, str
                 continue
             for rec in records.values():
                 try:
-                    screen_record(rec)
+                    screen(rec)
                 except ScreeningError as exc:
                     findings.append(
                         {"path": rel, "kind": "unknown_field", "name": str(exc)}
@@ -204,7 +227,10 @@ def _allowlist_findings(root: Path, files: Iterable[Path]) -> list[dict[str, str
                 props = row.get("properties", row) if isinstance(row, Mapping) else {}
                 if isinstance(props, Mapping):
                     keys.update(str(k) for k in props)
-        elif kind in {"dossier_manifest", "run_record"} and isinstance(parsed, Mapping):
+        elif kind in {
+            "dossier_manifest", "run_record", "dossier_files",
+            "dossier_provenance", "dossier_label_seed",
+        } and isinstance(parsed, Mapping):
             # Value maps (counts, coverage, metrics) are data, not schema fields.
             keys.update(str(k) for k in parsed)
         elif parsed is not None:
@@ -263,6 +289,9 @@ def _size_findings(
             entry["compressed_bytes"] = compressed
             shard_sizes.append(compressed)
             _judge("shard_compressed_bytes", rel, compressed)
+        elif kind == "dossier_detail":
+            entry["compressed_bytes"] = gzip_size(data)
+            _judge("detail_compressed_bytes", rel, entry["compressed_bytes"])
         measured["files"].append(entry)
 
     measured["total_bytes"] = total

@@ -7,7 +7,7 @@ allowlist here, in review.
 
 from __future__ import annotations
 
-from heavymap.dossier.schema import FORBIDDEN_KEY_PARTS, spec_keys
+from heavymap.dossier.schema import DETAIL_SPEC, FORBIDDEN_KEY_PARTS, spec_keys
 
 # Exact field names that must never appear as keys or CSV headers.
 # Building and park ``name`` is a public feature label, not an owner field.
@@ -35,6 +35,7 @@ DOSSIER_FORBIDDEN_KEY_PARTS = FORBIDDEN_KEY_PARTS
 SIZE_BUDGETS = {
     "startup_compressed_bytes": {"warn": 40_960, "fail": 51_200},
     "shard_compressed_bytes": {"warn": 40_960, "fail": 51_200},
+    "detail_compressed_bytes": {"warn": 40_960, "fail": 51_200},
     "pmtiles_bytes": {"warn": 83_886_080, "fail": 104_857_600},
     "total_bytes": {"warn": 858_993_459, "fail": 1_073_741_824},
 }
@@ -44,6 +45,15 @@ STARTUP_NAMES = frozenset({"manifest.json", "startup.json", "index.json"})
 DOSSIER_SHARD_ENVELOPE = frozenset({"schema", "jurisdiction", "shard", "records"})
 
 DOSSIER_RECORD_KEYS = frozenset(spec_keys())
+
+# Schema 2 side files (contract: seam-contract-dossier.md). Detail records are
+# screened like core records; the other files are checked by their top-level keys.
+DOSSIER_DETAIL_KEYS = frozenset(spec_keys(DETAIL_SPEC))
+DOSSIER_FILES_KEYS = frozenset({"schema", "files"})
+DOSSIER_PROVENANCE_KEYS = frozenset(
+    {"schema", "sources", "layer_aliases", "fields_unavailable", "not_yet_captured"}
+)
+DOSSIER_LABEL_SEED_KEYS = frozenset({"schema", "confidence_words"})
 
 DOSSIER_MANIFEST_KEYS = frozenset(
     {
@@ -62,7 +72,13 @@ DOSSIER_MANIFEST_KEYS = frozenset(
         "min",
         "median",
         "max",
-        "max_addresses_shown",
+        "core_addresses",
+        "contract_revisions",
+        "release",
+        "files_sha256",
+        "file_count",
+        "detail_path",
+        "detail_total",
         "sliver_rule",
         "sliver_policy",
         "layer_aliases",
@@ -78,8 +94,6 @@ DOSSIER_MANIFEST_KEYS = frozenset(
         "from",
         "to",
         "family",
-        "confidence_words",
-        "fields_unavailable",
         "gaps_ledger",
         "gap_id",
         "gap_type",

@@ -42,7 +42,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--npca-cityview", default=None, help="NPCA Parcels_Cityview GeoJSON")
     p.add_argument("--no-npca", action="store_true", help="Skip both NPCA files (roll data from registry only)")
     p.add_argument("--out-dir", default=None, help="Output dir (default: <data-root>/dossier/hamilton/<today>)")
-    p.add_argument("--max-addresses", type=int, default=25, help="Addresses listed per parcel (count is always full)")
+    p.add_argument("--core-addresses", type=int, default=5, help="Addresses in the core record (the detail file always holds all of them)")
+    p.add_argument("--release-id", default=None, help="Release id (default: today, ISO date)")
     return p
 
 
@@ -75,7 +76,8 @@ def main(argv: list[str] | None = None) -> int:
     manifest = write_dossier(
         idx,
         out,
-        max_addresses=args.max_addresses,
+        core_addresses=args.core_addresses,
+        release_id=args.release_id,
         extra_manifest={"generated_at": _dt.datetime.now().astimezone().isoformat(timespec="seconds")},
     )
     t_write = time.monotonic() - t0 - t_load

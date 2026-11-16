@@ -29,8 +29,8 @@ SENTINELS = (
 
 def _record(hm_id: str) -> dict:
     return {
-        "heavymap_id": hm_id,
-        "area": {"m2": 1.0, "src": "s", "join": "j", "conf": "high", "label": "l"},
+        "key": hm_id,
+        "area": {"value": 1.0, "unit": "m2", "crs": "EPSG:26917", "src": "s", "join": "j", "conf": "high"},
         "coverage": {
             "status": "has_arn",
             "provisional": False,
@@ -38,7 +38,6 @@ def _record(hm_id: str) -> dict:
             "src": "s",
             "join": "j",
             "conf": "c",
-            "label": "l",
         },
         "roll": [
             {
@@ -51,26 +50,16 @@ def _record(hm_id: str) -> dict:
                 "src": "s",
                 "join": "j",
                 "conf": "c",
-                "label": "l",
             }
         ],
-        "addresses": {
-            "src": "s",
-            "join": "j",
-            "label": "l",
-            "count": 0,
-            "truncated": False,
-            "shown": [],
-        },
-        "overlays": {
-            "src": "s",
-            "join": "j",
-            "label": "l",
-            "rows": [],
-            "sliver_count": 0,
-        },
+        "addresses": {"src": "s", "join": "j", "count": 0, "complete": True, "items": []},
+        "overlays": {"src": "s", "join": "j", "row_count": 0, "rows": [], "sliver_count": 0},
         "gaps": [],
     }
+
+
+def _detail(hm_id: str) -> dict:
+    return {"addresses_full": [], "feature_ids": {"/overlays/rows/0": "75"}}
 
 
 def write_clean_tree(base: Path) -> Path:
@@ -84,6 +73,11 @@ def write_clean_tree(base: Path) -> Path:
         "records": {P_ONE: _record(P_ONE), P_TWO: _record(P_TWO)},
     }
     (shards / "A0.json").write_text(json.dumps(payload), encoding="utf-8")
+    detail_dir = out / "detail"
+    detail_dir.mkdir()
+    detail_payload = {**payload, "records": {P_ONE: _detail(P_ONE), P_TWO: _detail(P_TWO)}}
+    (detail_dir / "A0.json").write_text(json.dumps(detail_payload), encoding="utf-8")
+    (out / "files.json").write_text(json.dumps({"schema": SCHEMA_VERSION, "files": []}), encoding="utf-8")
     manifest = {
         "schema": SCHEMA_VERSION,
         "jurisdiction": "hamilton",
@@ -135,6 +129,28 @@ class PrepublishTests(unittest.TestCase):
 
     def tearDown(self):
         self.tmp.cleanup()
+
+    def test_detail_file_with_unknown_field_or_display_key_fails(self):
+        path = self.out / "detail" / "A0.json"
+        payload = json.loads(path.read_text())
+        payload["records"][P_ONE]["label"] = "display text"
+        path.write_text(json.dumps(payload), encoding="utf-8")
+        report = run_checks(self.out, reference=None, withheld_values=SENTINELS)
+        self.assertEqual(report["checks"]["allowlist"]["status"], "fail")
+        self.assertFalse(report["ok"])
+
+    def test_record_id_containing_a_forbidden_substring_is_not_a_field_name(self):
+        # ULIDs are random; one can spell "NAME". It is a record id, not a field.
+        odd = PFX[:-8] + "NAMEXXXX" + "A0"
+        for sub in ("shards", "detail"):
+            path = self.out / sub / "A0.json"
+            payload = json.loads(path.read_text())
+            payload["records"][odd] = payload["records"].pop(P_ONE)
+            if sub == "shards":
+                payload["records"][odd]["key"] = odd
+            path.write_text(json.dumps(payload), encoding="utf-8")
+        report = run_checks(self.out, reference=None, withheld_values=SENTINELS)
+        self.assertEqual(report["checks"]["leak"]["status"], "pass", report["checks"]["leak"])
 
     def test_clean_tree_passes_with_reference(self):
         reference = self.base / "ref"

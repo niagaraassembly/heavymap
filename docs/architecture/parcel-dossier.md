@@ -6,7 +6,7 @@ The dossier is the per-parcel lookup the v0 front end reads when a parcel is cli
 
 ```
 python3 -m heavymap.dossier --data-root ../local-data \
-  --out-dir ../local-data/dossier/hamilton/2026-10-17
+  --out-dir ../local-data/dossier/hamilton/2026-10-17 [--core-addresses 5] [--release-id ID]
 ```
 
 ## Inputs
@@ -29,7 +29,22 @@ Owner names, owner mailing addresses, `Legal_Txt` / legal descriptions and any o
 
 Public in Ontario and shown: roll number (ARN), MPAC property code, civic addresses (City address points and NPCA MPAC street text).
 
-## Record schema (v1)
+## Schema 2 (current)
+
+Draft contract: `drafts/wave-1/seam-contract-dossier.md` in the private `heavymap-restricted` repo. Changes from v1, all covered by tests:
+
+- **Layout:** `shards/<KK>.json` (core), `detail/<KK>.json` (on demand), `provenance/sources.json`, `label-seed.json`, `files.json` (path, bytes, SHA-256 of every file) and a small `manifest.json` that holds `files_sha256`, `release {unit, id}` and `contract_revisions`. File hashes live in `files.json` because a hash per file made the manifest about 98 KB compressed against the 50 KB start-up budget.
+- **No display text.** No `label` key at any depth (`assert_no_display_keys`). Counts that labels used to spell out are data: `roll[].other_parcels`, `addresses.count`, `overlays.row_count`. Property-code families are tokens (`residential`, `vacant_land`, ...). The old `confidence_words` moved to `label-seed.json` as a seed for the label register.
+- **Names:** `heavymap_id` is `key`; `area.m2` is `area.value` with `unit` and `crs`; overlay `m2` is `area_m2`.
+- **Core and detail:** the core record holds at most `--core-addresses` (default 5) addresses and `addresses.complete`; the detail record holds every address (no cap, D-023) and `feature_ids` keyed by JSON Pointer into the core record (`/overlays/rows/3`). The core list is always a prefix of the full list.
+- **Verification:** `audit_output` checks `files.json` against the manifest, every file hash, the exact file set, every record against `RECORD_SPEC` and `DETAIL_SPEC`, key/shard agreement, address counts and prefix, and the record count. Builds are byte-identical on repeat (only `generated_at` in the manifest differs).
+- **Prepublish gate** understands the new files; record ids (random ULIDs) are no longer treated as field names.
+
+Hamilton, 2026-10-17 inputs: 166,745 records; core shard mean 16.2 KB gzipped (p95 18.3 KB, max 21.3 KB); detail mean 15.1 KB (max 30.5 KB); manifest 3.1 KB gzipped.
+
+The `hm:` prefix is unchanged here; the rename to `ia:` is a separate step (`heavymap-restricted/tools/rename`).
+
+## Record schema (v1, superseded by schema 2 above)
 
 ```json
 {

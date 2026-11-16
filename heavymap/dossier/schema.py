@@ -17,7 +17,7 @@ from __future__ import annotations
 
 from typing import Any, Mapping
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 # Source properties the dossier may read. Nothing else leaves the loader.
 SOURCE_FIELDS: dict[str, tuple[str, ...]] = {
@@ -39,11 +39,15 @@ def _list(spec: Any) -> tuple[str, Any]:
     return ("list", spec)
 
 
+# Schema 2 (contract: seam-contract-dossier.md): data holds tokens, numbers and
+# source values only. No display text, so no ``label`` key at any depth. Wording
+# lives in the label register. ``assert_no_display_keys`` enforces it.
+NO_DISPLAY_KEYS = ("label",)
+
 PROVENANCE = {
     "src": STR,
     "join": STR,
     "conf": STR,
-    "label": STR,
 }
 
 PROPERTY_CODE_SPEC = {
@@ -60,6 +64,7 @@ ROLL_SPEC = {
     "iou": NUM,
     "flag": STR,
     "roll_address": STR,
+    "other_parcels": INT,
     "property_code": PROPERTY_CODE_SPEC,
 }
 
@@ -74,30 +79,27 @@ ADDRESS_SPEC = {
 OVERLAY_SPEC = {
     "layer": STR,
     "class": STR,
-    "label": STR,
     "share": NUM,
-    "m2": NUM,
-    "fid": STR,
+    "area_m2": NUM,
     "sliver": BOOL,
 }
 
 RECORD_SPEC: dict[str, Any] = {
-    "heavymap_id": STR,
-    "area": {**PROVENANCE, "m2": NUM},
+    "key": STR,
+    "area": {**PROVENANCE, "value": NUM, "unit": STR, "crs": STR},
     "coverage": {**PROVENANCE, "status": STR, "provisional": BOOL, "grade": STR},
     "roll": _list(ROLL_SPEC),
     "addresses": {
         "src": STR,
         "join": STR,
-        "label": STR,
         "count": INT,
-        "truncated": BOOL,
-        "shown": _list(ADDRESS_SPEC),
+        "complete": BOOL,
+        "items": _list(ADDRESS_SPEC),
     },
     "overlays": {
         "src": STR,
         "join": STR,
-        "label": STR,
+        "row_count": INT,
         "rows": _list(OVERLAY_SPEC),
         "sliver_count": INT,
     },
@@ -105,8 +107,15 @@ RECORD_SPEC: dict[str, Any] = {
     "gaps": _list(STR),
 }
 
+# Detail record (loaded on demand): the full address list and source feature ids.
+# ``feature_ids`` maps a JSON Pointer into the core record to a source feature id.
+DETAIL_SPEC: dict[str, Any] = {
+    "addresses_full": _list(ADDRESS_SPEC),
+    "feature_ids": ("map", STR),
+}
+
 REQUIRED_KEYS = (
-    "heavymap_id",
+    "key",
     "area",
     "coverage",
     "roll",
@@ -139,6 +148,14 @@ def _kind_ok(kind: str, value: Any) -> bool:
 
 
 def _walk(value: Any, spec: Any, path: str) -> None:
+    if isinstance(spec, tuple) and spec and spec[0] == "map":
+        if not isinstance(value, Mapping):
+            raise ScreeningError(f"{path}: expected object")
+        for key, sub in value.items():
+            if not isinstance(key, str) or not key.startswith("/"):
+                raise ScreeningError(f"{path}.{key}: map key must be a JSON Pointer")
+            _walk(sub, spec[1], f"{path}[{key}]")
+        return
     if isinstance(spec, dict):
         if not isinstance(value, Mapping):
             raise ScreeningError(f"{path}: expected object")
@@ -166,7 +183,34 @@ def screen_record(record: Mapping[str, Any]) -> Mapping[str, Any]:
         if key not in record:
             raise ScreeningError(f"record.{key}: required key missing")
     _walk(record, RECORD_SPEC, "record")
+    assert_no_display_keys(record, "record")
     return record
+
+
+def screen_detail(detail: Mapping[str, Any]) -> Mapping[str, Any]:
+    """Raise ``ScreeningError`` unless ``detail`` fits ``DETAIL_SPEC``."""
+
+    if not isinstance(detail, Mapping):
+        raise ScreeningError("detail: expected object")
+    for key in DETAIL_SPEC:
+        if key not in detail:
+            raise ScreeningError(f"detail.{key}: required key missing")
+    _walk(detail, DETAIL_SPEC, "detail")
+    assert_no_display_keys(detail, "detail")
+    return detail
+
+
+def assert_no_display_keys(value: Any, path: str = "") -> None:
+    """Refuse a display-text key (``label``) at any depth (contract section 9)."""
+
+    if isinstance(value, Mapping):
+        for key, sub in value.items():
+            if key in NO_DISPLAY_KEYS:
+                raise ScreeningError(f"{path}.{key}: display text does not belong in data")
+            assert_no_display_keys(sub, f"{path}.{key}")
+    elif isinstance(value, list):
+        for i, sub in enumerate(value):
+            assert_no_display_keys(sub, f"{path}[{i}]")
 
 
 def spec_keys(spec: Any = None) -> set[str]:
@@ -178,13 +222,15 @@ def spec_keys(spec: Any = None) -> set[str]:
         for key, sub in spec.items():
             out.add(key)
             out |= spec_keys(sub)
-    elif isinstance(spec, tuple) and spec and spec[0] == "list":
+    elif isinstance(spec, tuple) and spec and spec[0] in ("list", "map"):
         out |= spec_keys(spec[1])
     return out
 
 
 def audit_spec() -> None:
-    for key in spec_keys():
+    for key in spec_keys() | spec_keys(DETAIL_SPEC):
+        if key in NO_DISPLAY_KEYS:
+            raise ScreeningError(f"output allowlist key {key!r} is display text")
         low = key.lower()
         for part in FORBIDDEN_KEY_PARTS:
             if part in low:

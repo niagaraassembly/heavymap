@@ -26,6 +26,8 @@ from heavymap.dossier.schema import (
     FORBIDDEN_KEY_PARTS,
     SOURCE_FIELDS,
     ScreeningError,
+    assert_no_display_keys,
+    screen_detail,
     pick,
     screen_record,
     spec_keys,
@@ -189,12 +191,12 @@ class ScreeningTests(unittest.TestCase):
 
     def _ok_record(self):
         return {
-            "heavymap_id": P_EXACT,
-            "area": {"m2": 1.0, "src": "s", "join": "j", "conf": "high", "label": "l"},
-            "coverage": {"status": "has_arn", "provisional": False, "grade": "g", "src": "s", "join": "j", "conf": "c", "label": "l"},
-            "roll": [{"arn": "2518", "grade": "g", "method": "m", "iou": 1.0, "src": "s", "join": "j", "conf": "c", "label": "l"}],
-            "addresses": {"src": "s", "join": "j", "label": "l", "count": 0, "truncated": False, "shown": []},
-            "overlays": {"src": "s", "join": "j", "label": "l", "rows": [], "sliver_count": 0},
+            "key": P_EXACT,
+            "area": {"value": 1.0, "unit": "m2", "crs": "EPSG:26917", "src": "s", "join": "j", "conf": "high"},
+            "coverage": {"status": "has_arn", "provisional": False, "grade": "g", "src": "s", "join": "j", "conf": "c"},
+            "roll": [{"arn": "2518", "grade": "g", "method": "m", "iou": 1.0, "src": "s", "join": "j", "conf": "c"}],
+            "addresses": {"src": "s", "join": "j", "count": 0, "complete": True, "items": []},
+            "overlays": {"src": "s", "join": "j", "row_count": 0, "rows": [], "sliver_count": 0},
             "gaps": [],
         }
 
@@ -211,15 +213,32 @@ class ScreeningTests(unittest.TestCase):
         with self.assertRaises(ScreeningError):
             screen_record(rec)
         rec = self._ok_record()
-        rec["addresses"]["shown"].append({"id": "a", "text": "t", "unit": "", "join": "pip", "conf": "high", "mailing": SENTINELS[1]})
+        rec["addresses"]["items"].append({"id": "a", "text": "t", "unit": "", "join": "pip", "conf": "high", "mailing": SENTINELS[1]})
         with self.assertRaises(ScreeningError):
             screen_record(rec)
 
     def test_screen_rejects_nested_object_in_leaf(self):
         rec = self._ok_record()
-        rec["area"]["label"] = {"Owner": SENTINELS[0]}
+        rec["area"]["unit"] = {"Owner": SENTINELS[0]}
         with self.assertRaises(ScreeningError):
             screen_record(rec)
+
+    def test_screen_refuses_label_at_any_depth(self):
+        rec = self._ok_record()
+        rec["roll"][0]["label"] = "NPCA roll 2518"
+        with self.assertRaises(ScreeningError):
+            screen_record(rec)
+        rec = self._ok_record()
+        rec["roll"][0]["property_code"] = {"code": "301", "family": "residential", "src": "s", "join": "j", "conf": "low", "label": "x"}
+        with self.assertRaises(ScreeningError):
+            screen_record(rec)
+
+    def test_detail_screening(self):
+        screen_detail({"addresses_full": [], "feature_ids": {"/overlays/rows/0": "75"}})
+        with self.assertRaises(ScreeningError):
+            screen_detail({"addresses_full": [], "feature_ids": {"overlays": "75"}})
+        with self.assertRaises(ScreeningError):
+            screen_detail({"addresses_full": [], "feature_ids": {}, "owner": "x"})
 
     def test_screen_requires_core_keys(self):
         rec = self._ok_record()
@@ -239,7 +258,7 @@ class BuildTests(unittest.TestCase):
         self.inputs = make_fixture(self.base)
         self.out = self.base / "out"
         idx = load_all(self.inputs)
-        self.manifest = write_dossier(idx, self.out, max_addresses=25)
+        self.manifest = write_dossier(idx, self.out, core_addresses=5, release_id="2026-01-01")
         self.records = {}
         for path in (self.out / "shards").glob("*.json"):
             self.records.update(json.loads(path.read_text())["records"])
@@ -255,7 +274,7 @@ class BuildTests(unittest.TestCase):
             for s in SENTINELS:
                 self.assertNotIn(s, text, f"{s} leaked into {path.name}")
             keys: set[str] = set()
-            if path.parent.name == "shards":
+            if path.parent.name in ("shards", "detail"):
                 for rec in json.loads(text)["records"].values():
                     _walk_keys(rec, keys)
                 for k in keys:
@@ -268,6 +287,7 @@ class BuildTests(unittest.TestCase):
         for hm_id, rec in self.records.items():
             path = self.out / "shards" / f"{shard_key(hm_id)}.json"
             self.assertIn(hm_id, json.loads(path.read_text())["records"])
+            self.assertIn(hm_id, json.loads((self.out / "detail" / path.name).read_text())["records"])
 
     def test_coverage_split(self):
         st = {k: r["coverage"]["status"] for k, r in self.records.items()}
@@ -291,7 +311,7 @@ class BuildTests(unittest.TestCase):
         self.assertEqual(len(many), 2)
         self.assertEqual(many[0]["property_code"]["code"], "520")
         self.assertEqual(many[0]["property_code"]["join"], "arn_prefix15")
-        self.assertEqual(many[0]["property_code"]["family"], "Industrial")
+        self.assertEqual(many[0]["property_code"]["family"], "industrial")
         self.assertEqual(many[1]["property_code"]["join"], "arn_exact")
         self.assertNotIn("roll_address", many[1])  # blank MPAC street
         bad = self.records[P_BAD]["roll"][0]
@@ -302,13 +322,19 @@ class BuildTests(unittest.TestCase):
     def test_addresses(self):
         a = self.records[P_EXACT]["addresses"]
         self.assertEqual(a["count"], 2)
-        self.assertEqual([x["text"] for x in a["shown"]], ["10 MAIN STREET WEST, HAMILTON", "12 MAIN STREET WEST, HAMILTON"])
-        self.assertEqual(a["shown"][0]["conf"], "medium")
+        self.assertTrue(a["complete"])
+        self.assertEqual([x["text"] for x in a["items"]], ["10 MAIN STREET WEST, HAMILTON", "12 MAIN STREET WEST, HAMILTON"])
+        self.assertEqual(a["items"][0]["conf"], "medium")
         self.assertEqual(self.records[P_NOCOV]["addresses"]["count"], 0)  # pip_ambiguous not linked
         m = self.records[P_MANY]["addresses"]
         self.assertEqual(m["count"], 30)
-        self.assertTrue(m["truncated"])
-        self.assertEqual(len(m["shown"]), 25)
+        self.assertFalse(m["complete"])
+        self.assertEqual(len(m["items"]), 5)
+        # the detail file holds every address (no cap, D-023) and the core list is its prefix
+        shard = shard_key(P_MANY)
+        full = json.loads((self.out / "detail" / f"{shard}.json").read_text())["records"][P_MANY]["addresses_full"]
+        self.assertEqual(len(full), 30)
+        self.assertEqual(m["items"], full[:5])
 
     def test_overlays_slivers_flagged_never_dropped_and_alias(self):
         o = self.records[P_EXACT]["overlays"]
@@ -318,7 +344,7 @@ class BuildTests(unittest.TestCase):
         by_class = {r["class"]: r for r in o["rows"]}
         self.assertIs(by_class["P7"].get("sliver"), True)
         self.assertNotIn("sliver", by_class["C5"])
-        self.assertIn("1 flagged as sliver", o["label"])
+        self.assertEqual(o["row_count"], len(o["rows"]))
         many = self.records[P_MANY]["overlays"]
         self.assertEqual(many["sliver_count"], 2)
         self.assertEqual(len(many["rows"]), 3)
@@ -337,7 +363,38 @@ class BuildTests(unittest.TestCase):
             screen_record(rec)
 
     def test_area(self):
-        self.assertEqual(self.records[P_EXACT]["area"]["m2"], 1200.5)
+        self.assertEqual(self.records[P_EXACT]["area"]["value"], 1200.5)
+        self.assertEqual(self.records[P_EXACT]["area"]["unit"], "m2")
+
+    def test_no_display_text_in_any_artifact(self):
+        for path in self.out.rglob("*.json"):
+            if path.name == "label-seed.json":
+                continue  # the seed for the label register is wording by design
+            assert_no_display_keys(json.loads(path.read_text(encoding="utf-8")), path.name)
+
+    def test_files_json_and_release_block(self):
+        manifest = json.loads((self.out / "manifest.json").read_text())
+        self.assertEqual(manifest["schema"], 2)
+        self.assertEqual(manifest["release"], {"unit": "ca-on-hamilton", "id": "2026-01-01"})
+        files = json.loads((self.out / "files.json").read_text())["files"]
+        self.assertEqual(manifest["file_count"], len(files))
+        self.assertNotIn("files", manifest)  # hashes live in files.json, not the manifest
+        self.assertIn("provenance/sources.json", {f["path"] for f in files})
+
+    def test_audit_detects_tampering(self):
+        shard = next((self.out / "shards").glob("*.json"))
+        shard.write_bytes(shard.read_bytes() + b" ")
+        with self.assertRaises(ValueError):
+            audit_output(self.out)
+
+    def test_feature_ids_are_in_detail_not_core(self):
+        shard = shard_key(P_EXACT)
+        det = json.loads((self.out / "detail" / f"{shard}.json").read_text())["records"][P_EXACT]
+        self.assertTrue(det["feature_ids"])
+        for pointer in det["feature_ids"]:
+            self.assertTrue(pointer.startswith("/overlays/rows/"))
+        for r in self.records[P_EXACT]["overlays"]["rows"]:
+            self.assertNotIn("fid", r)
 
     def test_gaps_cite_ledger_ids_not_copy(self):
         withheld = {"GAP-0008", "GAP-0009", "GAP-0006", "GAP-0007"}
@@ -376,8 +433,8 @@ class BuildTests(unittest.TestCase):
 
 class HelperTests(unittest.TestCase):
     def test_property_code_family(self):
-        self.assertEqual(property_code_family("301"), "Residential")
-        self.assertEqual(property_code_family("100"), "Vacant land")
+        self.assertEqual(property_code_family("301"), "residential")
+        self.assertEqual(property_code_family("100"), "vacant_land")
         self.assertIsNone(property_code_family("X"))
         self.assertIsNone(property_code_family("950"))
 

@@ -14,6 +14,8 @@ passes ``schema.screen_record`` before it is written.
 from __future__ import annotations
 
 import csv
+import datetime as _dt
+import hashlib
 import json
 import os
 import re
@@ -23,7 +25,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable, Iterator
 
-from heavymap.dossier.schema import SCHEMA_VERSION, pick, screen_record
+from heavymap.dossier.schema import SCHEMA_VERSION, assert_no_display_keys, pick, screen_detail, screen_record
 from heavymap.gaps import (
     context_from_record,
     is_placeholder_arn,
@@ -69,16 +71,16 @@ BASE_SOURCES: dict[str, dict[str, str]] = {
     },
 }
 
-# MPAC property code ranges (first digit). Used only to name the family of a
-# source code; the code itself is always shown as quoted.
+# MPAC property code ranges (first digit). Family tokens only; wording is in the
+# label register. The code itself is always shown as quoted.
 PROPERTY_CODE_FAMILIES = (
-    (100, 199, "Vacant land"),
-    (200, 299, "Farm"),
-    (300, 399, "Residential"),
-    (400, 499, "Commercial"),
-    (500, 599, "Industrial"),
-    (600, 699, "Institutional"),
-    (700, 799, "Special and exempt"),
+    (100, 199, "vacant_land"),
+    (200, 299, "farm"),
+    (300, 399, "residential"),
+    (400, 499, "commercial"),
+    (500, 599, "industrial"),
+    (600, 699, "institutional"),
+    (700, 799, "special_and_exempt"),
 )
 
 ROLL_CONF = {
@@ -295,14 +297,12 @@ def _property_code(codes: tuple[str, ...], join: str) -> dict[str, Any] | None:
     code = "/".join(codes)
     families = {property_code_family(c) for c in codes}
     family = families.pop() if len(families) == 1 else None
-    fam_txt = f" ({family} range)" if family else ""
     return {
         "code": code,
         "family": family,
         "src": CITYVIEW,
         "join": join,
         "conf": "low",
-        "label": f"NPCA Cityview PropCode: {code}{fam_txt}; layer last edited 2020",
     }
 
 
@@ -328,18 +328,12 @@ def _roll_entries(idx: Indexes, links: list[dict[str, str]], arn_re: re.Pattern)
         if placeholder:
             entry["flag"] = "placeholder"
             entry["conf"] = "low"
-            entry["label"] = "NPCA roll value is a placeholder, not a Hamilton roll number"
         elif not valid:
             entry["flag"] = link["notes"] or "invalid_arn"
             entry["conf"] = "low"
-            entry["label"] = "NPCA roll value is not a Hamilton roll number; not shown"
         elif grade == "one_to_many":
-            others = idx.arn_parcel_count[arn] - 1
-            entry["label"] = f"NPCA roll {arn}, also on {others} other City parcel(s)"
-        elif grade == "many_to_one":
-            entry["label"] = f"NPCA roll {arn}, one of {n_links} rolls on this parcel"
-        else:
-            entry["label"] = f"NPCA roll {arn}, one-to-one parcel match"
+            # The count the old label spelled out; the wording is now a label template.
+            entry["other_parcels"] = idx.arn_parcel_count[arn] - 1
         apt = idx.apt.get(link["npca_source_id"])
         if apt and apt[1]:
             entry["roll_address"] = apt[1]
@@ -357,7 +351,6 @@ def _coverage(grade: str, rolls: list[dict[str, Any]]) -> dict[str, Any]:
     valid = [r for r in rolls if r.get("arn")]
     if valid:
         best = "high" if any(r["conf"] == "high" for r in valid) else "medium"
-        n = len(valid)
         return {
             "status": "has_arn",
             "provisional": False,
@@ -365,7 +358,6 @@ def _coverage(grade: str, rolls: list[dict[str, Any]]) -> dict[str, Any]:
             "src": APT,
             "join": grade,
             "conf": best,
-            "label": f"NPCA roll data: {n} roll number{'s' if n != 1 else ''}",
         }
     if rolls:
         return {
@@ -375,7 +367,6 @@ def _coverage(grade: str, rolls: list[dict[str, Any]]) -> dict[str, Any]:
             "src": APT,
             "join": grade,
             "conf": "low",
-            "label": "NPCA roll value is a placeholder, not a Hamilton roll number",
         }
     if grade == "unmatched":
         return {
@@ -385,7 +376,6 @@ def _coverage(grade: str, rolls: list[dict[str, Any]]) -> dict[str, Any]:
             "src": APT,
             "join": "representative_point",
             "conf": "medium",
-            "label": "Inside NPCA roll coverage, no roll number attached",
         }
     return {
         "status": "not_covered",
@@ -394,23 +384,24 @@ def _coverage(grade: str, rolls: list[dict[str, Any]]) -> dict[str, Any]:
         "src": APT,
         "join": "coverage_test_5m",
         "conf": "medium",
-        "label": "Not covered by NPCA roll data (provisional)",
     }
 
 
-def build_record(idx: Indexes, hm_id: str, max_addresses: int = 25) -> dict[str, Any]:
+def build_record_pair(idx: Indexes, hm_id: str, core_addresses: int = 5) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Return (core record, detail record) for one parcel (schema 2)."""
+
     area, grade = idx.parcels[hm_id]
     arn_re = idx.arn_re
     rolls = _roll_entries(idx, idx.arn_links.get(hm_id, []), arn_re)
 
     addrs = sorted(idx.addresses.get(hm_id, []), key=lambda a: _civic_sort(a[1]))
-    shown = []
-    for aid, civic, method in addrs[:max_addresses]:
+    all_addresses = []
+    for aid, civic, method in addrs:
         text, unit = _split_civic(civic)
-        shown.append(
+        all_addresses.append(
             {"id": aid, "text": text, "unit": unit, "join": method, "conf": ADDRESS_CONF.get(method, "low")}
         )
-    n_addr = len(addrs)
+    n_addr = len(all_addresses)
 
     rows = sorted(
         idx.overlays.get(hm_id, []),
@@ -418,81 +409,113 @@ def build_record(idx: Indexes, hm_id: str, max_addresses: int = 25) -> dict[str,
     )
     slivers = idx.slivers.get(hm_id, 0)
     overlay_rows = []
-    for r in rows:
-        item = {"layer": r[0], "class": r[1], "label": r[2], "share": r[3], "m2": r[4], "fid": r[5]}
+    feature_ids: dict[str, str] = {}
+    for i, r in enumerate(rows):
+        item = {"layer": r[0], "class": r[1], "share": r[3], "area_m2": r[4]}
         if r[6]:
             item["sliver"] = True
         overlay_rows.append(item)
-    sliver_txt = f", {slivers} flagged as sliver{'s' if slivers != 1 else ''}" if slivers else ""
+        if r[5]:
+            feature_ids[f"/overlays/rows/{i}"] = str(r[5])
     run_id = idx.overlay_manifest.get("run_id", "")
 
     record = {
-        "heavymap_id": hm_id,
+        "key": hm_id,
         "area": {
-            "m2": round(area, 1),
+            "value": round(area, 1),
+            "unit": "m2",
+            "crs": "EPSG:26917",
             "src": PARCEL,
             "join": "registry_geometry",
             "conf": "high",
-            "label": "Area of the City parcel polygon (EPSG:26917)",
         },
         "coverage": _coverage(grade, rolls),
         "roll": rolls,
         "addresses": {
             "src": ADDRESSES,
             "join": "point_in_polygon",
-            "label": f"{n_addr} City address point{'s' if n_addr != 1 else ''} in this parcel",
             "count": n_addr,
-            "truncated": n_addr > max_addresses,
-            "shown": shown,
+            "complete": n_addr <= core_addresses,
+            "items": all_addresses[:core_addresses],
         },
         "overlays": {
             "src": f"heavymap-overlays:{run_id}" if run_id else "heavymap-overlays",
             "join": "area_share",
-            "label": f"{len(overlay_rows)} zone or designation link{'s' if len(overlay_rows) != 1 else ''}{sliver_txt}",
+            "row_count": len(overlay_rows),
             "rows": overlay_rows,
             "sliver_count": slivers,
         },
     }
     record["gaps"] = parcel_gap_ids(context_from_record(record), idx.gaps_ledger)
-    return dict(screen_record(record))
+    detail = {"addresses_full": all_addresses, "feature_ids": feature_ids}
+    return dict(screen_record(record)), dict(screen_detail(detail))
+
+
+def build_record(idx: Indexes, hm_id: str, core_addresses: int = 5) -> dict[str, Any]:
+    """The core record only (see ``build_record_pair``)."""
+
+    return build_record_pair(idx, hm_id, core_addresses)[0]
 
 
 def _dump(obj: Any) -> bytes:
     return json.dumps(obj, ensure_ascii=False, separators=(",", ":"), sort_keys=False).encode("utf-8")
 
 
+def _sha256(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def _write_file(path: Path, data: bytes) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_bytes(data)
+    os.replace(tmp, path)
+
+
 def write_dossier(
     idx: Indexes,
     out_dir: Path,
     jurisdiction: str = "hamilton",
-    max_addresses: int = 25,
+    core_addresses: int = 5,
     extra_manifest: dict[str, Any] | None = None,
+    release_unit: str = "ca-on-hamilton",
+    release_id: str | None = None,
 ) -> dict[str, Any]:
+    """Write a schema 2 release: shards/, detail/, provenance/, files.json, manifest.json.
+
+    Contract: drafts/wave-1/seam-contract-dossier.md in heavymap-restricted.
+    """
+
     out_dir = Path(out_dir)
-    shard_dir = out_dir / "shards"
-    shard_dir.mkdir(parents=True, exist_ok=True)
+    files: list[dict[str, Any]] = []
+
+    def emit(rel: str, data: bytes) -> None:
+        _write_file(out_dir / rel, data)
+        files.append({"path": rel, "bytes": len(data), "sha256": _sha256(data)})
+
     by_shard: dict[str, list[str]] = defaultdict(list)
     for hm_id in idx.parcels:
         by_shard[shard_key(hm_id)].append(hm_id)
 
     coverage = Counter()
     sizes: dict[str, int] = {}
+    detail_sizes: dict[str, int] = {}
     counts = Counter()
     gap_counts: Counter = Counter()
-    sample_ids: dict[str, str] = {}
     for key in sorted(by_shard):
-        records = {}
+        records, details = {}, {}
         for hm_id in sorted(by_shard[key]):
-            rec = build_record(idx, hm_id, max_addresses)
+            rec, det = build_record_pair(idx, hm_id, core_addresses)
             records[hm_id] = rec
+            details[hm_id] = det
             coverage[rec["coverage"]["status"]] += 1
             counts["records"] += 1
             counts["addresses_linked"] += rec["addresses"]["count"]
-            counts["addresses_shown"] += len(rec["addresses"]["shown"])
+            counts["addresses_in_core"] += len(rec["addresses"]["items"])
             counts["overlay_rows"] += len(rec["overlays"]["rows"])
             counts["sliver_rows_flagged"] += rec["overlays"]["sliver_count"]
-            if rec["addresses"]["truncated"]:
-                counts["address_lists_truncated"] += 1
+            if not rec["addresses"]["complete"]:
+                counts["address_lists_beyond_core"] += 1
             if not rec["overlays"]["rows"]:
                 counts["parcels_without_overlay_rows"] += 1
             for r in rec["roll"]:
@@ -506,17 +529,13 @@ def write_dossier(
                 gap_counts[gid] += 1
             if rec["gaps"]:
                 counts["parcels_with_gaps"] += 1
-        payload = {
-            "schema": SCHEMA_VERSION,
-            "jurisdiction": jurisdiction,
-            "shard": key,
-            "records": records,
-        }
-        data = _dump(payload)
-        tmp = shard_dir / f"{key}.json.tmp"
-        tmp.write_bytes(data)
-        os.replace(tmp, shard_dir / f"{key}.json")
-        sizes[key] = len(data)
+        envelope = {"schema": SCHEMA_VERSION, "jurisdiction": jurisdiction, "shard": key}
+        core = _dump({**envelope, "records": records})
+        emit(f"shards/{key}.json", core)
+        sizes[key] = len(core)
+        det_bytes = _dump({**envelope, "records": details})
+        emit(f"detail/{key}.json", det_bytes)
+        detail_sizes[key] = len(det_bytes)
 
     sources = {k: dict(v) for k, v in BASE_SOURCES.items()}
     for layer in idx.overlay_manifest.get("layers", []):
@@ -530,16 +549,46 @@ def write_dossier(
         if lid != layer["layer_id"]:
             sources[lid]["former_layer_id"] = layer["layer_id"]
 
+    # Provenance detail (loaded when a viewer opens the provenance view). Retrieval
+    # date, licence and archive reference are not captured by this builder yet (BL-099).
+    emit(
+        "provenance/sources.json",
+        _dump(
+            {
+                "schema": SCHEMA_VERSION,
+                "sources": sources,
+                "layer_aliases": LAYER_ALIASES,
+                "fields_unavailable": FIELDS_UNAVAILABLE,
+                "not_yet_captured": ["captured_at", "captured_version", "archive_ref", "licence", "processing_steps"],
+            }
+        ),
+    )
+    # Seed for the label register (wording that used to sit in the manifest).
+    emit("label-seed.json", _dump({"schema": SCHEMA_VERSION, "confidence_words": CONFIDENCE_WORDS}))
+
+    files.sort(key=lambda f: f["path"])
+    files_bytes = _dump({"schema": SCHEMA_VERSION, "files": files})
+    _write_file(out_dir / "files.json", files_bytes)
+
     size_list = sorted(sizes.values())
+    release = {
+        "unit": release_unit,
+        "id": release_id or _dt.date.today().isoformat(),
+    }
     manifest = {
         "schema": SCHEMA_VERSION,
+        "contract_revisions": {"dossier": "0.1"},
+        "release": release,
         "jurisdiction": jurisdiction,
         "shard_key": {
-            "rule": "last two characters of heavymap_id (Crockford ULID random part)",
+            "rule": "last two characters of key (Crockford ULID random part)",
             "path": "shards/{key}.json",
+            "detail_path": "detail/{key}.json",
             "alphabet": "0123456789ABCDEFGHJKMNPQRSTVWXYZ",
             "count": len(sizes),
         },
+        "files_sha256": _sha256(files_bytes),
+        "file_count": len(files),
         "counts": dict(counts),
         "coverage": dict(coverage),
         "coverage_note": "not_covered and in_coverage_unmatched are provisional pending Morgen's decision on the ~46% of parcels outside NPCA roll data.",
@@ -548,24 +597,24 @@ def write_dossier(
             "min": size_list[0] if size_list else 0,
             "median": size_list[len(size_list) // 2] if size_list else 0,
             "max": size_list[-1] if size_list else 0,
+            "detail_total": sum(detail_sizes.values()),
         },
-        "max_addresses_shown": max_addresses,
+        "core_addresses": core_addresses,
         "sliver_rule": idx.overlay_manifest.get("sliver", {}),
         "sliver_policy": (
             "Flag, never extinguish. Every overlay link is in rows; slivers carry "
             "sliver=true (absent means not a sliver) and are counted in sliver_count."
         ),
-        "layer_aliases": LAYER_ALIASES,
-        "sources": sources,
+        "sources": {
+            k: {x: v[x] for x in ("title", "publisher", "band") if x in v} for k, v in sources.items()
+        },
         "property_code_families": [
             {"from": lo, "to": hi, "family": name} for lo, hi, name in PROPERTY_CODE_FAMILIES
         ],
-        "confidence_words": CONFIDENCE_WORDS,
-        "fields_unavailable": FIELDS_UNAVAILABLE,
         "gaps_ledger": manifest_ledger(idx.gaps_ledger),
         "gap_counts": dict(gap_counts),
         "screening": (
-            "Output keys come from heavymap/dossier/schema.py RECORD_SPEC (allowlist). "
+            "Output keys come from heavymap/dossier/schema.py RECORD_SPEC and DETAIL_SPEC (allowlists). "
             "Only SOURCE_FIELDS are read from NPCA files. Owner names, mailing addresses "
             "and legal descriptions are never read past the loader or written."
         ),
@@ -577,24 +626,58 @@ def write_dossier(
     }
     if extra_manifest:
         manifest.update(extra_manifest)
-    (out_dir / "manifest.json").write_bytes(
-        json.dumps(manifest, ensure_ascii=False, indent=1).encode("utf-8")
-    )
+    _write_file(out_dir / "manifest.json", json.dumps(manifest, ensure_ascii=False, indent=1).encode("utf-8"))
     manifest["_shard_sizes"] = sizes
     return manifest
 
 
 def audit_output(out_dir: Path) -> int:
-    """Re-read every shard and re-screen every record. Returns records checked."""
+    """Re-verify a written release. Returns records checked.
+
+    Checks: the manifest hash of files.json; every file's hash; every core record
+    re-screened; no display keys; each record in the shard its key names; detail
+    present for every record; counts match the manifest.
+    """
+
+    out_dir = Path(out_dir)
+    manifest = json.loads((out_dir / "manifest.json").read_text(encoding="utf-8"))
+    files_bytes = (out_dir / "files.json").read_bytes()
+    if _sha256(files_bytes) != manifest.get("files_sha256"):
+        raise ValueError("files.json does not match manifest files_sha256")
+    listed = json.loads(files_bytes)["files"]
+    for entry in listed:
+        data = (out_dir / entry["path"]).read_bytes()
+        if len(data) != entry["bytes"] or _sha256(data) != entry["sha256"]:
+            raise ValueError(f"{entry['path']}: hash or size mismatch")
+    on_disk = {
+        str(p.relative_to(out_dir))
+        for sub in ("shards", "detail", "provenance")
+        for p in (out_dir / sub).glob("*.json")
+    } | {"label-seed.json"}
+    if on_disk != {e["path"] for e in listed}:
+        raise ValueError("files.json does not list exactly the files on disk")
 
     n = 0
-    for path in sorted((Path(out_dir) / "shards").glob("*.json")):
+    envelope = {"schema", "jurisdiction", "shard", "records"}
+    for path in sorted((out_dir / "shards").glob("*.json")):
         payload = json.loads(path.read_text(encoding="utf-8"))
-        if set(payload) != {"schema", "jurisdiction", "shard", "records"}:
+        detail = json.loads((out_dir / "detail" / path.name).read_text(encoding="utf-8"))
+        if set(payload) != envelope or set(detail) != envelope:
             raise ValueError(f"{path.name}: unexpected envelope keys")
+        if set(detail["records"]) != set(payload["records"]):
+            raise ValueError(f"{path.name}: detail records differ from core records")
         for hm_id, rec in payload["records"].items():
-            if rec.get("heavymap_id") != hm_id or shard_key(hm_id) != payload["shard"]:
-                raise ValueError(f"{path.name}: id/shard mismatch for {hm_id}")
+            if rec.get("key") != hm_id or shard_key(hm_id) != payload["shard"]:
+                raise ValueError(f"{path.name}: key/shard mismatch for {hm_id}")
             screen_record(rec)
+            screen_detail(detail["records"][hm_id])
+            full = detail["records"][hm_id]["addresses_full"]
+            if len(full) != rec["addresses"]["count"]:
+                raise ValueError(f"{path.name}: address count mismatch for {hm_id}")
+            if rec["addresses"]["items"] != full[: len(rec["addresses"]["items"])]:
+                raise ValueError(f"{path.name}: core addresses are not a prefix of the full list for {hm_id}")
             n += 1
+    assert_no_display_keys(manifest, "manifest")
+    if n != manifest["counts"].get("records", 0):
+        raise ValueError("record count does not match manifest")
     return n
