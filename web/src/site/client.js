@@ -2,6 +2,7 @@
  * this adds conveniences. Reader and history arrive in build step 4. */
 import "./styles.css";
 import { mountThemePicker } from "./theme-picker.js";
+import { mountMapBars } from "./map-bars.js";
 import { mountReader } from "./reader-page.js";
 import {
   attachArticle,
@@ -24,6 +25,9 @@ if (picker) {
     /* The page keeps the theme the head script chose. */
   }
 }
+
+/* The /map/ bottom bar and top-bar menus (Desks drop-up, place selector). */
+mountMapBars();
 
 /* Edition cards: "Copy link" copies the card's permalink. */
 document.addEventListener("click", async (e) => {

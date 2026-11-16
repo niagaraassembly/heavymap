@@ -25,10 +25,47 @@
 .alt-header .wordmark {
   font-size: 29px;
 }
-.alt-header-caption {
-  font: italic 15px var(--serif);
-  color: var(--green);
-  margin-left: 6px;
+/* The /map/ header: much thinner, no wordmark, no main nav — both live in
+ * the bottom bar. The place selector takes the title's place; the search
+ * and tool slots sit between it and the theme picker at the far right. */
+.alt-header.alt-header--map {
+  height: 52px;
+  gap: 16px;
+  padding: 0 20px;
+  max-width: none;
+}
+.alt-header.alt-header--map .alt-follow {
+  margin-left: 0;
+  padding: 4px 0;
+}
+@media (max-width: 1100px) {
+  .alt-header.alt-header--map .alt-follow {
+    display: none;
+  }
+}
+@media (max-width: 640px) {
+  .alt-header.alt-header--map .hm-map-search {
+    display: none;
+  }
+  .alt-header.alt-header--map .hm-place-button {
+    max-width: 11rem;
+  }
+}
+@media (max-width: 600px) {
+  /* The shared header wraps here; the map header stays one thin row. */
+  .alt-header.alt-header--map {
+    height: 52px;
+    min-height: 0;
+    flex-wrap: nowrap;
+    padding: 0 12px;
+    gap: 8px;
+  }
+  .alt-header.alt-header--map .hm-place-button {
+    max-width: 9rem;
+  }
+  .alt-header.alt-header--map .hm-tool-profile {
+    display: none;
+  }
 }
 .alt-header nav {
   display: flex;
@@ -876,9 +913,6 @@
   }
 }
 @media (max-width: 1100px) {
-  .alt-header-caption {
-    display: none;
-  }
   .alt-header {
     gap: 20px;
   }

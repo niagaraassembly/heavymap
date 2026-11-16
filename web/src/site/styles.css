@@ -302,6 +302,239 @@
   }
 }
 
+/* Map bars (/map/ only): place selector, search and tool slots in the thin
+ * top header; context strip and bottom bar fixed to the viewport. The bars
+ * use theme tokens, so they follow the theme like the rest of the chrome. */
+.hm-place {
+  position: relative;
+}
+.hm-place-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2rem;
+  max-width: 22rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--rule-soft);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--text);
+  font: 0.85rem/1.2 var(--sans);
+  cursor: pointer;
+}
+.hm-place-button span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hm-place-panel {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 0.4rem);
+  z-index: 20;
+  width: 16rem;
+  padding: 0.75rem;
+  background: var(--surface-raised);
+  color: var(--text);
+  border: 1px solid var(--rule-soft);
+  box-shadow: 0 0.6rem 1.5rem var(--shadow);
+  font: 0.9rem/1.4 var(--sans);
+}
+.hm-place-panel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.hm-place-panel li span {
+  display: block;
+  padding: 0.3rem 0.5rem;
+}
+.hm-place-panel li small {
+  display: block;
+  padding: 0 0.5rem 0.3rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+.hm-place-panel p {
+  margin: 0.6rem 0 0;
+  padding: 0.5rem 0.5rem 0;
+  border-top: 1px solid var(--rule-soft);
+}
+.hm-place-panel p + p {
+  border-top: 0;
+  padding-top: 0;
+}
+.hm-map-search {
+  flex: 1 1 auto;
+  min-width: 8rem;
+  max-width: 22rem;
+}
+.hm-map-search input {
+  width: 100%;
+  min-height: 2rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--rule-soft);
+  border-radius: 2px;
+  background: var(--surface);
+  color: var(--text);
+  font: 0.85rem/1.2 var(--sans);
+}
+.hm-map-search input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.hm-tool-slot {
+  min-height: 2rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--rule-soft);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--text);
+  font: 0.85rem/1.2 var(--sans);
+  cursor: not-allowed;
+}
+.hm-tool-slot:disabled {
+  opacity: 0.55;
+}
+.hm-tool-profile {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.45rem;
+}
+.hm-map-context {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 48px;
+  z-index: 30;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 0.3rem 20px;
+  background: var(--surface);
+  color: var(--text-muted);
+  border-top: 1px solid var(--rule-soft);
+  font: 0.72rem/1.4 var(--sans);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.hm-map-context a {
+  color: inherit;
+}
+.hm-map-context span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hm-map-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 48px;
+  padding: 0 20px;
+  background: var(--surface);
+  color: var(--text);
+  border-top: 1px solid var(--rule-soft);
+  font: 0.85rem/1.2 var(--sans);
+}
+.hm-map-bar .wordmark {
+  font-size: 20px;
+}
+.hm-desks-split {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+.hm-desks-split > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0 0.4rem;
+  color: var(--text);
+  text-decoration: none;
+}
+.hm-desks-split > button {
+  min-height: 2rem;
+  padding: 0 0.3rem;
+  border: 0;
+  background: none;
+  color: var(--text);
+  cursor: pointer;
+}
+.hm-desks-panel {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 0.4rem);
+  z-index: 20;
+  width: 15rem;
+  padding: 0.75rem;
+  background: var(--surface-raised);
+  color: var(--text);
+  border: 1px solid var(--rule-soft);
+  box-shadow: 0 -0.6rem 1.5rem var(--shadow);
+  font: 0.9rem/1.4 var(--sans);
+}
+.hm-desks-panel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.hm-desks-panel li a {
+  display: block;
+  min-height: 2rem;
+  padding: 0.3rem 0.5rem;
+  color: var(--text);
+}
+.hm-desks-panel li a:hover {
+  background: var(--surface-tint);
+}
+.hm-desks-group {
+  margin-top: 0.4rem;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.hm-reader-icon {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0 0.3rem;
+  color: var(--text);
+}
+.hm-map-bar-status {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hm-map-bar-back {
+  margin-left: auto;
+  white-space: nowrap;
+  font-size: 0.8rem;
+  color: var(--text);
+}
+/* The fixed bars overlay the page foot; give the map page room for them. */
+body.hm-map-intro {
+  padding-bottom: 84px;
+}
+@media (max-width: 640px) {
+  .hm-map-context span:nth-child(3) {
+    display: none;
+  }
+  .hm-map-bar-status {
+    display: none;
+  }
+}
+
 /* Reader (spec C section 5) */
 .hm-reader-notice {
   margin: 0.5rem 0;

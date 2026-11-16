@@ -88,7 +88,7 @@ function followBand() {
   return `<section class="follow-band"><div><p class="eyebrow">Good intelligence travels.</p><h2>Keep your regions close.</h2><p>Choose the Desks you want to follow. Read on the web, or receive the regional reporting by email.</p></div><a class="button button-light" href="#/subscribe">Choose your Desks ${arrow}</a></section>`;
 }
 function home() {
-  return `<section class="hero"><div class="hero-copy"><p class="eyebrow"><span class="status-dot"></span> Regional intelligence, in perspective</p><h1>A closer reading<br />of <em>place.</em></h1><p class="hero-description">The stories shaping a region.<br />The land behind the story.</p><p class="hero-detail">Follow industry, investment and change through our regional Desks. Explore the geography with HeavyMap.</p><a class="button" href="#/desks">Find your Desk ${arrow}</a></div><div class="hero-art">${atlas()}<div class="art-index"><span>01 — A connected region</span><span>Reporting + geography</span></div></div></section><div class="edition-strip"><span class="eyebrow">From the Desks</span><a href="#/desks/western-new-york/issue-one"><span class="status-dot"></span> Western New York <span class="strip-muted">/ Issue One</span><strong>$49M for Buffalo R&D. A closure in Niagara Falls. A region in motion.</strong><span aria-hidden="true">→</span></a></div><section class="section desks-section"><div class="section-heading"><div><p class="eyebrow">Reporting, rooted in place</p><h2>The Desks<span class="count">02</span></h2></div><p>Each region has its own story.<br />A dedicated Desk follows the details.</p></div><div class="desk-grid">${desks.map(card).join("")}</div></section><section class="latest-section"><div class="latest-label"><p class="eyebrow">In the reading room</p><h2>Western<br />New York</h2><p>Issue One<br />10 October 2026</p><a class="text-link" href="#/desks/western-new-york/issue-one">Read the issue ${arrow}</a></div><div class="latest-stories">${issue.items
+  return `<section class="hero"><div class="hero-copy"><p class="eyebrow"><span class="status-dot"></span> Regional intelligence, in perspective</p><h1>Places change.<br /><em>Keep a closer eye.</em></h1><p class="hero-description">The stories shaping a region.<br />The land behind the story.</p><p class="hero-detail">Follow industry, investment and change through our regional Desks. Explore the geography with HeavyMap.</p><a class="button" href="#/desks">Find your Desk ${arrow}</a></div><div class="hero-art">${atlas()}<div class="art-index"><span>01 — A connected region</span><span>Reporting + geography</span></div></div></section><div class="edition-strip"><span class="eyebrow">From the Desks</span><a href="#/desks/western-new-york/issue-one"><span class="status-dot"></span> Western New York <span class="strip-muted">/ Issue One</span><strong>$49M for Buffalo R&D. A closure in Niagara Falls. A region in motion.</strong><span aria-hidden="true">→</span></a></div><section class="section desks-section"><div class="section-heading"><div><p class="eyebrow">Reporting, rooted in place</p><h2>The Desks<span class="count">02</span></h2></div><p>Each region has its own story.<br />A dedicated Desk follows the details.</p></div><div class="desk-grid">${desks.map(card).join("")}</div></section><section class="latest-section"><div class="latest-label"><p class="eyebrow">In the reading room</p><h2>Western<br />New York</h2><p>Issue One<br />10 October 2026</p><a class="text-link" href="#/desks/western-new-york/issue-one">Read the issue ${arrow}</a></div><div class="latest-stories">${issue.items
     .slice(0, 3)
     .map(
       (s, i) =>
@@ -159,7 +159,7 @@ function render(initial = false) {
   const desk = desks.find((d) => path === `/desks/${d.id}`);
   if (path === "/") {
     html = home();
-    title = "A closer reading of place";
+    title = "";
   } else if (path === "/desks") {
     html = directory();
     title = "The Desks";
@@ -189,7 +189,7 @@ function render(initial = false) {
     title = "Page not found";
   }
   content.innerHTML = html.replaceAll("↗", arrowIcon);
-  document.title = `HeavyMap · ${title}`;
+  document.title = title ? `HeavyMap · ${title}` : "HeavyMap";
   document.querySelectorAll("[data-nav]").forEach((a) => {
     if (path.startsWith(`/${a.dataset.nav}`))
       a.setAttribute("aria-current", "page");
