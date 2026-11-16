@@ -14,6 +14,12 @@
    "sha256": "62efeb3c32f2c345a17b2196d6beabc4f2a20e9ca80422d03591522773368b7f"
   },
   {
+   "path": "parcel.en.json",
+   "domain": "parcel",
+   "locale": "en",
+   "sha256": "fc5c1f5e29f9867f4fffaa5dc1f04b443a6aa2113d28c590c916bcbf10a70f04"
+  },
+  {
    "path": "states.en.json",
    "domain": "states",
    "locale": "en",
