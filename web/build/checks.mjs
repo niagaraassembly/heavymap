@@ -173,13 +173,16 @@ export function budgetReport(outDir) {
 const kb = (n) => `${(n / 1024).toFixed(1)} KB`;
 
 /** Things a public build must never contain. */
-export function publicHygiene(outDir, { preview, unpublished = [] }) {
+export function publicHygiene(
+  outDir,
+  { preview, unpublished = [], allowedPmtiles = [] },
+) {
   const problems = [];
   const files = walk(outDir).map((f) =>
     path.relative(outDir, f).split(path.sep).join("/"),
   );
   for (const f of files) {
-    if (/\.pmtiles$/.test(f))
+    if (/\.pmtiles$/.test(f) && !allowedPmtiles.includes(f))
       problems.push(`${f}: map tiles must not ship in v1`);
     if (/^(studies|compare|alternate|site)\b|round-two/.test(f))
       problems.push(`${f}: review-only page in output`);

@@ -83,6 +83,7 @@ export function createDossierLoader({ base, fetchBytes = defaultFetchBytes, onRe
     pin,
     core: (key) => record("shards", key),
     detail: (key) => record("detail", key),
+    asset: file,
     get release() {
       return current?.manifest.release ?? null;
     },

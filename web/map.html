@@ -6,17 +6,17 @@
     <meta name="theme-color" content="#f5f8fa" />
     <title>HeavyMap · Hamilton field guide</title>
   </head>
-  <body>
+  <body class="standalone-map">
     <header class="topbar">
       <a class="wordmark" href="#">HeavyMap<span class="brand-dot">◒</span></a
       ><span class="place"
         >Hamilton, Ontario <span> / Field guide 001</span></span
-      ><span class="prototype">Synthetic local prototype</span>
+      ><span class="prototype">Public map preview</span>
     </header>
-    <main>
+    <main class="map-workspace">
       <div
         id="map"
-        aria-label="Schematic Hamilton map with three fictional sample parcels"
+        aria-label="City of Hamilton map with parcel selection at close zoom"
       ></div>
       <section class="intro" aria-label="Introduction">
         <span class="eyebrow">A city encased by nature</span>
@@ -32,72 +32,67 @@
         aria-expanded="false"
         aria-controls="tray"
       >
-        Explore lenses
+        Map options
       </button>
-      <aside id="tray" class="tray" aria-label="Explore Hamilton samples">
+      <aside id="tray" class="tray" aria-label="Hamilton map controls">
         <form id="search-form">
-          <label for="search">Find a sample</label>
+          <label for="search">Open a parcel record</label>
           <div class="search-row">
             <input
               id="search"
               type="search"
-              placeholder="Sample, roll alias or key…"
+              placeholder="Paste a parcel key…"
               autocomplete="off"
-            /><button aria-label="Search samples">Go</button>
+            /><button aria-label="Open parcel key">Go</button>
           </div>
         </form>
         <div class="tray-heading">
-          <h2>Opportunity lenses</h2>
-          <span>01 / Investigate</span>
+          <h2>Hamilton parcels</h2>
+          <span id="parcel-count">Loading</span>
         </div>
         <p class="subtext">
-          Vacant & underused: an evidence lens,<br />not a conclusion about the
-          land.
+          Zoom in to see parcel outlines. Select any outline to open its
+          evidence record.
         </p>
-        <div id="lenses"></div>
         <details class="layers">
-          <summary>Context layers <span>＋</span></summary>
-          <div id="layers"></div>
+          <summary>Map layers <span>＋</span></summary>
+          <label class="layer">
+            <input id="parcels-visible" type="checkbox" checked />
+            <span><strong>Hamilton parcels</strong><small>Key-only tiles · zoom 14–16</small></span>
+          </label>
         </details>
         <div class="samples-heading">
-          <h2>Places to begin</h2>
+          <h2>Selection</h2>
           <span id="result-count"></span>
         </div>
         <div id="samples"></div>
         <p id="search-status" role="status"></p>
       </aside>
       <div class="map-tools">
-        <label for="palette">Map study</label
-        ><select id="palette">
-          <option value="field">Quiet vector</option>
-          <option value="wash">Watercolour study</option></select
-        ><button id="home" title="Reset map view">
+        <button id="home" title="Reset map view">
           ⌂ <span>Hamilton</span>
         </button>
       </div>
       <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
       <aside id="dossier" class="dossier" aria-label="Parcel dossier" hidden>
         <div class="dossier-top">
-          <span class="eyebrow">Parcel field notes · synthetic</span
+          <span class="eyebrow">Parcel field notes · D-070 release</span
           ><button id="close" aria-label="Close dossier">✕</button>
         </div>
         <div id="dossier-body"></div>
       </aside>
       <div id="map-status" class="map-status" role="status">
-        Loading local synthetic tiles…
+        Loading Hamilton map…
       </div>
       <footer class="map-footer">
         <div>
-          <span class="legend-dot nature"></span>Nature
-          <span class="legend-dot signal"></span>Investigative signal
-          <span class="legend-dot public"></span>Public claim
+          <span class="legend-dot signal"></span>Hamilton parcel boundary
         </div>
-        <span>Schematic geography · all records invented · no live feed</span>
+        <span>Still image fallback · parcel selection from zoom 14</span>
       </footer>
     </main>
     <noscript
-      >This local interactive prototype requires JavaScript. All sample records
-      are invented.</noscript
+      >This interactive Hamilton map preview requires JavaScript.</noscript
     >
     <script type="module" src="/src/app.js"></script>
   </body>

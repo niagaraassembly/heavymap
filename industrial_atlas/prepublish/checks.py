@@ -53,6 +53,10 @@ def file_kind(rel: str) -> str:
         return "dossier_provenance"
     if name == "files.json":
         return "dossier_files"
+    if name == "tiles-manifest.json":
+        return "tiles_manifest"
+    if name == "layers.json" and "tiles" in parts:
+        return "layer_catalogue"
     if name == "label-seed.json":
         return "dossier_label_seed"
     if name == "manifest.json":
@@ -188,6 +192,10 @@ def _allowlist_for(kind: str) -> frozenset[str] | None:
         return config.DOSSIER_PROVENANCE_KEYS
     if kind == "dossier_label_seed":
         return config.DOSSIER_LABEL_SEED_KEYS
+    if kind == "tiles_manifest":
+        return config.TILES_MANIFEST_KEYS
+    if kind == "layer_catalogue":
+        return config.LAYER_CATALOGUE_KEYS
     if kind == "dossier_manifest":
         return config.DOSSIER_MANIFEST_KEYS
     if kind == "run_record":

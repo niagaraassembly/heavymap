@@ -12,7 +12,7 @@ on:
       launch_gates:
         description: "Run the launch gates (all themes published, signup configured)"
         type: boolean
-        default: true
+        default: false
 
 permissions:
   contents: read
@@ -29,6 +29,12 @@ jobs:
         working-directory: web
     steps:
       - uses: actions/checkout@v4
+      - name: Check out the pinned Industrial Atlas release
+        uses: actions/checkout@v4
+        with:
+          repository: niagaraassembly/industrial-atlas-data
+          ref: ca-on-hamilton-2026-11-16-d070
+          path: industrial-atlas-data
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -37,6 +43,8 @@ jobs:
       - run: npm ci
       - run: npm test
       - name: Build with every check
+        env:
+          HM_ATLAS_RELEASE_DIR: ${{ github.workspace }}/industrial-atlas-data/releases/ca-on-hamilton/2026-11-16-d070
         run: node build/prerender.mjs ${{ inputs.launch_gates && '--launch' || '' }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

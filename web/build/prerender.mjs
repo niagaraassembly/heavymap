@@ -25,6 +25,7 @@ import {
 } from "./checks.mjs";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
+import { copyAtlasRelease } from "./copy-atlas-release.mjs";
 
 const web = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 export const PAGES_DIR = path.join(web, ".site");
@@ -96,6 +97,7 @@ export function renderSite({ preview = false } = {}) {
         .split(path.sep)
         .join("/");
     const rel = fromPage(CLIENT);
+    const mapApp = page.path === "/map/" ? fromPage(path.join(web, "src/app.js")) : null;
     return {
       ...page,
       file,
@@ -111,7 +113,7 @@ export function renderSite({ preview = false } = {}) {
           css: themes
             .filter((t) => t.tokens)
             .map((t) => fromPage(path.join(SITE_SRC, t.tokens))),
-          js: [rel],
+          js: mapApp ? [rel, mapApp] : [rel],
         },
       }),
     };
@@ -201,6 +203,16 @@ async function main() {
     fs.cpSync(path.join(STATIC_ROOT, dir), path.join(OUT_DIR, dir), {
       recursive: true,
     });
+  fs.cpSync(path.join(web, "../labels"), path.join(OUT_DIR, "labels"), {
+    recursive: true,
+  });
+
+  const atlasRelease = process.env.HM_ATLAS_RELEASE_DIR
+    ? copyAtlasRelease({
+        sourceDir: process.env.HM_ATLAS_RELEASE_DIR,
+        outputDir: OUT_DIR,
+      })
+    : null;
 
   const budgets = budgetReport(OUT_DIR);
   fail("size budgets (decision 56, BETA-GATE section 6)", budgets.problems);
@@ -208,6 +220,9 @@ async function main() {
     "public build hygiene (spec G section 3)",
     publicHygiene(OUT_DIR, {
       preview,
+      allowedPmtiles: atlasRelease
+        ? [`${atlasRelease.path}/tiles/parcels.pmtiles`]
+        : [],
       unpublished: content.themes.themes
         .filter((t) => t.status !== "published")
         .map((t) => t.id),
@@ -230,6 +245,7 @@ async function main() {
         "utf8",
       ),
     ),
+    atlas_release: atlasRelease,
     themes: themes.map((t) => t.id),
     pages: pages.length,
     sizes_compressed: {

@@ -113,9 +113,8 @@ DOSSIER_MANIFEST_KEYS = frozenset(
 )
 
 TILE_PROPERTY_KEYS = {
-    "parcels": frozenset(
-        {"ia_id", "arn_grade", "area_m2", "arn_count", "arn", "arn_all"}
-    ),
+    # CN-03: only the schema 2 record key is carried by parcel features.
+    "parcels": frozenset({"key"}),
     "buildings": frozenset(
         {"ia_id", "area_m2", "parcel_ia_id", "name"}
     ),
@@ -123,6 +122,21 @@ TILE_PROPERTY_KEYS = {
     "nature-greenbelt": frozenset({"designation"}),
     "nature-conservation": frozenset({"authority"}),
 }
+
+TILES_MANIFEST_KEYS = frozenset(
+    {
+        "schema_version", "min_zoom", "max_zoom", "bounds", "tile_format",
+        "generated_at", "source_refs", "sha256", "bytes", "tile_layer",
+        "registry_run", "feature_count", "tool", "processing",
+    }
+)
+
+LAYER_CATALOGUE_KEYS = frozenset(
+    {
+        "schema_version", "layers", "id", "role", "geometry", "source",
+        "default_visible", "tile_layer", "coverage", "state", "order",
+    }
+)
 
 RUN_RECORD_KEYS = frozenset(
     {
