@@ -131,12 +131,15 @@ const gz = (buf) => zlib.gzipSync(buf, { level: 9 }).length;
 
 export const BUDGETS = {
   startupData: 50 * 1024, // decision 56: start-up data ≤ 50 KB compressed
-  appCode: 500 * 1024, // decision 56: app code ≤ 500 KB compressed
+  // D-076: the 500 KB app-code limit is suspended as a build failure while
+  // the core map features are built; it stays as a reported measurement.
+  appCode: 500 * 1024, // decision 56 (suspended by D-076): app code reference size
   file: 100 * 1024 * 1024, // each file ≤ 100 MB
   site: 1024 * 1024 * 1024, // site ≤ 1 GB
 };
 
-/** Sizes and budget problems for a built site. */
+/** Sizes, budget problems and reported measurements for a built site.
+ * D-076: app code over the old limit is a note, not a problem. */
 export function budgetReport(outDir) {
   const files = walk(outDir);
   const sizes = files.map((f) => ({ f, bytes: fs.statSync(f).size }));
@@ -153,13 +156,14 @@ export function budgetReport(outDir) {
     if (m) startupData = Math.max(startupData, gz(Buffer.from(m[1])));
   }
   const problems = [];
+  const notes = [];
   if (startupData > BUDGETS.startupData)
     problems.push(
       `start-up data ${kb(startupData)} > ${kb(BUDGETS.startupData)} compressed`,
     );
   if (appCode > BUDGETS.appCode)
-    problems.push(
-      `app code ${kb(appCode)} > ${kb(BUDGETS.appCode)} compressed`,
+    notes.push(
+      `app code ${kb(appCode)} is over the suspended ${kb(BUDGETS.appCode)} limit (D-076: reported, not a failure)`,
     );
   for (const s of sizes)
     if (s.bytes > BUDGETS.file)
@@ -167,6 +171,7 @@ export function budgetReport(outDir) {
   if (total > BUDGETS.site) problems.push(`site is ${kb(total)}, over 1 GB`);
   return {
     problems,
+    notes,
     sizes: { startupData, appCode, total, files: files.length },
   };
 }

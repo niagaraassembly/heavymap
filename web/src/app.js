@@ -2,68 +2,155 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import "./style.css";
 import { loadLabels } from "./labels.js";
 import { createDossierLoader } from "./dossier-loader.js";
-import { el, renderSchema2DossierFromLoader } from "./dossier.js";
+import { summariseRecord } from "./parcel-summary.js";
+import { parcelCardElement, parcelDrawerElement } from "./parcel-views.js";
+import { el } from "./dossier.js";
 import { FieldMap } from "./map.js";
 
 const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
-const panel = document.getElementById("dossier");
+const cardSlot = document.getElementById("parcel-card-slot");
+const drawerSlot = document.getElementById("parcel-drawer-slot");
 let selected = null;
+let view = null;
+let current = null;
 let opener = null;
+let loading = false;
+let loadToken = 0;
 let map;
 let loader;
 let labels;
+let manifestSources = null;
 
 function status(text) {
   document.getElementById("map-status").textContent = text;
 }
 
-function dossierMessage(text) {
-  const body = document.getElementById("dossier-body");
-  body.replaceChildren(el("p", text, "subtext"));
-}
-
-function updateLocation(key) {
+function updateLocation(key, level) {
   const url = key
-    ? `#parcel=${encodeURIComponent(key)}`
+    ? `#parcel=${encodeURIComponent(key)}${level === "card" ? "&view=card" : ""}`
     : location.pathname + location.search;
   history.replaceState(null, "", url);
 }
 
-async function openParcel(parcel, trigger) {
+function renderLevel(level) {
+  const { summary, releaseId, geometry } = current;
+  if (level === "card") {
+    drawerSlot.replaceChildren();
+    drawerSlot.hidden = true;
+    cardSlot.replaceChildren(
+      parcelCardElement(summary, labels, {
+        geometry,
+        onOpenRecord: () => {
+          view = "drawer";
+          updateLocation(current.key);
+          renderLevel("drawer");
+        },
+        onClose: closeAll,
+      }),
+    );
+    cardSlot.hidden = false;
+    document.body.classList.add("has-parcel-card");
+    document.body.classList.remove("has-parcel-drawer");
+    cardSlot.querySelector(".parcel-go")?.focus({ preventScroll: true });
+  } else {
+    cardSlot.replaceChildren();
+    cardSlot.hidden = true;
+    drawerSlot.replaceChildren(
+      parcelDrawerElement(summary, labels, {
+        geometry,
+        releaseId,
+        // BL-107: no feedback target is configured yet, so Report a
+        // problem stays hidden.
+        feedbackUrl: null,
+        onClose: stepBack,
+      }),
+    );
+    drawerSlot.hidden = false;
+    document.body.classList.add("has-parcel-drawer");
+    document.body.classList.remove("has-parcel-card");
+    drawerSlot.querySelector(".parcel-btn:not([disabled])")?.focus({ preventScroll: true });
+  }
+  view = level;
+  // A parcel clicked on the map eases into the visible area above the
+  // panel; a deep link carries no location, so the map does not move.
+  if (geometry) {
+    const panel = level === "card" ? cardSlot.firstElementChild : drawerSlot.firstElementChild;
+    map.focusParcel(geometry, (panel?.offsetHeight ?? 0) + 64 + 16);
+  }
+}
+
+async function openParcel(parcel, trigger, level = "card") {
   if (!loader || !labels) {
     status("The Hamilton data release is unavailable; the still image remains available.");
     return;
   }
+  if (selected?.id === parcel.id && view === level && current) return;
+  const token = ++loadToken;
+  loading = true;
   selected = parcel;
   opener = trigger || opener;
-  panel.hidden = false;
-  document.body.classList.add("has-dossier");
   document.getElementById("tray").classList.remove("mobile-open");
   document.getElementById("tray-toggle").setAttribute("aria-expanded", "false");
-  dossierMessage("Loading verified parcel record…");
   map.select(parcel);
-  updateLocation(parcel.id);
-  const result = await renderSchema2DossierFromLoader(
-    loader,
-    parcel.id,
-    labels,
-    document.getElementById("dossier-body"),
-  );
-  if (!result.ok) {
-    dossierMessage(`This parcel record could not be verified (${result.reason}).`);
-    status("The selected key is not available in the pinned Hamilton release.");
-  } else {
-    document.getElementById("dossier-body").scrollTop = 0;
-    status(`Verified parcel record · release ${result.release.id}`);
+  status("Loading verified parcel record…");
+  const coreResult = await loader.core(parcel.id);
+  if (token !== loadToken) {
+    loading = false;
+    return;
   }
-  document.getElementById("close").focus({ preventScroll: true });
+  if (!coreResult.ok) {
+    loading = false;
+    closeAll();
+    status("The selected key is not available in the pinned Hamilton release.");
+    return;
+  }
+  const detailResult = await loader.detail(parcel.id);
+  if (token !== loadToken) {
+    loading = false;
+    return;
+  }
+  loading = false;
+  current = {
+    key: parcel.id,
+    summary: summariseRecord(
+      coreResult.record,
+      detailResult.ok ? detailResult.record : null,
+      labels,
+      { sources: manifestSources },
+    ),
+    releaseId: coreResult.release.id,
+    geometry: parcel.geometry ?? null,
+  };
+  updateLocation(parcel.id, level);
+  renderLevel(level);
+  status(`Verified parcel record · release ${coreResult.release.id}`);
 }
 
-function close() {
-  if (!selected) return;
-  panel.hidden = true;
-  document.body.classList.remove("has-dossier");
+function stepBack() {
+  if (loading) {
+    closeAll();
+    return;
+  }
+  if (view === "drawer" && current) {
+    updateLocation(current.key, "card");
+    renderLevel("card");
+  } else if (view === "card") {
+    closeAll();
+  }
+}
+
+function closeAll() {
+  if (!selected && !view) return;
+  loadToken++;
+  loading = false;
   selected = null;
+  current = null;
+  view = null;
+  cardSlot.replaceChildren();
+  cardSlot.hidden = true;
+  drawerSlot.replaceChildren();
+  drawerSlot.hidden = true;
+  document.body.classList.remove("has-parcel-card", "has-parcel-drawer");
   map.close();
   updateLocation(null);
   if (opener?.isConnected && !opener.hidden) opener.focus({ preventScroll: true });
@@ -88,20 +175,23 @@ function search() {
   }
   const button = el("button", undefined, "sample");
   button.append(el("span", "↗", "sample-number"), el("span", key), el("span", "›", "sample-arrow"));
-  button.addEventListener("click", () => openParcel({ id: key }, button));
+  button.addEventListener("click", () => openParcel({ id: key }, button, "drawer"));
   list.append(button);
   document.getElementById("result-count").textContent = "1 key";
   document.getElementById("search-status").textContent = "Open this release record.";
 }
 
 function route() {
-  const key = new URLSearchParams(location.hash.slice(1)).get("parcel");
+  const params = new URLSearchParams(location.hash.slice(1));
+  const key = params.get("parcel");
   if (!key) {
-    if (selected) close();
+    if (selected) closeAll();
     return;
   }
   const fullKey = parcelKey(key);
-  if (fullKey) void openParcel({ id: fullKey });
+  // A deep link opens the drawer; view=card opens the card. view=work is
+  // the phase 2 workspace (BL-118); until then it opens the drawer.
+  if (fullKey) void openParcel({ id: fullKey }, null, params.get("view") === "card" ? "card" : "drawer");
   else status("This is not a Hamilton parcel key.");
 }
 
@@ -112,6 +202,7 @@ async function start() {
   const tileResult = pin.ok ? await loader.asset("tiles/tiles-manifest.json") : { ok: false };
   const layerResult = pin.ok ? await loader.asset("tiles/layers.json") : { ok: false };
   labels = await labelsPromise;
+  manifestSources = pin.ok ? pin.manifest?.sources ?? null : null;
 
   const tileManifest = tileResult.ok ? tileResult.doc : null;
   const parcelLayer = layerResult.ok
@@ -121,7 +212,7 @@ async function start() {
     pin.ok && tileManifest && parcelLayer && parcelLayer.tile_layer === tileManifest.tile_layer,
   );
   map = new FieldMap({
-    onSelect: (parcel, trigger) => void openParcel(parcel, trigger),
+    onSelect: (parcel, trigger) => void openParcel(parcel, trigger, "card"),
     onStatus: status,
     tilesUrl: tilesReady ? `${RELEASE_BASE}tiles/parcels.pmtiles` : null,
     tileLayer: tilesReady ? tileManifest.tile_layer : null,
@@ -154,8 +245,7 @@ async function start() {
     search();
     document.querySelector("#samples button")?.click();
   });
-  document.getElementById("close").addEventListener("click", close);
-  document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape") stepBack(); });
   document.getElementById("home").addEventListener("click", () => map.home());
   document.getElementById("tray-toggle").addEventListener("click", (event) => {
     const open = document.getElementById("tray").classList.toggle("mobile-open");

@@ -1015,3 +1015,444 @@ h2 {
   font-size: 23px;
   letter-spacing: 0.05em;
 }
+
+/* ---- Parcel card and drawer (BL-117, parcel-views design §5.2, §5.3) ---- */
+/* One white bar, hairline dividers, no colour blocks; rust only for
+ * attention. Tokens are the map workspace's own (scoped above). */
+.has-parcel-card .intro,
+.has-parcel-drawer .intro {
+  opacity: 0;
+}
+.parcel-thumb {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  background: var(--surface-tint);
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.parcel-thumb svg {
+  width: 30px;
+  height: 30px;
+}
+.parcel-thumb polygon {
+  fill: #a2513829;
+  stroke: var(--rust);
+  stroke-width: 1.5;
+}
+.parcel-thumb-empty {
+  border-style: dashed;
+  background: none;
+}
+.parcel-title {
+  font-family: Georgia, serif;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.parcel-sub {
+  color: var(--muted);
+  font-size: 11.5px;
+  margin: 2px 0 0;
+  overflow-wrap: anywhere;
+}
+.parcel-card {
+  position: absolute;
+  left: 50%;
+  bottom: 64px;
+  transform: translateX(-50%);
+  background: var(--surface-raised);
+  border: 1px solid var(--rule-soft);
+  border-radius: 16px;
+  box-shadow: 0 10px 40px var(--shadow);
+  display: flex;
+  align-items: stretch;
+  padding: 10px 8px 10px 14px;
+  z-index: 4;
+  max-width: calc(100% - 32px);
+}
+.parcel-card-id {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding-right: 18px;
+  min-width: 0;
+}
+.parcel-fact {
+  padding: 4px 18px;
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 92px;
+}
+.parcel-fact small {
+  font-size: 10px;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+.parcel-fact b {
+  font-size: 15.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.parcel-fact-plan b {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  max-width: 220px;
+  line-height: 1.25;
+}
+.parcel-fact i {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 11.5px;
+  white-space: nowrap;
+}
+.parcel-fact-plan i {
+  white-space: normal;
+}
+.parcel-fact-warn b {
+  color: var(--rust);
+}
+.parcel-go {
+  margin-left: 8px;
+  background: var(--deep);
+  color: #fff;
+  border: 0;
+  border-radius: 11px;
+  padding: 0 18px;
+  font-weight: 600;
+  font-size: 12.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.parcel-go:hover {
+  background: #17313f;
+}
+.parcel-xx {
+  border: 0;
+  background: none;
+  color: var(--muted);
+  width: 28px;
+  border-radius: 8px;
+  font-size: 14px;
+  align-self: center;
+  flex: none;
+}
+.parcel-xx:hover {
+  background: var(--surface-tint);
+}
+.parcel-drawer {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 64px;
+  background: var(--surface-raised);
+  border: 1px solid var(--rule-soft);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px var(--shadow);
+  padding: 8px 20px 16px;
+  z-index: 4;
+  max-height: calc(100% - 80px);
+  overflow-y: auto;
+}
+.parcel-grab {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: #d3dde3;
+  margin: 0 auto 10px;
+}
+.parcel-drawer-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+.parcel-drawer-titles {
+  min-width: 0;
+}
+.parcel-drawer-titles .parcel-title {
+  font-size: 25px;
+}
+.parcel-match {
+  margin: 1px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.parcel-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.parcel-btn {
+  border: 1px solid #d8e2e8;
+  background: #fff;
+  border-radius: 9px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  min-height: 32px;
+  text-decoration: none;
+  color: inherit;
+}
+.parcel-btn:hover {
+  background: var(--surface-tint);
+}
+.parcel-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.parcel-btn:disabled:hover {
+  background: #fff;
+}
+.parcel-btn-pri {
+  background: var(--deep);
+  color: #fff;
+  border-color: var(--deep);
+}
+.parcel-btn-pri:disabled:hover {
+  background: var(--deep);
+}
+.parcel-btn-pri .parcel-coming {
+  color: #c5d5dd;
+}
+.parcel-btn-ico {
+  padding: 6px 9px;
+  color: var(--muted);
+}
+.parcel-coming {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.parcel-tiles {
+  display: grid;
+  grid-template-columns: 0.8fr 1.7fr 1.25fr 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+.parcel-tile {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 11px 14px;
+  min-height: 0;
+  background: #fff;
+  min-width: 0;
+}
+.parcel-tile > small {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 7px;
+}
+.parcel-tile b {
+  display: block;
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: 27px;
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+.parcel-tile span {
+  font-size: 12px;
+  color: var(--muted);
+}
+.parcel-tile-dark {
+  background: var(--deep);
+  border-color: var(--deep);
+  color: #fff;
+}
+.parcel-tile-dark > small {
+  color: #9fb6c2;
+}
+.parcel-tile-dark span {
+  color: #c5d5dd;
+}
+.parcel-tile ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+}
+.parcel-tile li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 3px 0;
+  border-bottom: 1px solid var(--line);
+}
+.parcel-tile li:last-child {
+  border: 0;
+}
+.parcel-tile li em {
+  font-style: normal;
+  color: var(--muted);
+  text-align: right;
+}
+.parcel-tile li em.parcel-inside {
+  color: var(--sage);
+  font-weight: 600;
+}
+.parcel-lr {
+  display: grid;
+  grid-template-columns: 96px 1fr auto;
+  gap: 2px 8px;
+  align-items: baseline;
+  padding: 3px 0;
+  font-size: 12px;
+}
+.parcel-lr span {
+  color: var(--muted);
+}
+.parcel-lr strong {
+  font-weight: 600;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.parcel-lr em {
+  font-style: normal;
+  color: var(--muted);
+  font-size: 11.5px;
+}
+.parcel-bar {
+  grid-column: 2 / -1;
+  height: 3px;
+  background: var(--meter-track);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.parcel-bar span {
+  display: block;
+  height: 100%;
+  background: var(--sage);
+}
+.parcel-mini {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--link-soft);
+  font-weight: 600;
+  min-height: 0;
+  text-align: right;
+}
+.parcel-mini.parcel-warn {
+  color: var(--rust);
+}
+.parcel-drawer-foot {
+  display: flex;
+  margin-top: 12px;
+  align-items: center;
+}
+.parcel-verified {
+  margin-left: auto;
+  color: var(--sage);
+  font-size: 12px;
+  font-weight: 600;
+}
+.parcel-detail {
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  position: relative;
+}
+.parcel-detail-title {
+  font-size: 13px;
+  margin: 0 0 6px;
+  padding-right: 36px;
+}
+.parcel-detail-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  max-height: 160px;
+  overflow-y: auto;
+}
+.parcel-detail-list li {
+  padding: 2px 0;
+  overflow-wrap: anywhere;
+}
+.parcel-detail .parcel-xx {
+  position: absolute;
+  top: 6px;
+  right: 0;
+}
+@media (max-width: 900px) {
+  .parcel-card {
+    left: 8px;
+    right: 8px;
+    bottom: 55px;
+    transform: none;
+    flex-wrap: wrap;
+    padding: 12px;
+  }
+  .parcel-card-id {
+    flex-basis: 100%;
+    padding: 0 0 10px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 10px;
+  }
+  .parcel-fact {
+    flex: 1 1 40%;
+    border-left: 0;
+    padding: 6px 8px 6px 0;
+  }
+  .parcel-fact-plan {
+    display: none;
+  }
+  .parcel-go {
+    flex: 1 1 100%;
+    margin: 8px 0 0;
+    justify-content: center;
+    min-height: 44px;
+  }
+  .parcel-drawer {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 22px 22px 0 0;
+    max-height: 66%;
+    padding: 8px 14px 16px;
+  }
+  .parcel-drawer-head {
+    flex-wrap: wrap;
+  }
+  .parcel-actions {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+  .parcel-tiles {
+    grid-template-columns: 1fr 1fr;
+  }
+  .parcel-tile-land {
+    grid-column: 1 / -1;
+  }
+  .has-parcel-card .maplibregl-ctrl-bottom-right,
+  .has-parcel-drawer .maplibregl-ctrl-bottom-right {
+    bottom: auto;
+    top: 70px;
+  }
+}
