@@ -8,12 +8,40 @@ export function el(tag, text, className) {
 }
 export function renderDossier(parcel, container) {
   container.replaceChildren();
-  container.append(
+  /* Identity header: pinned while the bands scroll (sticky in CSS). It is
+   * the same identity the Make modal uses as its focus box: name, address,
+   * grain and jurisdiction, spine key. */
+  const identity = el("header", undefined, "dossier-identity");
+  identity.append(
     el("h2", parcel.name, "dossier-title"),
     el("p", parcel.address, "address"),
     el("p", `${parcel.grain} · ${parcel.jurisdiction}`, "subtext"),
     el("p", parcel.id, "spine-key"),
   );
+  /* Band index: jump between bands without losing the parcel. Buttons, not
+   * links, so the #parcel= hash (the deep link) is left alone. */
+  const nav = el("nav", undefined, "dossier-bands");
+  nav.setAttribute("aria-label", "Dossier bands");
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  for (const [index, band] of bands.entries()) {
+    const button = el(
+      "button",
+      `${String(index + 1).padStart(2, "0")} ${labels[band]}`,
+      "dossier-band-link",
+    );
+    button.type = "button";
+    button.addEventListener("click", () => {
+      document
+        .getElementById(`band-${band}`)
+        ?.scrollIntoView({
+          behavior: reduceMotion ? "auto" : "smooth",
+          block: "start",
+        });
+    });
+    nav.append(button);
+  }
+  identity.append(nav);
+  container.append(identity);
   const note = el("div", undefined, "sample-note");
   note.append(
     el("strong", "A sample, not a site finding."),
@@ -25,6 +53,7 @@ export function renderDossier(parcel, container) {
   container.append(note);
   for (const [index, band] of bands.entries()) {
     const section = el("section", undefined, "band");
+    section.id = `band-${band}`;
     section.dataset.band = band;
     section.append(
       el("span", String(index + 1).padStart(2, "0"), "band-number"),

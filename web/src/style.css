@@ -16,6 +16,19 @@
   --rust: #a25138;
   --sage: #618574;
   --violet: #796094;
+  /* Dossier tokens: the sidebar's surfaces, all in one place. */
+  --surface: #f8fafc;
+  --surface-raised: #ffffff;
+  --surface-tint: #eaf0f5;
+  --rule-soft: #d1dee7;
+  --deep: #294d60;
+  --meter-track: #e1e8ed;
+  --meter-fill: #9caeaa;
+  --next-tint: #f4ece8;
+  --claim-ink: #46677c;
+  --link-soft: #3e6077;
+  --shadow: #23425721;
+  --focus-ring: #626ca7;
 }
 * {
   box-sizing: border-box;
@@ -42,7 +55,7 @@ a:focus-visible,
 input:focus-visible,
 summary:focus-visible,
 select:focus-visible {
-  outline: 3px solid #626ca7;
+  outline: 3px solid var(--focus-ring);
   outline-offset: 3px;
 }
 button:hover {
@@ -435,10 +448,10 @@ h2 {
   top: 16px;
   bottom: 64px;
   width: 410px;
-  background: #f8fafc;
-  border: 1px solid #d1dee7;
+  background: var(--surface);
+  border: 1px solid var(--rule-soft);
   border-radius: 16px;
-  box-shadow: -8px 10px 45px #23425721;
+  box-shadow: -8px 10px 45px var(--shadow);
   z-index: 4;
   display: flex;
   flex-direction: column;
@@ -455,9 +468,40 @@ h2 {
   background: none;
   width: 44px;
 }
+/* Identity header: pinned under the dossier top while the bands scroll.
+ * Negative side margins span the panel edge to edge; the body padding
+ * supplies the breathing room inside. */
+.dossier-identity {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin: 0 -25px;
+  padding: 12px 25px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--rule-soft);
+}
+.dossier-bands {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 14px;
+  margin-top: 10px;
+}
+.dossier-band-link {
+  min-height: 28px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.dossier-band-link:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
 #dossier-body {
   overflow-y: auto;
-  padding: 6px 25px 25px;
+  padding: 0 25px 25px;
   scrollbar-width: thin;
 }
 .dossier-title {
@@ -479,7 +523,7 @@ h2 {
   color: var(--muted);
 }
 .sample-note {
-  background: #eaf0f5;
+  background: var(--surface-tint);
   border-radius: 10px;
   padding: 13px;
   margin-top: 18px;
@@ -494,6 +538,8 @@ h2 {
   border-top: 1px solid var(--line);
   padding-top: 20px;
   margin-top: 24px;
+  /* Jump-nav landings clear the pinned identity header. */
+  scroll-margin-top: 180px;
 }
 .band-number {
   font-size: 12px;
@@ -507,9 +553,13 @@ h2 {
 }
 .claim {
   margin-bottom: 20px;
+  background: var(--surface-raised);
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  padding: 12px 14px;
 }
 .claim-meta {
-  color: #46677c;
+  color: var(--claim-ink);
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -537,14 +587,14 @@ h2 {
 .share {
   height: 4px;
   width: 100%;
-  background: #e1e8ed;
+  background: var(--meter-track);
   border-radius: 5px;
   overflow: hidden;
 }
 .share span {
   height: 100%;
   display: block;
-  background: #9caeaa;
+  background: var(--meter-fill);
 }
 .community {
   border-left: 3px solid var(--violet);
@@ -559,7 +609,7 @@ h2 {
 }
 .evidence summary {
   font-size: 12px;
-  color: #3e6077;
+  color: var(--link-soft);
   padding: 5px 0;
 }
 .evidence dl {
@@ -569,7 +619,7 @@ h2 {
   font-size: 12px;
   line-height: 1.6;
   margin: 8px 0;
-  background: #edf2f6;
+  background: var(--surface-tint);
   padding: 10px;
   border-radius: 6px;
 }
@@ -580,9 +630,13 @@ h2 {
   margin: 0;
   overflow-wrap: anywhere;
 }
+/* Refusals are flagged, never extinguished: a rust edge and a tinted
+ * ground mark the sliver, while the row itself stays in the band. */
 .refusal {
-  border-left: 2px solid #b8c5ce;
-  padding-left: 12px;
+  border-left: 3px solid var(--rust);
+  background: var(--surface-tint);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 12px;
   margin: 16px 0;
   font-size: 12px;
 }
@@ -593,10 +647,10 @@ h2 {
 }
 .refusal code {
   font-size: 12px;
-  color: #506573;
+  color: var(--rust);
 }
 .next-check {
-  background: #f4ece8;
+  background: var(--next-tint);
   padding: 15px;
   border-radius: 10px;
   font-size: 12px;
@@ -607,8 +661,8 @@ h2 {
 }
 .export {
   width: 100%;
-  background: #294d60;
-  color: #fff;
+  background: var(--deep);
+  color: var(--surface-raised);
   border: 0;
   border-radius: 8px;
   font-size: 12px;
@@ -758,6 +812,19 @@ h2 {
   }
   #dossier-body {
     padding-inline: 20px;
+  }
+  /* The sticky identity spans the sheet edge to edge, as on desktop. */
+  .dossier-identity {
+    margin-inline: -20px;
+    padding-inline: 20px;
+  }
+  /* The band index scrolls sideways on the sheet instead of wrapping
+   * to three lines and eating the reading area. */
+  .dossier-bands {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
   }
   .dossier-title {
     font-size: 25px;
