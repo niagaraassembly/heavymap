@@ -1,5 +1,7 @@
 # HeavyMap
 
+HeavyMap is a global industrial intelligence tool: it maps, informs, publishes and promotes. Hamilton and Niagara-Brant are the launch slice, not the scope.
+
 Beta for this repository is the **top level**. Prior-art work (the original `niagara-atlas/` prototype, now under [`first-attempts/niagara-atlas/`](first-attempts/niagara-atlas/)) is reference only. It is not the product root.
 
 How a parcel is known and shown is specified in [docs/architecture/](docs/architecture/README.md):

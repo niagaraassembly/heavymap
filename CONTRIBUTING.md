@@ -1,6 +1,6 @@
 # Contributing to HeavyMap
 
-HeavyMap is industrial intelligence for cross-border Niagara, built in the open. This file is for human contributors — humans opening issues, reviewing pull requests, or writing code or docs by hand. If you are an AI agent picking up work, read [AGENTS.md](AGENTS.md) first; its pickup contract (Linear labels, agent lanes) governs agent work and this file does not override it.
+HeavyMap is a global industrial intelligence tool: it maps, informs, publishes and promotes. It is built in the open; Hamilton and Niagara-Brant are the launch slice, not the scope. This file is for human contributors — humans opening issues, reviewing pull requests, or writing code or docs by hand. If you are an AI agent picking up work, read [AGENTS.md](AGENTS.md) first; its pickup contract (Linear labels, agent lanes) governs agent work and this file does not override it.
 
 ## Before you start
 

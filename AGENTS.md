@@ -4,8 +4,9 @@ Pickup contract for agents working on HeavyMap. Read this before opening an issu
 
 **Status:** agent pickup source of truth. Linear **NA-13**. Docs only.
 
-**Product:** HeavyMap — industrial intelligence for cross-border Niagara.
-**Control plane:** Linear projects Industrial Atlas (backend) and HeavyMap.com (frontend), with linked issues for shared dependencies.
+**Product:** HeavyMap — a global industrial intelligence tool: it maps, informs, publishes and promotes. Hamilton and Niagara-Brant are the launch slice, not the scope.
+**Linear is out of use until further notice (2026-11-16).** Work comes from direct assignments by Morgen; ticket ids are not required on branches or PRs for now, and the `agent-ready` pickup route below is dormant. Branch rules: [BRANCHING.md](BRANCHING.md).
+**Control plane (when Linear returns):** Linear projects Industrial Atlas (backend) and HeavyMap.com (frontend), with linked issues for shared dependencies.
 **Code source of truth:** this repository, `niagaraassembly/heavymap`.
 
 Beta is the repository top level. The original `niagara-atlas/` prototype is prior-art reference only; it is archived at [`first-attempts/niagara-atlas/`](first-attempts/niagara-atlas/).

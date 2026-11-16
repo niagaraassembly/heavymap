@@ -7,10 +7,11 @@ separate step; see [docs/DEPLOY.md](docs/DEPLOY.md).
 
 1. **`main` is always releasable.** It builds and passes `npm test` and the Python
    tests.
-2. **Topic branches are short-lived** (days, not weeks) and **named after the
-   Linear ticket**: `na-<number>-<short-slug>`, lower case, for example
-   `na-412-dossier-sidebar`. Do not put a tool or person in the name; that goes
-   in the PR and the Linear issue. Open work with no ticket yet: get one first.
+2. **Topic branches are short-lived** (days, not weeks) and **named for the work**:
+   `<track>/<short-slug>`, lower case, where the track is `web`, `atlas`, `docs`
+   or `ops`, for example `web/dossier-sidebar` or `atlas/hamilton-tiles`. Do not
+   put a tool or person in the name; that goes in the PR description. Linear is out
+   of use for now; if it returns, prefix the ticket (`na-412-dossier-sidebar`).
 3. **One owner per branch or worktree.** Others may review; they do not write to
    it concurrently (see the
    [working agreement](heavymap-planning/WORKING-AGREEMENT.md)).
@@ -20,10 +21,10 @@ separate step; see [docs/DEPLOY.md](docs/DEPLOY.md).
 6. **Long efforts:** prefer small steps behind a flag. If that is not possible, use
    a temporary `epic/<slug>` branch with a stated end date and merge `main` in
    weekly. Delete it when it lands. Never keep standing per-team branches.
-7. **Commits and PRs:** `type(scope): message`; PR title `[NA-n] Short
-   description`; body has What changed, Why, How to test; link the ticket.
+7. **Commits and PRs:** `type(scope): message`; PR title is a short description
+   (add `[NA-n]` when Linear is back); body has What changed, Why, How to test.
 8. **Worktrees:** the primary checkout stays on `main`; feature work happens in a
-   worktree named `<repo>--na-<n>-<slug>`.
+   worktree named `<repo>--<slug>`.
 
 ## Two modes
 
