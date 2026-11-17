@@ -753,6 +753,150 @@ body.hm-docs-service-page main { min-height: 0; overflow: hidden; }
 .alt-header--docs nav .hm-map-service:hover, .alt-header--docs nav .hm-map-service[aria-current="page"] { color: #fff; background: #41657a; }
 @keyframes hm-docs-mark-glow { 0%, 100% { filter: drop-shadow(0 0 0 transparent); } 50% { filter: drop-shadow(0 0 3px #ffffffaa); } }
 @media (prefers-reduced-motion: reduce) { .alt-header .wordmark-mark { animation: none; } }
+
+/* Service surfaces: deliberate rail controls, readable cards, and calmer spacing. */
+body.hm-docs-service-page main { background: var(--surface); }
+.hm-docs-library { grid-template-columns: minmax(260px, 300px) minmax(0, 1fr); }
+.hm-docs-library-rail, .hm-global-rail, .hm-docs-outline {
+  padding: 22px 18px;
+  background: var(--surface-tint);
+}
+.hm-docs-library-rail > .hm-docs-kicker, .hm-global-rail > .hm-docs-kicker { margin: 2px 0 8px; }
+.hm-docs-type-filters { display: flex; flex-direction: column; gap: 5px; min-height: 0; overflow: auto; padding: 2px 3px 5px 0; }
+.hm-docs-type-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--text-body);
+  background: transparent;
+  text-align: left;
+  font: 500 .76rem/1.3 var(--sans);
+  cursor: pointer;
+}
+.hm-docs-type-filter span { min-width: 0; overflow-wrap: anywhere; }
+.hm-docs-type-filter small {
+  flex: none;
+  min-width: 24px;
+  padding: 3px 6px;
+  border: 1px solid var(--rule-soft);
+  border-radius: 999px;
+  color: var(--text-muted);
+  background: var(--surface-raised);
+  text-align: center;
+  font: 600 .63rem/1 var(--sans);
+}
+.hm-docs-type-filter:hover { border-color: var(--rule-soft); color: var(--text); background: color-mix(in srgb, var(--surface-raised) 72%, transparent); }
+.hm-docs-type-filter.is-active { border-color: var(--rule-soft); color: var(--text); background: var(--surface-raised); box-shadow: 0 2px 8px var(--shadow-soft); }
+.hm-docs-type-filter.is-active small { border-color: color-mix(in srgb, var(--accent) 28%, var(--rule-soft)); color: var(--accent-strong); }
+.hm-docs-library-toolbar { gap: 12px; padding: 16px 22px; background: var(--surface-raised); }
+.hm-docs-library-toolbar .hm-docs-search { min-height: 42px; border-radius: 4px; background: var(--surface); }
+.hm-docs-library-toolbar .hm-docs-search input { min-height: 40px; }
+.hm-docs-library-toolbar > select { border-radius: 4px; }
+.hm-docs-library-toolbar .hm-docs-library-count { color: var(--text-muted); font: 600 .7rem/1.3 var(--sans); }
+.hm-docs-library:not(.is-writing) .hm-docs-list {
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
+  align-content: start;
+  gap: 12px;
+  padding: 20px 22px 28px;
+  background: var(--surface);
+}
+.hm-docs-library:not(.is-writing) .hm-docs-card {
+  display: flex;
+  min-height: 154px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  padding: 16px 17px 12px;
+  border: 1px solid var(--rule-soft);
+  border-radius: 5px;
+  background: var(--surface-raised);
+  box-shadow: 0 2px 8px var(--shadow-soft);
+  transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+.hm-docs-library:not(.is-writing) .hm-docs-card:hover { border-color: var(--rule-strong); box-shadow: 0 7px 18px var(--shadow); transform: translateY(-1px); }
+.hm-docs-library:not(.is-writing) .hm-docs-card.is-current { border-color: var(--accent); background: var(--surface-raised); }
+.hm-docs-library:not(.is-writing) .hm-docs-card-open { flex: 1; gap: 7px; }
+.hm-docs-library:not(.is-writing) .hm-docs-card-open strong { color: var(--text); font: 600 1rem/1.3 var(--sans); }
+.hm-docs-library:not(.is-writing) .hm-docs-card-project { color: var(--text-body); white-space: normal; overflow-wrap: anywhere; font: .75rem/1.4 var(--sans); }
+.hm-docs-library:not(.is-writing) .hm-docs-card small { margin-top: 2px; font: .68rem/1.4 var(--sans); }
+.hm-docs-library:not(.is-writing) .hm-docs-card-actions { justify-content: start; gap: 7px; padding-top: 8px; border-top: 1px solid var(--rule-soft); }
+.hm-docs-library:not(.is-writing) .hm-docs-quiet-button { min-height: 30px; padding-inline: 8px; border-radius: 3px; }
+.hm-docs-outline { padding: 22px 18px; }
+.hm-docs-outline-head { gap: 12px; margin-bottom: 18px; }
+.hm-docs-property-block { gap: 9px; padding: 0 0 15px; }
+.hm-docs-property-item { min-height: 36px; padding: 6px 8px; border: 1px solid var(--rule-soft); border-radius: 4px; background: var(--surface-raised); }
+.hm-docs-active-address { white-space: normal; overflow-wrap: anywhere; font-size: .74rem; }
+.hm-docs-property-scope { padding: 0 2px; font-size: .68rem; }
+.hm-docs-property-block select, .hm-docs-outline-head select { border-radius: 4px; }
+.hm-docs-outline-title { min-height: 40px; font-size: 1.16rem; line-height: 1.2; overflow-wrap: anywhere; }
+.hm-docs-outline-row { gap: 4px; margin: 4px 0; }
+.hm-docs-outline-link { padding: 9px 10px; border-radius: 4px; font-size: .78rem; line-height: 1.4; overflow-wrap: anywhere; }
+.hm-docs-icon-button { flex: none; width: 28px; height: 28px; border-radius: 4px; }
+.hm-docs-writing-pane { padding: clamp(24px, 4vw, 58px) clamp(24px, 6vw, 92px); background: var(--surface-raised); }
+.hm-docs-writing-pane > input[aria-label="Section title"] { margin-bottom: 14px; font-size: clamp(1.8rem, 3vw, 2.7rem); line-height: 1.14; }
+.hm-docs-writing-pane > .hm-docs-kicker { margin-bottom: 18px; }
+.hm-docs-writing-pane > textarea { min-height: min(55vh, 600px); padding: 20px 22px; border-radius: 5px; font: .9rem/1.8 var(--sans); }
+.hm-docs-reference-tools { margin: 14px 0; padding: 12px 0; border-top: 1px solid var(--rule-soft); border-bottom: 1px solid var(--rule-soft); }
+.hm-docs-field-browser { gap: 10px; margin-top: 22px; padding: 16px; border-radius: 5px; background: var(--surface); }
+.hm-docs-field-browser summary { padding: 2px 0; font-size: .83rem; }
+.hm-docs-field-browser[open] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.hm-docs-field-browser > summary, .hm-docs-field-browser > .hm-docs-field-intro,
+.hm-docs-field-browser > select[aria-label="Data field"], .hm-docs-field-browser > .hm-docs-field-value,
+.hm-docs-field-browser > textarea, .hm-docs-field-browser > button, .hm-docs-field-browser > .hm-docs-field-feedback { grid-column: 1 / -1; }
+.hm-docs-field-browser > select[aria-label="Parcel for this field comment"] { grid-column: 1; }
+.hm-docs-field-browser > select[aria-label="Data layer"] { grid-column: 2; }
+.hm-docs-field-browser > input[aria-label="Filter data rows"] { grid-column: 1; }
+.hm-docs-field-browser > select[aria-label="Data row"] { grid-column: 2; }
+.hm-docs-field-browser > button { justify-self: start; }
+.hm-global-workspace { grid-template-columns: minmax(260px, 300px) minmax(0, 1fr); background: var(--surface); }
+.hm-global-rail { padding: 22px 18px; }
+.hm-global-rail > .hm-docs-search { min-height: 42px; margin: 2px 0 5px; border-radius: 4px; background: var(--surface-raised); }
+.hm-global-rail > .hm-docs-search input { min-height: 40px; }
+.hm-global-rail > select { width: 100%; min-height: 40px; padding: 7px 9px; border: 1px solid var(--rule-soft); border-radius: 4px; color: var(--text); background: var(--surface-raised); font: .76rem/1.3 var(--sans); }
+.hm-global-content { gap: 14px; padding: clamp(22px, 3vw, 40px); background: var(--surface); }
+.hm-global-page-heading { padding-bottom: 13px; border-bottom: 1px solid var(--rule-soft); }
+.hm-global-page-heading h1 { margin-bottom: 6px; font-size: clamp(1.65rem, 2.4vw, 2.35rem); }
+.hm-global-page-heading p, .hm-global-toolbar-note { font-size: .82rem; }
+.hm-global-content > .hm-docs-library-toolbar { padding: 0 0 10px; border-bottom: 1px solid var(--rule-soft); background: transparent; }
+.hm-global-record-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr)); align-content: start; gap: 10px; overflow: auto; padding: 4px 2px 20px; }
+.hm-global-record-list .hm-docs-saved-row { min-width: 0; min-height: 84px; padding: 15px; border: 1px solid var(--rule-soft); border-radius: 5px; background: var(--surface-raised); box-shadow: 0 2px 8px var(--shadow-soft); }
+.hm-global-record-list .hm-docs-saved-open { gap: 5px; }
+.hm-global-record-list .hm-docs-saved-open strong { white-space: normal; overflow-wrap: anywhere; font-size: .87rem; }
+.hm-global-note-compose { align-items: stretch; padding: 14px; border: 1px solid var(--rule-soft); border-radius: 5px; background: var(--surface-raised); }
+.hm-global-note-compose select { border-radius: 4px; padding: 6px 8px; }
+.hm-global-note-compose textarea { min-height: 74px; border-radius: 4px; font: .82rem/1.55 var(--sans); }
+.hm-global-note-list { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr)); align-content: start; gap: 10px; overflow: auto; padding: 2px 2px 20px; }
+.hm-global-note-card { min-width: 0; padding: 15px; border: 1px solid var(--rule-soft); border-radius: 5px; background: var(--surface-raised); box-shadow: 0 2px 8px var(--shadow-soft); }
+.hm-global-note-head .hm-docs-saved-open { gap: 5px; }
+.hm-global-note-head .hm-docs-saved-open strong { white-space: normal; overflow-wrap: anywhere; }
+.hm-global-note-card > p { margin-top: 12px; }
+.hm-global-workspace select, .hm-docs-library-toolbar select { max-width: 100%; }
+@media (max-width: 760px) {
+  .hm-docs-library { grid-template-columns: minmax(0, 1fr); }
+  .hm-docs-library-rail { max-height: 34%; padding: 12px 12px 9px; }
+  .hm-docs-type-filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; max-height: 126px; overflow: auto; }
+  .hm-docs-type-filter { min-height: 35px; padding: 6px 8px; font-size: .7rem; }
+  .hm-docs-library:not(.is-writing) .hm-docs-list { gap: 9px; padding: 10px; }
+  .hm-docs-library:not(.is-writing) .hm-docs-card { min-height: 130px; padding: 13px; }
+  .hm-docs-library-toolbar { padding: 10px; }
+  .hm-docs-outline { padding: 14px 10px; }
+  .hm-docs-writing-pane { padding: 20px 14px; }
+  .hm-docs-field-browser[open] { grid-template-columns: minmax(0, 1fr); }
+  .hm-docs-field-browser[open] > select, .hm-docs-field-browser[open] > input { grid-column: 1; }
+  .hm-global-workspace { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+  .hm-global-rail { max-height: 31dvh; gap: 6px; padding: 10px 12px; border-right: 0; border-bottom: 1px solid var(--rule-soft); }
+  .hm-global-rail > .hm-docs-kicker { display: none; }
+  .hm-global-rail .hm-docs-type-filters { display: flex; flex-direction: row; max-height: none; overflow-x: auto; overflow-y: hidden; }
+  .hm-global-rail .hm-docs-type-filter { flex: none; width: auto; min-height: 34px; }
+  .hm-global-content { padding: 16px 12px; }
+  .hm-global-record-list, .hm-global-note-list { grid-template-columns: minmax(0, 1fr); }
+}
 .hm-docs-header-label { display: none; }
 .hm-docs-head-right { display: flex; align-items: center; min-width: 0; }
 .hm-docs-head-right { justify-content: end; }
