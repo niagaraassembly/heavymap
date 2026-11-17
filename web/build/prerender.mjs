@@ -37,6 +37,7 @@ const SITE_SRC = path.join(web, "src/site");
 /* Static files the public site ships, copied as is. Only these: web/public also
  * holds prototype fixtures (synthetic-parcels.pmtiles) that must never ship. */
 export const STATIC_DIRS = ["editorial", "map", "flags", "fonts"];
+export const STATIC_FILES = ["heavy-element-favicon.png", "heavy-element-mark.png"];
 const STATIC_ROOT = path.join(web, "public");
 
 /** "/" -> "index.html", "/a/b/" -> "a/b/index.html", "/404.html" -> "404.html". */
@@ -54,6 +55,11 @@ export function brokenLinks(pages) {
       const top = target.split("/")[1];
       if (
         STATIC_DIRS.includes(top) &&
+        fs.existsSync(path.join(STATIC_ROOT, target))
+      )
+        continue;
+      if (
+        STATIC_FILES.includes(target.slice(1)) &&
         fs.existsSync(path.join(STATIC_ROOT, target))
       )
         continue;
@@ -209,6 +215,8 @@ async function main() {
     fs.cpSync(path.join(STATIC_ROOT, dir), path.join(OUT_DIR, dir), {
       recursive: true,
     });
+  for (const file of STATIC_FILES)
+    fs.copyFileSync(path.join(STATIC_ROOT, file), path.join(OUT_DIR, file));
   fs.cpSync(path.join(web, "../labels"), path.join(OUT_DIR, "labels"), {
     recursive: true,
   });
