@@ -831,6 +831,41 @@ body.hm-directory-open { overflow: hidden; }
 .hm-saved-rail-link:hover { color: var(--text); background: var(--surface-raised); }
 .hm-global-service[data-docs-service="saved"] .hm-global-content,
 .hm-global-service[data-docs-service="development"] .hm-global-content { gap: 17px; padding: clamp(23px, 3.2vw, 44px) clamp(22px, 4vw, 58px); }
+.hm-development-page-stats { display: flex; flex: none; flex-wrap: wrap; gap: 8px; }
+.hm-development-page-stat { padding: 8px 11px; border: 1px solid var(--rule-soft); border-radius: 4px; color: var(--text-body); background: var(--surface-raised); font: 700 .68rem/1.3 var(--sans); letter-spacing: .025em; }
+.hm-development-browser-page { flex: 1 1 auto; min-height: 0; max-height: none; overflow: hidden; border: 1px solid var(--rule-soft); border-radius: 5px; background: var(--surface); }
+.hm-development-browser { display: flex; flex-direction: column; min-height: 100%; max-height: calc(100dvh - 112px); overflow: auto; }
+.hm-development-browser-page .hm-development-browser-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; border-bottom: 1px solid var(--rule-soft); }
+.hm-development-browser-page .hm-development-browser-head h2 { margin: 0; color: var(--text); font: 500 1.35rem/1.15 var(--serif); }
+.hm-development-browser-page .hm-development-browser-head .hm-map-dialog-eyebrow { margin: 0 0 5px; color: var(--text-muted); font: 700 .58rem/1.2 var(--sans); letter-spacing: .13em; }
+.hm-development-browser-page .hm-development-browser-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(185px, .7fr); gap: 9px; padding: 12px 16px 0; }
+.hm-development-browser-page .hm-development-browser-controls input,
+.hm-development-browser-page .hm-development-browser-controls select { min-width: 0; padding: 9px 10px; border: 1px solid var(--rule-strong); border-radius: 4px; color: var(--text); background: var(--surface-raised); font: .75rem/1.3 var(--sans); }
+.hm-development-browser-page .hm-development-browser-status { flex: none; margin: 9px 16px; color: var(--text-muted); font: .68rem/1.3 var(--sans); }
+.hm-development-browser-page .hm-development-browser-list { overflow-y: auto; padding: 0 16px; }
+.hm-development-browser-page .hm-development-browser-item { border-top: 1px solid var(--rule-soft); }
+.hm-development-browser-page .hm-development-browser-item summary { display: grid; grid-template-columns: minmax(120px, .5fr) minmax(0, 1fr); gap: 10px; padding: 10px 2px; color: var(--text-body); cursor: pointer; font: .72rem/1.4 var(--sans); }
+.hm-development-browser-page .hm-development-browser-item summary span { color: var(--text-muted); overflow-wrap: anywhere; }
+.hm-development-browser-page .hm-development-record { margin: 0 0 12px; padding: 12px; border: 1px solid var(--rule-soft); border-radius: 4px; background: var(--surface-raised); }
+.hm-development-browser-page .hm-development-record-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.hm-development-browser-page .hm-development-record-head h4 { margin: 0; overflow-wrap: anywhere; color: var(--text); font: 700 .78rem/1.35 var(--sans); }
+.hm-development-browser-page .hm-development-record-head time { flex: none; color: var(--text-muted); font: .65rem/1.3 var(--sans); }
+.hm-development-browser-page .hm-development-site,
+.hm-development-browser-page .hm-development-names,
+.hm-development-browser-page .hm-development-provenance { color: var(--text-body); font: .7rem/1.5 var(--sans); }
+.hm-development-browser-page .hm-development-facts { display: grid; grid-template-columns: minmax(110px, .35fr) minmax(0, 1fr); gap: 4px 10px; }
+.hm-development-browser-page .hm-development-facts dt { color: var(--text-muted); font: 600 .63rem/1.45 var(--sans); }
+.hm-development-browser-page .hm-development-facts dd { margin: 0; color: var(--text-body); font: .68rem/1.45 var(--sans); white-space: pre-wrap; overflow-wrap: anywhere; }
+.hm-development-browser-page .hm-development-browser-paging { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 12px 16px 16px; border-top: 1px solid var(--rule-soft); }
+.hm-development-browser-page .hm-development-page { padding: 7px 10px; border: 1px solid var(--rule-soft); border-radius: 4px; color: var(--text); background: var(--surface-raised); cursor: pointer; font: .68rem/1.3 var(--sans); }
+.hm-development-browser-page .hm-development-page:disabled { opacity: .45; cursor: default; }
+.hm-development-browser-page .hm-development-browser-paging span { color: var(--text-muted); font: .68rem/1.3 var(--sans); }
+.hm-development-browser-page .hm-development-browser-head { flex: none; padding: 12px 16px 10px; }
+.hm-development-browser-page .hm-development-browser-controls,
+.hm-development-browser-page .hm-development-browser-status,
+.hm-development-browser-page .hm-development-browser-paging { flex: none; }
+.hm-development-browser-page .hm-development-browser-list { flex: 1 1 auto; min-height: 0; }
+.hm-development-page-status { padding: 12px; color: var(--text-muted); }
 .hm-global-service[data-docs-service="saved"] .hm-global-page-heading,
 .hm-global-service[data-docs-service="development"] .hm-global-page-heading { padding-bottom: 17px; }
 .hm-saved-heading-copy .hm-notes-eyebrow { margin-bottom: 6px; }
@@ -903,6 +938,10 @@ body.hm-directory-open { overflow: hidden; }
   .hm-saved-toolbar .hm-docs-search { width: 100%; min-width: 0; }
   .hm-saved-overview .hm-notes-metric { min-height: 52px; padding: 7px; }
   .hm-saved-overview .hm-notes-metric strong { font-size: .96rem; }
+  .hm-development-browser-page .hm-development-browser-controls { grid-template-columns: minmax(0, 1fr); }
+  .hm-development-browser-page .hm-development-browser-head { align-items: flex-start; }
+  .hm-development-browser-page .hm-development-browser-item summary { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .hm-global-service[data-docs-service="development"] .hm-global-rail { overflow-y: auto; }
   .hm-saved-overview .hm-notes-metric span { font-size: .48rem; letter-spacing: .02em; }
   .hm-global-service[data-docs-service="saved"] .hm-saved-card,
   .hm-global-service[data-docs-service="development"] .hm-saved-card { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "entry remove" "date remove"; gap: 5px 8px; padding: 10px; }

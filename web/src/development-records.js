@@ -258,15 +258,20 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose } = 
   const titles = el("div");
   titles.append(el("p", "HAMILTON · MONTHLY PERMIT AUDITS", "hm-map-dialog-eyebrow"));
   titles.append(el("h2", "Development records", "hm-map-dialog-title"));
-  const back = el("button", "← Snapshot", "hm-development-browser-back");
-  back.type = "button";
-  back.addEventListener("click", onBack);
-  const close = el("button", "×", "hm-map-dialog-close");
-  close.type = "button";
-  close.setAttribute("aria-label", "Close development records");
-  close.addEventListener("click", onClose);
   const actions = el("div", undefined, "hm-development-browser-actions");
-  actions.append(back, close);
+  if (onBack) {
+    const back = el("button", "← Snapshot", "hm-development-browser-back");
+    back.type = "button";
+    back.addEventListener("click", onBack);
+    actions.append(back);
+  }
+  if (onClose) {
+    const close = el("button", "×", "hm-map-dialog-close");
+    close.type = "button";
+    close.setAttribute("aria-label", "Close development records");
+    close.addEventListener("click", onClose);
+    actions.append(close);
+  }
   head.append(titles, actions);
   panel.append(head);
 
