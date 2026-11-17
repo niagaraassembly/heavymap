@@ -446,7 +446,47 @@ export function mapIntro() {
     description:
       "Explore City of Hamilton parcel boundaries and inspect their verified public records.",
     bodyClass: "hm-map-intro",
-    main: `<div class="map-workspace"><div id="map" aria-label="City of Hamilton map with parcel selection at close zoom"></div><aside id="tray" class="tray" aria-label="Hamilton map controls"><div class="tray-heading"><h2>Hamilton parcels</h2><span id="parcel-count">Loading</span></div><p class="subtext">Zoom in to see parcel outlines. Select any outline to open its evidence record.</p><section id="layers-panel" class="layers is-collapsed" aria-label="Map layers"><div class="tray-heading"><button type="button" id="layers-toggle" aria-expanded="false" aria-controls="layers-content" title="Expand map layers"><span aria-hidden="true">▤</span><span class="layers-toggle-label">Map layers</span></button><span>Hamilton</span></div><div id="layers-content"><div class="layer-group"><h3>Base map</h3><div class="basemap-switch" role="group" aria-label="Basemap style"><button type="button" id="basemap-light" aria-pressed="true">Light</button><button type="button" id="basemap-dark" aria-pressed="false">Dark</button></div><small class="layer-note">OpenStreetMap vector map · detail loads for the current view</small></div><div class="layer-group"><h3>Parcels</h3><label class="layer"><input id="parcels-visible" type="checkbox" checked><span><strong>Hamilton parcels</strong><small>On map · key-only tiles · zoom 14–16</small></span></label></div><div id="thematic-layers" aria-live="polite"><p class="layer-note">Loading map layers…</p></div><p class="layers-footnote">Map overlays show source features and boundaries. They are contextual layers, not parcel-level joins or legal determinations.</p></div></section><div class="samples-heading"><h2>Selection</h2><span id="result-count"></span></div><div id="samples"></div><p id="search-status" role="status"></p></aside><div id="parcel-card-slot" hidden></div><div id="parcel-drawer-slot" hidden></div><div id="parcel-workspace-slot" hidden></div></div>`,
+    main: `<div class="map-workspace">
+      <div id="map" aria-label="City of Hamilton map with parcel selection at close zoom"></div>
+      <aside id="tray" class="tray" aria-label="Hamilton map controls">
+        <div id="layers-backdrop" class="layers-backdrop" data-layers-backdrop hidden></div>
+        <section id="layers-panel" class="layers is-collapsed" aria-label="Map layers">
+          <button type="button" id="layers-toggle" class="layers-launcher" aria-expanded="false" aria-controls="layers-dialog" title="Open map layers">
+            <span aria-hidden="true">▤</span><span class="hm-visually-hidden">Map layers</span>
+          </button>
+          <div id="layers-dialog" class="layers-dialog" role="dialog" aria-modal="true" aria-labelledby="layers-dialog-title" hidden>
+            <header class="layers-dialog-head">
+              <div><p class="layers-kicker">HAMILTON MAP · LAYERS</p><h2 id="layers-dialog-title">Discover map layers</h2><p>Choose what to show and narrow the layer library by topic.</p></div>
+              <button type="button" class="layers-close" data-layers-close aria-label="Close map layers">×</button>
+            </header>
+            <div class="layers-dialog-body">
+              <nav class="layers-categories" id="layers-categories" aria-label="Filter map layers">
+                <button type="button" data-layer-filter="all" aria-pressed="true"><span>All layers</span><small data-layer-count-for="all">—</small></button>
+                <button type="button" data-layer-filter="on"><span>On the map</span><small data-layer-count-for="on">—</small></button>
+                <button type="button" data-layer-filter="basemap"><span>Base map</span></button>
+                <button type="button" data-layer-filter="parcels"><span>Parcels</span></button>
+                <button type="button" data-layer-filter="planning"><span>Planning</span><small data-layer-count-for="planning">—</small></button>
+                <button type="button" data-layer-filter="protected"><span>Protected &amp; regulated</span><small data-layer-count-for="protected">—</small></button>
+                <button type="button" data-layer-filter="parks"><span>Parks</span><small data-layer-count-for="parks">—</small></button>
+              </nav>
+              <section class="layers-browser" aria-label="Layer library">
+                <div class="layers-browser-head"><div><h3>Layer library</h3><p id="layers-result-count" aria-live="polite">Loading map layers…</p></div>
+                  <label class="layers-search"><span aria-hidden="true">⌕</span><input id="layers-search" type="search" placeholder="Find a layer" aria-label="Find a map layer"></label>
+                </div>
+                <div id="layers-content" class="layers-content">
+                  <section class="layer-group" data-layer-group="basemap"><h3>Base map</h3><div class="basemap-switch" role="group" aria-label="Basemap style"><button type="button" id="basemap-light" aria-pressed="true">Light</button><button type="button" id="basemap-dark" aria-pressed="false">Dark</button></div><small class="layer-note">OpenStreetMap vector map · detail loads for the current view</small></section>
+                  <section class="layer-group" data-layer-group="parcels"><h3>Parcels</h3><label class="layer"><input id="parcels-visible" type="checkbox" checked><span><strong>Hamilton parcels</strong><small>On map · key-only tiles · zoom 14–16</small></span></label></section>
+                  <div id="thematic-layers" aria-live="polite"><p class="layer-note">Loading map layers…</p></div>
+                </div>
+                <p class="layers-footnote">Overlays show source features and boundaries. They are contextual layers, not parcel-level joins or legal determinations.</p>
+              </section>
+            </div>
+          </div>
+        </section>
+        <div class="tray-heading"><h2>Hamilton parcels</h2><span id="parcel-count">Loading</span></div><p class="subtext">Zoom in to see parcel outlines. Select any outline to open its evidence record.</p><div class="samples-heading"><h2>Selection</h2><span id="result-count"></span></div><div id="samples"></div><p id="search-status" role="status"></p>
+      </aside>
+      <div id="parcel-card-slot" hidden></div><div id="parcel-drawer-slot" hidden></div><div id="parcel-workspace-slot" hidden></div>
+    </div>`,
     after: `<div class="hm-map-bar" data-map-bars><span class="hm-map-bar-legend"><span class="legend-dot signal"></span>Parcel boundary</span><span id="map-display-note" class="hm-map-bar-note">Still image fallback · parcels from zoom 14</span><span class="hm-map-bar-credits">© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · D-070 · <a href="/map/data-methods/">Data &amp; methods</a></span><span class="hm-map-bar-status" id="map-bar-status" role="status">Loading map…</span><div class="hm-map-bar-spacer"></div><!-- map-theme-picker --></div>`,
   };
 }

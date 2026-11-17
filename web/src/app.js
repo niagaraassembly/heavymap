@@ -38,6 +38,60 @@ function status(text) {
   if (barStatus) barStatus.textContent = text;
 }
 
+function setLayersOpen(open, { restoreFocus = true } = {}) {
+  const panel = document.getElementById("layers-panel");
+  const toggle = document.getElementById("layers-toggle");
+  const dialog = document.getElementById("layers-dialog");
+  const backdrop = document.getElementById("layers-backdrop");
+  panel.classList.toggle("is-collapsed", !open);
+  toggle.setAttribute("aria-expanded", String(open));
+  toggle.title = open ? "Map layers open" : "Open map layers";
+  dialog.hidden = !open;
+  backdrop.hidden = !open;
+  if (open) dialog.querySelector("[data-layers-close]")?.focus({ preventScroll: true });
+  else if (restoreFocus) toggle.focus({ preventScroll: true });
+}
+
+function updateLayerLibrary() {
+  const content = document.getElementById("layers-content");
+  const query = document.getElementById("layers-search").value.trim().toLowerCase();
+  const filter = document.querySelector("[data-layer-filter][aria-pressed='true']")?.dataset.layerFilter ?? "all";
+  const groups = [...content.querySelectorAll(".layer-group")];
+  const inputs = [...content.querySelectorAll(".layer input[type='checkbox']")];
+  let visibleCount = 0;
+
+  for (const group of groups) {
+    const category = group.dataset.layerGroup;
+    const labels = [...group.querySelectorAll(".layer")];
+    const categoryMatch = filter === "all" || filter === "on" || filter === category;
+    let groupCount = category === "basemap" && categoryMatch ? 1 : 0;
+    for (const label of labels) {
+      const input = label.querySelector("input[type='checkbox']");
+      const textMatch = !query || label.textContent.toLowerCase().includes(query);
+      const activeMatch = filter !== "on" || input.checked;
+      label.hidden = !categoryMatch || !textMatch || !activeMatch;
+      if (!label.hidden) groupCount++;
+    }
+    const queryMatch = !query || group.textContent.toLowerCase().includes(query);
+    const hasVisibleLayer = labels.length ? groupCount > 0 : category === "basemap" && queryMatch;
+    group.hidden = !categoryMatch || !queryMatch || !hasVisibleLayer;
+    if (!group.hidden) visibleCount += groupCount;
+  }
+
+  const totalCount = inputs.length + 1;
+  const activeCount = inputs.filter((input) => input.checked).length + 1;
+  document.querySelector("[data-layer-count-for='all']").textContent = String(totalCount);
+  document.querySelector("[data-layer-count-for='on']").textContent = String(activeCount);
+  for (const category of ["planning", "protected", "parks"]) {
+    const count = content.querySelectorAll(`[data-layer-group='${category}'] .layer input[type='checkbox']`).length;
+    const counter = document.querySelector(`[data-layer-count-for='${category}']`);
+    if (counter) counter.textContent = String(count);
+  }
+  document.getElementById("layers-result-count").textContent = query || filter !== "all"
+    ? `${visibleCount} ${visibleCount === 1 ? "layer" : "layers"} shown`
+    : `${totalCount} layers · ${activeCount} on the map`;
+}
+
 function readSavedParcelKeys(storage) {
   try {
     storage ??= window.localStorage;
@@ -211,9 +265,7 @@ async function openParcel(parcel, trigger, level = "card") {
   loading = true;
   selected = parcel;
   opener = trigger || opener;
-  const layersPanel = document.getElementById("layers-panel");
-  layersPanel.classList.add("is-collapsed");
-  document.getElementById("layers-toggle").setAttribute("aria-expanded", "false");
+  setLayersOpen(false, { restoreFocus: false });
   map.select(parcel);
   status("Loading verified parcel record…");
   const coreResult = await loader.core(parcel.id);
@@ -279,8 +331,7 @@ function closeAll() {
   workspaceSlot.replaceChildren();
   workspaceSlot.hidden = true;
   document.body.classList.remove("has-parcel-card", "has-parcel-drawer", "has-parcel-workspace");
-  document.getElementById("layers-panel").classList.add("is-collapsed");
-  document.getElementById("layers-toggle").setAttribute("aria-expanded", "false");
+  setLayersOpen(false, { restoreFocus: false });
   syncSaveButton();
   map.close();
   updateLocation(null);
@@ -415,16 +466,17 @@ async function start() {
   const thematic = document.getElementById("thematic-layers");
   if (mapLayerManifest) {
     const sections = [
-      { title: "Planning", ids: ["zoning", "secondary-plan-land-use", "urban-boundary", "rural-boundary", "employment-lands"] },
-      { title: "Protected and regulated", ids: ["greenbelt", "niagara-escarpment-plan", "conservation-hca", "conservation-npca", "conservation-grca"] },
-      { title: "Parks", ids: ["parks"] },
+      { key: "planning", title: "Planning", ids: ["zoning", "secondary-plan-land-use", "urban-boundary", "rural-boundary", "employment-lands"] },
+      { key: "protected", title: "Protected and regulated", ids: ["greenbelt", "niagara-escarpment-plan", "conservation-hca", "conservation-npca", "conservation-grca"] },
+      { key: "parks", title: "Parks", ids: ["parks"] },
     ];
     thematic.replaceChildren();
     for (const section of sections) {
       const layers = section.ids.map((id) => mapLayerManifest.layers.find((layer) => layer.id === id)).filter(Boolean);
       if (!layers.length) continue;
       const group = document.createElement("div");
-      group.className = "layer-group";
+      group.className = "layer-group thematic-layer-group";
+      group.dataset.layerGroup = section.key;
       const heading = document.createElement("h3");
       heading.textContent = section.title;
       group.append(heading);
@@ -435,7 +487,10 @@ async function start() {
         input.type = "checkbox";
         input.checked = false;
         input.setAttribute("aria-label", `Show ${layer.label}`);
-        input.addEventListener("change", () => map.toggleOverlay(layer.id, input.checked));
+        input.addEventListener("change", () => {
+          map.toggleOverlay(layer.id, input.checked);
+          updateLayerLibrary();
+        });
         const text = document.createElement("span");
         const title = document.createElement("strong");
         title.textContent = layer.label;
@@ -450,6 +505,7 @@ async function start() {
   } else {
     thematic.textContent = "Thematic map layers are unavailable.";
   }
+  updateLayerLibrary();
   const searchInput = document.getElementById("hm-map-search") ?? document.getElementById("search");
   searchInput.addEventListener("input", search);
   searchInput.addEventListener("keydown", (event) => {
@@ -463,17 +519,48 @@ async function start() {
     search();
     document.querySelector("#samples button")?.click();
   });
-  document.addEventListener("keydown", (event) => { if (event.key === "Escape") stepBack(); });
   const layersPanel = document.getElementById("layers-panel");
   for (const eventName of ["pointerdown", "click"]) {
     layersPanel.addEventListener(eventName, (event) => event.stopPropagation());
   }
-  document.getElementById("layers-toggle").addEventListener("click", (event) => {
-    const expanded = event.currentTarget.getAttribute("aria-expanded") !== "true";
-    event.currentTarget.setAttribute("aria-expanded", String(expanded));
-    event.currentTarget.title = expanded ? "Collapse map layers" : "Expand map layers";
-    layersPanel.classList.toggle("is-collapsed", !expanded);
+  const layersDialog = document.getElementById("layers-dialog");
+  document.getElementById("layers-toggle").addEventListener("click", () => setLayersOpen(true));
+  document.querySelector("[data-layers-close]").addEventListener("click", () => setLayersOpen(false));
+  document.getElementById("layers-backdrop").addEventListener("click", () => setLayersOpen(false));
+  document.getElementById("layers-search").addEventListener("input", updateLayerLibrary);
+  document.getElementById("layers-categories").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-layer-filter]");
+    if (!button) return;
+    for (const item of event.currentTarget.querySelectorAll("[data-layer-filter]"))
+      item.setAttribute("aria-pressed", String(item === button));
+    updateLayerLibrary();
   });
+  layersDialog.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.stopPropagation();
+      setLayersOpen(false);
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const focusable = [...layersDialog.querySelectorAll("button:not([disabled]), input:not([disabled]), [href], [tabindex]:not([tabindex='-1'])")]
+      .filter((item) => !item.hidden && item.getClientRects().length > 0);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable.at(-1);
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    if (!layersPanel.classList.contains("is-collapsed")) setLayersOpen(false);
+    else stepBack();
+  });
+  document.getElementById("parcels-visible").addEventListener("change", updateLayerLibrary);
   document.querySelector("[data-save-parcel]")?.addEventListener("click", toggleSaveCurrentParcel);
   document.querySelector("[data-note-parcel]")?.addEventListener("click", openNoteService);
   syncSaveButton();
