@@ -1,15 +1,45 @@
 import { el } from "../dossier.js";
 import { putLocalRecord, recordsFor, removeLocalRecord } from "../local-data.js";
 
-const DEFAULT_SECTIONS = [
-  "Vision and intended outcomes",
-  "Site conditions",
-  "Development concept",
-  "Evidence and data",
-  "Constraints, risks, and open questions",
-  "Viability",
-  "Decisions and next steps",
+const TEMPLATES = [
+  {
+    id: "default-general", label: "General site plan", kind: "SITE PLAN",
+    description: "A flexible home for the vision, site evidence, constraints, viability, and next steps.",
+    title: "Site plan",
+    sections: ["Vision and intended outcomes", "Site conditions", "Development concept", "Evidence and data", "Constraints, risks, and open questions", "Viability", "Decisions and next steps"],
+  },
+  {
+    id: "site-brief", label: "One-page site brief", kind: "SITE BRIEF",
+    description: "A concise snapshot of the opportunity, place, concept, and the questions that matter most.",
+    title: "One-page site brief",
+    sections: ["Opportunity at a glance", "The site", "Concept and intended outcomes", "Key evidence and constraints", "Open questions and next move"],
+  },
+  {
+    id: "executive-summary", label: "Executive summary", kind: "EXECUTIVE SUMMARY",
+    description: "A decision-ready overview for collaborators, advisors, or a future project package.",
+    title: "Executive summary",
+    sections: ["Purpose and recommendation", "Site and context", "Proposal", "Evidence and viability", "Key risks and decisions", "Immediate next steps"],
+  },
+  {
+    id: "development-update", label: "Development update", kind: "PROJECT UPDATE",
+    description: "Record what changed, what was learned, what is blocked, and what happens next.",
+    title: "Development update",
+    sections: ["Update at a glance", "Progress since last update", "Evidence and decisions", "Risks and blockers", "Upcoming milestones", "Help or decisions needed"],
+  },
+  {
+    id: "due-diligence", label: "Due diligence", kind: "DUE DILIGENCE",
+    description: "Organize investigations, source notes, findings, gaps, and follow-up for one parcel.",
+    title: "Site due diligence",
+    sections: ["Review scope", "Ownership and parcel basics", "Planning and approvals", "Built form and site conditions", "Infrastructure and environment", "Market and financial review", "Evidence register", "Open items and follow-up"],
+  },
+  {
+    id: "funding-proposal", label: "Funding proposal", kind: "FUNDING PROPOSAL",
+    description: "Shape a project case for a lender, grant, or funding partner; adapt the sections to fit.",
+    title: "Project funding proposal",
+    sections: ["Project summary", "Need and opportunity", "Site and development plan", "Outcomes and public benefit", "Budget and funding request", "Delivery plan and milestones", "Risks and mitigation", "Evidence and supporting materials"],
+  },
 ];
+const templateFor = (id) => TEMPLATES.find((template) => template.id === id) ?? TEMPLATES[0];
 const OPTIONAL_SECTIONS = [
   "Market and demand", "Design and massing", "Infrastructure and servicing",
   "Approvals and permits", "Financial model", "Stakeholders and engagement",
@@ -53,6 +83,8 @@ export async function mountDocsService(root) {
   const list = root.querySelector("[data-docs-list]");
   const search = root.querySelector("[data-docs-search]");
   const projectFilter = root.querySelector("[data-docs-project-filter]");
+  const templateSelect = root.querySelector("[data-docs-template]");
+  const templateDescription = root.querySelector("[data-docs-template-description]");
   const count = root.querySelector("[data-docs-count]");
   const status = root.querySelector("[data-docs-status]");
   const detail = root.querySelector("[data-docs-detail]");
@@ -94,7 +126,7 @@ export async function mountDocsService(root) {
     for (const doc of filtered) {
       const card = el("article", undefined, `hm-docs-card${selectedDocId === doc.id ? " is-current" : ""}`);
       const open = button("", () => openDocument(doc, false), "hm-docs-card-open");
-      open.append(el("span", doc.template === "default-general" ? "SITE PLAN" : doc.template.toUpperCase(), "hm-docs-kicker"));
+      open.append(el("span", templateFor(doc.template).kind, "hm-docs-kicker"));
       open.append(el("strong", doc.title || "Untitled document"));
       open.append(el("span", doc.parcelKey || "No site project selected", "hm-docs-card-project"));
       open.append(el("small", `${doc.sections?.length ?? 0} sections · ${formatDate(doc.updatedAt)}`));
@@ -216,7 +248,7 @@ export async function mountDocsService(root) {
       sectionTitle.setAttribute("aria-label", "Section title");
       sectionTitle.addEventListener("change", () => { section.title = sectionTitle.value.trim() || section.title; saveSoon(); renderDocument(); });
       body.append(sectionTitle);
-      body.append(el("p", "SITE PLAN · DEFAULT-GENERAL", "hm-docs-kicker"));
+      body.append(el("p", `${templateFor(activeDoc.template).kind} · SITE PROJECT`, "hm-docs-kicker"));
       if (editing) {
         const editor = document.createElement("textarea");
         editor.value = section.markdown ?? "";
@@ -268,6 +300,9 @@ export async function mountDocsService(root) {
     const dialog = root.querySelector("[data-docs-create-dialog]");
     const projects = root.querySelector("[data-docs-project]");
     const title = root.querySelector("[data-docs-new-title]");
+    templateSelect.replaceChildren(...TEMPLATES.map((template) => new Option(template.label, template.id)));
+    templateSelect.value = "default-general";
+    templateDescription.textContent = templateFor(templateSelect.value).description;
     const feedback = root.querySelector("[data-docs-create-feedback]");
     const submit = root.querySelector("[data-docs-confirm-create]");
     void recordsFor("saved").then((saved) => {
@@ -279,19 +314,25 @@ export async function mountDocsService(root) {
       feedback.textContent = known.size ? "A site plan belongs to one parcel project." : "Save a parcel from the map first, then create its site plan here.";
       submit.disabled = known.size === 0;
     });
-    title.value = "Site plan";
+    title.value = templateFor(templateSelect.value).title;
     dialog.showModal();
     projects.focus({ preventScroll: true });
   }
 
   root.querySelectorAll("[data-docs-create]").forEach((control) => control.addEventListener("click", openCreateDialog));
+  templateSelect.addEventListener("change", () => {
+    const template = templateFor(templateSelect.value);
+    templateDescription.textContent = template.description;
+    root.querySelector("[data-docs-new-title]").value = template.title;
+  });
   root.querySelectorAll("[data-docs-create-close]").forEach((control) => control.addEventListener("click", () => root.querySelector("[data-docs-create-dialog]").close()));
   root.querySelector("[data-docs-confirm-create]").addEventListener("click", async (event) => {
     event.preventDefault();
     const parcelKey = root.querySelector("[data-docs-project]").value;
     if (!parcelKey) return;
     const now = new Date().toISOString();
-    const doc = { id: uid(), parcelKey, title: root.querySelector("[data-docs-new-title]").value.trim() || "Site plan", template: "default-general", sections: DEFAULT_SECTIONS.map((title) => ({ id: uid(), title, parentId: null, markdown: "" })), createdAt: now, updatedAt: now };
+    const template = templateFor(templateSelect.value);
+    const doc = { id: uid(), parcelKey, title: root.querySelector("[data-docs-new-title]").value.trim() || template.title, template: template.id, sections: template.sections.map((title) => ({ id: uid(), title, parentId: null, markdown: "" })), createdAt: now, updatedAt: now };
     await putLocalRecord("documents", doc);
     root.querySelector("[data-docs-create-dialog]").close();
     await all();

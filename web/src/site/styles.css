@@ -829,6 +829,7 @@ body.hm-docs-service-page main { min-height: 0; overflow: hidden; }
 .hm-docs-create-dialog label { color: var(--text-muted); font: 700 .62rem/1.3 var(--sans); letter-spacing: .07em; text-transform: uppercase; }
 .hm-docs-create-dialog select, .hm-docs-create-dialog input { width: 100%; }
 .hm-docs-create-dialog p[data-docs-create-feedback] { margin: 0; color: var(--text-muted); font: .72rem/1.5 var(--sans); }
+.hm-docs-create-dialog p.hm-docs-template-description { margin: -3px 0 2px; color: var(--text-muted); font: .76rem/1.5 var(--sans); }
 .hm-docs-create-dialog footer { display: flex; justify-content: end; gap: 8px; margin-top: 8px; }
 .hm-docs-bottom-bar { position: relative; z-index: 30; display: flex; align-items: center; gap: 12px; height: 38px; padding: 0 12px; border-top: 1px solid var(--rule-soft); color: var(--text-muted); background: var(--surface); font: .65rem/1.2 var(--sans); }
 .hm-docs-bottom-spacer { flex: 1; }
