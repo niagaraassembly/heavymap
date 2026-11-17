@@ -6,12 +6,18 @@ import { createAccessLoader, summariseAccess } from "./parcel-access.js";
 import { summariseRecord } from "./parcel-summary.js";
 import { parcelCardElement, parcelDrawerElement } from "./parcel-views.js";
 import { parcelNotesDialogElement, parcelWorkspaceElement } from "./parcel-workspace.js";
-import { createNotesStore, recordsFor, removeSavedPlace, savePlace } from "./local-data.js";
+import { createNotesStore, putLocalRecord, recordsFor, removeSavedPlace, savePlace } from "./local-data.js";
 import { el } from "./dossier.js";
 import { FieldMap } from "./map.js";
 import { findBasemap } from "./basemap.js";
 import { startTitleIntro } from "./brand/title-intro.js";
-import { cityDevelopmentSheetElement, createHamiltonDevelopmentLoader, developmentRecordsBrowserElement } from "./development-records.js";
+import {
+  cityDevelopmentSheetElement,
+  createHamiltonDevelopmentLoader,
+  developmentRecordNote,
+  developmentRecordSavedItem,
+  developmentRecordsBrowserElement,
+} from "./development-records.js";
 
 const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
 const PARCEL_GEOMETRY_CACHE = "heavymap.parcel-geometry-cache.v1";
@@ -38,6 +44,14 @@ let labels;
 let manifestSources = null;
 let notesStore = null;
 let savedItems = [];
+async function saveDevelopmentRecord(record) {
+  const item = developmentRecordSavedItem(record);
+  await putLocalRecord("saved", item);
+  savedItems = [...savedItems.filter((entry) => entry.id !== item.id), item];
+}
+async function createDevelopmentRecordNote(record, text, parcelKey = null) {
+  await putLocalRecord("field-notes", developmentRecordNote(record, text, parcelKey));
+}
 let savedFilter = "all";
 let savedQuery = "";
 /* Which workspace sections are open, remembered while moving between
@@ -451,6 +465,9 @@ function renderLevel(level, tab = "notes") {
       developmentCount: current.developmentCount ?? 0,
       developmentRecords: current.developmentRecords ?? [],
       developmentLoading: Boolean(current.developmentLoading),
+      savedDevelopmentRecordIds: savedItems.filter((item) => item.kind === "development").map((item) => item.key ?? item.id),
+      onSaveDevelopmentRecord: saveDevelopmentRecord,
+      onCreateDevelopmentNote: (record, text) => createDevelopmentRecordNote(record, text, current?.key ?? null),
       notesStore,
       sourceRecords,
       onSave: () => void toggleSaveCurrentParcel(),
@@ -683,6 +700,9 @@ async function start() {
           dialog.replaceChildren(developmentRecordsBrowserElement(records.records, {
             onBack: showSnapshot,
             onClose: () => dialog.close(),
+            savedRecordIds: savedItems.filter((item) => item.kind === "development").map((item) => item.key ?? item.id),
+            onSaveRecord: saveDevelopmentRecord,
+            onCreateNote: (record, text) => createDevelopmentRecordNote(record, text),
           }));
           dialog.classList.add("hm-development-browser-open");
           dialog.setAttribute("aria-label", "Hamilton development records");

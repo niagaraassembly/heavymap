@@ -1532,3 +1532,46 @@ body.hm-docs-service-page main { background: var(--surface); }
 }
 
 .hm-reader.hm-docs-service-page .reader-library { padding-inline: clamp(12px, 2vw, 24px); }
+
+/* Development permits: compact actions and a laptop-sized detail surface. */
+.hm-development-browser-page .hm-development-browser-item { grid-template-columns: minmax(0, 1fr) auto auto; cursor: default; }
+.hm-development-browser-page .hm-development-browser-item-tags { grid-column: 1; }
+.hm-development-browser-page .hm-development-browser-item-actions { grid-column: 3; grid-row: 1 / span 3; align-self: center; }
+.hm-development-browser-page .hm-development-browser-item .hm-development-icon-action { background: var(--surface-raised); }
+.hm-development-record-dialog { width: min(1080px, calc(100vw - 20px)); max-height: calc(100dvh - 20px); }
+.hm-development-record-detail { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr); align-content: start; gap: 12px 20px; padding: clamp(15px, 2.4vw, 26px); }
+.hm-development-record-detail-head, .hm-development-record-detail-site, .hm-development-record-secondary, .hm-development-record-note-form { grid-column: 1 / -1; }
+.hm-development-record-detail-head { align-items: center; }
+.hm-development-record-detail-title h2 { font-size: clamp(1.2rem, 2vw, 1.7rem); }
+.hm-development-record-detail-title time { margin-top: 4px; font-size: .66rem; }
+.hm-development-record-detail-actions { display: flex; flex: none; align-items: center; gap: 4px; }
+.hm-development-action { min-height: 32px; padding: 5px 9px; border: 1px solid var(--rule-soft); border-radius: 4px; color: var(--text); background: var(--surface); cursor: pointer; font: 600 .68rem/1.2 var(--sans); }
+.hm-development-action-save { border-color: var(--accent); color: var(--accent-strong); }
+.hm-development-action:disabled { opacity: .7; cursor: default; }
+.hm-development-record-detail-site { gap: 3px; margin-top: 0; padding: 10px 13px; }
+.hm-development-record-detail-site > span, .hm-development-record-detail-metric > span { font-size: .54rem; }
+.hm-development-record-detail-site strong { font-size: .94rem; }
+.hm-development-record-detail-metrics { align-content: start; gap: 6px; margin-top: 0; }
+.hm-development-record-detail-metric { gap: 4px; padding: 8px 10px; }
+.hm-development-record-detail-metric strong { font-size: 1rem; }
+.hm-development-record-detail-section { margin-top: 0; min-width: 0; }
+.hm-development-record-detail-section h3 { margin-bottom: 6px; font-size: .58rem; }
+.hm-development-record-detail-facts { grid-template-columns: minmax(92px, .4fr) minmax(0, 1fr); gap: 5px 10px; }
+.hm-development-record-detail-facts dt { font-size: .63rem; }
+.hm-development-record-detail-facts dd { font-size: .68rem; }
+.hm-development-record-detail-facts dd small { font-size: .58rem; }
+.hm-development-record-secondary { border-top: 1px solid var(--rule-soft); padding-top: 8px; }
+.hm-development-record-secondary > summary { color: var(--accent-strong); cursor: pointer; font: 600 .65rem/1.3 var(--sans); }
+.hm-development-record-secondary[open] { max-height: 26vh; overflow: auto; }
+.hm-development-record-source-facts { margin-top: 8px; }
+.hm-development-record-provenance { margin: 9px 0 0; font-size: .58rem; }
+.hm-development-record-note-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 5px 7px; }
+.hm-development-record-note-form[hidden] { display: none; }
+.hm-development-record-note-form textarea { width: 100%; min-height: 48px; resize: vertical; padding: 7px; border: 1px solid var(--rule-soft); border-radius: 4px; color: var(--text); background: var(--surface); font: .7rem/1.4 var(--sans); }
+.hm-development-record-feedback { grid-column: 1 / -1; min-height: 1em; color: var(--text-muted); font: .62rem/1.3 var(--sans); }
+@media (max-width: 680px) {
+  .hm-development-browser-page .hm-development-browser-item { grid-template-columns: minmax(0, 1fr) auto; }
+  .hm-development-browser-page .hm-development-browser-item-actions { grid-column: 2; grid-row: 1 / span 3; }
+  .hm-development-record-detail { grid-template-columns: minmax(0, 1fr); }
+  .hm-development-record-detail-head, .hm-development-record-detail-site, .hm-development-record-secondary, .hm-development-record-note-form { grid-column: 1; }
+}

@@ -125,57 +125,184 @@ const FOCUS_SECTORS = new Set([
   "residential_multi_unit",
 ]);
 const permitNumber = (record) => record.source_fields?.permit_number?.value;
+const uid = () => globalThis.crypto?.randomUUID?.() ?? `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+export const developmentRecordKey = (record) => `development-record:${record.development_record_id ?? permitNumber(record) ?? "unknown"}`;
 
-function permitCard(record) {
-  const card = el("article", undefined, "hm-development-record");
-  const header = el("header", undefined, "hm-development-record-head");
-  header.append(el("h4", permitNumber(record) || "Permit record"));
-  header.append(el("time", record.report_month || ""));
-  card.append(header);
+export function developmentRecordSavedItem(record) {
   const sourceFields = record.source_fields ?? {};
-  const fieldLabels = {
-    item_number: "Item number · source",
-    permit_number: "Permit number · source",
-    location_text: "Project location · source",
-    area: "Area · source",
-    building_type: "Building type · source",
-    building_gfa: "Building GFA · source",
-    work_type: "Work type · source",
-    construction_value: "Construction value · source",
-    permit_description: "Permit description · source",
-    owner_organization_name: "Owner name · source",
-    builder_organization_name: "Builder name · source",
+  const key = developmentRecordKey(record);
+  const address = sourceFields.location_text?.value ?? "Location not available";
+  const sector = displayTags(record, "derived_sector_tags");
+  return {
+    id: key,
+    kind: "development",
+    key,
+    title: permitNumber(record) || "Development permit",
+    address,
+    subtitle: [record.report_month, sector].filter(Boolean).join(" · "),
+    source: "City of Hamilton building permit records",
+    url: `/development/?record=${encodeURIComponent(record.development_record_id ?? permitNumber(record) ?? "")}`,
+    savedAt: new Date().toISOString(),
   };
-  const facts = el("dl", undefined, "hm-development-facts");
-  for (const [key, field] of Object.entries(sourceFields)) {
-    const label = fieldLabels[key] ?? key.replaceAll("_", " ");
-    const value = field.value === null || field.value === undefined || field.value === ""
-      ? `No value · ${field.status ?? "status unavailable"}`
-      : String(field.value);
-    const valueCell = el("dd", value);
-    valueCell.classList.add("hm-development-source-value");
-    if (field.status && field.status !== "observed")
-      valueCell.append(el("small", `Field status: ${field.status}`, "hm-development-field-status"));
-    if (field.source_text && field.source_text !== String(field.value ?? ""))
-      valueCell.append(el("small", `Source text: ${field.source_text}`, "hm-development-field-source-text"));
-    for (const [metadataKey, metadataValue] of Object.entries(field)) {
-      if (["value", "status", "source_text"].includes(metadataKey) || metadataValue === null || metadataValue === "") continue;
-      const label = metadataKey.replaceAll("_", " ");
-      valueCell.append(el("small", `${label}: ${String(metadataValue)}`, "hm-development-field-source-text"));
+}
+
+export function developmentRecordNote(record, text, parcelKey = null) {
+  const sourceFields = record.source_fields ?? {};
+  return {
+    id: `development-note:${record.development_record_id ?? permitNumber(record) ?? uid()}:${uid()}`,
+    parcelKey: parcelKey ?? record.parcel_ids?.[0] ?? null,
+    developmentRecordId: record.development_record_id ?? null,
+    layer: "Development records",
+    row: sourceFields.location_text?.value ?? permitNumber(record) ?? "Permit record",
+    field: permitNumber(record) ?? "Permit note",
+    text: text.trim(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+function createDevelopmentRecordDialog({ savedRecordIds = new Set(), onSaveRecord, onCreateNote } = {}) {
+  const dialog = document.createElement("dialog");
+  dialog.className = "hm-development-record-dialog";
+  dialog.setAttribute("aria-label", "Permit record details");
+  const open = (record, trigger) => {
+    const sourceFields = record.source_fields ?? {};
+    const sourceValue = (key) => sourceFields[key]?.value;
+    const permit = permitNumber(record) || "Permit record";
+    const key = developmentRecordKey(record);
+    const detail = el("article", undefined, "hm-development-record-detail");
+    const header = el("header", undefined, "hm-development-record-detail-head");
+    const heading = el("div", undefined, "hm-development-record-detail-title");
+    const title = el("h2", permit);
+    title.id = `hm-development-record-detail-title-${uid()}`;
+    const month = el("time", record.report_month || "Report month not stated");
+    if (record.report_month) month.dateTime = record.report_month;
+    heading.append(title, month);
+    const tools = el("div", undefined, "hm-development-record-detail-actions");
+    const save = el("button", savedRecordIds.has(key) ? "✓ Saved" : "☆ Save", "hm-development-action hm-development-action-save");
+    save.type = "button";
+    save.disabled = savedRecordIds.has(key) || !onSaveRecord;
+    save.setAttribute("aria-label", savedRecordIds.has(key) ? `Saved ${permit}` : `Save ${permit}`);
+    save.addEventListener("click", async () => {
+      save.disabled = true;
+      try {
+        await onSaveRecord?.(record);
+        savedRecordIds.add(key);
+        save.textContent = "✓ Saved";
+        save.setAttribute("aria-label", `Saved ${permit}`);
+      } catch {
+        save.disabled = false;
+        feedback.textContent = "Could not save this permit on this device.";
+      }
+    });
+    const noteToggle = el("button", "＋ Note", "hm-development-action");
+    noteToggle.type = "button";
+    noteToggle.disabled = !onCreateNote;
+    const dismiss = el("button", "×", "hm-map-dialog-close");
+    dismiss.type = "button";
+    dismiss.setAttribute("aria-label", "Close permit details");
+    dismiss.addEventListener("click", () => dialog.close());
+    tools.append(save, noteToggle, dismiss);
+    header.append(heading, tools);
+
+    const site = el("section", undefined, "hm-development-record-detail-site");
+    site.append(el("span", "Site location"), el("strong", sourceValue("location_text") || "Location not available"));
+    const metrics = el("div", undefined, "hm-development-record-detail-metrics");
+    const rawMoney = sourceValue("construction_value");
+    const moneyValue = rawMoney === null || rawMoney === undefined || rawMoney === ""
+      ? "Not reported" : new Intl.NumberFormat("en-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 }).format(Number(rawMoney));
+    const rawGfa = sourceValue("building_gfa");
+    const gfaValue = rawGfa === null || rawGfa === undefined || rawGfa === "" ? "Not reported" : `${Number(rawGfa).toLocaleString("en-CA")} m²`;
+    for (const [label, value] of [["Reported construction value", moneyValue], ["Building area", gfaValue]]) {
+      const metric = el("div", undefined, "hm-development-record-detail-metric");
+      metric.append(el("span", label), el("strong", value));
+      metrics.append(metric);
     }
-    facts.append(el("dt", label), valueCell);
-  }
-  facts.append(
-    el("dt", "Sector · derived"), el("dd", displayTags(record, "derived_sector_tags") || "No derived sector tag"),
-    el("dt", "Action · derived"), el("dd", displayTags(record, "derived_action_tags") || "No derived action tag"),
-  );
-  card.append(facts);
-  card.append(el("p", "Owner and builder contact addresses are withheld. Names and permit fields are source-reported and not independently verified.", "hm-development-provenance"));
-  card.append(el("p", `Classification ${record.classification_status} · taxonomy ${record.taxonomy_version} · ${record.activity_basis}`, "hm-development-provenance"));
-  if (record.source_evidence_ref?.source_page) {
-    card.append(el("p", `Source evidence: monthly permit audit, page ${record.source_evidence_ref.source_page}`, "hm-development-provenance"));
-  }
-  return card;
+
+    const facts = el("section", undefined, "hm-development-record-detail-section");
+    facts.append(el("h3", "Permit details"));
+    const factList = el("dl", undefined, "hm-development-record-detail-facts");
+    const fieldLabels = {
+      item_number: "Item number", permit_number: "Permit number", location_text: "Project location", area: "Area",
+      building_type: "Building type", building_gfa: "Building GFA", work_type: "Work type", construction_value: "Construction value",
+      permit_description: "Project description", owner_organization_name: "Owner name", builder_organization_name: "Builder name",
+    };
+    const primaryFields = ["permit_description", "building_type", "work_type", "owner_organization_name", "builder_organization_name"];
+    for (const keyName of primaryFields) {
+      const field = sourceFields[keyName];
+      if (!field || field.value === null || field.value === undefined || field.value === "") continue;
+      factList.append(el("dt", fieldLabels[keyName] ?? keyName.replaceAll("_", " ")), el("dd", String(field.value)));
+    }
+    facts.append(factList);
+
+    const classification = el("section", undefined, "hm-development-record-detail-section");
+    classification.append(el("h3", "Classification"));
+    const tags = el("div", undefined, "hm-development-record-detail-tags");
+    for (const [label, values] of [["Sector", record.derived_sector_tags], ["Action", record.derived_action_tags]]) {
+      for (const value of values ?? []) {
+        const tag = value?.label ?? value?.tag ?? value;
+        tags.append(el("span", `${label} · ${String(tag).replaceAll("_", " ")}`, "hm-development-record-tag"));
+      }
+    }
+    if (tags.childElementCount) classification.append(tags);
+
+    const secondary = document.createElement("details");
+    secondary.className = "hm-development-record-secondary";
+    secondary.append(el("summary", "Source fields and record notes"));
+    const sourceFacts = el("dl", undefined, "hm-development-record-detail-facts hm-development-record-source-facts");
+    for (const [keyName, field] of Object.entries(sourceFields)) {
+      const value = field.value === null || field.value === undefined || field.value === "" ? `Not reported · ${field.status ?? "status unavailable"}` : String(field.value);
+      const valueCell = el("dd", value);
+      const sourceNotes = [field.status && field.status !== "observed" ? `Field status: ${field.status}` : null,
+        field.source_text && field.source_text !== String(field.value ?? "") ? `Source text: ${field.source_text}` : null,
+        ...Object.entries(field).filter(([metadataKey, metadataValue]) => !["value", "status", "source_text"].includes(metadataKey) && metadataValue !== null && metadataValue !== "").map(([metadataKey, metadataValue]) => `${metadataKey.replaceAll("_", " ")}: ${String(metadataValue)}`)];
+      for (const note of sourceNotes.filter(Boolean)) valueCell.append(el("small", note));
+      sourceFacts.append(el("dt", fieldLabels[keyName] ?? keyName.replaceAll("_", " ")), valueCell);
+    }
+    secondary.append(sourceFacts);
+    const provenance = el("p", [
+      "Contact addresses are withheld. Source-reported values have not been independently verified; issue month does not establish current project status.",
+      record.source_evidence_ref?.source_page ? `Monthly permit report, page ${record.source_evidence_ref.source_page}.` : null,
+      `Classification ${record.classification_status || "not stated"} · taxonomy ${record.taxonomy_version || "not stated"}.`,
+    ].filter(Boolean).join(" "), "hm-development-record-provenance");
+    secondary.append(provenance);
+
+    const noteForm = el("form", undefined, "hm-development-record-note-form");
+    noteForm.hidden = true;
+    const noteInput = document.createElement("textarea");
+    noteInput.maxLength = 5000;
+    noteInput.rows = 2;
+    noteInput.placeholder = "Add a note about this permit…";
+    noteInput.setAttribute("aria-label", "Note about this permit");
+    const noteSave = el("button", "Save note", "hm-development-action hm-development-action-save");
+    noteSave.type = "submit";
+    const feedback = el("span", "", "hm-development-record-feedback");
+    noteForm.append(noteInput, noteSave, feedback);
+    noteToggle.addEventListener("click", () => {
+      noteForm.hidden = !noteForm.hidden;
+      if (!noteForm.hidden) noteInput.focus({ preventScroll: true });
+    });
+    noteForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!noteInput.value.trim()) { feedback.textContent = "Write a note first."; return; }
+      noteSave.disabled = true;
+      try {
+        await onCreateNote?.(record, noteInput.value.trim());
+        noteInput.value = "";
+        feedback.textContent = "Note saved on this device.";
+      } catch { feedback.textContent = "Could not save this note on this device."; }
+      finally { noteSave.disabled = false; }
+    });
+
+    detail.append(header, site, metrics, facts, classification, secondary, noteForm);
+    dialog.setAttribute("aria-labelledby", title.id);
+    dialog.replaceChildren(detail);
+    dialog.showModal();
+    dismiss.focus({ preventScroll: true });
+    dialog.addEventListener("close", () => { if (trigger?.isConnected) trigger.focus({ preventScroll: true }); }, { once: true });
+  };
+  dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+  return { dialog, open };
 }
 
 export function developmentCountAction(count, onOpen) {
@@ -187,7 +314,13 @@ export function developmentCountAction(count, onOpen) {
   return button;
 }
 
-export function developmentRecordsSection(records, { count = records.length, loading = false } = {}) {
+export function developmentRecordsSection(records, {
+  count = records.length,
+  loading = false,
+  savedRecordIds = new Set(),
+  onSaveRecord,
+  onCreateNote,
+} = {}) {
   const section = el("section", undefined, "hm-development-section");
   const head = el("header", undefined, "hm-development-section-head");
   const title = el("h3", "Development activity");
@@ -195,10 +328,102 @@ export function developmentRecordsSection(records, { count = records.length, loa
   head.append(title);
   head.append(el("span", `${count} ${count === 1 ? "record" : "records"}`));
   section.append(head);
-  section.append(el("p", "Monthly issued-permit records. These summaries do not establish current permit or project status.", "hm-development-caveat"));
   if (loading) section.append(el("p", "Loading development records…", "hm-development-empty"));
   else if (!records.length) section.append(el("p", count ? "The linked records could not be loaded." : "No linked development records in this collection.", "hm-development-empty"));
-  else records.forEach((record) => section.append(permitCard(record)));
+  else {
+    const toolbar = el("div", undefined, "hm-development-record-filter-bar");
+    const search = document.createElement("input");
+    search.type = "search";
+    search.placeholder = "Filter permits, descriptions, owners…";
+    search.setAttribute("aria-label", "Filter linked development permits");
+    const month = document.createElement("select");
+    month.setAttribute("aria-label", "Filter permits by report month");
+    month.append(new Option("All months", "all"));
+    [...new Set(records.map((record) => record.report_month).filter(Boolean))].sort().reverse().forEach((value) => month.append(new Option(value, value)));
+    const category = document.createElement("select");
+    category.setAttribute("aria-label", "Filter permits by category");
+    category.append(new Option("All categories", "all"));
+    for (const [value, label] of categoryDefinitions) category.append(new Option(label, value));
+    toolbar.append(search, month, category);
+    section.append(toolbar);
+    const resultStatus = el("p", "", "hm-development-record-filter-status");
+    resultStatus.setAttribute("role", "status");
+    section.append(resultStatus);
+    const list = el("div", undefined, "hm-development-compact-list");
+    section.append(list);
+    const more = el("button", "Show more records", "hm-development-show-more");
+    more.type = "button";
+    section.append(more);
+    const { dialog, open } = createDevelopmentRecordDialog({ savedRecordIds, onSaveRecord, onCreateNote });
+    section.append(dialog);
+    let visibleCount = 8;
+    const render = () => {
+      const query = search.value.trim().toLocaleLowerCase();
+      const matches = records.filter((record) => {
+        if (month.value !== "all" && record.report_month !== month.value) return false;
+        if (!recordMatchesCategory(record, category.value)) return false;
+        const searchable = [
+          ...Object.values(record.source_fields ?? {}).flatMap((field) => [field.value, field.source_text]),
+          ...(record.derived_sector_tags ?? []).map((tag) => tag.label ?? tag.tag ?? tag),
+          ...(record.derived_action_tags ?? []).map((tag) => tag.label ?? tag.tag ?? tag),
+        ].join(" ").toLocaleLowerCase();
+        return !query || searchable.includes(query);
+      });
+      resultStatus.textContent = `${matches.length.toLocaleString("en-CA")} of ${count.toLocaleString("en-CA")} records`;
+      const shown = matches.slice(0, visibleCount);
+      list.replaceChildren();
+      for (const record of shown) {
+        const fields = record.source_fields ?? {};
+        const key = developmentRecordKey(record);
+        const card = el("article", undefined, "hm-development-compact-card");
+        const identity = el("div", undefined, "hm-development-compact-identity");
+        const top = el("div", undefined, "hm-development-compact-title");
+        top.append(el("strong", permitNumber(record) || "Permit record"), el("time", record.report_month || "—"));
+        identity.append(top, el("span", fields.location_text?.value || "Location not available"));
+        const description = fields.permit_description?.value || fields.work_type?.value;
+        if (description) identity.append(el("p", String(description), "hm-development-compact-description"));
+        const meta = el("span", [
+          fields.construction_value?.value !== null && fields.construction_value?.value !== undefined && fields.construction_value?.value !== ""
+            ? money(fields.construction_value.value) : null,
+          displayTags(record, "derived_sector_tags"),
+        ].filter(Boolean).join(" · "), "hm-development-compact-meta");
+        identity.append(meta);
+        const actions = el("div", undefined, "hm-development-compact-actions");
+        const save = el("button", savedRecordIds.has(key) ? "✓" : "☆", "hm-development-icon-action");
+        save.type = "button";
+        save.disabled = savedRecordIds.has(key) || !onSaveRecord;
+        save.setAttribute("aria-label", savedRecordIds.has(key) ? `Saved ${permitNumber(record)}` : `Save ${permitNumber(record)}`);
+        save.title = savedRecordIds.has(key) ? "Saved" : "Save permit";
+        save.addEventListener("click", async () => {
+          save.disabled = true;
+          try {
+            await onSaveRecord?.(record);
+            savedRecordIds.add(key);
+            save.textContent = "✓";
+            save.setAttribute("aria-label", `Saved ${permitNumber(record)}`);
+            save.title = "Saved";
+          } catch { save.disabled = false; }
+        });
+        const detail = el("button", "↗", "hm-development-icon-action");
+        detail.type = "button";
+        detail.setAttribute("aria-haspopup", "dialog");
+        detail.setAttribute("aria-label", `Open full record for ${permitNumber(record)}`);
+        detail.title = "Open full record";
+        detail.addEventListener("click", () => open(record, detail));
+        actions.append(save, detail);
+        card.append(identity, actions);
+        list.append(card);
+      }
+      if (!matches.length) list.append(el("p", "No records match these filters.", "hm-development-empty"));
+      more.hidden = visibleCount >= matches.length;
+      more.textContent = `Show ${Math.min(12, matches.length - visibleCount)} more records`;
+    };
+    search.addEventListener("input", () => { visibleCount = 8; render(); });
+    month.addEventListener("change", () => { visibleCount = 8; render(); });
+    category.addEventListener("change", () => { visibleCount = 8; render(); });
+    more.addEventListener("click", () => { visibleCount += 12; render(); });
+    render();
+  }
   return section;
 }
 
@@ -234,7 +459,7 @@ function sumMonthly(monthly, first, last) {
 function recordMatchesCategory(record, category) {
   if (category === "all") return true;
   const tags = (record.derived_sector_tags ?? []).map((tag) => String(tag?.tag ?? tag?.label ?? tag));
-  if (category === "industrial") return tags.includes("industrial");
+  if (category === "industrial") return tags.includes("industrial") || tags.includes("light_industrial");
   if (category === "logistics") return tags.some((tag) => tag === "logistics" || tag === "warehouse_logistics");
   if (category === "commercial") return tags.some((tag) => tag.startsWith("commercial"));
   if (category === "multi_unit_residential") return tags.includes("residential_multi_unit") || tags.includes("multi_unit_residential");
@@ -313,7 +538,7 @@ export function cityDevelopmentSheetElement(snapshot, { onBrowse } = {}) {
   return panel;
 }
 
-export function developmentRecordsBrowserElement(records, { onBack, onClose, sidebarTarget, snapshot } = {}) {
+export function developmentRecordsBrowserElement(records, { onBack, onClose, sidebarTarget, snapshot, savedRecordIds: savedIds = [], onSaveRecord, onCreateNote } = {}) {
   const isDashboard = Boolean(sidebarTarget && snapshot?.monthly?.length);
   const panel = el("section", undefined, "hm-development-browser");
   panel.setAttribute("aria-label", "Hamilton development records");
@@ -474,111 +699,23 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose, sid
   if (sidebarTarget) panel.append(main);
   else panel.append(sidebar, main);
 
-  const recordDialog = document.createElement("dialog");
-  recordDialog.className = "hm-development-record-dialog";
-  recordDialog.setAttribute("aria-label", "Permit record details");
-  panel.append(recordDialog);
-
-  const openRecord = (record, trigger) => {
-    const sourceFields = record.source_fields ?? {};
-    const sourceValue = (key) => sourceFields[key]?.value;
-    const permit = sourceValue("permit_number");
-    const detail = el("article", undefined, "hm-development-record-detail");
-    const header = el("header", undefined, "hm-development-record-detail-head");
-    const heading = el("div", undefined, "hm-development-record-detail-title");
-    const title = el("h2", permit || "Permit record");
-    title.id = "hm-development-record-detail-title";
-    const month = el("time", record.report_month || "Report month not stated");
-    if (record.report_month) month.dateTime = record.report_month;
-    heading.append(title, month);
-    const dismiss = el("button", "×", "hm-map-dialog-close");
-    dismiss.type = "button";
-    dismiss.setAttribute("aria-label", "Close permit details");
-    dismiss.addEventListener("click", () => recordDialog.close());
-    header.append(heading, dismiss);
-
-    const site = el("section", undefined, "hm-development-record-detail-site");
-    site.append(el("span", "SITE LOCATION"), el("strong", sourceValue("location_text") || "Location not available"));
-    const metrics = el("div", undefined, "hm-development-record-detail-metrics");
-    const rawMoney = sourceValue("construction_value");
-    const moneyValue = rawMoney === null || rawMoney === undefined || rawMoney === ""
-      ? "Not reported"
-      : new Intl.NumberFormat("en-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 }).format(Number(rawMoney));
-    const rawGfa = sourceValue("building_gfa");
-    const gfaValue = rawGfa === null || rawGfa === undefined || rawGfa === ""
-      ? "Not reported"
-      : `${Number(rawGfa).toLocaleString("en-CA")} m²`;
-    for (const [label, value] of [["Reported construction value", moneyValue], ["Building area", gfaValue]]) {
-      const metric = el("div", undefined, "hm-development-record-detail-metric");
-      metric.append(el("span", label), el("strong", value));
-      metrics.append(metric);
-    }
-
-    const facts = el("section", undefined, "hm-development-record-detail-section");
-    facts.append(el("h3", "Permit details"));
-    const factList = el("dl", undefined, "hm-development-record-detail-facts");
-    const fieldLabels = {
-      item_number: "Item number · source", permit_number: "Permit number · source",
-      location_text: "Project location · source", area: "Area · source",
-      building_type: "Building type · source", building_gfa: "Building GFA · source",
-      work_type: "Work type · source", construction_value: "Construction value · source",
-      permit_description: "Permit description · source",
-      owner_organization_name: "Owner name · source", builder_organization_name: "Builder name · source",
-    };
-    for (const [key, field] of Object.entries(sourceFields)) {
-      const value = field.value === null || field.value === undefined || field.value === ""
-        ? `Not reported · ${field.status ?? "status unavailable"}`
-        : String(field.value);
-      const valueCell = el("dd", value);
-      if (field.status && field.status !== "observed")
-        valueCell.append(el("small", `Field status: ${field.status}`, "hm-development-field-status"));
-      if (field.source_text && field.source_text !== String(field.value ?? ""))
-        valueCell.append(el("small", `Source text: ${field.source_text}`, "hm-development-field-source-text"));
-      for (const [metadataKey, metadataValue] of Object.entries(field)) {
-        if (["value", "status", "source_text"].includes(metadataKey) || metadataValue === null || metadataValue === "") continue;
-        valueCell.append(el("small", `${metadataKey.replaceAll("_", " ")}: ${String(metadataValue)}`, "hm-development-field-source-text"));
-      }
-      factList.append(el("dt", fieldLabels[key] ?? key.replaceAll("_", " "), "hm-development-source-label"), valueCell);
-    }
-    facts.append(factList);
-
-    const classification = el("section", undefined, "hm-development-record-detail-section");
-    classification.append(el("h3", "Classification"));
-    const tags = el("div", undefined, "hm-development-record-detail-tags");
-    for (const [label, values] of [["Sector", record.derived_sector_tags], ["Action", record.derived_action_tags]]) {
-      for (const value of values ?? []) {
-        const tag = value?.label ?? value?.tag ?? value;
-        tags.append(el("span", `${label} · ${String(tag).replaceAll("_", " ")}`, "hm-development-record-tag"));
-      }
-    }
-    if (!tags.childElementCount) tags.append(el("span", "No derived tags", "hm-development-record-tag is-muted"));
-    classification.append(tags);
-
-    const provenance = el("section", undefined, "hm-development-record-detail-provenance");
-    provenance.append(el("span", "Source-reported values are reproduced as published and have not been independently verified."));
-    provenance.append(el("span", record.activity_basis || "Permit issued in report month; current status unknown."));
-    provenance.append(el("span", "Owner and builder contact addresses are withheld."));
-    if (record.source_evidence_ref?.source_page) provenance.append(el("span", `Source evidence · monthly permit report, page ${record.source_evidence_ref.source_page}`));
-    provenance.append(el("span", `Classification: ${record.classification_status || "not stated"} · Taxonomy: ${record.taxonomy_version || "not stated"}`));
-
-    detail.append(header, site, metrics, facts, classification);
-    detail.append(provenance);
-    recordDialog.setAttribute("aria-labelledby", title.id);
-    recordDialog.replaceChildren(detail);
-    recordDialog.showModal();
-    dismiss.focus({ preventScroll: true });
-    recordDialog.addEventListener("close", () => {
-      if (trigger.isConnected) trigger.focus({ preventScroll: true });
-    }, { once: true });
-  };
-  recordDialog.addEventListener("click", (event) => {
-    if (event.target === recordDialog) recordDialog.close();
+  const savedRecordIds = savedIds instanceof Set ? savedIds : new Set(savedIds);
+  const { dialog: recordDialog, open: openRecord } = createDevelopmentRecordDialog({
+    savedRecordIds,
+    onSaveRecord,
+    onCreateNote,
   });
+  panel.append(recordDialog);
 
   const pageSize = 50;
   let page = 0;
   let visibleCount = 48;
+  let pendingRecordId = new URLSearchParams(globalThis.location?.search ?? "").get("record");
   function update() {
+    if (pendingRecordId) {
+      const target = records.find((record) => record.development_record_id === pendingRecordId || permitNumber(record) === pendingRecordId);
+      if (target && permitNumber(target)) search.value = permitNumber(target);
+    }
     const query = search.value.trim().toLocaleLowerCase();
     const first = fromMonth?.value || snapshot?.coverage?.first_report_month || "0000-00";
     const last = toMonth?.value || snapshot?.coverage?.last_report_month || "9999-99";
@@ -628,14 +765,19 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose, sid
       next.disabled = page + 1 >= pageCount;
     }
     list.replaceChildren();
+    if (pendingRecordId) {
+      const targetIndex = matches.findIndex((record) => record.development_record_id === pendingRecordId || permitNumber(record) === pendingRecordId);
+      if (targetIndex >= 0) {
+        if (isDashboard) visibleCount = Math.max(visibleCount, targetIndex + 1);
+        else page = Math.floor(targetIndex / pageSize);
+      }
+    }
     const pageRecords = isDashboard
       ? matches.slice(0, visibleCount)
       : matches.slice(page * pageSize, (page + 1) * pageSize);
     if (!pageRecords.length) list.append(el("p", "No permit records match these search and filter settings.", "hm-development-browser-empty"));
     for (const record of pageRecords) {
-      const row = el("button", undefined, "hm-development-browser-item");
-      row.type = "button";
-      row.setAttribute("aria-haspopup", "dialog");
+      const row = el("article", undefined, "hm-development-browser-item");
       const identity = el("span", undefined, "hm-development-browser-item-identity");
       identity.append(el("strong", permitNumber(record) || "Permit record"), el("span", record.source_fields?.location_text?.value || "Location not available"));
       const description = record.source_fields?.permit_description?.value || record.source_fields?.work_type?.value;
@@ -648,8 +790,45 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose, sid
       const tagLine = el("span", tags.map((tag) => String(tag?.label ?? tag?.tag ?? tag).replaceAll("_", " ")).join(" · "), "hm-development-browser-item-tags");
       row.append(identity, meta);
       if (tags.length) row.append(tagLine);
-      row.addEventListener("click", () => openRecord(record, row));
+      const actions = el("div", undefined, "hm-development-browser-item-actions");
+      const savedKey = developmentRecordKey(record);
+      const save = el("button", savedRecordIds.has(savedKey) ? "✓" : "☆", "hm-development-icon-action");
+      save.type = "button";
+      save.disabled = savedRecordIds.has(savedKey) || !onSaveRecord;
+      save.title = savedRecordIds.has(savedKey) ? "Saved" : "Save permit";
+      save.setAttribute("aria-label", savedRecordIds.has(savedKey) ? `Saved ${permitNumber(record)}` : `Save ${permitNumber(record)}`);
+      save.addEventListener("click", async () => {
+        save.disabled = true;
+        try {
+          await onSaveRecord?.(record);
+          savedRecordIds.add(savedKey);
+          save.textContent = "✓";
+          save.title = "Saved";
+          save.setAttribute("aria-label", `Saved ${permitNumber(record)}`);
+        } catch { save.disabled = false; }
+      });
+      const open = el("button", "↗", "hm-development-icon-action");
+      open.type = "button";
+      open.setAttribute("aria-haspopup", "dialog");
+      open.setAttribute("aria-label", `Open full record for ${permitNumber(record)}`);
+      open.dataset.recordId = record.development_record_id ?? permitNumber(record) ?? "";
+      open.title = "Open full record";
+      open.addEventListener("click", () => openRecord(record, open));
+      actions.append(save, open);
+      row.append(actions);
       list.append(row);
+    }
+    if (pendingRecordId) {
+      const target = records.find((record) => record.development_record_id === pendingRecordId || permitNumber(record) === pendingRecordId);
+      if (target) {
+        const button = [...list.querySelectorAll("[data-record-id]")].find((candidate) => candidate.dataset.recordId === (target.development_record_id ?? permitNumber(target) ?? ""));
+        if (button) {
+          pendingRecordId = null;
+          const show = () => openRecord(target, button);
+          if (globalThis.requestAnimationFrame) requestAnimationFrame(show);
+          else setTimeout(show, 0);
+        }
+      }
     }
   }
   search.addEventListener("input", () => { page = 0; visibleCount = 48; update(); });
@@ -684,5 +863,6 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose, sid
     citySelect.addEventListener("change", update);
   }
   update();
+  panel.refreshSavedRecords = () => update();
   return panel;
 }

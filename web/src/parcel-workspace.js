@@ -291,6 +291,9 @@ export function parcelWorkspaceElement(summary, labels, {
   developmentCount = 0,
   developmentRecords = [],
   developmentLoading = false,
+  savedDevelopmentRecordIds = [],
+  onSaveDevelopmentRecord,
+  onCreateDevelopmentNote,
   notesStore,
   onSave,
   initialTab = "notes",
@@ -355,6 +358,9 @@ export function parcelWorkspaceElement(summary, labels, {
     record.append(developmentRecordsSection(developmentRecords, {
       count: developmentCount,
       loading: developmentLoading,
+      savedRecordIds: new Set(savedDevelopmentRecordIds),
+      onSaveRecord: onSaveDevelopmentRecord,
+      onCreateNote: onCreateDevelopmentNote,
     }));
   }
   const sections = [

@@ -6,6 +6,8 @@ import { loadLabels } from "../labels.js";
 import { summariseRecord } from "../parcel-summary.js";
 import {
   createHamiltonDevelopmentLoader,
+  developmentRecordNote,
+  developmentRecordSavedItem,
   developmentRecordsBrowserElement,
 } from "../development-records.js";
 
@@ -590,13 +592,26 @@ async function mountDevelopmentLibrary({ rail, content, status }) {
     return;
   }
 
+  const savedRecordIds = new Set();
   const browser = developmentRecordsBrowserElement(recordsResult.records, {
     sidebarTarget: rail,
     snapshot: snapshotResult.ok ? snapshotResult.snapshot : null,
+    savedRecordIds,
+    onSaveRecord: async (record) => {
+      await putLocalRecord("saved", developmentRecordSavedItem(record));
+      if (status) status.textContent = `${record.source_fields?.permit_number?.value ?? "Permit record"} saved on this device.`;
+    },
+    onCreateNote: (record, text) => putLocalRecord("field-notes", developmentRecordNote(record, text)),
   });
   browser.classList.add("hm-development-browser-page");
   content.replaceChildren(browser);
   if (status) status.textContent = `${recordsResult.records.length.toLocaleString("en-CA")} published Hamilton permit records are ready.`;
+  void recordsFor("saved").then((items) => {
+    for (const item of items.filter((entry) => entry.kind === "development")) savedRecordIds.add(item.key ?? item.id);
+    browser.refreshSavedRecords?.();
+  }).catch(() => {
+    if (status) status.textContent = "Permit records are ready; local saved-item state is unavailable in this tab.";
+  });
 }
 
 async function mountSavedLibrary({ rail, content, status, developmentOnly }) {
