@@ -263,6 +263,80 @@ test("a record with no overlay rows names the absence plainly", () => {
   assert.ok(s.checkedAgainst.every((row) => row.inside === false));
 });
 
+test("workspace facts: one row per record fact, each with its provenance", () => {
+  const s = summarise(typicalCore());
+  assert.equal(s.locality, "Ancaster");
+  assert.deepEqual(
+    s.facts.map((f) => f.id),
+    ["area", "roll", "zoning", "plan_use", "boundary", "constraints"],
+  );
+  const area = s.facts[0];
+  assert.equal(area.label, "Area");
+  assert.equal(area.value, "608.3 m²");
+  assert.equal(area.sub, "0.06 ha · 0.15 acres");
+  assert.equal(area.provenance.source, "LYR-HAM-PARCEL");
+  assert.equal(area.provenance.sourceLabel, "Hamilton Assessment Parcel (City of Hamilton)");
+  assert.equal(area.provenance.joinText, "Area of the City parcel polygon (EPSG:26917)");
+  assert.equal(area.provenance.confText, "one-to-one or point-in-polygon join on current sources");
+  const roll = s.facts[1];
+  assert.equal(roll.value, "2518 140 320 71153");
+  assert.equal(roll.sub, "One-to-one match");
+  assert.equal(roll.provenance.source, "LYR-NPCA-ASSESSMENT-PARCELS-TEST");
+  assert.equal(roll.provenance.joinText, "exact one-to-one roll match");
+  const zoning = s.facts[2];
+  assert.equal(zoning.value, "R4-394");
+  assert.equal(zoning.sub, "whole parcel");
+  assert.equal(zoning.share, 1);
+  assert.equal(zoning.provenance.joinText, "share of parcel area");
+  assert.equal(zoning.provenance.confText, "");
+  const constraints = s.facts[5];
+  assert.equal(constraints.value, "None found in the 7 regulation layers checked");
+  assert.equal(constraints.sub, "");
+});
+
+test("workspace facts: a regulated parcel names the layer that contains it", () => {
+  const core = typicalCore({
+    overlays: {
+      src: "heavymap-overlays:20261017-val2-ia1",
+      join: "area_share",
+      row_count: 4,
+      rows: [
+        { layer: "LYR-HAM-ZONING", class: "R4-394", share: 1.0, area_m2: 608.3 },
+        { layer: "LYR-HAM-SECONDARY-PLAN-LAND-USE", class: "Low Density Residential 1", share: 0.9985, area_m2: 607.4 },
+        { layer: "LYR-HAM-URBAN-BOUNDARY", class: "urban", share: 1.0, area_m2: 608.3 },
+        { layer: "LYR-HCA-REGULATED-AREAS", class: "Regulated", share: 0.0004, area_m2: 0.24, sliver: true },
+      ],
+      sliver_count: 1,
+    },
+  });
+  const s = summarise(core);
+  const constraints = s.facts.find((f) => f.id === "constraints");
+  assert.equal(constraints.value, "HCA regulated area");
+  assert.equal(constraints.sub, "inside");
+});
+
+test("workspace facts: no roll number, the coverage text stands in with its provenance", () => {
+  const core = typicalCore({
+    coverage: { status: "not_covered", provisional: true, grade: "not_in_coverage", src: "LYR-NPCA-ASSESSMENT-PARCELS-TEST", join: "not_in_coverage", conf: "high" },
+    roll: [],
+    gaps: ["GAP-0010"],
+  });
+  const s = summarise(core);
+  const roll = s.facts.find((f) => f.id === "roll");
+  assert.equal(roll.value, "Not covered by NPCA roll data (provisional)");
+  assert.equal(roll.provenance.source, "LYR-NPCA-ASSESSMENT-PARCELS-TEST");
+});
+
+test("no address: the workspace has no locality for the breadcrumb", () => {
+  const core = typicalCore({
+    roll: [],
+    coverage: { status: "has_arn", provisional: false, grade: "exact_1to1", src: "LYR-NPCA-ASSESSMENT-PARCELS-TEST", join: "exact_1to1", conf: "high" },
+    addresses: { src: "LYR-HAM-ADDRESSES", join: "point_in_polygon", count: 0, complete: true, items: [] },
+  });
+  const s = summarise(core, { addresses_full: [], feature_ids: {} });
+  assert.equal(s.locality, null);
+});
+
 test("checked-against needs the manifest sources; without them it says so", () => {
   const s = summariseRecord(typicalCore(), typicalDetail, testLabels());
   assert.deepEqual(s.checkedAgainst, []);
