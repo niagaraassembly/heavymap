@@ -612,31 +612,92 @@ async function mountNotesLibrary({ rail, content, status }) {
     for (const key of keys) if (key && !parcels.has(key)) parcels.set(key, key);
   }
   for (const note of notes) if (note.parcelKey && !parcels.has(note.parcelKey)) parcels.set(note.parcelKey, note.parcelKey);
+  await Promise.all([...parcels].filter(([key, label]) => label === key || /^(saved hamilton parcel|parcel)$/i.test(label))
+    .map(async ([key]) => {
+      try {
+        const pin = dossierLoader.release ? { ok: true, manifest: null } : await (dossierPin ??= dossierLoader.pin());
+        if (!pin.ok) return;
+        const [core, detail, labels] = await Promise.all([
+          dossierLoader.core(key), dossierLoader.detail(key),
+          labelsPromise ??= loadLabels({ base: "/labels/", locales: ["en"] }),
+        ]);
+        if (core.ok) parcels.set(key, summariseRecord(core.record, detail.ok ? detail.record : null, labels, { sources: pin.manifest?.sources }).title);
+      } catch { /* Keep the saved project key visible if local parcel details are unavailable. */ }
+    }));
   let query = "";
-  let project = "all";
+  let scope = "all";
+  let composerOpen = false;
   const search = document.createElement("input");
   search.type = "search";
   search.placeholder = "Search notes";
   search.setAttribute("aria-label", "Search notes");
   const searchLabel = el("label", undefined, "hm-docs-search");
   searchLabel.append(el("span", "⌕"), search);
-  const projectSelect = document.createElement("select");
-  projectSelect.setAttribute("aria-label", "Filter notes by parcel project");
-  projectSelect.append(new Option("All site projects", "all"));
-  for (const [key, label] of parcels) projectSelect.append(new Option(label, key));
-  rail.replaceChildren(el("p", "NOTES", "hm-docs-kicker"), searchLabel, projectSelect);
+  const navigation = el("nav", undefined, "hm-notes-navigation");
+  navigation.setAttribute("aria-label", "Notes library");
+  const projectList = el("div", undefined, "hm-notes-project-list");
+  const allButton = button("", () => { scope = "all"; render(); }, "hm-notes-nav-item");
+  const recentButton = button("", () => { scope = "recent"; render(); }, "hm-notes-nav-item");
+  allButton.dataset.notesScope = "all";
+  recentButton.dataset.notesScope = "recent";
+  navigation.append(el("p", "LIBRARY", "hm-notes-rail-label"), allButton, recentButton,
+    el("p", "SITE PROJECTS", "hm-notes-rail-label hm-notes-project-label"), projectList);
+  rail.replaceChildren(el("p", "NOTES", "hm-docs-kicker"), searchLabel, navigation,
+    el("p", "Notes are saved in this browser and stay attached to their site project.", "hm-notes-rail-footnote"));
   const heading = el("div", undefined, "hm-global-page-heading");
-  heading.append(el("h1", "Parcel notes"), el("p", "Short observations and longer comments, kept with their site project."));
+  const headingCopy = el("div", undefined, "hm-notes-heading-copy");
+  headingCopy.append(el("p", "FIELD JOURNAL", "hm-notes-eyebrow"), el("h1", "Notes"),
+    el("p", "Observations, decisions, and data annotations across your site projects."));
+  const newNote = button("＋ New note", () => {
+    composerOpen = !composerOpen;
+    scope = "all";
+    render();
+    compose.hidden = !composerOpen;
+    newNote.setAttribute("aria-expanded", String(composerOpen));
+    if (composerOpen) { parcel.focus(); compose.scrollIntoView({ block: "nearest", behavior: "smooth" }); }
+  }, "hm-docs-primary hm-notes-new-note");
+  newNote.disabled = parcels.size === 0;
+  if (newNote.disabled) newNote.title = "Save a parcel on the map to start a site project";
+  newNote.setAttribute("aria-expanded", "false");
+  heading.append(headingCopy, newNote);
+  const overview = el("div", undefined, "hm-notes-overview");
+  const metric = (label) => { const node = el("div", undefined, "hm-notes-metric"); node.append(el("strong", "0"), el("span", label)); return node; };
+  const noteMetric = metric("NOTES");
+  const projectMetric = metric("SITE PROJECTS");
+  const latestMetric = metric("LATEST NOTE");
+  overview.append(noteMetric, projectMetric, latestMetric);
   const compose = el("form", undefined, "hm-global-note-compose");
+  compose.hidden = true;
+  compose.setAttribute("aria-label", "Write a parcel note");
+  const composeHead = el("div", undefined, "hm-notes-compose-head");
+  composeHead.append(el("div", undefined), button("×", () => {
+    composerOpen = false; compose.hidden = true; newNote.setAttribute("aria-expanded", "false");
+  }, "hm-notes-close"));
+  composeHead.firstChild.append(el("h2", "Capture a note"), el("p", "Keep a quick observation or longer thought with its site."));
   const parcel = document.createElement("select");
+  parcel.required = true;
   parcel.setAttribute("aria-label", "Site project for this note");
-  parcel.append(new Option("Choose a site project…", ""));
+  parcel.append(new Option(parcels.size ? "Choose a site project…" : "Save a parcel to create a project…", ""));
   for (const [key, label] of parcels) parcel.append(new Option(label, key));
   const noteInput = document.createElement("textarea");
   noteInput.maxLength = 12000;
-  noteInput.placeholder = "Add a note about this parcel…";
+  noteInput.placeholder = "What did you notice? Capture context, a decision, or a question…";
+  noteInput.required = true;
   noteInput.setAttribute("aria-label", "New parcel note");
-  const save = button("Save note", async () => {
+  const parcelField = el("label", "SITE PROJECT", "hm-notes-field-label");
+  parcelField.append(parcel);
+  const noteField = el("label", "YOUR NOTE", "hm-notes-field-label hm-notes-note-field");
+  noteField.append(noteInput);
+  const composeActions = el("div", undefined, "hm-notes-compose-actions");
+  const cancel = button("Cancel", () => {
+    composerOpen = false; compose.hidden = true; newNote.setAttribute("aria-expanded", "false");
+  }, "hm-docs-quiet-button");
+  const save = el("button", "Save note", "hm-docs-primary");
+  save.type = "submit";
+  composeActions.append(cancel, save);
+  compose.append(composeHead, parcelField, noteField, composeActions);
+  compose.addEventListener("submit", async (event) => {
+    event.preventDefault();
     const text = noteInput.value.trim();
     if (!parcel.value || !text) { status.textContent = "Choose a site project and write a note first"; return; }
     const address = parcels.get(parcel.value) || parcel.value;
@@ -644,37 +705,94 @@ async function mountNotesLibrary({ rail, content, status }) {
     const record = { id: uid(), parcelKey: parcel.value, layer: "Project", row: address, field: "General note", text, createdAt: now, updatedAt: now };
     await putLocalRecord("field-notes", record);
     notes.unshift(record);
+    scope = "all";
     noteInput.value = "";
+    composerOpen = false;
+    compose.hidden = true;
+    newNote.setAttribute("aria-expanded", "false");
     status.textContent = "Note saved on this device";
     render();
-  }, "hm-docs-primary");
-  compose.addEventListener("submit", (event) => { event.preventDefault(); save.click(); });
-  compose.append(parcel, noteInput, save);
-  const list = el("div", undefined, "hm-docs-list hm-global-note-list");
-  const toolbar = el("div", undefined, "hm-docs-library-toolbar");
-  toolbar.append(el("p", "Your notes stay in this browser and can be opened from the parcel workspace.", "hm-global-toolbar-note"));
-  content.replaceChildren(heading, compose, toolbar, list);
+  });
+  const list = el("div", undefined, "hm-notes-feed");
+  const feedHead = el("div", undefined, "hm-notes-feed-head");
+  const feedTitle = el("h2", "All notes");
+  const feedCount = el("span", "0 notes", "hm-notes-feed-count");
+  feedHead.append(feedTitle, feedCount);
+  content.replaceChildren(heading, overview, compose, feedHead, list);
   const render = () => {
+    const recentNotes = notes.filter((note) => Date.now() - new Date(note.createdAt ?? 0).getTime() < 7 * 86400000);
+    const projectCounts = new Map();
+    for (const note of notes) if (note.parcelKey) projectCounts.set(note.parcelKey, (projectCounts.get(note.parcelKey) ?? 0) + 1);
+    allButton.replaceChildren(el("span", "All notes"), el("small", String(notes.length)));
+    recentButton.replaceChildren(el("span", "Recent"), el("small", String(recentNotes.length)));
+    allButton.classList.toggle("is-active", scope === "all");
+    recentButton.classList.toggle("is-active", scope === "recent");
+    allButton.setAttribute("aria-pressed", String(scope === "all"));
+    recentButton.setAttribute("aria-pressed", String(scope === "recent"));
+    projectList.replaceChildren();
+    const projectKeys = [...new Set([...parcels.keys(), ...projectCounts.keys()])];
+    if (!projectKeys.length) projectList.append(el("p", "Your parcel projects will appear here.", "hm-notes-project-empty"));
+    for (const key of projectKeys) {
+      const projectButton = button("", () => { scope = key; render(); }, "hm-notes-nav-item hm-notes-project-item");
+      projectButton.classList.toggle("is-active", scope === key);
+      projectButton.setAttribute("aria-pressed", String(scope === key));
+      projectButton.append(el("span", parcels.get(key) || key), el("small", String(projectCounts.get(key) ?? 0)));
+      projectList.append(projectButton);
+    }
+    noteMetric.querySelector("strong").textContent = String(notes.length);
+    projectMetric.querySelector("strong").textContent = String(projectCounts.size);
+    const latestDate = new Date(notes[0]?.createdAt ?? notes[0]?.updatedAt ?? "");
+    latestMetric.querySelector("strong").textContent = notes.length && !Number.isNaN(latestDate.getTime())
+      ? latestDate.toLocaleDateString(undefined, { month: "short", day: "numeric" }) : "—";
+    const activeProject = parcels.get(scope) || "";
+    feedTitle.textContent = scope === "recent" ? "Recent notes" : activeProject || "All notes";
+    const visible = notes.filter((note) => (scope === "all" || (scope === "recent" ? recentNotes.includes(note) : note.parcelKey === scope))
+      && `${note.text ?? ""} ${note.layer ?? ""} ${note.row ?? ""} ${note.field ?? ""} ${note.value ?? ""} ${note.anchorType ?? ""} ${parcels.get(note.parcelKey) ?? ""}`.toLowerCase().includes(query));
+    feedCount.textContent = `${visible.length} ${visible.length === 1 ? "note" : "notes"}`;
     list.replaceChildren();
-    const visible = notes.filter((note) => (project === "all" || note.parcelKey === project)
-      && `${note.text ?? ""} ${note.layer ?? ""} ${note.row ?? ""} ${note.field ?? ""} ${parcels.get(note.parcelKey) ?? ""}`.toLowerCase().includes(query));
-    if (!visible.length) { list.append(el("p", notes.length ? "No notes match these filters." : "Parcel notes will appear here when you add them.", "hm-docs-empty-copy")); return; }
+    if (!visible.length) {
+      const empty = el("section", undefined, "hm-notes-empty");
+      empty.append(el("span", "✳", "hm-notes-empty-mark"), el("p", notes.length ? "NOTHING MATCHED" : "YOUR FIELD JOURNAL", "hm-notes-eyebrow"),
+        el("h3", notes.length ? "No notes in this view" : "Make space for the details that matter."),
+        el("p", notes.length ? "Try another project or clear your search." : "Add observations here, or annotate layers and fields from a parcel workspace. Your notes will stay connected to the site."));
+      if (!notes.length && !parcels.size) {
+        const mapLink = el("a", "Open the map", "hm-docs-quiet-button hm-notes-map-link");
+        mapLink.href = "/map/";
+        empty.append(mapLink);
+      } else if (!notes.length) {
+        const start = button("＋ Write the first note", () => { composerOpen = true; compose.hidden = false; newNote.setAttribute("aria-expanded", "true"); parcel.focus(); }, "hm-docs-primary");
+        empty.append(start);
+      }
+      list.append(empty);
+      return;
+    }
     for (const note of visible) {
       const card = el("article", undefined, "hm-docs-note-card hm-global-note-card");
-      const head = el("div", undefined, "hm-global-note-head");
-      head.append(el("div", undefined, "hm-docs-saved-open"));
-      head.firstChild.append(el("span", parcels.get(note.parcelKey) || note.parcelKey, "hm-docs-saved-kind"), el("strong", `${note.layer || "Project"} · ${note.row || "General"} · ${note.field || "Note"}`));
+      const head = el("div", undefined, "hm-notes-card-head");
+      const projectLink = el("a", parcels.get(note.parcelKey) || "Site project", "hm-notes-card-project");
+      projectLink.href = note.parcelKey ? `/map/#parcel=${encodeURIComponent(note.parcelKey)}` : "/map/";
+      const date = new Date(note.createdAt ?? note.updatedAt ?? "");
+      const time = el("time", Number.isNaN(date.getTime()) ? "Recently" : date.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }), "hm-notes-card-date");
+      if (!Number.isNaN(date.getTime())) time.dateTime = date.toISOString();
+      const context = el("div", undefined, "hm-notes-card-context");
+      const annotation = note.anchorType === "parcel-field";
+      context.append(el("span", annotation ? "DATA ANNOTATION" : "PROJECT NOTE", "hm-notes-context-type"));
+      const detail = [note.layer, note.row, note.field].filter(Boolean).filter((value, index, values) => index === 0 || value !== values[index - 1]).join(" / ");
+      if (detail) context.append(el("span", detail, "hm-notes-context-detail"));
+      head.append(projectLink, time);
+      const body = el("div", undefined, "hm-notes-card-body");
+      body.append(context, el("p", note.text));
+      if (annotation && note.value) body.append(el("p", `Recorded value: ${note.value}`, "hm-notes-card-value"));
       head.append(button("Delete", async () => {
         if (!confirm("Delete this note?")) return;
         await removeLocalRecord("field-notes", note.id);
         notes = notes.filter((entry) => entry.id !== note.id);
         render();
       }, "hm-docs-quiet-button"));
-      card.append(head, el("p", note.text));
+      card.append(head, body);
       list.append(card);
     }
   };
   search.addEventListener("input", () => { query = search.value.trim().toLowerCase(); render(); });
-  projectSelect.addEventListener("change", () => { project = projectSelect.value; render(); });
   render();
 }
