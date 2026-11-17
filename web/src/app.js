@@ -49,7 +49,7 @@ function setLayersOpen(open, { restoreFocus = true } = {}) {
   toggle.title = open ? "Map layers open" : "Open map layers";
   dialog.hidden = !open;
   backdrop.hidden = !open;
-  if (open) dialog.querySelector("[data-layers-close]")?.focus({ preventScroll: true });
+  if (open) document.getElementById("layers-search")?.focus({ preventScroll: true });
   else if (restoreFocus) toggle.focus({ preventScroll: true });
 }
 
@@ -528,8 +528,11 @@ async function start() {
   }
   const layersDialog = document.getElementById("layers-dialog");
   document.getElementById("layers-toggle").addEventListener("click", () => setLayersOpen(true));
-  document.querySelector("[data-layers-close]").addEventListener("click", () => setLayersOpen(false));
-  document.getElementById("layers-backdrop").addEventListener("click", () => setLayersOpen(false));
+  document.getElementById("layers-backdrop").addEventListener("click", () => setLayersOpen(false, { restoreFocus: false }));
+  document.addEventListener("click", (event) => {
+    if (!layersPanel.classList.contains("is-collapsed") && !layersPanel.contains(event.target))
+      setLayersOpen(false, { restoreFocus: false });
+  });
   document.getElementById("layers-search").addEventListener("input", updateLayerLibrary);
   document.getElementById("layers-categories").addEventListener("click", (event) => {
     const button = event.target.closest("[data-layer-filter]");
