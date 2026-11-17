@@ -150,3 +150,68 @@ Slice: Hamilton, family "context" (freight access and infrastructure). Linear is
 4. **Code definitions (BL-120):** ask the City what `RESTRICTED`, blank `TIME_OF_DAY`, `REDUCEDLOAD` and `TRUCK_ROUTE` mean. Meanwhile keep the fields, shown as unconfirmed codes.
 5. **Water and sewer:** approved for display (D-077). Pull and profile next.
 6. **Corridor permits:** decide whether a dated "current activity" layer belongs in HeavyMap at all.
+
+## 5. Round 2: bridges, utilities, traffic counts, rail (2026-11-17)
+
+**Pulls (all complete, server count = pulled, native EPSG:26917, local only, folders `<name>-hamilton-2026-11-17/` in `deb:/fast/code/making/na/local-data/hamilton-city/`):**
+
+| Layer | Pulled |
+|---|---|
+| traffic-bridges | 446/446 |
+| railways | 1,692/1,692 |
+| railway-crossings | 353/353 |
+| watermain | 38,357/38,357 |
+| water-valve | 24,488/24,488 |
+| water-node | 18,327/18,327 |
+| water-hydrant | 14,217/14,217 |
+| water-pressure-district | 28/28 |
+| sewermain | 54,209/54,209 |
+| sewer-manhole | 48,906/48,906 |
+| sewer-node | 3,686/3,686 |
+| sewer-valve | 163/163 |
+| sewer-lift-station | 96/96 |
+
+**Reference:** OpenStreetMap railway ways (rail with yard, siding and spur service values; 1,111 ways; OSM data timestamp 2026-07-24) from an Overpass mirror (the main server was at capacity), in `osm-railways-hamilton-2026-11-17/`. © OpenStreetMap contributors, ODbL. Used only to check currency.
+
+**Method:** `measure2.py` (local). Outputs are measurement tables in `_freight-recon-2026-11-17/derived/`: distances in metres, ids and source attributes, with no thresholds or labels applied (proposed D-078). The population is the 3,193 active industrial-zoned parcels used in 1.1. Distances run from parcel boundary vertices (about 60 per parcel).
+
+### 5.1 Bridges, culverts and grade separations with restrictions
+- **Restricted structures:** 40 of 446: 27 height-restricted, 13 weight-restricted, none both. By type: bridge 28, railway grade separation 11, pedestrian bridge 1.
+- **Posted heights:** 3.3 to 4.4 m.
+- **Link to streets:** each structure was joined to its nearest street centreline segment: **439/446 within 15 m** (`bridge-segment-links.csv`).
+- **On truck routes:** 11 of the 40 restricted structures lie within 15 m of a truck route, all full-time routes. Eight are low clearances of 4.0 to 4.4 m posted (one measured 4.25 m against 4.1 posted); three are weight limits of 27, 51 and 54 t.
+- **Use:** a route-level constraint ("the nearest truck route passes under a 4.1 m posted structure"), never a parcel attribute.
+- **Quirks:** heights carry floating-point artefacts (Q-035); flags use −1/0 (Q-036); `GIS_USER` holds staff account names (Q-037, never expose).
+
+### 5.2 Water and sewer networks (show, per D-077)
+- **Frontage proximity, boundary to main (`parcel-utility-measurements.csv`):**
+  - Watermain within 30 m: **2,937/3,193**.
+  - Sewer main within 30 m: **2,816/3,193**.
+  - No watermain within 300 m: 129. No sewer main within 300 m: 227.
+- **Pressure district:** assigned by representative point for 3,055/3,193.
+- **Nearest-main attributes:**
+  - Watermain `WAT_SIZE`: 150 (815), 200 (738), 300 (727), 400 (299), up to 1200.
+  - Sewer `PIPEDIAM`: 300 (643), 375 (410), 450 (262), 600 (241), up to 900+.
+  - Also `PIPETYPE`, `SUBTYPE`, `INSTDATE`, and `OWN` (HA = City, PR = private).
+  - The table also holds the distance to the nearest of 96 sewer lift stations.
+- **Reading rule:** a main near the frontage is not a service connection, and its size is not available capacity. The sewer `SUBTYPE` distinguishes sanitary, storm and combined; check it before any wording.
+- **Quirk:** `INSTDATE` is text in YYYYMMDD form (Q-038).
+
+### 5.3 Traffic counts on street segments
+- **Count table:** `adt-by-centreline-segment.csv` lists each counted segment with its latest year, latest count, number of years counted and all counts. 1,716 segments, 1,682 present in the centreline.
+- **Coverage of the truck network:** **185.9 of 631.2 km** of truck routes fall on a counted segment (midpoint within 12 m).
+- **Latest count year on those routes (km):** 2008 to 2012 → 39.8; 2014 to 2018 → 19.4; 2019 → 31.8; 2020 to 2022 → 34.7; 2023 → 42.2; 2024 → 18.0.
+- **Use:** "latest all-vehicle count on the fronting segment, and its year", never as truck volume. Most truck routes have no count at all.
+
+### 5.4 Rail
+- **Currency against OpenStreetMap:**
+  - Of 386.0 km of City rail, **359.9 km (93%)** lies within 25 m of OSM rail.
+  - Of 386.8 km of OSM rail near the City data, **349.5 km (90%)** lies within 25 m of City rail.
+  - The City layer (edited 2023-10-22) is broadly current. The roughly 10% differences are worth a reviewed look (sidings and yards are likely candidates).
+- **Industrial parcels within 50 m of a surface railway:** **719/3,193** (tunnels excluded; `parcel-rail-distance.csv`).
+- **Level crossings:** 214 (public and private at-grade). 73 of them lie within 15 m of a truck route: at-grade rail on a freight route.
+- **Crossing fields:** `TRACK_OWNER`, `XING_OWNER` and `TRACK_SPUR_NAME` name railway companies and private spurs (Q-039; business names, review before public use). The spur names could identify rail-served industrial sites, a strong freight signal to profile next.
+
+### 5.5 Where these outputs belong (proposed, D-078 in the planning repo)
+The four derived tables are measurements (distances, ids, source attributes) and fit Industrial Atlas releases. Any wording such as "fronts a truck route", "rail-served" or "low bridge on route" is HeavyMap's judgement over them. Nothing here is released yet.
+
