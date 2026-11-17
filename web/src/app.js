@@ -29,6 +29,7 @@ let labels;
 let manifestSources = null;
 let notesStore = null;
 let savedItems = [];
+let savedFilter = "all";
 /* Which workspace sections are open, remembered while moving between
  * parcels in the session (design §5.4). Set on the first workspace open:
  * Addresses open only when the parcel has more than one. */
@@ -153,6 +154,32 @@ function openNoteService() {
   dialog.querySelector("textarea")?.focus({ preventScroll: true });
 }
 
+function savedItemCategory(item) {
+  const kind = item.kind ?? item.type ?? "parcel";
+  if (kind === "parcel") return "parcel";
+  if (["news", "story", "article", "editorial"].includes(kind)) return "news";
+  if (["development", "development-record", "development_record", "development-records"].includes(kind)) return "development";
+  return "other";
+}
+
+async function hydrateLegacyParcelTitles() {
+  if (!loader || !labels) return;
+  const legacy = savedItems.filter((item) => savedItemCategory(item) === "parcel" && item.key && (!item.title || item.title === "Saved Hamilton parcel"));
+  await Promise.all(legacy.map(async (item) => {
+    const result = await loader.core(item.key);
+    if (!result.ok) return;
+    const summary = summariseRecord(result.record, null, labels, { sources: manifestSources });
+    const updated = { ...item, title: summary.title, subtitle: summary.subtitle };
+    try {
+      await savePlace(updated);
+      savedItems = savedItems.map((saved) => saved.id === item.id ? updated : saved);
+    } catch {
+      // The address can still be shown for this session if the browser store is read-only.
+      savedItems = savedItems.map((saved) => saved.id === item.id ? updated : saved);
+    }
+  }));
+}
+
 function renderSaveDialog() {
   const dialog = document.getElementById("parcel-save-dialog");
   const panel = el("section", undefined, "hm-map-dialog-panel hm-save-dialog-panel");
@@ -183,20 +210,37 @@ function renderSaveDialog() {
     body.append(el("p", "Select a parcel on the map to save it here.", "hm-save-empty-hint"));
   }
 
-  const groups = [
-    { id: "parcel", title: "Parcels", empty: "Saved parcels will appear here.", items: savedItems.filter((item) => (item.kind ?? "parcel") === "parcel") },
-    { id: "news", title: "News", empty: "Saved news items will appear here.", items: savedItems.filter((item) => ["news", "story", "article", "editorial"].includes(item.kind ?? item.type)) },
-    { id: "development", title: "Development records", empty: "Saved development records will appear here.", items: savedItems.filter((item) => ["development", "development-record", "development_record", "development-records"].includes(item.kind ?? item.type)) },
-    { id: "other", title: "Other items", empty: "Other saved items will appear here.", items: savedItems.filter((item) => !["parcel", "news", "story", "article", "editorial", "development", "development-record", "development_record", "development-records"].includes(item.kind ?? item.type ?? "parcel")) },
+  const categories = [
+    { id: "all", title: "All" },
+    { id: "parcel", title: "Parcel" },
+    { id: "news", title: "News" },
+    { id: "development", title: "Development" },
+    { id: "other", title: "Other" },
   ];
-  for (const group of groups) {
-    const section = el("section", undefined, "hm-save-category");
-    section.append(el("h3", group.title, "hm-save-list-heading"));
-    const list = el("ul", undefined, "hm-save-list");
-    if (!group.items.length) list.append(el("li", group.empty, "hm-save-list-empty"));
-    for (const item of group.items) {
+  const filters = el("nav", undefined, "hm-save-filters");
+  filters.setAttribute("aria-label", "Filter saved items");
+  for (const category of categories) {
+    const button = el("button", category.title, "hm-save-filter");
+    button.type = "button";
+    button.setAttribute("aria-pressed", String(savedFilter === category.id));
+    button.addEventListener("click", () => {
+      savedFilter = category.id;
+      renderSaveDialog();
+      dialog.querySelector(`[data-save-filter="${category.id}"]`)?.focus({ preventScroll: true });
+    });
+    button.dataset.saveFilter = category.id;
+    filters.append(button);
+  }
+  const filtered = savedFilter === "all" ? savedItems : savedItems.filter((item) => savedItemCategory(item) === savedFilter);
+  const list = el("ul", undefined, "hm-save-list");
+  if (!filtered.length) {
+    const emptyMessage = savedFilter === "all" ? "Saved items will appear here." : `Saved ${savedFilter === "parcel" ? "parcels" : `${savedFilter} items`} will appear here.`;
+    list.append(el("li", emptyMessage, "hm-save-list-empty"));
+  }
+  for (const item of filtered) {
       const row = el("li", undefined, "hm-save-list-row");
-      const open = item.kind === "parcel" || item.key
+      row.classList.add("hm-save-item-card");
+      const open = savedItemCategory(item) === "parcel"
         ? el("button", undefined, "hm-save-place-open")
         : el(item.url ? "a" : "div", undefined, "hm-save-place-open");
       if (item.url) open.href = item.url;
@@ -207,8 +251,9 @@ function renderSaveDialog() {
           void openParcel({ id: item.key }, null, "drawer");
         });
       }
-      open.append(el("strong", item.title || "Saved item"));
-      if (item.subtitle) open.append(el("span", item.subtitle));
+      open.append(el("strong", item.title || (savedItemCategory(item) === "parcel" ? `Parcel ${String(item.key ?? item.id).slice(-7)}` : "Saved item")));
+      const detail = item.subtitle || (savedItemCategory(item) === "parcel" ? "Hamilton parcel" : "");
+      if (detail) open.append(el("span", detail));
       const remove = el("button", "Remove", "hm-save-remove");
       remove.type = "button";
       remove.addEventListener("click", async () => {
@@ -223,10 +268,8 @@ function renderSaveDialog() {
       });
       row.append(open, remove);
       list.append(row);
-    }
-    section.append(list);
-    body.append(section);
   }
+  body.append(filters, list);
   panel.append(head, body);
   dialog.replaceChildren(panel);
 }
@@ -242,6 +285,9 @@ async function openSaveService() {
   renderSaveDialog();
   if (!dialog.open) dialog.showModal();
   dialog.querySelector(".hm-map-dialog-close")?.focus({ preventScroll: true });
+  void hydrateLegacyParcelTitles().then(() => {
+    if (dialog.open) renderSaveDialog();
+  });
 }
 
 function updateLocation(key, level) {

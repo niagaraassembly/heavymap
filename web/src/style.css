@@ -2308,6 +2308,9 @@ h2 {
   box-shadow: 0 10px 40px var(--shadow);
   transform: translate(-50%, -50%);
 }
+#parcel-save-dialog.hm-map-dialog {
+  width: min(1160px, calc(100vw - 32px));
+}
 .hm-map-dialog::backdrop { background: #152e3b8c; backdrop-filter: blur(3px); }
 .hm-map-dialog-panel {
   display: flex;
@@ -2388,14 +2391,18 @@ h2 {
 .hm-save-title { grid-column: 1; margin: 0; font: 500 20px/1.2 var(--serif, Georgia, serif); overflow-wrap: anywhere; }
 .hm-save-selected .parcel-btn { grid-column: 2; grid-row: 1 / span 3; }
 .hm-save-list-heading { margin: 0 0 7px; color: #294d60; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
-.hm-save-list { margin: 0; padding: 0; list-style: none; }
-.hm-save-category + .hm-save-category { margin-top: 18px; }
-.hm-save-list-row { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-top: 1px solid #c1ccd3; }
+.hm-save-filters { display: flex; gap: 6px; margin: 0 0 12px; padding: 0 0 8px; overflow-x: auto; border-bottom: 1px solid #c1ccd3; }
+.hm-save-filter { flex: none; min-height: 34px; padding: 6px 12px; border: 1px solid #aebdc6; border-radius: 999px; background: #f8fafb; color: #405562; font: 600 11px/1.2 var(--sans, system-ui, sans-serif); }
+.hm-save-filter[aria-pressed="true"] { border-color: #294d60; background: #294d60; color: #fff; }
+.hm-save-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.hm-save-list-row { display: flex; min-width: 0; min-height: 66px; align-items: center; gap: 12px; padding: 9px 11px; border: 1px solid #c1ccd3; border-radius: 11px; background: #f8fafb; }
 .hm-save-place-open { display: grid; flex: 1; min-width: 0; gap: 3px; padding: 0; border: 0; background: transparent; color: inherit; text-align: left; text-decoration: none; }
-.hm-save-place-open strong { font-size: 13px; overflow-wrap: anywhere; }
-.hm-save-place-open span { color: #536a75; font-size: 11px; overflow-wrap: anywhere; }
+.hm-save-place-open strong,
+.hm-save-place-open span { display: -webkit-box; overflow: hidden; overflow-wrap: anywhere; -webkit-box-orient: vertical; }
+.hm-save-place-open strong { color: #1e3440; font-size: 13px; line-height: 1.3; -webkit-line-clamp: 1; }
+.hm-save-place-open span { color: #536a75; font-size: 11px; line-height: 1.3; -webkit-line-clamp: 1; }
 .hm-save-remove { flex: none; min-height: 32px; padding: 4px 9px; border: 1px solid #aebdc6; border-radius: 8px; background: #f8fafb; color: #405562; font-size: 11px; }
-.hm-save-list-empty,
+.hm-save-list-empty { grid-column: 1 / -1; margin: 0; padding: 12px; border: 1px dashed #aebdc6; border-radius: 11px; color: #536a75; font-size: 12px; }
 .hm-save-empty-hint { margin: 0; padding: 9px 0; color: #536a75; font-size: 12px; }
 .layers-dialog { background: #edf2f4; }
 .layers-dialog-head { min-height: 72px; }
@@ -2448,6 +2455,7 @@ h2 {
   .hm-notes-dialog-body { padding: 6px 13px 12px; }
   .hm-save-selected { grid-template-columns: minmax(0, 1fr); }
   .hm-save-selected .parcel-btn { grid-column: 1; grid-row: auto; justify-self: start; }
+  .hm-save-list { grid-template-columns: minmax(0, 1fr); }
   .hm-map-intro #layers-panel:not(.is-collapsed) {
     top: 60px;
     bottom: 48px;
