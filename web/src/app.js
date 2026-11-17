@@ -4,12 +4,15 @@ import { loadLabels } from "./labels.js";
 import { createDossierLoader } from "./dossier-loader.js";
 import { summariseRecord } from "./parcel-summary.js";
 import { parcelCardElement, parcelDrawerElement } from "./parcel-views.js";
+import { parcelWorkspaceElement } from "./parcel-workspace.js";
+import { createNotesStore } from "./parcel-notes.js";
 import { el } from "./dossier.js";
 import { FieldMap } from "./map.js";
 
 const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
 const cardSlot = document.getElementById("parcel-card-slot");
 const drawerSlot = document.getElementById("parcel-drawer-slot");
+const workspaceSlot = document.getElementById("parcel-workspace-slot");
 let selected = null;
 let view = null;
 let current = null;
@@ -20,6 +23,11 @@ let map;
 let loader;
 let labels;
 let manifestSources = null;
+let notesStore = null;
+/* Which workspace sections are open, remembered while moving between
+ * parcels in the session (design §5.4). Set on the first workspace open:
+ * Addresses open only when the parcel has more than one. */
+let workspaceSections = null;
 
 function status(text) {
   document.getElementById("map-status").textContent = text;
@@ -27,16 +35,40 @@ function status(text) {
 
 function updateLocation(key, level) {
   const url = key
-    ? `#parcel=${encodeURIComponent(key)}${level === "card" ? "&view=card" : ""}`
+    ? `#parcel=${encodeURIComponent(key)}${level === "card" ? "&view=card" : level === "workspace" ? "&view=work" : ""}`
     : location.pathname + location.search;
   history.replaceState(null, "", url);
 }
 
-function renderLevel(level) {
+/** Trap Tab inside the workspace while it is open (design §5.1). The
+ * listener lives on the workspace element, so it goes away with it. */
+function trapFocus(workspace) {
+  workspace.addEventListener("keydown", (event) => {
+    if (event.key !== "Tab") return;
+    const focusable = [...workspace.querySelectorAll(
+      "button:not([disabled]), textarea, input, a[href], [tabindex]:not([tabindex='-1'])",
+    )].filter((n) => n.getClientRects().length > 0);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus({ preventScroll: true });
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus({ preventScroll: true });
+    }
+  });
+}
+
+function renderLevel(level, tab = "notes") {
   const { summary, releaseId, geometry } = current;
+  document.body.classList.remove("has-parcel-card", "has-parcel-drawer", "has-parcel-workspace");
   if (level === "card") {
     drawerSlot.replaceChildren();
     drawerSlot.hidden = true;
+    workspaceSlot.replaceChildren();
+    workspaceSlot.hidden = true;
     cardSlot.replaceChildren(
       parcelCardElement(summary, labels, {
         geometry,
@@ -50,11 +82,12 @@ function renderLevel(level) {
     );
     cardSlot.hidden = false;
     document.body.classList.add("has-parcel-card");
-    document.body.classList.remove("has-parcel-drawer");
     cardSlot.querySelector(".parcel-go")?.focus({ preventScroll: true });
-  } else {
+  } else if (level === "drawer") {
     cardSlot.replaceChildren();
     cardSlot.hidden = true;
+    workspaceSlot.replaceChildren();
+    workspaceSlot.hidden = true;
     drawerSlot.replaceChildren(
       parcelDrawerElement(summary, labels, {
         geometry,
@@ -63,17 +96,50 @@ function renderLevel(level) {
         // problem stays hidden.
         feedbackUrl: null,
         onClose: stepBack,
+        onOpenWorkspace: (initialTab) => {
+          updateLocation(current.key, "workspace");
+          renderLevel("workspace", initialTab);
+        },
       }),
     );
     drawerSlot.hidden = false;
     document.body.classList.add("has-parcel-drawer");
-    document.body.classList.remove("has-parcel-card");
     drawerSlot.querySelector(".parcel-btn:not([disabled])")?.focus({ preventScroll: true });
+  } else {
+    cardSlot.replaceChildren();
+    cardSlot.hidden = true;
+    drawerSlot.replaceChildren();
+    drawerSlot.hidden = true;
+    if (!workspaceSections) {
+      workspaceSections = new Set(summary.addresses.count > 1 ? ["addresses"] : []);
+    }
+    const workspace = parcelWorkspaceElement(summary, labels, {
+      geometry,
+      releaseId,
+      notesStore,
+      initialTab: tab,
+      openSections: workspaceSections,
+      onToggleSection: (id, open) => {
+        if (open) workspaceSections.add(id);
+        else workspaceSections.delete(id);
+      },
+      onBackToMap: () => {
+        updateLocation(current.key);
+        renderLevel("drawer");
+      },
+      onClose: stepBack,
+    });
+    trapFocus(workspace);
+    workspaceSlot.replaceChildren(workspace);
+    workspaceSlot.hidden = false;
+    document.body.classList.add("has-parcel-workspace");
+    workspace.querySelector(".parcel-btn:not([disabled])")?.focus({ preventScroll: true });
   }
   view = level;
   // A parcel clicked on the map eases into the visible area above the
   // panel; a deep link carries no location, so the map does not move.
-  if (geometry) {
+  // The workspace fills the map window, so there is nothing to ease to.
+  if (geometry && level !== "workspace") {
     const panel = level === "card" ? cardSlot.firstElementChild : drawerSlot.firstElementChild;
     map.focusParcel(geometry, (panel?.offsetHeight ?? 0) + 64 + 16);
   }
@@ -131,7 +197,10 @@ function stepBack() {
     closeAll();
     return;
   }
-  if (view === "drawer" && current) {
+  if (view === "workspace" && current) {
+    updateLocation(current.key);
+    renderLevel("drawer");
+  } else if (view === "drawer" && current) {
     updateLocation(current.key, "card");
     renderLevel("card");
   } else if (view === "card") {
@@ -150,7 +219,9 @@ function closeAll() {
   cardSlot.hidden = true;
   drawerSlot.replaceChildren();
   drawerSlot.hidden = true;
-  document.body.classList.remove("has-parcel-card", "has-parcel-drawer");
+  workspaceSlot.replaceChildren();
+  workspaceSlot.hidden = true;
+  document.body.classList.remove("has-parcel-card", "has-parcel-drawer", "has-parcel-workspace");
   map.close();
   updateLocation(null);
   if (opener?.isConnected && !opener.hidden) opener.focus({ preventScroll: true });
@@ -189,13 +260,22 @@ function route() {
     return;
   }
   const fullKey = parcelKey(key);
-  // A deep link opens the drawer; view=card opens the card. view=work is
-  // the phase 2 workspace (BL-118); until then it opens the drawer.
-  if (fullKey) void openParcel({ id: fullKey }, null, params.get("view") === "card" ? "card" : "drawer");
-  else status("This is not a Hamilton parcel key.");
+  // A deep link opens the drawer; view=card opens the card, view=work
+  // the workspace (BL-118).
+  if (fullKey) {
+    const level = params.get("view") === "card" ? "card" : params.get("view") === "work" ? "workspace" : "drawer";
+    void openParcel({ id: fullKey }, null, level);
+  } else status("This is not a Hamilton parcel key.");
 }
 
 async function start() {
+  let notesStorage = null;
+  try {
+    notesStorage = window.localStorage;
+  } catch {
+    notesStorage = null;
+  }
+  notesStore = createNotesStore(notesStorage);
   const labelsPromise = loadLabels({ base: "/labels/", locales: ["en"] });
   loader = createDossierLoader({ base: RELEASE_BASE });
   const pin = await loader.pin();
@@ -212,7 +292,7 @@ async function start() {
     pin.ok && tileManifest && parcelLayer && parcelLayer.tile_layer === tileManifest.tile_layer,
   );
   map = new FieldMap({
-    onSelect: (parcel, trigger) => void openParcel(parcel, trigger, "card"),
+    onSelect: (parcel, trigger) => void openParcel(parcel, trigger, view ?? "card"),
     onStatus: status,
     tilesUrl: tilesReady ? `${RELEASE_BASE}tiles/parcels.pmtiles` : null,
     tileLayer: tilesReady ? tileManifest.tile_layer : null,
