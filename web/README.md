@@ -45,6 +45,8 @@ Open the loopback URL Vite prints, normally `http://127.0.0.1:5173`. Use HTTP, n
 
 `src/fixtures.js` holds the complete synthetic evidence model and single layer registry. `src/dossier.js` renders claims/refusals with text nodes (no raw source HTML), and exports the same packet. `src/map.js` owns MapLibre, PMTiles and camera state. `src/app.js` owns controls and selection.
 
+The `/map/` profile icon opens **Your data**, a device-only data manager. Parcel notes live in the IndexedDB store in `src/local-data.js`; the first open copies valid notes from the previous `heavymap-parcel-notes-v1` localStorage key and removes that key only after the IndexedDB write commits. Each active data type can be exported as JSON or cleared independently. Future store types are listed but marked unavailable until HeavyMap starts writing them. No sign-in, sync or upload is involved.
+
 `npm run fixture` deterministically regenerates `public/synthetic-parcels.pmtiles` (768 bytes) from the three invented geometries. The small writer in `scripts/make-fixture.mjs` encodes one z8 MVT tile in PMTiles v3 with no compression. This writer is deliberately **not** a general-purpose GIS pipeline. Its one tile and handcrafted shares demonstrate protocol/interaction, not large-scale tiling or area-overlay accuracy. Nature/context fixtures remain tiny GeoJSON in the app. No real data may be added here.
 
 The browser uses PMTiles range reads; local Vite supports 206. MapLibre 6's worker is bundled explicitly via a Vite worker URL so development and the compiled build do not depend on a missing sibling worker file. The app never treats HTTP failure as a parcel refusal or an empty source.

@@ -5,7 +5,7 @@ import { createDossierLoader } from "./dossier-loader.js";
 import { summariseRecord } from "./parcel-summary.js";
 import { parcelCardElement, parcelDrawerElement } from "./parcel-views.js";
 import { parcelWorkspaceElement } from "./parcel-workspace.js";
-import { createNotesStore } from "./parcel-notes.js";
+import { createNotesStore } from "./local-data.js";
 import { el } from "./dossier.js";
 import { FieldMap } from "./map.js";
 import { findBasemap } from "./basemap.js";
@@ -329,13 +329,17 @@ function route() {
 }
 
 async function start() {
-  let notesStorage = null;
   try {
-    notesStorage = window.localStorage;
-  } catch {
-    notesStorage = null;
+    notesStore = await createNotesStore();
+  } catch (error) {
+    status(`Local notes are unavailable: ${error.message}`);
+    notesStore = {
+      available: false,
+      notesFor: async () => [],
+      add: async () => { throw new Error("IndexedDB is unavailable."); },
+      remove: async () => { throw new Error("IndexedDB is unavailable."); },
+    };
   }
-  notesStore = createNotesStore(notesStorage);
   const labelsPromise = loadLabels({ base: "/labels/", locales: ["en"] });
   loader = createDossierLoader({ base: RELEASE_BASE });
   const pin = await loader.pin();

@@ -3,6 +3,7 @@
 import "./styles.css";
 import { mountThemePicker } from "./theme-picker.js";
 import { mountMapBars } from "./map-bars.js";
+import { mountLocalAccount } from "./local-account.js";
 import { mountReader } from "./reader-page.js";
 import {
   attachArticle,
@@ -28,6 +29,7 @@ if (picker) {
 
 /* The /map/ bottom bar and top-bar menus (Desks drop-up, place selector). */
 mountMapBars();
+mountLocalAccount();
 
 /* Edition cards: "Copy link" copies the card's permalink. */
 document.addEventListener("click", async (e) => {

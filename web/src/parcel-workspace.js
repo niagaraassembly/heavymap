@@ -7,7 +7,8 @@
  * from the summary, which itself resolves labels.
  *
  * Only Notes works in this build. The other workspace areas remain
- * visible without availability badges. Notes are device-only.
+ * visible without availability badges. Notes use the device-only IndexedDB
+ * store in local-data.js.
  */
 
 import { el } from "./dossier.js";
@@ -159,16 +160,22 @@ function notesPane(summary, labels, notesStore, releaseId, onCountChange) {
   area.setAttribute("aria-label", labels.t("parcel.workspace.notes.write"));
   const add = el("button", undefined, "parcel-btn parcel-btn-pri");
   add.append(el("span", labels.t("parcel.workspace.notes.add")));
+  const storageStatus = el("p", "", "parcel-ws-ondevice");
+  if (!notesStore.available) {
+    area.disabled = true;
+    add.disabled = true;
+    storageStatus.textContent = "Notes cannot be saved because browser storage is unavailable.";
+  }
   const row = el("div", undefined, "parcel-ws-compose-row");
   row.append(add);
-  compose.append(area, row);
+  compose.append(area, row, storageStatus);
   pane.append(compose);
   const list = el("ul", undefined, "parcel-ws-note-list");
   const empty = el("p", labels.t("parcel.workspace.notes.empty"), "parcel-ws-empty");
   pane.append(list, empty);
 
-  function renderList() {
-    const notes = notesStore.notesFor(summary.key);
+  async function renderList() {
+    const notes = await notesStore.notesFor(summary.key);
     list.replaceChildren();
     for (const note of notes) {
       const li = el("li", undefined, "parcel-ws-note");
@@ -177,9 +184,13 @@ function notesPane(summary, labels, notesStore, releaseId, onCountChange) {
       meta.append(document.createTextNode(formatNoteTime(note.at)));
       meta.append(document.createTextNode(" · "));
       const del = el("button", labels.t("parcel.workspace.notes.delete"), "parcel-mini");
-      del.addEventListener("click", () => {
-        notesStore.remove(note.id);
-        renderList();
+      del.addEventListener("click", async () => {
+        try {
+          await notesStore.remove(note.id);
+          await renderList();
+        } catch (error) {
+          storageStatus.textContent = `Could not delete this note: ${error.message}`;
+        }
       });
       meta.append(del);
       li.append(meta);
@@ -188,15 +199,31 @@ function notesPane(summary, labels, notesStore, releaseId, onCountChange) {
     empty.hidden = notes.length > 0;
     onCountChange(notes.length);
   }
-  add.addEventListener("click", () => {
-    const note = notesStore.add({ key: summary.key, releaseId, text: area.value });
+  add.addEventListener("click", async () => {
+    const note = {
+      id: globalThis.crypto?.randomUUID?.() ?? `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`,
+      key: summary.key,
+      releaseId: releaseId ?? "",
+      text: area.value.trim().slice(0, 2000),
+      at: new Date().toISOString(),
+    };
+    if (!note.text) return;
+    try {
+      await notesStore.add(note);
+      storageStatus.textContent = "Saved on this device.";
+    } catch (error) {
+      storageStatus.textContent = `Could not save this note: ${error.message}`;
+      return;
+    }
     if (note) {
       area.value = "";
-      renderList();
+      await renderList();
       area.focus();
     }
   });
-  renderList();
+  void renderList().catch((error) => {
+    storageStatus.textContent = `Could not read notes from this device: ${error.message}`;
+  });
   return pane;
 }
 
