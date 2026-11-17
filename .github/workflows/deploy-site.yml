@@ -48,7 +48,7 @@ jobs:
         with:
           repository: niagaraassembly/industrial-atlas-data
           # Pin the immutable commit containing map-releases/.../layer-set-002.
-          ref: PENDING_LAYER_SET_002_COMMIT
+          ref: 8fe8bdf846defe4451a17ee6a41d949b3ba859be
           path: industrial-atlas-map-layers
       - name: Refuse a map-layer pin that is not a full commit hash
         working-directory: .
