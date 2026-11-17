@@ -60,7 +60,12 @@ export async function findBasemap(base, fetchImpl = fetch) {
     const response = await fetchImpl(`${base}basemap.json`);
     if (!response.ok) return null;
     const doc = await response.json();
-    if (typeof doc?.file !== "string" || !/^[a-z0-9._-]+\.pmtiles$/.test(doc.file)) return null;
+    const parts = typeof doc?.file === "string" ? doc.file.split("/") : [];
+    const safeArchivePath =
+      parts.length > 0 &&
+      parts.every((part) => part !== "" && part !== "." && part !== ".." && /^[a-z0-9._-]+$/.test(part)) &&
+      parts.at(-1).endsWith(".pmtiles");
+    if (!safeArchivePath) return null;
     return {
       url: `${base}${doc.file}`,
       maxZoom: Number.isInteger(doc.max_zoom) ? doc.max_zoom : 15,
