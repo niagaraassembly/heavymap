@@ -1532,3 +1532,44 @@ body.hm-docs-service-page main { background: var(--surface); }
 }
 
 .hm-reader.hm-docs-service-page .reader-library { padding-inline: clamp(12px, 2vw, 24px); }
+
+/* Service pages scroll as one column (2026-11-17). Headers, totals and
+ * metrics scroll away with the list instead of pinning it into a small
+ * window, and paging ("Load more") sits after the last card rather than
+ * over the list. The development filters live in the left rail. */
+.hm-global-service[data-docs-service="development"] .hm-global-content,
+.hm-global-service[data-docs-service="notes"] .hm-global-content,
+.hm-global-service[data-docs-service="saved"] .hm-global-content { overflow-y: auto; overscroll-behavior: contain; }
+.hm-global-service[data-docs-service="development"] .hm-global-content > *,
+.hm-global-service[data-docs-service="notes"] .hm-global-content > *,
+.hm-global-service[data-docs-service="saved"] .hm-global-content > * { flex: none; }
+.hm-development-browser-page { flex: none; overflow: visible; }
+/* The page wrapper is a row: main must still fill its width. */
+.hm-development-browser-page .hm-development-browser-main { flex: 1 1 auto; min-width: 0; overflow: visible; }
+.hm-development-browser-page .hm-development-browser-list { flex: none; overflow: visible; padding-bottom: 4px; }
+.hm-development-browser-page .hm-development-browser-paging { padding: 12px 12px 4px; }
+.hm-global-service[data-docs-service="notes"] .hm-notes-feed { flex: none; overflow: visible; }
+.hm-global-service[data-docs-service="saved"] .hm-global-record-list { flex: none; overflow: visible; }
+
+.hm-development-dashboard-totals-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.hm-development-dashboard-title { margin: 0; color: var(--text); font: 500 1.28rem/1.2 var(--serif); }
+.hm-development-rail-filters { display: flex; flex-direction: column; gap: 12px; }
+.hm-development-rail-filters .hm-docs-kicker { margin: 0 0 2px; }
+.hm-development-rail-filters .hm-development-dashboard-filters { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.hm-development-rail-filters .hm-development-dashboard-field > input,
+.hm-development-rail-filters .hm-development-dashboard-field > select { width: 100%; min-height: 36px; padding: 6px 9px; border: 1px solid var(--rule-soft); border-radius: 3px; color: var(--text); background: var(--surface-raised); font: 500 .72rem/1.3 var(--sans); letter-spacing: normal; text-transform: none; }
+.hm-development-rail-filters .hm-development-month-range { grid-template-columns: minmax(0, 1fr); gap: 5px; }
+.hm-development-rail-filters .hm-development-month-range > span { display: none; }
+.hm-development-rail-filters .hm-development-browser-status { margin: 0; color: var(--text-muted); font: .66rem/1.45 var(--sans); }
+.hm-global-service[data-docs-service="development"] .hm-global-rail { display: flex; flex-direction: column; justify-content: space-between; gap: 18px; overflow-y: auto; }
+.hm-global-service[data-docs-service="development"] .hm-global-rail .hm-development-browser-source { margin-top: 0; }
+
+@media (max-width: 760px) {
+  /* Phones: the filters stack above the totals and permits, and the whole
+   * development workspace scrolls as one. */
+  .hm-global-service[data-docs-service="development"] .hm-global-workspace { display: block; overflow-y: auto; }
+  .hm-global-service[data-docs-service="development"] .hm-global-rail { display: flex; max-height: none; overflow: visible; padding: 12px; border-bottom: 1px solid var(--rule-soft); }
+  .hm-global-service[data-docs-service="development"] .hm-global-content { overflow: visible; }
+  .hm-development-rail-filters .hm-development-dashboard-filters { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .hm-development-rail-filters .hm-development-dashboard-range { grid-column: 1 / -1; }
+}
