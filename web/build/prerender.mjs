@@ -26,11 +26,13 @@ import {
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { copyAtlasRelease } from "./copy-atlas-release.mjs";
+import { copyMapRelease } from "./copy-map-release.mjs";
 
 const web = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 export const PAGES_DIR = path.join(web, ".site");
 export const OUT_DIR = path.join(web, "dist-site");
 const CLIENT = path.join(web, "src/site/client.js");
+const MAP_LIBRARY_CLIENT = path.join(web, "src/site/map-library.js");
 const SITE_SRC = path.join(web, "src/site");
 /* Static files the public site ships, copied as is. Only these: web/public also
  * holds prototype fixtures (synthetic-parcels.pmtiles) that must never ship. */
@@ -97,7 +99,11 @@ export function renderSite({ preview = false } = {}) {
         .split(path.sep)
         .join("/");
     const rel = fromPage(CLIENT);
-    const mapApp = page.path === "/map/" ? fromPage(path.join(web, "src/app.js")) : null;
+    const pageApp = page.path === "/map/"
+      ? fromPage(path.join(web, "src/app.js"))
+      : page.path === "/map/data-methods/"
+        ? fromPage(MAP_LIBRARY_CLIENT)
+        : null;
     return {
       ...page,
       file,
@@ -113,7 +119,7 @@ export function renderSite({ preview = false } = {}) {
           css: themes
             .filter((t) => t.tokens)
             .map((t) => fromPage(path.join(SITE_SRC, t.tokens))),
-          js: mapApp ? [rel, mapApp] : [rel],
+        js: pageApp ? [rel, pageApp] : [rel],
         },
       }),
     };
@@ -213,6 +219,9 @@ async function main() {
         outputDir: OUT_DIR,
       })
     : null;
+  const mapRelease = process.env.HM_MAP_LAYER_RELEASE_DIR
+    ? copyMapRelease({ sourceDir: process.env.HM_MAP_LAYER_RELEASE_DIR, outputDir: OUT_DIR })
+    : null;
 
   const budgets = budgetReport(OUT_DIR);
   fail("size budgets (decision 56, BETA-GATE section 6)", budgets.problems);
@@ -221,9 +230,13 @@ async function main() {
     "public build hygiene (spec G section 3)",
     publicHygiene(OUT_DIR, {
       preview,
-      allowedPmtiles: atlasRelease
-        ? [`${atlasRelease.path}/tiles/parcels.pmtiles`]
-        : [],
+      allowedPmtiles: [
+        ...(atlasRelease ? [`${atlasRelease.path}/tiles/parcels.pmtiles`] : []),
+        ...(mapRelease ? [
+          `${mapRelease.path}/${mapRelease.manifest.basemap.file}`,
+          ...mapRelease.manifest.layers.map((layer) => `${mapRelease.path}/${layer.file}`),
+        ] : []),
+      ],
       unpublished: content.themes.themes
         .filter((t) => t.status !== "published")
         .map((t) => t.id),

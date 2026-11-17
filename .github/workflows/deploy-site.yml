@@ -43,6 +43,13 @@ jobs:
           repository: niagaraassembly/industrial-atlas-data
           ref: ca-on-hamilton-2026-11-16-d070
           path: industrial-atlas-data
+      - name: Check out the pinned Hamilton map-layer release
+        uses: actions/checkout@v4
+        with:
+          repository: niagaraassembly/industrial-atlas-data
+          # Pin the immutable commit containing map-releases/.../layer-set-001.
+          ref: 042a6a5230ec1377e8cf1a3797d9bf57f5a85525
+          path: industrial-atlas-map-layers
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -53,6 +60,7 @@ jobs:
       - name: Build with every check
         env:
           HM_ATLAS_RELEASE_DIR: ${{ github.workspace }}/industrial-atlas-data/releases/ca-on-hamilton/2026-11-16-d070
+          HM_MAP_LAYER_RELEASE_DIR: ${{ github.workspace }}/industrial-atlas-map-layers/map-releases/ca-on-hamilton/2026-11-16-layer-set-001
         run: node build/prerender.mjs ${{ (github.event_name == 'push' || inputs.launch_gates) && '--launch' || '' }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
@@ -84,5 +92,6 @@ jobs:
             echo "- Commit: \`$SHA\` on \`$REF_NAME\`"
             echo "- Trigger: $EVENT by $ACTOR"
             echo "- Atlas release: ca-on-hamilton/2026-11-16-d070"
+            echo "- Map layer release: ca-on-hamilton/2026-11-16-layer-set-001"
             echo "- URL: $PAGE_URL"
           } >> "$GITHUB_STEP_SUMMARY"

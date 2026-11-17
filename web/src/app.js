@@ -12,7 +12,7 @@ import { findBasemap } from "./basemap.js";
 
 const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
 // The street basemap is a separate artifact from the parcel release.
-const BASEMAP_BASE = "/map/basemap/ca-on-hamilton/20261116/";
+const MAP_LAYER_BASE = "/map/layers/ca-on-hamilton-map-layers/2026-11-16-layer-set-001/";
 const cardSlot = document.getElementById("parcel-card-slot");
 const drawerSlot = document.getElementById("parcel-drawer-slot");
 const workspaceSlot = document.getElementById("parcel-workspace-slot");
@@ -158,6 +158,9 @@ async function openParcel(parcel, trigger, level = "card") {
   loading = true;
   selected = parcel;
   opener = trigger || opener;
+  const layersPanel = document.getElementById("layers-panel");
+  layersPanel.classList.add("is-collapsed");
+  document.getElementById("layers-toggle").setAttribute("aria-expanded", "false");
   document.getElementById("tray").classList.remove("mobile-open");
   document.getElementById("tray-toggle").setAttribute("aria-expanded", "false");
   map.select(parcel);
@@ -225,6 +228,8 @@ function closeAll() {
   workspaceSlot.replaceChildren();
   workspaceSlot.hidden = true;
   document.body.classList.remove("has-parcel-card", "has-parcel-drawer", "has-parcel-workspace");
+  document.getElementById("layers-panel").classList.remove("is-collapsed");
+  document.getElementById("layers-toggle").setAttribute("aria-expanded", "true");
   map.close();
   updateLocation(null);
   if (opener?.isConnected && !opener.hidden) opener.focus({ preventScroll: true });
@@ -284,6 +289,17 @@ async function start() {
   const pin = await loader.pin();
   const tileResult = pin.ok ? await loader.asset("tiles/tiles-manifest.json") : { ok: false };
   const layerResult = pin.ok ? await loader.asset("tiles/layers.json") : { ok: false };
+  let mapLayerManifest = null;
+  try {
+    const response = await fetch(`${MAP_LAYER_BASE}manifest.json`);
+    if (response.ok) {
+      const doc = await response.json();
+      if (doc.schema === 1 && Array.isArray(doc.layers) && doc.basemap?.file)
+        mapLayerManifest = doc;
+    }
+  } catch {
+    // The map keeps its still image and parcel behavior if optional context is unavailable.
+  }
   labels = await labelsPromise;
   manifestSources = pin.ok ? pin.manifest?.sources ?? null : null;
 
@@ -294,7 +310,7 @@ async function start() {
   const tilesReady = Boolean(
     pin.ok && tileManifest && parcelLayer && parcelLayer.tile_layer === tileManifest.tile_layer,
   );
-  const basemap = await findBasemap(BASEMAP_BASE);
+  const basemap = mapLayerManifest ? await findBasemap(MAP_LAYER_BASE) : null;
   if (basemap) {
     // The page ships with still-image wording; correct it when the vector
     // basemap is in use. OpenStreetMap attribution is a licence condition.
@@ -305,6 +321,8 @@ async function start() {
   }
   map = new FieldMap({
     basemap,
+    overlays: mapLayerManifest?.layers ?? [],
+    overlaysBase: MAP_LAYER_BASE,
     // Comparison aid while the style is chosen: /map/?basemap=dark
     flavor: new URLSearchParams(location.search).get("basemap") ?? "light",
     onSelect: (parcel, trigger) => void openParcel(parcel, trigger, view ?? "card"),
@@ -314,6 +332,21 @@ async function start() {
     minZoom: tilesReady ? tileManifest.min_zoom : 14,
     maxZoom: tilesReady ? tileManifest.max_zoom : 16,
   });
+
+  const basemapFlavor = basemap && new URLSearchParams(location.search).get("basemap") === "dark" ? "dark" : "light";
+  document.body.classList.toggle("basemap-dark", basemapFlavor === "dark");
+  for (const flavor of ["light", "dark"]) {
+    const button = document.getElementById(`basemap-${flavor}`);
+    button.setAttribute("aria-pressed", String(flavor === basemapFlavor));
+    if (flavor === "dark") button.disabled = !basemap;
+    button.addEventListener("click", () => {
+      const params = new URLSearchParams(location.search);
+      if (flavor === "light") params.delete("basemap");
+      else params.set("basemap", flavor);
+      const query = params.toString();
+      location.search = query ? `?${query}` : "";
+    });
+  }
 
   if (tilesReady) {
     document.getElementById("parcel-count").textContent =
@@ -327,6 +360,44 @@ async function start() {
 
   const checkbox = document.getElementById("parcels-visible");
   checkbox.addEventListener("change", () => map.toggleParcels(checkbox.checked));
+  const thematic = document.getElementById("thematic-layers");
+  if (mapLayerManifest) {
+    const sections = [
+      { title: "Planning", ids: ["zoning", "secondary-plan-land-use", "urban-boundary", "rural-boundary", "employment-lands"] },
+      { title: "Protected and regulated", ids: ["greenbelt", "niagara-escarpment-plan", "conservation-hca", "conservation-npca", "conservation-grca"] },
+      { title: "Parks", ids: ["parks"] },
+    ];
+    thematic.replaceChildren();
+    for (const section of sections) {
+      const layers = section.ids.map((id) => mapLayerManifest.layers.find((layer) => layer.id === id)).filter(Boolean);
+      if (!layers.length) continue;
+      const group = document.createElement("div");
+      group.className = "layer-group";
+      const heading = document.createElement("h3");
+      heading.textContent = section.title;
+      group.append(heading);
+      for (const layer of layers) {
+        const label = document.createElement("label");
+        label.className = "layer thematic-layer";
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.checked = false;
+        input.setAttribute("aria-label", `Show ${layer.label}`);
+        input.addEventListener("change", () => map.toggleOverlay(layer.id, input.checked));
+        const text = document.createElement("span");
+        const title = document.createElement("strong");
+        title.textContent = layer.label;
+        const details = document.createElement("small");
+        details.textContent = `${layer.source} · ${layer.feature_count.toLocaleString("en-CA")} features · ${layer.source_date}`;
+        text.append(title, details);
+        label.append(input, text);
+        group.append(label);
+      }
+      thematic.append(group);
+    }
+  } else {
+    thematic.textContent = "Thematic map layers are unavailable.";
+  }
   const searchInput = document.getElementById("hm-map-search") ?? document.getElementById("search");
   searchInput.addEventListener("input", search);
   searchInput.addEventListener("keydown", (event) => {
@@ -345,6 +416,12 @@ async function start() {
   document.getElementById("tray-toggle").addEventListener("click", (event) => {
     const open = document.getElementById("tray").classList.toggle("mobile-open");
     event.currentTarget.setAttribute("aria-expanded", String(open));
+  });
+  document.getElementById("layers-toggle").addEventListener("click", (event) => {
+    const expanded = event.currentTarget.getAttribute("aria-expanded") !== "true";
+    event.currentTarget.setAttribute("aria-expanded", String(expanded));
+    event.currentTarget.title = expanded ? "Collapse map layers" : "Expand map layers";
+    document.getElementById("layers-panel").classList.toggle("is-collapsed", !expanded);
   });
   let resizeTimer;
   addEventListener("resize", () => {

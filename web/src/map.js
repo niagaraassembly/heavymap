@@ -29,12 +29,16 @@ const STILL_BOUNDS_TALL = [
 ];
 
 export class FieldMap {
-  constructor({ onSelect, onStatus, tilesUrl, tileLayer, minZoom = 14, maxZoom = 16, basemap = null, flavor = "light" }) {
+  constructor({ onSelect, onStatus, tilesUrl, tileLayer, minZoom = 14, maxZoom = 16, basemap = null, flavor = "light", overlays = [], overlaysBase = null }) {
     this.basemap = basemap;
     this.flavor = basemapFlavor(flavor);
     this.onStatus = onStatus;
     this.tilesUrl = tilesUrl;
     this.tileLayer = tileLayer;
+    this.overlays = overlays;
+    this.overlaysBase = overlaysBase;
+    this.overlayArchivesAdded = new Set();
+    this.overlayVisibility = new Map();
     this.minZoom = minZoom;
     this.maxZoom = maxZoom;
     this.selectedKey = null;
@@ -101,6 +105,7 @@ export class FieldMap {
         };
         map.on("error", dropBasemap);
       }
+      this.beneathLabels = beneathLabels;
 
       const paint = PARCEL_PAINT[this.basemap ? this.flavor : "still"];
       if (this.tilesUrl && this.tileLayer) {
@@ -149,6 +154,11 @@ export class FieldMap {
       }
 
       this.ready = true;
+      for (const [id, show] of this.overlayVisibility) if (show) this.toggleOverlay(id, true);
+      map.on("error", (event) => {
+        if (event.sourceId?.startsWith("overlay-source-"))
+          this.onStatus("This map layer could not be loaded. Check your connection and try again.");
+      });
       this.toggleParcels(this.parcelsVisible);
       this.reportZoom();
       map.on("zoomend", () => this.reportZoom());
@@ -185,6 +195,43 @@ export class FieldMap {
     if (!this.ready || !this.map.getLayer("parcels-fill")) return;
     for (const id of ["parcels-fill", "parcels-line"])
       this.map.setLayoutProperty(id, "visibility", show ? "visible" : "none");
+  }
+
+  toggleOverlay(id, show) {
+    this.overlayVisibility.set(id, show);
+    if (!this.ready) return;
+    const layer = this.overlays.find((item) => item.id === id);
+    if (!layer) return;
+    const archive = layer.file.split("/").at(-1).replace(/\.pmtiles$/, "");
+    const sourceId = `overlay-source-${archive}`;
+    if (!this.overlayArchivesAdded.has(archive)) {
+      this.map.addSource(sourceId, {
+        type: "vector",
+        url: `pmtiles://${this.overlaysBase}${layer.file}`,
+        minzoom: 6,
+        maxzoom: 14,
+      });
+      const before = this.beneathLabels && this.map.getLayer(this.beneathLabels) ? this.beneathLabels : undefined;
+      for (const item of this.overlays.filter((candidate) => candidate.file === layer.file)) {
+        const color = item.color || "#557a78";
+        this.map.addLayer({
+          id: `overlay-${item.id}-fill`, type: "fill", source: sourceId, "source-layer": item.tile_layer,
+          minzoom: item.min_zoom, maxzoom: item.max_zoom,
+          layout: { visibility: "none" },
+          paint: { "fill-color": color, "fill-opacity": 0.20 },
+        }, before);
+        this.map.addLayer({
+          id: `overlay-${item.id}-line`, type: "line", source: sourceId, "source-layer": item.tile_layer,
+          minzoom: item.min_zoom, maxzoom: item.max_zoom,
+          layout: { visibility: "none" },
+          paint: { "line-color": color, "line-width": 1.2, "line-opacity": 0.86 },
+        }, before);
+      }
+      this.overlayArchivesAdded.add(archive);
+    }
+    for (const suffix of ["fill", "line"])
+      if (this.map.getLayer(`overlay-${id}-${suffix}`))
+        this.map.setLayoutProperty(`overlay-${id}-${suffix}`, "visibility", show ? "visible" : "none");
   }
 
   /** Ease the parcel into the visible area above a bottom panel: the
