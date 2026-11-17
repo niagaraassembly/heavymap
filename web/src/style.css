@@ -363,8 +363,28 @@ h2 {
   box-shadow: 0 8px 28px var(--shadow);
 }
 .has-parcel-card #tray,
-.has-parcel-drawer #tray,
-.has-parcel-workspace #tray { overflow: visible; }
+.has-parcel-drawer #tray {
+  position: static;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  width: auto;
+  max-height: none;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  pointer-events: none;
+  z-index: auto;
+}
+.has-parcel-card #tray > :not(.layers),
+.has-parcel-drawer #tray > :not(.layers) { display: none; }
+.has-parcel-card #tray-toggle,
+.has-parcel-drawer #tray-toggle,
+.has-parcel-workspace #tray-toggle { display: none; }
 .layers.is-collapsed { width: 42px; height: 42px; padding: 4px; overflow: hidden; }
 .layers.is-collapsed .tray-heading { justify-content: center; margin: 0; }
 .layers.is-collapsed .tray-heading > span,
@@ -1030,12 +1050,10 @@ h2 {
   .tray.mobile-open {
     display: block;
   }
-  .has-parcel-card .tray,
-  .has-parcel-drawer .tray,
-  .has-parcel-workspace .tray {
+  .has-parcel-card #tray,
+  .has-parcel-drawer #tray {
     display: block;
-    visibility: hidden;
-    pointer-events: none;
+    visibility: visible;
   }
   .has-parcel-card .layers,
   .has-parcel-drawer .layers,
