@@ -1,0 +1,418 @@
+{
+ "schema": 1,
+ "domain": "parcel",
+ "locale": "en",
+ "entries": {
+  "parcel.addresses.partial": {
+   "text": "Showing first {shown} of {count}",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer address list when the detail record is unavailable (BL-117)."
+  },
+  "parcel.addresses_count": {
+   "text": {
+    "one": "1 address",
+    "other": "{n} addresses"
+   },
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Card subtitle and drawer identity tile (BL-117)."
+  },
+  "parcel.attention.gaps": {
+   "text": "Known gaps",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer attention row (BL-117)."
+  },
+  "parcel.attention.not_yet": {
+   "text": "Not yet available",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer attention row: provenance not yet captured (BL-099)."
+  },
+  "parcel.attention.slivers": {
+   "text": "Minor overlaps",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer attention row: sliver-flagged overlay rows (BL-117)."
+  },
+  "parcel.attention.sources": {
+   "text": "Sources and method",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer attention row (BL-117)."
+  },
+  "parcel.checked.inside": {
+   "text": "inside",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer checked-against row (BL-117)."
+  },
+  "parcel.checked.not_in": {
+   "text": "not in",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer checked-against row (BL-117)."
+  },
+  "parcel.field.boundary": {
+   "text": "Boundary",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Card fact and drawer Land row (BL-117)."
+  },
+  "parcel.field.gaps": {
+   "text": "Gaps",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Card fact (BL-117)."
+  },
+  "parcel.field.plan_use": {
+   "text": "Plan land use",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Card fact and drawer Land row (BL-117)."
+  },
+  "parcel.field.setting": {
+   "text": "Setting",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Card fact (BL-117)."
+  },
+  "parcel.field.zoning": {
+   "text": "Zoning",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Card fact and drawer Land row (BL-117)."
+  },
+  "parcel.gaps.known": {
+   "text": "known",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Card Gaps fact second line (BL-117)."
+  },
+  "parcel.identity.addresses": {
+   "text": "Addresses",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer identity row (BL-117)."
+  },
+  "parcel.identity.parcel_key": {
+   "text": "Parcel key",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer identity row (BL-117)."
+  },
+  "parcel.identity.roll": {
+   "text": "Roll number",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer identity row (BL-117)."
+  },
+  "parcel.identity.roll_match": {
+   "text": "Roll match",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer identity row (BL-117)."
+  },
+  "parcel.more": {
+   "text": "+{n} more",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Shown after the largest class when a parcel has several (BL-117)."
+  },
+  "parcel.none_found": {
+   "text": "None found",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "An absent fact says so plainly; the row label names what was checked (BL-117)."
+  },
+  "parcel.setting.no_regulated": {
+   "text": "No regulated areas found",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Card Setting second line when no checked layer contains the parcel (BL-117)."
+  },
+  "parcel.setting.rural": {
+   "text": "Rural area",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Card Setting and drawer Land boundary row (BL-117)."
+  },
+  "parcel.setting.urban": {
+   "text": "Urban area",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Card Setting and drawer Land boundary row (BL-117)."
+  },
+  "parcel.share.whole": {
+   "text": "whole parcel",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Share text when a class covers the whole parcel (BL-117)."
+  },
+  "parcel.tile.area": {
+   "text": "Area",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer tile heading (BL-117)."
+  },
+  "parcel.tile.attention": {
+   "text": "Attention",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer tile heading (BL-117)."
+  },
+  "parcel.tile.checked": {
+   "text": "Checked against",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer tile heading (BL-117)."
+  },
+  "parcel.tile.identity": {
+   "text": "Identity",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer tile heading (BL-117)."
+  },
+  "parcel.tile.land": {
+   "text": "Land",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer tile heading (BL-117)."
+  },
+  "parcel.verified": {
+   "text": "Verified record · release {id}",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Drawer footer line (BL-117)."
+  },
+  "parcel.workspace.addresses.filter": {
+   "text": "Filter addresses",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace Addresses section filter, shown above 12 addresses (BL-118)."
+  },
+  "parcel.workspace.addresses.filtered": {
+   "text": "Showing {shown} of {count}",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace Addresses filter result count (BL-118)."
+  },
+  "parcel.workspace.back": {
+   "text": "Back to map",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace header: returns to the drawer (BL-118)."
+  },
+  "parcel.workspace.fact.constraints": {
+   "text": "Constraints",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace record fact row: the regulated layers checked (BL-118)."
+  },
+  "parcel.workspace.constraints.none": {
+   "text": "None found in the {n} regulation layers checked",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace Constraints fact when no checked layer contains the parcel; names what was checked (BL-118)."
+  },
+  "parcel.workspace.notes.add": {
+   "text": "Add note",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace Notes compose button (BL-118)."
+  },
+  "parcel.workspace.notes.delete": {
+   "text": "Delete note",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace note delete button label (BL-118)."
+  },
+  "parcel.workspace.notes.empty": {
+   "text": "No notes yet for this parcel.",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace Notes empty state (BL-118)."
+  },
+  "parcel.workspace.notes.on_device": {
+   "text": "Notes stay on this device",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace Notes: device-only storage line (BL-118)."
+  },
+  "parcel.workspace.notes.placeholder": {
+   "text": "Write a note about this parcel. It stays on this device.",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace Notes compose placeholder (BL-118)."
+  },
+  "parcel.workspace.notes.write": {
+   "text": "Write a note",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace Notes compose textarea label (BL-118)."
+  },
+  "parcel.workspace.pane.record": {
+   "text": "Record",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace narrow-screen Record / Notes switch (BL-118)."
+  },
+  "parcel.workspace.source": {
+   "text": "Source",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace fact-row disclosure: source label (BL-118)."
+  },
+  "parcel.workspace.source.join": {
+   "text": "Join",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace fact-row disclosure: join method label (BL-118)."
+  },
+  "parcel.workspace.source.confidence": {
+   "text": "Confidence",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace fact-row disclosure: confidence label (BL-118)."
+  },
+  "parcel.workspace.tab.checklist": {
+   "text": "Checklist",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace work-area tab; coming in a later pass (BL-118)."
+  },
+  "parcel.workspace.tab.docs": {
+   "text": "Docs",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace work-area tab; coming in a later pass (BL-118)."
+  },
+  "parcel.workspace.tab.export": {
+   "text": "Export",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace work-area tab; coming in a later pass (BL-118)."
+  },
+  "parcel.workspace.tab.history": {
+   "text": "History",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace work-area tab; coming in a later pass (BL-118)."
+  },
+  "parcel.workspace.tab.lists": {
+   "text": "Lists",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace work-area tab; coming in a later pass (BL-118)."
+  },
+  "parcel.workspace.tab.notes": {
+   "text": "Notes",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace work-area tab; the only working tab in this pass (BL-118)."
+  }
+ }
+}
