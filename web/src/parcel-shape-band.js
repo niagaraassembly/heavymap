@@ -1,48 +1,34 @@
+// A deliberately varied set of isolated parcel silhouettes, not a street grid.
 const PARCELS = [
-  "M0 17 88 11 102 55 94 93 4 88Z",
-  "M102 55 168 48 178 105 94 112 94 93Z",
-  "M4 88 94 93 94 112 105 169 13 160Z",
-  "M178 105 265 96 273 159 196 170 105 169 94 112Z",
-  "M88 11 175 8 168 48 102 55Z",
-  "M175 8 272 14 265 96 178 105 168 48Z",
-  "M272 14 362 6 367 74 265 96Z",
-  "M273 159 367 151 375 179 282 177Z",
-  "M367 74 448 69 455 133 375 145 367 151 367 74Z",
-  "M367 151 375 145 455 133 463 177 375 179Z",
-  "M448 69 532 63 543 111 455 133Z",
-  "M532 63 625 70 621 126 543 111Z",
-  "M543 111 621 126 629 171 463 177 455 133Z",
-  "M625 70 714 62 724 111 621 126Z",
-  "M714 62 808 69 805 133 724 111Z",
-  "M724 111 805 133 812 174 629 171 621 126Z",
-  "M808 69 891 61 899 109 805 133Z",
-  "M891 61 985 66 989 127 899 109Z",
-  "M899 109 989 127 1000 173 812 174 805 133Z",
-  "M985 66 1075 58 1080 107 989 127Z",
-  "M1075 58 1168 62 1171 121 1080 107Z",
-  "M1080 107 1171 121 1200 166 1000 173 989 127Z",
-  "M2 88 4 18M273 159 282 177M448 69 455 133M714 62 724 111M985 66 989 127",
+  { d: "M34 105 49 53 89 28 145 39 136 91 151 136 93 153 58 139Z", color: "#fffaf0" },
+  { d: "M229 26 294 44 311 100 280 151 231 126 204 76Z", color: "#ff914d" },
+  { d: "M385 36 466 30 466 76 497 76 497 143 423 153 423 104 375 104Z", color: "#fffaf0" },
+  { d: "M572 45 630 28 670 44 689 88 651 101 665 144 607 150 598 106 557 91Z", color: "#fffaf0" },
+  { d: "M753 30 835 38 849 64 827 78 845 119 794 151 761 127 779 91 738 68Z", color: "#ff914d" },
+  { d: "M927 43 990 23 1025 51 1007 83 1035 112 1017 151 956 142 941 108 912 92Z", color: "#fffaf0" },
+  { d: "M1122 113 1134 49 1183 30 1219 49 1199 89 1230 129 1185 151 1150 132Z", color: "#fffaf0" },
+  { d: "M1318 25 1364 25 1364 62 1416 62 1416 111 1364 111 1364 150 1318 150 1318 109 1287 109 1287 67 1318 67Z", color: "#ff914d" },
+  { d: "M1517 33 1572 24 1593 63 1577 92 1600 130 1551 153 1510 129 1528 91 1496 67Z", color: "#fffaf0" },
 ];
 
 const NS = "http://www.w3.org/2000/svg";
 
 function parcelArtwork() {
   const svg = document.createElementNS(NS, "svg");
-  svg.setAttribute("viewBox", "0 0 1200 180");
+  svg.setAttribute("viewBox", "0 0 1600 180");
   svg.setAttribute("preserveAspectRatio", "none");
   svg.setAttribute("aria-hidden", "true");
   svg.setAttribute("focusable", "false");
 
-  for (const [index, d] of PARCELS.entries()) {
+  for (const { d, color } of PARCELS) {
     const path = document.createElementNS(NS, "path");
     path.setAttribute("d", d);
-    path.setAttribute("class", index % 5 === 0 ? "shape-line shape-line--quiet" : "shape-line");
     path.setAttribute("fill", "none");
-    path.setAttribute("stroke", "#d7d0c2");
-    path.setAttribute("stroke-width", "1.25");
+    path.setAttribute("stroke", color);
+    path.setAttribute("stroke-width", "1.7");
     path.setAttribute("stroke-linecap", "round");
     path.setAttribute("stroke-linejoin", "round");
-    path.setAttribute("opacity", index % 5 === 0 ? "0.46" : "0.83");
+    path.setAttribute("opacity", "0.98");
     svg.append(path);
   }
   return svg;
