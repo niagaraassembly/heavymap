@@ -60,7 +60,7 @@ jobs:
         with:
           repository: niagaraassembly/industrial-atlas-data
           # Immutable screened package commit; its manifest verifies all output hashes.
-          ref: d6f562d6b8b6f2bbccce3629e8b5de0696524567
+          ref: d6f562d61518b9aa18d64cfa950f24d401450c06
           path: industrial-atlas-development
       - uses: actions/setup-node@v4
         with:
@@ -99,7 +99,7 @@ jobs:
           EVENT: ${{ github.event_name }}
           ACTOR: ${{ github.actor }}
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
-          DEVELOPMENT_REF: d6f562d6b8b6f2bbccce3629e8b5de0696524567
+          DEVELOPMENT_REF: d6f562d61518b9aa18d64cfa950f24d401450c06
         run: |
           {
             echo "### Deployed heavymap.com"
