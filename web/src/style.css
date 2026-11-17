@@ -169,7 +169,7 @@ button:hover {
   width: 100%;
   height: clamp(128px, 19vh, 208px);
   overflow: hidden;
-  background: #080908;
+  background: rgba(8, 9, 8, 0.68);
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -177,7 +177,7 @@ button:hover {
   display: flex;
   width: max-content;
   height: 100%;
-  animation: parcel-shapes-drift 9s linear infinite;
+  animation: parcel-shapes-drift var(--parcel-shapes-duration, 28s) linear infinite;
   will-change: transform;
 }
 .parcel-shape-band-track svg {
