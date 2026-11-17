@@ -7,21 +7,21 @@
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  color: #233e4c;
+  color: #1e3440;
   background: #f5f8fa;
   font-synthesis: none;
-  --ink: #233e4c;
-  --muted: #506573;
-  --line: #dbe3e8;
+  --ink: #1e3440;
+  --muted: #405562;
+  --line: #c1ccd3;
   --rust: #a25138;
   --sage: #618574;
   --violet: #796094;
   /* Dossier and tray tokens: the map chrome's surfaces, all in one place. */
-  --surface: #f8fafc;
-  --surface-raised: #ffffff;
-  --surface-tint: #eaf0f5;
-  --rule-soft: #d1dee7;
-  --rule-mid: #a3b5c0;
+  --surface: #edf2f4;
+  --surface-raised: #f8fafb;
+  --surface-tint: #e1e8ec;
+  --rule-soft: #aebdc6;
+  --rule-mid: #899ba6;
   --deep: #294d60;
   --meter-track: #e1e8ed;
   --meter-fill: #9caeaa;
@@ -46,18 +46,18 @@
  * too: the chrome inherits its text color, and the site's themed body
  * color would otherwise win over the scoped variables. */
 .map-workspace {
-  color: #233e4c;
-  --ink: #233e4c;
-  --muted: #506573;
-  --line: #dbe3e8;
+  color: #1e3440;
+  --ink: #1e3440;
+  --muted: #405562;
+  --line: #c1ccd3;
   --rust: #a25138;
   --sage: #618574;
   --violet: #796094;
-  --surface: #f8fafc;
-  --surface-raised: #ffffff;
-  --surface-tint: #eaf0f5;
-  --rule-soft: #d1dee7;
-  --rule-mid: #a3b5c0;
+  --surface: #edf2f4;
+  --surface-raised: #f8fafb;
+  --surface-tint: #e1e8ec;
+  --rule-soft: #aebdc6;
+  --rule-mid: #899ba6;
   --deep: #294d60;
   --meter-track: #e1e8ed;
   --meter-fill: #9caeaa;
@@ -390,6 +390,63 @@ h2 {
 .layers.is-collapsed .tray-heading > span,
 .layers.is-collapsed .layers-toggle-label { display: none; }
 .layers.is-collapsed #layers-toggle { width: 32px; height: 32px; justify-content: center; padding: 0; font-size: 18px; }
+.hm-map-intro #tray {
+  display: block;
+  position: static;
+  width: auto;
+  max-height: none;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  pointer-events: none;
+  z-index: auto;
+}
+.hm-map-intro #tray > :not(.layers) { display: none; }
+.hm-map-intro #layers-panel {
+  position: fixed;
+  top: 58px;
+  left: 12px;
+  z-index: 1000;
+  width: 48px;
+  height: 48px;
+  max-height: calc(100dvh - 76px);
+  margin: 0;
+  padding: 4px;
+  overflow: hidden;
+  border: 1px solid #aebdc6;
+  border-radius: 10px;
+  background: #edf2f4;
+  box-shadow: 0 4px 18px #18334335;
+  pointer-events: auto;
+  isolation: isolate;
+}
+.hm-map-intro #layers-panel:not(.is-collapsed) {
+  width: min(410px, calc(100vw - 24px));
+  height: min(76dvh, 720px);
+  min-height: min(460px, calc(100dvh - 76px));
+  padding: 14px 16px;
+  overflow: auto;
+  border-color: #899ba6;
+  background: #edf2f4;
+  box-shadow: 0 12px 36px #1833434d;
+}
+.hm-map-intro #layers-panel.is-collapsed .tray-heading {
+  justify-content: center;
+  margin: 0;
+}
+.hm-map-intro #layers-panel.is-collapsed .tray-heading > span,
+.hm-map-intro #layers-panel.is-collapsed .layers-toggle-label { display: none; }
+.hm-map-intro #layers-panel.is-collapsed #layers-toggle {
+  width: 38px;
+  height: 38px;
+  min-height: 38px;
+  justify-content: center;
+  padding: 0;
+  font-size: 18px;
+}
+.hm-map-intro #layers-panel:not(.is-collapsed) #layers-toggle { padding: 5px 0; }
 .layer {
   display: flex;
   gap: 9px;
@@ -662,8 +719,10 @@ h2 {
 .dossier-top button {
   font-size: 19px;
   border: 0;
-  background: none;
+  background: transparent;
+  color: var(--ink);
   width: 44px;
+  filter: none;
 }
 /* Identity header: pinned under the dossier top while the bands scroll.
  * Negative side margins span the panel edge to edge; the body padding
@@ -1187,15 +1246,16 @@ h2 {
 }
 .parcel-card {
   position: absolute;
-  /* Stretch across the map's visible area, clear of the 300px side tray
-     (left 22px + 278px wide), with the facts centred as a group. left:50%
-     would cap the shrink-to-fit width at half the map, crushing the plan
-     fact. */
-  left: 316px;
-  right: 16px;
-  bottom: 64px;
-  background: var(--surface-raised);
-  border: 1px solid var(--rule-soft);
+  left: 50%;
+  top: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  width: min(780px, calc(100% - 48px));
+  max-height: calc(100% - 110px);
+  overflow: auto;
+  background: #edf2f4;
+  border: 1px solid #899ba6;
   border-radius: 16px;
   box-shadow: 0 10px 40px var(--shadow);
   display: flex;
@@ -1274,24 +1334,27 @@ h2 {
 }
 .parcel-xx {
   border: 0;
-  background: none;
-  color: var(--muted);
+  background: transparent;
+  color: var(--ink);
   width: 28px;
   border-radius: 8px;
   font-size: 14px;
   align-self: center;
   flex: none;
+  filter: none;
 }
 .parcel-xx:hover {
-  background: var(--surface-tint);
+  background: transparent;
+  color: var(--ink);
+  filter: none;
 }
 .parcel-drawer {
   position: absolute;
   left: 14px;
   right: 14px;
   bottom: 64px;
-  background: var(--surface-raised);
-  border: 1px solid var(--rule-soft);
+  background: #edf2f4;
+  border: 1px solid #899ba6;
   border-radius: 20px;
   box-shadow: 0 10px 40px var(--shadow);
   padding: 8px 20px 16px;
@@ -1369,7 +1432,19 @@ h2 {
 }
 .parcel-btn-ico {
   padding: 6px 9px;
-  color: var(--muted);
+  color: var(--ink);
+  background: transparent;
+  filter: none;
+}
+.parcel-btn-ico,
+.dossier-top button {
+  transition: none;
+}
+.parcel-btn-ico:hover,
+.dossier-top button:hover {
+  color: var(--ink);
+  background: transparent;
+  filter: none;
 }
 .parcel-coming {
   font-size: 10px;
@@ -1543,10 +1618,13 @@ h2 {
 }
 @media (max-width: 900px) {
   .parcel-card {
-    left: 8px;
-    right: 8px;
-    bottom: 55px;
-    transform: none;
+    left: 50%;
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 24px);
+    max-height: calc(100% - 96px);
     flex-wrap: wrap;
     padding: 12px;
   }
@@ -1618,9 +1696,9 @@ h2 {
   top: 14px;
   left: 14px;
   right: 14px;
-  bottom: 64px;
-  background: var(--surface-raised);
-  border: 1px solid var(--rule-soft);
+  bottom: 0;
+  background: #edf2f4;
+  border: 1px solid #899ba6;
   border-radius: 20px;
   box-shadow: 0 10px 40px var(--shadow);
   z-index: 4;
@@ -1629,6 +1707,12 @@ h2 {
   min-height: 0;
   overflow: hidden;
 }
+.has-parcel-workspace .hm-map-bar { display: none; }
+.has-parcel-workspace.hm-map-intro { padding-bottom: 0; }
+.has-parcel-workspace.hm-map-intro .map-workspace {
+  height: calc(100dvh - 46px);
+}
+.has-parcel-workspace .maplibregl-ctrl-bottom-right { bottom: 6px; }
 .parcel-ws-head {
   display: flex;
   align-items: center;

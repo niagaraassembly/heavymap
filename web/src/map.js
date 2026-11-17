@@ -46,8 +46,8 @@ export class FieldMap {
     this.parcelsVisible = true;
     this.map = new maplibregl.Map({
       container: "map",
-      center: [-79.865, 43.266],
-      zoom: 12.5,
+      center: [-79.87, 43.275],
+      zoom: 11.8,
       minZoom: 8,
       maxZoom: 18,
       attributionControl: false,
@@ -271,7 +271,7 @@ export class FieldMap {
   }
 
   home() {
-    this.map.easeTo({ center: [-79.865, 43.266], zoom: 12.5, padding: { top: 0, left: 0, right: 0, bottom: 0 }, duration: 300 });
+    this.map.easeTo({ center: [-79.87, 43.275], zoom: 11.8, padding: { top: 0, left: 0, right: 0, bottom: 0 }, duration: 300 });
   }
 
   resize() { this.map.resize(); }

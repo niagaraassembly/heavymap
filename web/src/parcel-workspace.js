@@ -1,18 +1,17 @@
 /* Parcel workspace renderer (parcel-views design §5.4, BL-118).
  *
  * The third parcel level: the record at left, the work area at right,
- * inside the map window with a margin and both nav bars preserved.
+ * inside the map window, extending to its bottom edge while open.
  * Renders from summariseRecord, like the card and drawer. Interface
  * chrome is literal, as the site does for chrome; every data word comes
  * from the summary, which itself resolves labels.
  *
- * Only Notes works in this build. Checklist, Lists, Export, Docs and
- * History are visible tabs marked "coming"; their design is separate
- * (Save, BL-106). Notes are device-only (parcel-notes.js).
+ * Only Notes works in this build. The other workspace areas remain
+ * visible without availability badges. Notes are device-only.
  */
 
 import { el } from "./dossier.js";
-import { comingTag, copyLinkButton, disabledAction, thumbnail } from "./parcel-views.js";
+import { copyLinkButton, disabledAction, thumbnail } from "./parcel-views.js";
 
 const TABS = [
   { id: "notes", labelKey: "parcel.workspace.tab.notes", works: true },
@@ -214,13 +213,13 @@ function workArea(summary, labels, notesStore, releaseId, initialTab) {
   for (const tab of TABS) {
     const button = el("button", undefined, "parcel-ws-tab");
     button.setAttribute("role", "tab");
+    button.dataset.parcelTab = tab.id;
     button.setAttribute("aria-selected", String(tab.id === activeTab));
     button.append(el("span", labels.t(tab.labelKey)));
     if (tab.id === "notes") {
       notesCount = el("em", "0", "parcel-ws-tab-count");
       button.append(notesCount);
     }
-    if (!tab.works) button.append(comingTag());
     button.addEventListener("click", () => selectTab(tab.id));
     tablist.append(button);
   }
@@ -232,11 +231,7 @@ function workArea(summary, labels, notesStore, releaseId, initialTab) {
   panes.set("notes", notes);
   for (const tab of TABS.filter((t) => !t.works)) {
     const pane = el("div", undefined, "parcel-ws-coming-pane");
-    const line = el("p");
-    line.append(el("span", labels.t(tab.labelKey)));
-    line.append(document.createTextNode(" "));
-    line.append(comingTag());
-    pane.append(line);
+    pane.append(el("p", labels.t(tab.labelKey)));
     panes.set(tab.id, pane);
   }
   for (const [id, pane] of panes) {

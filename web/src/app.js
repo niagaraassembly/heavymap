@@ -27,6 +27,7 @@ let loader;
 let labels;
 let manifestSources = null;
 let notesStore = null;
+const SAVED_PARCELS_KEY = "heavymap.saved-parcel-keys.v1";
 /* Which workspace sections are open, remembered while moving between
  * parcels in the session (design §5.4). Set on the first workspace open:
  * Addresses open only when the parcel has more than one. */
@@ -35,6 +36,56 @@ let workspaceSections = null;
 function status(text) {
   const barStatus = document.getElementById("map-bar-status");
   if (barStatus) barStatus.textContent = text;
+}
+
+function readSavedParcelKeys(storage) {
+  try {
+    storage ??= window.localStorage;
+    const keys = JSON.parse(storage.getItem(SAVED_PARCELS_KEY) ?? "[]");
+    return Array.isArray(keys) ? keys.filter((key) => typeof key === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
+function syncSaveButton() {
+  const button = document.querySelector("[data-save-parcel]");
+  if (!button) return;
+  const saved = Boolean(current && readSavedParcelKeys().includes(current.key));
+  button.setAttribute("aria-pressed", String(saved));
+  button.title = saved ? "Remove parcel from saved places" : "Save selected parcel";
+  button.setAttribute("aria-label", button.title);
+}
+
+function toggleSaveCurrentParcel() {
+  if (!current) {
+    status("Open a parcel record before saving it.");
+    return;
+  }
+  try {
+    const storage = window.localStorage;
+    const keys = readSavedParcelKeys(storage);
+    const saved = keys.includes(current.key);
+    const next = saved ? keys.filter((key) => key !== current.key) : [...keys, current.key];
+    storage.setItem(SAVED_PARCELS_KEY, JSON.stringify(next));
+    syncSaveButton();
+    status(saved ? "Parcel removed from saved places on this device." : "Parcel saved on this device.");
+  } catch {
+    status("Browser storage is unavailable; this parcel could not be saved.");
+  }
+}
+
+function openNoteService() {
+  if (!current) {
+    status("Open a parcel record before adding a note.");
+    return;
+  }
+  if (view !== "workspace") {
+    updateLocation(current.key, "workspace");
+    renderLevel("workspace", "notes");
+  }
+  workspaceSlot.querySelector('[data-parcel-tab="notes"]')?.click();
+  workspaceSlot.querySelector("textarea")?.focus({ preventScroll: true });
 }
 
 function updateLocation(key, level) {
@@ -140,6 +191,7 @@ function renderLevel(level, tab = "notes") {
     workspace.querySelector(".parcel-btn:not([disabled])")?.focus({ preventScroll: true });
   }
   view = level;
+  syncSaveButton();
   // A parcel clicked on the map eases into the visible area above the
   // panel; a deep link carries no location, so the map does not move.
   // The workspace fills the map window, so there is nothing to ease to.
@@ -162,8 +214,6 @@ async function openParcel(parcel, trigger, level = "card") {
   const layersPanel = document.getElementById("layers-panel");
   layersPanel.classList.add("is-collapsed");
   document.getElementById("layers-toggle").setAttribute("aria-expanded", "false");
-  document.getElementById("tray").classList.remove("mobile-open");
-  document.getElementById("tray-toggle").setAttribute("aria-expanded", "false");
   map.select(parcel);
   status("Loading verified parcel record…");
   const coreResult = await loader.core(parcel.id);
@@ -229,8 +279,9 @@ function closeAll() {
   workspaceSlot.replaceChildren();
   workspaceSlot.hidden = true;
   document.body.classList.remove("has-parcel-card", "has-parcel-drawer", "has-parcel-workspace");
-  document.getElementById("layers-panel").classList.remove("is-collapsed");
-  document.getElementById("layers-toggle").setAttribute("aria-expanded", "true");
+  document.getElementById("layers-panel").classList.add("is-collapsed");
+  document.getElementById("layers-toggle").setAttribute("aria-expanded", "false");
+  syncSaveButton();
   map.close();
   updateLocation(null);
   if (opener?.isConnected && !opener.hidden) opener.focus({ preventScroll: true });
@@ -409,17 +460,19 @@ async function start() {
     document.querySelector("#samples button")?.click();
   });
   document.addEventListener("keydown", (event) => { if (event.key === "Escape") stepBack(); });
-  document.getElementById("home").addEventListener("click", () => map.home());
-  document.getElementById("tray-toggle").addEventListener("click", (event) => {
-    const open = document.getElementById("tray").classList.toggle("mobile-open");
-    event.currentTarget.setAttribute("aria-expanded", String(open));
-  });
+  const layersPanel = document.getElementById("layers-panel");
+  for (const eventName of ["pointerdown", "click"]) {
+    layersPanel.addEventListener(eventName, (event) => event.stopPropagation());
+  }
   document.getElementById("layers-toggle").addEventListener("click", (event) => {
     const expanded = event.currentTarget.getAttribute("aria-expanded") !== "true";
     event.currentTarget.setAttribute("aria-expanded", String(expanded));
     event.currentTarget.title = expanded ? "Collapse map layers" : "Expand map layers";
-    document.getElementById("layers-panel").classList.toggle("is-collapsed", !expanded);
+    layersPanel.classList.toggle("is-collapsed", !expanded);
   });
+  document.querySelector("[data-save-parcel]")?.addEventListener("click", toggleSaveCurrentParcel);
+  document.querySelector("[data-note-parcel]")?.addEventListener("click", openNoteService);
+  syncSaveButton();
   let resizeTimer;
   addEventListener("resize", () => {
     clearTimeout(resizeTimer);

@@ -34,4 +34,28 @@ export function mountMapBars() {
     mountMenu(root, { toggleAttr: "data-site-menu-toggle", panelAttr: "data-site-menu-panel" });
   for (const root of document.querySelectorAll("[data-place-selector]"))
     mountMenu(root, { toggleAttr: "data-place-button", panelAttr: "data-place-panel" });
+
+  const header = document.querySelector(".alt-header--map");
+  const toggle = header?.querySelector("[data-search-toggle]");
+  const box = header?.querySelector("[data-map-searchbox]");
+  const input = box?.querySelector("input[type='search']");
+  const close = box?.querySelector("[data-search-close]");
+  if (!header || !toggle || !box || !input || !close) return;
+
+  const setOpen = (open) => {
+    header.classList.toggle("search-open", open);
+    box.hidden = !open;
+    toggle.setAttribute("aria-expanded", String(open));
+    if (open) input.focus({ preventScroll: true });
+    else toggle.focus({ preventScroll: true });
+  };
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.addEventListener("click", () => setOpen(true));
+  close.addEventListener("click", () => setOpen(false));
+  box.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.stopPropagation();
+      setOpen(false);
+    }
+  });
 }
