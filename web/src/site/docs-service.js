@@ -10,7 +10,7 @@ import {
 } from "../development-records.js";
 
 const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
-const DEVELOPMENT_BASE = "/map/data/ca-on-hamilton-development/2026-11-17-field-screen-v0.2/";
+const DEVELOPMENT_BASE = "/map/data/ca-on-hamilton-development/2026-11-17-field-screen-v0.3/";
 const dossierLoader = createDossierLoader({ base: RELEASE_BASE });
 const developmentLoader = createHamiltonDevelopmentLoader({ base: DEVELOPMENT_BASE });
 let dossierPin;

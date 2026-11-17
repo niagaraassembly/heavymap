@@ -34,7 +34,7 @@ const STILL_BOUNDS_TALL = [
 ];
 
 export class FieldMap {
-  constructor({ onSelect, onStatus, onReady, tilesUrl, tileLayer, minZoom = 14, maxZoom = 16, basemap = null, flavor = "light", overlays = [], overlaysBase = null }) {
+  constructor({ onSelect, onStatus, onReady, tilesUrl, tileLayer, minZoom = 14, maxZoom = 16, basemap = null, flavor = "light", overlays = [], overlaysBase = null, developmentOverviewUrl = null }) {
     this.basemap = basemap;
     this.flavor = basemapFlavor(flavor);
     this.onStatus = onStatus;
@@ -43,6 +43,12 @@ export class FieldMap {
     this.tileLayer = tileLayer;
     this.overlays = overlays;
     this.overlaysBase = overlaysBase;
+    this.developmentOverviewUrl = developmentOverviewUrl;
+    this.developmentOverviewAdded = false;
+    this.developmentOverviewVisible = false;
+    this.developmentMonths = [];
+    this.developmentFrom = null;
+    this.developmentTo = null;
     this.overlayArchivesAdded = new Set();
     this.overlayVisibility = new Map();
     this.minZoom = minZoom;
@@ -164,10 +170,15 @@ export class FieldMap {
 
       this.ready = true;
       for (const [id, show] of this.overlayVisibility) if (show) this.toggleOverlay(id, true);
-      if (this.developmentKeys.size) this.applyDevelopmentFeatureState();
+      if (this.developmentKeys.size) {
+        this.applyDevelopmentFeatureState();
+        this.setDevelopmentOverviewVisible(true);
+      }
       map.on("error", (event) => {
         if (event.sourceId?.startsWith("overlay-source-"))
           this.onStatus("This map layer could not be loaded. Check your connection and try again.");
+        if (event.sourceId === "development-overview")
+          this.onStatus("The citywide development mosaic could not be loaded. Parcel highlights remain available at zoom 14+.");
       });
       this.toggleParcels(this.parcelsVisible);
       this.reportZoom();
@@ -179,6 +190,10 @@ export class FieldMap {
 
   reportZoom() {
     if (!this.tilesUrl) return;
+    if (this.developmentOverviewVisible && this.map.getZoom() >= 8 && this.map.getZoom() < this.minZoom) {
+      this.onStatus(`Development activity · citywide mosaic at zoom 8–13 · parcel highlights from zoom ${this.minZoom}.`);
+      return;
+    }
     if (this.map.getZoom() < this.minZoom)
       this.onStatus(`Zoom in to level ${this.minZoom} to see and select Hamilton parcels.`);
     else if (this.map.getZoom() > this.maxZoom)
@@ -215,6 +230,112 @@ export class FieldMap {
     }
     this.developmentKeys = new Set(parcelKeys);
     if (this.ready && this.map.getSource("parcels")) this.applyDevelopmentFeatureState();
+    this.setDevelopmentOverviewVisible(this.developmentKeys.size > 0);
+  }
+
+  setDevelopmentActivityRange(months, from, to) {
+    this.developmentMonths = months;
+    this.developmentFrom = from;
+    this.developmentTo = to;
+    this.updateDevelopmentOverviewStyle();
+  }
+
+  setDevelopmentOverviewVisible(visible) {
+    this.developmentOverviewVisible = visible;
+    if (!this.ready || !this.developmentOverviewUrl) return;
+    this.ensureDevelopmentOverview();
+    for (const id of ["development-overview-all", "development-overview-focus", "development-overview-line", "development-overview-count"])
+      if (this.map.getLayer(id)) this.map.setLayoutProperty(id, "visibility", visible ? "visible" : "none");
+    this.reportZoom();
+  }
+
+  ensureDevelopmentOverview() {
+    if (this.developmentOverviewAdded || !this.ready || !this.developmentOverviewUrl) return;
+    this.map.addSource("development-overview", { type: "geojson", data: this.developmentOverviewUrl });
+    const before = this.map.getLayer("parcels-fill") ? "parcels-fill" : undefined;
+    const visibility = this.developmentOverviewVisible ? "visible" : "none";
+    this.map.addLayer({
+      id: "development-overview-all", type: "fill", source: "development-overview",
+      minzoom: 8, maxzoom: this.minZoom,
+      paint: { "fill-color": "#e3b55e", "fill-opacity": 0.30 },
+      layout: { visibility },
+    }, before);
+    this.map.addLayer({
+      id: "development-overview-focus", type: "fill", source: "development-overview",
+      minzoom: 8, maxzoom: this.minZoom,
+      paint: { "fill-color": "#b85c24", "fill-opacity": 0.52 },
+      layout: { visibility },
+    }, before);
+    this.map.addLayer({
+      id: "development-overview-line", type: "line", source: "development-overview",
+      minzoom: 8, maxzoom: this.minZoom,
+      paint: { "line-color": "#a84f1c", "line-width": 0.55, "line-opacity": 0.55 },
+      layout: { visibility },
+    }, before);
+    this.map.addLayer({
+      id: "development-overview-count", type: "symbol", source: "development-overview",
+      minzoom: 12, maxzoom: this.minZoom,
+      layout: {
+        visibility,
+        "text-field": "",
+        "text-font": ["Noto Sans Medium"],
+        "text-size": 10,
+        "text-allow-overlap": false,
+      },
+      paint: { "text-color": "#64300f", "text-halo-color": "#fff7e8", "text-halo-width": 1 },
+    }, before);
+    this.map.on("click", "development-overview-all", (event) => {
+      const properties = event.features?.[0]?.properties;
+      if (!properties) return;
+      const indices = this.developmentMonthIndexes();
+      const count = (prefix) => indices.reduce((sum, index) => sum + Number(properties[`${prefix}${String(index).padStart(2, "0")}`] ?? 0), 0);
+      const total = count("a");
+      const focus = count("f");
+      const months = this.developmentFrom && this.developmentTo ? `${this.developmentFrom} to ${this.developmentTo}` : "selected report months";
+      new maplibregl.Popup({ closeButton: false, closeOnClick: true })
+        .setLngLat(event.lngLat)
+        .setText(`${total.toLocaleString("en-CA")} permit records · ${focus.toLocaleString("en-CA")} industrial, commercial, logistics, or multi-unit residential · ${months}. Aggregated area; not an exact project location.`)
+        .addTo(this.map);
+    });
+    this.map.on("mouseenter", "development-overview-all", () => { this.map.getCanvas().style.cursor = "pointer"; });
+    this.map.on("mouseleave", "development-overview-all", () => { this.map.getCanvas().style.cursor = ""; });
+    this.developmentOverviewAdded = true;
+    this.updateDevelopmentOverviewStyle();
+  }
+
+  developmentMonthIndexes() {
+    const start = this.developmentMonths.indexOf(this.developmentFrom);
+    const end = this.developmentMonths.indexOf(this.developmentTo);
+    return start < 0 || end < start
+      ? []
+      : this.developmentMonths.slice(start, end + 1).map((_, offset) => start + offset);
+  }
+
+  updateDevelopmentOverviewStyle() {
+    if (!this.developmentOverviewAdded) return;
+    const months = this.developmentMonthIndexes();
+    const sum = (prefix) => months.length
+      ? ["+", ...months.map((index) => ["get", `${prefix}${String(index).padStart(2, "0")}`])]
+      : ["literal", 0];
+    const all = sum("a");
+    const focus = sum("f");
+    this.map.setPaintProperty("development-overview-all", "fill-color", [
+      "interpolate", ["linear"], all,
+      0, "#f4ead4", 1, "#f1d18e", 5, "#e5af56", 15, "#cf7b36", 40, "#a84f1b",
+    ]);
+    this.map.setPaintProperty("development-overview-all", "fill-opacity", [
+      "interpolate", ["linear"], all, 0, 0, 1, 0.24, 8, 0.46, 30, 0.68,
+    ]);
+    this.map.setPaintProperty("development-overview-focus", "fill-color", [
+      "interpolate", ["linear"], focus,
+      0, "#b85c24", 1, "#e6a054", 4, "#d47732", 12, "#b94c1d", 30, "#802f16",
+    ]);
+    this.map.setPaintProperty("development-overview-focus", "fill-opacity", [
+      "interpolate", ["linear"], focus, 0, 0, 1, 0.42, 8, 0.65, 30, 0.82,
+    ]);
+    this.map.setFilter("development-overview-focus", [">", focus, 0]);
+    this.map.setFilter("development-overview-count", [">", focus, 0]);
+    this.map.setLayoutProperty("development-overview-count", "text-field", ["to-string", focus]);
   }
 
   applyDevelopmentFeatureState() {

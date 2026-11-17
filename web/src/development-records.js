@@ -31,7 +31,7 @@ export function createHamiltonDevelopmentLoader({
     try {
       const bytes = await fetchBytes(`${root}${MANIFEST_FILE}`);
       const doc = parse(bytes);
-      if (doc.schema_version !== "hamilton-development-release-manifest/0.2.0" || doc.jurisdiction !== "ca/on/hamilton")
+      if (!new Set(["hamilton-development-release-manifest/0.2.0", "hamilton-development-release-manifest/0.3.0"]).has(doc.schema_version) || doc.jurisdiction !== "ca/on/hamilton")
         throw new Error("Unsupported Hamilton development package.");
       manifest = doc;
       const indicatorBytes = await fetchBytes(`${root}${INDICATORS_FILE}`);
@@ -40,7 +40,13 @@ export function createHamiltonDevelopmentLoader({
       indicators = parse(indicatorBytes);
       if (indicators.schema_version !== "hamilton-parcel-development-indicators/0.2.0" || indicators.jurisdiction !== doc.jurisdiction)
         throw new Error("Hamilton parcel indicators have an incompatible schema.");
-      return { ok: true, recordCount: doc.record_count, focusCount: doc.focus_record_count, reportMonths: doc.report_months ?? [] };
+      return {
+        ok: true,
+        recordCount: doc.record_count,
+        focusCount: doc.focus_record_count,
+        reportMonths: doc.report_months ?? [],
+        activityMosaic: doc.activity_mosaic ?? null,
+      };
     } catch (error) {
       manifest = null;
       indicators = null;
