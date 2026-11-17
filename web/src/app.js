@@ -4,8 +4,11 @@ import { loadLabels } from "./labels.js";
 import { createDossierLoader } from "./dossier-loader.js";
 import { el, renderSchema2DossierFromLoader } from "./dossier.js";
 import { FieldMap } from "./map.js";
+import { findBasemap } from "./basemap.js";
 
 const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
+// The street basemap is a separate artifact from the parcel release.
+const BASEMAP_BASE = "/map/basemap/ca-on-hamilton/20261116/";
 const panel = document.getElementById("dossier");
 let selected = null;
 let opener = null;
@@ -120,7 +123,11 @@ async function start() {
   const tilesReady = Boolean(
     pin.ok && tileManifest && parcelLayer && parcelLayer.tile_layer === tileManifest.tile_layer,
   );
+  const basemap = await findBasemap(BASEMAP_BASE);
   map = new FieldMap({
+    basemap,
+    // Comparison aid while the style is chosen: /map/?basemap=dark
+    flavor: new URLSearchParams(location.search).get("basemap") ?? "light",
     onSelect: (parcel, trigger) => void openParcel(parcel, trigger),
     onStatus: status,
     tilesUrl: tilesReady ? `${RELEASE_BASE}tiles/parcels.pmtiles` : null,

@@ -1,6 +1,15 @@
 import * as maplibregl from "maplibre-gl";
 import { Protocol } from "pmtiles";
 import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
+import {
+  BASEMAP_SOURCE,
+  GLYPHS_URL,
+  GROUND,
+  PARCEL_PAINT,
+  basemapFlavor,
+  basemapLayers,
+  firstLabelLayerId,
+} from "./basemap.js";
 
 maplibregl.setWorkerUrl(workerUrl);
 const protocol = new Protocol();
@@ -20,7 +29,9 @@ const STILL_BOUNDS_TALL = [
 ];
 
 export class FieldMap {
-  constructor({ onSelect, onStatus, tilesUrl, tileLayer, minZoom = 14, maxZoom = 16 }) {
+  constructor({ onSelect, onStatus, tilesUrl, tileLayer, minZoom = 14, maxZoom = 16, basemap = null, flavor = "light" }) {
+    this.basemap = basemap;
+    this.flavor = basemapFlavor(flavor);
     this.onStatus = onStatus;
     this.tilesUrl = tilesUrl;
     this.tileLayer = tileLayer;
@@ -38,8 +49,9 @@ export class FieldMap {
       attributionControl: false,
       style: {
         version: 8,
+        glyphs: GLYPHS_URL,
         sources: {},
-        layers: [{ id: "ground", type: "background", paint: { "background-color": "#eaf0ef" } }],
+        layers: [{ id: "ground", type: "background", paint: { "background-color": GROUND[basemap ? this.flavor : "light"] } }],
       },
     });
     this.map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
@@ -53,6 +65,40 @@ export class FieldMap {
       });
       map.addLayer({ id: "hamilton-still", type: "raster", source: "hamilton-still", paint: { "raster-opacity": 0.94 } });
 
+      // Vector basemap over the still image; parcels go beneath its labels.
+      // If it cannot be read, its layers are removed and the still remains.
+      let beneathLabels;
+      if (this.basemap) {
+        const list = basemapLayers(this.flavor);
+        map.addSource(BASEMAP_SOURCE, {
+          type: "vector",
+          url: `pmtiles://${this.basemap.url}`,
+          maxzoom: this.basemap.maxZoom,
+        });
+        for (const layer of list) map.addLayer(layer);
+        beneathLabels = firstLabelLayerId(list);
+        if (this.flavor === "dark") map.setLayoutProperty("hamilton-still", "visibility", "none");
+        const dropBasemap = (event) => {
+          if (event.sourceId !== BASEMAP_SOURCE) return;
+          map.off("error", dropBasemap);
+          for (const layer of list) if (map.getLayer(layer.id)) map.removeLayer(layer.id);
+          if (map.getSource(BASEMAP_SOURCE)) map.removeSource(BASEMAP_SOURCE);
+          map.setLayoutProperty("hamilton-still", "visibility", "visible");
+          map.setPaintProperty("ground", "background-color", GROUND.light);
+          if (map.getLayer("parcels-fill")) {
+            const still = PARCEL_PAINT.still;
+            const selected = ["boolean", ["feature-state", "selected"], false];
+            map.setPaintProperty("parcels-fill", "fill-color", ["case", selected, still.selFill, still.fill]);
+            map.setPaintProperty("parcels-fill", "fill-opacity", ["case", selected, still.selFillOpacity, still.fillOpacity]);
+            map.setPaintProperty("parcels-line", "line-color", ["case", selected, still.selLine, still.line]);
+            map.setPaintProperty("parcels-line", "line-width", ["case", selected, 2.4, still.lineWidth]);
+          }
+          onStatus("The street basemap could not be loaded. The still image remains available.");
+        };
+        map.on("error", dropBasemap);
+      }
+
+      const paint = PARCEL_PAINT[this.basemap ? this.flavor : "still"];
       if (this.tilesUrl && this.tileLayer) {
         map.addSource("parcels", {
           type: "vector",
@@ -68,10 +114,10 @@ export class FieldMap {
           "source-layer": this.tileLayer,
           minzoom: this.minZoom,
           paint: {
-            "fill-color": ["case", ["boolean", ["feature-state", "selected"], false], "#a25138", "#c17254"],
-            "fill-opacity": ["case", ["boolean", ["feature-state", "selected"], false], 0.72, 0.24],
+            "fill-color": ["case", ["boolean", ["feature-state", "selected"], false], paint.selFill, paint.fill],
+            "fill-opacity": ["case", ["boolean", ["feature-state", "selected"], false], paint.selFillOpacity, paint.fillOpacity],
           },
-        });
+        }, beneathLabels);
         map.addLayer({
           id: "parcels-line",
           type: "line",
@@ -79,10 +125,10 @@ export class FieldMap {
           "source-layer": this.tileLayer,
           minzoom: this.minZoom,
           paint: {
-            "line-color": ["case", ["boolean", ["feature-state", "selected"], false], "#713c2c", "#9c4d35"],
-            "line-width": ["case", ["boolean", ["feature-state", "selected"], false], 2.4, 1.15],
+            "line-color": ["case", ["boolean", ["feature-state", "selected"], false], paint.selLine, paint.line],
+            "line-width": ["case", ["boolean", ["feature-state", "selected"], false], 2.4, paint.lineWidth],
           },
-        });
+        }, beneathLabels);
         map.on("click", "parcels-fill", (event) => {
           const key = event.features?.[0]?.properties?.key;
           if (typeof key === "string") onSelect({ id: key, key }, map.getCanvas());
@@ -90,6 +136,7 @@ export class FieldMap {
         map.on("mouseenter", "parcels-fill", () => { map.getCanvas().style.cursor = "pointer"; });
         map.on("mouseleave", "parcels-fill", () => { map.getCanvas().style.cursor = ""; });
         map.on("error", (event) => {
+          if (event.sourceId === BASEMAP_SOURCE) return;
           if (event.sourceId === "parcels" || event.error?.message?.includes("PMTiles"))
             onStatus("Hamilton parcel tiles could not be loaded. The still image remains available.");
         });
