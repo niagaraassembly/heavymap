@@ -364,8 +364,43 @@ export class FieldMap {
         maxzoom: typed ? Math.max(...members.map((item) => item.max_zoom)) : 14,
       });
       const before = this.beneathLabels && this.map.getLayer(this.beneathLabels) ? this.beneathLabels : undefined;
-      for (const item of members)
+      for (const item of members) {
         for (const spec of overlayLayerSpecs(item, sourceId)) this.map.addLayer(spec, before);
+        if (item.id === "building-footprints") {
+          const fillId = "overlay-building-footprints-fill";
+          this.map.on("click", fillId, (event) => {
+            const properties = event.features?.[0]?.properties ?? {};
+            const content = document.createElement("div");
+            content.className = "building-footprint-popup";
+            const title = document.createElement("strong");
+            title.textContent = properties.BUILD_NO == null ? "Unassigned building footprint" : `Building ${properties.BUILD_NO}`;
+            content.append(title);
+            const area = properties.AREA_M2 == null ? NaN : Number(properties.AREA_M2);
+            const edge = properties.EDGE_M == null ? NaN : Number(properties.EDGE_M);
+            const values = [
+              ["Footprint area", Number.isFinite(area) ? `${area.toLocaleString("en-CA")} m²` : "Not available"],
+              ["Nearest parcel edge", Number.isFinite(edge) ? `${edge.toLocaleString("en-CA")} m` : "Not available"],
+              ["Building ID", properties.BUILD_ID ?? "Not available"],
+              ["Primary parcel", properties.PARCEL_ID ?? "Not assigned"],
+            ];
+            for (const [label, value] of values) {
+              const row = document.createElement("p");
+              const name = document.createElement("span");
+              name.textContent = `${label}: `;
+              const itemValue = document.createElement("b");
+              itemValue.textContent = String(value);
+              row.append(name, itemValue);
+              content.append(row);
+            }
+            new maplibregl.Popup({ closeButton: true, maxWidth: "320px" })
+              .setLngLat(event.lngLat)
+              .setDOMContent(content)
+              .addTo(this.map);
+          });
+          this.map.on("mouseenter", fillId, () => { this.map.getCanvas().style.cursor = "pointer"; });
+          this.map.on("mouseleave", fillId, () => { this.map.getCanvas().style.cursor = ""; });
+        }
+      }
       this.overlayArchivesAdded.add(archive);
     }
     for (const suffix of ["fill", "line", "dash", "circle"])

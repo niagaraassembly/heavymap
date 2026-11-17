@@ -136,6 +136,16 @@ export function parcelCardElement(summary, labels, { geometry, onSave, onOpenRec
     fact(labels.t("parcel.tile.area"), summary.area.ha.toFixed(2), fmtM2(summary.area.m2)),
   );
   card.lastElementChild.classList.add("parcel-fact-area");
+  if (summary.buildingFacts) {
+    const edge = summary.buildingFacts.nearest_building_edge_m;
+    const buildings = fact(
+      "Buildings",
+      String(summary.buildingFacts.assigned_building_count),
+      edge == null ? "No assigned footprint" : `Nearest edge ${edge.toLocaleString("en-CA")} m`,
+    );
+    buildings.classList.add("parcel-fact-buildings");
+    card.append(buildings);
+  }
   const zoneCell = fact(
     labels.t("parcel.field.zoning"),
     zoning ? zoning.class : labels.t("parcel.none_found"),
@@ -314,6 +324,21 @@ export function parcelDrawerElement(summary, labels, { geometry, releaseId, feed
     el("span", fmtUnits(summary.area)),
   );
   tiles.append(areaTile);
+
+  if (summary.buildingFacts) {
+    const buildingTile = el("div", undefined, "parcel-tile parcel-tile-buildings");
+    buildingTile.append(
+      tileHeading("Buildings"),
+      el("b", String(summary.buildingFacts.assigned_building_count)),
+      el("span", summary.buildingFacts.nearest_building_edge_m == null
+        ? "No assigned footprint"
+        : `Nearest edge ${summary.buildingFacts.nearest_building_edge_m.toLocaleString("en-CA")} m`),
+      el("span", summary.buildingFacts.largest_footprint_area_m2 == null
+        ? ""
+        : `Largest ${summary.buildingFacts.largest_footprint_area_m2.toLocaleString("en-CA")} m²`),
+    );
+    tiles.append(buildingTile);
+  }
 
   const landTile = el("div", undefined, "parcel-tile parcel-tile-land");
   landTile.append(tileHeading(labels.t("parcel.tile.land")));

@@ -1,15 +1,19 @@
 # Hamilton building footprints: parcel links and size ranks
 
-**Status:** local working derivative; not published and not jurisdiction-approved.
+**Status:** published in the owner-authorized live map release; source data and full relationship tables remain local.
+
+**Public data pin:** Industrial Atlas data commit `e3ab71d326602492bb2087e39e0e2359525c796a`, map-layer set `2026-11-17-layer-set-003`.
 
 ## Deliverables
 
-The generated package is stored outside Git at `deb:/fast/code/making/na/local-data/heavymap-buildings/hamilton/2026-11-17-v1/`.
+The full generated package is stored outside Git at `deb:/fast/code/making/na/local-data/heavymap-buildings/hamilton/2026-11-17-v2/`.
 
 - `hamilton_buildings_ranked_shapefile.zip`: EPSG:26917 polygon shapefile with one feature per active registered footprint.
 - `building_parcel_ranks.csv`: one row per active footprint, including the 383 with no positive parcel intersection.
 - `building_parcel_overlaps.csv`: all 259,407 positive building–parcel intersections and the primary assignment flag.
 - `parcel_building_summary.csv`: assigned footprint counts, summed plan-view area, largest footprint, and multi-parcel count by primary parcel.
+- `hamilton_buildings_ranked_wgs84.ndjson`: screened map features for the public vector-tile release; includes numeric `AREA_M2`, stable `BUILD_ID`, parcel rank, overlap count and parcel-edge distance.
+- `parcel-building-facts-index.json` and `parcel-building-facts/*.json`: all-active-parcel modal facts, sharded by the final two stable parcel-ID characters for on-demand loading.
 - `manifest.json`: source/input hashes, output hashes, processing rules, feature counts and limitations.
 - Reproducer: `scripts/export_hamilton_building_ranks.py`.
 
@@ -22,6 +26,8 @@ Each footprint is assigned to the parcel with the greatest positive polygon-inte
 Within each primary parcel, `building_no` is assigned from 1 upward by full footprint area descending, then stable `building_id` ascending. Equal area groups are reported by `equal_area_tie_count`. `building_id` remains the durable cross-release identity; `building_no` is a convenient rank that can change when geometry or parcel membership changes. The rank scope is one parcel. Site-wide ranks require a separately defined site grouping.
 
 `footprint_area_m2` / shapefile `AREA_M2` is continuous plan-view polygon area, so it supports numeric size filtering. It is not floor area, gross floor area, building height, occupancy or current use. The shapefile also includes `BUILD_ID`, `PARCEL_ID`, `BUILD_NO`, primary overlap area/share, the count of intersected parcels, and the equal-size tie count. Source `NAME`, OID, and source geometry fields are screened out.
+
+For the parcel modal and map popup, the derivation also records the minimum distance from each assigned building footprint to its primary parcel boundary line. EPSG:26917 metre coordinates are used; touching, crossing, or a parcel boundary inside a footprint has distance zero. Parcel summaries expose nearest and median building-edge distance, buildings within 3 m, largest and median footprint size, assigned whole-footprint area sum, and the count of all intersecting footprints. Whole-footprint area sum is explicitly not parcel coverage. Parcels without assigned footprints receive zero counts and null size/distance statistics.
 
 ## Population and quality notes
 

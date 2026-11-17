@@ -47,8 +47,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: niagaraassembly/industrial-atlas-data
-          # Pin the immutable commit containing map-releases/.../layer-set-002.
-          ref: 8fe8bdf846defe4451a17ee6a41d949b3ba859be
+          # Pin the immutable commit containing map-releases/.../layer-set-003.
+          ref: e3ab71d326602492bb2087e39e0e2359525c796a
           path: industrial-atlas-map-layers
       - name: Refuse a map-layer pin that is not a full commit hash
         working-directory: .
@@ -87,7 +87,7 @@ jobs:
       - name: Build with every check
         env:
           HM_ATLAS_RELEASE_DIR: ${{ github.workspace }}/industrial-atlas-data/releases/ca-on-hamilton/2026-11-16-d070
-          HM_MAP_LAYER_RELEASE_DIR: ${{ github.workspace }}/industrial-atlas-map-layers/map-releases/ca-on-hamilton/2026-11-17-layer-set-002
+          HM_MAP_LAYER_RELEASE_DIR: ${{ github.workspace }}/industrial-atlas-map-layers/map-releases/ca-on-hamilton/2026-11-17-layer-set-003
           HM_DEVELOPMENT_RELEASE_DIR: ${{ github.workspace }}/industrial-atlas-development/development-releases/ca-on-hamilton/2026-11-17-field-screen-v0.3
           HM_ACCESS_RELEASE_DIR: ${{ github.workspace }}/heavymap-portraits/access-releases/ca-on-hamilton/2026-11-17-access-v0.1
         run: node build/prerender.mjs ${{ (github.event_name == 'push' || inputs.launch_gates) && '--launch' || '' }}
@@ -122,7 +122,7 @@ jobs:
             echo "- Commit: \`$SHA\` on \`$REF_NAME\`"
             echo "- Trigger: $EVENT by $ACTOR"
             echo "- Atlas release: ca-on-hamilton/2026-11-16-d070"
-            echo "- Map layer release: ca-on-hamilton/2026-11-17-layer-set-002"
+            echo "- Map layer release: ca-on-hamilton/2026-11-17-layer-set-003"
             echo "- Development release: ca-on-hamilton/2026-11-17-field-screen-v0.3 (data commit $DEVELOPMENT_REF)"
             echo "- URL: $PAGE_URL"
           } >> "$GITHUB_STEP_SUMMARY"

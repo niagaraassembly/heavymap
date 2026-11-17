@@ -22,7 +22,7 @@ import {
 const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
 const PARCEL_GEOMETRY_CACHE = "heavymap.parcel-geometry-cache.v1";
 // The street basemap is a separate artifact from the parcel release.
-const MAP_LAYER_BASE = "/map/layers/ca-on-hamilton-map-layers/2026-11-17-layer-set-002/";
+const MAP_LAYER_BASE = "/map/layers/ca-on-hamilton-map-layers/2026-11-17-layer-set-003/";
 const DEVELOPMENT_BASE = "/map/data/ca-on-hamilton-development/2026-11-17-field-screen-v0.3/";
 // Private portrait package (D-079): access and infrastructure measurements per parcel.
 const ACCESS_BASE = "/map/data/ca-on-hamilton-access/2026-11-17-access-v0.1/";
@@ -42,6 +42,8 @@ let accessLoader;
 let accessPinned = Promise.resolve({ ok: false });
 let labels;
 let manifestSources = null;
+let buildingFactsIndexPromise = null;
+const buildingFactsShards = new Map();
 let notesStore = null;
 let savedItems = [];
 async function saveDevelopmentRecord(record) {
@@ -58,6 +60,27 @@ let savedQuery = "";
  * parcels in the session (design §5.4). Set on the first workspace open:
  * Addresses open only when the parcel has more than one. */
 let workspaceSections = null;
+
+async function buildingFactsForParcel(parcelId) {
+  try {
+    buildingFactsIndexPromise ??= fetch(`${MAP_LAYER_BASE}parcel-building-facts-index.json`)
+      .then((response) => response.ok ? response.json() : null)
+      .catch(() => null);
+    const index = await buildingFactsIndexPromise;
+    if (index?.schema !== 1 || !Array.isArray(index.shards)) return null;
+    const suffix = parcelId.slice(-2).toLowerCase();
+    if (!index.shards.includes(suffix)) return null;
+    if (!buildingFactsShards.has(suffix)) {
+      const request = fetch(`${MAP_LAYER_BASE}parcel-building-facts/${suffix}.json`)
+        .then((response) => response.ok ? response.json() : null)
+        .catch(() => null);
+      buildingFactsShards.set(suffix, request);
+    }
+    return (await buildingFactsShards.get(suffix))?.[parcelId] ?? null;
+  } catch {
+    return null;
+  }
+}
 // The opening title sequence plays over the map while it loads; it leaves
 // when both the sequence (or a skip) and the map are done.
 const titleIntro = startTitleIntro(document.querySelector("[data-map-loading]"));
@@ -535,7 +558,10 @@ async function openParcel(parcel, trigger, level = "card") {
     status("The selected key is not available in the pinned Hamilton release.");
     return;
   }
-  const detailResult = await loader.detail(parcel.id);
+  const [detailResult, buildingFacts] = await Promise.all([
+    loader.detail(parcel.id),
+    buildingFactsForParcel(parcel.id),
+  ]);
   if (token !== loadToken) {
     loading = false;
     return;
@@ -551,7 +577,7 @@ async function openParcel(parcel, trigger, level = "card") {
     coreResult.record,
     detailResult.ok ? detailResult.record : null,
     labels,
-    { sources: manifestSources },
+    { sources: manifestSources, buildingFacts },
   );
   summary.access = accessResult.ok ? summariseAccess(accessResult.record, labels) : null;
   current = {
@@ -850,7 +876,7 @@ async function start() {
   const thematic = document.getElementById("thematic-layers");
   if (mapLayerManifest) {
     // Sections follow the release's groups, in manifest order; titles are HeavyMap wording.
-    const titles = { planning: "Planning", protected: "Protected and regulated", parks: "Parks", freight: "Freight and access", utilities: "Water and sewer" };
+    const titles = { planning: "Planning", protected: "Protected and regulated", parks: "Parks", freight: "Freight and access", utilities: "Water and sewer", "built-form": "Buildings" };
     const sections = [...new Set(mapLayerManifest.layers.map((layer) => layer.group))].map((key) => ({
       key, title: titles[key] ?? key,
       ids: mapLayerManifest.layers.filter((layer) => layer.group === key).map((layer) => layer.id),

@@ -159,7 +159,7 @@ function provenance(labels, src, join, conf) {
  * `labels` is the result of `createLabels`/`loadLabels`; `sources` is the
  * release manifest's `sources` map.
  */
-export function summariseRecord(core, detail, labels, { sources } = {}) {
+export function summariseRecord(core, detail, labels, { sources, buildingFacts } = {}) {
   if (!core || typeof core.key !== "string" || !core.key.startsWith("ia:")) {
     throw new TypeError("A schema 2 Industrial Atlas core record is required");
   }
@@ -300,6 +300,70 @@ export function summariseRecord(core, detail, labels, { sources } = {}) {
     },
   ];
 
+  const buildingProvenance = {
+    sourceLabel: "City of Hamilton building footprints (2026-10-17); parcel metrics derived by HeavyMap",
+    joinText: "Linked by greatest positive footprint-to-parcel intersection; distance measured from footprint area to parcel boundary line",
+  };
+  const buildingFactRows = buildingFacts ? [
+    {
+      id: "building_count",
+      label: "Assigned buildings",
+      value: String(buildingFacts.assigned_building_count),
+      sub: `${buildingFacts.intersecting_building_count} intersecting footprints · ${buildingFacts.multi_parcel_building_count} assigned footprints span multiple parcels`,
+      share: null,
+      provenance: buildingProvenance,
+    },
+    {
+      id: "building_largest",
+      label: "Largest footprint",
+      value: buildingFacts.largest_footprint_area_m2 == null ? "—" : `${buildingFacts.largest_footprint_area_m2.toLocaleString("en-CA")} m²`,
+      sub: "Plan-view polygon area",
+      share: null,
+      provenance: buildingProvenance,
+    },
+    {
+      id: "building_median",
+      label: "Median footprint area",
+      value: buildingFacts.median_footprint_area_m2 == null ? "—" : `${buildingFacts.median_footprint_area_m2.toLocaleString("en-CA")} m²`,
+      sub: "Plan-view polygon area",
+      share: null,
+      provenance: buildingProvenance,
+    },
+    {
+      id: "building_area_sum",
+      label: "Assigned footprint area sum",
+      value: `${buildingFacts.assigned_footprint_area_sum_m2.toLocaleString("en-CA")} m²`,
+      sub: "Whole footprints; not parcel coverage",
+      share: null,
+      provenance: buildingProvenance,
+    },
+    {
+      id: "building_edge_nearest",
+      label: "Nearest building footprint to parcel edge",
+      value: buildingFacts.nearest_building_edge_m == null ? "—" : `${buildingFacts.nearest_building_edge_m.toLocaleString("en-CA")} m`,
+      sub: "Minimum footprint-to-boundary distance; touch, crossing, or boundary inside footprint is 0 m",
+      share: null,
+      provenance: buildingProvenance,
+    },
+    {
+      id: "building_edge_median",
+      label: "Median building-to-edge distance",
+      value: buildingFacts.median_building_edge_distance_m == null ? "—" : `${buildingFacts.median_building_edge_distance_m.toLocaleString("en-CA")} m`,
+      sub: "Across buildings assigned to this parcel",
+      share: null,
+      provenance: buildingProvenance,
+    },
+    {
+      id: "building_edge_near_count",
+      label: "Buildings within 3 m of parcel edge",
+      value: String(buildingFacts.buildings_within_3m_of_parcel_edge),
+      sub: "Based on minimum footprint-to-boundary-line distance",
+      share: null,
+      provenance: buildingProvenance,
+    },
+  ] : [];
+  facts.push(...buildingFactRows);
+
   return {
     key,
     shortKey: shortKey(key),
@@ -308,6 +372,7 @@ export function summariseRecord(core, detail, labels, { sources } = {}) {
     locality,
     area,
     facts,
+    buildingFacts: buildingFacts ?? null,
     land: { zoning, planUse, boundary },
     setting: {
       boundary: boundary[0]?.class ?? null,
