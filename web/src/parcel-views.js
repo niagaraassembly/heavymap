@@ -63,7 +63,14 @@ export function disabledAction(text) {
   const button = el("button", undefined, "parcel-btn");
   button.disabled = true;
   button.append(el("span", text));
-  button.append(comingTag());
+  return button;
+}
+
+function saveAction(onSave) {
+  const button = el("button", "☆ Save", "parcel-btn");
+  button.type = "button";
+  button.dataset.parcelSave = "";
+  button.addEventListener("click", onSave);
   return button;
 }
 
@@ -107,7 +114,7 @@ function moreText(labels, total, shown) {
 }
 
 /** One bar centred along the bottom of the map window (design §5.2). */
-export function parcelCardElement(summary, labels, { geometry, onOpenRecord, onClose }) {
+export function parcelCardElement(summary, labels, { geometry, onSave, onOpenRecord, onClose }) {
   const card = el("section", undefined, "parcel-card");
   card.setAttribute("role", "region");
   card.setAttribute("aria-label", "Parcel summary");
@@ -125,6 +132,7 @@ export function parcelCardElement(summary, labels, { geometry, onOpenRecord, onC
   card.append(
     fact(labels.t("parcel.tile.area"), summary.area.ha.toFixed(2), fmtM2(summary.area.m2)),
   );
+  card.lastElementChild.classList.add("parcel-fact-area");
   const zoneCell = fact(
     labels.t("parcel.field.zoning"),
     zoning ? zoning.class : labels.t("parcel.none_found"),
@@ -166,6 +174,12 @@ export function parcelCardElement(summary, labels, { geometry, onOpenRecord, onC
   gapsCell.classList.add("parcel-fact-gaps");
   card.append(gapsCell);
 
+  const save = el("button", "☆ Save", "parcel-card-save");
+  save.type = "button";
+  save.dataset.parcelSave = "";
+  save.addEventListener("click", onSave);
+  card.append(save);
+
   const open = el("button", undefined, "parcel-go");
   open.append(el("span", "Open record"));
   open.addEventListener("click", onOpenRecord);
@@ -203,7 +217,7 @@ function tileHeading(text) {
 }
 
 /** Dense record drawer rising from the bottom (design §5.3). */
-export function parcelDrawerElement(summary, labels, { geometry, releaseId, feedbackUrl, onClose, onOpenWorkspace }) {
+export function parcelDrawerElement(summary, labels, { geometry, releaseId, feedbackUrl, onClose, onSave, onOpenNotes, onOpenWorkspace }) {
   const drawer = el("section", undefined, "parcel-drawer");
   drawer.setAttribute("role", "region");
   drawer.setAttribute("aria-label", "Parcel record");
@@ -252,11 +266,11 @@ export function parcelDrawerElement(summary, labels, { geometry, releaseId, feed
   head.append(titles);
 
   const actions = el("div", undefined, "parcel-actions");
-  actions.append(disabledAction("☆ Save"));
-  if (onOpenWorkspace) {
+  actions.append(saveAction(onSave));
+  if (onOpenNotes) {
     const note = el("button", undefined, "parcel-btn");
     note.append(el("span", "✎ Note"));
-    note.addEventListener("click", () => onOpenWorkspace("notes"));
+    note.addEventListener("click", onOpenNotes);
     actions.append(note);
   } else {
     actions.append(disabledAction("✎ Note"));

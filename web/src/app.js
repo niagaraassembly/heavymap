@@ -4,8 +4,8 @@ import { loadLabels } from "./labels.js";
 import { createDossierLoader } from "./dossier-loader.js";
 import { summariseRecord } from "./parcel-summary.js";
 import { parcelCardElement, parcelDrawerElement } from "./parcel-views.js";
-import { parcelWorkspaceElement } from "./parcel-workspace.js";
-import { createNotesStore } from "./local-data.js";
+import { parcelNotesDialogElement, parcelWorkspaceElement } from "./parcel-workspace.js";
+import { createNotesStore, recordsFor, removeSavedPlace, savePlace } from "./local-data.js";
 import { el } from "./dossier.js";
 import { FieldMap } from "./map.js";
 import { findBasemap } from "./basemap.js";
@@ -28,7 +28,7 @@ let loader;
 let labels;
 let manifestSources = null;
 let notesStore = null;
-const SAVED_PARCELS_KEY = "heavymap.saved-parcel-keys.v1";
+let savedItems = [];
 /* Which workspace sections are open, remembered while moving between
  * parcels in the session (design §5.4). Set on the first workspace open:
  * Addresses open only when the parcel has more than one. */
@@ -93,40 +93,48 @@ function updateLayerLibrary() {
     : `${totalCount} layers · ${activeCount} on the map`;
 }
 
-function readSavedParcelKeys(storage) {
-  try {
-    storage ??= window.localStorage;
-    const keys = JSON.parse(storage.getItem(SAVED_PARCELS_KEY) ?? "[]");
-    return Array.isArray(keys) ? keys.filter((key) => typeof key === "string") : [];
-  } catch {
-    return [];
-  }
-}
-
 function syncSaveButton() {
   const button = document.querySelector("[data-save-parcel]");
-  if (!button) return;
-  const saved = Boolean(current && readSavedParcelKeys().includes(current.key));
-  button.setAttribute("aria-pressed", String(saved));
-  button.title = saved ? "Remove parcel from saved places" : "Save selected parcel";
-  button.setAttribute("aria-label", button.title);
+  const saved = Boolean(current && savedItems.some((item) => item.key === current.key && (item.kind ?? "parcel") === "parcel"));
+  if (button) {
+    button.removeAttribute("aria-pressed");
+    button.title = saved ? "Saved items · selected parcel is saved" : "Saved items";
+    button.setAttribute("aria-label", button.title);
+  }
+  document.querySelectorAll("[data-parcel-save]").forEach((action) => {
+    action.textContent = saved ? "★ Saved" : "☆ Save";
+    action.setAttribute("aria-pressed", String(saved));
+  });
 }
 
-function toggleSaveCurrentParcel() {
+async function toggleSaveCurrentParcel() {
   if (!current) {
     status("Open a parcel record before saving it.");
     return;
   }
   try {
-    const storage = window.localStorage;
-    const keys = readSavedParcelKeys(storage);
-    const saved = keys.includes(current.key);
-    const next = saved ? keys.filter((key) => key !== current.key) : [...keys, current.key];
-    storage.setItem(SAVED_PARCELS_KEY, JSON.stringify(next));
+    const saved = savedItems.some((item) => item.key === current.key && (item.kind ?? "parcel") === "parcel");
+    if (saved) {
+      await removeSavedPlace(current.key);
+      savedItems = savedItems.filter((item) => item.key !== current.key);
+    } else {
+      const place = {
+        id: current.key,
+        kind: "parcel",
+        key: current.key,
+        title: current.summary.title,
+        subtitle: current.summary.subtitle,
+        releaseId: current.releaseId ?? "",
+        savedAt: new Date().toISOString(),
+      };
+      await savePlace(place);
+      savedItems = [place, ...savedItems.filter((item) => item.id !== place.id)];
+    }
     syncSaveButton();
-    status(saved ? "Parcel removed from saved places on this device." : "Parcel saved on this device.");
+    status(saved ? "Parcel removed from saved items on this device." : "Parcel saved on this device.");
+    if (document.getElementById("parcel-save-dialog")?.open) renderSaveDialog();
   } catch {
-    status("Browser storage is unavailable; this parcel could not be saved.");
+    status("This device could not save the parcel. Check browser storage and try again.");
   }
 }
 
@@ -135,12 +143,105 @@ function openNoteService() {
     status("Open a parcel record before adding a note.");
     return;
   }
-  if (view !== "workspace") {
-    updateLocation(current.key, "workspace");
-    renderLevel("workspace", "notes");
+  const dialog = document.getElementById("parcel-notes-dialog");
+  dialog.replaceChildren(parcelNotesDialogElement(current.summary, labels, {
+    notesStore,
+    releaseId: current.releaseId,
+    onClose: () => dialog.close(),
+  }));
+  if (!dialog.open) dialog.showModal();
+  dialog.querySelector("textarea")?.focus({ preventScroll: true });
+}
+
+function renderSaveDialog() {
+  const dialog = document.getElementById("parcel-save-dialog");
+  const panel = el("section", undefined, "hm-map-dialog-panel hm-save-dialog-panel");
+  const head = el("header", undefined, "hm-map-dialog-head");
+  const titleBlock = el("div", undefined, "hm-map-dialog-title-block");
+  titleBlock.append(el("p", "ON THIS DEVICE", "hm-map-dialog-eyebrow"));
+  titleBlock.append(el("h2", "Saved items", "hm-map-dialog-title"));
+  titleBlock.append(el("p", "Parcels, news, and development records you keep on this device.", "hm-map-dialog-subtitle"));
+  const close = el("button", "×", "hm-map-dialog-close");
+  close.type = "button";
+  close.setAttribute("aria-label", "Close saved items");
+  close.addEventListener("click", () => dialog.close());
+  head.append(titleBlock, close);
+
+  const body = el("div", undefined, "hm-map-dialog-body hm-save-dialog-body");
+  if (current) {
+    const saved = savedItems.some((item) => item.key === current.key && (item.kind ?? "parcel") === "parcel");
+    const selected = el("section", undefined, "hm-save-selected");
+    selected.append(el("p", saved ? "This parcel is saved" : "Selected parcel", "hm-save-kicker"));
+    selected.append(el("h3", current.summary.title, "hm-save-title"));
+    selected.append(el("p", current.summary.subtitle, "hm-save-subtitle"));
+    const action = el("button", saved ? "Remove from saved items" : "Save this parcel", "parcel-btn parcel-btn-pri");
+    action.type = "button";
+    action.addEventListener("click", () => void toggleSaveCurrentParcel());
+    selected.append(action);
+    body.append(selected);
+  } else {
+    body.append(el("p", "Select a parcel on the map to save it here.", "hm-save-empty-hint"));
   }
-  workspaceSlot.querySelector('[data-parcel-tab="notes"]')?.click();
-  workspaceSlot.querySelector("textarea")?.focus({ preventScroll: true });
+
+  const groups = [
+    { id: "parcel", title: "Parcels", empty: "Saved parcels will appear here.", items: savedItems.filter((item) => (item.kind ?? "parcel") === "parcel") },
+    { id: "news", title: "News", empty: "Saved news items will appear here.", items: savedItems.filter((item) => ["news", "story", "article", "editorial"].includes(item.kind ?? item.type)) },
+    { id: "development", title: "Development records", empty: "Saved development records will appear here.", items: savedItems.filter((item) => ["development", "development-record", "development_record", "development-records"].includes(item.kind ?? item.type)) },
+    { id: "other", title: "Other items", empty: "Other saved items will appear here.", items: savedItems.filter((item) => !["parcel", "news", "story", "article", "editorial", "development", "development-record", "development_record", "development-records"].includes(item.kind ?? item.type ?? "parcel")) },
+  ];
+  for (const group of groups) {
+    const section = el("section", undefined, "hm-save-category");
+    section.append(el("h3", group.title, "hm-save-list-heading"));
+    const list = el("ul", undefined, "hm-save-list");
+    if (!group.items.length) list.append(el("li", group.empty, "hm-save-list-empty"));
+    for (const item of group.items) {
+      const row = el("li", undefined, "hm-save-list-row");
+      const open = item.kind === "parcel" || item.key
+        ? el("button", undefined, "hm-save-place-open")
+        : el(item.url ? "a" : "div", undefined, "hm-save-place-open");
+      if (item.url) open.href = item.url;
+      if (open.tagName === "BUTTON") {
+        open.type = "button";
+        open.addEventListener("click", () => {
+          dialog.close();
+          void openParcel({ id: item.key }, null, "drawer");
+        });
+      }
+      open.append(el("strong", item.title || "Saved item"));
+      if (item.subtitle) open.append(el("span", item.subtitle));
+      const remove = el("button", "Remove", "hm-save-remove");
+      remove.type = "button";
+      remove.addEventListener("click", async () => {
+        try {
+          await removeSavedPlace(item.id);
+          savedItems = savedItems.filter((saved) => saved.id !== item.id);
+          syncSaveButton();
+          renderSaveDialog();
+        } catch {
+          status("This device could not remove the saved item.");
+        }
+      });
+      row.append(open, remove);
+      list.append(row);
+    }
+    section.append(list);
+    body.append(section);
+  }
+  panel.append(head, body);
+  dialog.replaceChildren(panel);
+}
+
+async function openSaveService() {
+  const dialog = document.getElementById("parcel-save-dialog");
+  try {
+    savedItems = await recordsFor("saved");
+    syncSaveButton();
+  } catch {
+    status("Saved items are unavailable in this browser.");
+  }
+  renderSaveDialog();
+  if (!dialog.open) dialog.showModal();
+  dialog.querySelector(".hm-map-dialog-close")?.focus({ preventScroll: true });
 }
 
 function updateLocation(key, level) {
@@ -182,6 +283,7 @@ function renderLevel(level, tab = "notes") {
     cardSlot.replaceChildren(
       parcelCardElement(summary, labels, {
         geometry,
+        onSave: () => void toggleSaveCurrentParcel(),
         onOpenRecord: () => {
           view = "drawer";
           updateLocation(current.key);
@@ -206,6 +308,8 @@ function renderLevel(level, tab = "notes") {
         // problem stays hidden.
         feedbackUrl: null,
         onClose: stepBack,
+        onSave: () => void toggleSaveCurrentParcel(),
+        onOpenNotes: openNoteService,
         onOpenWorkspace: (initialTab) => {
           updateLocation(current.key, "workspace");
           renderLevel("workspace", initialTab);
@@ -227,6 +331,7 @@ function renderLevel(level, tab = "notes") {
       geometry,
       releaseId,
       notesStore,
+      onSave: () => void toggleSaveCurrentParcel(),
       initialTab: tab,
       openSections: workspaceSections,
       onToggleSection: (id, open) => {
@@ -252,7 +357,7 @@ function renderLevel(level, tab = "notes") {
   // The workspace fills the map window, so there is nothing to ease to.
   if (geometry && level !== "workspace") {
     const panel = level === "card" ? cardSlot.firstElementChild : drawerSlot.firstElementChild;
-    map.focusParcel(geometry, (panel?.offsetHeight ?? 0) + 64 + 16);
+    map.focusParcel(geometry, (panel?.offsetHeight ?? 0) + 16);
   }
 }
 
@@ -332,6 +437,10 @@ function closeAll() {
   workspaceSlot.replaceChildren();
   workspaceSlot.hidden = true;
   document.body.classList.remove("has-parcel-card", "has-parcel-drawer", "has-parcel-workspace");
+  for (const id of ["parcel-save-dialog", "parcel-notes-dialog"]) {
+    const dialog = document.getElementById(id);
+    if (dialog?.open) dialog.close();
+  }
   setLayersOpen(false, { restoreFocus: false });
   syncSaveButton();
   map.close();
@@ -385,6 +494,7 @@ async function start() {
   mountParcelShapeBand(document.querySelector(".map-workspace"));
   try {
     notesStore = await createNotesStore();
+    savedItems = await recordsFor("saved");
   } catch (error) {
     status(`Local notes are unavailable: ${error.message}`);
     notesStore = {
@@ -393,6 +503,7 @@ async function start() {
       add: async () => { throw new Error("IndexedDB is unavailable."); },
       remove: async () => { throw new Error("IndexedDB is unavailable."); },
     };
+    savedItems = [];
   }
   const labelsPromise = loadLabels({ base: "/labels/", locales: ["en"] });
   loader = createDossierLoader({ base: RELEASE_BASE });
@@ -528,6 +639,7 @@ async function start() {
   }
   const layersDialog = document.getElementById("layers-dialog");
   document.getElementById("layers-toggle").addEventListener("click", () => setLayersOpen(true));
+  document.querySelector("[data-layers-close]")?.addEventListener("click", () => setLayersOpen(false));
   document.getElementById("layers-backdrop").addEventListener("click", () => setLayersOpen(false, { restoreFocus: false }));
   document.addEventListener("click", (event) => {
     if (!layersPanel.classList.contains("is-collapsed") && !layersPanel.contains(event.target))
@@ -563,12 +675,19 @@ async function start() {
   });
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
+    if (document.getElementById("parcel-save-dialog")?.open || document.getElementById("parcel-notes-dialog")?.open) return;
     if (!layersPanel.classList.contains("is-collapsed")) setLayersOpen(false);
     else stepBack();
   });
   document.getElementById("parcels-visible").addEventListener("change", updateLayerLibrary);
-  document.querySelector("[data-save-parcel]")?.addEventListener("click", toggleSaveCurrentParcel);
+  document.querySelector("[data-save-parcel]")?.addEventListener("click", openSaveService);
   document.querySelector("[data-note-parcel]")?.addEventListener("click", openNoteService);
+  for (const id of ["parcel-save-dialog", "parcel-notes-dialog"]) {
+    const dialog = document.getElementById(id);
+    dialog?.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  }
   syncSaveButton();
   let resizeTimer;
   addEventListener("resize", () => {

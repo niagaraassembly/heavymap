@@ -280,6 +280,7 @@ export function parcelWorkspaceElement(summary, labels, {
   geometry,
   releaseId,
   notesStore,
+  onSave,
   initialTab = "notes",
   openSections,
   onToggleSection,
@@ -303,7 +304,11 @@ export function parcelWorkspaceElement(summary, labels, {
   head.append(titles);
 
   const actions = el("div", undefined, "parcel-actions");
-  actions.append(disabledAction("☆ Save"));
+  const save = el("button", "☆ Save", "parcel-btn");
+  save.type = "button";
+  save.dataset.parcelSave = "";
+  save.addEventListener("click", onSave);
+  actions.append(save);
   actions.append(disabledAction("⤓ Export"));
   actions.append(copyLinkButton(summary));
   const back = el("button", undefined, "parcel-btn");
@@ -399,4 +404,23 @@ export function parcelWorkspaceElement(summary, labels, {
     selectTab("notes");
   });
   return ws;
+}
+
+/** A focused Notes dialog for the map toolbar pencil action. */
+export function parcelNotesDialogElement(summary, labels, { notesStore, releaseId, onClose }) {
+  const panel = el("section", undefined, "hm-map-dialog-panel hm-notes-dialog-panel");
+  const head = el("header", undefined, "hm-map-dialog-head");
+  const titleBlock = el("div", undefined, "hm-map-dialog-title-block");
+  titleBlock.append(el("p", "PARCEL NOTES", "hm-map-dialog-eyebrow"));
+  titleBlock.append(el("h2", summary.title, "hm-map-dialog-title"));
+  titleBlock.append(el("p", summary.subtitle, "hm-map-dialog-subtitle"));
+  const close = el("button", "×", "hm-map-dialog-close");
+  close.type = "button";
+  close.setAttribute("aria-label", "Close parcel notes");
+  close.addEventListener("click", onClose);
+  head.append(titleBlock, close);
+  const body = el("div", undefined, "hm-map-dialog-body hm-notes-dialog-body");
+  body.append(notesPane(summary, labels, notesStore, releaseId, () => {}));
+  panel.append(head, body);
+  return panel;
 }

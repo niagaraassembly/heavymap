@@ -454,8 +454,8 @@ export function mapIntro() {
           <button type="button" id="layers-toggle" class="layers-launcher" aria-expanded="false" aria-controls="layers-dialog" title="Open map layers">
             <span aria-hidden="true">▤</span><span class="hm-visually-hidden">Map layers</span>
           </button>
-          <div id="layers-dialog" class="layers-dialog" role="dialog" aria-modal="true" aria-label="Map layers" hidden>
-            <header class="layers-dialog-head" aria-hidden="true"></header>
+          <div id="layers-dialog" class="layers-dialog" role="dialog" aria-modal="true" aria-labelledby="layers-dialog-title" hidden>
+            <header class="layers-dialog-head"><div><p class="hm-map-dialog-eyebrow">HAMILTON</p><h2 id="layers-dialog-title">Map layers</h2></div><button type="button" class="hm-map-dialog-close" data-layers-close aria-label="Close map layers">×</button></header>
             <div class="layers-dialog-body">
               <nav class="layers-categories" id="layers-categories" aria-label="Filter map layers">
                 <button type="button" data-layer-filter="all" aria-pressed="true"><span>All layers</span><small data-layer-count-for="all">—</small></button>
@@ -483,6 +483,8 @@ export function mapIntro() {
         <div class="tray-heading"><h2>Hamilton parcels</h2><span id="parcel-count">Loading</span></div><p class="subtext">Zoom in to see parcel outlines. Select any outline to open its evidence record.</p><div class="samples-heading"><h2>Selection</h2><span id="result-count"></span></div><div id="samples"></div><p id="search-status" role="status"></p>
       </aside>
       <div id="parcel-card-slot" hidden></div><div id="parcel-drawer-slot" hidden></div><div id="parcel-workspace-slot" hidden></div>
+      <dialog id="parcel-save-dialog" class="hm-map-dialog" aria-label="Saved places"></dialog>
+      <dialog id="parcel-notes-dialog" class="hm-map-dialog" aria-label="Parcel notes"></dialog>
     </div>`,
     after: `<div class="hm-map-bar" data-map-bars><span class="hm-map-bar-legend"><span class="legend-dot signal"></span>Parcel boundary</span><span id="map-display-note" class="hm-map-bar-note">Still image fallback · parcels from zoom 14</span><span class="hm-map-bar-credits">© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · D-070 · <a href="/map/data-methods/">Data &amp; methods</a></span><span class="hm-map-bar-status" id="map-bar-status" role="status">Loading map…</span><div class="hm-map-bar-spacer"></div><!-- map-theme-picker --></div>`,
   };

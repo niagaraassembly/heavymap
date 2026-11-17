@@ -48,7 +48,10 @@ export function mountLocalAccount() {
         detail.append(title);
         if (type.live) {
           const description = document.createElement("span");
-          description.textContent = `${type.count} ${type.count === 1 ? "note" : "notes"}`;
+          const unit = type.id === "notes"
+            ? (type.count === 1 ? "note" : "notes")
+            : (type.count === 1 ? "saved item" : "saved items");
+          description.textContent = `${type.count} ${unit}`;
           detail.append(description);
         }
         item.append(detail);

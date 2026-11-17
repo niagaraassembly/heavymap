@@ -367,15 +367,17 @@
 }
 .hm-map-profile { cursor: pointer; }
 .hm-local-account {
-  width: min(44rem, calc(100vw - 2rem));
-  max-height: min(80vh, 48rem);
-  padding: clamp(1.25rem, 4vw, 2.25rem);
-  border: 1px solid var(--rule-mid);
+  width: min(48rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 7rem);
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid #899ba6;
+  border-radius: 20px;
   background: var(--surface);
   color: var(--text);
-  box-shadow: 0 1.5rem 5rem #17252c55;
+  box-shadow: 0 10px 40px #23425736;
+  overflow: auto;
 }
-.hm-local-account::backdrop { background: #17252c88; }
+.hm-local-account::backdrop { background: #152e3b8c; backdrop-filter: blur(3px); }
 .hm-local-account-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .hm-local-account-head h2 { margin: 0; font: 500 clamp(1.8rem, 5vw, 2.6rem)/1.05 var(--serif); letter-spacing: -.035em; }
 .hm-local-account-close { width: 2.5rem; min-height: 2.5rem; border: 1px solid var(--rule-soft); background: transparent; color: inherit; font-size: 1.5rem; }

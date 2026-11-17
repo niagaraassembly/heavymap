@@ -5,10 +5,11 @@
 export const DATABASE_NAME = "heavymap-local-data";
 export const DATABASE_VERSION = 1;
 export const LEGACY_NOTES_KEY = "heavymap-parcel-notes-v1";
+export const LEGACY_SAVED_KEY = "heavymap.saved-parcel-keys.v1";
 
 export const DATA_TYPES = [
   { id: "notes", label: "Parcel notes", description: "Notes attached to parcel records", live: true },
-  { id: "saved", label: "Saved places", description: "Parcels and items you keep", live: false },
+  { id: "saved", label: "Saved items", description: "Parcels, stories, and development records you keep", live: true },
   { id: "lists", label: "Lists", description: "Groups you make from saved items", live: false },
   { id: "observations", label: "Observations", description: "Your own findings and context", live: false },
   { id: "documents", label: "Documents and images", description: "Documents you create in HeavyMap", live: false },
@@ -71,6 +72,29 @@ async function migrateLegacyNotes(db) {
   }
 }
 
+async function migrateLegacySavedPlaces(db) {
+  let keys;
+  try {
+    const raw = localStorage.getItem(LEGACY_SAVED_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    keys = Array.isArray(parsed) ? parsed.filter((key) => typeof key === "string") : null;
+  } catch {
+    return;
+  }
+  if (!keys) return;
+
+  const transaction = db.transaction("saved", "readwrite");
+  const store = transaction.objectStore("saved");
+  for (const key of keys) store.put({ id: key, kind: "parcel", key, title: "Saved Hamilton parcel", savedAt: new Date().toISOString() });
+  await transactionDone(transaction);
+  try {
+    localStorage.removeItem(LEGACY_SAVED_KEY);
+  } catch {
+    // The successfully copied legacy key is harmless and can be removed later.
+  }
+}
+
 export function openLocalData() {
   if (!databasePromise) {
     databasePromise = new Promise((resolve, reject) => {
@@ -91,6 +115,7 @@ export function openLocalData() {
         db.onversionchange = () => db.close();
         try {
           await migrateLegacyNotes(db);
+          await migrateLegacySavedPlaces(db);
           resolve(db);
         } catch (error) {
           db.close();
@@ -165,6 +190,21 @@ export async function removeNote(id) {
   const db = await openLocalData();
   const transaction = db.transaction("notes", "readwrite");
   transaction.objectStore("notes").delete(id);
+  await transactionDone(transaction);
+}
+
+export async function savePlace(place) {
+  const db = await openLocalData();
+  const transaction = db.transaction("saved", "readwrite");
+  transaction.objectStore("saved").put(place);
+  await transactionDone(transaction);
+  return place;
+}
+
+export async function removeSavedPlace(id) {
+  const db = await openLocalData();
+  const transaction = db.transaction("saved", "readwrite");
+  transaction.objectStore("saved").delete(id);
   await transactionDone(transaction);
 }
 

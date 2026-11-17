@@ -2223,3 +2223,239 @@ h2 {
     grid-template-columns: 104px 1fr;
   }
 }
+
+/* Parcel quick view: a compact, fixed strip above the map's bottom chrome. */
+.parcel-card {
+  top: auto;
+  right: auto;
+  bottom: 8px;
+  left: 50%;
+  width: min(1120px, calc(100% - 24px));
+  max-height: none;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: minmax(130px, 1.3fr) repeat(5, minmax(0, 0.8fr)) auto auto 28px;
+  align-items: stretch;
+  gap: 0;
+  overflow: hidden;
+  padding: 8px 9px 8px 12px;
+}
+.parcel-card-id {
+  flex: initial;
+  gap: 9px;
+  padding-right: 10px;
+}
+.parcel-card-id > :last-child { min-width: 0; }
+.parcel-fact {
+  min-width: 0;
+  padding: 4px 9px;
+}
+.parcel-fact-setting { min-width: 0; }
+.parcel-fact b,
+.parcel-fact i {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.25;
+}
+.parcel-fact small { line-height: 1.2; }
+.parcel-card-save,
+.parcel-go {
+  align-self: center;
+  justify-self: stretch;
+  min-height: 38px;
+  margin: 0 4px;
+  padding-inline: 10px;
+  border: 1px solid var(--rule-soft);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.parcel-card-save[aria-pressed="true"] {
+  color: #335d4c;
+  border-color: #9bb6a8;
+  background: #e7f0eb;
+}
+.parcel-go {
+  justify-content: center;
+  border-color: var(--deep);
+  background: var(--deep);
+  color: #fff;
+}
+.parcel-xx { justify-self: center; }
+.has-parcel-card .maplibregl-ctrl-bottom-right {
+  top: 12px;
+  bottom: auto;
+}
+
+/* Shared modal frame for layer, save, note, and local-data surfaces. */
+.hm-map-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(780px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 112px);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #899ba6;
+  border-radius: 20px;
+  color: #1e3440;
+  background: #edf2f4;
+  box-shadow: 0 10px 40px var(--shadow);
+  transform: translate(-50%, -50%);
+}
+.hm-map-dialog::backdrop { background: #152e3b8c; backdrop-filter: blur(3px); }
+.hm-map-dialog-panel {
+  display: flex;
+  width: 100%;
+  max-height: calc(100dvh - 112px);
+  flex-direction: column;
+  overflow: hidden;
+  background: #edf2f4;
+}
+.hm-map-dialog-head,
+.layers-dialog-head {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 72px;
+  padding: 12px 18px;
+  border-bottom: 1px solid #c1ccd3;
+  background: #edf2f4;
+}
+.hm-map-dialog-title-block { min-width: 0; }
+.hm-map-dialog-eyebrow {
+  margin: 0 0 4px;
+  color: #5a717c;
+  font: 700 10px/1.2 var(--sans, system-ui, sans-serif);
+  letter-spacing: .1em;
+}
+.hm-map-dialog-title,
+.layers-dialog-head h2 {
+  margin: 0;
+  color: #1e3440;
+  font: 500 24px/1.1 var(--serif, Georgia, serif);
+  letter-spacing: -.02em;
+  overflow-wrap: anywhere;
+}
+.hm-map-dialog-subtitle {
+  margin: 4px 0 0;
+  color: #536a75;
+  font: 12px/1.45 var(--sans, system-ui, sans-serif);
+}
+.hm-map-dialog-close {
+  display: grid;
+  flex: none;
+  width: 38px;
+  min-height: 38px;
+  place-items: center;
+  border: 1px solid #aebdc6;
+  border-radius: 10px;
+  background: #f8fafb;
+  color: #1e3440;
+  font-size: 22px;
+  line-height: 1;
+}
+.hm-map-dialog-body {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  padding: 16px 18px 20px;
+}
+.hm-notes-dialog-panel { min-height: min(420px, calc(100dvh - 112px)); }
+.hm-notes-dialog-body { padding: 8px 18px 18px; }
+.hm-notes-dialog-body .parcel-ws-notes { overflow: visible; padding: 12px 0 0; }
+.hm-save-dialog-panel { min-height: 280px; }
+.hm-save-selected {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 16px;
+  align-items: center;
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  border: 1px solid #c1ccd3;
+  border-radius: 14px;
+  background: #f8fafb;
+}
+.hm-save-kicker,
+.hm-save-subtitle { margin: 0; color: #536a75; font-size: 12px; }
+.hm-save-title { grid-column: 1; margin: 0; font: 500 20px/1.2 var(--serif, Georgia, serif); overflow-wrap: anywhere; }
+.hm-save-selected .parcel-btn { grid-column: 2; grid-row: 1 / span 3; }
+.hm-save-list-heading { margin: 0 0 7px; color: #294d60; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.hm-save-list { margin: 0; padding: 0; list-style: none; }
+.hm-save-category + .hm-save-category { margin-top: 18px; }
+.hm-save-list-row { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-top: 1px solid #c1ccd3; }
+.hm-save-place-open { display: grid; flex: 1; min-width: 0; gap: 3px; padding: 0; border: 0; background: transparent; color: inherit; text-align: left; text-decoration: none; }
+.hm-save-place-open strong { font-size: 13px; overflow-wrap: anywhere; }
+.hm-save-place-open span { color: #536a75; font-size: 11px; overflow-wrap: anywhere; }
+.hm-save-remove { flex: none; min-height: 32px; padding: 4px 9px; border: 1px solid #aebdc6; border-radius: 8px; background: #f8fafb; color: #405562; font-size: 11px; }
+.hm-save-list-empty,
+.hm-save-empty-hint { margin: 0; padding: 9px 0; color: #536a75; font-size: 12px; }
+.layers-dialog { background: #edf2f4; }
+.layers-dialog-head { min-height: 72px; }
+.layers-dialog-head > div { min-width: 0; }
+.parcel-tile li { align-items: flex-start; }
+.parcel-tile li > span { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.parcel-tile li em { flex: 0 1 64%; min-width: 0; white-space: normal; overflow-wrap: anywhere; }
+.parcel-tile li .parcel-mini { max-width: 64%; white-space: normal; overflow-wrap: anywhere; }
+.hm-map-intro #layers-panel:not(.is-collapsed) {
+  border-color: #899ba6;
+  border-radius: 20px;
+  background: #edf2f4;
+  box-shadow: 0 10px 40px var(--shadow);
+}
+
+@media (max-width: 900px) {
+  .parcel-card {
+    right: 10px;
+    bottom: 8px;
+    left: 10px;
+    width: auto;
+    transform: none;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-areas: "id id id close" "area zone setting gaps" "save save open open";
+    gap: 4px 6px;
+    padding: 9px 10px;
+  }
+  .parcel-card-id { grid-area: id; padding: 0 0 7px; border-bottom: 1px solid var(--line); margin: 0; }
+  .parcel-fact-area { grid-area: area; }
+  .parcel-fact-zone { grid-area: zone; }
+  .parcel-fact-setting { grid-area: setting; }
+  .parcel-fact-gaps { grid-area: gaps; }
+  .parcel-fact-plan { display: none; }
+  .parcel-fact { border: 0; padding: 3px 0; }
+  .parcel-fact small { font-size: 9px; letter-spacing: .06em; }
+  .parcel-fact b { font-size: 13px; }
+  .parcel-fact i { font-size: 10px; }
+  .parcel-card-save { grid-area: save; margin: 2px 0 0; }
+  .parcel-go { grid-area: open; margin: 2px 0 0; }
+  .parcel-xx { grid-area: close; justify-self: end; align-self: start; }
+  .has-parcel-card .maplibregl-ctrl-bottom-right { top: 12px; bottom: auto; }
+  .hm-map-dialog { top: 60px; bottom: 48px; left: 8px; width: calc(100vw - 16px); max-height: none; transform: none; }
+  .hm-map-dialog-panel { max-height: none; height: 100%; }
+  .hm-map-dialog-head,
+  .layers-dialog-head { min-height: 62px; padding: 10px 13px; }
+  .hm-map-dialog-title,
+  .layers-dialog-head h2 { font-size: 21px; }
+  .hm-map-dialog-body { padding: 12px 13px 16px; }
+  .hm-notes-dialog-panel { min-height: 0; }
+  .hm-notes-dialog-body { padding: 6px 13px 12px; }
+  .hm-save-selected { grid-template-columns: minmax(0, 1fr); }
+  .hm-save-selected .parcel-btn { grid-column: 1; grid-row: auto; justify-self: start; }
+  .hm-map-intro #layers-panel:not(.is-collapsed) {
+    top: 60px;
+    bottom: 48px;
+    left: 8px;
+    width: calc(100vw - 16px);
+    height: auto;
+    max-height: none;
+    transform: none;
+  }
+  .layers-dialog-head { flex-basis: auto; height: auto; }
+}
