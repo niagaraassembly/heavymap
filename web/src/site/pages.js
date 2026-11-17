@@ -516,7 +516,7 @@ function localServicePage(service, title, description) {
     title,
     description,
     bodyClass: "hm-docs-service-page",
-    main: `<section class="hm-docs-service hm-global-service" data-docs-service="${service}"><div class="hm-global-workspace"><aside class="hm-global-rail" data-service-rail aria-label="${title} filters"></aside><section class="hm-global-content" data-service-content aria-label="${title}"></section></div><p class="hm-docs-status" data-service-status role="status" aria-live="polite">Your ${service === "development" ? "development records" : title.toLowerCase()} stay on this device.</p></section>`,
+    main: `<section class="hm-docs-service hm-global-service" data-docs-service="${service}"><div class="hm-global-workspace"><aside class="hm-global-rail" data-service-rail aria-label="${title} filters"></aside><section class="hm-global-content" data-service-content aria-label="${title}"></section></div><p class="hm-docs-status" data-service-status role="status" aria-live="polite">Your ${service === "development" ? "development records" : service === "saved" ? "saved items" : title.toLowerCase()} stay on this device.</p></section>`,
   };
 }
 

@@ -1438,3 +1438,5 @@ body.hm-docs-service-page main { background: var(--surface); }
   .hm-global-service[data-docs-service="development"] .hm-saved-card-tools { flex-direction: column; align-items: flex-end; }
   .hm-saved-organize > summary { min-height: 27px; padding: 5px 6px; font-size: .6rem; }
 }
+
+.hm-reader.hm-docs-service-page .reader-library { padding-inline: clamp(12px, 2vw, 24px); }
