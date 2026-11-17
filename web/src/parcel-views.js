@@ -333,6 +333,7 @@ export function parcelDrawerElement(summary, labels, { geometry, releaseId, feed
   }
   tiles.append(landTile);
 
+
   const identityTile = el("div", undefined, "parcel-tile");
   identityTile.append(tileHeading(labels.t("parcel.tile.identity")));
   const identityList = el("ul");
@@ -447,6 +448,21 @@ export function parcelDrawerElement(summary, labels, { geometry, releaseId, feed
   }
   attentionTile.append(attentionList);
   tiles.append(attentionTile);
+  // Access and services last, on its own full-width row.
+  if (summary.access) {
+    const accessTile = el("div", undefined, "parcel-tile parcel-tile-access");
+    accessTile.append(tileHeading(labels.t("parcel.tile.access")));
+    const list = el("ul");
+    for (const row of summary.access.rows) {
+      const li = el("li");
+      li.title = row.sub || "";
+      li.append(el("span", row.label), el("em", row.value));
+      if (row.sub) li.append(el("small", row.sub, "parcel-access-sub"));
+      list.append(li);
+    }
+    accessTile.append(list, el("p", summary.access.caveat, "parcel-access-caveat"));
+    tiles.append(accessTile);
+  }
   drawer.append(tiles);
 
   if (releaseId) {

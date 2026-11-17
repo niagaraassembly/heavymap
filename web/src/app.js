@@ -2,6 +2,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import "./style.css";
 import { loadLabels } from "./labels.js";
 import { createDossierLoader } from "./dossier-loader.js";
+import { createAccessLoader, summariseAccess } from "./parcel-access.js";
 import { summariseRecord } from "./parcel-summary.js";
 import { parcelCardElement, parcelDrawerElement } from "./parcel-views.js";
 import { parcelNotesDialogElement, parcelWorkspaceElement } from "./parcel-workspace.js";
@@ -17,6 +18,8 @@ const PARCEL_GEOMETRY_CACHE = "heavymap.parcel-geometry-cache.v1";
 // The street basemap is a separate artifact from the parcel release.
 const MAP_LAYER_BASE = "/map/layers/ca-on-hamilton-map-layers/2026-11-17-layer-set-002/";
 const DEVELOPMENT_BASE = "/map/data/ca-on-hamilton-development/2026-11-17-field-screen-v0.2/";
+// Private portrait package (D-079): access and infrastructure measurements per parcel.
+const ACCESS_BASE = "/map/data/ca-on-hamilton-access/2026-11-17-access-v0.1/";
 const cardSlot = document.getElementById("parcel-card-slot");
 const drawerSlot = document.getElementById("parcel-drawer-slot");
 const workspaceSlot = document.getElementById("parcel-workspace-slot");
@@ -29,6 +32,8 @@ let loadToken = 0;
 let map;
 let loader;
 let developmentLoader;
+let accessLoader;
+let accessPinned = Promise.resolve({ ok: false });
 let labels;
 let manifestSources = null;
 let notesStore = null;
@@ -518,15 +523,23 @@ async function openParcel(parcel, trigger, level = "card") {
     loading = false;
     return;
   }
+  // Access and services: optional; the parcel opens without it.
+  const accessResult = (await accessPinned).ok && accessLoader ? await accessLoader.forParcel(parcel.id) : { ok: false };
+  if (token !== loadToken) {
+    loading = false;
+    return;
+  }
   loading = false;
+  const summary = summariseRecord(
+    coreResult.record,
+    detailResult.ok ? detailResult.record : null,
+    labels,
+    { sources: manifestSources },
+  );
+  summary.access = accessResult.ok ? summariseAccess(accessResult.record, labels) : null;
   current = {
     key: parcel.id,
-    summary: summariseRecord(
-      coreResult.record,
-      detailResult.ok ? detailResult.record : null,
-      labels,
-      { sources: manifestSources },
-    ),
+    summary,
     releaseId: coreResult.release.id,
     geometry: parcel.geometry ?? rememberedGeometry(parcel.id),
     sourceRecords: { core: coreResult.record, detail: detailResult.ok ? detailResult.record : null },
@@ -638,6 +651,8 @@ async function start() {
   }
   const labelsPromise = loadLabels({ base: "/labels/", locales: ["en"] });
   loader = createDossierLoader({ base: RELEASE_BASE });
+  accessLoader = createAccessLoader({ base: ACCESS_BASE });
+  accessPinned = accessLoader.pin();
   developmentLoader = createHamiltonDevelopmentLoader({ base: DEVELOPMENT_BASE });
   const developmentPackage = await developmentLoader.pin();
   const developmentButton = document.getElementById("development-overview-open");

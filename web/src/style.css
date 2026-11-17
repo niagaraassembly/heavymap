@@ -2745,3 +2745,45 @@ h2 {
   .hm-development-city-note { margin-right: 14px; margin-left: 14px; }
   .hm-development-sheet-latest { margin-right: 14px; margin-left: 14px; }
 }
+
+/* Access and services tile (parcel-access.js): its own full-width row in the
+ * drawer, a two-column list, and the standing caveat underneath. */
+.parcel-tile-access {
+  grid-column: 1 / -1;
+}
+.parcel-tile-access ul {
+  columns: 2;
+  column-gap: 28px;
+}
+.parcel-tile-access li {
+  break-inside: avoid;
+  flex-wrap: wrap;
+}
+.parcel-tile-access li em {
+  font-weight: 600;
+  font-style: normal;
+}
+.parcel-access-sub {
+  flex-basis: 100%;
+  text-align: right;
+  font-size: 11px;
+  opacity: 0.72;
+}
+.parcel-access-caveat {
+  margin: 8px 0 0;
+  font-size: 11px;
+  line-height: 1.4;
+  opacity: 0.72;
+}
+.parcel-ws-subhead {
+  margin: 18px 0 6px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+@media (max-width: 760px) {
+  .parcel-tile-access ul {
+    columns: 1;
+  }
+}

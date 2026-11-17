@@ -343,6 +343,11 @@ export function parcelWorkspaceElement(summary, labels, {
   const cols = el("div", undefined, "parcel-ws-cols");
   const record = el("div", undefined, "parcel-ws-record");
   for (const fact of summary.facts) record.append(factRow(labels, fact));
+  if (summary.access) {
+    record.append(el("h3", labels.t("parcel.tile.access"), "parcel-ws-subhead"));
+    for (const fact of summary.access.rows) record.append(factRow(labels, fact));
+    record.append(el("p", summary.access.caveat, "parcel-access-caveat"));
+  }
   if (developmentCount > 0) {
     record.append(developmentRecordsSection(developmentRecords, {
       count: developmentCount,

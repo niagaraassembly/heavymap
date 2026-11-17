@@ -28,6 +28,7 @@ import { createHash } from "node:crypto";
 import { copyAtlasRelease } from "./copy-atlas-release.mjs";
 import { copyMapRelease } from "./copy-map-release.mjs";
 import { copyDevelopmentRelease } from "./copy-development-release.mjs";
+import { copyAccessRelease } from "./copy-access-release.mjs";
 
 const web = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 export const PAGES_DIR = path.join(web, ".site");
@@ -236,6 +237,10 @@ async function main() {
   const developmentRelease = process.env.HM_DEVELOPMENT_RELEASE_DIR
     ? copyDevelopmentRelease({ sourceDir: process.env.HM_DEVELOPMENT_RELEASE_DIR, outputDir: OUT_DIR })
     : null;
+  // Private portrait package (D-079): optional; the site works without it.
+  const accessRelease = process.env.HM_ACCESS_RELEASE_DIR
+    ? copyAccessRelease({ sourceDir: process.env.HM_ACCESS_RELEASE_DIR, outputDir: OUT_DIR })
+    : null;
 
   const budgets = budgetReport(OUT_DIR);
   fail("size budgets (decision 56, BETA-GATE section 6)", budgets.problems);
@@ -275,6 +280,7 @@ async function main() {
     ),
     atlas_release: atlasRelease,
     development_release: developmentRelease,
+    access_release: accessRelease,
     themes: themes.map((t) => t.id),
     pages: pages.length,
     sizes_compressed: {
