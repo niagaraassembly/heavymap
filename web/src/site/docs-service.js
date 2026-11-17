@@ -107,6 +107,18 @@ export async function mountDocsService(root) {
   const count = root.querySelector("[data-docs-count]");
   const status = root.querySelector("[data-docs-status]");
   const detail = root.querySelector("[data-docs-detail]");
+  const overview = el("div", undefined, "hm-docs-home-overview");
+  const overviewCopy = el("div", undefined, "hm-docs-home-copy");
+  overviewCopy.append(el("p", "PROJECT WORKSPACE", "hm-notes-eyebrow"), el("h1", "Documents"),
+    el("p", "Shape a site vision, collect its evidence, and keep decisions connected to the place."));
+  const overviewStats = el("div", undefined, "hm-docs-home-stats");
+  const homeMetric = (label) => { const node = el("div", undefined, "hm-docs-home-metric"); node.append(el("strong", "0"), el("span", label)); return node; };
+  const documentMetric = homeMetric("DOCUMENTS");
+  const projectMetric = homeMetric("SITE PROJECTS");
+  const recentMetric = homeMetric("UPDATED THIS WEEK");
+  overviewStats.append(documentMetric, projectMetric, recentMetric);
+  overview.append(overviewCopy, overviewStats);
+  browser.prepend(overview);
   let docs = [];
   let parcelLabels = new Map();
   let parcelEntries = [];
@@ -136,6 +148,9 @@ export async function mountDocsService(root) {
         } catch { /* The saved parcel key remains a usable label if its release is unavailable. */ }
       }));
     const projects = [...new Set(docs.flatMap((doc) => doc.parcelKeys))];
+    documentMetric.querySelector("strong").textContent = String(docs.length);
+    projectMetric.querySelector("strong").textContent = String(projects.length);
+    recentMetric.querySelector("strong").textContent = String(docs.filter((doc) => Date.now() - new Date(doc.updatedAt ?? doc.createdAt ?? 0).getTime() < 7 * 86400000).length);
     projectFilter.replaceChildren(new Option("All site projects", "all"));
     for (const key of projects) projectFilter.append(new Option(parcelLabels.get(key) || key, key));
     renderTypeFilters();
@@ -166,8 +181,23 @@ export async function mountDocsService(root) {
     count.textContent = `${filtered.length} ${filtered.length === 1 ? "document" : "documents"}`;
     list.replaceChildren();
     if (!filtered.length) {
-      const message = docs.length ? "No documents match these filters." : "Your site plans and project documents will live here.";
-      list.append(el("p", message, "hm-docs-empty-copy"));
+      const empty = el("section", undefined, "hm-docs-empty-state hm-docs-home-empty");
+      const hasDocuments = docs.length > 0;
+      empty.append(el("span", "▤", "hm-docs-empty-mark"),
+        el("p", hasDocuments ? "NO MATCHES" : "A CLEAR PLACE TO THINK", "hm-docs-kicker"),
+        el("h2", hasDocuments ? "No documents in this view." : "Give the project a place to take shape."),
+        el("p", hasDocuments ? "Adjust the search or project filters to find the document you need." : "Start with a site plan, brief, due diligence review, or project update. Each document stays linked to its parcel and can gather notes on the data that shapes the decision."));
+      if (hasDocuments) {
+        const clear = button("Clear filters", () => { search.value = ""; projectFilter.value = "all"; selectedType = "all"; renderTypeFilters(); renderList(); }, "hm-docs-quiet-button");
+        empty.append(clear);
+      } else if (parcelEntries.length) {
+        const create = button("＋ Create a site document", () => headerNew.click(), "hm-docs-primary");
+        empty.append(create, el("p", "Choose one parcel to start; add related properties as the project grows.", "hm-docs-empty-foot"));
+      } else {
+        const map = el("a", "Save a parcel on the map", "hm-docs-primary"); map.href = "/map/"; empty.append(map);
+        empty.append(el("p", "Once a parcel is saved, create its first document here.", "hm-docs-empty-foot"));
+      }
+      list.append(empty);
       return;
     }
     for (const doc of filtered) {
@@ -537,23 +567,53 @@ async function mountSavedLibrary({ rail, content, status, developmentOnly }) {
   let query = "";
   const categories = developmentOnly ? ["Development"] : ["All", "Parcel", "News", "Development", "Other"];
   const title = developmentOnly ? "Development records" : "Saved items";
+  const parcelLabels = new Map(items.filter((item) => item.kind === "parcel" && item.key).map((item) => [item.key, savedParcelLabel(item)]));
+  await Promise.all([...parcelLabels].filter(([key, label]) => key === label || /^(saved hamilton parcel|parcel)$/i.test(label))
+    .map(async ([key]) => {
+      try {
+        const pin = dossierLoader.release ? { ok: true, manifest: null } : await (dossierPin ??= dossierLoader.pin());
+        if (!pin.ok) return;
+        const [core, detail, labels] = await Promise.all([
+          dossierLoader.core(key), dossierLoader.detail(key),
+          labelsPromise ??= loadLabels({ base: "/labels/", locales: ["en"] }),
+        ]);
+        if (core.ok) parcelLabels.set(key, summariseRecord(core.record, detail.ok ? detail.record : null, labels, { sources: pin.manifest?.sources }).title);
+      } catch { /* Keep the parcel key as a readable fallback if local details are unavailable. */ }
+    }));
   const search = document.createElement("input");
   search.type = "search";
   search.placeholder = developmentOnly ? "Search development records" : "Search saved items";
   search.setAttribute("aria-label", search.placeholder);
   const searchLabel = el("label", undefined, "hm-docs-search");
   searchLabel.append(el("span", "⌕"), search);
-  rail.replaceChildren(el("p", developmentOnly ? "DEVELOPMENT" : "SAVED ITEMS", "hm-docs-kicker"), searchLabel);
   const categoryNav = el("nav", undefined, "hm-docs-type-filters");
   categoryNav.setAttribute("aria-label", "Saved item categories");
-  rail.append(categoryNav);
+  const railSummary = el("div", undefined, "hm-saved-rail-summary");
+  railSummary.append(el("strong", "0"), el("span", developmentOnly ? "records in your library" : "items in your library"));
+  const railLinks = el("nav", undefined, "hm-saved-rail-links");
+  railLinks.setAttribute("aria-label", "Continue exploring HeavyMap");
+  railLinks.append(el("p", "PICK UP ELSEWHERE", "hm-notes-rail-label"));
+  for (const [label, href] of [["Parcel map", "/map/"], ["Reader", "/reader/"], ["Project docs", "/docs/"]]) {
+    const link = el("a", label, "hm-saved-rail-link"); link.href = href; railLinks.append(link);
+  }
+  rail.replaceChildren(el("p", developmentOnly ? "DEVELOPMENT" : "YOUR LIBRARY", "hm-docs-kicker"), railSummary,
+    el("p", developmentOnly ? "A focused shelf for development records you choose to keep." : "Places, reporting, and project records you want to return to.", "hm-saved-rail-note"), railLinks);
 
-  const list = el("div", undefined, "hm-docs-list hm-global-record-list");
+  const list = el("div", undefined, "hm-global-record-list");
   const heading = el("div", undefined, "hm-global-page-heading");
-  heading.append(el("h1", title), el("p", "Kept on this device · ready when you return."));
-  const toolbar = el("div", undefined, "hm-docs-library-toolbar");
-  toolbar.append(el("p", "Filter your saved parcels, reporting, and development activity.", "hm-global-toolbar-note"));
-  content.replaceChildren(heading, toolbar, list);
+  const headingCopy = el("div", undefined, "hm-saved-heading-copy");
+  headingCopy.append(el("p", developmentOnly ? "PROJECT INTELLIGENCE" : "YOUR HEAVYMAP LIBRARY", "hm-notes-eyebrow"), el("h1", developmentOnly ? "Development records" : "Saved items"),
+    el("p", developmentOnly ? "Keep the applications and records that matter close to their sites." : "A personal shelf for parcels, reporting, and development activity."));
+  heading.append(headingCopy);
+  const overview = el("div", undefined, "hm-saved-overview");
+  const countMetric = (label) => { const node = el("div", undefined, "hm-notes-metric"); node.append(el("strong", "0"), el("span", label)); return node; };
+  const totalMetric = countMetric(developmentOnly ? "DEVELOPMENT RECORDS" : "SAVED ITEMS");
+  const siteMetric = countMetric("SITE PARCELS");
+  const newsMetric = countMetric(developmentOnly ? "LINKED SITES" : "NEWS & RECORDS");
+  overview.append(totalMetric, siteMetric, newsMetric);
+  const toolbar = el("div", undefined, "hm-saved-toolbar");
+  toolbar.append(categoryNav, searchLabel);
+  content.replaceChildren(heading, overview, toolbar, list);
 
   const category = (item) => {
     const kind = item.kind ?? item.type ?? "parcel";
@@ -571,16 +631,38 @@ async function mountSavedLibrary({ rail, content, status, developmentOnly }) {
       filter.append(el("span", name === "All" ? "All saved" : name), el("small", String(count)));
       categoryNav.append(filter);
     }
+    const parcelCount = new Set(items.filter((item) => category(item) === "Parcel").map((item) => item.key).filter(Boolean)).size;
+    const newsAndDevelopment = items.filter((item) => ["News", "Development"].includes(category(item))).length;
+    railSummary.querySelector("strong").textContent = String(items.length);
+    totalMetric.querySelector("strong").textContent = String(developmentOnly ? items.filter((item) => category(item) === "Development").length : items.length);
+    siteMetric.querySelector("strong").textContent = String(developmentOnly
+      ? new Set(items.filter((item) => category(item) === "Development").map((item) => item.parcelKey ?? item.key).filter(Boolean)).size
+      : parcelCount);
+    newsMetric.querySelector("strong").textContent = String(developmentOnly ? "—" : newsAndDevelopment);
     list.replaceChildren();
     const shown = items.filter((item) => (selected === "All" || category(item) === selected)
-      && `${item.title ?? ""} ${item.subtitle ?? ""} ${item.address ?? ""} ${item.key ?? ""} ${item.id ?? ""}`.toLowerCase().includes(query));
+      && `${item.title ?? ""} ${item.subtitle ?? ""} ${item.address ?? ""} ${item.key ?? ""} ${item.id ?? ""} ${parcelLabels.get(item.key) ?? ""}`.toLowerCase().includes(query));
     if (!shown.length) {
-      list.append(el("p", items.length ? `No ${title.toLowerCase()} match this filter.` : `${title} will appear here when you save them.`, "hm-docs-empty-copy"));
+      const empty = el("section", undefined, "hm-saved-empty");
+      const isSearch = query || items.length;
+      empty.append(el("span", developmentOnly ? "⌂" : "✳", "hm-notes-empty-mark"),
+        el("p", isSearch ? "NO MATCHES" : developmentOnly ? "DEVELOPMENT LIBRARY" : "YOUR SAVED LIBRARY", "hm-notes-eyebrow"),
+        el("h2", isSearch ? `No ${title.toLowerCase()} in this view.` : developmentOnly ? "Keep important records close to the site." : "Keep the things you want to come back to."),
+        el("p", isSearch ? "Try another search or filter to find what you saved." : developmentOnly ? "Development records you save will be gathered here with their site context." : "Save parcels from the map, reporting from Reader, and development records as you explore. They will be collected here."));
+      if (!isSearch) {
+        const links = el("div", undefined, "hm-saved-empty-actions");
+        const map = el("a", "Explore parcels", "hm-docs-primary"); map.href = "/map/"; links.append(map);
+        if (!developmentOnly) { const reader = el("a", "Browse Reader", "hm-docs-quiet-button"); reader.href = "/reader/"; links.append(reader); }
+        empty.append(links);
+      } else {
+        empty.append(button("Clear search and filters", () => { selected = developmentOnly ? "Development" : "All"; query = ""; search.value = ""; render(); }, "hm-docs-quiet-button"));
+      }
+      list.append(empty);
       return;
     }
     for (const item of shown) {
       const kind = category(item);
-      const row = el("article", undefined, "hm-docs-saved-row");
+      const row = el("article", undefined, "hm-docs-saved-row hm-saved-card");
       const href = kind === "Parcel" && item.key ? `/map/#parcel=${encodeURIComponent(item.key)}` : item.url;
       let open;
       try {
@@ -588,7 +670,10 @@ async function mountSavedLibrary({ rail, content, status, developmentOnly }) {
         if (safeHref && ["http:", "https:"].includes(safeHref.protocol)) { open = el("a", undefined, "hm-docs-saved-open"); open.href = safeHref.href; }
       } catch { /* Invalid saved links remain readable without navigation. */ }
       open ??= el("div", undefined, "hm-docs-saved-open");
-      open.append(el("span", kind, "hm-docs-saved-kind"), el("strong", item.address || item.title || item.key || "Saved item"), el("small", item.subtitle || (kind === "Parcel" ? item.key : "")));
+      open.classList.add("hm-saved-entry");
+      open.append(el("span", kind.toUpperCase(), "hm-docs-saved-kind"), el("strong", item.address || (kind === "Parcel" ? parcelLabels.get(item.key) : "") || item.title || item.key || "Saved item"), el("small", item.subtitle || (kind === "Parcel" ? item.key : item.source || item.publisher || "")));
+      const when = item.savedAt ? new Date(item.savedAt) : null;
+      if (when && !Number.isNaN(when.getTime())) row.append(el("time", when.toLocaleDateString(undefined, { month: "short", day: "numeric" }), "hm-saved-date"));
       const remove = button("Remove", async () => {
         await removeLocalRecord("saved", item.id);
         items = items.filter((entry) => entry.id !== item.id);

@@ -499,7 +499,7 @@ export function docsIntro() {
     bodyClass: "hm-docs-service-page",
     main: `<section class="hm-docs-service" data-docs-service="docs">
       <div class="hm-docs-library" data-docs-library>
-        <aside class="hm-docs-library-rail" aria-label="Document types"><p class="hm-docs-kicker">DOCUMENT TYPES</p><nav class="hm-docs-type-filters" data-docs-type-filters aria-label="Filter by document type"></nav></aside>
+        <aside class="hm-docs-library-rail" aria-label="Document types"><div class="hm-docs-library-intro"><p class="hm-docs-kicker">DOCUMENT LIBRARY</p><h2>Start with a shape.</h2><p>Choose a template, then make it yours for the site.</p></div><nav class="hm-docs-type-filters" data-docs-type-filters aria-label="Filter by document type"></nav></aside>
         <section class="hm-docs-browser" data-docs-browser aria-label="Documents"><div class="hm-docs-library-toolbar"><label class="hm-docs-search"><span aria-hidden="true">⌕</span><input type="search" maxlength="120" placeholder="Search documents" aria-label="Search documents" data-docs-search></label><label class="hm-visually-hidden" for="hm-docs-project-filter">Site project</label><select id="hm-docs-project-filter" data-docs-project-filter><option value="all">All site projects</option></select><div class="hm-docs-library-count" data-docs-count aria-live="polite">Loading documents…</div></div><div class="hm-docs-list" data-docs-list></div></section>
         <section class="hm-docs-detail" data-docs-detail aria-label="Document workspace" hidden></section>
       </div>
