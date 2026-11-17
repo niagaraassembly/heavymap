@@ -1,5 +1,7 @@
 # Hamilton freight and infrastructure datasets: discovery and first profile (2026-11-17)
 
+**Owner decisions 2026-11-17:** show the water and sewer networks in HeavyMap (D-077, planning repo), keeping proximity distinct from service. Keep the coded fields (`RESTRICTED`, blank `TIME_OF_DAY`, `REDUCEDLOAD`, `TRUCK_ROUTE`) in use, shown as the source's codes marked "meaning not yet confirmed by the City", while the definitions are requested (BL-120).
+
 Slice: Hamilton, family "context" (freight access and infrastructure). Linear is out of use (D-075); the Hamilton slice id NA-24 is cited for continuity. Routine: `heavymap-planning/DATASET-ROUTINE.md`, stages 1 to 3 for the first slice, stage 1 for the rest. No MCS edit, schema change, UI or publication.
 
 **Evidence labels.** Every fact below was **live read on 2026-11-17** from the source URL given, unless marked *documented, not re-read*. Counts are server counts (`returnCountOnly`). Join results are `hits/tested`. Owner or identifying fields are named, never quoted. Raw pulls, scripts and summaries are local only: `deb:/fast/code/making/na/local-data/hamilton-city/_freight-recon-2026-11-17/` (scripts `recon.py`, `recon2.py`, `measure.py`, `pull.py`, `join_test.py`; metadata in `raw/`) and the pull folders named in each section.
@@ -35,7 +37,7 @@ Slice: Hamilton, family "context" (freight access and infrastructure). Linear is
 - **Join (stage 6 evidence, spatial):** industrial-zoned parcels (largest zoning row an `M` zone covering at least half the parcel, overlay run 20261017-val2-ia1), shortest distance from parcel boundary to a route centreline: within 20 m **1,313/3,193**, 30 m **1,425/3,193**, 50 m 1,590/3,193, 100 m 1,974/3,193. Of the 30 m hits, 1,388 are nearest a full-time route, 31 part time, 6 unspecified. Method: `join_test.py`; boundary vertices sampled (about 60 per parcel).
 - **Limits and risks:**
   - The service description still says "identified as part of the 2010 Truck Route Master Plan and updated in 2017". The City page describes a 2022 Master Plan Update, signage completed October 2023, and a restriction on trucks with more than four axles in parts of the lower city (*documented on the City page, read 2026-11-17*).
-  - What `RESTRICTED` encodes (the axle rule, time limits, or something else) is not stated anywhere. Do not label it until the City confirms.
+  - What `RESTRICTED` encodes (the axle rule, time limits, or something else) is not stated anywhere. Show the source value with "meaning not yet confirmed" until the City replies (BL-120).
   - Directional routes are not distinguishable in this layer.
   - There is no stable id, only `OBJECTID`.
   - Adjacency to a route is not access: driveways, medians and turn restrictions are unknown.
@@ -62,7 +64,7 @@ Slice: Hamilton, family "context" (freight access and infrastructure). Linear is
 - **How it compares with 1.1:** active `TRUCK_ROUTE = F` covers 839.6 km, against 597.9 km full time in the current network. The difference is unexplained: possibly divided roads counted per carriageway, or the pre-2022 network.
   - **This is not a duplicate. It is an older, different product.** Use 1.1 for truck routes.
 - **Volumes:** 16,176 segments have a 24-hour volume above zero. This is all-vehicle traffic, mostly estimated or modelled (`VOLUME_STAT` codes such as MS2FLOW5), not truck counts.
-- **REDUCEDLOAD:** "Y" on 796.6 km of active segments. No documentation was found. It may mark seasonal reduced-load roads, but **that is unconfirmed**; do not interpret it until the City confirms the code meanings.
+- **REDUCEDLOAD:** "Y" on 796.6 km of active segments. No documentation was found. It may mark seasonal reduced-load roads, but **that is unconfirmed**. Keep the field, show the raw code marked "meaning not yet confirmed", and do not describe it as a load restriction until the City confirms (BL-120).
 - **Pull:** complete, 21,062/21,062 (outSR 4326), `traffic-segments-heavy-truck-traffic-route-hamilton-2026-11-17/`.
 
 ### 1.4 Corridor Activities map
@@ -128,7 +130,7 @@ Slice: Hamilton, family "context" (freight access and infrastructure). Linear is
 - **Licence:** City open data portal terms; read the published licence page before use. Licence text is *not yet confirmed per layer*.
 - **McMaster record:** https://library.mcmaster.ca/maps/geospatial/enhanced-water-and-sewer-data-city-hamilton returned an automated bot check. **Blocked.** It is not needed, since the City layers cover the same asset classes.
 - **Worth it:** yes for context ("water main of 300 mm along the frontage, installed 1974"; "nearest sewer lift station"). Proximity is not service: a main along a frontage does not mean the parcel is connected or that capacity exists.
-- **Sensitivity:** the MCS catalogue flags these layers `infrastructure_ownership_attribute`. Publication needs an owner decision, even though the City publishes them.
+- **Sensitivity:** the MCS catalogue flags these layers `infrastructure_ownership_attribute`. **Owner decision 2026-11-17 (D-077): show them**, with proximity worded distinctly from service.
 - **Existing work:** sanitary, combined-overflow and treatment-plant catchments and subwatersheds were pulled on 2026-11-16 (`LOCAL-DATA-REGISTER-2026-11-16.csv`). Keep catchment membership separate from pipe proximity.
 
 ## 3. Other candidates found (stage 1 only)
@@ -145,6 +147,6 @@ Slice: Hamilton, family "context" (freight access and infrastructure). Linear is
 1. **Truck Route Network:** profile stage 6 fully with a reviewed sample of the 30 m hits, and ask the City what `RESTRICTED` and the blank `TIME_OF_DAY` mean.
 2. **Bridges:** pull and profile the restriction layer; relate structures to truck-route and centreline segments.
 3. **Traffic counts:** build the `GEO_ID` to centreline link as a derived segment table, showing count year with every value.
-4. **Reduced-load codes:** ask the City what `REDUCEDLOAD` means. Treat the segment layer as historical context only.
-5. **Water and sewer:** owner decision on exposure before any pull beyond profiling.
+4. **Code definitions (BL-120):** ask the City what `RESTRICTED`, blank `TIME_OF_DAY`, `REDUCEDLOAD` and `TRUCK_ROUTE` mean. Meanwhile keep the fields, shown as unconfirmed codes.
+5. **Water and sewer:** approved for display (D-077). Pull and profile next.
 6. **Corridor permits:** decide whether a dated "current activity" layer belongs in HeavyMap at all.
