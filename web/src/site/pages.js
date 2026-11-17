@@ -490,6 +490,26 @@ export function mapIntro() {
   };
 }
 
+/** A quiet, full-window home for site and parcel planning documents. */
+export function docsIntro() {
+  return {
+    path: "/docs/",
+    title: "Docs",
+    description: "Create and organize site plans, project notes, and evidence for HeavyMap parcel projects.",
+    bodyClass: "hm-docs-service-page",
+    main: `<section class="hm-docs-service" data-docs-service>
+      <header class="hm-docs-home-head"><div><p class="hm-docs-kicker">SITE PROJECTS · PRIVATE TO THIS DEVICE</p><h1>Docs<span>.</span></h1><p>Plans, evidence, and decisions for the places you’re exploring.</p></div><button type="button" class="hm-docs-primary hm-docs-new" data-docs-create><span aria-hidden="true">＋</span> New document</button></header>
+      <div class="hm-docs-library" data-docs-library>
+        <aside class="hm-docs-library-rail"><div class="hm-docs-library-intro"><span class="hm-docs-kicker">YOUR WORKSPACE</span><h2>Documents</h2><p>Each document belongs to one parcel project.</p></div><label class="hm-docs-search"><span aria-hidden="true">⌕</span><input type="search" maxlength="120" placeholder="Search documents" aria-label="Search documents" data-docs-search></label><label class="hm-docs-filter-label" for="hm-docs-project-filter">SITE PROJECT</label><select id="hm-docs-project-filter" data-docs-project-filter><option value="all">All site projects</option></select><div class="hm-docs-library-count" data-docs-count aria-live="polite">Loading documents…</div><div class="hm-docs-list" data-docs-list></div></aside>
+        <section class="hm-docs-detail" data-docs-detail aria-label="Document workspace"><div class="hm-docs-empty-state" data-docs-empty><div class="hm-docs-empty-mark" aria-hidden="true">✳</div><p class="hm-docs-kicker">A CLEARER VIEW OF THE SITE</p><h2>Give the project a shape.</h2><p>Bring together what you know, what you’re considering, and what you still need to learn.</p><button type="button" class="hm-docs-primary" data-docs-create>＋ Start a site plan</button><span class="hm-docs-empty-foot">Your documents are saved in this browser.</span></div></section>
+      </div>
+      <p class="hm-docs-status" data-docs-status role="status" aria-live="polite">Your documents stay on this device.</p>
+      <dialog class="hm-docs-create-dialog" data-docs-create-dialog aria-labelledby="hm-docs-create-title"><form method="dialog"><header><div><p class="hm-docs-kicker">NEW DOCUMENT</p><h2 id="hm-docs-create-title">Start with a site.</h2></div><button type="button" data-docs-create-close aria-label="Close">×</button></header><label for="hm-docs-project">Parcel project</label><select id="hm-docs-project" data-docs-project><option value="">Loading saved parcels…</option></select><label for="hm-docs-new-title">Document name</label><input id="hm-docs-new-title" data-docs-new-title maxlength="180" value="Site plan"><p data-docs-create-feedback role="status"></p><footer><button type="button" class="hm-docs-quiet-button" data-docs-create-close>Cancel</button><button type="submit" class="hm-docs-primary" data-docs-confirm-create disabled>Create document</button></footer></form></dialog>
+    </section>`,
+    after: `<div class="hm-docs-bottom-bar"><span class="hm-docs-bottom-spacer"></span><!-- docs-theme-picker --></div>`,
+  };
+}
+
 /* ---- per-Desk signup form (spec E section 4) ------------------------------ */
 
 /** With a configured form, inputs carry the Google entry ids so it also posts without JavaScript. */
@@ -621,6 +641,7 @@ export function allPages(c) {
     ...[...c.items.values()].map((it) => itemPage(c, it)),
     ...[...c.retired.values()].map((it) => tombstone(c, it)),
     readerPage(c),
+    docsIntro(),
     mapIntro(c),
     mapDataLibraryPage(),
     subscribePage(c),

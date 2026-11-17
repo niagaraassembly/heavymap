@@ -12,9 +12,15 @@ export const arrow =
 export const bookIcon =
   '<svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v13M10 4C7 2 4 2 2 3v12c3-1 5-1 8 2 3-3 5-3 8-2V3c-2-1-5-1-8 1Z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>';
 
+export const docsIcon =
+  '<svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 2.8h7l3.4 3.4v11H5zM12 2.8v3.8h3.4M7.7 10h5.1M7.7 12.8h5.1M7.7 15.5h3.4" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+export const mapIcon =
+  '<svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><path d="m2.5 4.5 5-2 5 2 5-2v13l-5 2-5-2-5 2zM7.5 2.5v13M12.5 4.5v13" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>';
+
 const NAV = [
   { href: "/desks/", label: "Desks", section: "desks" },
   { href: "/reader/", label: "Reader", section: "reader", icon: bookIcon },
+  { href: "/docs/", label: "Docs", section: "docs", icon: docsIcon },
   { href: "/map/", label: "Map", section: "map" },
 ];
 
@@ -62,6 +68,7 @@ function mapHeader(regions) {
     </div>
     <div class="hm-map-utilities" data-map-utilities>
       <a class="hm-map-service" href="/reader/" aria-label="Reader" title="Reader">${bookIcon}</a>
+      <a class="hm-map-service" href="/docs/" aria-label="Docs" title="Docs">${docsIcon}</a>
       <button class="hm-map-service" type="button" data-save-parcel aria-label="Saved items" title="Saved items" aria-haspopup="dialog" aria-controls="parcel-save-dialog"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5h10v14l-5-3.4-5 3.4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
       <button class="hm-map-service" type="button" data-note-parcel aria-label="Parcel notes" title="Add a note" aria-haspopup="dialog" aria-controls="parcel-notes-dialog"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 14.8-.7 2.9 2.9-.7L17 6.2 13.8 3zM12.8 4l3.2 3.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <button class="hm-map-service" type="button" data-search-toggle aria-label="Search parcels" title="Search parcels"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m12.5 12.5 4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
@@ -130,11 +137,15 @@ ${css}${js}
 </head>
 <body class="alternate ${esc(o.bodyClass ?? "")}">
 ${banner}<a class="skip-link" href="#content">Skip to content</a>
-${o.path === "/map/" ? mapHeader(o.regions) : header(o.path, o.themes)}
+${o.path === "/map/" ? mapHeader(o.regions) : o.path === "/docs/" ? docsHeader(o.themes) : header(o.path, o.themes)}
 <main id="content" tabindex="-1">${o.main}</main>
 ${o.catalogue ? `<script type="application/json" id="hm-catalogue">${JSON.stringify(o.catalogue).replace(/</g, "\\u003c")}</script>` : ""}
-${footer(o.regions)}${o.path === "/map/" ? (o.after ?? "").replace("<!-- map-theme-picker -->", themePicker(o.themes)) : o.after ?? ""}
+${o.path === "/docs/" ? (o.after ?? "").replace("<!-- docs-theme-picker -->", themePicker(o.themes)) : `${footer(o.regions)}${o.path === "/map/" ? (o.after ?? "").replace("<!-- map-theme-picker -->", themePicker(o.themes)) : o.after ?? ""}`}
 </body>
 </html>
 `;
+}
+
+function docsHeader(themes) {
+  return `<header class="alt-header alt-header--docs"><a class="wordmark" href="/"><span>HeavyMap</span><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><nav aria-label="Services"><a class="hm-map-service" href="/map/" aria-label="Map" title="Map">${mapIcon}</a><a class="hm-map-service" href="/reader/" aria-label="Reader" title="Reader">${bookIcon}</a><a class="hm-map-service" href="/docs/" aria-label="Docs" title="Docs" aria-current="page">${docsIcon}</a></nav><span class="hm-docs-header-label">Docs</span></header>`;
 }

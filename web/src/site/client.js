@@ -13,6 +13,7 @@ import {
 import { createStore, readCatalogue } from "./reading-store.js";
 import { SIGNUP } from "./signup-config.js";
 import { mountSignup } from "./signup.js";
+import { mountDocsService } from "./docs-service.js";
 
 const picker = document.querySelector("[data-theme-picker]");
 if (picker) {
@@ -30,6 +31,7 @@ if (picker) {
 /* The /map/ bottom bar and top-bar menus (Desks drop-up, place selector). */
 mountMapBars();
 mountLocalAccount();
+void mountDocsService(document.querySelector("[data-docs-service]"));
 
 /* Edition cards: "Copy link" copies the card's permalink. */
 document.addEventListener("click", async (e) => {

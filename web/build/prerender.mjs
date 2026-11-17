@@ -105,7 +105,9 @@ export function renderSite({ preview = false } = {}) {
         .split(path.sep)
         .join("/");
     const rel = fromPage(CLIENT);
-    const pageApp = page.path === "/map/"
+    const pageApp = page.path === "/docs/"
+      ? fromPage(path.join(web, "src/site/docs-service.js"))
+      : page.path === "/map/"
       ? fromPage(path.join(web, "src/app.js"))
       : page.path === "/map/data-methods/"
         ? fromPage(MAP_LIBRARY_CLIENT)
