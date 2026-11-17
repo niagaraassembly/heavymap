@@ -447,7 +447,7 @@ export function mapIntro() {
       "Explore City of Hamilton parcel boundaries and inspect their verified public records.",
     bodyClass: "hm-map-intro",
     main: `<div class="map-workspace">
-      <div id="map" aria-label="City of Hamilton map with parcel selection at close zoom"></div><div class="parcel-shape-band" data-parcel-shape-band aria-hidden="true"><div class="parcel-shape-band-track"></div></div>
+      <div id="map" aria-label="City of Hamilton map with parcel selection at close zoom"></div><div class="map-loading" data-map-loading aria-hidden="true"><img src="/heavy-element-mark.png" alt=""><span>Preparing Hamilton map</span></div>
       <aside id="tray" class="tray" aria-label="Hamilton map controls">
         <div id="layers-backdrop" class="layers-backdrop" data-layers-backdrop hidden></div>
         <section id="layers-panel" class="layers is-collapsed" aria-label="Map layers">

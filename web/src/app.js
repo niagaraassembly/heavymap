@@ -9,7 +9,6 @@ import { createNotesStore, recordsFor, removeSavedPlace, savePlace } from "./loc
 import { el } from "./dossier.js";
 import { FieldMap } from "./map.js";
 import { findBasemap } from "./basemap.js";
-import { mountParcelShapeBand } from "./parcel-shape-band.js";
 
 const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
 const PARCEL_GEOMETRY_CACHE = "heavymap.parcel-geometry-cache.v1";
@@ -36,6 +35,23 @@ let savedQuery = "";
  * parcels in the session (design §5.4). Set on the first workspace open:
  * Addresses open only when the parcel has more than one. */
 let workspaceSections = null;
+const MAP_LOADING_MIN_MS = 500;
+const mapLoadingStartedAt = performance.now();
+let mapLoadingFinished = false;
+
+function finishMapLoading() {
+  if (mapLoadingFinished) return;
+  mapLoadingFinished = true;
+  const overlay = document.querySelector("[data-map-loading]");
+  if (!overlay) return;
+
+  const remaining = Math.max(0, MAP_LOADING_MIN_MS - (performance.now() - mapLoadingStartedAt));
+  setTimeout(() => {
+    overlay.classList.add("is-hidden");
+    overlay.addEventListener("transitionend", () => overlay.remove(), { once: true });
+    setTimeout(() => overlay.remove(), 250);
+  }, remaining);
+}
 
 function status(text) {
   const barStatus = document.getElementById("map-bar-status");
@@ -583,8 +599,6 @@ function route() {
 }
 
 async function start() {
-  // Mount before local storage and remote map data initialization.
-  mountParcelShapeBand(document.querySelector(".map-workspace"));
   try {
     notesStore = await createNotesStore();
     savedItems = await recordsFor("saved");
@@ -637,6 +651,7 @@ async function start() {
     flavor: new URLSearchParams(location.search).get("basemap") ?? "light",
     onSelect: (parcel, trigger) => void openParcel(parcel, trigger, view ?? "card"),
     onStatus: status,
+    onReady: finishMapLoading,
     tilesUrl: tilesReady ? `${RELEASE_BASE}tiles/parcels.pmtiles` : null,
     tileLayer: tilesReady ? tileManifest.tile_layer : null,
     minZoom: tilesReady ? tileManifest.min_zoom : 14,
@@ -792,4 +807,8 @@ async function start() {
   if (import.meta.env.DEV) window.__heavymap = { map: map.map, controller: map };
 }
 
-void start();
+void start().catch((error) => {
+  console.error("HeavyMap could not initialize", error);
+  status("The map could not be initialized. Please refresh to try again.");
+  finishMapLoading();
+});

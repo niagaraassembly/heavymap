@@ -191,39 +191,45 @@ button:hover {
   position: absolute;
   inset: 0;
 }
-.parcel-shape-band {
+.map-loading {
   position: absolute;
   z-index: 2;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: clamp(128px, 19vh, 208px);
-  overflow: hidden;
-  background: rgba(8, 9, 8, 0.68);
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-.parcel-shape-band-track {
+  inset: 0;
   display: flex;
-  width: max-content;
-  height: 100%;
-  animation: parcel-shapes-drift var(--parcel-shapes-duration, 28s) linear infinite;
-  will-change: transform;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  color: #f1f2f0;
+  background: #262a2d;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 180ms ease-out;
 }
-.parcel-shape-band-track svg {
-  display: block;
-  flex: 0 0 100vw;
-  width: 100vw;
-  height: 100%;
-  overflow: visible;
+.map-loading.is-hidden {
+  opacity: 0;
 }
-@keyframes parcel-shapes-drift {
-  to { transform: translateX(-50%); }
+.map-loading img {
+  width: clamp(88px, 12vw, 144px);
+  height: auto;
+  animation: heavy-element-loading 1.2s cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+.map-loading span {
+  color: #c4c8c8;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+@keyframes heavy-element-loading {
+  from { transform: rotate(-150deg) scale(0.72); opacity: 0.35; }
+  72% { transform: rotate(12deg) scale(1.06); opacity: 1; }
+  to { transform: rotate(0) scale(1); opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .parcel-shape-band-track {
+  .map-loading img {
     animation: none;
-    transform: translateX(-25%);
+    opacity: 1;
+    transform: none;
   }
 }
 .intro {

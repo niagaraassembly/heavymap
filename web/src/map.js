@@ -29,10 +29,11 @@ const STILL_BOUNDS_TALL = [
 ];
 
 export class FieldMap {
-  constructor({ onSelect, onStatus, tilesUrl, tileLayer, minZoom = 14, maxZoom = 16, basemap = null, flavor = "light", overlays = [], overlaysBase = null }) {
+  constructor({ onSelect, onStatus, onReady, tilesUrl, tileLayer, minZoom = 14, maxZoom = 16, basemap = null, flavor = "light", overlays = [], overlaysBase = null }) {
     this.basemap = basemap;
     this.flavor = basemapFlavor(flavor);
     this.onStatus = onStatus;
+    this.onReady = onReady;
     this.tilesUrl = tilesUrl;
     this.tileLayer = tileLayer;
     this.overlays = overlays;
@@ -161,6 +162,7 @@ export class FieldMap {
       this.reportZoom();
       map.on("zoomend", () => this.reportZoom());
       onStatus(this.tilesUrl ? `Hamilton parcels · selectable from zoom ${this.minZoom}` : "Hamilton still image · parcel data unavailable");
+      map.once("idle", () => this.onReady?.());
     });
   }
 
