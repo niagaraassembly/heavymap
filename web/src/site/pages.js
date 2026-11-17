@@ -454,11 +454,8 @@ export function mapIntro() {
           <button type="button" id="layers-toggle" class="layers-launcher" aria-expanded="false" aria-controls="layers-dialog" title="Open map layers">
             <span aria-hidden="true">▤</span><span class="hm-visually-hidden">Map layers</span>
           </button>
-          <div id="layers-dialog" class="layers-dialog" role="dialog" aria-modal="true" aria-labelledby="layers-dialog-title" hidden>
-            <header class="layers-dialog-head">
-              <div><h2 id="layers-dialog-title">Discover map layers</h2></div>
-              <button type="button" class="layers-close" data-layers-close aria-label="Close map layers">×</button>
-            </header>
+          <div id="layers-dialog" class="layers-dialog" role="dialog" aria-modal="true" aria-label="Map layers" hidden>
+            <header class="layers-dialog-head" aria-hidden="true"></header>
             <div class="layers-dialog-body">
               <nav class="layers-categories" id="layers-categories" aria-label="Filter map layers">
                 <button type="button" data-layer-filter="all" aria-pressed="true"><span>All layers</span><small data-layer-count-for="all">—</small></button>
@@ -470,7 +467,7 @@ export function mapIntro() {
                 <button type="button" data-layer-filter="parks"><span>Parks</span><small data-layer-count-for="parks">—</small></button>
               </nav>
               <section class="layers-browser" aria-label="Layer library">
-                <div class="layers-browser-head"><div><h3>Layer library</h3><p id="layers-result-count" aria-live="polite">Loading map layers…</p></div>
+                <div class="layers-browser-head"><div><h3>LAYER LIBRARY</h3><p id="layers-result-count" aria-live="polite">Loading map layers…</p></div>
                   <label class="layers-search"><span aria-hidden="true">⌕</span><input id="layers-search" type="search" placeholder="Find a layer" aria-label="Find a map layer"></label>
                 </div>
                 <div id="layers-content" class="layers-content">
