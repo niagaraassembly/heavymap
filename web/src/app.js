@@ -33,7 +33,8 @@ let notesStore = null;
 let workspaceSections = null;
 
 function status(text) {
-  document.getElementById("map-status").textContent = text;
+  const barStatus = document.getElementById("map-bar-status");
+  if (barStatus) barStatus.textContent = text;
 }
 
 function updateLocation(key, level) {
@@ -312,11 +313,7 @@ async function start() {
   );
   const basemap = mapLayerManifest ? await findBasemap(MAP_LAYER_BASE) : null;
   if (basemap) {
-    // The page ships with still-image wording; correct it when the vector
-    // basemap is in use. OpenStreetMap attribution is a licence condition.
-    const credit = document.querySelector(".hm-map-context span:nth-child(2)");
-    if (credit?.firstChild?.nodeType === Node.TEXT_NODE) credit.firstChild.textContent = "Map data © ";
-    const note = document.querySelector(".honesty");
+    const note = document.getElementById("map-display-note");
     if (note) note.textContent = "Street basemap · parcel selection from zoom 14";
   }
   map = new FieldMap({

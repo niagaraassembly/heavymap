@@ -363,8 +363,28 @@ h2 {
   box-shadow: 0 8px 28px var(--shadow);
 }
 .has-parcel-card #tray,
-.has-parcel-drawer #tray,
-.has-parcel-workspace #tray { overflow: visible; }
+.has-parcel-drawer #tray {
+  position: static;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  width: auto;
+  max-height: none;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  pointer-events: none;
+  z-index: auto;
+}
+.has-parcel-card #tray > :not(.layers),
+.has-parcel-drawer #tray > :not(.layers) { display: none; }
+.has-parcel-card #tray-toggle,
+.has-parcel-drawer #tray-toggle,
+.has-parcel-workspace #tray-toggle { display: none; }
 .layers.is-collapsed { width: 42px; height: 42px; padding: 4px; overflow: hidden; }
 .layers.is-collapsed .tray-heading { justify-content: center; margin: 0; }
 .layers.is-collapsed .tray-heading > span,
@@ -547,32 +567,6 @@ h2 {
 .map-tools button span {
   font-size: 12px;
 }
-.map-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  min-height: 47px;
-  padding: 10px 25px;
-  background: var(--surface);
-  border-top: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  font-size: 12px;
-  z-index: 2;
-}
-/* The map status lives in the footer, not pasted over the map: a
- * semi-transparent pill over the parcels fails contrast wherever the
- * map runs dark underneath. */
-.map-status {
-  flex: 1;
-  text-align: center;
-  font-size: 12px;
-  color: var(--muted);
-  min-width: 0;
-}
 .legend-dot {
   display: inline-block;
   vertical-align: middle;
@@ -611,7 +605,7 @@ h2 {
   border-color: var(--surface-raised);
 }
 .maplibregl-ctrl-bottom-right {
-  bottom: 60px;
+  bottom: 6px;
   right: 16px;
 }
 .maplibregl-ctrl-group button {
@@ -1030,12 +1024,10 @@ h2 {
   .tray.mobile-open {
     display: block;
   }
-  .has-parcel-card .tray,
-  .has-parcel-drawer .tray,
-  .has-parcel-workspace .tray {
+  .has-parcel-card #tray,
+  .has-parcel-drawer #tray {
     display: block;
-    visibility: hidden;
-    pointer-events: none;
+    visibility: visible;
   }
   .has-parcel-card .layers,
   .has-parcel-drawer .layers,
@@ -1076,43 +1068,18 @@ h2 {
   .dossier-title {
     font-size: 25px;
   }
-  .map-footer {
-    font-size: 10px;
-    padding: 10px 15px;
-    flex-wrap: wrap;
-  }
-  .map-footer .honesty {
-    max-width: 160px;
-  }
-  /* On the sheet the status drops to its own line under the legend
-   * and the honesty note, so the footer never crowds. */
-  .map-footer .map-status {
-    order: 3;
-    flex-basis: 100%;
-    text-align: left;
-    font-size: 10px;
-  }
   .has-dossier .map-tools {
     right: 16px;
   }
   .has-dossier .map-tools button span {
     display: inline;
   }
-  .legend-dot {
-    margin-left: 8px;
-  }
   .maplibregl-ctrl-bottom-right {
-    bottom: 65px;
+    bottom: 6px;
   }
   .has-dossier .maplibregl-ctrl-bottom-right {
     bottom: auto;
     top: 70px;
-  }
-  .has-dossier .map-footer .legend {
-    display: none;
-  }
-  .has-dossier .map-footer .honesty {
-    max-width: none;
   }
 }
 @media (max-width: 540px) {
@@ -1137,15 +1104,8 @@ h2 {
   .dossier {
     height: 60%;
   }
-  .map-footer {
-    gap: 6px;
-  }
-  .map-footer .honesty {
-    max-width: 115px;
-  }
-  .map-footer .legend {
-    max-width: 225px;
-    line-height: 1.8;
+  .maplibregl-ctrl-bottom-right {
+    bottom: 6px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -1,5 +1,4 @@
-/* The /map/ bottom bar and top-bar menus: the Desks split-button's drop-up
- * sitemap and the place selector's dropdown. Both are progressive
+/* The /map/ top navigation menu and place selector. Both are progressive
  * enhancement over links: without JavaScript the Desks word still links to
  * /desks/ and the place button simply does nothing. */
 
@@ -31,8 +30,8 @@ function mountMenu(root, { toggleAttr, panelAttr }) {
 }
 
 export function mountMapBars() {
-  for (const root of document.querySelectorAll("[data-desks-menu]"))
-    mountMenu(root, { toggleAttr: "data-desks-toggle", panelAttr: "data-desks-panel" });
+  for (const root of document.querySelectorAll("[data-site-menu]"))
+    mountMenu(root, { toggleAttr: "data-site-menu-toggle", panelAttr: "data-site-menu-panel" });
   for (const root of document.querySelectorAll("[data-place-selector]"))
     mountMenu(root, { toggleAttr: "data-place-button", panelAttr: "data-place-panel" });
 }
