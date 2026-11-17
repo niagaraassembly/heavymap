@@ -200,6 +200,40 @@ const money = (value) => new Intl.NumberFormat("en-CA", {
   style: "currency", currency: "CAD", maximumFractionDigits: 0,
 }).format(Number(value ?? 0));
 const area = (value) => `${Number(value ?? 0).toLocaleString("en-CA", { maximumFractionDigits: 0 })} m²`;
+const categoryDefinitions = [
+  ["industrial", "Industrial"],
+  ["logistics", "Logistics"],
+  ["commercial", "Commercial"],
+  ["multi_unit_residential", "Multi-unit residential"],
+  ["residential_all", "Residential"],
+];
+function sumMonthly(monthly, first, last) {
+  const rows = monthly.filter((row) => row.report_month >= first && row.report_month <= last);
+  const sum = (items) => items.reduce((total, item) => total + Number(item ?? 0), 0);
+  const totalFor = (key) => ({
+    unique_permits: sum(rows.map((row) => row[key]?.unique_permits)),
+    reported_construction_value_cad_sum: sum(rows.map((row) => row[key]?.reported_construction_value_cad_sum)),
+    reported_building_gfa_m2_sum: sum(rows.map((row) => row[key]?.reported_building_gfa_m2_sum)),
+  });
+  return {
+    citywide: {
+      unique_permits: sum(rows.map((row) => row.citywide.unique_permits)),
+      reported_construction_value_cad_sum: sum(rows.map((row) => row.citywide.reported_construction_value_cad_sum)),
+      reported_building_gfa_m2_sum: sum(rows.map((row) => row.citywide.reported_building_gfa_m2_sum)),
+    },
+    categories: Object.fromEntries(categoryDefinitions.map(([key]) => [key, totalFor(key)])),
+  };
+}
+function recordMatchesCategory(record, category) {
+  if (category === "all") return true;
+  const tags = (record.derived_sector_tags ?? []).map((tag) => String(tag?.tag ?? tag?.label ?? tag));
+  if (category === "industrial") return tags.includes("industrial");
+  if (category === "logistics") return tags.some((tag) => tag === "logistics" || tag === "warehouse_logistics");
+  if (category === "commercial") return tags.some((tag) => tag.startsWith("commercial"));
+  if (category === "multi_unit_residential") return tags.includes("residential_multi_unit") || tags.includes("multi_unit_residential");
+  if (category === "residential_all") return tags.some((tag) => tag.startsWith("residential"));
+  return false;
+}
 
 export function cityDevelopmentSheetElement(snapshot, { onBrowse } = {}) {
   const panel = el("section", undefined, "hm-development-sheet");
@@ -272,7 +306,8 @@ export function cityDevelopmentSheetElement(snapshot, { onBrowse } = {}) {
   return panel;
 }
 
-export function developmentRecordsBrowserElement(records, { onBack, onClose, sidebarTarget } = {}) {
+export function developmentRecordsBrowserElement(records, { onBack, onClose, sidebarTarget, snapshot } = {}) {
+  const isDashboard = Boolean(sidebarTarget && snapshot?.monthly?.length);
   const panel = el("section", undefined, "hm-development-browser");
   panel.setAttribute("aria-label", "Hamilton development records");
   const sidebar = sidebarTarget ?? el("aside", undefined, "hm-development-browser-sidebar");
@@ -295,21 +330,22 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose, sid
   const controls = el("div", undefined, "hm-development-browser-controls");
   const search = el("input");
   search.type = "search";
-  search.placeholder = "Permit, site, source type, or name";
-  search.setAttribute("aria-label", "Search all Hamilton development records");
+  search.placeholder = "Search permits, streets, businesses, or project descriptions";
+  search.setAttribute("aria-label", "Search Hamilton permit records");
   const filter = el("select");
-  filter.setAttribute("aria-label", "Filter development records");
-  for (const [value, label] of [["all", "All permit records"], ["focus", "Industrial, commercial, logistics & multi-unit"]]) {
+  filter.setAttribute("aria-label", "Filter by development category");
+  const filterOptions = isDashboard
+    ? [["all", "All categories"], ...categoryDefinitions.map(([key, label]) => [key, label])]
+    : [["all", "All permit records"], ["focus", "Industrial, commercial, logistics & multi-unit"]];
+  for (const [value, label] of filterOptions) {
     const option = el("option", label);
     option.value = value;
     filter.append(option);
   }
   controls.append(search, filter);
-  sidebar.append(controls);
 
   const resultStatus = el("p", "", "hm-development-browser-status");
   resultStatus.setAttribute("role", "status");
-  sidebar.append(resultStatus);
   const source = el("a", "City of Hamilton open data ↗", "hm-development-browser-source");
   source.href = "https://open.hamilton.ca/";
   source.target = "_blank";
@@ -317,6 +353,105 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose, sid
   sidebar.append(source);
 
   const main = el("div", undefined, "hm-development-browser-main");
+  let citySelect = null;
+  let fromMonth = null;
+  let toMonth = null;
+  let periodSelect = null;
+  let categoryCards = [];
+  if (isDashboard) {
+    const dashboard = el("section", undefined, "hm-development-dashboard");
+    dashboard.setAttribute("aria-label", "Hamilton development totals");
+    const dashboardHeading = el("h1", "Hamilton permit activity", "hm-visually-hidden");
+    dashboard.append(dashboardHeading);
+    const dashboardFilters = el("div", undefined, "hm-development-dashboard-filters");
+    const labeledControl = (label, control, className = "") => {
+      const wrap = el("label", label, `hm-development-dashboard-field ${className}`.trim());
+      wrap.append(control);
+      return wrap;
+    };
+    citySelect = el("select");
+    citySelect.setAttribute("aria-label", "City or region");
+    const placeOption = el("option", "Hamilton, Ontario");
+    placeOption.value = snapshot.jurisdiction ?? "ca/on/hamilton";
+    citySelect.append(placeOption);
+    citySelect.id = "hm-development-place";
+    periodSelect = el("select");
+    periodSelect.setAttribute("aria-label", "Time period");
+    for (const [value, label] of [
+      ["all", "All reporting months"], ["last12", "Latest 12 months"], ["2026", "2026"], ["2025", "2025"], ["custom", "Custom range"],
+    ]) {
+      const option = el("option", label);
+      option.value = value;
+      periodSelect.append(option);
+    }
+    fromMonth = el("input");
+    fromMonth.type = "month";
+    fromMonth.setAttribute("aria-label", "Start report month");
+    toMonth = el("input");
+    toMonth.type = "month";
+    toMonth.setAttribute("aria-label", "End report month");
+    fromMonth.value = snapshot.coverage.first_report_month;
+    toMonth.value = snapshot.coverage.last_report_month;
+    periodSelect.id = "hm-development-period";
+    const range = el("div", undefined, "hm-development-month-range");
+    range.append(fromMonth, el("span", "to"), toMonth);
+    const totalsToggle = el("button", "Hide totals", "hm-development-dashboard-toggle");
+    totalsToggle.type = "button";
+    totalsToggle.setAttribute("aria-expanded", "true");
+    totalsToggle.setAttribute("aria-controls", "hm-development-dashboard-summary");
+    dashboardFilters.append(
+      labeledControl("City / region", citySelect),
+      labeledControl("Report period", periodSelect),
+      labeledControl("From · to", range, "hm-development-dashboard-range"),
+      totalsToggle,
+    );
+    dashboard.append(dashboardFilters);
+
+    const summary = el("div", undefined, "hm-development-dashboard-summary");
+    summary.id = "hm-development-dashboard-summary";
+    const metrics = el("div", undefined, "hm-development-dashboard-metrics");
+    for (const [key, label] of [["permits", "Permits issued"], ["value", "Reported construction value"], ["gfa", "Measured building area"]]) {
+      const card = el("article", undefined, "hm-development-dashboard-metric");
+      card.append(el("span", label), el("strong", "—"));
+      card.dataset.metric = key;
+      metrics.append(card);
+    }
+    summary.append(metrics);
+
+    const categories = el("div", undefined, "hm-development-dashboard-categories");
+    categoryCards = categoryDefinitions.map(([key, label]) => {
+      const card = el("button", undefined, "hm-development-category-card");
+      card.type = "button";
+      card.dataset.category = key;
+      card.setAttribute("aria-pressed", "false");
+      card.append(el("span", label), el("strong", "—"), el("small", "permits"), el("span", "—", "hm-development-category-value"));
+      card.addEventListener("click", () => {
+        filter.value = filter.value === key ? "all" : key;
+        visibleCount = 48;
+        update();
+      });
+      categories.append(card);
+      return card;
+    });
+    summary.append(categories);
+    summary.append(el("p", "Category totals can overlap. Reported permit values are not realized investment, and issue dates do not show current project status.", "hm-development-dashboard-note"));
+    dashboard.append(summary);
+    totalsToggle.addEventListener("click", () => {
+      summary.hidden = !summary.hidden;
+      totalsToggle.textContent = summary.hidden ? "Show totals" : "Hide totals";
+      totalsToggle.setAttribute("aria-expanded", String(!summary.hidden));
+    });
+    main.append(dashboard);
+
+    const toolbar = el("div", undefined, "hm-development-browser-toolbar");
+    toolbar.append(controls, resultStatus);
+    main.append(toolbar);
+    sidebarTarget.append(source);
+  } else {
+    search.placeholder = "Permit, site, source type, or name";
+    search.setAttribute("aria-label", "Search all Hamilton development records");
+    sidebar.append(controls, resultStatus);
+  }
   const list = el("div", undefined, "hm-development-browser-list");
   main.append(list);
   const paging = el("div", undefined, "hm-development-browser-paging");
@@ -324,7 +459,10 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose, sid
   const next = el("button", "Next →", "hm-development-page");
   previous.type = next.type = "button";
   const position = el("span");
-  paging.append(previous, position, next);
+  if (isDashboard) {
+    next.textContent = "Load 48 more permits";
+    paging.append(next);
+  } else paging.append(previous, position, next);
   main.append(paging);
   if (sidebarTarget) panel.append(main);
   else panel.append(sidebar, main);
@@ -432,26 +570,60 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose, sid
 
   const pageSize = 50;
   let page = 0;
+  let visibleCount = 48;
   function update() {
     const query = search.value.trim().toLocaleLowerCase();
-    const focusOnly = filter.value === "focus";
+    const first = fromMonth?.value || snapshot?.coverage?.first_report_month || "0000-00";
+    const last = toMonth?.value || snapshot?.coverage?.last_report_month || "9999-99";
     const matches = records.filter((record) => {
-      if (focusOnly && !(record.derived_sector_tags ?? []).some((tag) => FOCUS_SECTORS.has(tag.tag ?? tag.label ?? tag))) return false;
+      if (isDashboard && (record.report_month < first || record.report_month > last)) return false;
+      if (isDashboard && !recordMatchesCategory(record, filter.value)) return false;
+      if (!isDashboard && filter.value === "focus" && !(record.derived_sector_tags ?? []).some((tag) => FOCUS_SECTORS.has(tag.tag ?? tag.label ?? tag))) return false;
       if (!query) return true;
       return [
         ...Object.values(record.source_fields ?? {}).flatMap((field) => [field.value, field.source_text]),
-        ...record.derived_sector_tags,
-        ...record.derived_action_tags,
+        ...(record.derived_sector_tags ?? []).map((tag) => tag?.label ?? tag?.tag ?? tag),
+        ...(record.derived_action_tags ?? []).map((tag) => tag?.label ?? tag?.tag ?? tag),
       ].some((value) => String(value ?? "").toLocaleLowerCase().includes(query));
     });
-    const pageCount = Math.max(1, Math.ceil(matches.length / pageSize));
-    page = Math.min(page, pageCount - 1);
-    resultStatus.textContent = `${number(matches.length)} ${matches.length === 1 ? "record" : "records"} · showing ${matches.length ? page * pageSize + 1 : 0}–${Math.min((page + 1) * pageSize, matches.length)}`;
-    position.textContent = `Page ${page + 1} of ${pageCount}`;
-    previous.disabled = page === 0;
-    next.disabled = page + 1 >= pageCount;
+    if (isDashboard) {
+      const aggregate = first === snapshot.coverage.first_report_month && last === snapshot.coverage.last_report_month
+        ? { citywide: snapshot.citywide_totals, categories: snapshot.category_totals }
+        : sumMonthly(snapshot.monthly, first, last);
+      const metricValues = {
+        permits: number(aggregate.citywide.unique_permits),
+        value: money(aggregate.citywide.reported_construction_value_cad_sum),
+        gfa: area(aggregate.citywide.reported_building_gfa_m2_sum),
+      };
+      for (const [key, value] of Object.entries(metricValues)) {
+        const target = main.querySelector(`[data-metric="${key}"] strong`);
+        if (target) target.textContent = value;
+      }
+      for (const card of categoryCards) {
+        const key = card.dataset.category;
+        const total = aggregate.categories[key] ?? {};
+        card.querySelector("strong").textContent = number(total.unique_permits);
+        card.querySelector(".hm-development-category-value").textContent = money(total.reported_construction_value_cad_sum);
+        card.setAttribute("aria-pressed", String(filter.value === key));
+        card.classList.toggle("is-active", filter.value === key);
+      }
+      const shown = Math.min(visibleCount, matches.length);
+      resultStatus.textContent = `${number(matches.length)} matching permits · showing ${number(shown)}`;
+      next.textContent = matches.length > visibleCount ? `Load ${Math.min(48, matches.length - visibleCount)} more permits` : "All matching permits shown";
+      next.disabled = matches.length <= visibleCount;
+      paging.hidden = matches.length <= visibleCount;
+    } else {
+      const pageCount = Math.max(1, Math.ceil(matches.length / pageSize));
+      page = Math.min(page, pageCount - 1);
+      resultStatus.textContent = `${number(matches.length)} ${matches.length === 1 ? "record" : "records"} · showing ${matches.length ? page * pageSize + 1 : 0}–${Math.min((page + 1) * pageSize, matches.length)}`;
+      position.textContent = `Page ${page + 1} of ${pageCount}`;
+      previous.disabled = page === 0;
+      next.disabled = page + 1 >= pageCount;
+    }
     list.replaceChildren();
-    const pageRecords = matches.slice(page * pageSize, (page + 1) * pageSize);
+    const pageRecords = isDashboard
+      ? matches.slice(0, visibleCount)
+      : matches.slice(page * pageSize, (page + 1) * pageSize);
     if (!pageRecords.length) list.append(el("p", "No permit records match these search and filter settings.", "hm-development-browser-empty"));
     for (const record of pageRecords) {
       const row = el("button", undefined, "hm-development-browser-item");
@@ -459,6 +631,8 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose, sid
       row.setAttribute("aria-haspopup", "dialog");
       const identity = el("span", undefined, "hm-development-browser-item-identity");
       identity.append(el("strong", permitNumber(record) || "Permit record"), el("span", record.source_fields?.location_text?.value || "Location not available"));
+      const description = record.source_fields?.permit_description?.value || record.source_fields?.work_type?.value;
+      if (description) identity.append(el("span", String(description), "hm-development-browser-item-description"));
       const meta = el("span", undefined, "hm-development-browser-item-meta");
       meta.append(el("time", record.report_month || "—"));
       const value = record.source_fields?.construction_value?.value;
@@ -471,10 +645,37 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose, sid
       list.append(row);
     }
   }
-  search.addEventListener("input", () => { page = 0; update(); });
-  filter.addEventListener("change", () => { page = 0; update(); });
+  search.addEventListener("input", () => { page = 0; visibleCount = 48; update(); });
+  filter.addEventListener("change", () => { page = 0; visibleCount = 48; update(); });
   previous.addEventListener("click", () => { page--; update(); });
-  next.addEventListener("click", () => { page++; update(); });
+  next.addEventListener("click", () => {
+    if (isDashboard) visibleCount += 48;
+    else page++;
+    update();
+  });
+  if (isDashboard) {
+    const setRange = (first, last) => {
+      fromMonth.value = first;
+      toMonth.value = last;
+      visibleCount = 48;
+      update();
+    };
+    periodSelect.addEventListener("change", () => {
+      const months = snapshot.monthly.map((row) => row.report_month);
+      if (periodSelect.value === "all") setRange(snapshot.coverage.first_report_month, snapshot.coverage.last_report_month);
+      else if (periodSelect.value === "last12") setRange(months[Math.max(0, months.length - 12)], months.at(-1));
+      else if (["2025", "2026"].includes(periodSelect.value)) {
+        const yearMonths = months.filter((month) => month.startsWith(periodSelect.value));
+        setRange(yearMonths[0] ?? snapshot.coverage.first_report_month, yearMonths.at(-1) ?? snapshot.coverage.last_report_month);
+      } else update();
+    });
+    for (const input of [fromMonth, toMonth]) input.addEventListener("change", () => {
+      periodSelect.value = "custom";
+      visibleCount = 48;
+      update();
+    });
+    citySelect.addEventListener("change", update);
+  }
   update();
   return panel;
 }

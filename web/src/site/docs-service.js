@@ -580,14 +580,20 @@ async function mountDevelopmentLibrary({ rail, content, status }) {
     if (status) status.textContent = "Hamilton permit records could not be loaded.";
     return;
   }
-  const recordsResult = await developmentLoader.allRecords();
+  const [recordsResult, snapshotResult] = await Promise.all([
+    developmentLoader.allRecords(),
+    developmentLoader.citySnapshot(),
+  ]);
   if (!recordsResult.ok) {
     loading.textContent = "The published Hamilton permit records failed verification and could not be displayed.";
     if (status) status.textContent = "Hamilton permit records failed verification.";
     return;
   }
 
-  const browser = developmentRecordsBrowserElement(recordsResult.records, { sidebarTarget: rail });
+  const browser = developmentRecordsBrowserElement(recordsResult.records, {
+    sidebarTarget: rail,
+    snapshot: snapshotResult.ok ? snapshotResult.snapshot : null,
+  });
   browser.classList.add("hm-development-browser-page");
   content.replaceChildren(browser);
   if (status) status.textContent = `${recordsResult.records.length.toLocaleString("en-CA")} published Hamilton permit records are ready.`;
