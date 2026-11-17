@@ -139,6 +139,21 @@ function sourceList(labels, entries) {
   return [...seen.values()];
 }
 
+/** Provenance for one fact row: source, join method and confidence, each
+ * resolved through the label register. Empty join or confidence stays
+ * empty — the disclosure shows only what the record carries. */
+function provenance(labels, src, join, conf) {
+  if (!src) return null;
+  return {
+    source: src,
+    sourceLabel: label(labels, `dossier.source.${src}`, {}, src),
+    join: join ?? "",
+    joinText: join ? label(labels, `states.join.${join}`, {}, join) : "",
+    conf: conf ?? "",
+    confText: conf ? label(labels, `states.conf.${conf}`, {}, conf) : "",
+  };
+}
+
 /**
  * Summarise one schema 2 core record and its optional detail record.
  * `labels` is the result of `createLabels`/`loadLabels`; `sources` is the
@@ -227,13 +242,72 @@ export function summariseRecord(core, detail, labels, { sources } = {}) {
     [core.overlays.src, rows.map((_, i) => `/overlays/rows/${i}`)],
   ];
   const sourcesSummary = sourceList(labels, sourceEntries);
+  const area = formatArea(core.area.value);
+  const overlayProvenance = provenance(labels, core.overlays.src, core.overlays.join, "");
+  const landFact = (id, labelKey, classes) => ({
+    id,
+    label: label(labels, labelKey, {}, labelKey),
+    value: classes[0] ? classes[0].class : label(labels, "parcel.none_found", {}, "None found"),
+    sub: classes[0] ? classes[0].shareText : "",
+    share: classes[0] ? classes[0].share : null,
+    provenance: overlayProvenance,
+  });
+  /* Fact rows for the workspace record (design §5.4): label, value, share
+   * bar, and the provenance a click discloses in place. */
+  const facts = [
+    {
+      id: "area",
+      label: label(labels, "parcel.tile.area", {}, "Area"),
+      value: `${core.area.value.toLocaleString("en-CA")} m²`,
+      sub: `${area.ha.toFixed(2)} ha · ${area.acres.toFixed(2)} acres`,
+      share: null,
+      provenance: provenance(labels, core.area.src, core.area.join, core.area.conf),
+    },
+    {
+      id: "roll",
+      label: label(labels, "parcel.identity.roll", {}, "Roll number"),
+      value: roll ? formatArn(roll.arn) : coverageText,
+      sub: roll ? label(labels, `dossier.grade.${roll.grade}`, {}, roll.grade) : "",
+      share: null,
+      provenance: roll
+        ? provenance(labels, roll.src, roll.join, roll.conf)
+        : provenance(labels, core.coverage.src, core.coverage.join, core.coverage.conf),
+    },
+    landFact("zoning", "parcel.field.zoning", zoning),
+    landFact("plan_use", "parcel.field.plan_use", planUse),
+    {
+      id: "boundary",
+      label: label(labels, "parcel.field.boundary", {}, "Boundary"),
+      value: boundary[0] ? boundary[0].value : label(labels, "parcel.none_found", {}, "None found"),
+      sub: boundary[0] ? boundary[0].shareText : "",
+      share: boundary[0] ? boundary[0].share : null,
+      provenance: overlayProvenance,
+    },
+    {
+      id: "constraints",
+      label: label(labels, "parcel.workspace.fact.constraints", {}, "Constraints"),
+      value: firstRegulated
+        ? firstRegulated.name
+        : label(
+            labels,
+            "parcel.workspace.constraints.none",
+            { n: checkedAgainst.length },
+            `None found in the ${checkedAgainst.length} regulation layers checked`,
+          ),
+      sub: firstRegulated ? label(labels, "parcel.checked.inside", {}, "inside") : "",
+      share: null,
+      provenance: overlayProvenance,
+    },
+  ];
 
   return {
     key,
     shortKey: shortKey(key),
     title,
     subtitle,
-    area: formatArea(core.area.value),
+    locality,
+    area,
+    facts,
     land: { zoning, planUse, boundary },
     setting: {
       boundary: boundary[0]?.class ?? null,

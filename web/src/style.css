@@ -1476,3 +1476,342 @@ h2 {
     top: 70px;
   }
 }
+
+/* ---- Parcel workspace (BL-118, parcel-views design §5.4) ---- */
+/* Fills the map window with a margin; both nav bars stay. The side tray
+ * and the intro are hidden while it is open — the workspace is the map
+ * window for as long as it is up. */
+.has-parcel-workspace .intro {
+  opacity: 0;
+}
+.has-parcel-workspace #tray,
+.has-parcel-workspace #tray-toggle {
+  display: none;
+}
+.parcel-workspace {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  bottom: 64px;
+  background: var(--surface-raised);
+  border: 1px solid var(--rule-soft);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px var(--shadow);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+.parcel-ws-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px 12px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+  flex: none;
+}
+.parcel-ws-titles {
+  min-width: 0;
+}
+.parcel-ws-crumb {
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.parcel-ws-titles .parcel-title {
+  font-size: 22px;
+}
+.parcel-ws-switch {
+  display: none;
+}
+.parcel-ws-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 0;
+  flex: 1;
+  min-height: 0;
+}
+.parcel-ws-record {
+  overflow-y: auto;
+  padding: 6px 20px 16px;
+  border-right: 1px solid var(--line);
+  min-width: 0;
+}
+.parcel-ws-fact-btn {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 2px 12px;
+  align-items: baseline;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 9px 2px;
+  font: inherit;
+  cursor: pointer;
+}
+.parcel-ws-fact-btn:hover {
+  background: var(--surface-tint);
+}
+.parcel-ws-fact-label {
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+.parcel-ws-fact-btn strong {
+  font-size: 13.5px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.parcel-ws-fact-btn em {
+  grid-column: 2;
+  font-style: normal;
+  font-size: 12px;
+  color: var(--muted);
+}
+.parcel-ws-fact-btn .parcel-bar {
+  grid-column: 2;
+  margin: 2px 0;
+}
+.parcel-ws-fact-src {
+  font-size: 12px;
+  color: var(--muted);
+  padding: 8px 2px 10px;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+.parcel-ws-sec-btn {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 11px 2px;
+  font: inherit;
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+.parcel-ws-sec-btn:hover {
+  background: var(--surface-tint);
+}
+.parcel-ws-caret {
+  font-style: normal;
+  color: var(--muted);
+  font-size: 11px;
+  width: 12px;
+  flex: none;
+}
+.parcel-ws-sec-btn em {
+  font-style: normal;
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: auto;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.parcel-ws-sec-body {
+  padding: 4px 2px 12px;
+  font-size: 12.5px;
+}
+.parcel-ws-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.parcel-ws-list li {
+  padding: 3px 0;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+.parcel-ws-list li:last-child {
+  border-bottom: 0;
+}
+.parcel-ws-partial {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 6px 0;
+}
+.parcel-ws-filter {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 7px 10px;
+  font: inherit;
+  font-size: 12.5px;
+  margin: 6px 0 2px;
+}
+.parcel-ws-filter-count {
+  color: var(--muted);
+  font-size: 11.5px;
+  margin: 2px 0 6px;
+  min-height: 14px;
+}
+.parcel-ws-work {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+.parcel-ws-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 10px 16px 0;
+  border-bottom: 1px solid var(--line);
+  flex: none;
+  flex-wrap: wrap;
+}
+.parcel-ws-tab {
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 10px;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.parcel-ws-tab[aria-selected="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--deep);
+}
+.parcel-ws-tab-count {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  background: var(--surface-tint);
+  border-radius: 9px;
+  padding: 1px 7px;
+}
+.parcel-ws-notes {
+  overflow-y: auto;
+  padding: 12px 16px 16px;
+  min-height: 0;
+}
+.parcel-ws-ondevice {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0 0 10px;
+}
+.parcel-ws-compose textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 9px 11px;
+  font: inherit;
+  font-size: 13px;
+  resize: vertical;
+  min-height: 64px;
+}
+.parcel-ws-compose-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+.parcel-ws-note-list {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+}
+.parcel-ws-note {
+  border-top: 1px solid var(--line);
+  padding: 10px 0;
+}
+.parcel-ws-note p {
+  margin: 0 0 4px;
+  font-size: 13px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.parcel-ws-note small {
+  color: var(--muted);
+  font-size: 11.5px;
+}
+.parcel-ws-empty {
+  color: var(--muted);
+  font-size: 12.5px;
+  margin: 14px 0 0;
+}
+.parcel-ws-coming-pane {
+  padding: 16px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.parcel-ws-coming-pane p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+@media (max-width: 900px) {
+  .parcel-workspace {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+  .parcel-ws-head {
+    padding: 10px 14px;
+  }
+  .parcel-ws-titles .parcel-title {
+    font-size: 18px;
+  }
+  .parcel-ws-switch {
+    display: flex;
+    gap: 6px;
+    padding: 10px 14px 0;
+    flex: none;
+  }
+  .parcel-ws-switch-btn {
+    flex: 1;
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 9px;
+    padding: 8px;
+    font: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .parcel-ws-switch-btn[aria-pressed="true"] {
+    background: var(--deep);
+    border-color: var(--deep);
+    color: #fff;
+  }
+  .parcel-ws-cols {
+    grid-template-columns: 1fr;
+  }
+  .parcel-workspace[data-mobile-pane="record"] .parcel-ws-work {
+    display: none;
+  }
+  .parcel-workspace[data-mobile-pane="notes"] .parcel-ws-record {
+    display: none;
+  }
+  .parcel-ws-record {
+    border-right: 0;
+    padding: 6px 14px 16px;
+  }
+  .parcel-ws-fact-btn {
+    grid-template-columns: 104px 1fr;
+  }
+}

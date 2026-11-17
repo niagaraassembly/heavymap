@@ -60,8 +60,11 @@ try {
   }));
   check("typical parcel needs no scrolling in drawer", drawerScroll.scroll <= 1, `h=${drawerScroll.h} overflow=${drawerScroll.scroll}`);
   const saveDisabled = await page.locator('.parcel-drawer .parcel-btn:has-text("Save")').isDisabled();
+  const exportDisabled = await page.locator('.parcel-drawer .parcel-btn:has-text("Export")').isDisabled();
+  const noteEnabled = await page.locator('.parcel-drawer .parcel-btn:has-text("Note")').isEnabled();
+  const workspaceEnabled = await page.locator('.parcel-drawer .parcel-btn-pri:has-text("Open workspace")').isEnabled();
   const coming = await page.locator(".parcel-drawer .parcel-coming").count();
-  check("Save/Note/Export/workspace disabled with coming", saveDisabled && coming >= 4, `coming tags=${coming}`);
+  check("Save/Export disabled with coming; Note/Open workspace enabled (BL-118)", saveDisabled && exportDisabled && noteEnabled && workspaceEnabled && coming === 2, `coming tags=${coming}`);
   const copyEnabled = await page.locator('.parcel-drawer .parcel-btn:has-text("Copy link")').isEnabled();
   check("Copy link enabled", copyEnabled);
   await page.screenshot({ path: `${SHOTS}parcel-drawer-desktop.png` });

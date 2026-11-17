@@ -8,6 +8,10 @@
  * disabled with "coming" — the workspace is BL-118. Report a problem
  * appears only when a feedback target is configured (BL-107); there is
  * none yet, so it is hidden.
+ *
+ * Phase 2 (BL-118): pass onOpenWorkspace(tab) and the Note and Open
+ * workspace buttons open the workspace (Note lands on the Notes tab).
+ * Without it the buttons stay disabled, as in phase 1.
  */
 
 import { el } from "./dossier.js";
@@ -16,7 +20,7 @@ const fmtM2 = (m2) => `${m2.toLocaleString("en-CA")} m²`;
 const fmtUnits = (area) => `${area.ha.toFixed(2)} ha · ${area.acres.toFixed(2)} acres`;
 
 /** Outline of the clicked parcel, or a neutral placeholder with no geometry. */
-function thumbnail(geometry) {
+export function thumbnail(geometry) {
   const wrap = el("div", undefined, "parcel-thumb");
   const ring =
     geometry?.type === "Polygon"
@@ -49,18 +53,45 @@ function thumbnail(geometry) {
   return wrap;
 }
 
-function comingTag() {
+export function comingTag() {
   const tag = el("span", "coming", "parcel-coming");
   tag.setAttribute("aria-hidden", "true");
   return tag;
 }
 
-function disabledAction(text) {
+export function disabledAction(text) {
   const button = el("button", undefined, "parcel-btn");
   button.disabled = true;
   button.append(el("span", text));
   button.append(comingTag());
   return button;
+}
+
+/** Copy-link button: copies the drawer deep link for this parcel. Shared
+ * by the drawer and the workspace header (BL-118). */
+export function copyLinkButton(summary) {
+  const copy = el("button", undefined, "parcel-btn");
+  copy.append(el("span", "⧉ Copy link"));
+  copy.addEventListener("click", async () => {
+    const url = `${location.origin}${location.pathname}#parcel=${encodeURIComponent(summary.key)}`;
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      const area = document.createElement("textarea");
+      area.value = url;
+      document.body.append(area);
+      area.select();
+      try {
+        document.execCommand("copy");
+      } catch {
+        /* clipboard unavailable; the link stays visible in the address bar */
+      }
+      area.remove();
+    }
+    copy.replaceChildren(el("span", "Copied"));
+    setTimeout(() => copy.replaceChildren(el("span", "⧉ Copy link")), 1500);
+  });
+  return copy;
 }
 
 function fact(labelText, big, sub) {
@@ -172,7 +203,7 @@ function tileHeading(text) {
 }
 
 /** Dense record drawer rising from the bottom (design §5.3). */
-export function parcelDrawerElement(summary, labels, { geometry, releaseId, feedbackUrl, onClose }) {
+export function parcelDrawerElement(summary, labels, { geometry, releaseId, feedbackUrl, onClose, onOpenWorkspace }) {
   const drawer = el("section", undefined, "parcel-drawer");
   drawer.setAttribute("role", "region");
   drawer.setAttribute("aria-label", "Parcel record");
@@ -222,30 +253,16 @@ export function parcelDrawerElement(summary, labels, { geometry, releaseId, feed
 
   const actions = el("div", undefined, "parcel-actions");
   actions.append(disabledAction("☆ Save"));
-  actions.append(disabledAction("✎ Note"));
+  if (onOpenWorkspace) {
+    const note = el("button", undefined, "parcel-btn");
+    note.append(el("span", "✎ Note"));
+    note.addEventListener("click", () => onOpenWorkspace("notes"));
+    actions.append(note);
+  } else {
+    actions.append(disabledAction("✎ Note"));
+  }
   actions.append(disabledAction("⤓ Export"));
-  const copy = el("button", undefined, "parcel-btn");
-  copy.append(el("span", "⧉ Copy link"));
-  copy.addEventListener("click", async () => {
-    const url = `${location.origin}${location.pathname}#parcel=${encodeURIComponent(summary.key)}`;
-    try {
-      await navigator.clipboard.writeText(url);
-    } catch {
-      const area = document.createElement("textarea");
-      area.value = url;
-      document.body.append(area);
-      area.select();
-      try {
-        document.execCommand("copy");
-      } catch {
-        /* clipboard unavailable; the link stays visible in the address bar */
-      }
-      area.remove();
-    }
-    copy.replaceChildren(el("span", "Copied"));
-    setTimeout(() => copy.replaceChildren(el("span", "⧉ Copy link")), 1500);
-  });
-  actions.append(copy);
+  actions.append(copyLinkButton(summary));
   if (feedbackUrl) {
     const report = el("a", "⚑ Report a problem", "parcel-btn");
     report.href = feedbackUrl;
@@ -253,9 +270,16 @@ export function parcelDrawerElement(summary, labels, { geometry, releaseId, feed
     report.rel = "noreferrer";
     actions.append(report);
   }
-  const workspace = disabledAction("Open workspace ⤢");
-  workspace.classList.add("parcel-btn-pri");
-  actions.append(workspace);
+  if (onOpenWorkspace) {
+    const workspace = el("button", undefined, "parcel-btn parcel-btn-pri");
+    workspace.append(el("span", "Open workspace ⤢"));
+    workspace.addEventListener("click", () => onOpenWorkspace("notes"));
+    actions.append(workspace);
+  } else {
+    const workspace = disabledAction("Open workspace ⤢");
+    workspace.classList.add("parcel-btn-pri");
+    actions.append(workspace);
+  }
   const close = el("button", "✕", "parcel-btn-ico");
   close.setAttribute("aria-label", "Close record");
   close.addEventListener("click", onClose);
