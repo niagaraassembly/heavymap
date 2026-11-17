@@ -86,7 +86,11 @@ export async function mountDocsService(root) {
   if (!root) return;
   const library = root.querySelector("[data-docs-library]");
   const list = root.querySelector("[data-docs-list]");
-  const search = root.querySelector("[data-docs-search]");
+  const search = document.querySelector("[data-docs-search]");
+  const headerLibrary = document.querySelector("[data-docs-header-library]");
+  const headerDocument = document.querySelector("[data-docs-header-document]");
+  const headerNew = document.querySelector("[data-docs-create]");
+  const headerActions = document.querySelector("[data-docs-header-editor]");
   const projectFilter = root.querySelector("[data-docs-project-filter]");
   const templateSelect = root.querySelector("[data-docs-template]");
   const templateDescription = root.querySelector("[data-docs-template-description]");
@@ -155,6 +159,12 @@ export async function mountDocsService(root) {
     detail.append(empty);
     empty.hidden = false;
     library.classList.remove("is-writing");
+    headerLibrary.hidden = false;
+    headerDocument.hidden = true;
+    headerDocument.replaceChildren();
+    headerNew.hidden = false;
+    headerActions.hidden = true;
+    headerActions.replaceChildren();
     renderList();
   }
 
@@ -190,10 +200,16 @@ export async function mountDocsService(root) {
     empty.hidden = true;
     library.classList.add("is-writing");
     detail.replaceChildren();
-    const top = el("div", undefined, "hm-docs-editor-toolbar");
-    top.append(button("← Library", showEmpty, "hm-docs-back"));
+    headerLibrary.hidden = true;
+    headerDocument.hidden = false;
+    headerNew.hidden = true;
+    headerActions.hidden = false;
+    headerDocument.replaceChildren();
+    headerActions.replaceChildren();
     const heading = el("div", undefined, "hm-docs-editor-title");
-    heading.append(el("span", activeDoc.parcelKey || "Site project", "hm-docs-kicker"));
+    const parcelKey = el("span", activeDoc.parcelKey || "Site project", "hm-docs-document-id");
+    parcelKey.title = activeDoc.parcelKey || "Site project";
+    heading.append(parcelKey);
     const title = document.createElement("input");
     title.value = activeDoc.title || "Untitled document";
     title.maxLength = 180;
@@ -201,12 +217,14 @@ export async function mountDocsService(root) {
     title.setAttribute("aria-label", "Document title");
     title.addEventListener("input", () => { activeDoc.title = title.value; saveSoon(); });
     heading.append(title);
-    top.append(heading);
+    headerDocument.append(heading);
     const state = el("span", editing ? "EDITING" : "READING", "hm-docs-mode");
-    top.append(state, el("span", "Saved on this device", "hm-docs-save-status"));
-    if (editing) top.append(button("Done", async () => { await persist(); editing = false; renderDocument(); }, "hm-docs-primary"));
-    else top.append(button("Edit document", () => { editing = true; renderDocument(); }, "hm-docs-primary"));
-    detail.append(top);
+    const back = button("←", showEmpty, "hm-docs-back");
+    back.setAttribute("aria-label", "Back to document library");
+    back.title = "Back to document library";
+    headerActions.append(back, state, el("span", "Saved on this device", "hm-docs-save-status"));
+    if (editing) headerActions.append(button("Done", async () => { await persist(); editing = false; renderDocument(); }, "hm-docs-primary"));
+    else headerActions.append(button("Edit document", () => { editing = true; renderDocument(); }, "hm-docs-primary"));
 
     const workspace = el("div", undefined, "hm-docs-editor-workspace");
     const outline = el("aside", undefined, "hm-docs-outline");
@@ -327,7 +345,7 @@ export async function mountDocsService(root) {
     projects.focus({ preventScroll: true });
   }
 
-  root.querySelectorAll("[data-docs-create]").forEach((control) => control.addEventListener("click", openCreateDialog));
+  document.querySelectorAll("[data-docs-create]").forEach((control) => control.addEventListener("click", openCreateDialog));
   root.querySelector("[data-docs-project]").addEventListener("change", (event) => {
     const parcelId = root.querySelector("[data-docs-parcel-id]");
     parcelId.textContent = event.currentTarget.value ? `Parcel ID · ${event.currentTarget.value}` : "";

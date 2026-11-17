@@ -498,9 +498,8 @@ export function docsIntro() {
     description: "Create and organize site plans, project notes, and evidence for HeavyMap parcel projects.",
     bodyClass: "hm-docs-service-page",
     main: `<section class="hm-docs-service" data-docs-service>
-      <header class="hm-docs-home-head"><button type="button" class="hm-docs-primary hm-docs-new" data-docs-create><span aria-hidden="true">＋</span> New document</button></header>
       <div class="hm-docs-library" data-docs-library>
-        <aside class="hm-docs-library-rail"><label class="hm-docs-search"><span aria-hidden="true">⌕</span><input type="search" maxlength="120" placeholder="Search documents" aria-label="Search documents" data-docs-search></label><label class="hm-docs-filter-label hm-visually-hidden" for="hm-docs-project-filter">Site project</label><select id="hm-docs-project-filter" data-docs-project-filter><option value="all">All site projects</option></select><div class="hm-docs-library-count" data-docs-count aria-live="polite">Loading documents…</div><div class="hm-docs-list" data-docs-list></div></aside>
+        <aside class="hm-docs-library-rail"><label class="hm-docs-filter-label hm-visually-hidden" for="hm-docs-project-filter">Site project</label><select id="hm-docs-project-filter" data-docs-project-filter><option value="all">All site projects</option></select><div class="hm-docs-library-count" data-docs-count aria-live="polite">Loading documents…</div><div class="hm-docs-list" data-docs-list></div></aside>
         <section class="hm-docs-detail" data-docs-detail aria-label="Document workspace"><div class="hm-docs-empty-state" data-docs-empty aria-label="No document selected"></div></section>
       </div>
       <p class="hm-docs-status" data-docs-status role="status" aria-live="polite">Your documents stay on this device.</p>
