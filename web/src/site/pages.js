@@ -410,11 +410,24 @@ export function tombstone(c, item) {
 
 /* ---- Reader shell: a working list without JavaScript; spec C adds the rest */
 
+/** One story card. reader-page.js renders the same markup in the browser. */
+export function newsCard({ id, href, eyebrow, badge, title, summary, foot }) {
+  return `<li><a class="hm-news-card library-item" href="${esc(href)}" data-id="${esc(id)}"><span class="hm-news-card-eyebrow">${esc(eyebrow)}<i>${esc(badge)}</i></span><strong>${esc(title)}</strong>${summary ? `<p>${esc(summary)}</p>` : ""}${foot ? `<small>${esc(foot)}</small>` : ""}</a></li>`;
+}
+
 export function readerPage(c) {
   const list = newsNewestFirst(c)
     .map((i) => {
       const ed = c.editions.get(i.editions?.[0]);
-      return `<li><a class="library-item" href="/read/${esc(i.id)}/" data-id="${esc(i.id)}"><span>${esc(ed ? `${regionOf(c, ed.desk)?.name} · ${ed.title}` : "HeavyMap")}<i>${esc(c.labels.types[i.type])}</i></span><strong>${esc(i.title)}</strong><small>${esc(longDate(i.published_on))}</small></a></li>`;
+      return newsCard({
+        id: i.id,
+        href: `/read/${i.id}/`,
+        eyebrow: ed ? `${regionOf(c, ed.desk)?.name} · ${ed.title}` : "HeavyMap",
+        badge: c.labels.types[i.type] ?? i.type,
+        title: i.title,
+        summary: i.summary,
+        foot: [longDate(i.published_on), i.place, i.entity?.name].filter(Boolean).join(" · "),
+      });
     })
     .join("");
   const kinds = ["news", "finding", "documentation", "editorial", "all"];
@@ -426,13 +439,18 @@ export function readerPage(c) {
     ),
     `<option value="heavymap">HeavyMap</option>`,
   ].join("");
+  const kindButtons = kinds
+    .map((k) => `<button type="button" class="hm-news-kind" data-kind="${k}" aria-pressed="false"><span>${esc(kindLabel[k])}</span><small data-kind-count></small></button>`)
+    .join("");
+  // Filters in the rail, story cards in the main window, and one story at a
+  // time in a dialog over the whole workspace (both nav bars stay in view).
   return {
     path: "/reader/",
     title: "Reader",
     description:
       "Every HeavyMap story in one place, with your place kept in this browser.",
     bodyClass: "hm-reader hm-docs-service-page",
-    main: `<section class="reader-page study-wrap" data-reader><header class="reader-heading"><div><p class="eyebrow">A single door into HeavyMap</p><h1>Reader</h1></div><p>News first; findings, editorials and documentation when you want to go deeper. Your place is remembered in this browser only.</p></header><div class="reader-types" role="group" aria-label="Material" data-reader-controls hidden>${kinds.map((k) => `<button type="button" data-kind="${k}" aria-pressed="false">${esc(kindLabel[k])}</button>`).join("")}</div><button type="button" class="reader-library-toggle" id="reader-library-toggle" aria-expanded="true" aria-controls="reader-library" hidden>Browse &amp; filter <span aria-hidden="true">−</span></button><div class="reader-workspace"><aside id="reader-library" class="reader-library" aria-label="Reader library"><div data-reader-controls hidden><div class="reader-filter-row"><label for="reader-region">Region</label><select id="reader-region">${regionOptions}</select></div><label class="hm-visually-hidden" for="reader-search">Search the library</label><input id="reader-search" type="search" maxlength="120" placeholder="Search the library…" autocomplete="off"><label class="unread-option"><input id="reader-unread" type="checkbox"> Unread only</label></div><p class="hm-reader-notice" data-reader-notice hidden></p><div class="library-count" id="library-count" role="status"></div><ol id="reader-list" class="reader-list">${list}</ol><div class="reader-storage" data-reader-controls hidden><p data-storage-note>Your place and filters stay on this device.</p><button type="button" data-forget>Forget reading history</button><div data-forget-confirm hidden><p>Forget what you've read on this device? Your theme stays as it is.</p><button type="button" data-forget-yes>Forget</button> <button type="button" data-forget-no>Cancel</button></div></div></aside><div class="reader-document" data-reader-document><div class="document-navigation" hidden><button type="button" id="reader-prev">← Previous</button><span id="reader-position"></span><button type="button" id="reader-next">Next →</button></div><div id="reader-scroll" class="reader-scroll" tabindex="-1" aria-label="Reading pane"><div id="reader-article"><div class="reader-empty"><p class="eyebrow">Start here</p><h2>Choose a story from the list.</h2><p class="reader-lede">News first; findings, editorials and documentation when you want to go deeper. Your place is remembered in this browser only.</p></div></div></div></div></div></section>`,
+    main: `<section class="reader-page hm-news" data-reader><h1 class="hm-visually-hidden">Reader</h1><button type="button" class="reader-library-toggle" id="reader-library-toggle" aria-expanded="true" aria-controls="reader-library" hidden>Filters <span aria-hidden="true">−</span></button><div class="reader-workspace"><aside id="reader-library" class="reader-library hm-news-filters" aria-label="Filter stories"><p class="hm-docs-kicker">READER</p><div class="hm-news-kinds reader-types" role="group" aria-label="Material" data-reader-controls hidden>${kindButtons}</div><div class="hm-news-fields" data-reader-controls hidden><label class="hm-news-field" for="reader-region">Region<select id="reader-region">${regionOptions}</select></label><label class="hm-news-field" for="reader-search">Search<input id="reader-search" type="search" maxlength="120" placeholder="Titles, places, companies…" autocomplete="off"></label><label class="unread-option"><input id="reader-unread" type="checkbox"> Unread only</label></div><p class="hm-reader-notice" data-reader-notice hidden></p><div class="reader-storage" data-reader-controls hidden><p data-storage-note>Your place and filters stay on this device.</p><button type="button" data-forget>Forget reading history</button><div data-forget-confirm hidden><p>Forget what you've read on this device? Your theme stays as it is.</p><button type="button" data-forget-yes>Forget</button> <button type="button" data-forget-no>Cancel</button></div></div></aside><div class="hm-news-main"><header class="hm-news-head"><h2 data-news-heading>Stories</h2><p class="library-count" id="library-count" role="status"></p></header><ol id="reader-list" class="reader-list hm-news-cards">${list}</ol></div></div><dialog class="hm-news-modal" data-reader-document aria-label="Story"><div class="hm-news-modal-bar document-navigation"><button type="button" id="reader-prev">← Previous</button><span id="reader-position"></span><button type="button" id="reader-next">Next →</button><a class="hm-news-modal-page" id="reader-page-link" href="/reader/">Story page ↗</a><button type="button" class="hm-news-modal-close" id="reader-close" aria-label="Close story">×</button></div><div id="reader-scroll" class="reader-scroll hm-news-modal-body" tabindex="-1"><div id="reader-article"></div></div></dialog></section>`,
   };
 }
 
