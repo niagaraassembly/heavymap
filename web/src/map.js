@@ -240,18 +240,18 @@ export class FieldMap {
    * so the map does not move for it. */
   focusParcel(geometry, bottomPadding) {
     if (!this.ready || !geometry) return;
-    const ring =
-      geometry.type === "Polygon"
-        ? geometry.coordinates?.[0]
-        : geometry.type === "MultiPolygon"
-          ? geometry.coordinates?.[0]?.[0]
-          : null;
-    if (!ring || !ring.length) return;
+    const rings = geometry.type === "Polygon"
+      ? [geometry.coordinates?.[0]]
+      : geometry.type === "MultiPolygon"
+        ? geometry.coordinates?.map((polygon) => polygon?.[0])
+        : [];
+    const usableRings = rings.filter((ring) => ring?.length);
+    if (!usableRings.length) return;
     let minX = Infinity;
     let maxX = -Infinity;
     let minY = Infinity;
     let maxY = -Infinity;
-    for (const [x, y] of ring) {
+    for (const ring of usableRings) for (const [x, y] of ring) {
       if (x < minX) minX = x;
       if (x > maxX) maxX = x;
       if (y < minY) minY = y;
@@ -260,14 +260,14 @@ export class FieldMap {
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const tray = document.getElementById("tray");
     const trayVisible = tray && getComputedStyle(tray).display !== "none";
-    this.map.easeTo({
-      center: [(minX + maxX) / 2, (minY + maxY) / 2],
+    this.map.fitBounds([[minX, minY], [maxX, maxY]], {
       padding: {
         top: 16,
         left: trayVisible ? tray.getBoundingClientRect().width + 32 : 16,
         right: 16,
         bottom: bottomPadding,
       },
+      maxZoom: this.maxZoom,
       duration: reduce ? 0 : 300,
     });
   }
