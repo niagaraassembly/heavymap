@@ -30,7 +30,7 @@ function header(path, themes) {
     (n) =>
       `<a href="${n.href}"${n.section === current ? ' aria-current="page"' : ""}${n.icon ? ' class="reader-nav"' : ""}>${n.icon ?? ""}${n.label}</a>`,
   ).join("");
-  return `<header class="alt-header"><a class="wordmark" href="/">HeavyMap<span aria-hidden="true">◒</span></a><nav aria-label="Main navigation">${links}</nav><a class="alt-follow" href="/subscribe/"${current === "subscribe" ? ' aria-current="page"' : ""}>Follow your regions</a>${themePicker(themes)}</header>`;
+  return `<header class="alt-header"><a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><nav aria-label="Main navigation">${links}</nav><a class="alt-follow" href="/subscribe/"${current === "subscribe" ? ' aria-current="page"' : ""}>Follow your regions</a>${themePicker(themes)}</header>`;
 }
 
 /* Map status words, as in pages.js: the selector names a place with its status. */
@@ -55,7 +55,7 @@ function mapHeader(regions) {
     )
     .join("");
   return `<header class="alt-header alt-header--map">
-    <a class="wordmark" href="/">HeavyMap<span aria-hidden="true">◒</span></a>
+    <a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>
     <div class="hm-site-menu" data-site-menu>
       <button type="button" class="hm-site-menu-toggle" data-site-menu-toggle aria-label="Open site menu" aria-haspopup="true" aria-expanded="false" aria-controls="hm-site-menu-panel"><span aria-hidden="true">▾</span></button>
       <div class="hm-site-menu-panel" id="hm-site-menu-panel" data-site-menu-panel hidden><ul><li><a href="/desks/">Desks</a></li><li><a href="/desks/western-new-york/">Western New York</a></li><li><a href="/desks/niagara-brant/">Niagara–Brant</a></li><li><a href="/reader/">Reader</a></li><li><a href="/map/" aria-current="page">Map</a></li><li><a href="/about/">About</a></li><li><a href="/about/credits/">Credits</a></li><li><a href="/preferences/">Email preferences</a></li></ul></div>
@@ -82,7 +82,7 @@ function footer(regions) {
   const desks = regions
     .map((r) => `<a href="/desks/${esc(r.slug)}/">${esc(r.name)}</a>`)
     .join("");
-  return `<footer class="alt-footer"><div><a class="wordmark" href="/">HeavyMap<span aria-hidden="true">◒</span></a><p>Regional reporting. Geographic intelligence.</p></div><nav aria-label="Footer"><a href="/about/">About</a><a href="/about/credits/">Credits</a><a href="/reader/">Reader</a><a href="/preferences/">Email preferences</a>${desks}</nav></footer>`;
+  return `<footer class="alt-footer"><div><a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><p>Regional reporting. Geographic intelligence.</p></div><nav aria-label="Footer"><a href="/about/">About</a><a href="/about/credits/">Credits</a><a href="/reader/">Reader</a><a href="/preferences/">Email preferences</a>${desks}</nav></footer>`;
 }
 
 /**
@@ -122,6 +122,7 @@ export function renderPage(o) {
 <meta name="viewport" content="width=device-width,initial-scale=1">
 ${headScript(o.themes, o.defaultTheme)}
 <meta name="theme-color" content="#f5f4ee">
+<link rel="icon" type="image/png" href="/heavy-element-favicon.png">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(o.description)}">
 ${canonical}${o.path === "/404.html" ? '<meta name="robots" content="noindex">' : ""}

@@ -90,10 +90,30 @@ img {
   gap: 9px;
   white-space: nowrap;
 }
-.wordmark span {
-  font-size: 19px;
-  color: var(--rust);
-  transform: rotate(180deg);
+.wordmark-mark {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  animation: heavy-element-arrive 1.15s cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+@keyframes heavy-element-arrive {
+  from {
+    transform: rotate(-150deg) scale(0.72);
+    opacity: 0.35;
+  }
+  72% {
+    transform: rotate(12deg) scale(1.06);
+    opacity: 1;
+  }
+  to {
+    transform: rotate(0) scale(1);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wordmark-mark {
+    animation: none;
+  }
 }
 .site-header nav {
   display: flex;
