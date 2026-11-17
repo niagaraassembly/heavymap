@@ -499,7 +499,7 @@ export function docsIntro() {
     bodyClass: "hm-docs-service-page",
     main: `<section class="hm-docs-service" data-docs-service>
       <div class="hm-docs-library" data-docs-library>
-        <aside class="hm-docs-library-rail"><label class="hm-docs-filter-label hm-visually-hidden" for="hm-docs-project-filter">Site project</label><select id="hm-docs-project-filter" data-docs-project-filter><option value="all">All site projects</option></select><div class="hm-docs-library-count" data-docs-count aria-live="polite">Loading documents…</div><div class="hm-docs-list" data-docs-list></div></aside>
+        <aside class="hm-docs-library-rail"><label class="hm-docs-search"><span aria-hidden="true">⌕</span><input type="search" maxlength="120" placeholder="Search documents" aria-label="Search documents" data-docs-search></label><label class="hm-docs-filter-label hm-visually-hidden" for="hm-docs-project-filter">Site project</label><select id="hm-docs-project-filter" data-docs-project-filter><option value="all">All site projects</option></select><div class="hm-docs-library-count" data-docs-count aria-live="polite">Loading documents…</div><div class="hm-docs-list" data-docs-list></div></aside>
         <section class="hm-docs-detail" data-docs-detail aria-label="Document workspace"><div class="hm-docs-empty-state" data-docs-empty aria-label="No document selected"></div></section>
       </div>
       <p class="hm-docs-status" data-docs-status role="status" aria-live="polite">Your documents stay on this device.</p>
@@ -507,7 +507,7 @@ export function docsIntro() {
       <dialog id="docs-saved-dialog" class="hm-docs-service-dialog" data-docs-saved-dialog aria-labelledby="hm-docs-saved-title"></dialog>
       <dialog id="docs-notes-dialog" class="hm-docs-service-dialog" data-docs-notes-dialog aria-labelledby="hm-docs-notes-title"></dialog>
     </section>`,
-    after: `<div class="hm-docs-bottom-bar"><span class="hm-docs-bottom-spacer"></span><!-- docs-theme-picker --></div>`,
+    after: `<div class="hm-docs-bottom-bar"><a class="hm-docs-bottom-brand" href="/" aria-label="HeavyMap home"><span>HeavyMap</span><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><span class="hm-docs-bottom-spacer"></span><!-- docs-theme-picker --></div>`,
   };
 }
 

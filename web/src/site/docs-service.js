@@ -86,9 +86,7 @@ export async function mountDocsService(root) {
   if (!root) return;
   const library = root.querySelector("[data-docs-library]");
   const list = root.querySelector("[data-docs-list]");
-  const search = document.querySelector("[data-docs-search]");
-  const headerLibrary = document.querySelector("[data-docs-header-library]");
-  const headerDocument = document.querySelector("[data-docs-header-document]");
+  const search = root.querySelector("[data-docs-search]");
   const headerNew = document.querySelector("[data-docs-create]");
   const headerActions = document.querySelector("[data-docs-header-editor]");
   const projectFilter = root.querySelector("[data-docs-project-filter]");
@@ -114,7 +112,7 @@ export async function mountDocsService(root) {
     docs = documentRecords.sort((a, b) => String(b.updatedAt ?? "").localeCompare(String(a.updatedAt ?? "")));
     const projects = [...new Set(docs.map((doc) => doc.parcelKey).filter(Boolean))];
     projectFilter.replaceChildren(new Option("All site projects", "all"));
-    for (const key of projects) projectFilter.append(new Option(key, key));
+    for (const key of projects) projectFilter.append(new Option(parcelLabels.get(key) || key, key));
     renderList();
     if (selectedDocId) {
       const selected = docs.find((doc) => doc.id === selectedDocId);
@@ -142,7 +140,7 @@ export async function mountDocsService(root) {
       const open = button("", () => openDocument(doc, false), "hm-docs-card-open");
       open.append(el("span", templateFor(doc.template).kind, "hm-docs-kicker"));
       open.append(el("strong", doc.title || "Untitled document"));
-      open.append(el("span", doc.parcelKey || "No site project selected", "hm-docs-card-project"));
+      open.append(el("span", parcelLabels.get(doc.parcelKey) || doc.parcelKey || "No site project selected", "hm-docs-card-project"));
       open.append(el("small", `${doc.sections?.length ?? 0} sections · ${formatDate(doc.updatedAt)}`));
       const actions = el("div", undefined, "hm-docs-card-actions");
       actions.append(button("Edit", () => openDocument(doc, true), "hm-docs-quiet-button"));
@@ -164,9 +162,6 @@ export async function mountDocsService(root) {
     detail.append(empty);
     empty.hidden = false;
     library.classList.remove("is-writing");
-    headerLibrary.hidden = false;
-    headerDocument.hidden = true;
-    headerDocument.replaceChildren();
     headerNew.hidden = false;
     headerActions.hidden = true;
     headerActions.replaceChildren();
@@ -205,15 +200,14 @@ export async function mountDocsService(root) {
     empty.hidden = true;
     library.classList.add("is-writing");
     detail.replaceChildren();
-    headerLibrary.hidden = true;
-    headerDocument.hidden = false;
     headerNew.hidden = true;
     headerActions.hidden = false;
-    headerDocument.replaceChildren();
     headerActions.replaceChildren();
     const address = el("span", parcelLabels.get(activeDoc.parcelKey) || activeDoc.parcelKey || "Site project", "hm-docs-active-address");
     address.title = activeDoc.parcelKey || "Site project";
-    headerDocument.append(address);
+    const parcelBar = el("div", undefined, "hm-docs-parcel-bar");
+    parcelBar.append(address);
+    detail.append(parcelBar);
     const state = el("span", editing ? "EDITING" : "READING", "hm-docs-mode");
     const back = button("←", showEmpty, "hm-docs-back");
     back.setAttribute("aria-label", "Back to document library");
