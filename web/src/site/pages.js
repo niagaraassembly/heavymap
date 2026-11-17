@@ -499,13 +499,15 @@ export function docsIntro() {
     bodyClass: "hm-docs-service-page",
     main: `<section class="hm-docs-service" data-docs-service>
       <div class="hm-docs-library" data-docs-library>
-        <aside class="hm-docs-library-rail"><label class="hm-docs-filter-label hm-visually-hidden" for="hm-docs-project-filter">Site project</label><select id="hm-docs-project-filter" data-docs-project-filter><option value="all">All site projects</option></select><div class="hm-docs-library-count" data-docs-count aria-live="polite">Loading documents…</div><div class="hm-docs-list" data-docs-list></div></aside>
+        <aside class="hm-docs-library-rail"><label class="hm-docs-search"><span aria-hidden="true">⌕</span><input type="search" maxlength="120" placeholder="Search documents" aria-label="Search documents" data-docs-search></label><label class="hm-docs-filter-label hm-visually-hidden" for="hm-docs-project-filter">Site project</label><select id="hm-docs-project-filter" data-docs-project-filter><option value="all">All site projects</option></select><div class="hm-docs-library-count" data-docs-count aria-live="polite">Loading documents…</div><div class="hm-docs-list" data-docs-list></div></aside>
         <section class="hm-docs-detail" data-docs-detail aria-label="Document workspace"><div class="hm-docs-empty-state" data-docs-empty aria-label="No document selected"></div></section>
       </div>
       <p class="hm-docs-status" data-docs-status role="status" aria-live="polite">Your documents stay on this device.</p>
       <dialog class="hm-docs-create-dialog" data-docs-create-dialog aria-labelledby="hm-docs-create-title"><form method="dialog"><header><div><p class="hm-docs-kicker">NEW DOCUMENT</p><h2 id="hm-docs-create-title">Start with a site.</h2></div><button type="button" data-docs-create-close aria-label="Close">×</button></header><label for="hm-docs-project">Parcel project</label><select id="hm-docs-project" data-docs-project><option value="">Loading saved parcels…</option></select><p class="hm-docs-parcel-id" data-docs-parcel-id hidden></p><label for="hm-docs-template">Document type</label><select id="hm-docs-template" data-docs-template></select><p class="hm-docs-template-description" data-docs-template-description></p><label for="hm-docs-new-title">Document name</label><input id="hm-docs-new-title" data-docs-new-title maxlength="180" value="Site plan"><p data-docs-create-feedback role="status"></p><footer><button type="button" class="hm-docs-quiet-button" data-docs-create-close>Cancel</button><button type="submit" class="hm-docs-primary" data-docs-confirm-create disabled>Create document</button></footer></form></dialog>
+      <dialog id="docs-saved-dialog" class="hm-docs-service-dialog" data-docs-saved-dialog aria-labelledby="hm-docs-saved-title"></dialog>
+      <dialog id="docs-notes-dialog" class="hm-docs-service-dialog" data-docs-notes-dialog aria-labelledby="hm-docs-notes-title"></dialog>
     </section>`,
-    after: `<div class="hm-docs-bottom-bar"><span class="hm-docs-bottom-spacer"></span><!-- docs-theme-picker --></div>`,
+    after: `<div class="hm-docs-bottom-bar"><a class="hm-docs-bottom-brand" href="/" aria-label="HeavyMap home"><span>HeavyMap</span><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><span class="hm-docs-bottom-spacer"></span><!-- docs-theme-picker --></div>`,
   };
 }
 
