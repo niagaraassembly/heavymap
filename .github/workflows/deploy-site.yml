@@ -50,6 +50,10 @@ jobs:
           # Pin the immutable commit containing map-releases/.../layer-set-002.
           ref: PENDING_LAYER_SET_002_COMMIT
           path: industrial-atlas-map-layers
+      - name: Refuse a map-layer pin that is not a full commit hash
+        run: |
+          grep -Eq '^\s+ref: [0-9a-f]{40}$' <(sed -n '/Check out the pinned Hamilton map-layer release/,/path:/p' .github/workflows/deploy-site.yml) \
+            || { echo "Map-layer release ref must be a 40-character commit SHA"; exit 1; }
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -92,6 +96,6 @@ jobs:
             echo "- Commit: \`$SHA\` on \`$REF_NAME\`"
             echo "- Trigger: $EVENT by $ACTOR"
             echo "- Atlas release: ca-on-hamilton/2026-11-16-d070"
-            echo "- Map layer release: ca-on-hamilton/2026-11-16-layer-set-001"
+            echo "- Map layer release: ca-on-hamilton/2026-11-17-layer-set-002"
             echo "- URL: $PAGE_URL"
           } >> "$GITHUB_STEP_SUMMARY"
