@@ -303,9 +303,8 @@
   }
 }
 
-/* Map bars (/map/ only): place selector, search and tool slots in the thin
- * top header; context strip and bottom bar fixed to the viewport. The bars
- * use theme tokens, so they follow the theme like the rest of the chrome. */
+/* Map chrome: place selector at the end of the short top header and map
+ * status, attribution, and theme picker in one fixed bottom bar. */
 .hm-place {
   position: relative;
 }
@@ -331,7 +330,7 @@
 }
 .hm-place-panel {
   position: absolute;
-  left: 0;
+  right: 0;
   top: calc(100% + 0.4rem);
   z-index: 20;
   width: 16rem;
@@ -366,68 +365,6 @@
   border-top: 0;
   padding-top: 0;
 }
-.hm-map-search {
-  flex: 1 1 auto;
-  min-width: 8rem;
-  max-width: 22rem;
-}
-.hm-map-search input {
-  width: 100%;
-  min-height: 2rem;
-  padding: 0.3rem 0.6rem;
-  border: 1px solid var(--rule-soft);
-  border-radius: 2px;
-  background: var(--surface);
-  color: var(--text);
-  font: 0.85rem/1.2 var(--sans);
-}
-.hm-map-search input:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-.hm-tool-slot {
-  min-height: 2rem;
-  padding: 0.3rem 0.6rem;
-  border: 1px solid var(--rule-soft);
-  border-radius: 2px;
-  background: transparent;
-  color: var(--text);
-  font: 0.85rem/1.2 var(--sans);
-  cursor: not-allowed;
-}
-.hm-tool-slot:disabled {
-  opacity: 0.55;
-}
-.hm-tool-profile {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.3rem 0.45rem;
-}
-.hm-map-context {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 48px;
-  z-index: 30;
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-  padding: 0.3rem 20px;
-  background: var(--surface);
-  color: var(--text-muted);
-  border-top: 1px solid var(--rule-soft);
-  font: 0.72rem/1.4 var(--sans);
-  white-space: nowrap;
-  overflow: hidden;
-}
-.hm-map-context a {
-  color: inherit;
-}
-.hm-map-context span {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 .hm-map-bar {
   position: fixed;
   left: 0;
@@ -436,104 +373,76 @@
   z-index: 30;
   display: flex;
   align-items: center;
-  gap: 16px;
-  height: 48px;
-  padding: 0 20px;
+  gap: 14px;
+  height: 38px;
+  padding: 0 12px;
   background: var(--surface);
   color: var(--text);
   border-top: 1px solid var(--rule-soft);
-  font: 0.85rem/1.2 var(--sans);
+  font: 0.72rem/1.2 var(--sans);
 }
-.hm-map-bar .wordmark {
-  font-size: 20px;
-}
-.hm-desks-split {
-  position: relative;
-  display: flex;
-  align-items: stretch;
-}
-.hm-desks-split > a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2rem;
-  padding: 0 0.4rem;
-  color: var(--text);
-  text-decoration: none;
-}
-.hm-desks-split > button {
-  min-height: 2rem;
-  padding: 0 0.3rem;
-  border: 0;
-  background: none;
-  color: var(--text);
-  cursor: pointer;
-}
-.hm-desks-panel {
-  position: absolute;
-  left: 0;
-  bottom: calc(100% + 0.4rem);
-  z-index: 20;
-  width: 15rem;
-  padding: 0.75rem;
-  background: var(--surface-raised);
-  color: var(--text);
-  border: 1px solid var(--rule-soft);
-  box-shadow: 0 -0.6rem 1.5rem var(--shadow);
-  font: 0.9rem/1.4 var(--sans);
-}
-.hm-desks-panel ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.hm-desks-panel li a {
-  display: block;
-  min-height: 2rem;
-  padding: 0.3rem 0.5rem;
-  color: var(--text);
-}
-.hm-desks-panel li a:hover {
-  background: var(--surface-tint);
-}
-.hm-desks-group {
-  margin-top: 0.4rem;
-  padding: 0.2rem 0.4rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-.hm-reader-icon {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2rem;
-  padding: 0 0.3rem;
-  color: var(--text);
-}
+.hm-map-bar-legend,
+.hm-map-bar-credits,
 .hm-map-bar-status {
-  color: var(--text-muted);
-  font-size: 0.8rem;
   white-space: nowrap;
+}
+.hm-map-bar-legend {
+  color: var(--text-muted);
+}
+.hm-map-bar-credits a {
+  color: inherit;
+}
+.hm-map-bar-note,
+.hm-map-bar-status {
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.hm-map-bar-back {
-  margin-left: auto;
   white-space: nowrap;
-  font-size: 0.8rem;
-  color: var(--text);
+  color: var(--text-muted);
 }
-/* The fixed bars overlay the page foot; give the map page room for them. */
+.hm-map-bar-note {
+  flex: 0 1 22rem;
+}
+.hm-map-bar-status {
+  flex: 0 1 10rem;
+}
+.hm-map-bar-spacer {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.hm-map-bar .hm-theme {
+  flex: 0 0 auto;
+}
+.hm-map-bar .hm-theme-button {
+  min-height: 2rem;
+  padding: 0.2rem 0.45rem;
+}
+.hm-map-bar .hm-theme-panel {
+  top: auto;
+  bottom: calc(100% + 0.4rem);
+}
+/* Give the map room for its compact top and bottom bars. */
 body.hm-map-intro {
-  padding-bottom: 84px;
+  padding-bottom: 38px;
 }
-@media (max-width: 640px) {
-  .hm-map-context span:nth-child(3) {
-    display: none;
-  }
-  .hm-map-bar-status {
-    display: none;
-  }
+body.hm-map-intro .map-workspace {
+  height: calc(100dvh - 84px);
+  min-height: 0;
+}
+body.hm-map-intro .alt-footer {
+  display: none;
+}
+@media (max-width: 900px) {
+  .hm-map-bar { gap: 9px; padding-inline: 10px; }
+  .hm-map-bar-note { flex-basis: 14rem; }
+  .hm-map-bar-status { display: none; }
+}
+@media (max-width: 600px) {
+  .hm-map-bar { gap: 7px; padding-inline: 8px; font-size: 0.66rem; }
+  .hm-map-bar-legend { display: none; }
+  .hm-map-bar-note { flex: 0 1 auto; }
+  .hm-map-bar-credits { overflow: hidden; text-overflow: ellipsis; }
+  .hm-map-bar-spacer { flex: 1 1 0; }
 }
 
 /* Reader (spec C section 5) */
