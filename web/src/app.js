@@ -743,13 +743,15 @@ async function start() {
     const note = document.getElementById("map-display-note");
     if (note) note.textContent = "Street basemap · parcel selection from zoom 14";
   }
+  const requestedBasemapFlavor = new URLSearchParams(location.search).get("basemap");
+  const basemapFlavor = ["dark", "grayscale"].includes(requestedBasemapFlavor) ? requestedBasemapFlavor : "white";
   map = new FieldMap({
     basemap,
     overlays: mapLayerManifest?.layers ?? [],
     overlaysBase: MAP_LAYER_BASE,
     developmentOverviewUrl: `${DEVELOPMENT_BASE}city_development_mosaic_v0.1.geojson`,
     // Style preference can be shared in a URL, e.g. /map/?basemap=dark.
-    flavor: new URLSearchParams(location.search).get("basemap") ?? "white",
+    flavor: basemapFlavor,
     onSelect: (parcel, trigger) => void openParcel(parcel, trigger, view ?? "card"),
     onStatus: status,
     onReady: finishMapLoading,
@@ -759,8 +761,6 @@ async function start() {
     maxZoom: tilesReady ? tileManifest.max_zoom : 16,
   });
 
-  const requestedBasemapFlavor = new URLSearchParams(location.search).get("basemap");
-  const basemapFlavor = requestedBasemapFlavor === "light" ? "white" : requestedBasemapFlavor ?? "white";
   document.body.classList.toggle("basemap-dark", basemapFlavor === "dark");
   for (const flavor of ["white", "dark", "grayscale"]) {
     const button = document.getElementById(`basemap-${flavor}`);

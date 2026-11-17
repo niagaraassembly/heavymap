@@ -7,11 +7,11 @@
 import { layers, namedFlavor } from "@protomaps/basemaps";
 
 export const BASEMAP_SOURCE = "basemap";
-export const BASEMAP_FLAVORS = ["white", "dark", "grayscale"];
+export const BASEMAP_FLAVORS = ["light", "white", "dark", "grayscale"];
 export const GLYPHS_URL = "/map/fonts/{fontstack}/{range}.pbf";
 
 /* Ground colour shown before tiles arrive and outside the extract. */
-export const GROUND = { white: "#f7f7f4", dark: "#1b1f22", grayscale: "#eeeeec" };
+export const GROUND = { light: "#eaf0ef", white: "#f7f7f4", dark: "#1b1f22", grayscale: "#eeeeec" };
 
 /* Parcel paint over each ground. On the still image parcels carry a
  * visible fill; over a real basemap they are mostly outline so streets
@@ -29,19 +29,18 @@ export const PARCEL_PAINT = {
 const ICON_ONLY = new Set(["roads_oneway", "roads_shields", "pois"]);
 
 export function basemapFlavor(value) {
-  // Keep existing shared links working while making the clearer white style
-  // the default for new visits.
-  if (value === "light") return "white";
-  return BASEMAP_FLAVORS.includes(value) ? value : "white";
+  // Retain the legacy light flavor for older links; new visits use white.
+  return BASEMAP_FLAVORS.includes(value) ? value : "light";
 }
 
 /** MapLibre layers for one flavor, ids prefixed `basemap-`.
- * Each flavor supplies its own background, so the low contrast still image
- * remains only as a fallback if the vector archive fails to load. */
+ * The legacy light flavor omits its background to blend with the still image;
+ * the new white, dark and grayscale choices use a clean vector canvas. */
 export function basemapLayers(flavor) {
   const name = basemapFlavor(flavor);
   return layers(BASEMAP_SOURCE, namedFlavor(name), { lang: "en" })
     .filter((layer) => !ICON_ONLY.has(layer.id))
+    .filter((layer) => !(name === "light" && layer.type === "background"))
     .map((layer) => {
       const next = { ...layer, id: `basemap-${layer.id}` };
       if (layer.layout && "icon-image" in layer.layout) {
