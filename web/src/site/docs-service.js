@@ -40,6 +40,11 @@ const TEMPLATES = [
   },
 ];
 const templateFor = (id) => TEMPLATES.find((template) => template.id === id) ?? TEMPLATES[0];
+const savedParcelLabel = (item) => {
+  const candidates = [item.address, item.title].filter((value) => typeof value === "string");
+  const address = candidates.find((value) => value.trim() && !/^(saved hamilton parcel|parcel)$/i.test(value.trim()));
+  return address?.trim() || item.key;
+};
 const OPTIONAL_SECTIONS = [
   "Market and demand", "Design and massing", "Infrastructure and servicing",
   "Approvals and permits", "Financial model", "Stakeholders and engagement",
@@ -299,15 +304,18 @@ export async function mountDocsService(root) {
   function openCreateDialog() {
     const dialog = root.querySelector("[data-docs-create-dialog]");
     const projects = root.querySelector("[data-docs-project]");
+    const parcelId = root.querySelector("[data-docs-parcel-id]");
     const title = root.querySelector("[data-docs-new-title]");
     templateSelect.replaceChildren(...TEMPLATES.map((template) => new Option(template.label, template.id)));
     templateSelect.value = "default-general";
     templateDescription.textContent = templateFor(templateSelect.value).description;
+    parcelId.textContent = "";
+    parcelId.hidden = true;
     const feedback = root.querySelector("[data-docs-create-feedback]");
     const submit = root.querySelector("[data-docs-confirm-create]");
     void recordsFor("saved").then((saved) => {
       const parcelEntries = saved.filter((item) => item.kind === "parcel" && item.key);
-      const known = new Map(parcelEntries.map((item) => [item.key, item.title || item.address || item.key]));
+      const known = new Map(parcelEntries.map((item) => [item.key, savedParcelLabel(item)]));
       for (const doc of docs) if (doc.parcelKey && !known.has(doc.parcelKey)) known.set(doc.parcelKey, doc.parcelKey);
       projects.replaceChildren(new Option("Choose a saved parcel…", ""));
       for (const [key, label] of known) projects.append(new Option(label, key));
@@ -320,6 +328,11 @@ export async function mountDocsService(root) {
   }
 
   root.querySelectorAll("[data-docs-create]").forEach((control) => control.addEventListener("click", openCreateDialog));
+  root.querySelector("[data-docs-project]").addEventListener("change", (event) => {
+    const parcelId = root.querySelector("[data-docs-parcel-id]");
+    parcelId.textContent = event.currentTarget.value ? `Parcel ID · ${event.currentTarget.value}` : "";
+    parcelId.hidden = !event.currentTarget.value;
+  });
   templateSelect.addEventListener("change", () => {
     const template = templateFor(templateSelect.value);
     templateDescription.textContent = template.description;

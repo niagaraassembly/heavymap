@@ -147,5 +147,5 @@ ${o.path === "/docs/" ? (o.after ?? "").replace("<!-- docs-theme-picker -->", th
 }
 
 function docsHeader(themes) {
-  return `<header class="alt-header alt-header--docs"><a class="wordmark" href="/"><span>HeavyMap</span><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><nav aria-label="Services"><a class="hm-map-service" href="/map/" aria-label="Map" title="Map">${mapIcon}</a><a class="hm-map-service" href="/reader/" aria-label="Reader" title="Reader">${bookIcon}</a><a class="hm-map-service" href="/docs/" aria-label="Docs" title="Docs" aria-current="page">${docsIcon}</a></nav><span class="hm-docs-header-label">Docs</span></header>`;
+  return `<header class="alt-header alt-header--docs"><a class="wordmark" href="/" aria-label="HeavyMap home"><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><nav aria-label="Services"><a class="hm-map-service" href="/map/" aria-label="Map" title="Map">${mapIcon}</a><a class="hm-map-service" href="/reader/" aria-label="Reader" title="Reader">${bookIcon}</a><a class="hm-map-service" href="/docs/" aria-label="Docs" title="Docs" aria-current="page">${docsIcon}</a></nav></header>`;
 }
