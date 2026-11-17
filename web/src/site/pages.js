@@ -504,6 +504,8 @@ export function docsIntro() {
       </div>
       <p class="hm-docs-status" data-docs-status role="status" aria-live="polite">Your documents stay on this device.</p>
       <dialog class="hm-docs-create-dialog" data-docs-create-dialog aria-labelledby="hm-docs-create-title"><form method="dialog"><header><div><p class="hm-docs-kicker">NEW DOCUMENT</p><h2 id="hm-docs-create-title">Start with a site.</h2></div><button type="button" data-docs-create-close aria-label="Close">×</button></header><label for="hm-docs-project">Parcel project</label><select id="hm-docs-project" data-docs-project><option value="">Loading saved parcels…</option></select><p class="hm-docs-parcel-id" data-docs-parcel-id hidden></p><label for="hm-docs-template">Document type</label><select id="hm-docs-template" data-docs-template></select><p class="hm-docs-template-description" data-docs-template-description></p><label for="hm-docs-new-title">Document name</label><input id="hm-docs-new-title" data-docs-new-title maxlength="180" value="Site plan"><p data-docs-create-feedback role="status"></p><footer><button type="button" class="hm-docs-quiet-button" data-docs-create-close>Cancel</button><button type="submit" class="hm-docs-primary" data-docs-confirm-create disabled>Create document</button></footer></form></dialog>
+      <dialog id="docs-saved-dialog" class="hm-docs-service-dialog" data-docs-saved-dialog aria-labelledby="hm-docs-saved-title"></dialog>
+      <dialog id="docs-notes-dialog" class="hm-docs-service-dialog" data-docs-notes-dialog aria-labelledby="hm-docs-notes-title"></dialog>
     </section>`,
     after: `<div class="hm-docs-bottom-bar"><span class="hm-docs-bottom-spacer"></span><!-- docs-theme-picker --></div>`,
   };
