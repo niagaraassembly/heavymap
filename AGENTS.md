@@ -15,6 +15,10 @@ Beta is the repository top level. The original `niagara-atlas/` prototype is pri
 
 Read [WORKING-AGREEMENT.md](heavymap-planning/WORKING-AGREEMENT.md) for task ownership, direct-assignment packets, contract-change review, acceptance evidence and the scoped frontend exception to deferred UI chrome. Frontend and already-authorized backend validation proceed concurrently. PR #80 records the merged split plan; split execution and identifier migration require a separate assignment from Morgen. Frontend tasks use synthetic contract fixtures; real-data work stays on Deb. The hard rules and publication gate still apply.
 
+## Frontend UI ethos
+
+Keep interface chrome compact, especially on laptop screens. In modals, keep the title and remove introductory or explanatory copy when the controls and content are self-explanatory; retain only concise labels, essential state, and action confirmations.
+
 ## Process insights (standing rule)
 
 Before finishing a session or PR, record reusable findings once with live-verified evidence. Atlas findings go to `Spreadsheets/19-process-insights.csv` with `PI-` IDs. Frontend findings use `heavymap-planning/frontend/19-process-insights.csv` with `HM-PI-` IDs; until that file exists, use the PR's Process insights section with the same columns. Never write frontend findings into Atlas sheet 19. Preserve reserved IDs and append-only etiquette. If unable to write, report findings in the final response for transfer. Columns and etiquette: [PROCESS-INSIGHTS.md](heavymap-planning/PROCESS-INSIGHTS.md).

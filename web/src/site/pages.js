@@ -456,7 +456,7 @@ export function mapIntro() {
           </button>
           <div id="layers-dialog" class="layers-dialog" role="dialog" aria-modal="true" aria-labelledby="layers-dialog-title" hidden>
             <header class="layers-dialog-head">
-              <div><p class="layers-kicker">HAMILTON MAP · LAYERS</p><h2 id="layers-dialog-title">Discover map layers</h2><p>Choose what to show and narrow the layer library by topic.</p></div>
+              <div><h2 id="layers-dialog-title">Discover map layers</h2></div>
               <button type="button" class="layers-close" data-layers-close aria-label="Close map layers">×</button>
             </header>
             <div class="layers-dialog-body">
@@ -474,11 +474,11 @@ export function mapIntro() {
                   <label class="layers-search"><span aria-hidden="true">⌕</span><input id="layers-search" type="search" placeholder="Find a layer" aria-label="Find a map layer"></label>
                 </div>
                 <div id="layers-content" class="layers-content">
-                  <section class="layer-group" data-layer-group="basemap"><h3>Base map</h3><div class="basemap-switch" role="group" aria-label="Basemap style"><button type="button" id="basemap-light" aria-pressed="true">Light</button><button type="button" id="basemap-dark" aria-pressed="false">Dark</button></div><small class="layer-note">OpenStreetMap vector map · detail loads for the current view</small></section>
+                  <section class="layer-group" data-layer-group="basemap"><h3>Base map</h3><div class="basemap-switch" role="group" aria-label="Basemap style"><button type="button" id="basemap-light" aria-pressed="true">Light</button><button type="button" id="basemap-dark" aria-pressed="false">Dark</button></div></section>
                   <section class="layer-group" data-layer-group="parcels"><h3>Parcels</h3><label class="layer"><input id="parcels-visible" type="checkbox" checked><span><strong>Hamilton parcels</strong><small>On map · key-only tiles · zoom 14–16</small></span></label></section>
                   <div id="thematic-layers" aria-live="polite"><p class="layer-note">Loading map layers…</p></div>
                 </div>
-                <p class="layers-footnote">Overlays show source features and boundaries. They are contextual layers, not parcel-level joins or legal determinations.</p>
+                
               </section>
             </div>
           </div>

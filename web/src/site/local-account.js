@@ -45,11 +45,12 @@ export function mountLocalAccount() {
         detail.className = "hm-local-data-detail";
         const title = document.createElement("strong");
         title.textContent = type.label;
-        const description = document.createElement("span");
-        description.textContent = type.live
-          ? `${type.count} ${type.count === 1 ? "note" : "notes"} · ${type.description}`
-          : `${type.description} · Not stored yet`;
-        detail.append(title, description);
+        detail.append(title);
+        if (type.live) {
+          const description = document.createElement("span");
+          description.textContent = `${type.count} ${type.count === 1 ? "note" : "notes"}`;
+          detail.append(description);
+        }
         item.append(detail);
 
         const actions = document.createElement("div");
@@ -92,7 +93,7 @@ export function mountLocalAccount() {
         item.append(actions);
         list.append(item);
       }
-      status.textContent = "Stored only in this browser. Exports download a JSON copy.";
+      status.textContent = "";
     } catch (error) {
       status.textContent = `Local data is unavailable: ${error.message}`;
       for (const type of DATA_TYPES) {
