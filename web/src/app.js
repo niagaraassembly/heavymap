@@ -669,21 +669,27 @@ async function start() {
       return;
     }
     const snapshot = result.snapshot;
-    const showSnapshot = () => dialog.replaceChildren(cityDevelopmentSheetElement(snapshot, {
-      onBrowse: async () => {
-        status("Loading all Hamilton permit records…");
-        const records = await developmentLoader.allRecords();
-        if (!records.ok) {
-          status("Hamilton permit records are unavailable.");
-          return;
-        }
-        dialog.replaceChildren(developmentRecordsBrowserElement(records.records, {
-          onBack: showSnapshot,
-          onClose: () => dialog.close(),
-        }));
-        status(`${records.records.length.toLocaleString("en-CA")} Hamilton permit records ready`);
-      },
-    }));
+    const showSnapshot = () => {
+      dialog.classList.remove("hm-development-browser-open");
+      dialog.setAttribute("aria-label", "Hamilton development at a glance");
+      dialog.replaceChildren(cityDevelopmentSheetElement(snapshot, {
+        onBrowse: async () => {
+          status("Loading all Hamilton permit records…");
+          const records = await developmentLoader.allRecords();
+          if (!records.ok) {
+            status("Hamilton permit records are unavailable.");
+            return;
+          }
+          dialog.replaceChildren(developmentRecordsBrowserElement(records.records, {
+            onBack: showSnapshot,
+            onClose: () => dialog.close(),
+          }));
+          dialog.classList.add("hm-development-browser-open");
+          dialog.setAttribute("aria-label", "Hamilton development records");
+          status(`${records.records.length.toLocaleString("en-CA")} Hamilton permit records ready`);
+        },
+      }));
+    };
     showSnapshot();
     dialog.showModal();
     status(`${result.snapshot.coverage.monthly_report_count} monthly permit reports · latest ${result.snapshot.coverage.last_report_month}`);

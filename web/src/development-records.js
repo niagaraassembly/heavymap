@@ -274,10 +274,8 @@ export function cityDevelopmentSheetElement(snapshot, { onBrowse } = {}) {
 
 export function developmentRecordsBrowserElement(records, { onBack, onClose } = {}) {
   const panel = el("section", undefined, "hm-development-browser");
-  const head = el("header", undefined, "hm-development-browser-head");
-  const titles = el("div");
-  titles.append(el("p", "HAMILTON · MONTHLY PERMIT AUDITS", "hm-map-dialog-eyebrow"));
-  titles.append(el("h2", "Development records", "hm-map-dialog-title"));
+  panel.setAttribute("aria-label", "Hamilton development records");
+  const sidebar = el("aside", undefined, "hm-development-browser-sidebar");
   const actions = el("div", undefined, "hm-development-browser-actions");
   if (onBack) {
     const back = el("button", "← Snapshot", "hm-development-browser-back");
@@ -292,8 +290,7 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose } = 
     close.addEventListener("click", onClose);
     actions.append(close);
   }
-  head.append(titles, actions);
-  panel.append(head);
+  sidebar.append(actions);
 
   const controls = el("div", undefined, "hm-development-browser-controls");
   const search = el("input");
@@ -308,22 +305,131 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose } = 
     filter.append(option);
   }
   controls.append(search, filter);
-  panel.append(controls);
+  sidebar.append(controls);
 
   const resultStatus = el("p", "", "hm-development-browser-status");
   resultStatus.setAttribute("role", "status");
-  panel.append(resultStatus);
+  sidebar.append(resultStatus);
+  const source = el("a", "City of Hamilton open data ↗", "hm-development-browser-source");
+  source.href = "https://open.hamilton.ca/";
+  source.target = "_blank";
+  source.rel = "noopener noreferrer";
+  sidebar.append(source);
+
+  const main = el("div", undefined, "hm-development-browser-main");
   const list = el("div", undefined, "hm-development-browser-list");
-  panel.append(list);
+  main.append(list);
   const paging = el("div", undefined, "hm-development-browser-paging");
   const previous = el("button", "← Previous", "hm-development-page");
   const next = el("button", "Next →", "hm-development-page");
   previous.type = next.type = "button";
   const position = el("span");
   paging.append(previous, position, next);
-  panel.append(paging);
+  main.append(paging);
+  panel.append(sidebar, main);
 
-  const pageSize = 30;
+  const recordDialog = document.createElement("dialog");
+  recordDialog.className = "hm-development-record-dialog";
+  recordDialog.setAttribute("aria-label", "Permit record details");
+  panel.append(recordDialog);
+
+  const openRecord = (record, trigger) => {
+    const sourceFields = record.source_fields ?? {};
+    const sourceValue = (key) => sourceFields[key]?.value;
+    const permit = sourceValue("permit_number");
+    const detail = el("article", undefined, "hm-development-record-detail");
+    const header = el("header", undefined, "hm-development-record-detail-head");
+    const heading = el("div", undefined, "hm-development-record-detail-title");
+    const title = el("h2", permit || "Permit record");
+    title.id = "hm-development-record-detail-title";
+    const month = el("time", record.report_month || "Report month not stated");
+    if (record.report_month) month.dateTime = record.report_month;
+    heading.append(title, month);
+    const dismiss = el("button", "×", "hm-map-dialog-close");
+    dismiss.type = "button";
+    dismiss.setAttribute("aria-label", "Close permit details");
+    dismiss.addEventListener("click", () => recordDialog.close());
+    header.append(heading, dismiss);
+
+    const site = el("section", undefined, "hm-development-record-detail-site");
+    site.append(el("span", "SITE LOCATION"), el("strong", sourceValue("location_text") || "Location not available"));
+    const metrics = el("div", undefined, "hm-development-record-detail-metrics");
+    const rawMoney = sourceValue("construction_value");
+    const moneyValue = rawMoney === null || rawMoney === undefined || rawMoney === ""
+      ? "Not reported"
+      : new Intl.NumberFormat("en-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 }).format(Number(rawMoney));
+    const rawGfa = sourceValue("building_gfa");
+    const gfaValue = rawGfa === null || rawGfa === undefined || rawGfa === ""
+      ? "Not reported"
+      : `${Number(rawGfa).toLocaleString("en-CA")} m²`;
+    for (const [label, value] of [["Reported construction value", moneyValue], ["Building area", gfaValue]]) {
+      const metric = el("div", undefined, "hm-development-record-detail-metric");
+      metric.append(el("span", label), el("strong", value));
+      metrics.append(metric);
+    }
+
+    const facts = el("section", undefined, "hm-development-record-detail-section");
+    facts.append(el("h3", "Permit details"));
+    const factList = el("dl", undefined, "hm-development-record-detail-facts");
+    const fieldLabels = {
+      item_number: "Item number · source", permit_number: "Permit number · source",
+      location_text: "Project location · source", area: "Area · source",
+      building_type: "Building type · source", building_gfa: "Building GFA · source",
+      work_type: "Work type · source", construction_value: "Construction value · source",
+      permit_description: "Permit description · source",
+      owner_organization_name: "Owner name · source", builder_organization_name: "Builder name · source",
+    };
+    for (const [key, field] of Object.entries(sourceFields)) {
+      const value = field.value === null || field.value === undefined || field.value === ""
+        ? `Not reported · ${field.status ?? "status unavailable"}`
+        : String(field.value);
+      const valueCell = el("dd", value);
+      if (field.status && field.status !== "observed")
+        valueCell.append(el("small", `Field status: ${field.status}`, "hm-development-field-status"));
+      if (field.source_text && field.source_text !== String(field.value ?? ""))
+        valueCell.append(el("small", `Source text: ${field.source_text}`, "hm-development-field-source-text"));
+      for (const [metadataKey, metadataValue] of Object.entries(field)) {
+        if (["value", "status", "source_text"].includes(metadataKey) || metadataValue === null || metadataValue === "") continue;
+        valueCell.append(el("small", `${metadataKey.replaceAll("_", " ")}: ${String(metadataValue)}`, "hm-development-field-source-text"));
+      }
+      factList.append(el("dt", fieldLabels[key] ?? key.replaceAll("_", " "), "hm-development-source-label"), valueCell);
+    }
+    facts.append(factList);
+
+    const classification = el("section", undefined, "hm-development-record-detail-section");
+    classification.append(el("h3", "Classification"));
+    const tags = el("div", undefined, "hm-development-record-detail-tags");
+    for (const [label, values] of [["Sector", record.derived_sector_tags], ["Action", record.derived_action_tags]]) {
+      for (const value of values ?? []) {
+        const tag = value?.label ?? value?.tag ?? value;
+        tags.append(el("span", `${label} · ${String(tag).replaceAll("_", " ")}`, "hm-development-record-tag"));
+      }
+    }
+    if (!tags.childElementCount) tags.append(el("span", "No derived tags", "hm-development-record-tag is-muted"));
+    classification.append(tags);
+
+    const provenance = el("section", undefined, "hm-development-record-detail-provenance");
+    provenance.append(el("span", "Source-reported values are reproduced as published and have not been independently verified."));
+    provenance.append(el("span", record.activity_basis || "Permit issued in report month; current status unknown."));
+    provenance.append(el("span", "Owner and builder contact addresses are withheld."));
+    if (record.source_evidence_ref?.source_page) provenance.append(el("span", `Source evidence · monthly permit report, page ${record.source_evidence_ref.source_page}`));
+    provenance.append(el("span", `Classification: ${record.classification_status || "not stated"} · Taxonomy: ${record.taxonomy_version || "not stated"}`));
+
+    detail.append(header, site, metrics, facts, classification);
+    detail.append(provenance);
+    recordDialog.setAttribute("aria-labelledby", title.id);
+    recordDialog.replaceChildren(detail);
+    recordDialog.showModal();
+    dismiss.focus({ preventScroll: true });
+    recordDialog.addEventListener("close", () => {
+      if (trigger.isConnected) trigger.focus({ preventScroll: true });
+    }, { once: true });
+  };
+  recordDialog.addEventListener("click", (event) => {
+    if (event.target === recordDialog) recordDialog.close();
+  });
+
+  const pageSize = 50;
   let page = 0;
   function update() {
     const query = search.value.trim().toLocaleLowerCase();
@@ -344,13 +450,24 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose } = 
     previous.disabled = page === 0;
     next.disabled = page + 1 >= pageCount;
     list.replaceChildren();
-    for (const record of matches.slice(page * pageSize, (page + 1) * pageSize)) {
-      const details = el("details", undefined, "hm-development-browser-item");
-      const summary = el("summary");
-      summary.append(el("strong", permitNumber(record) || "Permit record"));
-      summary.append(el("span", [record.report_month, record.source_fields?.location_text?.value].filter(Boolean).join(" · ")));
-      details.append(summary, permitCard(record));
-      list.append(details);
+    const pageRecords = matches.slice(page * pageSize, (page + 1) * pageSize);
+    if (!pageRecords.length) list.append(el("p", "No permit records match these search and filter settings.", "hm-development-browser-empty"));
+    for (const record of pageRecords) {
+      const row = el("button", undefined, "hm-development-browser-item");
+      row.type = "button";
+      row.setAttribute("aria-haspopup", "dialog");
+      const identity = el("span", undefined, "hm-development-browser-item-identity");
+      identity.append(el("strong", permitNumber(record) || "Permit record"), el("span", record.source_fields?.location_text?.value || "Location not available"));
+      const meta = el("span", undefined, "hm-development-browser-item-meta");
+      meta.append(el("time", record.report_month || "—"));
+      const value = record.source_fields?.construction_value?.value;
+      if (value !== null && value !== undefined && value !== "") meta.append(el("span", new Intl.NumberFormat("en-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 }).format(Number(value))));
+      const tags = [...(record.derived_sector_tags ?? []), ...(record.derived_action_tags ?? [])].slice(0, 4);
+      const tagLine = el("span", tags.map((tag) => String(tag?.label ?? tag?.tag ?? tag).replaceAll("_", " ")).join(" · "), "hm-development-browser-item-tags");
+      row.append(identity, meta);
+      if (tags.length) row.append(tagLine);
+      row.addEventListener("click", () => openRecord(record, row));
+      list.append(row);
     }
   }
   search.addEventListener("input", () => { page = 0; update(); });
