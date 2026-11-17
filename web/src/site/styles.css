@@ -751,7 +751,7 @@ body.hm-docs-service-page main { min-height: 0; overflow: hidden; }
 .alt-header--docs nav .hm-map-service { position: relative; display: inline-flex; width: 42px; height: 38px; min-height: 38px; align-items: center; justify-content: center; padding: 0; border: 0; border-radius: 2px; color: #e6eef1; background: transparent; cursor: pointer; }
 .alt-header--docs nav .hm-map-service + .hm-map-service { border-left: 1px solid #ffffff22; }
 .alt-header--docs nav .hm-map-service:hover, .alt-header--docs nav .hm-map-service[aria-current="page"] { color: #fff; background: #41657a; }
-@keyframes hm-docs-mark-glow { 0%, 100% { filter: drop-shadow(0 0 0 transparent); } 50% { filter: drop-shadow(0 0 3px #ffffffaa); } }
+@keyframes hm-docs-mark-glow { 0%, 100% { filter: drop-shadow(0 0 .45px currentColor); } 50% { filter: drop-shadow(0 0 3px currentColor); } }
 @media (prefers-reduced-motion: reduce) { .alt-header .wordmark-mark { animation: none; } }
 
 /* A generous service directory rises from the dock like a site-wide footer. */

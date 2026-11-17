@@ -1,6 +1,6 @@
 /* Self-hosted webfonts (SIL Open Font License 1.1).
- * Newsreader for the display serif, IBM Plex Sans for labels and UI sans.
- * Files live in web/public/fonts/ (latin subsets only); font-display: swap
+ * Newsreader for display serif, IBM Plex Sans for UI, and Cantarell for the
+ * split-weight wordmark. Files live in web/public/fonts/; font-display: swap
  * so text never waits on the font. The stacks fall back to the old system
  * faces when a file is missing. */
 @font-face {
@@ -28,6 +28,21 @@
   font-family: "IBM Plex Sans";
   src: url("/fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2");
   font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cantarell";
+  src: url("/fonts/cantarell-700-normal.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cantarell";
+  src: url("/fonts/cantarell-800-normal.otf") format("opentype");
+  font-weight: 800;
   font-style: normal;
   font-display: swap;
 }

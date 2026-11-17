@@ -1,3 +1,4 @@
+@import "./site/fonts.css";
 @import "./scrollbars.css";
 
 :root {
@@ -131,10 +132,24 @@ button:hover {
   align-items: center;
   gap: 8px;
 }
+.wordmark-type {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+  font-family: "Cantarell", Inter, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.03em;
+}
+.wordmark-heavy {
+  font-weight: 800;
+}
+.wordmark-map {
+  font-weight: 700;
+}
 .wordmark-mark {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
+  filter: drop-shadow(0 0 0.45px currentColor);
   animation: heavy-element-arrive 1.15s cubic-bezier(0.2, 0.75, 0.25, 1) both;
 }
 @keyframes heavy-element-arrive {
@@ -233,14 +248,14 @@ button:hover {
   opacity: 0;
   pointer-events: none;
 }
-/* Same face and weight as the site title (.wordmark): Plex Sans, heavy, tight */
+/* Keep the intro wordmark aligned with the site brand type. */
 .map-intro-word strong {
   display: block;
-  font: 750 clamp(30px, 11cqmin, 96px) / 1 "IBM Plex Sans", Arial, Helvetica, sans-serif;
-  letter-spacing: -0.04em;
+  font: 800 clamp(30px, 11cqmin, 96px) / 1 "Cantarell", Arial, Helvetica, sans-serif;
+  letter-spacing: -0.03em;
   color: #f4f5f4;
 }
-.map-intro-word span {
+.map-intro-word > span {
   display: block;
   margin-top: 1.6cqmin;
   font-size: clamp(9px, 1.7cqmin, 12px);
