@@ -565,6 +565,21 @@ async function mountSavedLibrary({ rail, content, status, developmentOnly }) {
   let items = await recordsFor("saved");
   let selected = developmentOnly ? "Development" : "All";
   let query = "";
+  let savedScope = "all";
+  let developmentScope = "all";
+  const developmentFacets = { stage: "all", place: "all", sector: "all" };
+  const collectionsKey = "heavymap.saved-collections.v1";
+  const readCollections = () => {
+    try {
+      const value = JSON.parse(localStorage.getItem(collectionsKey) ?? "[]");
+      return Array.isArray(value) ? value.filter((item) => item && typeof item.id === "string" && typeof item.name === "string") : [];
+    } catch { return []; }
+  };
+  let collections = readCollections();
+  const writeCollections = () => {
+    try { localStorage.setItem(collectionsKey, JSON.stringify(collections)); }
+    catch { if (status) status.textContent = "Collections could not be saved on this device."; }
+  };
   const categories = developmentOnly ? ["Development"] : ["All", "Parcel", "News", "Development", "Other"];
   const title = developmentOnly ? "Development records" : "Saved items";
   const parcelLabels = new Map(items.filter((item) => item.kind === "parcel" && item.key).map((item) => [item.key, savedParcelLabel(item)]));
@@ -589,15 +604,48 @@ async function mountSavedLibrary({ rail, content, status, developmentOnly }) {
   const categoryNav = el("nav", undefined, "hm-docs-type-filters");
   categoryNav.setAttribute("aria-label", "Saved item categories");
   const railSummary = el("div", undefined, "hm-saved-rail-summary");
-  railSummary.append(el("strong", "0"), el("span", developmentOnly ? "records in your library" : "items in your library"));
-  const railLinks = el("nav", undefined, "hm-saved-rail-links");
-  railLinks.setAttribute("aria-label", "Continue exploring HeavyMap");
-  railLinks.append(el("p", "PICK UP ELSEWHERE", "hm-notes-rail-label"));
-  for (const [label, href] of [["Parcel map", "/map/"], ["Reader", "/reader/"], ["Project docs", "/docs/"]]) {
-    const link = el("a", label, "hm-saved-rail-link"); link.href = href; railLinks.append(link);
-  }
-  rail.replaceChildren(el("p", developmentOnly ? "DEVELOPMENT" : "YOUR LIBRARY", "hm-docs-kicker"), railSummary,
-    el("p", developmentOnly ? "A focused shelf for development records you choose to keep." : "Places, reporting, and project records you want to return to.", "hm-saved-rail-note"), railLinks);
+  railSummary.append(el("strong", "0"), el("span", developmentOnly ? "records tracked" : "saved to your library"));
+  const railViews = el("nav", undefined, developmentOnly ? "hm-dev-views" : "hm-saved-views");
+  railViews.setAttribute("aria-label", developmentOnly ? "Development record views" : "Saved library views");
+  const railDetail = el("div", undefined, developmentOnly ? "hm-dev-facets" : "hm-saved-collections");
+  const collectionForm = document.createElement("form");
+  collectionForm.className = "hm-saved-collection-form";
+  collectionForm.hidden = true;
+  const collectionName = document.createElement("input");
+  collectionName.type = "text";
+  collectionName.maxLength = 48;
+  collectionName.placeholder = "Collection name";
+  collectionName.setAttribute("aria-label", "New collection name");
+  const collectionCreate = button("Create", () => {}, "hm-docs-primary");
+  collectionCreate.type = "submit";
+  collectionForm.append(collectionName, collectionCreate);
+  collectionForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const name = collectionName.value.trim();
+    if (!name) { collectionName.focus(); return; }
+    const existing = collections.find((item) => item.name.toLowerCase() === name.toLowerCase());
+    if (existing) {
+      savedScope = existing.id;
+      if (status) status.textContent = "That collection already exists.";
+    } else {
+      const collection = { id: uid(), name, createdAt: new Date().toISOString() };
+      collections = [...collections, collection];
+      writeCollections();
+      savedScope = collection.id;
+      if (status) status.textContent = `“${name}” collection created on this device.`;
+    }
+    collectionName.value = "";
+    collectionForm.hidden = true;
+    render();
+  });
+  const addCollection = button("＋ New collection", () => {
+    collectionForm.hidden = !collectionForm.hidden;
+    if (!collectionForm.hidden) collectionName.focus();
+  }, "hm-saved-create-collection");
+  const railKicker = el("p", developmentOnly ? "DEVELOPMENT PORTFOLIO" : "SAVED LIBRARY", "hm-docs-kicker");
+  rail.replaceChildren(railKicker, railSummary, railViews, railDetail);
+  if (!developmentOnly) rail.append(addCollection, collectionForm,
+    el("p", "Collections are private to this browser and never remove a saved item.", "hm-saved-rail-note"));
 
   const list = el("div", undefined, "hm-global-record-list");
   const heading = el("div", undefined, "hm-global-page-heading");
@@ -609,9 +657,10 @@ async function mountSavedLibrary({ rail, content, status, developmentOnly }) {
   const countMetric = (label) => { const node = el("div", undefined, "hm-notes-metric"); node.append(el("strong", "0"), el("span", label)); return node; };
   const totalMetric = countMetric(developmentOnly ? "DEVELOPMENT RECORDS" : "SAVED ITEMS");
   const siteMetric = countMetric("SITE PARCELS");
-  const newsMetric = countMetric(developmentOnly ? "LINKED SITES" : "NEWS & RECORDS");
+  const newsMetric = countMetric(developmentOnly ? "WITH A SOURCE" : "NEWS & RECORDS");
   overview.append(totalMetric, siteMetric, newsMetric);
   const toolbar = el("div", undefined, "hm-saved-toolbar");
+  if (developmentOnly) categoryNav.hidden = true;
   toolbar.append(categoryNav, searchLabel);
   content.replaceChildren(heading, overview, toolbar, list);
 
@@ -622,7 +671,96 @@ async function mountSavedLibrary({ rail, content, status, developmentOnly }) {
     if (["development", "development-record", "development_record", "development-records"].includes(kind)) return "Development";
     return "Other";
   };
+  const dateFor = (item) => {
+    const date = new Date(item.savedAt ?? item.updatedAt ?? item.createdAt ?? 0);
+    return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+  };
+  const recentCutoff = () => Date.now() - 30 * 86400000;
+  const fieldValue = (item, keys) => {
+    const containers = [item, item?.metadata, item?.project, item?.details].filter(Boolean);
+    for (const source of containers) for (const key of keys) {
+      const value = source[key];
+      if ((typeof value === "string" || typeof value === "number") && String(value).trim()) return String(value).trim();
+      if (value && typeof value === "object") {
+        const nested = value.name ?? value.label ?? value.value;
+        if ((typeof nested === "string" || typeof nested === "number") && String(nested).trim()) return String(nested).trim();
+      }
+    }
+    return "";
+  };
+  const siteKeyFor = (item) => item.parcelKey ?? item.siteParcelKey ?? item.siteKey ?? item.parcel?.key ?? "";
+  const placeFor = (item) => fieldValue(item, ["municipality", "city", "town", "community", "region", "location", "place"])
+    || (siteKeyFor(item) ? parcelLabels.get(siteKeyFor(item)) || "" : "");
+  const developmentRecords = () => items.filter((item) => category(item) === "Development");
+  const developmentFacetValues = (kind) => {
+    const keys = kind === "stage"
+      ? ["stage", "status", "lifecycleStage", "projectStage", "approvalStatus", "planningStatus"]
+      : kind === "place"
+        ? ["municipality", "city", "town", "community", "region", "location", "place"]
+        : ["sector", "industry", "industrySector", "projectType", "developmentType", "category"];
+    const values = new Map();
+    for (const item of developmentRecords()) {
+      const value = kind === "place" ? placeFor(item) : fieldValue(item, keys);
+      if (value) values.set(value, (values.get(value) ?? 0) + 1);
+    }
+    return [...values].sort(([a], [b]) => a.localeCompare(b));
+  };
+  const viewButton = (label, count, active, action, className = "hm-saved-view") => {
+    const node = button("", action, `${className}${active ? " is-active" : ""}`);
+    node.setAttribute("aria-pressed", String(active));
+    node.append(el("span", label), el("small", String(count)));
+    return node;
+  };
+  const renderSidebar = () => {
+    railSummary.querySelector("strong").textContent = String(developmentOnly ? developmentRecords().length : items.length);
+    railViews.replaceChildren();
+    if (developmentOnly) {
+      const records = developmentRecords();
+      const linked = records.filter((item) => Boolean(siteKeyFor(item))).length;
+      const recent = records.filter((item) => dateFor(item) >= recentCutoff()).length;
+      railViews.append(
+        viewButton("All records", records.length, developmentScope === "all", () => { developmentScope = "all"; render(); }, "hm-dev-view"),
+        viewButton("Recently saved", recent, developmentScope === "recent", () => { developmentScope = "recent"; render(); }, "hm-dev-view"),
+        viewButton("Linked to a site", linked, developmentScope === "linked", () => { developmentScope = "linked"; render(); }, "hm-dev-view"),
+      );
+      railDetail.replaceChildren();
+      let facetCount = 0;
+      for (const [kind, label] of [["stage", "STAGE"], ["place", "PLACE"], ["sector", "SECTOR"]]) {
+        const values = developmentFacetValues(kind);
+        if (!values.length) continue;
+        facetCount++;
+        const group = el("section", undefined, "hm-dev-facet");
+        group.append(el("p", label, "hm-notes-rail-label"));
+        const all = viewButton("All", records.length, developmentFacets[kind] === "all", () => { developmentFacets[kind] = "all"; render(); }, "hm-dev-facet-option");
+        group.append(all);
+        for (const [value, count] of values.slice(0, 12)) {
+          group.append(viewButton(value, count, developmentFacets[kind] === value, () => { developmentFacets[kind] = value; render(); }, "hm-dev-facet-option"));
+        }
+        if (values.length > 12) group.append(el("p", `Showing 12 of ${values.length}; refine the main search to find more.`, "hm-dev-facet-note"));
+        railDetail.append(group);
+      }
+      if (!facetCount) railDetail.append(el("p", records.length
+        ? "Stage, place, and sector filters will appear when saved records include those details."
+        : "Your saved development records will appear here. Available stage, place, and sector details will become filters.", "hm-dev-facet-empty"));
+      return;
+    }
+
+    const recent = items.filter((item) => dateFor(item) >= recentCutoff()).length;
+    const uncollected = items.filter((item) => !Array.isArray(item.collectionIds) || item.collectionIds.length === 0).length;
+    railViews.append(
+      viewButton("All saved", items.length, savedScope === "all", () => { savedScope = "all"; render(); }),
+      viewButton("Recently saved", recent, savedScope === "recent", () => { savedScope = "recent"; render(); }),
+      viewButton("No collection", uncollected, savedScope === "uncollected", () => { savedScope = "uncollected"; render(); }),
+    );
+    railDetail.replaceChildren(el("p", "COLLECTIONS", "hm-notes-rail-label"));
+    if (!collections.length) railDetail.append(el("p", "Create a collection for a site visit, project, or follow-up thread.", "hm-saved-collection-empty"));
+    for (const collection of collections) {
+      const count = items.filter((item) => item.collectionIds?.includes(collection.id)).length;
+      railDetail.append(viewButton(collection.name, count, savedScope === collection.id, () => { savedScope = collection.id; render(); }));
+    }
+  };
   const render = () => {
+    renderSidebar();
     categoryNav.replaceChildren();
     for (const name of categories) {
       const count = name === "All" ? items.length : items.filter((item) => category(item) === name).length;
@@ -633,15 +771,31 @@ async function mountSavedLibrary({ rail, content, status, developmentOnly }) {
     }
     const parcelCount = new Set(items.filter((item) => category(item) === "Parcel").map((item) => item.key).filter(Boolean)).size;
     const newsAndDevelopment = items.filter((item) => ["News", "Development"].includes(category(item))).length;
-    railSummary.querySelector("strong").textContent = String(items.length);
     totalMetric.querySelector("strong").textContent = String(developmentOnly ? items.filter((item) => category(item) === "Development").length : items.length);
     siteMetric.querySelector("strong").textContent = String(developmentOnly
-      ? new Set(items.filter((item) => category(item) === "Development").map((item) => item.parcelKey ?? item.key).filter(Boolean)).size
+      ? new Set(developmentRecords().map(siteKeyFor).filter(Boolean)).size
       : parcelCount);
-    newsMetric.querySelector("strong").textContent = String(developmentOnly ? "—" : newsAndDevelopment);
+    newsMetric.querySelector("strong").textContent = String(developmentOnly
+      ? developmentRecords().filter((item) => item.source || item.sourceUrl || item.publisher || item.sources?.length).length
+      : newsAndDevelopment);
     list.replaceChildren();
-    const shown = items.filter((item) => (selected === "All" || category(item) === selected)
-      && `${item.title ?? ""} ${item.subtitle ?? ""} ${item.address ?? ""} ${item.key ?? ""} ${item.id ?? ""} ${parcelLabels.get(item.key) ?? ""}`.toLowerCase().includes(query));
+    const scopedItems = developmentOnly ? developmentRecords().filter((item) => {
+      if (developmentScope === "recent" && dateFor(item) < recentCutoff()) return false;
+      if (developmentScope === "linked" && !siteKeyFor(item)) return false;
+      for (const [kind, keys] of Object.entries(developmentFacets)) {
+        if (keys === "all") continue;
+        const value = kind === "place" ? placeFor(item) : fieldValue(item, kind === "stage"
+          ? ["stage", "status", "lifecycleStage", "projectStage", "approvalStatus", "planningStatus"]
+          : ["sector", "industry", "industrySector", "projectType", "developmentType", "category"]);
+        if (value !== keys) return false;
+      }
+      return true;
+    }) : items.filter((item) => savedScope === "all"
+      || savedScope === "recent" && dateFor(item) >= recentCutoff()
+      || savedScope === "uncollected" && (!Array.isArray(item.collectionIds) || item.collectionIds.length === 0)
+      || collections.some((collection) => collection.id === savedScope && item.collectionIds?.includes(collection.id)));
+    const shown = scopedItems.filter((item) => (developmentOnly || selected === "All" || category(item) === selected)
+      && `${item.title ?? ""} ${item.subtitle ?? ""} ${item.address ?? ""} ${item.key ?? ""} ${item.id ?? ""} ${parcelLabels.get(item.key) ?? ""} ${fieldValue(item, ["stage", "status", "lifecycleStage", "projectStage", "approvalStatus", "planningStatus", "sector", "industry", "industrySector", "projectType", "developmentType", "municipality", "city", "town", "region", "location"])} ${placeFor(item)}`.toLowerCase().includes(query));
     if (!shown.length) {
       const empty = el("section", undefined, "hm-saved-empty");
       const isSearch = query || items.length;
@@ -673,14 +827,52 @@ async function mountSavedLibrary({ rail, content, status, developmentOnly }) {
       open.classList.add("hm-saved-entry");
       open.append(el("span", kind.toUpperCase(), "hm-docs-saved-kind"), el("strong", item.address || (kind === "Parcel" ? parcelLabels.get(item.key) : "") || item.title || item.key || "Saved item"), el("small", item.subtitle || (kind === "Parcel" ? item.key : item.source || item.publisher || "")));
       const when = item.savedAt ? new Date(item.savedAt) : null;
-      if (when && !Number.isNaN(when.getTime())) row.append(el("time", when.toLocaleDateString(undefined, { month: "short", day: "numeric" }), "hm-saved-date"));
+      if (when && !Number.isNaN(when.getTime())) {
+        const time = el("time", when.toLocaleDateString(undefined, { month: "short", day: "numeric" }), "hm-saved-date");
+        time.dateTime = when.toISOString();
+        row.append(open, time);
+      } else row.append(open);
+      const tools = el("div", undefined, "hm-saved-card-tools");
+      if (!developmentOnly) {
+        const organize = document.createElement("details");
+        organize.className = "hm-saved-organize";
+        const summary = document.createElement("summary");
+        summary.textContent = "Organize";
+        organize.append(summary);
+        const menu = el("div", undefined, "hm-saved-organize-menu");
+        if (!collections.length) menu.append(el("p", "Create a collection in the sidebar, then add this item here.", "hm-saved-organize-empty"));
+        for (const collection of collections) {
+          const label = el("label", undefined, "hm-saved-organize-option");
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.checked = Array.isArray(item.collectionIds) && item.collectionIds.includes(collection.id);
+          label.append(checkbox, el("span", collection.name));
+          checkbox.addEventListener("change", async () => {
+            const memberships = new Set(Array.isArray(item.collectionIds) ? item.collectionIds : []);
+            if (checkbox.checked) memberships.add(collection.id);
+            else memberships.delete(collection.id);
+            item.collectionIds = [...memberships];
+            try {
+              await putLocalRecord("saved", item);
+              if (status) status.textContent = checkbox.checked
+                ? `Added to “${collection.name}” on this device.`
+                : `Removed from “${collection.name}” on this device.`;
+              render();
+            } catch { if (status) status.textContent = "Collection membership could not be saved on this device."; }
+          });
+          menu.append(label);
+        }
+        organize.append(menu);
+        tools.append(organize);
+      }
       const remove = button("Remove", async () => {
         await removeLocalRecord("saved", item.id);
         items = items.filter((entry) => entry.id !== item.id);
         if (status) status.textContent = "Saved item removed on this device";
         render();
       }, "hm-docs-quiet-button");
-      row.append(open, remove);
+      tools.append(remove);
+      row.append(tools);
       list.append(row);
     }
   };

@@ -809,6 +809,7 @@ body.hm-directory-open { overflow: hidden; }
 }
 @media (prefers-reduced-motion: reduce) { .hm-directory-panel { animation: none; } }
 
+
 /* Shared service dock and the two focused library homebases. */
 .hm-docs-status { display: flex; min-height: 26px; align-items: center; padding: 2px 14px 4px; }
 .hm-docs-bottom-bar { padding-inline: 14px; }
@@ -1372,3 +1373,68 @@ body.hm-docs-service-page main { background: var(--surface); }
   .hm-reader.hm-docs-service-page .reader-workspace { grid-template-columns: minmax(140px, 38%) minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) { .alt-header .wordmark-mark { animation: none; } }
+
+/* Saved collections and development portfolio navigation. */
+.hm-global-service[data-docs-service="saved"] .hm-global-rail,
+.hm-global-service[data-docs-service="development"] .hm-global-rail { gap: 0; }
+.hm-global-service[data-docs-service="saved"] .hm-saved-rail-summary,
+.hm-global-service[data-docs-service="development"] .hm-saved-rail-summary { margin: 8px 8px 17px; }
+.hm-saved-views, .hm-dev-views { display: flex; flex-direction: column; gap: 3px; }
+.hm-saved-view, .hm-dev-view, .hm-dev-facet-option { display: flex; width: 100%; min-height: 36px; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 9px; border: 1px solid transparent; border-radius: 3px; color: var(--text-body); background: transparent; text-align: left; font: 500 .73rem/1.35 var(--sans); cursor: pointer; }
+.hm-saved-view:hover, .hm-dev-view:hover, .hm-dev-facet-option:hover { border-color: var(--rule-soft); color: var(--text); background: var(--surface-raised); }
+.hm-saved-view.is-active, .hm-dev-view.is-active, .hm-dev-facet-option.is-active { border-color: var(--rule-soft); color: var(--text); background: var(--surface-raised); box-shadow: 0 2px 8px var(--shadow-soft); }
+.hm-saved-view small, .hm-dev-view small, .hm-dev-facet-option small { flex: none; min-width: 22px; padding: 3px 5px; border-radius: 99px; color: var(--text-muted); background: var(--surface-tint); text-align: center; font: 600 .6rem/1 var(--sans); }
+.hm-saved-view.is-active small, .hm-dev-view.is-active small, .hm-dev-facet-option.is-active small { color: var(--accent-strong); }
+.hm-saved-collections { display: flex; flex-direction: column; gap: 3px; margin-top: 25px; }
+.hm-saved-collections > .hm-notes-rail-label { margin-bottom: 5px; }
+.hm-saved-collection-empty { margin: 4px 8px 10px; color: var(--text-muted); font: .68rem/1.55 var(--sans); }
+.hm-saved-create-collection { min-height: 34px; align-self: flex-start; margin: 12px 0 4px 7px; padding: 6px 9px; border: 1px solid var(--rule-soft); border-radius: 3px; color: var(--text); background: var(--surface-raised); font: 600 .67rem/1.2 var(--sans); cursor: pointer; }
+.hm-saved-create-collection:hover { border-color: var(--rule-strong); background: var(--surface); }
+.hm-saved-collection-form { display: flex; gap: 6px; margin: 6px 0 3px; }
+.hm-saved-collection-form[hidden] { display: none; }
+.hm-saved-collection-form input { width: 100%; min-width: 0; min-height: 34px; padding: 6px 8px; border: 1px solid var(--rule-soft); border-radius: 3px; color: var(--text); background: var(--surface); font: .7rem/1.35 var(--sans); }
+.hm-saved-collection-form .hm-docs-primary { min-height: 34px; padding: 5px 8px; font-size: .65rem; }
+.hm-global-service[data-docs-service="saved"] .hm-saved-rail-note { margin: auto 8px 0; padding-top: 25px; font-size: .65rem; }
+.hm-dev-facets { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+.hm-dev-facet { min-width: 0; }
+.hm-dev-facet > .hm-notes-rail-label { margin-bottom: 4px; }
+.hm-dev-facet-option { min-height: 31px; padding-block: 4px; font-size: .68rem; }
+.hm-dev-facet-empty, .hm-dev-facet-note { margin: 5px 8px; color: var(--text-muted); font: .67rem/1.55 var(--sans); }
+.hm-global-service[data-docs-service="development"] .hm-saved-toolbar .hm-docs-type-filters[hidden] { display: none; }
+.hm-global-service[data-docs-service="development"] .hm-saved-toolbar .hm-docs-search { width: 100%; min-width: 0; }
+.hm-global-service[data-docs-service="saved"] .hm-saved-card,
+.hm-global-service[data-docs-service="development"] .hm-saved-card { grid-template-areas: "entry date tools"; grid-template-columns: minmax(0, 1fr) auto auto; }
+.hm-global-service[data-docs-service="saved"] .hm-saved-card-tools,
+.hm-global-service[data-docs-service="development"] .hm-saved-card-tools { display: flex; grid-area: tools; align-items: center; justify-content: flex-end; gap: 7px; }
+.hm-saved-organize { position: relative; }
+.hm-saved-organize > summary { min-height: 29px; padding: 6px 8px; border: 1px solid var(--rule-soft); border-radius: 3px; color: var(--text-body); background: var(--surface); font: 600 .65rem/1.2 var(--sans); cursor: pointer; list-style: none; white-space: nowrap; }
+.hm-saved-organize > summary::-webkit-details-marker { display: none; }
+.hm-saved-organize > summary:hover, .hm-saved-organize[open] > summary { border-color: var(--rule-strong); color: var(--text); background: var(--surface-tint); }
+.hm-saved-organize-menu { position: absolute; z-index: 25; top: calc(100% + 5px); right: 0; display: flex; width: min(230px, 66vw); max-height: 230px; flex-direction: column; gap: 2px; overflow: auto; padding: 7px; border: 1px solid var(--rule-soft); border-radius: 4px; background: var(--surface-raised); box-shadow: 0 8px 24px var(--shadow); }
+.hm-saved-organize-option { display: flex; min-height: 31px; align-items: center; gap: 8px; padding: 5px 6px; border-radius: 2px; color: var(--text-body); font: .69rem/1.35 var(--sans); cursor: pointer; }
+.hm-saved-organize-option:hover { background: var(--surface-tint); }
+.hm-saved-organize-option input { accent-color: var(--accent-strong); }
+.hm-saved-organize-empty { margin: 4px; color: var(--text-muted); font: .68rem/1.5 var(--sans); }
+@media (max-width: 760px) {
+  .hm-global-service[data-docs-service="saved"] .hm-global-rail,
+  .hm-global-service[data-docs-service="development"] .hm-global-rail { overflow: auto; }
+  .hm-global-service[data-docs-service="saved"] .hm-saved-rail-summary,
+  .hm-global-service[data-docs-service="development"] .hm-saved-rail-summary { margin: 0 5px 7px; }
+  .hm-saved-views, .hm-dev-views { flex-direction: row; overflow-x: auto; }
+  .hm-saved-view, .hm-dev-view { width: auto; min-width: max-content; min-height: 30px; padding: 4px 7px; font-size: .65rem; }
+  .hm-saved-collections { flex-direction: row; align-items: center; overflow-x: auto; margin-top: 10px; }
+  .hm-saved-collections > .hm-notes-rail-label { flex: none; margin: 0 3px 0 0; }
+  .hm-saved-collections > .hm-saved-collection-empty { flex: none; margin: 0 6px; }
+  .hm-saved-create-collection { flex: none; min-height: 29px; margin: 7px 0 3px; padding: 4px 7px; font-size: .61rem; }
+  .hm-saved-collection-form { flex: none; width: min(280px, 72vw); margin: 6px 0 3px; }
+  .hm-global-service[data-docs-service="saved"] .hm-saved-rail-note { display: none; }
+  .hm-dev-facets { flex-direction: row; gap: 11px; overflow-x: auto; margin-top: 9px; }
+  .hm-dev-facet { min-width: 150px; flex: 0 0 auto; }
+  .hm-dev-facet-option { width: auto; min-width: 130px; min-height: 27px; padding: 3px 6px; font-size: .62rem; }
+  .hm-dev-facet-empty { margin: 5px 2px; }
+  .hm-global-service[data-docs-service="saved"] .hm-saved-card,
+  .hm-global-service[data-docs-service="development"] .hm-saved-card { grid-template-areas: "entry tools" "date tools"; grid-template-columns: minmax(0, 1fr) auto; }
+  .hm-global-service[data-docs-service="saved"] .hm-saved-card-tools,
+  .hm-global-service[data-docs-service="development"] .hm-saved-card-tools { flex-direction: column; align-items: flex-end; }
+  .hm-saved-organize > summary { min-height: 27px; padding: 5px 6px; font-size: .6rem; }
+}
