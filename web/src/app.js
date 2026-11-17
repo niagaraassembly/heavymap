@@ -34,10 +34,6 @@ const SAVED_PARCELS_KEY = "heavymap.saved-parcel-keys.v1";
  * Addresses open only when the parcel has more than one. */
 let workspaceSections = null;
 
-// Fill the decorative band immediately; map data and image loading continue
-// independently so the gallery appears on the first page paint after refresh.
-mountParcelShapeBand(document.querySelector(".map-workspace"));
-
 function status(text) {
   const barStatus = document.getElementById("map-bar-status");
   if (barStatus) barStatus.textContent = text;
@@ -385,6 +381,8 @@ function route() {
 }
 
 async function start() {
+  // Mount before local storage and remote map data initialization.
+  mountParcelShapeBand(document.querySelector(".map-workspace"));
   try {
     notesStore = await createNotesStore();
   } catch (error) {

@@ -37,6 +37,12 @@ function parcelArtwork() {
     const path = document.createElementNS(NS, "path");
     path.setAttribute("d", d);
     path.setAttribute("class", index % 5 === 0 ? "shape-line shape-line--quiet" : "shape-line");
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke", "#d7d0c2");
+    path.setAttribute("stroke-width", "1.25");
+    path.setAttribute("stroke-linecap", "round");
+    path.setAttribute("stroke-linejoin", "round");
+    path.setAttribute("opacity", index % 5 === 0 ? "0.46" : "0.83");
     svg.append(path);
   }
   return svg;
@@ -55,10 +61,11 @@ export function mountParcelShapeBand(workspace) {
     workspace.append(band);
   }
 
-  if (!band.querySelector("svg")) {
-    const track = document.createElement("div");
+  let track = band.querySelector(".parcel-shape-band-track");
+  if (!track) {
+    track = document.createElement("div");
     track.className = "parcel-shape-band-track";
-    track.append(parcelArtwork(), parcelArtwork());
     band.append(track);
   }
+  if (!track.querySelector("svg")) track.replaceChildren(parcelArtwork(), parcelArtwork());
 }
