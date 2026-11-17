@@ -10,6 +10,7 @@ import {
   basemapLayers,
   firstLabelLayerId,
 } from "./basemap.js";
+import { overlayLayerSpecs } from "./overlay-layers.js";
 
 maplibregl.setWorkerUrl(workerUrl);
 const protocol = new Protocol();
@@ -205,31 +206,22 @@ export class FieldMap {
     const archive = layer.file.split("/").at(-1).replace(/\.pmtiles$/, "");
     const sourceId = `overlay-source-${archive}`;
     if (!this.overlayArchivesAdded.has(archive)) {
+      const members = this.overlays.filter((candidate) => candidate.file === layer.file);
+      // The archive's real zoom range: from the lowest layer minimum to the
+      // highest layer maximum (layer set 001 archives keep their 6-14 source).
+      const typed = members.some((item) => item.geometry);
       this.map.addSource(sourceId, {
         type: "vector",
         url: `pmtiles://${this.overlaysBase}${layer.file}`,
-        minzoom: 6,
-        maxzoom: 14,
+        minzoom: typed ? Math.min(...members.map((item) => item.min_zoom)) : 6,
+        maxzoom: typed ? Math.max(...members.map((item) => item.max_zoom)) : 14,
       });
       const before = this.beneathLabels && this.map.getLayer(this.beneathLabels) ? this.beneathLabels : undefined;
-      for (const item of this.overlays.filter((candidate) => candidate.file === layer.file)) {
-        const color = item.color || "#557a78";
-        this.map.addLayer({
-          id: `overlay-${item.id}-fill`, type: "fill", source: sourceId, "source-layer": item.tile_layer,
-          minzoom: item.min_zoom, maxzoom: item.max_zoom,
-          layout: { visibility: "none" },
-          paint: { "fill-color": color, "fill-opacity": 0.20 },
-        }, before);
-        this.map.addLayer({
-          id: `overlay-${item.id}-line`, type: "line", source: sourceId, "source-layer": item.tile_layer,
-          minzoom: item.min_zoom, maxzoom: item.max_zoom,
-          layout: { visibility: "none" },
-          paint: { "line-color": color, "line-width": 1.2, "line-opacity": 0.86 },
-        }, before);
-      }
+      for (const item of members)
+        for (const spec of overlayLayerSpecs(item, sourceId)) this.map.addLayer(spec, before);
       this.overlayArchivesAdded.add(archive);
     }
-    for (const suffix of ["fill", "line"])
+    for (const suffix of ["fill", "line", "dash", "circle"])
       if (this.map.getLayer(`overlay-${id}-${suffix}`))
         this.map.setLayoutProperty(`overlay-${id}-${suffix}`, "visibility", show ? "visible" : "none");
   }

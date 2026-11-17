@@ -14,7 +14,7 @@ import { startTitleIntro } from "./brand/title-intro.js";
 const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
 const PARCEL_GEOMETRY_CACHE = "heavymap.parcel-geometry-cache.v1";
 // The street basemap is a separate artifact from the parcel release.
-const MAP_LAYER_BASE = "/map/layers/ca-on-hamilton-map-layers/2026-11-16-layer-set-001/";
+const MAP_LAYER_BASE = "/map/layers/ca-on-hamilton-map-layers/2026-11-17-layer-set-002/";
 const cardSlot = document.getElementById("parcel-card-slot");
 const drawerSlot = document.getElementById("parcel-drawer-slot");
 const workspaceSlot = document.getElementById("parcel-workspace-slot");
@@ -681,11 +681,12 @@ async function start() {
   checkbox.addEventListener("change", () => map.toggleParcels(checkbox.checked));
   const thematic = document.getElementById("thematic-layers");
   if (mapLayerManifest) {
-    const sections = [
-      { key: "planning", title: "Planning", ids: ["zoning", "secondary-plan-land-use", "urban-boundary", "rural-boundary", "employment-lands"] },
-      { key: "protected", title: "Protected and regulated", ids: ["greenbelt", "niagara-escarpment-plan", "conservation-hca", "conservation-npca", "conservation-grca"] },
-      { key: "parks", title: "Parks", ids: ["parks"] },
-    ];
+    // Sections follow the release's groups, in manifest order; titles are HeavyMap wording.
+    const titles = { planning: "Planning", protected: "Protected and regulated", parks: "Parks", freight: "Freight and access", utilities: "Water and sewer" };
+    const sections = [...new Set(mapLayerManifest.layers.map((layer) => layer.group))].map((key) => ({
+      key, title: titles[key] ?? key,
+      ids: mapLayerManifest.layers.filter((layer) => layer.group === key).map((layer) => layer.id),
+    }));
     thematic.replaceChildren();
     for (const section of sections) {
       const layers = section.ids.map((id) => mapLayerManifest.layers.find((layer) => layer.id === id)).filter(Boolean);
