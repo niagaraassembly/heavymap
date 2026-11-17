@@ -16,6 +16,10 @@ maplibregl.setWorkerUrl(workerUrl);
 const protocol = new Protocol();
 maplibregl.addProtocol("pmtiles", protocol.tile);
 
+function pmtilesUrl(url) {
+  return `pmtiles://${new URL(url, window.location.href).href}`;
+}
+
 const STILL_BOUNDS = [
   [-79.91663604095358, 43.289999999999736],
   [-79.81336395904835, 43.289999999999736],
@@ -78,7 +82,7 @@ export class FieldMap {
         const list = basemapLayers(this.flavor);
         map.addSource(BASEMAP_SOURCE, {
           type: "vector",
-          url: `pmtiles://${this.basemap.url}`,
+          url: pmtilesUrl(this.basemap.url),
           maxzoom: this.basemap.maxZoom,
         });
         for (const layer of list) map.addLayer(layer);
@@ -99,6 +103,7 @@ export class FieldMap {
             map.setPaintProperty("parcels-line", "line-color", ["case", selected, still.selLine, still.line]);
             map.setPaintProperty("parcels-line", "line-width", ["case", selected, 2.4, still.lineWidth]);
           }
+          console.error("HeavyMap street basemap failed to load", event.error);
           onStatus("The street basemap could not be loaded. The still image remains available.");
           const note = document.getElementById("map-display-note");
           if (note) note.textContent = "Still image fallback · parcel selection from zoom 14";
@@ -111,7 +116,7 @@ export class FieldMap {
       if (this.tilesUrl && this.tileLayer) {
         map.addSource("parcels", {
           type: "vector",
-          url: `pmtiles://${this.tilesUrl}`,
+          url: pmtilesUrl(this.tilesUrl),
           minzoom: this.minZoom,
           maxzoom: this.maxZoom,
           promoteId: "key",
@@ -148,8 +153,10 @@ export class FieldMap {
         map.on("mouseleave", "parcels-fill", () => { map.getCanvas().style.cursor = ""; });
         map.on("error", (event) => {
           if (event.sourceId === BASEMAP_SOURCE) return;
-          if (event.sourceId === "parcels" || event.error?.message?.includes("PMTiles"))
+          if (event.sourceId === "parcels" || event.error?.message?.includes("PMTiles")) {
+            console.error("HeavyMap parcel tiles failed to load", event.error);
             onStatus("Hamilton parcel tiles could not be loaded. The still image remains available.");
+          }
         });
       }
 
@@ -212,7 +219,7 @@ export class FieldMap {
       const typed = members.some((item) => item.geometry);
       this.map.addSource(sourceId, {
         type: "vector",
-        url: `pmtiles://${this.overlaysBase}${layer.file}`,
+        url: pmtilesUrl(`${this.overlaysBase}${layer.file}`),
         minzoom: typed ? Math.min(...members.map((item) => item.min_zoom)) : 6,
         maxzoom: typed ? Math.max(...members.map((item) => item.max_zoom)) : 14,
       });
