@@ -226,6 +226,9 @@ function notesPane(summary, labels, notesStore, releaseId, onCountChange) {
   void renderList().catch((error) => {
     storageStatus.textContent = `Could not read notes from this device: ${error.message}`;
   });
+  const allNotes = el("a", labels.t("parcel.workspace.notes.view_all"), "parcel-ws-all-notes");
+  allNotes.href = "/notes/";
+  pane.append(allNotes);
   return pane;
 }
 

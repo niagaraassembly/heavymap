@@ -2838,3 +2838,11 @@ h2 {
   .hm-development-record-detail-facts { grid-template-columns: 1fr; gap: 3px; }
   .hm-development-record-detail-facts dd { margin-bottom: 7px; }
 }
+
+/* Workspace Notes: link to the /notes/ library. */
+.parcel-ws-all-notes {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--accent, currentColor);
+}

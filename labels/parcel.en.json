@@ -3,6 +3,150 @@
   "domain": "parcel",
   "locale": "en",
   "entries": {
+    "parcel.access.caveat": {
+      "text": "Distances are measured from the parcel boundary. Near is not connected or served, and pipe size is not spare capacity. Counts are all vehicles, not trucks.",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.from_boundary": {
+      "text": "{distance} from boundary",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.installed": {
+      "text": "installed {year}",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.lift_station": {
+      "text": "Nearest sewer lift station",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.method": {
+      "text": "Shortest distance from the parcel boundary",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.method_count": {
+      "text": "Nearest counted street segment within 60 m of the boundary",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.method_point": {
+      "text": "Parcel point inside the district",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.no_count": {
+      "text": "No count within 60 m",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.none_within": {
+      "text": "None within {distance}",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.pressure_district": {
+      "text": "Water pressure district",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.rail": {
+      "text": "Railway",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.rail_sub": {
+      "text": "surface line, not rail service",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.sewermain": {
+      "text": "Nearest sewer main",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.traffic": {
+      "text": "Traffic on nearest counted street",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.traffic_sub": {
+      "text": "all vehicles, {year} count · {distance} away",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.traffic_value": {
+      "text": "{n} vehicles a day",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.truck_route": {
+      "text": "Truck route",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
+    "parcel.access.watermain": {
+      "text": "Nearest water main",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
     "parcel.addresses.partial": {
       "text": "Showing first {shown} of {count}",
       "status": "draft",
@@ -198,6 +342,14 @@
       "changed_at": "2026-11-16",
       "note": "Share text when a class covers the whole parcel (BL-117)."
     },
+    "parcel.tile.access": {
+      "text": "Access and services",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
+    },
     "parcel.tile.area": {
       "text": "Area",
       "status": "draft",
@@ -270,14 +422,6 @@
       "changed_at": "2026-11-16",
       "note": "Workspace header: returns to the drawer (BL-118)."
     },
-    "parcel.workspace.fact.constraints": {
-      "text": "Constraints",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-16",
-      "note": "Workspace record fact row: the regulated layers checked (BL-118)."
-    },
     "parcel.workspace.constraints.none": {
       "text": "None found in the {n} regulation layers checked",
       "status": "draft",
@@ -285,6 +429,14 @@
       "reviewer": null,
       "changed_at": "2026-11-16",
       "note": "Workspace Constraints fact when no checked layer contains the parcel; names what was checked (BL-118)."
+    },
+    "parcel.workspace.fact.constraints": {
+      "text": "Constraints",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-16",
+      "note": "Workspace record fact row: the regulated layers checked (BL-118)."
     },
     "parcel.workspace.notes.add": {
       "text": "Add note",
@@ -326,6 +478,14 @@
       "changed_at": "2026-11-16",
       "note": "Workspace Notes compose placeholder (BL-118)."
     },
+    "parcel.workspace.notes.view_all": {
+      "text": "All notes",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Workspace Notes tab: link to the /notes/ library, which lists workspace and field notes (from web/notes-page-ui)."
+    },
     "parcel.workspace.notes.write": {
       "text": "Write a note",
       "status": "draft",
@@ -350,14 +510,6 @@
       "changed_at": "2026-11-16",
       "note": "Workspace fact-row disclosure: source label (BL-118)."
     },
-    "parcel.workspace.source.join": {
-      "text": "Join",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-16",
-      "note": "Workspace fact-row disclosure: join method label (BL-118)."
-    },
     "parcel.workspace.source.confidence": {
       "text": "Confidence",
       "status": "draft",
@@ -365,6 +517,14 @@
       "reviewer": null,
       "changed_at": "2026-11-16",
       "note": "Workspace fact-row disclosure: confidence label (BL-118)."
+    },
+    "parcel.workspace.source.join": {
+      "text": "Join",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-16",
+      "note": "Workspace fact-row disclosure: join method label (BL-118)."
     },
     "parcel.workspace.tab.checklist": {
       "text": "Checklist",
@@ -413,158 +573,6 @@
       "reviewer": null,
       "changed_at": "2026-11-16",
       "note": "Workspace work-area tab; the only working tab in this pass (BL-118)."
-    },
-    "parcel.tile.access": {
-      "text": "Access and services",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.truck_route": {
-      "text": "Truck route",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.rail": {
-      "text": "Railway",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.rail_sub": {
-      "text": "surface line, not rail service",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.watermain": {
-      "text": "Nearest water main",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.sewermain": {
-      "text": "Nearest sewer main",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.lift_station": {
-      "text": "Nearest sewer lift station",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.pressure_district": {
-      "text": "Water pressure district",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.traffic": {
-      "text": "Traffic on nearest counted street",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.traffic_value": {
-      "text": "{n} vehicles a day",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.traffic_sub": {
-      "text": "all vehicles, {year} count · {distance} away",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.no_count": {
-      "text": "No count within 60 m",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.from_boundary": {
-      "text": "{distance} from boundary",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.installed": {
-      "text": "installed {year}",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.none_within": {
-      "text": "None within {distance}",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.method": {
-      "text": "Shortest distance from the parcel boundary",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.method_point": {
-      "text": "Parcel point inside the district",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.method_count": {
-      "text": "Nearest counted street segment within 60 m of the boundary",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
-    },
-    "parcel.access.caveat": {
-      "text": "Distances are measured from the parcel boundary. Near is not connected or served, and pipe size is not spare capacity. Counts are all vehicles, not trucks.",
-      "status": "draft",
-      "author": "team",
-      "reviewer": null,
-      "changed_at": "2026-11-17",
-      "note": "Access and services rows (BL-123, D-078 wording owned by HeavyMap)."
     }
   }
 }

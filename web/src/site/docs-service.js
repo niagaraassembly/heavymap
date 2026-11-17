@@ -913,7 +913,18 @@ async function mountSavedLibrary({ rail, content, status, developmentOnly }) {
 }
 
 async function mountNotesLibrary({ rail, content, status }) {
-  const [initialNotes, saved, docs] = await Promise.all([recordsFor("field-notes"), recordsFor("saved"), recordsFor("documents")]);
+  const [fieldNotes, workspaceNotes, saved, docs] = await Promise.all([
+    recordsFor("field-notes"), recordsFor("notes"), recordsFor("saved"), recordsFor("documents"),
+  ]);
+  // Notes written in a parcel workspace's Notes tab live in the "notes" store
+  // ({ id, key, releaseId, text, at }); show them alongside field notes.
+  const initialNotes = [
+    ...fieldNotes.map((note) => ({ ...note, store: "field-notes" })),
+    ...workspaceNotes.filter((note) => note && typeof note.text === "string").map((note) => ({
+      id: note.id, parcelKey: note.key ?? null, layer: "Workspace", field: "Parcel note",
+      text: note.text, createdAt: note.at, updatedAt: note.at, store: "notes",
+    })),
+  ];
   let notes = initialNotes.sort((a, b) => String(b.createdAt ?? "").localeCompare(String(a.createdAt ?? "")));
   const parcels = new Map(saved.filter((item) => item.kind === "parcel" && item.key).map((item) => [item.key, savedParcelLabel(item)]));
   for (const doc of docs) {
@@ -1013,7 +1024,7 @@ async function mountNotesLibrary({ rail, content, status }) {
     const now = new Date().toISOString();
     const record = { id: uid(), parcelKey: parcel.value, layer: "Project", row: address, field: "General note", text, createdAt: now, updatedAt: now };
     await putLocalRecord("field-notes", record);
-    notes.unshift(record);
+    notes.unshift({ ...record, store: "field-notes" });
     scope = "all";
     noteInput.value = "";
     composerOpen = false;
@@ -1094,7 +1105,7 @@ async function mountNotesLibrary({ rail, content, status }) {
       if (annotation && note.value) body.append(el("p", `Recorded value: ${note.value}`, "hm-notes-card-value"));
       head.append(button("Delete", async () => {
         if (!confirm("Delete this note?")) return;
-        await removeLocalRecord("field-notes", note.id);
+        await removeLocalRecord(note.store ?? "field-notes", note.id);
         notes = notes.filter((entry) => entry.id !== note.id);
         render();
       }, "hm-docs-quiet-button"));
