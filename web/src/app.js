@@ -744,7 +744,7 @@ async function start() {
     if (note) note.textContent = "Street basemap · parcel selection from zoom 14";
   }
   const requestedBasemapFlavor = new URLSearchParams(location.search).get("basemap");
-  const basemapFlavor = ["dark", "grayscale"].includes(requestedBasemapFlavor) ? requestedBasemapFlavor : "white";
+  const basemapFlavor = ["white", "dark"].includes(requestedBasemapFlavor) ? requestedBasemapFlavor : "grayscale";
   map = new FieldMap({
     basemap,
     overlays: mapLayerManifest?.layers ?? [],
