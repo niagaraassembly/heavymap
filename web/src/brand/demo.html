@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heavy element loaders</title>
+<!-- Reference page for <heavy-element-loader>. Not part of the site build:
+     serve the web/ folder over HTTP and open /src/brand/demo.html. -->
+<style>
+  body { margin: 0; font: 13px/1.5 "IBM Plex Sans", Arial, sans-serif; background: #d9dfe1; color: #1c3340; }
+  main { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; min-height: 100vh; }
+  section { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 28px; }
+  .dark { background: #0b0d0e; color: #c7d0d4; } .light { background: #eef2f1; }
+  heavy-element-loader { width: 168px; height: 168px; }
+  code { font: 11.5px ui-monospace, Menlo, monospace; opacity: .75; }
+  button { font: inherit; border: 1px solid #8a9aa3; background: transparent; color: inherit; border-radius: 8px; padding: 5px 12px; cursor: pointer; }
+</style>
+</head>
+<body>
+<main>
+  <section class="dark"><heavy-element-loader theme="dark" mode="spin" loading></heavy-element-loader><b>Dark · spin</b><code>&lt;heavy-element-loader theme="dark" mode="spin" loading&gt;</code></section>
+  <section class="light"><heavy-element-loader theme="light" mode="spin" loading></heavy-element-loader><b>Light · spin</b><code>&lt;heavy-element-loader theme="light" mode="spin" loading&gt;</code></section>
+  <section class="dark"><heavy-element-loader theme="dark" mode="drift" loading></heavy-element-loader><b>Dark · drift</b><code>&lt;heavy-element-loader theme="dark" mode="drift" loading&gt;</code></section>
+  <section class="light"><heavy-element-loader theme="light" mode="drift" loading></heavy-element-loader><b>Light · drift</b><code>&lt;heavy-element-loader theme="light" mode="drift" loading&gt;</code><button id="done">Finish loading (all)</button></section>
+</main>
+<script type="module">
+  import "./heavy-element-loader.js";
+  document.getElementById("done").addEventListener("click", () => {
+    for (const el of document.querySelectorAll("heavy-element-loader")) el.removeAttribute("loading");
+  });
+</script>
+</body>
+</html>

@@ -19,9 +19,13 @@
         id="map"
         aria-label="City of Hamilton map with parcel selection at close zoom"
       ></div>
-      <div class="map-loading" data-map-loading aria-hidden="true">
-        <img src="/heavy-element-mark.png" alt="" />
-        <span>Preparing Hamilton map</span>
+      <div class="map-loading map-intro" data-map-loading>
+        <canvas class="map-intro-canvas" data-intro-canvas aria-hidden="true"></canvas>
+        <div class="map-intro-word" data-intro-word aria-hidden="true">
+          <strong>HeavyMap</strong><span>industrial intelligence</span>
+        </div>
+        <p class="map-intro-status" data-intro-status role="status">Preparing Hamilton map</p>
+        <button type="button" class="map-intro-skip" data-intro-skip>Skip intro</button>
       </div>
       <section class="intro" aria-label="Introduction">
         <span class="eyebrow">A city encased by nature</span>

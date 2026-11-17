@@ -9,6 +9,7 @@ import { createNotesStore, recordsFor, removeSavedPlace, savePlace } from "./loc
 import { el } from "./dossier.js";
 import { FieldMap } from "./map.js";
 import { findBasemap } from "./basemap.js";
+import { startTitleIntro } from "./brand/title-intro.js";
 
 const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
 const PARCEL_GEOMETRY_CACHE = "heavymap.parcel-geometry-cache.v1";
@@ -35,22 +36,15 @@ let savedQuery = "";
  * parcels in the session (design §5.4). Set on the first workspace open:
  * Addresses open only when the parcel has more than one. */
 let workspaceSections = null;
-const MAP_LOADING_MIN_MS = 500;
-const mapLoadingStartedAt = performance.now();
+// The opening title sequence plays over the map while it loads; it leaves
+// when both the sequence (or a skip) and the map are done.
+const titleIntro = startTitleIntro(document.querySelector("[data-map-loading]"));
 let mapLoadingFinished = false;
 
 function finishMapLoading() {
   if (mapLoadingFinished) return;
   mapLoadingFinished = true;
-  const overlay = document.querySelector("[data-map-loading]");
-  if (!overlay) return;
-
-  const remaining = Math.max(0, MAP_LOADING_MIN_MS - (performance.now() - mapLoadingStartedAt));
-  setTimeout(() => {
-    overlay.classList.add("is-hidden");
-    overlay.addEventListener("transitionend", () => overlay.remove(), { once: true });
-    setTimeout(() => overlay.remove(), 250);
-  }, remaining);
+  titleIntro.mapReady();
 }
 
 function status(text) {
