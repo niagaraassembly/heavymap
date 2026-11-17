@@ -295,6 +295,14 @@ async function start() {
     pin.ok && tileManifest && parcelLayer && parcelLayer.tile_layer === tileManifest.tile_layer,
   );
   const basemap = await findBasemap(BASEMAP_BASE);
+  if (basemap) {
+    // The page ships with still-image wording; correct it when the vector
+    // basemap is in use. OpenStreetMap attribution is a licence condition.
+    const credit = document.querySelector(".hm-map-context span:nth-child(2)");
+    if (credit?.firstChild?.nodeType === Node.TEXT_NODE) credit.firstChild.textContent = "Map data © ";
+    const note = document.querySelector(".honesty");
+    if (note) note.textContent = "Street basemap · parcel selection from zoom 14";
+  }
   map = new FieldMap({
     basemap,
     // Comparison aid while the style is chosen: /map/?basemap=dark

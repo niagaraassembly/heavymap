@@ -94,6 +94,10 @@ export class FieldMap {
             map.setPaintProperty("parcels-line", "line-width", ["case", selected, 2.4, still.lineWidth]);
           }
           onStatus("The street basemap could not be loaded. The still image remains available.");
+          const credit = document.querySelector(".hm-map-context span:nth-child(2)");
+          if (credit?.firstChild?.nodeType === Node.TEXT_NODE) credit.firstChild.textContent = "Still image © ";
+          const note = document.querySelector(".honesty");
+          if (note) note.textContent = "Still image fallback · parcel selection from zoom 14";
         };
         map.on("error", dropBasemap);
       }
