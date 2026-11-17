@@ -1,0 +1,27 @@
+/* Keep scrolling visible with a quiet, floating thumb and no solid track. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(51, 75, 87, 0.42) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: rgba(51, 75, 87, 0.42);
+  background-clip: padding-box;
+  box-shadow: 0 0 3px rgba(22, 39, 47, 0.28);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(51, 75, 87, 0.68);
+  background-clip: padding-box;
+}
