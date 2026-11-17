@@ -2596,11 +2596,12 @@ h2 {
     width: auto;
     transform: none;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-template-areas: "id id id close" "area zone setting gaps" "save save open open";
+    grid-template-areas: "id id id close" "development development development development" "area zone setting gaps" "save save open open";
     gap: 4px 6px;
     padding: 9px 10px;
   }
   .parcel-card-id { grid-area: id; padding: 0 0 7px; border-bottom: 1px solid var(--line); margin: 0; }
+  .hm-development-count { grid-area: development; }
   .parcel-fact-area { grid-area: area; }
   .parcel-fact-zone { grid-area: zone; }
   .parcel-fact-setting { grid-area: setting; }
@@ -2636,4 +2637,105 @@ h2 {
     transform: none;
   }
   .layers-dialog-head { flex-basis: auto; height: auto; }
+}
+
+/* Hamilton permit records: exact source values remain adjacent to derived
+ * labels in the parcel workspace. */
+.hm-development-count {
+  align-self: center;
+  margin: 0 10px 0 0;
+  padding: 7px 10px;
+  border: 1px solid #a4b6bd;
+  border-radius: 8px;
+  background: #f8fbfc;
+  color: #244755;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 650;
+  cursor: pointer;
+}
+.hm-development-count:hover { background: #e2eef1; }
+.hm-development-section { margin: 18px 0 6px; padding-top: 14px; border-top: 1px solid var(--line); }
+.hm-development-section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.hm-development-section-head h3 { margin: 0; font: 650 18px/1.2 var(--serif, Georgia, serif); }
+.hm-development-section-head > span { color: var(--muted); font-size: 12px; }
+.hm-development-caveat { margin: 7px 0 12px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+.hm-development-record { margin: 10px 0; padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: #f8faf9; }
+.hm-development-record-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.hm-development-record-head h4 { margin: 0; font: 650 14px/1.35 var(--sans, sans-serif); overflow-wrap: anywhere; }
+.hm-development-record-head time { flex: none; color: var(--muted); font-size: 11px; }
+.hm-development-site { margin: 5px 0; font-size: 13px; }
+.hm-development-facts { display: grid; grid-template-columns: minmax(105px, .55fr) minmax(0, 1fr); gap: 4px 10px; margin: 10px 0; font-size: 12px; }
+.hm-development-facts dt { color: var(--muted); }
+.hm-development-facts dd { margin: 0; overflow-wrap: anywhere; }
+.hm-development-source-value { white-space: pre-wrap; }
+.hm-development-names { margin: 9px 0 0; font-size: 12px; font-weight: 600; overflow-wrap: anywhere; }
+.hm-development-provenance { margin: 8px 0 0; color: var(--muted); font-size: 10px; line-height: 1.4; overflow-wrap: anywhere; }
+.hm-development-empty { color: var(--muted); font-size: 13px; }
+.hm-development-overview-open {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 16px 0 20px;
+  padding: 12px 13px;
+  border: 1px solid #92a9b1;
+  border-radius: 9px;
+  background: #eaf1f0;
+  color: #214553;
+  font: 600 13px/1.3 var(--sans, sans-serif);
+  text-align: left;
+  cursor: pointer;
+}
+.hm-development-overview-open:hover { background: #dce9e8; }
+.hm-development-sheet, .hm-development-browser { display: flex; flex-direction: column; min-height: 100%; max-height: calc(100dvh - 112px); overflow: auto; }
+.hm-development-sheet-head { display: flex; justify-content: space-between; gap: 18px; padding: 18px 22px 14px; border-bottom: 1px solid var(--line); }
+.hm-development-sheet-head > div { min-width: 0; }
+.hm-development-sheet-head .hm-map-dialog-eyebrow { margin: 0 0 7px; }
+.hm-development-sheet-head .hm-map-dialog-title { margin: 0; }
+.hm-development-sheet-range { margin: 7px 0 0; color: var(--muted); font-size: 12px; }
+.hm-development-city-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 16px 22px; }
+.hm-development-city-stat { padding: 14px; border: 1px solid var(--line); border-radius: 9px; background: #f8faf9; }
+.hm-development-city-stat p { margin: 0 0 7px; color: var(--muted); font-size: 11px; }
+.hm-development-city-stat strong { display: block; font: 650 clamp(18px, 2.2vw, 25px)/1.15 var(--serif, Georgia, serif); overflow-wrap: anywhere; }
+.hm-development-city-stat small { display: block; margin-top: 7px; color: var(--muted); font-size: 10px; }
+.hm-development-city-categories { padding: 0 22px; }
+.hm-development-city-categories h3 { margin: 4px 0 9px; font: 650 17px/1.2 var(--serif, Georgia, serif); }
+.hm-development-city-row { display: grid; grid-template-columns: minmax(130px, 1.15fr) repeat(3, minmax(0, 1fr)); gap: 8px; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+.hm-development-city-row strong { color: #244755; }
+.hm-development-city-row span { text-align: right; }
+.hm-development-city-note { margin: 15px 22px 0; padding: 11px 13px; border-left: 3px solid #9daeb1; background: #f0f4f2; color: #52636a; font-size: 11px; line-height: 1.5; }
+.hm-development-sheet-latest { margin: auto 22px 16px; padding-top: 12px; color: var(--muted); font-size: 11px; }
+.hm-development-browse-open { align-self: flex-start; margin: 4px 22px 18px; padding: 8px 0; border: 0; background: none; color: #245267; font: 650 13px/1.4 var(--sans, sans-serif); cursor: pointer; }
+.hm-development-browse-open:hover { text-decoration: underline; }
+.hm-development-browser-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 22px 12px; border-bottom: 1px solid var(--line); }
+.hm-development-browser-head h2 { margin: 0; }
+.hm-development-browser-actions { display: flex; align-items: center; gap: 8px; }
+.hm-development-browser-back { flex: none; padding: 7px 9px; border: 1px solid var(--line); border-radius: 7px; background: #f8faf9; color: inherit; cursor: pointer; }
+.hm-development-browser-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(185px, .7fr); gap: 9px; padding: 12px 22px 0; }
+.hm-development-browser-controls input, .hm-development-browser-controls select { min-width: 0; padding: 9px 10px; border: 1px solid #9aaab0; border-radius: 7px; background: #fff; color: inherit; font: inherit; font-size: 12px; }
+.hm-development-browser-status { margin: 9px 22px; color: var(--muted); font-size: 11px; }
+.hm-development-browser-list { overflow-y: auto; padding: 0 22px; }
+.hm-development-browser-item { border-top: 1px solid var(--line); }
+.hm-development-browser-item summary { display: grid; grid-template-columns: minmax(120px, .5fr) minmax(0, 1fr); gap: 10px; padding: 10px 2px; cursor: pointer; font-size: 12px; }
+.hm-development-browser-item summary span { color: var(--muted); overflow-wrap: anywhere; }
+.hm-development-browser-item .hm-development-record { margin: 0 0 12px; }
+.hm-development-browser-paging { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 12px 22px 18px; }
+.hm-development-page { padding: 7px 10px; border: 1px solid var(--line); border-radius: 7px; background: #f8faf9; color: inherit; cursor: pointer; }
+.hm-development-page:disabled { opacity: .45; cursor: default; }
+.hm-development-browser-paging span { color: var(--muted); font-size: 11px; }
+@media (max-width: 620px) {
+  .hm-development-city-stats { grid-template-columns: 1fr; padding: 12px 14px; }
+  .hm-development-sheet-head, .hm-development-city-categories { padding-right: 14px; padding-left: 14px; }
+  .hm-development-browse-open { margin-right: 14px; margin-left: 14px; }
+  .hm-development-browser-head, .hm-development-browser-list { padding-right: 14px; padding-left: 14px; }
+  .hm-development-browser-controls { grid-template-columns: 1fr; padding-right: 14px; padding-left: 14px; }
+  .hm-development-browser-status { margin-right: 14px; margin-left: 14px; }
+  .hm-development-city-row { grid-template-columns: minmax(0, 1fr); gap: 5px; }
+  .hm-development-city-row span { text-align: left; }
+  .hm-development-city-row span::before { color: var(--muted); }
+  .hm-development-city-row span:nth-child(2)::before { content: "Permits · "; }
+  .hm-development-city-row span:nth-child(3)::before { content: "Reported value · "; }
+  .hm-development-city-row span:nth-child(4)::before { content: "Measured GFA · "; }
+  .hm-development-city-note { margin-right: 14px; margin-left: 14px; }
+  .hm-development-sheet-latest { margin-right: 14px; margin-left: 14px; }
 }

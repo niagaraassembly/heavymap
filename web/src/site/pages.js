@@ -480,11 +480,12 @@ export function mapIntro() {
             </div>
           </div>
         </section>
-        <div class="tray-heading"><h2>Hamilton parcels</h2><span id="parcel-count">Loading</span></div><p class="subtext">Zoom in to see parcel outlines. Select any outline to open its evidence record.</p><div class="samples-heading"><h2>Selection</h2><span id="result-count"></span></div><div id="samples"></div><p id="search-status" role="status"></p>
+        <div class="tray-heading"><h2>Hamilton parcels</h2><span id="parcel-count">Loading</span></div><p class="subtext">Zoom in to see parcel outlines. Select any outline to open its evidence record.</p><button type="button" id="development-overview-open" class="hm-development-overview-open" hidden>City development at a glance <span aria-hidden="true">↗</span></button><div class="samples-heading"><h2>Selection</h2><span id="result-count"></span></div><div id="samples"></div><p id="search-status" role="status"></p>
       </aside>
       <div id="parcel-card-slot" hidden></div><div id="parcel-drawer-slot" hidden></div><div id="parcel-workspace-slot" hidden></div>
       <dialog id="parcel-save-dialog" class="hm-map-dialog" aria-label="Saved places"></dialog>
       <dialog id="parcel-notes-dialog" class="hm-map-dialog" aria-label="Parcel notes"></dialog>
+      <dialog id="development-overview-dialog" class="hm-map-dialog hm-development-overview-dialog" aria-label="Hamilton development at a glance"></dialog>
     </div>`,
     after: `<div class="hm-map-bar" data-map-bars><span class="hm-map-bar-legend"><span class="legend-dot signal"></span>Parcel boundary</span><span id="map-display-note" class="hm-map-bar-note">Still image fallback · parcels from zoom 14</span><span class="hm-map-bar-credits">© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · D-070 · <a href="/map/data-methods/">Data &amp; methods</a></span><span class="hm-map-bar-status" id="map-bar-status" role="status">Loading map…</span><div class="hm-map-bar-spacer"></div><!-- map-theme-picker --></div>`,
   };

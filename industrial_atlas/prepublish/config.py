@@ -157,6 +157,56 @@ RUN_RECORD_KEYS = frozenset(
     }
 )
 
+# Hamilton monthly permit viewer package. Names are intentionally a public
+# source-reported field on the user's approved industrial/commercial/logistics/
+# multi-unit profile; contact addresses and description fields are excluded.
+DEVELOPMENT_RELEASE_MANIFEST_KEYS = frozenset(
+    {
+        "schema_version", "jurisdiction", "record_count", "focus_record_count",
+        "linked_record_count", "unique_parcel_count", "outputs",
+        "viewer_development_records_v0.1.json",
+        "parcel_development_indicators_v0.1.json",
+        "city_development_snapshot_v0.1.json",
+    }
+)
+DEVELOPMENT_RECORD_KEYS = frozenset(
+    {
+        "schema_version", "jurisdiction", "record_count", "records",
+        "development_record_id", "permit_number", "report_month", "site_location",
+        "source_reported_building_type", "source_reported_work_type",
+        "source_reported_names", "owner", "builder", "label", "derived_sector_tags",
+        "derived_action_tags", "taxonomy_version", "classification_status",
+        "display_profile", "activity_basis", "construction_value", "building_gfa",
+        "parcel_ids", "source_evidence_ref", "source_page", "source_record_id",
+    }
+)
+DEVELOPMENT_INDICATOR_KEYS = frozenset(
+    {
+        "schema_version", "jurisdiction", "relationship", "linked_record_count",
+        "unique_parcel_count", "unresolved_records", "address_only_matches",
+        "excluded_from_parcel_indicators", "parcels", "development_record_count",
+        "development_record_ids",
+    }
+)
+DEVELOPMENT_SNAPSHOT_KEYS = frozenset(
+    {
+        "aggregate_reports_matching", "aggregate_reports_with_mismatch", "categories",
+        "category_counts_overlap", "category_measures_overlap", "category_totals",
+        "citywide", "citywide_totals", "commercial", "coverage", "current_status",
+        "first_report_month", "industrial", "interpretation", "jurisdiction",
+        "known_source_reconciliation", "last_report_month", "light_industrial",
+        "logistics", "monthly", "monthly_report_count", "multi_unit_residential",
+        "observed_building_gfa_unparsed", "observed_construction_value_unparsed",
+        "open_issue", "permit_record_count", "permits_with_measured_building_gfa",
+        "permits_with_reported_construction_value", "record_grain", "report_month",
+        "reported_building_gfa_m2_sum", "reported_construction_value_cad_sum",
+        "reports_without_aggregate_summary", "residential", "residential_all",
+        "schema_version", "snapshot_status", "taxonomy_version",
+        "unique_citywide_permit_count_is_separate", "unique_permits", "value_and_gfa",
+        "without_reviewed_sector_tag",
+    }
+)
+
 TEXT_SUFFIXES = frozenset(
     {".json", ".ndjson", ".csv", ".txt", ".md", ".geojson", ".html"}
 )

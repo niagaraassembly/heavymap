@@ -3,8 +3,9 @@
 How the site gets from a commit to heavymap.com, who may trigger it, and how to
 undo it. Read [BRANCHING.md](../BRANCHING.md) for the branch rules this sits on.
 The publication rules in [for-agents/HARD-RULES.md](for-agents/HARD-RULES.md)
-(rules 2 and 3) still apply: nothing identifying is shipped, and public
-deployment is the owner's decision.
+(rules 2 and 3) still apply. Parcel dossier identifying fields remain screened;
+the Hamilton permit viewer has the narrow, owner-approved source-reported name
+profile documented in the Hamilton beta gate.
 
 ## Current mode: solo preview (since 2026-11-16, decision D-073)
 
@@ -14,12 +15,12 @@ follows the push.
 | Step | What happens |
 |---|---|
 | 1. Push to `main` | A push that touches `web/**` or `.github/workflows/deploy-site.yml` starts **Deploy heavymap.com**. Docs-only pushes do not deploy. |
-| 2. Build | `npm ci`, `npm test`, then `node build/prerender.mjs --launch` (every build check plus the launch gates). The pinned Industrial Atlas release is checked out from `niagaraassembly/industrial-atlas-data` at the tag named in the workflow and copied into the artifact. |
+| 2. Build | `npm ci`, `npm test`, then `node build/prerender.mjs --launch` (every build check plus the launch gates). The pinned Industrial Atlas, map-layer and screened Hamilton development releases are checked out at the immutable refs named in the workflow. The development package's manifest verifies every output SHA-256 before the files enter the artifact. |
 | 3. Deploy | The `heavymap-public` environment publishes to GitHub Pages. It has no approval click in this mode and only accepts `main`. |
 | 4. Record | The run summary lists the commit, trigger, actor, Atlas release and URL. **Actions run history is the deploy log.** |
 
-A failed test, check or gate stops the run before step 3, so the previous site
-stays up.
+A failed test, checksum, check or gate stops the run before step 3, so the
+previous site stays up.
 
 **Who may push `main`**
 - The owner pushes directly, with no pull request.
@@ -34,6 +35,9 @@ Launch gates default to on.
 
 **Changing the data release:** edit the `ref:` tag and `HM_ATLAS_RELEASE_DIR`
 path in the workflow together. That edit is a push to `main` and deploys.
+For the Hamilton development package, update its immutable data-repository
+commit, release identifier and output path together. The package is stored as a
+versioned release in `industrial-atlas-data`, not in HeavyMap's source history.
 
 ## Rolling back
 

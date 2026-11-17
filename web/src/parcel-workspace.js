@@ -12,6 +12,7 @@
  */
 
 import { el } from "./dossier.js";
+import { developmentRecordsSection } from "./development-records.js";
 import { copyLinkButton, disabledAction, thumbnail } from "./parcel-views.js";
 import { createWorkspaceServices } from "./parcel-workspace-services.js";
 
@@ -284,6 +285,9 @@ function workArea(summary, labels, notesStore, releaseId, initialTab, sourceReco
 export function parcelWorkspaceElement(summary, labels, {
   geometry,
   releaseId,
+  developmentCount = 0,
+  developmentRecords = [],
+  developmentLoading = false,
   notesStore,
   onSave,
   initialTab = "notes",
@@ -339,6 +343,12 @@ export function parcelWorkspaceElement(summary, labels, {
   const cols = el("div", undefined, "parcel-ws-cols");
   const record = el("div", undefined, "parcel-ws-record");
   for (const fact of summary.facts) record.append(factRow(labels, fact));
+  if (developmentCount > 0) {
+    record.append(developmentRecordsSection(developmentRecords, {
+      count: developmentCount,
+      loading: developmentLoading,
+    }));
+  }
   const sections = [
     {
       id: "addresses",

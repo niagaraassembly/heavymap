@@ -27,10 +27,11 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { copyAtlasRelease } from "./copy-atlas-release.mjs";
 import { copyMapRelease } from "./copy-map-release.mjs";
+import { copyDevelopmentRelease } from "./copy-development-release.mjs";
 
 const web = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 export const PAGES_DIR = path.join(web, ".site");
-export const OUT_DIR = path.join(web, "dist-site");
+export const OUT_DIR = path.resolve(process.env.HM_SITE_OUT_DIR || path.join(web, "dist-site"));
 const CLIENT = path.join(web, "src/site/client.js");
 const MAP_LIBRARY_CLIENT = path.join(web, "src/site/map-library.js");
 const SITE_SRC = path.join(web, "src/site");
@@ -232,6 +233,9 @@ async function main() {
   const mapRelease = process.env.HM_MAP_LAYER_RELEASE_DIR
     ? copyMapRelease({ sourceDir: process.env.HM_MAP_LAYER_RELEASE_DIR, outputDir: OUT_DIR })
     : null;
+  const developmentRelease = process.env.HM_DEVELOPMENT_RELEASE_DIR
+    ? copyDevelopmentRelease({ sourceDir: process.env.HM_DEVELOPMENT_RELEASE_DIR, outputDir: OUT_DIR })
+    : null;
 
   const budgets = budgetReport(OUT_DIR);
   fail("size budgets (decision 56, BETA-GATE section 6)", budgets.problems);
@@ -270,6 +274,7 @@ async function main() {
       ),
     ),
     atlas_release: atlasRelease,
+    development_release: developmentRelease,
     themes: themes.map((t) => t.id),
     pages: pages.length,
     sizes_compressed: {

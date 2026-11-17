@@ -15,6 +15,7 @@
  */
 
 import { el } from "./dossier.js";
+import { developmentCountAction } from "./development-records.js";
 
 const fmtM2 = (m2) => `${m2.toLocaleString("en-CA")} m²`;
 const fmtUnits = (area) => `${area.ha.toFixed(2)} ha · ${area.acres.toFixed(2)} acres`;
@@ -114,7 +115,7 @@ function moreText(labels, total, shown) {
 }
 
 /** One bar centred along the bottom of the map window (design §5.2). */
-export function parcelCardElement(summary, labels, { geometry, onSave, onOpenRecord, onClose }) {
+export function parcelCardElement(summary, labels, { geometry, onSave, onOpenRecord, onOpenDevelopment, developmentCount = 0, onClose }) {
   const card = el("section", undefined, "parcel-card");
   card.setAttribute("role", "region");
   card.setAttribute("aria-label", "Parcel summary");
@@ -126,6 +127,8 @@ export function parcelCardElement(summary, labels, { geometry, onSave, onOpenRec
   titles.append(el("p", summary.subtitle, "parcel-sub"));
   id.append(titles);
   card.append(id);
+  const development = developmentCountAction(developmentCount, onOpenDevelopment);
+  if (development) card.append(development);
 
   const zoning = summary.land.zoning[0];
   const plan = summary.land.planUse[0];
@@ -217,7 +220,7 @@ function tileHeading(text) {
 }
 
 /** Dense record drawer rising from the bottom (design §5.3). */
-export function parcelDrawerElement(summary, labels, { geometry, releaseId, feedbackUrl, onClose, onSave, onOpenNotes, onOpenWorkspace }) {
+export function parcelDrawerElement(summary, labels, { geometry, releaseId, feedbackUrl, onClose, onSave, onOpenNotes, onOpenWorkspace, developmentCount = 0, onOpenDevelopment }) {
   const drawer = el("section", undefined, "parcel-drawer");
   drawer.setAttribute("role", "region");
   drawer.setAttribute("aria-label", "Parcel record");
@@ -266,6 +269,8 @@ export function parcelDrawerElement(summary, labels, { geometry, releaseId, feed
   head.append(titles);
 
   const actions = el("div", undefined, "parcel-actions");
+  const development = developmentCountAction(developmentCount, onOpenDevelopment);
+  if (development) actions.append(development);
   actions.append(saveAction(onSave));
   if (onOpenNotes) {
     const note = el("button", undefined, "parcel-btn");

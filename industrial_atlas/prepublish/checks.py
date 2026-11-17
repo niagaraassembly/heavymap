@@ -43,6 +43,14 @@ def file_kind(rel: str) -> str:
     name = Path(rel).name
     parts = Path(rel).parts
     suffix = Path(rel).suffix.lower()
+    if name == "development_release_manifest.json":
+        return "development_release_manifest"
+    if name == "viewer_development_records_v0.1.json":
+        return "development_records"
+    if name == "parcel_development_indicators_v0.1.json":
+        return "development_indicators"
+    if name == "city_development_snapshot_v0.1.json":
+        return "development_snapshot"
     if suffix == ".pmtiles":
         return "pmtiles"
     if "shards" in parts and suffix == ".json":
@@ -182,6 +190,14 @@ def _leak_findings(
 
 
 def _allowlist_for(kind: str) -> frozenset[str] | None:
+    if kind == "development_release_manifest":
+        return config.DEVELOPMENT_RELEASE_MANIFEST_KEYS
+    if kind == "development_records":
+        return config.DEVELOPMENT_RECORD_KEYS
+    if kind == "development_indicators":
+        return config.DEVELOPMENT_INDICATOR_KEYS
+    if kind == "development_snapshot":
+        return config.DEVELOPMENT_SNAPSHOT_KEYS
     if kind == "dossier_shard":
         return config.DOSSIER_SHARD_ENVELOPE | config.DOSSIER_RECORD_KEYS
     if kind == "dossier_detail":
@@ -244,6 +260,51 @@ def _allowlist_findings(root: Path, files: Iterable[Path]) -> list[dict[str, str
                     findings.append(
                         {"path": rel, "kind": "unknown_field", "name": str(exc)}
                     )
+            continue
+        if kind == "development_records":
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            keys: set[str] = set(k for k in payload if k != "records")
+            records = payload.get("records")
+            if not isinstance(records, list):
+                findings.append({"path": rel, "kind": "unknown_field", "name": "records"})
+                continue
+            for record in records:
+                if not isinstance(record, Mapping):
+                    findings.append({"path": rel, "kind": "unknown_field", "name": "record"})
+                    continue
+                keys.update(record)
+                for nested in ("source_reported_names", "source_evidence_ref"):
+                    value = record.get(nested)
+                    if isinstance(value, Mapping):
+                        keys.update(value)
+                for nested in ("derived_sector_tags", "derived_action_tags"):
+                    value = record.get(nested)
+                    if isinstance(value, list):
+                        for tag in value:
+                            if isinstance(tag, Mapping):
+                                keys.update(tag)
+            for name in sorted(keys - config.DEVELOPMENT_RECORD_KEYS):
+                findings.append({"path": rel, "kind": "unknown_field", "name": name})
+            continue
+        if kind == "development_indicators":
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            keys: set[str] = set(k for k in payload if k != "parcels")
+            parcels = payload.get("parcels")
+            if not isinstance(parcels, Mapping):
+                findings.append({"path": rel, "kind": "unknown_field", "name": "parcels"})
+                continue
+            for parcel in parcels.values():
+                if isinstance(parcel, Mapping):
+                    keys.update(parcel)
+            for name in sorted(keys - config.DEVELOPMENT_INDICATOR_KEYS):
+                findings.append({"path": rel, "kind": "unknown_field", "name": name})
+            continue
+        if kind == "development_snapshot":
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            keys: set[str] = set()
+            _walk_keys(payload, keys)
+            for name in sorted(keys - config.DEVELOPMENT_SNAPSHOT_KEYS):
+                findings.append({"path": rel, "kind": "unknown_field", "name": name})
             continue
         keys: set[str] = set()
         _text, parsed, headers = _parse_text(path)

@@ -10,11 +10,13 @@ import { el } from "./dossier.js";
 import { FieldMap } from "./map.js";
 import { findBasemap } from "./basemap.js";
 import { startTitleIntro } from "./brand/title-intro.js";
+import { cityDevelopmentSheetElement, createHamiltonDevelopmentLoader, developmentRecordsBrowserElement } from "./development-records.js";
 
 const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
 const PARCEL_GEOMETRY_CACHE = "heavymap.parcel-geometry-cache.v1";
 // The street basemap is a separate artifact from the parcel release.
 const MAP_LAYER_BASE = "/map/layers/ca-on-hamilton-map-layers/2026-11-17-layer-set-002/";
+const DEVELOPMENT_BASE = "/map/data/ca-on-hamilton-development/2026-11-17-field-screen-v0.1/";
 const cardSlot = document.getElementById("parcel-card-slot");
 const drawerSlot = document.getElementById("parcel-drawer-slot");
 const workspaceSlot = document.getElementById("parcel-workspace-slot");
@@ -26,6 +28,7 @@ let loading = false;
 let loadToken = 0;
 let map;
 let loader;
+let developmentLoader;
 let labels;
 let manifestSources = null;
 let notesStore = null;
@@ -383,6 +386,11 @@ function renderLevel(level, tab = "notes") {
     cardSlot.replaceChildren(
       parcelCardElement(summary, labels, {
         geometry,
+        developmentCount: current.developmentCount ?? 0,
+        onOpenDevelopment: () => {
+          updateLocation(current.key, "workspace");
+          renderLevel("workspace", "notes");
+        },
         onSave: () => void toggleSaveCurrentParcel(),
         onOpenRecord: () => {
           view = "drawer";
@@ -404,6 +412,11 @@ function renderLevel(level, tab = "notes") {
       parcelDrawerElement(summary, labels, {
         geometry,
         releaseId,
+        developmentCount: current.developmentCount ?? 0,
+        onOpenDevelopment: () => {
+          updateLocation(current.key, "workspace");
+          renderLevel("workspace", "notes");
+        },
         // BL-107: no feedback target is configured yet, so Report a
         // problem stays hidden.
         feedbackUrl: null,
@@ -430,6 +443,9 @@ function renderLevel(level, tab = "notes") {
     const workspace = parcelWorkspaceElement(summary, labels, {
       geometry,
       releaseId,
+      developmentCount: current.developmentCount ?? 0,
+      developmentRecords: current.developmentRecords ?? [],
+      developmentLoading: Boolean(current.developmentLoading),
       notesStore,
       sourceRecords,
       onSave: () => void toggleSaveCurrentParcel(),
@@ -450,6 +466,16 @@ function renderLevel(level, tab = "notes") {
     workspaceSlot.hidden = false;
     document.body.classList.add("has-parcel-workspace");
     workspace.querySelector(".parcel-btn:not([disabled])")?.focus({ preventScroll: true });
+    if ((current.developmentCount ?? 0) > 0 && !current.developmentRecordsLoaded && !current.developmentLoading && developmentLoader) {
+      current.developmentLoading = true;
+      void developmentLoader.forParcel(current.key).then((result) => {
+        if (current?.key !== summary.key) return;
+        current.developmentLoading = false;
+        current.developmentRecordsLoaded = true;
+        current.developmentRecords = result.ok ? result.records : [];
+        if (view === "workspace") renderLevel("workspace", tab);
+      });
+    }
   }
   view = level;
   syncSaveButton();
@@ -504,6 +530,10 @@ async function openParcel(parcel, trigger, level = "card") {
     releaseId: coreResult.release.id,
     geometry: parcel.geometry ?? rememberedGeometry(parcel.id),
     sourceRecords: { core: coreResult.record, detail: detailResult.ok ? detailResult.record : null },
+    developmentCount: developmentLoader?.countForParcel(parcel.id) ?? 0,
+    developmentRecords: [],
+    developmentRecordsLoaded: false,
+    developmentLoading: false,
   };
   updateLocation(parcel.id, level);
   renderLevel(level);
@@ -608,6 +638,41 @@ async function start() {
   }
   const labelsPromise = loadLabels({ base: "/labels/", locales: ["en"] });
   loader = createDossierLoader({ base: RELEASE_BASE });
+  developmentLoader = createHamiltonDevelopmentLoader({ base: DEVELOPMENT_BASE });
+  const developmentPackage = await developmentLoader.pin();
+  const developmentButton = document.getElementById("development-overview-open");
+  if (developmentPackage.ok && developmentButton) developmentButton.hidden = false;
+  developmentButton?.addEventListener("click", async (event) => {
+    const button = event.currentTarget;
+    const dialog = document.getElementById("development-overview-dialog");
+    button.disabled = true;
+    status("Loading Hamilton development snapshot…");
+    const result = await developmentLoader.citySnapshot();
+    button.disabled = false;
+    if (!result.ok) {
+      status("The Hamilton development snapshot is unavailable.");
+      return;
+    }
+    const snapshot = result.snapshot;
+    const showSnapshot = () => dialog.replaceChildren(cityDevelopmentSheetElement(snapshot, {
+      onBrowse: async () => {
+        status("Loading all Hamilton permit records…");
+        const records = await developmentLoader.allRecords();
+        if (!records.ok) {
+          status("Hamilton permit records are unavailable.");
+          return;
+        }
+        dialog.replaceChildren(developmentRecordsBrowserElement(records.records, {
+          onBack: showSnapshot,
+          onClose: () => dialog.close(),
+        }));
+        status(`${records.records.length.toLocaleString("en-CA")} Hamilton permit records ready`);
+      },
+    }));
+    showSnapshot();
+    dialog.showModal();
+    status(`${result.snapshot.coverage.monthly_report_count} monthly permit reports · latest ${result.snapshot.coverage.last_report_month}`);
+  });
   const pin = await loader.pin();
   const tileResult = pin.ok ? await loader.asset("tiles/tiles-manifest.json") : { ok: false };
   const layerResult = pin.ok ? await loader.asset("tiles/layers.json") : { ok: false };

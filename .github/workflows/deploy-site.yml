@@ -55,6 +55,13 @@ jobs:
         run: |
           grep -Eq '^\s+ref: [0-9a-f]{40}$' <(sed -n '/Check out the pinned Hamilton map-layer release/,/path:/p' .github/workflows/deploy-site.yml) \
             || { echo "Map-layer release ref must be a 40-character commit SHA"; exit 1; }
+      - name: Check out the pinned Hamilton development data release
+        uses: actions/checkout@v4
+        with:
+          repository: niagaraassembly/industrial-atlas-data
+          # Immutable screened package commit; its manifest verifies all output hashes.
+          ref: d8643957acca66399c089c12fb43721869fdaa65
+          path: industrial-atlas-development
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -66,6 +73,7 @@ jobs:
         env:
           HM_ATLAS_RELEASE_DIR: ${{ github.workspace }}/industrial-atlas-data/releases/ca-on-hamilton/2026-11-16-d070
           HM_MAP_LAYER_RELEASE_DIR: ${{ github.workspace }}/industrial-atlas-map-layers/map-releases/ca-on-hamilton/2026-11-17-layer-set-002
+          HM_DEVELOPMENT_RELEASE_DIR: ${{ github.workspace }}/industrial-atlas-development/development-releases/ca-on-hamilton/2026-11-17-field-screen-v0.1
         run: node build/prerender.mjs ${{ (github.event_name == 'push' || inputs.launch_gates) && '--launch' || '' }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
@@ -91,6 +99,7 @@ jobs:
           EVENT: ${{ github.event_name }}
           ACTOR: ${{ github.actor }}
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+          DEVELOPMENT_REF: d8643957acca66399c089c12fb43721869fdaa65
         run: |
           {
             echo "### Deployed heavymap.com"
@@ -98,5 +107,6 @@ jobs:
             echo "- Trigger: $EVENT by $ACTOR"
             echo "- Atlas release: ca-on-hamilton/2026-11-16-d070"
             echo "- Map layer release: ca-on-hamilton/2026-11-17-layer-set-002"
+            echo "- Development release: ca-on-hamilton/2026-11-17-field-screen-v0.1 (data commit $DEVELOPMENT_REF)"
             echo "- URL: $PAGE_URL"
           } >> "$GITHUB_STEP_SUMMARY"

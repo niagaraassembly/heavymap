@@ -231,6 +231,61 @@ class PrepublishTests(unittest.TestCase):
             any(row["kind"] == "unknown_output" for row in report["checks"]["allowlist"]["findings"])
         )
 
+    def test_hamilton_development_profile_allows_source_names_but_rejects_extra_fields(self):
+        package = self.base / "development-package"
+        package.mkdir()
+        payloads = {
+            "development_release_manifest.json": {
+                "schema_version": "hamilton-development-release-manifest/0.1.0",
+                "jurisdiction": "ca/on/hamilton",
+                "record_count": 1,
+                "focus_record_count": 1,
+                "linked_record_count": 1,
+                "unique_parcel_count": 1,
+                "outputs": {
+                    "viewer_development_records_v0.1.json": "a" * 64,
+                    "parcel_development_indicators_v0.1.json": "b" * 64,
+                    "city_development_snapshot_v0.1.json": "c" * 64,
+                },
+            },
+            "viewer_development_records_v0.1.json": {
+                "schema_version": "hamilton-development-viewer/0.1.0",
+                "jurisdiction": "ca/on/hamilton",
+                "record_count": 1,
+                "records": [{
+                    "development_record_id": "dev-1",
+                    "source_reported_names": {"owner": "Example Industrial Ltd", "builder": None},
+                    "source_evidence_ref": {"source_page": 1, "source_record_id": "source-1"},
+                }],
+            },
+            "parcel_development_indicators_v0.1.json": {
+                "schema_version": "hamilton-parcel-development-indicators/0.1.0",
+                "jurisdiction": "ca/on/hamilton",
+                "relationship": "development_record_to_parcel",
+                "linked_record_count": 1,
+                "unique_parcel_count": 1,
+                "parcels": {"parcel-1": {"development_record_count": 1, "development_record_ids": ["dev-1"]}},
+            },
+            "city_development_snapshot_v0.1.json": {
+                "schema_version": "hamilton-city-development-snapshot/0.1.0",
+                "jurisdiction": "ca/on/hamilton",
+                "monthly": [],
+            },
+        }
+        for name, payload in payloads.items():
+            (package / name).write_text(json.dumps(payload), encoding="utf-8")
+
+        report = run_checks(package, withheld_values=SENTINELS)
+        self.assertEqual(report["checks"]["leak"]["status"], "pass")
+        self.assertEqual(report["checks"]["allowlist"]["status"], "pass")
+
+        records_path = package / "viewer_development_records_v0.1.json"
+        records = json.loads(records_path.read_text(encoding="utf-8"))
+        records["records"][0]["owner_mailing_address"] = "internal only"
+        records_path.write_text(json.dumps(records), encoding="utf-8")
+        report = run_checks(package, withheld_values=SENTINELS)
+        self.assertEqual(report["checks"]["allowlist"]["status"], "fail")
+
     def test_oversize_shard_fails_budget(self):
         tiny = {
             "startup_compressed_bytes": {"warn": 10, "fail": 20},
