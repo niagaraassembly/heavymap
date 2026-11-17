@@ -12,6 +12,7 @@ import { findBasemap } from "./basemap.js";
 import { mountParcelShapeBand } from "./parcel-shape-band.js";
 
 const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
+const PARCEL_GEOMETRY_CACHE = "heavymap.parcel-geometry-cache.v1";
 // The street basemap is a separate artifact from the parcel release.
 const MAP_LAYER_BASE = "/map/layers/ca-on-hamilton-map-layers/2026-11-16-layer-set-001/";
 const cardSlot = document.getElementById("parcel-card-slot");
@@ -39,6 +40,23 @@ let workspaceSections = null;
 function status(text) {
   const barStatus = document.getElementById("map-bar-status");
   if (barStatus) barStatus.textContent = text;
+}
+
+function rememberGeometry(key, geometry) {
+  if (!key || !geometry || !["Polygon", "MultiPolygon"].includes(geometry.type)) return;
+  try {
+    const value = JSON.stringify({ key, geometry });
+    if (value.length < 450_000) localStorage.setItem(PARCEL_GEOMETRY_CACHE, value);
+  } catch { /* the outline is an optional local convenience */ }
+}
+
+function rememberedGeometry(key) {
+  try {
+    const cached = JSON.parse(localStorage.getItem(PARCEL_GEOMETRY_CACHE) ?? "null");
+    return cached?.key === key && ["Polygon", "MultiPolygon"].includes(cached.geometry?.type)
+      ? cached.geometry
+      : null;
+  } catch { return null; }
 }
 
 function setLayersOpen(open, { restoreFocus = true } = {}) {
@@ -345,7 +363,7 @@ function trapFocus(workspace) {
 }
 
 function renderLevel(level, tab = "notes") {
-  const { summary, releaseId, geometry } = current;
+  const { summary, releaseId, geometry, sourceRecords } = current;
   document.body.classList.remove("has-parcel-card", "has-parcel-drawer", "has-parcel-workspace");
   if (level === "card") {
     drawerSlot.replaceChildren();
@@ -403,6 +421,7 @@ function renderLevel(level, tab = "notes") {
       geometry,
       releaseId,
       notesStore,
+      sourceRecords,
       onSave: () => void toggleSaveCurrentParcel(),
       initialTab: tab,
       openSections: workspaceSections,
@@ -439,6 +458,7 @@ async function openParcel(parcel, trigger, level = "card") {
     return;
   }
   if (selected?.id === parcel.id && view === level && current) return;
+  if (parcel.geometry) rememberGeometry(parcel.id, parcel.geometry);
   const token = ++loadToken;
   loading = true;
   selected = parcel;
@@ -472,7 +492,8 @@ async function openParcel(parcel, trigger, level = "card") {
       { sources: manifestSources },
     ),
     releaseId: coreResult.release.id,
-    geometry: parcel.geometry ?? null,
+    geometry: parcel.geometry ?? rememberedGeometry(parcel.id),
+    sourceRecords: { core: coreResult.record, detail: detailResult.ok ? detailResult.record : null },
   };
   updateLocation(parcel.id, level);
   renderLevel(level);
@@ -557,7 +578,7 @@ function route() {
   // the workspace (BL-118).
   if (fullKey) {
     const level = params.get("view") === "card" ? "card" : params.get("view") === "work" ? "workspace" : "drawer";
-    void openParcel({ id: fullKey }, null, level);
+    void openParcel({ id: fullKey, geometry: rememberedGeometry(fullKey) }, null, level);
   } else status("This is not a Hamilton parcel key.");
 }
 

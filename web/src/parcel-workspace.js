@@ -13,13 +13,14 @@
 
 import { el } from "./dossier.js";
 import { copyLinkButton, disabledAction, thumbnail } from "./parcel-views.js";
+import { createWorkspaceServices } from "./parcel-workspace-services.js";
 
 const TABS = [
   { id: "notes", labelKey: "parcel.workspace.tab.notes", works: true },
-  { id: "checklist", labelKey: "parcel.workspace.tab.checklist", works: false },
-  { id: "lists", labelKey: "parcel.workspace.tab.lists", works: false },
+  { id: "checklist", labelKey: "parcel.workspace.tab.checklist", works: true },
+  { id: "lists", labelKey: "parcel.workspace.tab.lists", works: true },
   { id: "export", labelKey: "parcel.workspace.tab.export", works: false },
-  { id: "docs", labelKey: "parcel.workspace.tab.docs", works: false },
+  { id: "docs", labelKey: "parcel.workspace.tab.docs", works: true },
   { id: "history", labelKey: "parcel.workspace.tab.history", works: false },
 ];
 
@@ -228,7 +229,7 @@ function notesPane(summary, labels, notesStore, releaseId, onCountChange) {
 }
 
 /** The right-hand work area: six tabs, only Notes working. */
-function workArea(summary, labels, notesStore, releaseId, initialTab) {
+function workArea(summary, labels, notesStore, releaseId, initialTab, sourceRecords) {
   const work = el("div", undefined, "parcel-ws-work");
   const tablist = el("div", undefined, "parcel-ws-tabs");
   tablist.setAttribute("role", "tablist");
@@ -256,6 +257,10 @@ function workArea(summary, labels, notesStore, releaseId, initialTab) {
     if (notesCount) notesCount.textContent = String(n);
   });
   panes.set("notes", notes);
+  const services = createWorkspaceServices({ summary, sourceRecords });
+  panes.set("checklist", services.checklist);
+  panes.set("lists", services.lists);
+  panes.set("docs", services.docs);
   for (const tab of TABS.filter((t) => !t.works)) {
     const pane = el("div", undefined, "parcel-ws-coming-pane");
     pane.append(el("p", labels.t(tab.labelKey)));
@@ -283,6 +288,7 @@ export function parcelWorkspaceElement(summary, labels, {
   onSave,
   initialTab = "notes",
   openSections,
+  sourceRecords,
   onToggleSection,
   onBackToMap,
   onClose,
@@ -388,7 +394,13 @@ export function parcelWorkspaceElement(summary, labels, {
   }
   cols.append(record);
 
-  const { work, selectTab } = workArea(summary, labels, notesStore, releaseId, initialTab);
+  const { work, selectTab } = workArea(summary, labels, notesStore, releaseId, initialTab, sourceRecords);
+  work.addEventListener("click", (event) => {
+    if (!event.target.closest('[role="tab"]')) return;
+    ws.dataset.mobilePane = "notes";
+    recordSwitch.setAttribute("aria-pressed", "false");
+    notesSwitch.setAttribute("aria-pressed", "true");
+  });
   cols.append(work);
   ws.append(cols);
 

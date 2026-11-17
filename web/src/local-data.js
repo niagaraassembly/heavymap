@@ -3,16 +3,18 @@
  * leave this browser unless the viewer downloads an export. */
 
 export const DATABASE_NAME = "heavymap-local-data";
-export const DATABASE_VERSION = 1;
+export const DATABASE_VERSION = 2;
 export const LEGACY_NOTES_KEY = "heavymap-parcel-notes-v1";
 export const LEGACY_SAVED_KEY = "heavymap.saved-parcel-keys.v1";
 
 export const DATA_TYPES = [
   { id: "notes", label: "Parcel notes", description: "Notes attached to parcel records", live: true },
   { id: "saved", label: "Saved items", description: "Parcels, stories, and development records you keep", live: true },
-  { id: "lists", label: "Lists", description: "Groups you make from saved items", live: false },
+  { id: "lists", label: "Lists", description: "Groups and planning lists you make", live: true },
   { id: "observations", label: "Observations", description: "Your own findings and context", live: false },
-  { id: "documents", label: "Documents and images", description: "Documents you create in HeavyMap", live: false },
+  { id: "documents", label: "Documents and images", description: "Documents you create in HeavyMap", live: true },
+  { id: "checklists", label: "Workspace checklists", description: "Parcel-specific review tasks", live: true },
+  { id: "field-notes", label: "Field notes", description: "Comments attached to parcel data", live: true },
 ];
 
 let databasePromise;
@@ -206,6 +208,25 @@ export async function removeSavedPlace(id) {
   const transaction = db.transaction("saved", "readwrite");
   transaction.objectStore("saved").delete(id);
   await transactionDone(transaction);
+}
+
+export async function putLocalRecord(type, record) {
+  const db = await openLocalData();
+  const transaction = db.transaction(type, "readwrite");
+  transaction.objectStore(type).put(record);
+  await transactionDone(transaction);
+  return record;
+}
+
+export async function removeLocalRecord(type, id) {
+  const db = await openLocalData();
+  const transaction = db.transaction(type, "readwrite");
+  transaction.objectStore(type).delete(id);
+  await transactionDone(transaction);
+}
+
+export async function workspaceRecords(type, parcelKey) {
+  return (await recordsFor(type)).filter((record) => record.parcelKey === parcelKey);
 }
 
 export async function createNotesStore() {

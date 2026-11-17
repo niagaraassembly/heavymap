@@ -522,6 +522,70 @@ h2 {
   box-shadow: 0 24px 90px #102a3a66;
   transform: translate(-50%, -50%);
 }
+
+/* Parcel workspace tools: local planning records and the default-general doc editor. */
+.parcel-ws-service { overflow-y: auto; min-height: 0; padding: 14px 16px 18px; }
+.parcel-ws-service-head,
+.parcel-ws-inline-form { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; }
+.parcel-ws-service-head { margin: 0 0 10px; }
+.parcel-ws-service-head h3 { margin: 0; color: #294d60; font: 500 18px/1.2 var(--serif, Georgia, serif); }
+.parcel-ws-service input,
+.parcel-ws-service select,
+.parcel-ws-doc-body input,
+.parcel-ws-doc-outline select {
+  min-width: 0; max-width: 100%; min-height: 36px; box-sizing: border-box;
+  border: 1px solid #aebdc6; border-radius: 9px; padding: 7px 10px;
+  background: #f8fafb; color: #1e3440; font: 12.5px/1.35 var(--sans, system-ui, sans-serif);
+}
+.parcel-ws-task-list { list-style: none; margin: 12px 0 0; padding: 0; }
+.parcel-ws-task { display: flex; align-items: center; gap: 9px; min-width: 0; padding: 9px 2px; border-bottom: 1px solid var(--line); font-size: 13px; }
+.parcel-ws-task > span { min-width: 0; flex: 1; overflow-wrap: anywhere; }
+.parcel-ws-task input[type="checkbox"] { width: 17px; height: 17px; flex: none; accent-color: #294d60; }
+.parcel-ws-task.is-done > span { color: var(--muted); text-decoration: line-through; }
+.parcel-ws-inline-form input { flex: 1; }
+.parcel-ws-list-cards,.parcel-ws-doc-list { display: grid; gap: 8px; margin-top: 12px; }
+.parcel-ws-list-card,.parcel-ws-doc-card { min-width: 0; padding: 12px; border: 1px solid #c1ccd3; border-radius: 11px; background: #f8fafb; }
+.parcel-ws-list-card > .parcel-ws-service-head > input { flex: 1; font-weight: 650; }
+.parcel-ws-doc-card { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 6px 12px; align-items: center; }
+.parcel-ws-doc-card small { color: var(--muted); font-size: 11px; }
+.parcel-ws-doc-open { min-width: 0; padding: 0; border: 0; background: none; color: #1e3440; font: 500 17px/1.25 var(--serif, Georgia, serif); text-align: left; overflow-wrap: anywhere; cursor: pointer; }
+.parcel-ws-doc-card .parcel-ws-inline-form { grid-column: 1 / -1; justify-content: flex-end; }
+.parcel-ws-docs { overflow: visible; }
+.parcel-ws-docscreen { position: absolute; inset: 0; z-index: 6; display: grid; grid-template-columns: minmax(210px, 1fr) minmax(0, 2fr); grid-template-rows: auto minmax(0, 1fr); background: #edf2f4; min-height: 0; overflow: hidden; }
+.parcel-ws-doc-toolbar { grid-column: 1 / -1; display: flex; align-items: center; gap: 9px; min-width: 0; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.parcel-ws-doc-outline { min-width: 0; overflow-y: auto; padding: 14px; border-right: 1px solid var(--line); }
+.parcel-ws-doc-outline .parcel-ws-service-head { display: block; }
+.parcel-ws-doc-outline select { width: 100%; margin-top: 8px; }
+.parcel-ws-outline-row { display: flex; align-items: center; gap: 4px; min-width: 0; margin: 3px 0; }
+.parcel-ws-outline-row.is-child { padding-left: 15px; }
+.parcel-ws-outline-select { min-width: 0; flex: 1; padding: 7px 8px; border: 0; border-radius: 7px; background: transparent; color: #405562; text-align: left; font: 12.5px/1.35 var(--sans, system-ui, sans-serif); cursor: pointer; overflow-wrap: anywhere; }
+.parcel-ws-outline-select.is-active { background: #dce6e9; color: #1e3440; font-weight: 650; }
+.parcel-ws-doc-body { min-width: 0; overflow-y: auto; padding: 14px 18px 20px; }
+.parcel-ws-doc-toolbar input { flex: 1; font: 500 19px/1.2 var(--serif, Georgia, serif); }
+.parcel-ws-doc-mode { color: var(--muted); font-size: 11px; }
+.parcel-ws-doc-body > input[aria-label="Section title"] { width: 100%; margin-bottom: 10px; font-weight: 650; }
+.parcel-ws-markdown-editor { width: 100%; min-height: min(38vh, 420px); box-sizing: border-box; resize: vertical; padding: 13px; border: 1px solid #aebdc6; border-radius: 10px; background: #fff; color: #1e3440; font: 13px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.parcel-ws-markdown-reader { min-height: 80px; color: #263b45; font: 14px/1.65 var(--sans, system-ui, sans-serif); }
+.parcel-ws-markdown-reader > :first-child { margin-top: 6px; }
+.parcel-ws-markdown-reader h1,.parcel-ws-markdown-reader h2,.parcel-ws-markdown-reader h3 { color: #1e3440; font-family: var(--serif, Georgia, serif); line-height: 1.25; }
+.parcel-ws-markdown-reader p { white-space: pre-wrap; overflow-wrap: anywhere; }
+.parcel-ws-field-browser { display: grid; gap: 8px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+.parcel-ws-field-browser h3,.parcel-ws-field-browser > p { margin: 0; }
+.parcel-ws-field-browser select,.parcel-ws-field-browser textarea { width: 100%; min-width: 0; box-sizing: border-box; }
+.parcel-ws-field-browser textarea { min-height: 66px; resize: vertical; padding: 9px 10px; border: 1px solid #aebdc6; border-radius: 9px; background: #fff; color: #1e3440; font: 12.5px/1.45 var(--sans, system-ui, sans-serif); }
+.parcel-ws-field-row { display: grid; grid-template-columns: minmax(120px, .7fr) minmax(0, 1.3fr); gap: 7px; }
+.parcel-ws-field-value { margin: 0; padding: 8px 10px; border-radius: 8px; background: #e3eaed; color: #405562; font-size: 11.5px; overflow-wrap: anywhere; }
+.parcel-ws-field-notes { display: grid; gap: 6px; }
+.parcel-ws-field-note { display: grid; gap: 3px; padding: 9px; border: 1px solid #c1ccd3; border-radius: 9px; background: #f8fafb; overflow-wrap: anywhere; }
+.parcel-ws-field-note strong { font-size: 11.5px; }
+.parcel-ws-field-note small { color: var(--muted); font-size: 10.5px; }
+.parcel-ws-field-note p { margin: 2px 0; white-space: pre-wrap; font-size: 12px; }
+@media (max-width: 900px) {
+  .parcel-ws-docscreen { grid-template-columns: minmax(115px, .8fr) minmax(0, 2fr); }
+  .parcel-ws-doc-toolbar { padding: 8px; }
+  .parcel-ws-doc-outline { padding: 10px 8px; }
+  .parcel-ws-doc-body { padding: 12px; }
+}
 .hm-map-intro #layers-panel:not(.is-collapsed) .layers-launcher { display: none; }
 .layers-dialog {
   display: flex;
