@@ -272,10 +272,10 @@ export function cityDevelopmentSheetElement(snapshot, { onBrowse } = {}) {
   return panel;
 }
 
-export function developmentRecordsBrowserElement(records, { onBack, onClose } = {}) {
+export function developmentRecordsBrowserElement(records, { onBack, onClose, sidebarTarget } = {}) {
   const panel = el("section", undefined, "hm-development-browser");
   panel.setAttribute("aria-label", "Hamilton development records");
-  const sidebar = el("aside", undefined, "hm-development-browser-sidebar");
+  const sidebar = sidebarTarget ?? el("aside", undefined, "hm-development-browser-sidebar");
   const actions = el("div", undefined, "hm-development-browser-actions");
   if (onBack) {
     const back = el("button", "← Snapshot", "hm-development-browser-back");
@@ -290,7 +290,7 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose } = 
     close.addEventListener("click", onClose);
     actions.append(close);
   }
-  sidebar.append(actions);
+  if (actions.childElementCount) sidebar.append(actions);
 
   const controls = el("div", undefined, "hm-development-browser-controls");
   const search = el("input");
@@ -326,7 +326,8 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose } = 
   const position = el("span");
   paging.append(previous, position, next);
   main.append(paging);
-  panel.append(sidebar, main);
+  if (sidebarTarget) panel.append(main);
+  else panel.append(sidebar, main);
 
   const recordDialog = document.createElement("dialog");
   recordDialog.className = "hm-development-record-dialog";

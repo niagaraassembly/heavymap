@@ -569,23 +569,9 @@ async function mountGlobalService(root, service) {
 }
 
 async function mountDevelopmentLibrary({ rail, content, status }) {
-  rail.replaceChildren(
-    el("p", "HAMILTON · PERMIT DIGESTS", "hm-docs-kicker"),
-    el("h2", "Development activity"),
-    el("p", "Monthly issued-permit records gathered from the City’s permit digests."),
-    el("p", "Industrial, logistics, commercial, and multi-unit residential records are highlighted. Source categories and derived classifications remain distinct."),
-    el("p", "These summaries report permit issuance. They do not establish whether a permit or project is currently open, active, under construction, or complete."),
-  );
-  const heading = el("header", undefined, "hm-global-page-heading");
-  const headingCopy = el("div", undefined, "hm-saved-heading-copy");
-  headingCopy.append(
-    el("p", "PROJECT INTELLIGENCE", "hm-notes-eyebrow"),
-    el("h1", "Hamilton development records"),
-    el("p", "Browse the complete published permit collection. Open a record to see its source-reported facts, derived tags, and provenance."),
-  );
-  heading.append(headingCopy);
+  rail.replaceChildren();
   const loading = el("p", "Loading the verified Hamilton permit collection…", "hm-development-page-status");
-  content.replaceChildren(heading, loading);
+  content.replaceChildren(loading);
   if (status) status.textContent = "Loading the published Hamilton permit records.";
 
   const packageResult = await developmentLoader.pin();
@@ -594,27 +580,16 @@ async function mountDevelopmentLibrary({ rail, content, status }) {
     if (status) status.textContent = "Hamilton permit records could not be loaded.";
     return;
   }
-  const [recordsResult, snapshotResult] = await Promise.all([
-    developmentLoader.allRecords(),
-    developmentLoader.citySnapshot(),
-  ]);
+  const recordsResult = await developmentLoader.allRecords();
   if (!recordsResult.ok) {
     loading.textContent = "The published Hamilton permit records failed verification and could not be displayed.";
     if (status) status.textContent = "Hamilton permit records failed verification.";
     return;
   }
 
-  const stats = el("div", undefined, "hm-development-page-stats");
-  stats.append(
-    el("article", `${packageResult.recordCount.toLocaleString("en-CA")} records`, "hm-development-page-stat"),
-    el("article", `${packageResult.focusCount.toLocaleString("en-CA")} focus records`, "hm-development-page-stat"),
-  );
-  if (snapshotResult.ok) {
-    stats.append(el("article", `${snapshotResult.snapshot.coverage.first_report_month}–${snapshotResult.snapshot.coverage.last_report_month}`, "hm-development-page-stat"));
-  }
-  const browser = developmentRecordsBrowserElement(recordsResult.records);
+  const browser = developmentRecordsBrowserElement(recordsResult.records, { sidebarTarget: rail });
   browser.classList.add("hm-development-browser-page");
-  content.replaceChildren(heading, stats, browser);
+  content.replaceChildren(browser);
   if (status) status.textContent = `${recordsResult.records.length.toLocaleString("en-CA")} published Hamilton permit records are ready.`;
 }
 
