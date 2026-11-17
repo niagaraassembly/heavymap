@@ -39,7 +39,7 @@ function header(path, themes) {
     (n) =>
       `<a href="${n.href}"${n.section === current ? ' aria-current="page"' : ""}${n.icon ? ' class="reader-nav"' : ""}>${n.icon ?? ""}${n.label}</a>`,
   ).join("");
-  return `<header class="alt-header"><a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>${serviceTabs(current)}<nav aria-label="Main navigation">${links}</nav><a class="alt-follow" href="/subscribe/"${current === "subscribe" ? ' aria-current="page"' : ""}>Follow your regions</a>${themePicker(themes)}</header>`;
+  return `<header class="alt-header"><a class="wordmark" href="/"><span class="wordmark-type"><span class="wordmark-heavy">Heavy</span><span class="wordmark-map">Map</span></span><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>${serviceTabs(current)}<nav aria-label="Main navigation">${links}</nav><a class="alt-follow" href="/subscribe/"${current === "subscribe" ? ' aria-current="page"' : ""}>Follow your regions</a>${themePicker(themes)}</header>`;
 }
 
 function serviceTabs(current = "") {
@@ -75,7 +75,7 @@ function mapHeader(regions) {
     )
     .join("");
   return `<header class="alt-header alt-header--map">
-    <a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>
+    <a class="wordmark" href="/"><span class="wordmark-type"><span class="wordmark-heavy">Heavy</span><span class="wordmark-map">Map</span></span><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>
     ${serviceTabs("map")}
     <div class="hm-site-menu" data-site-menu>
       <button type="button" class="hm-site-menu-toggle" data-site-menu-toggle aria-label="Open site menu" aria-haspopup="true" aria-expanded="false" aria-controls="hm-site-menu-panel"><span aria-hidden="true">▾</span></button>
@@ -100,7 +100,7 @@ function footer(regions) {
   const desks = regions
     .map((r) => `<a href="/desks/${esc(r.slug)}/">${esc(r.name)}</a>`)
     .join("");
-  return `<footer class="alt-footer"><div><a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><p>Regional reporting. Industrial Intelligence.</p></div><nav aria-label="Footer"><a href="/about/">About</a><a href="/about/credits/">Credits</a><a href="/reader/">Reader</a><a href="/preferences/">Email preferences</a>${desks}</nav></footer>`;
+  return `<footer class="alt-footer"><div><a class="wordmark" href="/"><span class="wordmark-type"><span class="wordmark-heavy">Heavy</span><span class="wordmark-map">Map</span></span><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><p>Regional reporting. Industrial Intelligence.</p></div><nav aria-label="Footer"><a href="/about/">About</a><a href="/about/credits/">Credits</a><a href="/reader/">Reader</a><a href="/preferences/">Email preferences</a>${desks}</nav></footer>`;
 }
 
 /**
@@ -162,7 +162,7 @@ const mainService = (path) => MAIN_SERVICES.has(path);
 
 function docsHeader(options) {
   const create = options.service === "docs" ? '<div class="hm-docs-head-right"><button type="button" class="hm-docs-primary hm-docs-new" data-docs-create aria-label="New document"><span aria-hidden="true">＋</span><span class="hm-docs-new-label">New document</span></button><div class="hm-docs-head-actions" data-docs-header-editor hidden></div></div>' : "";
-  return `<header class="alt-header alt-header--docs"><a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>${serviceTabs(options.service)}${create}</header>`;
+  return `<header class="alt-header alt-header--docs"><a class="wordmark" href="/"><span class="wordmark-type"><span class="wordmark-heavy">Heavy</span><span class="wordmark-map">Map</span></span><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>${serviceTabs(options.service)}${create}</header>`;
 }
 
 function serviceBottom(themes, regions, currentPath) {
@@ -180,6 +180,6 @@ function serviceBottom(themes, regions, currentPath) {
   const deskLinks = regions.map((region) =>
     `<a class="hm-directory-desk" href="/desks/${esc(region.slug)}/">${esc(region.name)}<span aria-hidden="true">↗</span></a>`,
   ).join("");
-  const directory = `<div class="hm-directory-scrim" data-directory-scrim hidden><section class="hm-directory-panel" id="hm-site-directory" role="dialog" aria-modal="true" aria-labelledby="hm-directory-title" tabindex="-1"><div class="hm-directory-topline"><p class="hm-directory-kicker">HEAVYMAP · SITE DIRECTORY</p><button class="hm-directory-close" type="button" data-directory-close aria-label="Close site directory">×</button></div><div class="hm-directory-heading"><h2 id="hm-directory-title">A way through the map.</h2><p>Reporting, place, and the work around it—gathered in one place.</p></div><div class="hm-directory-columns"><section class="hm-directory-section" aria-labelledby="hm-directory-services"><h3 id="hm-directory-services">Services</h3><nav class="hm-directory-services" aria-label="HeavyMap services">${serviceLinks}</nav></section><section class="hm-directory-section" aria-labelledby="hm-directory-desks"><h3 id="hm-directory-desks">Regional desks</h3><nav class="hm-directory-desks" aria-label="Regional desks">${deskLinks}</nav><div class="hm-directory-footer-links"><a href="/subscribe/">Follow your regions</a><a href="/about/">About HeavyMap</a><a href="/about/credits/">Credits</a><a href="/preferences/">Email preferences</a></div></section></div><div class="hm-directory-foot"><a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><span>Regional reporting. Industrial Intelligence.</span><a href="/map/">Return to the parcel map ${mapIcon}</a></div></section></div>`;
+  const directory = `<div class="hm-directory-scrim" data-directory-scrim hidden><section class="hm-directory-panel" id="hm-site-directory" role="dialog" aria-modal="true" aria-labelledby="hm-directory-title" tabindex="-1"><div class="hm-directory-topline"><p class="hm-directory-kicker">HEAVYMAP · SITE DIRECTORY</p><button class="hm-directory-close" type="button" data-directory-close aria-label="Close site directory">×</button></div><div class="hm-directory-heading"><h2 id="hm-directory-title">A way through the map.</h2><p>Reporting, place, and the work around it—gathered in one place.</p></div><div class="hm-directory-columns"><section class="hm-directory-section" aria-labelledby="hm-directory-services"><h3 id="hm-directory-services">Services</h3><nav class="hm-directory-services" aria-label="HeavyMap services">${serviceLinks}</nav></section><section class="hm-directory-section" aria-labelledby="hm-directory-desks"><h3 id="hm-directory-desks">Regional desks</h3><nav class="hm-directory-desks" aria-label="Regional desks">${deskLinks}</nav><div class="hm-directory-footer-links"><a href="/subscribe/">Follow your regions</a><a href="/about/">About HeavyMap</a><a href="/about/credits/">Credits</a><a href="/preferences/">Email preferences</a></div></section></div><div class="hm-directory-foot"><a class="wordmark" href="/"><span class="wordmark-type"><span class="wordmark-heavy">Heavy</span><span class="wordmark-map">Map</span></span><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><span>Regional reporting. Industrial Intelligence.</span><a href="/map/">Return to the parcel map ${mapIcon}</a></div></section></div>`;
   return `${directory}<div class="hm-docs-bottom-bar"><a class="hm-service-return-map" href="/map/" aria-label="Open the parcel map" title="Open the parcel map">${mapIcon}<span>Open map</span></a><span class="hm-service-bottom-context">LOCAL WORKSPACE</span><span class="hm-docs-bottom-spacer"></span><button class="hm-directory-toggle" type="button" data-directory-toggle aria-label="Open site directory" aria-haspopup="dialog" aria-expanded="false" aria-controls="hm-site-directory" title="Open site directory"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 15V5m0 0L5.5 9.5M10 5l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>${themePicker(themes)}</div>`;
 }

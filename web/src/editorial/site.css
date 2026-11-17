@@ -90,10 +90,24 @@ img {
   gap: 9px;
   white-space: nowrap;
 }
+.wordmark-type {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+  font-family: "Cantarell", var(--sans), sans-serif;
+  letter-spacing: -0.03em;
+}
+.wordmark-heavy {
+  font-weight: 800;
+}
+.wordmark-map {
+  font-weight: 700;
+}
 .wordmark-mark {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
+  filter: drop-shadow(0 0 0.45px currentColor);
   animation: heavy-element-arrive 1.15s cubic-bezier(0.2, 0.75, 0.25, 1) both;
 }
 @keyframes heavy-element-arrive {
