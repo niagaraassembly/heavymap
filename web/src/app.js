@@ -9,6 +9,7 @@ import { createNotesStore } from "./local-data.js";
 import { el } from "./dossier.js";
 import { FieldMap } from "./map.js";
 import { findBasemap } from "./basemap.js";
+import { mountParcelShapeBand } from "./parcel-shape-band.js";
 
 const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
 // The street basemap is a separate artifact from the parcel release.
@@ -32,6 +33,10 @@ const SAVED_PARCELS_KEY = "heavymap.saved-parcel-keys.v1";
  * parcels in the session (design §5.4). Set on the first workspace open:
  * Addresses open only when the parcel has more than one. */
 let workspaceSections = null;
+
+// Fill the decorative band immediately; map data and image loading continue
+// independently so the gallery appears on the first page paint after refresh.
+mountParcelShapeBand(document.querySelector(".map-workspace"));
 
 function status(text) {
   const barStatus = document.getElementById("map-bar-status");
