@@ -7,11 +7,11 @@
 import { layers, namedFlavor } from "@protomaps/basemaps";
 
 export const BASEMAP_SOURCE = "basemap";
-export const BASEMAP_FLAVORS = ["light", "dark"];
+export const BASEMAP_FLAVORS = ["white", "dark", "grayscale"];
 export const GLYPHS_URL = "/map/fonts/{fontstack}/{range}.pbf";
 
 /* Ground colour shown before tiles arrive and outside the extract. */
-export const GROUND = { light: "#eaf0ef", dark: "#1b1f22" };
+export const GROUND = { white: "#f7f7f4", dark: "#1b1f22", grayscale: "#eeeeec" };
 
 /* Parcel paint over each ground. On the still image parcels carry a
  * visible fill; over a real basemap they are mostly outline so streets
@@ -19,7 +19,9 @@ export const GROUND = { light: "#eaf0ef", dark: "#1b1f22" };
 export const PARCEL_PAINT = {
   still: { fill: "#c17254", fillOpacity: 0.24, line: "#9c4d35", lineWidth: 1.15, selFill: "#a25138", selFillOpacity: 0.72, selLine: "#713c2c" },
   light: { fill: "#c17254", fillOpacity: 0.07, line: "#a25138", lineWidth: 0.8, selFill: "#a25138", selFillOpacity: 0.55, selLine: "#713c2c" },
+  white: { fill: "#c17254", fillOpacity: 0.08, line: "#93452f", lineWidth: 1, selFill: "#a25138", selFillOpacity: 0.58, selLine: "#713c2c" },
   dark: { fill: "#f0b54a", fillOpacity: 0.05, line: "#d9a23f", lineWidth: 0.7, selFill: "#f0b54a", selFillOpacity: 0.5, selLine: "#ffd98a" },
+  grayscale: { fill: "#777777", fillOpacity: 0.08, line: "#555555", lineWidth: 0.9, selFill: "#555555", selFillOpacity: 0.54, selLine: "#303030" },
 };
 
 /* These layers draw only sprite icons (one-way arrows, highway shields,
@@ -27,17 +29,19 @@ export const PARCEL_PAINT = {
 const ICON_ONLY = new Set(["roads_oneway", "roads_shields", "pois"]);
 
 export function basemapFlavor(value) {
-  return BASEMAP_FLAVORS.includes(value) ? value : "light";
+  // Keep existing shared links working while making the clearer white style
+  // the default for new visits.
+  if (value === "light") return "white";
+  return BASEMAP_FLAVORS.includes(value) ? value : "white";
 }
 
 /** MapLibre layers for one flavor, ids prefixed `basemap-`.
- * The light flavor omits its background so the still image stays visible
- * as first paint until tiles cover it; the dark flavor keeps it. */
+ * Each flavor supplies its own background, so the low contrast still image
+ * remains only as a fallback if the vector archive fails to load. */
 export function basemapLayers(flavor) {
   const name = basemapFlavor(flavor);
   return layers(BASEMAP_SOURCE, namedFlavor(name), { lang: "en" })
     .filter((layer) => !ICON_ONLY.has(layer.id))
-    .filter((layer) => !(name === "light" && layer.type === "background"))
     .map((layer) => {
       const next = { ...layer, id: `basemap-${layer.id}` };
       if (layer.layout && "icon-image" in layer.layout) {

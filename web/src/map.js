@@ -68,7 +68,7 @@ export class FieldMap {
         version: 8,
         glyphs: GLYPHS_URL,
         sources: {},
-        layers: [{ id: "ground", type: "background", paint: { "background-color": GROUND[basemap ? this.flavor : "light"] } }],
+        layers: [{ id: "ground", type: "background", paint: { "background-color": GROUND[basemap ? this.flavor : "white"] } }],
       },
     });
     this.map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
@@ -101,7 +101,7 @@ export class FieldMap {
           for (const layer of list) if (map.getLayer(layer.id)) map.removeLayer(layer.id);
           if (map.getSource(BASEMAP_SOURCE)) map.removeSource(BASEMAP_SOURCE);
           map.setLayoutProperty("hamilton-still", "visibility", "visible");
-          map.setPaintProperty("ground", "background-color", GROUND.light);
+          map.setPaintProperty("ground", "background-color", GROUND.white);
           if (map.getLayer("parcels-fill")) {
             const still = PARCEL_PAINT.still;
             const selected = ["boolean", ["feature-state", "selected"], false];

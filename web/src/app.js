@@ -748,8 +748,8 @@ async function start() {
     overlays: mapLayerManifest?.layers ?? [],
     overlaysBase: MAP_LAYER_BASE,
     developmentOverviewUrl: `${DEVELOPMENT_BASE}city_development_mosaic_v0.1.geojson`,
-    // Comparison aid while the style is chosen: /map/?basemap=dark
-    flavor: new URLSearchParams(location.search).get("basemap") ?? "light",
+    // Style preference can be shared in a URL, e.g. /map/?basemap=dark.
+    flavor: new URLSearchParams(location.search).get("basemap") ?? "white",
     onSelect: (parcel, trigger) => void openParcel(parcel, trigger, view ?? "card"),
     onStatus: status,
     onReady: finishMapLoading,
@@ -759,15 +759,16 @@ async function start() {
     maxZoom: tilesReady ? tileManifest.max_zoom : 16,
   });
 
-  const basemapFlavor = basemap && new URLSearchParams(location.search).get("basemap") === "dark" ? "dark" : "light";
+  const requestedBasemapFlavor = new URLSearchParams(location.search).get("basemap");
+  const basemapFlavor = requestedBasemapFlavor === "light" ? "white" : requestedBasemapFlavor ?? "white";
   document.body.classList.toggle("basemap-dark", basemapFlavor === "dark");
-  for (const flavor of ["light", "dark"]) {
+  for (const flavor of ["white", "dark", "grayscale"]) {
     const button = document.getElementById(`basemap-${flavor}`);
     button.setAttribute("aria-pressed", String(flavor === basemapFlavor));
-    if (flavor === "dark") button.disabled = !basemap;
+    button.disabled = !basemap;
     button.addEventListener("click", () => {
       const params = new URLSearchParams(location.search);
-      if (flavor === "light") params.delete("basemap");
+      if (flavor === "white") params.delete("basemap");
       else params.set("basemap", flavor);
       const query = params.toString();
       location.search = query ? `?${query}` : "";
