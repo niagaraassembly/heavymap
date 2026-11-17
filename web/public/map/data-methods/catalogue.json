@@ -1,0 +1,345 @@
+{
+  "schema": 1,
+  "updated": "2026-11-16",
+  "documents": [
+    {
+      "id": "hamilton-map-release-001",
+      "place": "Hamilton, Ontario",
+      "topic": "Release records",
+      "kind": "Release",
+      "title": "Hamilton map layer release 001",
+      "date": "2026-11-16",
+      "summary": "Inventory and scope of the first published Hamilton map layer set.",
+      "sections": [
+        {
+          "id": "release",
+          "title": "Release identity",
+          "body": [
+            "Artifact: ca-on-hamilton-map-layers / 2026-11-16-layer-set-001.",
+            "Source snapshots for the municipal and conservation layers are dated 2026-10-17. The basemap extract is dated 2026-11-16.",
+            "The immutable artifact includes a manifest and a SHA-256 file index. The site build checks every indexed file before copying it into the deployment."
+          ]
+        },
+        {
+          "id": "inventory",
+          "title": "Layer inventory",
+          "body": [
+            "Planning archive: zoning (11,829 mapped features), secondary plan land use (47,206), urban boundary (1), rural boundary (1), and employment lands (22).",
+            "Protected archive: Greenbelt (9), Niagara Escarpment Plan designation (115), Hamilton Conservation Authority regulation areas (134), Niagara Peninsula Conservation Authority approximate regulation lands (271), and Grand River Conservation Authority regulation limits (199).",
+            "Parks archive: 633 City of Hamilton park features. These are source features; a parcel join has not been made.",
+            "Counts describe source features included in the tile preparation. They do not describe parcels, approvals, ownership, or development rights."
+          ],
+          "subsections": [
+            {
+              "id": "planning-layers",
+              "title": "Planning layers",
+              "body": [
+                "Zoning: 11,829 mapped features; secondary plan land use: 47,206; urban boundary: 1; rural boundary: 1; employment lands: 22."
+              ]
+            },
+            {
+              "id": "protected-layers",
+              "title": "Protected and regulated layers",
+              "body": [
+                "Greenbelt: 9; Niagara Escarpment Plan designation: 115; HCA regulation areas: 134; NPCA approximate regulation lands: 271; GRCA regulation limits: 199."
+              ]
+            },
+            {
+              "id": "parks-layer",
+              "title": "Parks",
+              "body": [
+                "633 City of Hamilton park features. This is a source layer; a parcel join has not been made."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "scope",
+          "title": "What the layers mean",
+          "body": [
+            "These are thematic source overlays. They are not parcel-level joins, planning advice, legal boundaries, or a finding that land is available.",
+            "Regulated-area mapping is contextual. For an official determination, use the relevant authority’s current map and contact its staff. Source maps may be approximate or incomplete.",
+            "The 31 zoning features with null geometry are counted in the source snapshot but omitted from map tiles. The map does not silently invent a location for them."
+          ]
+        },
+        {
+          "id": "attribution",
+          "title": "Sources and attribution",
+          "body": [
+            "City layers: Open Hamilton, City of Hamilton (zoning, secondary plan land use, urban and rural boundaries, employment lands, parks).",
+            "Provincial layers: Ontario Land Information Ontario / GeoHub (Greenbelt and Niagara Escarpment Plan designations).",
+            "Conservation layers: Hamilton Conservation Authority, Niagara Peninsula Conservation Authority, and Grand River Conservation Authority.",
+            "Basemap: Protomaps extract from OpenStreetMap and Natural Earth. © OpenStreetMap contributors; Open Database License (ODbL) 1.0.",
+            "The project owner explicitly cleared these public datasets for this release. Source attribution and each source portal’s applicable terms remain part of the record."
+          ],
+          "links": [
+            {
+              "label": "Open Hamilton",
+              "url": "https://open.hamilton.ca/"
+            },
+            {
+              "label": "Ontario GeoHub",
+              "url": "https://geohub.lio.gov.on.ca/"
+            },
+            {
+              "label": "HCA Open Data Hub",
+              "url": "https://hca-open-data-camaps.hub.arcgis.com/"
+            },
+            {
+              "label": "NPCA Open Data",
+              "url": "https://gis-npca-camaps.opendata.arcgis.com/"
+            },
+            {
+              "label": "GRCA geospatial catalogue",
+              "url": "https://data.grandriver.ca/downloads-geospatial.html"
+            },
+            {
+              "label": "OpenStreetMap copyright and ODbL",
+              "url": "https://www.openstreetmap.org/copyright"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hamilton-map-methods-001",
+      "place": "Hamilton, Ontario",
+      "topic": "Preparation methods",
+      "kind": "Method",
+      "title": "How Hamilton vector layers are prepared",
+      "date": "2026-11-16",
+      "summary": "The filtering, tile construction, zoom, and verification decisions used for release 001.",
+      "sections": [
+        {
+          "id": "selection",
+          "title": "Source selection and fields",
+          "body": [
+            "Each source is read from the local 2026-10-17 snapshot. A layer-specific allowlist selects only fields used for map context; source identifiers and administrative edit fields are not copied by default.",
+            "Zoning publishes ZONING_CODE, ZONING_DESC, COMMUNITY, URBAN_RURAL_SETTLE, BY_LAW_NUMBER, EXCEPTION1–3, and HOLDING1–3.",
+            "Secondary plan land use publishes LANDUSE_CLASS, SEC_PLAN_NAME, COMMUNITY, and AREA_HEC. Employment lands publishes AREA_NAME, CATEGORY, and AREA_HECTARES.",
+            "Greenbelt and Niagara Escarpment Plan tiles publish DESIGNATION. GRCA publishes GR_FEATURE and MU_LTIER / MU_UTIER. Parks publishes NAME, PARK_CLASS, TYPE, and AREA_HA. HCA and NPCA overlays carry geometry only."
+          ]
+        },
+        {
+          "id": "geometry",
+          "title": "Geometry preparation",
+          "body": [
+            "Source geometries are already in longitude / latitude (EPSG:4326). They are written to line-delimited GeoJSON after the property allowlist is applied.",
+            "Features with null geometry are skipped and counted. No parcel matching, dissolving, or reclassification is performed in this release."
+          ]
+        },
+        {
+          "id": "tiling",
+          "title": "Vector tile construction",
+          "body": [],
+          "subsections": [
+            {
+              "id": "archive-grouping",
+              "title": "Archive grouping",
+              "body": [
+                "The five planning layers share planning.pmtiles; the five protected and regulated layers share protected.pmtiles; parks use parks.pmtiles. Grouping reduces archive metadata and range-request overhead while keeping optional themes separate."
+              ]
+            },
+            {
+              "id": "zoom-generalization",
+              "title": "Zoom and simplification",
+              "body": [
+                "The tile build uses shared-border detection, simplification tolerance 3, density dropping when needed, and zoom extension if a tile still exceeds limits. Archives cover zoom 6–14; protected layers end at zoom 13. Individual map styles apply per-layer minimum zooms: planning starts at zoom 8, boundaries and protected layers at zoom 6, and parks at zoom 8.",
+                "These choices trade tiny geometric detail at small scales for smaller tiles and quicker redraws. High zooms preserve more source detail."
+              ]
+            },
+            {
+              "id": "layer-fidelity",
+              "title": "Layer-specific choices",
+              "body": [
+                "No parcel matching, dissolving, or reclassification is performed. Each layer remains identified as its source dataset. Feature density handling can reduce detail in a tile that exceeds limits; source feature counts in the manifest describe preparation inputs, not counts guaranteed in every rendered tile."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "verification",
+          "title": "Release verification",
+          "body": [
+            "The release manifest lists feature counts, source labels, property allowlists, archive grouping, and zoom ranges. files.json records each published file’s byte length and SHA-256.",
+            "The site build verifies every indexed byte and rejects unindexed files, symbolic links, and PMTiles archives above 100 MB.",
+            "The planning archive’s center tile at zoom 12 for the Hamilton map center is 71,944 bytes when read locally with pmtiles tile. This is one compressed tile, not a full-screen download or a live-network benchmark."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hamilton-map-loading-001",
+      "place": "Hamilton, Ontario",
+      "topic": "Performance",
+      "kind": "Method",
+      "title": "How the map loads on slower connections",
+      "date": "2026-11-16",
+      "summary": "Range reads, optional layers, zoom limits, and what still needs a live network measurement.",
+      "sections": [
+        {
+          "id": "ranges",
+          "title": "On-demand byte ranges",
+          "body": [
+            "PMTiles is a single-file tiled archive, but the browser reader uses HTTP Range requests to fetch archive metadata and only the tiles for the visible map area. It does not need to download the complete archive to draw one view.",
+            "The 25.4 MB basemap and each thematic archive are hosted as immutable files. Cached archive metadata can be reused while a visitor pans and zooms; neighboring views request only their tile ranges.",
+            "This depends on the host returning correct byte ranges. If the host ignores Range or sends the whole object, a visitor can receive much more data than intended."
+          ]
+        },
+        {
+          "id": "optional",
+          "title": "Optional overlays",
+          "body": [
+            "Thematic layers start off. Their PMTiles source is added only when the visitor turns on a layer. Turning on one layer requests the matching grouped archive; other groups remain untouched.",
+            "This keeps a first map view focused on the basemap and parcel tiles. A visitor who enables planning context downloads the visible planning tiles, not the full planning archive."
+          ]
+        },
+        {
+          "id": "zoom",
+          "title": "Zoom and rendering",
+          "body": [
+            "Source layers have minimum and maximum zooms, so the browser does not request high-detail tiles outside a layer’s useful scale.",
+            "Vector tiles let the browser draw line and fill styles locally. Self-hosted glyphs avoid a third-party font request for map labels."
+          ]
+        },
+        {
+          "id": "measurement",
+          "title": "Evidence and next measurements",
+          "body": [
+            "The local center-tile sample is recorded in the preparation-method document. It establishes a tile-size baseline, not an end-to-end speed claim.",
+            "After deployment, measure the map on the actual host with browser cache disabled and a throttled connection: initial transferred bytes, range response status and size, time to first basemap, and bytes after enabling each theme. Repeat in Chromium and Firefox.",
+            "If range requests are slow or unsupported, compare grouped PMTiles hosted on a range-capable object store / CDN with the current Pages artifact. Keep the site and tile host same-origin if possible to avoid CORS preflight overhead."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hamilton-basemap-001",
+      "place": "Hamilton, Ontario",
+      "topic": "Basemap",
+      "kind": "Source",
+      "title": "OpenStreetMap basemap extract",
+      "date": "2026-11-16",
+      "summary": "Coverage, licensing, styling, and delivery of the Hamilton street basemap.",
+      "sections": [
+        {
+          "id": "source",
+          "title": "Source and coverage",
+          "body": [
+            "Protomaps daily build dated 2026-11-16, extracted to the parcel-release bounds. The archive contains zoom levels 0–15 and is 25,368,361 bytes.",
+            "The data is derived from OpenStreetMap and Natural Earth. OSM replication timestamp: 2026-11-16 04:00 UTC."
+          ]
+        },
+        {
+          "id": "style",
+          "title": "Style and assets",
+          "body": [
+            "The browser uses the Protomaps basemap style package with light and dark variants. Sprite-only layers are omitted because no sprite sheet is shipped.",
+            "Glyphs are served from the site’s own /map/fonts/ path. This avoids a separate font host and keeps the map’s tile and label assets under the same origin."
+          ]
+        },
+        {
+          "id": "license",
+          "title": "Attribution and licence",
+          "body": [
+            "Show © OpenStreetMap contributors with a link to its copyright page wherever the basemap appears. OSM data is available under ODbL 1.0.",
+            "The map’s background image remains as a fallback if vector basemap tiles fail to load."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hamilton-planning-layers-001",
+      "place": "Hamilton, Ontario",
+      "topic": "Planning",
+      "kind": "Layer group",
+      "title": "Planning layers: zoning, secondary plans, boundaries, employment",
+      "date": "2026-11-16",
+      "summary": "Five City of Hamilton source layers and the public fields retained for map context.",
+      "sections": [
+        {
+          "id": "zoning",
+          "title": "Zoning by-law",
+          "body": [
+            "11,829 of 11,860 source features have mapped geometry; 31 null-geometry features are omitted from tiles.",
+            "Published fields: ZONING_CODE, ZONING_DESC, COMMUNITY, URBAN_RURAL_SETTLE, BY_LAW_NUMBER, EXCEPTION1–3, HOLDING1–3. Owner, legal description, editor, and geometry bookkeeping fields are not included."
+          ]
+        },
+        {
+          "id": "secondary",
+          "title": "Secondary plan land use",
+          "body": [
+            "47,206 source features. Published fields: LANDUSE_CLASS, SEC_PLAN_NAME, COMMUNITY, AREA_HEC. The layer is a source designation, not a parcel join."
+          ]
+        },
+        {
+          "id": "boundaries",
+          "title": "Urban and rural boundaries",
+          "body": [
+            "One source feature in each layer. Geometry only is published; object and shape bookkeeping fields are omitted."
+          ]
+        },
+        {
+          "id": "employment",
+          "title": "Employment lands",
+          "body": [
+            "22 source features. Published fields: AREA_NAME, CATEGORY, AREA_HECTARES. Source comments are excluded."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hamilton-protected-layers-001",
+      "place": "Hamilton, Ontario",
+      "topic": "Protected areas",
+      "kind": "Layer group",
+      "title": "Protected and regulated area layers",
+      "date": "2026-11-16",
+      "summary": "Greenbelt, Niagara Escarpment Plan, and three conservation authority sources.",
+      "sections": [
+        {
+          "id": "provincial",
+          "title": "Provincial designations",
+          "body": [
+            "Greenbelt: 9 features; Niagara Escarpment Plan designation: 115 features. The published attribute is DESIGNATION.",
+            "Source portal: Ontario GeoHub / Land Information Ontario. These are provincial source designations."
+          ]
+        },
+        {
+          "id": "authorities",
+          "title": "Conservation authorities",
+          "body": [
+            "Hamilton Conservation Authority: 134 features; Niagara Peninsula Conservation Authority approximate regulation lands: 271; Grand River Conservation Authority regulation limits: 199.",
+            "HCA and NPCA tiles carry geometry only. GRCA also carries GR_FEATURE and MU_LTIER / MU_UTIER.",
+            "Regulated-area maps are contextual and may not show every regulated feature. Verify a property with the authority that has jurisdiction; mapped areas do not decide whether a permit is required."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hamilton-parks-layer-001",
+      "place": "Hamilton, Ontario",
+      "topic": "Parks",
+      "kind": "Source",
+      "title": "City parks layer",
+      "date": "2026-11-16",
+      "summary": "633 park source features with map labels and classifications; not parcel-linked.",
+      "sections": [
+        {
+          "id": "fields",
+          "title": "Published fields",
+          "body": [
+            "NAME, PARK_CLASS, TYPE, and AREA_HA are included when present. Object and shape bookkeeping fields are omitted."
+          ]
+        },
+        {
+          "id": "limits",
+          "title": "Relationship to parcels",
+          "body": [
+            "This is the City’s parks layer. A parcel join has not been prepared, so the map does not claim that a park polygon corresponds to a specific parcel record."
+          ]
+        }
+      ]
+    }
+  ]
+}

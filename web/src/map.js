@@ -1,6 +1,15 @@
 import * as maplibregl from "maplibre-gl";
 import { Protocol } from "pmtiles";
 import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
+import {
+  BASEMAP_SOURCE,
+  GLYPHS_URL,
+  GROUND,
+  PARCEL_PAINT,
+  basemapFlavor,
+  basemapLayers,
+  firstLabelLayerId,
+} from "./basemap.js";
 
 maplibregl.setWorkerUrl(workerUrl);
 const protocol = new Protocol();
@@ -20,10 +29,16 @@ const STILL_BOUNDS_TALL = [
 ];
 
 export class FieldMap {
-  constructor({ onSelect, onStatus, tilesUrl, tileLayer, minZoom = 14, maxZoom = 16 }) {
+  constructor({ onSelect, onStatus, tilesUrl, tileLayer, minZoom = 14, maxZoom = 16, basemap = null, flavor = "light", overlays = [], overlaysBase = null }) {
+    this.basemap = basemap;
+    this.flavor = basemapFlavor(flavor);
     this.onStatus = onStatus;
     this.tilesUrl = tilesUrl;
     this.tileLayer = tileLayer;
+    this.overlays = overlays;
+    this.overlaysBase = overlaysBase;
+    this.overlayArchivesAdded = new Set();
+    this.overlayVisibility = new Map();
     this.minZoom = minZoom;
     this.maxZoom = maxZoom;
     this.selectedKey = null;
@@ -38,8 +53,9 @@ export class FieldMap {
       attributionControl: false,
       style: {
         version: 8,
+        glyphs: GLYPHS_URL,
         sources: {},
-        layers: [{ id: "ground", type: "background", paint: { "background-color": "#eaf0ef" } }],
+        layers: [{ id: "ground", type: "background", paint: { "background-color": GROUND[basemap ? this.flavor : "light"] } }],
       },
     });
     this.map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
@@ -53,6 +69,45 @@ export class FieldMap {
       });
       map.addLayer({ id: "hamilton-still", type: "raster", source: "hamilton-still", paint: { "raster-opacity": 0.94 } });
 
+      // Vector basemap over the still image; parcels go beneath its labels.
+      // If it cannot be read, its layers are removed and the still remains.
+      let beneathLabels;
+      if (this.basemap) {
+        const list = basemapLayers(this.flavor);
+        map.addSource(BASEMAP_SOURCE, {
+          type: "vector",
+          url: `pmtiles://${this.basemap.url}`,
+          maxzoom: this.basemap.maxZoom,
+        });
+        for (const layer of list) map.addLayer(layer);
+        beneathLabels = firstLabelLayerId(list);
+        if (this.flavor === "dark") map.setLayoutProperty("hamilton-still", "visibility", "none");
+        const dropBasemap = (event) => {
+          if (event.sourceId !== BASEMAP_SOURCE) return;
+          map.off("error", dropBasemap);
+          for (const layer of list) if (map.getLayer(layer.id)) map.removeLayer(layer.id);
+          if (map.getSource(BASEMAP_SOURCE)) map.removeSource(BASEMAP_SOURCE);
+          map.setLayoutProperty("hamilton-still", "visibility", "visible");
+          map.setPaintProperty("ground", "background-color", GROUND.light);
+          if (map.getLayer("parcels-fill")) {
+            const still = PARCEL_PAINT.still;
+            const selected = ["boolean", ["feature-state", "selected"], false];
+            map.setPaintProperty("parcels-fill", "fill-color", ["case", selected, still.selFill, still.fill]);
+            map.setPaintProperty("parcels-fill", "fill-opacity", ["case", selected, still.selFillOpacity, still.fillOpacity]);
+            map.setPaintProperty("parcels-line", "line-color", ["case", selected, still.selLine, still.line]);
+            map.setPaintProperty("parcels-line", "line-width", ["case", selected, 2.4, still.lineWidth]);
+          }
+          onStatus("The street basemap could not be loaded. The still image remains available.");
+          const credit = document.querySelector(".hm-map-context span:nth-child(2)");
+          if (credit?.firstChild?.nodeType === Node.TEXT_NODE) credit.firstChild.textContent = "Still image © ";
+          const note = document.querySelector(".honesty");
+          if (note) note.textContent = "Still image fallback · parcel selection from zoom 14";
+        };
+        map.on("error", dropBasemap);
+      }
+      this.beneathLabels = beneathLabels;
+
+      const paint = PARCEL_PAINT[this.basemap ? this.flavor : "still"];
       if (this.tilesUrl && this.tileLayer) {
         map.addSource("parcels", {
           type: "vector",
@@ -68,10 +123,10 @@ export class FieldMap {
           "source-layer": this.tileLayer,
           minzoom: this.minZoom,
           paint: {
-            "fill-color": ["case", ["boolean", ["feature-state", "selected"], false], "#a25138", "#c17254"],
-            "fill-opacity": ["case", ["boolean", ["feature-state", "selected"], false], 0.72, 0.24],
+            "fill-color": ["case", ["boolean", ["feature-state", "selected"], false], paint.selFill, paint.fill],
+            "fill-opacity": ["case", ["boolean", ["feature-state", "selected"], false], paint.selFillOpacity, paint.fillOpacity],
           },
-        });
+        }, beneathLabels);
         map.addLayer({
           id: "parcels-line",
           type: "line",
@@ -79,10 +134,10 @@ export class FieldMap {
           "source-layer": this.tileLayer,
           minzoom: this.minZoom,
           paint: {
-            "line-color": ["case", ["boolean", ["feature-state", "selected"], false], "#713c2c", "#9c4d35"],
-            "line-width": ["case", ["boolean", ["feature-state", "selected"], false], 2.4, 1.15],
+            "line-color": ["case", ["boolean", ["feature-state", "selected"], false], paint.selLine, paint.line],
+            "line-width": ["case", ["boolean", ["feature-state", "selected"], false], 2.4, paint.lineWidth],
           },
-        });
+        }, beneathLabels);
         map.on("click", "parcels-fill", (event) => {
           const feature = event.features?.[0];
           const key = feature?.properties?.key;
@@ -92,12 +147,18 @@ export class FieldMap {
         map.on("mouseenter", "parcels-fill", () => { map.getCanvas().style.cursor = "pointer"; });
         map.on("mouseleave", "parcels-fill", () => { map.getCanvas().style.cursor = ""; });
         map.on("error", (event) => {
+          if (event.sourceId === BASEMAP_SOURCE) return;
           if (event.sourceId === "parcels" || event.error?.message?.includes("PMTiles"))
             onStatus("Hamilton parcel tiles could not be loaded. The still image remains available.");
         });
       }
 
       this.ready = true;
+      for (const [id, show] of this.overlayVisibility) if (show) this.toggleOverlay(id, true);
+      map.on("error", (event) => {
+        if (event.sourceId?.startsWith("overlay-source-"))
+          this.onStatus("This map layer could not be loaded. Check your connection and try again.");
+      });
       this.toggleParcels(this.parcelsVisible);
       this.reportZoom();
       map.on("zoomend", () => this.reportZoom());
@@ -134,6 +195,43 @@ export class FieldMap {
     if (!this.ready || !this.map.getLayer("parcels-fill")) return;
     for (const id of ["parcels-fill", "parcels-line"])
       this.map.setLayoutProperty(id, "visibility", show ? "visible" : "none");
+  }
+
+  toggleOverlay(id, show) {
+    this.overlayVisibility.set(id, show);
+    if (!this.ready) return;
+    const layer = this.overlays.find((item) => item.id === id);
+    if (!layer) return;
+    const archive = layer.file.split("/").at(-1).replace(/\.pmtiles$/, "");
+    const sourceId = `overlay-source-${archive}`;
+    if (!this.overlayArchivesAdded.has(archive)) {
+      this.map.addSource(sourceId, {
+        type: "vector",
+        url: `pmtiles://${this.overlaysBase}${layer.file}`,
+        minzoom: 6,
+        maxzoom: 14,
+      });
+      const before = this.beneathLabels && this.map.getLayer(this.beneathLabels) ? this.beneathLabels : undefined;
+      for (const item of this.overlays.filter((candidate) => candidate.file === layer.file)) {
+        const color = item.color || "#557a78";
+        this.map.addLayer({
+          id: `overlay-${item.id}-fill`, type: "fill", source: sourceId, "source-layer": item.tile_layer,
+          minzoom: item.min_zoom, maxzoom: item.max_zoom,
+          layout: { visibility: "none" },
+          paint: { "fill-color": color, "fill-opacity": 0.20 },
+        }, before);
+        this.map.addLayer({
+          id: `overlay-${item.id}-line`, type: "line", source: sourceId, "source-layer": item.tile_layer,
+          minzoom: item.min_zoom, maxzoom: item.max_zoom,
+          layout: { visibility: "none" },
+          paint: { "line-color": color, "line-width": 1.2, "line-opacity": 0.86 },
+        }, before);
+      }
+      this.overlayArchivesAdded.add(archive);
+    }
+    for (const suffix of ["fill", "line"])
+      if (this.map.getLayer(`overlay-${id}-${suffix}`))
+        this.map.setLayoutProperty(`overlay-${id}-${suffix}`, "visibility", show ? "visible" : "none");
   }
 
   /** Ease the parcel into the visible area above a bottom panel: the
