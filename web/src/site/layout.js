@@ -100,7 +100,7 @@ function footer(regions) {
   const desks = regions
     .map((r) => `<a href="/desks/${esc(r.slug)}/">${esc(r.name)}</a>`)
     .join("");
-  return `<footer class="alt-footer"><div><a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><p>Regional reporting. Geographic intelligence.</p></div><nav aria-label="Footer"><a href="/about/">About</a><a href="/about/credits/">Credits</a><a href="/reader/">Reader</a><a href="/preferences/">Email preferences</a>${desks}</nav></footer>`;
+  return `<footer class="alt-footer"><div><a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><p>Regional reporting. Industrial Intelligence.</p></div><nav aria-label="Footer"><a href="/about/">About</a><a href="/about/credits/">Credits</a><a href="/reader/">Reader</a><a href="/preferences/">Email preferences</a>${desks}</nav></footer>`;
 }
 
 /**
@@ -151,7 +151,7 @@ ${banner}<a class="skip-link" href="#content">Skip to content</a>
 ${o.path === "/map/" ? mapHeader(o.regions) : mainService(o.path) ? docsHeader({ ...o.themes, service: o.path.slice(1, -1) }) : header(o.path, o.themes)}
 <main id="content" tabindex="-1">${o.main}</main>
 ${o.catalogue ? `<script type="application/json" id="hm-catalogue">${JSON.stringify(o.catalogue).replace(/</g, "\\u003c")}</script>` : ""}
-${mainService(o.path) ? serviceBottom(o.themes) : `${footer(o.regions)}${o.path === "/map/" ? (o.after ?? "").replace("<!-- map-theme-picker -->", themePicker(o.themes)) : o.after ?? ""}`}
+${mainService(o.path) ? serviceBottom(o.themes, o.regions, o.path) : `${footer(o.regions)}${o.path === "/map/" ? (o.after ?? "").replace("<!-- map-theme-picker -->", themePicker(o.themes)) : o.after ?? ""}`}
 </body>
 </html>
 `;
@@ -165,6 +165,21 @@ function docsHeader(options) {
   return `<header class="alt-header alt-header--docs"><a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>${serviceTabs(options.service)}${create}</header>`;
 }
 
-function serviceBottom(themes) {
-  return `<div class="hm-docs-bottom-bar"><span class="hm-docs-bottom-spacer"></span>${themePicker(themes)}</div>`;
+function serviceBottom(themes, regions, currentPath) {
+  const services = [
+    ["/map/", "Parcel map", "Explore parcels, layers, and place."],
+    ["/reader/", "Reader", "Regional reporting, together by place."],
+    ["/notes/", "Notes", "A field journal for site observations."],
+    ["/saved/", "Saved items", "Your saved parcels, stories, and records."],
+    ["/development/", "Development", "A focused shelf for development records."],
+    ["/docs/", "Documents", "Plans and working documents for a site."],
+  ];
+  const serviceLinks = services.map(([href, label, description]) =>
+    `<a class="hm-directory-service" href="${href}"${href === currentPath ? ' aria-current="page"' : ""}><span>${label}</span><small>${description}</small></a>`,
+  ).join("");
+  const deskLinks = regions.map((region) =>
+    `<a class="hm-directory-desk" href="/desks/${esc(region.slug)}/">${esc(region.name)}<span aria-hidden="true">↗</span></a>`,
+  ).join("");
+  const directory = `<div class="hm-directory-scrim" data-directory-scrim hidden><section class="hm-directory-panel" id="hm-site-directory" role="dialog" aria-modal="true" aria-labelledby="hm-directory-title" tabindex="-1"><div class="hm-directory-topline"><p class="hm-directory-kicker">HEAVYMAP · SITE DIRECTORY</p><button class="hm-directory-close" type="button" data-directory-close aria-label="Close site directory">×</button></div><div class="hm-directory-heading"><h2 id="hm-directory-title">A way through the map.</h2><p>Reporting, place, and the work around it—gathered in one place.</p></div><div class="hm-directory-columns"><section class="hm-directory-section" aria-labelledby="hm-directory-services"><h3 id="hm-directory-services">Services</h3><nav class="hm-directory-services" aria-label="HeavyMap services">${serviceLinks}</nav></section><section class="hm-directory-section" aria-labelledby="hm-directory-desks"><h3 id="hm-directory-desks">Regional desks</h3><nav class="hm-directory-desks" aria-label="Regional desks">${deskLinks}</nav><div class="hm-directory-footer-links"><a href="/subscribe/">Follow your regions</a><a href="/about/">About HeavyMap</a><a href="/about/credits/">Credits</a><a href="/preferences/">Email preferences</a></div></section></div><div class="hm-directory-foot"><a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><span>Regional reporting. Industrial Intelligence.</span><a href="/map/">Return to the parcel map ${mapIcon}</a></div></section></div>`;
+  return `${directory}<div class="hm-docs-bottom-bar"><a class="hm-service-return-map" href="/map/" aria-label="Open the parcel map" title="Open the parcel map">${mapIcon}<span>Open map</span></a><span class="hm-service-bottom-context">LOCAL WORKSPACE</span><span class="hm-docs-bottom-spacer"></span><button class="hm-directory-toggle" type="button" data-directory-toggle aria-label="Open site directory" aria-haspopup="dialog" aria-expanded="false" aria-controls="hm-site-directory" title="Open site directory"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 15V5m0 0L5.5 9.5M10 5l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>${themePicker(themes)}</div>`;
 }

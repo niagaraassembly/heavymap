@@ -33,6 +33,56 @@ mountMapBars();
 mountLocalAccount();
 void mountDocsService(document.querySelector("[data-docs-service]"));
 
+/* The service dock's site directory is a large, keyboard-friendly site map. */
+const directoryScrim = document.querySelector("[data-directory-scrim]");
+const directoryToggle = document.querySelector("[data-directory-toggle]");
+const directoryPanel = document.querySelector("#hm-site-directory");
+const directoryClose = document.querySelector("[data-directory-close]");
+if (directoryScrim && directoryToggle && directoryPanel && directoryClose) {
+  let directoryReturnFocus = null;
+  const closeDirectory = () => {
+    directoryScrim.hidden = true;
+    directoryToggle.setAttribute("aria-expanded", "false");
+    directoryToggle.setAttribute("aria-label", "Open site directory");
+    directoryToggle.title = "Open site directory";
+    document.body.classList.remove("hm-directory-open");
+    directoryReturnFocus?.focus();
+  };
+  directoryToggle.addEventListener("click", () => {
+    directoryReturnFocus = directoryToggle;
+    directoryScrim.hidden = false;
+    directoryToggle.setAttribute("aria-expanded", "true");
+    directoryToggle.setAttribute("aria-label", "Close site directory");
+    directoryToggle.title = "Close site directory";
+    document.body.classList.add("hm-directory-open");
+    directoryPanel.focus();
+  });
+  directoryClose.addEventListener("click", closeDirectory);
+  directoryScrim.addEventListener("click", (event) => {
+    if (event.target === directoryScrim) closeDirectory();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (directoryScrim.hidden) return;
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeDirectory();
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const focusable = [...directoryPanel.querySelectorAll('a[href], button:not([disabled])')];
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable.at(-1);
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === directoryPanel)) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+}
+
 /* Edition cards: "Copy link" copies the card's permalink. */
 document.addEventListener("click", async (e) => {
   const button = e.target.closest?.("[data-copy-link]");
