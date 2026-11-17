@@ -635,9 +635,12 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose, sid
       labeledControl("City / region", citySelect),
       labeledControl("Report period", periodSelect),
       labeledControl("From · to", range, "hm-development-dashboard-range"),
-      totalsToggle,
     );
-    dashboard.append(dashboardFilters);
+    // On the full page the filters live in the left rail, so the main column
+    // is totals and permits only. The totals toggle stays with the totals.
+    const totalsBar = el("div", undefined, "hm-development-dashboard-totals-bar");
+    totalsBar.append(el("h2", "Permit activity", "hm-development-dashboard-title"), totalsToggle);
+    dashboard.append(totalsBar);
 
     const summary = el("div", undefined, "hm-development-dashboard-summary");
     summary.id = "hm-development-dashboard-summary";
@@ -675,10 +678,16 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose, sid
     });
     main.append(dashboard);
 
-    const toolbar = el("div", undefined, "hm-development-browser-toolbar");
-    toolbar.append(controls, resultStatus);
-    main.append(toolbar);
-    sidebarTarget.append(source);
+    search.placeholder = "Permits, streets, businesses…";
+    const railFilters = el("div", undefined, "hm-development-rail-filters");
+    railFilters.append(
+      el("p", "DEVELOPMENT", "hm-docs-kicker"),
+      dashboardFilters,
+      labeledControl("Search", search),
+      labeledControl("Category", filter),
+      resultStatus,
+    );
+    sidebarTarget.replaceChildren(railFilters, source);
   } else {
     search.placeholder = "Permit, site, source type, or name";
     search.setAttribute("aria-label", "Search all Hamilton development records");
