@@ -84,8 +84,10 @@ export class FieldMap {
           },
         });
         map.on("click", "parcels-fill", (event) => {
-          const key = event.features?.[0]?.properties?.key;
-          if (typeof key === "string") onSelect({ id: key, key }, map.getCanvas());
+          const feature = event.features?.[0];
+          const key = feature?.properties?.key;
+          if (typeof key === "string")
+            onSelect({ id: key, key, geometry: feature.geometry ?? null }, map.getCanvas());
         });
         map.on("mouseenter", "parcels-fill", () => { map.getCanvas().style.cursor = "pointer"; });
         map.on("mouseleave", "parcels-fill", () => { map.getCanvas().style.cursor = ""; });
@@ -132,6 +134,44 @@ export class FieldMap {
     if (!this.ready || !this.map.getLayer("parcels-fill")) return;
     for (const id of ["parcels-fill", "parcels-line"])
       this.map.setLayoutProperty(id, "visibility", show ? "visible" : "none");
+  }
+
+  /** Ease the parcel into the visible area above a bottom panel: the
+   * parcel's centre lands in the viewport left after the panel (and the
+   * open tray, on desktop) is padded out. A deep link has no geometry,
+   * so the map does not move for it. */
+  focusParcel(geometry, bottomPadding) {
+    if (!this.ready || !geometry) return;
+    const ring =
+      geometry.type === "Polygon"
+        ? geometry.coordinates?.[0]
+        : geometry.type === "MultiPolygon"
+          ? geometry.coordinates?.[0]?.[0]
+          : null;
+    if (!ring || !ring.length) return;
+    let minX = Infinity;
+    let maxX = -Infinity;
+    let minY = Infinity;
+    let maxY = -Infinity;
+    for (const [x, y] of ring) {
+      if (x < minX) minX = x;
+      if (x > maxX) maxX = x;
+      if (y < minY) minY = y;
+      if (y > maxY) maxY = y;
+    }
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const tray = document.getElementById("tray");
+    const trayVisible = tray && getComputedStyle(tray).display !== "none";
+    this.map.easeTo({
+      center: [(minX + maxX) / 2, (minY + maxY) / 2],
+      padding: {
+        top: 16,
+        left: trayVisible ? tray.getBoundingClientRect().width + 32 : 16,
+        right: 16,
+        bottom: bottomPadding,
+      },
+      duration: reduce ? 0 : 300,
+    });
   }
 
   home() {

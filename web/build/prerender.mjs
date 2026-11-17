@@ -216,6 +216,7 @@ async function main() {
 
   const budgets = budgetReport(OUT_DIR);
   fail("size budgets (decision 56, BETA-GATE section 6)", budgets.problems);
+  for (const note of budgets.notes) console.warn(`note: ${note}`);
   fail(
     "public build hygiene (spec G section 3)",
     publicHygiene(OUT_DIR, {
@@ -252,6 +253,7 @@ async function main() {
       startup_data: budgets.sizes.startupData,
       app_code: budgets.sizes.appCode,
     },
+    notes: budgets.notes,
     total_bytes: budgets.sizes.total,
     checks: [
       "content",

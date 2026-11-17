@@ -1,9 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { randomBytes } from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import {
+  BUDGETS,
   budgetReport,
   contrast,
   contrastProblems,
@@ -86,6 +88,16 @@ test("public builds reject tiles, preview banners and design themes", () => {
     }).length,
     0,
   );
+});
+
+test("app code over the old 500 KB limit is reported, not a failure (D-076)", () => {
+  // Random bytes do not compress, so the gzipped asset stays over the limit.
+  const big = randomBytes(700 * 1024).toString("base64");
+  const dir = tmp({ "assets/a.js": big });
+  const r = budgetReport(dir);
+  assert.equal(r.problems.length, 0);
+  assert.ok(r.notes.some((x) => x.startsWith("app code")));
+  assert.ok(r.sizes.appCode > BUDGETS.appCode);
 });
 
 test("budgets measure the embedded catalogue and the code, compressed", () => {
