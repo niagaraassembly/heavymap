@@ -1760,71 +1760,10 @@ h2 {
   font-size: 12.5px;
 }
 
-/* Standalone Notes page (/notes/): groups of notes, device-only. */
-.hm-notes-head {
-  margin-bottom: 8px;
-}
-.hm-notes-compose {
-  margin: 18px 0 6px;
-}
-.hm-notes-compose label {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-.hm-notes-compose textarea {
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 9px 11px;
-  font: inherit;
-  font-size: 14px;
-  resize: vertical;
-  min-height: 64px;
-}
-.hm-notes-compose button {
-  margin-top: 8px;
-}
-.hm-notes-empty {
-  color: var(--muted);
-  font-size: 14px;
-}
-.hm-notes-group {
-  border-top: 1px solid var(--line);
-  margin-top: 24px;
-  padding-top: 16px;
-}
-.hm-notes-group-sub {
-  color: var(--muted);
-  font-size: 12.5px;
-  margin: 2px 0 0;
-}
-.hm-notes-open {
-  display: inline-block;
-  margin-top: 6px;
-  font-size: 13px;
-}
-.hm-notes-list {
-  list-style: none;
-  margin: 12px 0 0;
-  padding: 0;
-}
-.hm-notes-note {
-  border-top: 1px solid var(--line);
-  padding: 10px 0;
-}
-.hm-notes-note p {
-  margin: 0 0 4px;
-  font-size: 14px;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-.hm-notes-note small {
-  color: var(--muted);
-  font-size: 12px;
-}
+/* The standalone Notes page rules moved to src/site/styles.css: this
+ * bundle (the map entry) is not loaded by /notes/, so rules kept here
+ * never applied. */
+
 @media (max-width: 900px) {
   .parcel-workspace {
     top: 0;

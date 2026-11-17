@@ -17,13 +17,12 @@ import { createNotesStore, formatNoteTime } from "../parcel-notes.js";
 function noteItem(note, store) {
   const li = el("li", undefined, "hm-notes-note");
   li.append(el("p", note.text));
-  const meta = el("small");
-  meta.append(document.createTextNode(formatNoteTime(note.at)));
-  meta.append(document.createTextNode(" · "));
+  const foot = el("div", undefined, "hm-notes-note-foot");
+  foot.append(el("span", formatNoteTime(note.at), "hm-notes-note-time"));
   const del = el("button", "Delete note", "hm-notes-delete");
   del.addEventListener("click", () => store.remove(note.id));
-  meta.append(del);
-  li.append(meta);
+  foot.append(del);
+  li.append(foot);
   return li;
 }
 
@@ -34,13 +33,17 @@ function countText(n) {
 /** One group: a parcel group with its Open-parcel link, or the General group. */
 function groupSection({ title, sub, link }, notes, store) {
   const section = el("section", undefined, "hm-notes-group");
-  section.append(el("h2", title));
-  if (sub) section.append(el("p", sub, "hm-notes-group-sub"));
+  const head = el("div", undefined, "hm-notes-group-head");
+  const titles = el("div", undefined, "hm-notes-group-titles");
+  titles.append(el("h2", title));
+  if (sub) titles.append(el("p", sub, "hm-notes-group-sub"));
+  head.append(titles);
   if (link) {
-    const open = el("a", "Open parcel", "hm-notes-open");
+    const open = el("a", "Open parcel ↗", "hm-notes-open");
     open.href = link;
-    section.append(open);
+    head.append(open);
   }
+  section.append(head);
   const list = el("ul", undefined, "hm-notes-list");
   for (const note of notes) list.append(noteItem(note, store));
   section.append(list);
@@ -93,10 +96,16 @@ export function mountNotesPage(root) {
     }
   }
 
+  function syncAdd() {
+    add.disabled = area.value.trim() === "";
+  }
+  area.addEventListener("input", syncAdd);
+  syncAdd();
   add.addEventListener("click", () => {
     const note = store.add({ key: null, text: area.value });
     if (note) {
       area.value = "";
+      syncAdd();
       area.focus();
     }
   });

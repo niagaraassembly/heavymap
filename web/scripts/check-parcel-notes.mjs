@@ -192,6 +192,78 @@ try {
   );
   await page.screenshot({ path: `${SHOTS}parcel-notes-page-desktop.png` });
 
+  // 3b. Layout: the notes rules must actually load and the page must read
+  // as designed — label above the box, full-width textarea, right-aligned
+  // Add button, notes as cards, Open parcel visibly a link.
+  const labelBox = await page.locator(".hm-notes-compose label").boundingBox();
+  const areaBox = await page
+    .locator("[data-notes-compose] textarea")
+    .boundingBox();
+  const composeBox = await page.locator("[data-notes-compose]").boundingBox();
+  check(
+    "compose label sits above the textarea, no overlap",
+    labelBox.y + labelBox.height <= areaBox.y + 1,
+    `label bottom=${Math.round(labelBox.y + labelBox.height)} textarea top=${Math.round(areaBox.y)}`,
+  );
+  check(
+    "textarea is full width",
+    areaBox.width >= composeBox.width * 0.9,
+    `textarea=${Math.round(areaBox.width)} compose=${Math.round(composeBox.width)}`,
+  );
+  const addBox = await page.locator("[data-notes-add]").boundingBox();
+  check(
+    "Add note is right-aligned",
+    Math.abs(addBox.x + addBox.width - (composeBox.x + composeBox.width)) <= 2,
+    `button right=${Math.round(addBox.x + addBox.width)} compose right=${Math.round(composeBox.x + composeBox.width)}`,
+  );
+  check(
+    "Add note is disabled while the box is empty",
+    await page.locator("[data-notes-add]").isDisabled(),
+  );
+  const cardRadius = await page
+    .locator(".hm-notes-note")
+    .first()
+    .evaluate((e) => getComputedStyle(e).borderTopLeftRadius);
+  const cardBorder = await page
+    .locator(".hm-notes-note")
+    .first()
+    .evaluate((e) => getComputedStyle(e).borderTopWidth);
+  check(
+    "notes render as cards",
+    parseFloat(cardRadius) > 0 && parseFloat(cardBorder) >= 1,
+    `radius=${cardRadius} border=${cardBorder}`,
+  );
+  const openLink = page.locator(
+    '.hm-notes-group:has-text("155 Moore Cres") .hm-notes-open',
+  );
+  const openDeco = await openLink.evaluate(
+    (e) => getComputedStyle(e).textDecorationLine,
+  );
+  const openCursor = await openLink.evaluate((e) => getComputedStyle(e).cursor);
+  const openBorder = await openLink.evaluate(
+    (e) => getComputedStyle(e).borderTopWidth,
+  );
+  check(
+    "Open parcel is a visible button-like link",
+    parseFloat(openBorder) >= 1 && openCursor === "pointer",
+    `decoration=${openDeco} cursor=${openCursor} border=${openBorder}`,
+  );
+  check(
+    "each group has a header row",
+    (await page.locator(".hm-notes-group-head").count()) === 2,
+    `heads=${await page.locator(".hm-notes-group-head").count()}`,
+  );
+  const deskOverflow = await page.evaluate(
+    () =>
+      document.documentElement.scrollWidth -
+      document.documentElement.clientWidth,
+  );
+  check(
+    "no horizontal overflow on desktop notes page",
+    deskOverflow <= 0,
+    `overflow=${deskOverflow}px`,
+  );
+
   // 4. The Open-parcel link returns to the workspace for that parcel.
   await page
     .locator('.hm-notes-group:has-text("155 Moore Cres") .hm-notes-open')
@@ -273,6 +345,26 @@ try {
     .locator('.hm-notes-group:has-text("General notes")')
     .waitFor({ state: "visible" });
   check("general note can be added on phone", true);
+  const mobAreaBox = await page
+    .locator("[data-notes-compose] textarea")
+    .boundingBox();
+  const mobComposeBox = await page
+    .locator("[data-notes-compose]")
+    .boundingBox();
+  check(
+    "textarea is full width on phone",
+    mobAreaBox.width >= mobComposeBox.width * 0.9,
+    `textarea=${Math.round(mobAreaBox.width)} compose=${Math.round(mobComposeBox.width)}`,
+  );
+  const mobRadius = await page
+    .locator(".hm-notes-note")
+    .first()
+    .evaluate((e) => getComputedStyle(e).borderTopLeftRadius);
+  check(
+    "notes render as cards on phone",
+    parseFloat(mobRadius) > 0,
+    `radius=${mobRadius}`,
+  );
   await page.screenshot({ path: `${SHOTS}parcel-notes-page-mobile.png` });
 } catch (e) {
   check("script completed without exception", false, String(e).split("\n")[0]);
