@@ -2310,6 +2310,14 @@ h2 {
 }
 #parcel-save-dialog.hm-map-dialog {
   width: min(1160px, calc(100vw - 32px));
+  top: 14px;
+  bottom: 14px;
+  max-height: none;
+  transform: translateX(-50%);
+}
+#parcel-save-dialog .hm-map-dialog-panel {
+  height: 100%;
+  max-height: none;
 }
 .hm-map-dialog::backdrop { background: #152e3b8c; backdrop-filter: blur(3px); }
 .hm-map-dialog-panel {
@@ -2394,8 +2402,13 @@ h2 {
 .hm-save-filters { display: flex; gap: 6px; margin: 0 0 12px; padding: 0 0 8px; overflow-x: auto; border-bottom: 1px solid #c1ccd3; }
 .hm-save-filter { flex: none; min-height: 34px; padding: 6px 12px; border: 1px solid #aebdc6; border-radius: 999px; background: #f8fafb; color: #405562; font: 600 11px/1.2 var(--sans, system-ui, sans-serif); }
 .hm-save-filter[aria-pressed="true"] { border-color: #294d60; background: #294d60; color: #fff; }
+.hm-save-search { display: flex; flex: 1 0 240px; max-width: 340px; min-width: 200px; height: 34px; align-items: center; gap: 7px; margin-left: 4px; padding: 0 10px; border: 1px solid #aebdc6; border-radius: 999px; background: #f8fafb; color: #536a75; }
+.hm-save-search-icon { flex: none; font-size: 20px; line-height: 1; }
+.hm-save-search input { width: 100%; min-width: 0; height: 100%; padding: 0; border: 0; outline: 0; background: transparent; color: #1e3440; font: 12px/1.2 var(--sans, system-ui, sans-serif); }
+.hm-save-search input::placeholder { color: #71838b; }
 .hm-save-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
 .hm-save-list-row { display: flex; min-width: 0; min-height: 66px; align-items: center; gap: 12px; padding: 9px 11px; border: 1px solid #c1ccd3; border-radius: 11px; background: #f8fafb; }
+.hm-save-item-card[hidden] { display: none; }
 .hm-save-place-open { display: grid; flex: 1; min-width: 0; gap: 3px; padding: 0; border: 0; background: transparent; color: inherit; text-align: left; text-decoration: none; }
 .hm-save-place-open strong,
 .hm-save-place-open span { display: -webkit-box; overflow: hidden; overflow-wrap: anywhere; -webkit-box-orient: vertical; }

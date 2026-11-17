@@ -30,6 +30,7 @@ let manifestSources = null;
 let notesStore = null;
 let savedItems = [];
 let savedFilter = "all";
+let savedQuery = "";
 /* Which workspace sections are open, remembered while moving between
  * parcels in the session (design §5.4). Set on the first workspace open:
  * Addresses open only when the parcel has more than one. */
@@ -231,15 +232,27 @@ function renderSaveDialog() {
     button.dataset.saveFilter = category.id;
     filters.append(button);
   }
-  const filtered = savedFilter === "all" ? savedItems : savedItems.filter((item) => savedItemCategory(item) === savedFilter);
+  const search = el("label", undefined, "hm-save-search");
+  search.append(el("span", "⌕", "hm-save-search-icon"));
+  const searchInput = el("input");
+  searchInput.type = "search";
+  searchInput.placeholder = "Search saved items";
+  searchInput.setAttribute("aria-label", "Search saved items");
+  searchInput.value = savedQuery;
+  search.append(searchInput);
+  filters.append(search);
+  const categoryItems = savedFilter === "all" ? savedItems : savedItems.filter((item) => savedItemCategory(item) === savedFilter);
+  const filtered = categoryItems.filter((item) => !savedQuery || [item.title, item.subtitle, item.key, item.id].filter(Boolean).join(" ").toLocaleLowerCase().includes(savedQuery));
   const list = el("ul", undefined, "hm-save-list");
-  if (!filtered.length) {
-    const emptyMessage = savedFilter === "all" ? "Saved items will appear here." : `Saved ${savedFilter === "parcel" ? "parcels" : `${savedFilter} items`} will appear here.`;
-    list.append(el("li", emptyMessage, "hm-save-list-empty"));
+  let emptyMessage = null;
+  if (!categoryItems.length) {
+    emptyMessage = el("li", savedFilter === "all" ? "Saved items will appear here." : `Saved ${savedFilter === "parcel" ? "parcels" : `${savedFilter} items`} will appear here.`, "hm-save-list-empty");
+    list.append(emptyMessage);
   }
   for (const item of filtered) {
       const row = el("li", undefined, "hm-save-list-row");
       row.classList.add("hm-save-item-card");
+      row.dataset.search = [item.title, item.subtitle, item.key, item.id].filter(Boolean).join(" ").toLocaleLowerCase();
       const open = savedItemCategory(item) === "parcel"
         ? el("button", undefined, "hm-save-place-open")
         : el(item.url ? "a" : "div", undefined, "hm-save-place-open");
@@ -269,6 +282,19 @@ function renderSaveDialog() {
       row.append(open, remove);
       list.append(row);
   }
+  const noResults = el("li", "No saved items match your search.", "hm-save-list-empty");
+  noResults.hidden = !savedQuery || filtered.length > 0;
+  list.append(noResults);
+  searchInput.addEventListener("input", () => {
+    savedQuery = searchInput.value.trim().toLocaleLowerCase();
+    let visibleCount = 0;
+    for (const row of list.querySelectorAll(".hm-save-item-card")) {
+      row.hidden = Boolean(savedQuery) && !row.dataset.search.includes(savedQuery);
+      if (!row.hidden) visibleCount++;
+    }
+    if (emptyMessage) emptyMessage.hidden = Boolean(savedQuery);
+    noResults.hidden = !savedQuery || visibleCount > 0;
+  });
   body.append(filters, list);
   panel.append(head, body);
   dialog.replaceChildren(panel);
