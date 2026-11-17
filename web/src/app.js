@@ -17,7 +17,7 @@ const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
 const PARCEL_GEOMETRY_CACHE = "heavymap.parcel-geometry-cache.v1";
 // The street basemap is a separate artifact from the parcel release.
 const MAP_LAYER_BASE = "/map/layers/ca-on-hamilton-map-layers/2026-11-17-layer-set-002/";
-const DEVELOPMENT_BASE = "/map/data/ca-on-hamilton-development/2026-11-17-field-screen-v0.2/";
+const DEVELOPMENT_BASE = "/map/data/ca-on-hamilton-development/2026-11-17-field-screen-v0.3/";
 // Private portrait package (D-079): access and infrastructure measurements per parcel.
 const ACCESS_BASE = "/map/data/ca-on-hamilton-access/2026-11-17-access-v0.1/";
 const cardSlot = document.getElementById("parcel-card-slot");
@@ -727,6 +727,7 @@ async function start() {
     basemap,
     overlays: mapLayerManifest?.layers ?? [],
     overlaysBase: MAP_LAYER_BASE,
+    developmentOverviewUrl: `${DEVELOPMENT_BASE}city_development_mosaic_v0.1.geojson`,
     // Comparison aid while the style is chosen: /map/?basemap=dark
     flavor: new URLSearchParams(location.search).get("basemap") ?? "light",
     onSelect: (parcel, trigger) => void openParcel(parcel, trigger, view ?? "card"),
@@ -777,7 +778,7 @@ async function start() {
     developmentTo.value = developmentMonths.at(-1);
     developmentFrom.disabled = developmentTo.disabled = false;
     developmentToggle.disabled = false;
-    developmentPeriodStatus.textContent = `${developmentMonths[0]} to ${developmentMonths.at(-1)} · issued-permit records`;
+    developmentPeriodStatus.textContent = `${developmentMonths[0]} to ${developmentMonths.at(-1)} · issued-permit records · ${developmentPackage.activityMosaic?.cell_count?.toLocaleString("en-CA") ?? "Citywide"} citywide cells`;
   } else {
     developmentPeriodStatus.textContent = "Development records are unavailable.";
   }
@@ -817,7 +818,9 @@ async function start() {
     );
     const parcelKeys = new Set(matches.flatMap((record) => record.parcel_ids));
     map.setDevelopmentActivityParcels(parcelKeys);
-    developmentPeriodStatus.textContent = `${matches.length.toLocaleString("en-CA")} permits · ${parcelKeys.size.toLocaleString("en-CA")} parcels · ${developmentFrom.value} to ${developmentTo.value}`;
+    map.setDevelopmentActivityRange(developmentMonths, developmentFrom.value, developmentTo.value);
+    const locationless = developmentPackage.activityMosaic?.records_without_usable_parcel_location ?? 0;
+    developmentPeriodStatus.textContent = `${matches.length.toLocaleString("en-CA")} permits · ${parcelKeys.size.toLocaleString("en-CA")} parcels · ${developmentFrom.value} to ${developmentTo.value} · ${locationless.toLocaleString("en-CA")} records in the full release lack a mappable parcel location and remain in the viewer`;
     updateLayerLibrary();
   };
   developmentToggle.addEventListener("change", () => void updateDevelopmentActivity());
@@ -856,7 +859,10 @@ async function start() {
         const title = document.createElement("strong");
         title.textContent = layer.label;
         const details = document.createElement("small");
-        details.textContent = `${layer.source} · ${layer.feature_count.toLocaleString("en-CA")} features · ${layer.source_date}`;
+        const zoom = layer.geometry
+          ? `visible from z${layer.min_zoom} · source z${layer.min_zoom}–${layer.max_zoom}`
+          : `visible z${layer.min_zoom}–${layer.max_zoom}`;
+        details.textContent = `${layer.source} · ${layer.feature_count.toLocaleString("en-CA")} features · ${layer.source_date} · ${zoom}`;
         text.append(title, details);
         label.append(input, text);
         group.append(label);
