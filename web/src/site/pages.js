@@ -431,7 +431,7 @@ export function readerPage(c) {
     title: "Reader",
     description:
       "Every HeavyMap story in one place, with your place kept in this browser.",
-    bodyClass: "hm-reader",
+    bodyClass: "hm-reader hm-docs-service-page",
     main: `<section class="reader-page study-wrap" data-reader><header class="reader-heading"><div><p class="eyebrow">A single door into HeavyMap</p><h1>Reader</h1></div><p>News first; findings, editorials and documentation when you want to go deeper. Your place is remembered in this browser only.</p></header><div class="reader-types" role="group" aria-label="Material" data-reader-controls hidden>${kinds.map((k) => `<button type="button" data-kind="${k}" aria-pressed="false">${esc(kindLabel[k])}</button>`).join("")}</div><button type="button" class="reader-library-toggle" id="reader-library-toggle" aria-expanded="true" aria-controls="reader-library" hidden>Browse &amp; filter <span aria-hidden="true">−</span></button><div class="reader-workspace"><aside id="reader-library" class="reader-library" aria-label="Reader library"><div data-reader-controls hidden><div class="reader-filter-row"><label for="reader-region">Region</label><select id="reader-region">${regionOptions}</select></div><label class="hm-visually-hidden" for="reader-search">Search the library</label><input id="reader-search" type="search" maxlength="120" placeholder="Search the library…" autocomplete="off"><label class="unread-option"><input id="reader-unread" type="checkbox"> Unread only</label></div><p class="hm-reader-notice" data-reader-notice hidden></p><div class="library-count" id="library-count" role="status"></div><ol id="reader-list" class="reader-list">${list}</ol><div class="reader-storage" data-reader-controls hidden><p data-storage-note>Your place and filters stay on this device.</p><button type="button" data-forget>Forget reading history</button><div data-forget-confirm hidden><p>Forget what you've read on this device? Your theme stays as it is.</p><button type="button" data-forget-yes>Forget</button> <button type="button" data-forget-no>Cancel</button></div></div></aside><div class="reader-document" data-reader-document><div class="document-navigation" hidden><button type="button" id="reader-prev">← Previous</button><span id="reader-position"></span><button type="button" id="reader-next">Next →</button></div><div id="reader-scroll" class="reader-scroll" tabindex="-1" aria-label="Reading pane"><div id="reader-article"><div class="reader-empty"><p class="eyebrow">Start here</p><h2>Choose a story from the list.</h2><p class="reader-lede">News first; findings, editorials and documentation when you want to go deeper. Your place is remembered in this browser only.</p></div></div></div></div></div></section>`,
   };
 }
@@ -497,19 +497,32 @@ export function docsIntro() {
     title: "Docs",
     description: "Create and organize site plans, project notes, and evidence for HeavyMap parcel projects.",
     bodyClass: "hm-docs-service-page",
-    main: `<section class="hm-docs-service" data-docs-service>
+    main: `<section class="hm-docs-service" data-docs-service="docs">
       <div class="hm-docs-library" data-docs-library>
-        <aside class="hm-docs-library-rail"><label class="hm-docs-search"><span aria-hidden="true">⌕</span><input type="search" maxlength="120" placeholder="Search documents" aria-label="Search documents" data-docs-search></label><label class="hm-docs-filter-label hm-visually-hidden" for="hm-docs-project-filter">Site project</label><select id="hm-docs-project-filter" data-docs-project-filter><option value="all">All site projects</option></select><div class="hm-docs-library-count" data-docs-count aria-live="polite">Loading documents…</div><div class="hm-docs-list" data-docs-list></div></aside>
-        <section class="hm-docs-detail" data-docs-detail aria-label="Document workspace"><div class="hm-docs-empty-state" data-docs-empty aria-label="No document selected"></div></section>
+        <aside class="hm-docs-library-rail" aria-label="Document types"><p class="hm-docs-kicker">DOCUMENT TYPES</p><nav class="hm-docs-type-filters" data-docs-type-filters aria-label="Filter by document type"></nav></aside>
+        <section class="hm-docs-browser" data-docs-browser aria-label="Documents"><div class="hm-docs-library-toolbar"><label class="hm-docs-search"><span aria-hidden="true">⌕</span><input type="search" maxlength="120" placeholder="Search documents" aria-label="Search documents" data-docs-search></label><label class="hm-visually-hidden" for="hm-docs-project-filter">Site project</label><select id="hm-docs-project-filter" data-docs-project-filter><option value="all">All site projects</option></select><div class="hm-docs-library-count" data-docs-count aria-live="polite">Loading documents…</div></div><div class="hm-docs-list" data-docs-list></div></section>
+        <section class="hm-docs-detail" data-docs-detail aria-label="Document workspace" hidden></section>
       </div>
       <p class="hm-docs-status" data-docs-status role="status" aria-live="polite">Your documents stay on this device.</p>
       <dialog class="hm-docs-create-dialog" data-docs-create-dialog aria-labelledby="hm-docs-create-title"><form method="dialog"><header><div><p class="hm-docs-kicker">NEW DOCUMENT</p><h2 id="hm-docs-create-title">Start with a site.</h2></div><button type="button" data-docs-create-close aria-label="Close">×</button></header><label for="hm-docs-project">Parcel project</label><select id="hm-docs-project" data-docs-project><option value="">Loading saved parcels…</option></select><p class="hm-docs-parcel-id" data-docs-parcel-id hidden></p><label for="hm-docs-template">Document type</label><select id="hm-docs-template" data-docs-template></select><p class="hm-docs-template-description" data-docs-template-description></p><label for="hm-docs-new-title">Document name</label><input id="hm-docs-new-title" data-docs-new-title maxlength="180" value="Site plan"><p data-docs-create-feedback role="status"></p><footer><button type="button" class="hm-docs-quiet-button" data-docs-create-close>Cancel</button><button type="submit" class="hm-docs-primary" data-docs-confirm-create disabled>Create document</button></footer></form></dialog>
-      <dialog id="docs-saved-dialog" class="hm-docs-service-dialog" data-docs-saved-dialog aria-labelledby="hm-docs-saved-title"></dialog>
-      <dialog id="docs-notes-dialog" class="hm-docs-service-dialog" data-docs-notes-dialog aria-labelledby="hm-docs-notes-title"></dialog>
     </section>`,
-    after: `<div class="hm-docs-bottom-bar"><a class="hm-docs-bottom-brand" href="/" aria-label="HeavyMap home"><span>HeavyMap</span><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><span class="hm-docs-bottom-spacer"></span><!-- docs-theme-picker --></div>`,
+    after: "",
   };
 }
+
+function localServicePage(service, title, description) {
+  return {
+    path: `/${service}/`,
+    title,
+    description,
+    bodyClass: "hm-docs-service-page",
+    main: `<section class="hm-docs-service hm-global-service" data-docs-service="${service}"><div class="hm-global-workspace"><aside class="hm-global-rail" data-service-rail aria-label="${title} filters"></aside><section class="hm-global-content" data-service-content aria-label="${title}"></section></div><p class="hm-docs-status" data-service-status role="status" aria-live="polite">Your ${title.toLowerCase()} stay on this device.</p></section>`,
+  };
+}
+
+export const savedItemsPage = () => localServicePage("saved", "Saved", "All your saved parcels, stories, and development records in one place.");
+export const notesPage = () => localServicePage("notes", "Notes", "Notes attached to parcels and their project evidence.");
+export const developmentPage = () => localServicePage("development", "Development", "Development records and project activity across HeavyMap.");
 
 /* ---- per-Desk signup form (spec E section 4) ------------------------------ */
 
@@ -642,6 +655,9 @@ export function allPages(c) {
     ...[...c.items.values()].map((it) => itemPage(c, it)),
     ...[...c.retired.values()].map((it) => tombstone(c, it)),
     readerPage(c),
+    notesPage(),
+    savedItemsPage(),
+    developmentPage(),
     docsIntro(),
     mapIntro(c),
     mapDataLibraryPage(),

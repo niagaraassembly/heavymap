@@ -1,5 +1,14 @@
 import { el } from "../dossier.js";
 import { putLocalRecord, recordsFor, removeLocalRecord } from "../local-data.js";
+import { createDossierLoader } from "../dossier-loader.js";
+import { dataCatalog } from "../parcel-workspace-services.js";
+import { loadLabels } from "../labels.js";
+import { summariseRecord } from "../parcel-summary.js";
+
+const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
+const dossierLoader = createDossierLoader({ base: RELEASE_BASE });
+let dossierPin;
+let labelsPromise;
 
 const TEMPLATES = [
   {
@@ -84,9 +93,12 @@ function formatDate(value) {
 
 export async function mountDocsService(root) {
   if (!root) return;
+  if (root.dataset.docsService !== "docs") return mountGlobalService(root, root.dataset.docsService);
   const library = root.querySelector("[data-docs-library]");
   const list = root.querySelector("[data-docs-list]");
   const search = root.querySelector("[data-docs-search]");
+  const typeFilters = root.querySelector("[data-docs-type-filters]");
+  const browser = root.querySelector("[data-docs-browser]");
   const headerNew = document.querySelector("[data-docs-create]");
   const headerActions = document.querySelector("[data-docs-header-editor]");
   const projectFilter = root.querySelector("[data-docs-project-filter]");
@@ -95,24 +107,38 @@ export async function mountDocsService(root) {
   const count = root.querySelector("[data-docs-count]");
   const status = root.querySelector("[data-docs-status]");
   const detail = root.querySelector("[data-docs-detail]");
-  const empty = root.querySelector("[data-docs-empty]");
   let docs = [];
   let parcelLabels = new Map();
+  let parcelEntries = [];
   let selectedDocId = null;
   let activeDoc = null;
   let selectedSectionId = null;
   let editing = false;
   let saveTimer;
-  let savedFilter = "All";
-  let savedQuery = "";
+  let selectedType = "all";
 
   const all = async () => {
     const [documentRecords, saved] = await Promise.all([recordsFor("documents"), recordsFor("saved")]);
-    parcelLabels = new Map(saved.filter((item) => item.kind === "parcel" && item.key).map((item) => [item.key, savedParcelLabel(item)]));
-    docs = documentRecords.sort((a, b) => String(b.updatedAt ?? "").localeCompare(String(a.updatedAt ?? "")));
-    const projects = [...new Set(docs.map((doc) => doc.parcelKey).filter(Boolean))];
+    parcelEntries = saved.filter((item) => item.kind === "parcel" && item.key);
+    parcelLabels = new Map(parcelEntries.map((item) => [item.key, savedParcelLabel(item)]));
+    docs = documentRecords.map(normalizeDocument).sort((a, b) => String(b.updatedAt ?? "").localeCompare(String(a.updatedAt ?? "")));
+    const keys = [...new Set([...parcelEntries.map((item) => item.key), ...docs.flatMap((doc) => doc.parcelKeys)])];
+    await Promise.all(keys.filter((key) => parcelLabels.get(key) === key || /^(saved hamilton parcel|parcel)$/i.test(parcelLabels.get(key) ?? ""))
+      .map(async (key) => {
+        try {
+          const pin = dossierLoader.release ? { ok: true, manifest: null } : await (dossierPin ??= dossierLoader.pin());
+          if (!pin.ok) return;
+          const [core, detail, labels] = await Promise.all([
+            dossierLoader.core(key), dossierLoader.detail(key),
+            labelsPromise ??= loadLabels({ base: "/labels/", locales: ["en"] }),
+          ]);
+          if (core.ok) parcelLabels.set(key, summariseRecord(core.record, detail.ok ? detail.record : null, labels, { sources: pin.manifest?.sources }).title);
+        } catch { /* The saved parcel key remains a usable label if its release is unavailable. */ }
+      }));
+    const projects = [...new Set(docs.flatMap((doc) => doc.parcelKeys))];
     projectFilter.replaceChildren(new Option("All site projects", "all"));
     for (const key of projects) projectFilter.append(new Option(parcelLabels.get(key) || key, key));
+    renderTypeFilters();
     renderList();
     if (selectedDocId) {
       const selected = docs.find((doc) => doc.id === selectedDocId);
@@ -121,12 +147,21 @@ export async function mountDocsService(root) {
     } else showEmpty();
   };
 
+  function normalizeDocument(doc) {
+    const parcelKeys = [...new Set((Array.isArray(doc.parcelKeys) && doc.parcelKeys.length ? doc.parcelKeys : [doc.parcelKey]).filter(Boolean))];
+    return { ...doc, parcelKeys, parcelKey: doc.parcelKey || parcelKeys[0] || "" };
+  }
+
+  function parcelSummary(doc) {
+    return doc.parcelKeys.map((key) => parcelLabels.get(key) || key).join(" · ") || "No site project selected";
+  }
+
   function renderList() {
     const query = search.value.trim().toLowerCase();
     const project = projectFilter.value;
     const filtered = docs.filter((doc) => {
-      const matches = `${doc.title} ${doc.template} ${doc.parcelKey} ${doc.sections.map((s) => s.title).join(" ")}`.toLowerCase().includes(query);
-      return matches && (project === "all" || doc.parcelKey === project);
+      const matches = `${doc.title} ${doc.template} ${doc.parcelKeys.join(" ")} ${parcelSummary(doc)} ${doc.sections.map((s) => s.title).join(" ")}`.toLowerCase().includes(query);
+      return matches && (selectedType === "all" || doc.template === selectedType) && (project === "all" || doc.parcelKeys.includes(project));
     });
     count.textContent = `${filtered.length} ${filtered.length === 1 ? "document" : "documents"}`;
     list.replaceChildren();
@@ -140,7 +175,7 @@ export async function mountDocsService(root) {
       const open = button("", () => openDocument(doc, false), "hm-docs-card-open");
       open.append(el("span", templateFor(doc.template).kind, "hm-docs-kicker"));
       open.append(el("strong", doc.title || "Untitled document"));
-      open.append(el("span", parcelLabels.get(doc.parcelKey) || doc.parcelKey || "No site project selected", "hm-docs-card-project"));
+      open.append(el("span", parcelSummary(doc), "hm-docs-card-project"));
       open.append(el("small", `${doc.sections?.length ?? 0} sections · ${formatDate(doc.updatedAt)}`));
       const actions = el("div", undefined, "hm-docs-card-actions");
       actions.append(button("Edit", () => openDocument(doc, true), "hm-docs-quiet-button"));
@@ -155,12 +190,24 @@ export async function mountDocsService(root) {
     }
   }
 
+  function renderTypeFilters() {
+    typeFilters.replaceChildren();
+    const kinds = [{ id: "all", label: "All documents" }, ...TEMPLATES.map(({ id, label }) => ({ id, label }))];
+    for (const kind of kinds) {
+      const amount = kind.id === "all" ? docs.length : docs.filter((doc) => doc.template === kind.id).length;
+      const filter = button("", () => { selectedType = kind.id; renderTypeFilters(); renderList(); }, `hm-docs-type-filter${selectedType === kind.id ? " is-active" : ""}`);
+      filter.setAttribute("aria-pressed", String(selectedType === kind.id));
+      filter.append(el("span", kind.label), el("small", String(amount)));
+      typeFilters.append(filter);
+    }
+  }
+
   function showEmpty() {
     activeDoc = null;
     selectedDocId = null;
     detail.replaceChildren();
-    detail.append(empty);
-    empty.hidden = false;
+    detail.hidden = true;
+    browser.hidden = false;
     library.classList.remove("is-writing");
     headerNew.hidden = false;
     headerActions.hidden = true;
@@ -197,17 +244,13 @@ export async function mountDocsService(root) {
 
   function renderDocument() {
     if (!activeDoc) return showEmpty();
-    empty.hidden = true;
     library.classList.add("is-writing");
+    browser.hidden = true;
+    detail.hidden = false;
     detail.replaceChildren();
     headerNew.hidden = true;
     headerActions.hidden = false;
     headerActions.replaceChildren();
-    const address = el("span", parcelLabels.get(activeDoc.parcelKey) || activeDoc.parcelKey || "Site project", "hm-docs-active-address");
-    address.title = activeDoc.parcelKey || "Site project";
-    const parcelBar = el("div", undefined, "hm-docs-parcel-bar");
-    parcelBar.append(address);
-    detail.append(parcelBar);
     const state = el("span", editing ? "EDITING" : "READING", "hm-docs-mode");
     const back = button("←", showEmpty, "hm-docs-back");
     back.setAttribute("aria-label", "Back to document library");
@@ -219,6 +262,41 @@ export async function mountDocsService(root) {
     const workspace = el("div", undefined, "hm-docs-editor-workspace");
     const outline = el("aside", undefined, "hm-docs-outline");
     const outlineHead = el("div", undefined, "hm-docs-outline-head");
+    const propertyBlock = el("div", undefined, "hm-docs-property-block");
+    propertyBlock.append(el("span", activeDoc.parcelKeys.length > 1 ? "LINKED PROPERTIES" : "FOCUSED PARCEL", "hm-docs-kicker"));
+    const propertyList = el("div", undefined, "hm-docs-property-list");
+    for (const key of activeDoc.parcelKeys) {
+      const property = el("div", undefined, "hm-docs-property-item");
+      const address = el("span", parcelLabels.get(key) || key, "hm-docs-active-address");
+      address.title = key;
+      property.append(address);
+      if (editing && activeDoc.parcelKeys.length > 1) {
+        const remove = button("×", () => {
+        activeDoc.parcelKeys = activeDoc.parcelKeys.filter((item) => item !== key);
+        activeDoc.parcelKey = activeDoc.parcelKeys[0];
+        saveSoon(); renderDocument();
+        }, "hm-docs-property-remove");
+        remove.setAttribute("aria-label", `Unlink ${parcelLabels.get(key) || key}`);
+        remove.title = "Unlink this parcel";
+        property.append(remove);
+      }
+      propertyList.append(property);
+    }
+    propertyBlock.append(propertyList);
+    propertyBlock.append(el("p", "Document content is shared across these properties.", "hm-docs-property-scope"));
+    if (editing) {
+      const addParcel = document.createElement("select");
+      addParcel.setAttribute("aria-label", "Link another parcel to this document");
+      addParcel.append(new Option("＋ Link another parcel…", ""));
+      for (const item of parcelEntries.filter((entry) => !activeDoc.parcelKeys.includes(entry.key))) addParcel.append(new Option(savedParcelLabel(item), item.key));
+      addParcel.addEventListener("change", () => {
+        if (!addParcel.value) return;
+        activeDoc.parcelKeys = [...activeDoc.parcelKeys, addParcel.value];
+        saveSoon(); renderDocument();
+      });
+      propertyBlock.append(addParcel);
+    }
+    outlineHead.append(propertyBlock);
     const title = document.createElement("input");
     title.className = "hm-docs-outline-title";
     title.value = activeDoc.title || "Untitled document";
@@ -276,21 +354,22 @@ export async function mountDocsService(root) {
         editor.setAttribute("aria-label", `${section.title} content in Markdown`);
         editor.addEventListener("input", () => { section.markdown = editor.value; saveSoon(); });
         body.append(editor);
-        const refs = (awaitFieldNotes(activeDoc.parcelKey));
+        const refs = awaitFieldNotes(activeDoc.parcelKeys);
         void refs.then((items) => {
           if (!editing || !items.length || !body.isConnected) return;
           const ref = document.createElement("select"); ref.setAttribute("aria-label", "Insert a saved parcel data note");
           ref.append(new Option("Insert a parcel data note…", ""));
-          for (const item of items) ref.append(new Option(`${item.layer} · ${item.row} · ${item.field}`, item.id));
+          for (const item of items) ref.append(new Option(`${parcelLabels.get(item.parcelKey) || item.parcelKey} · ${item.layer} · ${item.row} · ${item.field}`, item.id));
           ref.addEventListener("change", () => {
             const item = items.find((note) => note.id === ref.value); if (!item) return;
-            section.markdown = `${section.markdown}${section.markdown ? "\n\n" : ""}> **${item.layer} · ${item.row} · ${item.field}**\n> ${item.text.replace(/\n/g, "\n> ")}`;
+            section.markdown = `${section.markdown}${section.markdown ? "\n\n" : ""}> **${parcelLabels.get(item.parcelKey) || item.parcelKey} · ${item.layer} · ${item.row} · ${item.field}**\n> ${item.text.replace(/\n/g, "\n> ")}`;
             renderDocument(); saveSoon();
           });
           const tools = body.querySelector(".hm-docs-reference-tools") ?? el("div", undefined, "hm-docs-reference-tools");
-          tools.replaceChildren(ref, el("span", "Notes are private to this site project."));
+          tools.replaceChildren(ref, el("span", "Field comments stay attached to their parcel and data field."));
           if (!tools.isConnected) body.append(tools);
         });
+        body.append(makeDocumentFieldNotesPanel(body));
       } else {
         const reader = el("article", undefined, "hm-docs-markdown");
         markdown(reader, section.markdown);
@@ -301,9 +380,73 @@ export async function mountDocsService(root) {
     detail.append(workspace);
   }
 
-  async function awaitFieldNotes(parcelKey) {
-    if (!parcelKey) return [];
-    return (await recordsFor("field-notes")).filter((note) => note.parcelKey === parcelKey).sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+  async function awaitFieldNotes(parcelKeys) {
+    if (!parcelKeys?.length) return [];
+    return (await recordsFor("field-notes")).filter((note) => parcelKeys.includes(note.parcelKey)).sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+  }
+
+  function makeDocumentFieldNotesPanel(body) {
+    const panel = el("details", undefined, "hm-docs-field-browser");
+    panel.append(el("summary", "Comment on parcel data"));
+    panel.append(el("p", "Choose a linked parcel, then browse its layers, rows, and fields. The comment will be saved to both this document and that parcel.", "hm-docs-field-intro"));
+    const parcelSelect = document.createElement("select"); parcelSelect.setAttribute("aria-label", "Parcel for this field comment");
+    for (const key of activeDoc.parcelKeys) parcelSelect.append(new Option(parcelLabels.get(key) || key, key));
+    const layerSelect = document.createElement("select"); layerSelect.setAttribute("aria-label", "Data layer");
+    const rowSearch = document.createElement("input"); rowSearch.type = "search"; rowSearch.placeholder = "Filter rows"; rowSearch.setAttribute("aria-label", "Filter data rows");
+    const rowSelect = document.createElement("select"); rowSelect.setAttribute("aria-label", "Data row");
+    const fieldSelect = document.createElement("select"); fieldSelect.setAttribute("aria-label", "Data field");
+    const value = el("p", "Select a field to see its source value.", "hm-docs-field-value");
+    const note = document.createElement("textarea"); note.rows = 3; note.maxLength = 5000; note.placeholder = "Comment on this field…"; note.setAttribute("aria-label", "Comment on this data field");
+    const feedback = el("p", "", "hm-docs-field-feedback");
+    const save = button("Save field comment", async () => {
+      const catalog = panel.catalog ?? [];
+      const row = catalog.find((item) => item.id === rowSelect.value);
+      const field = row?.fields[Number(fieldSelect.value)];
+      const text = note.value.trim();
+      if (!field || !text) { feedback.textContent = "Choose a field and write a comment first."; return; }
+      const parcelKey = parcelSelect.value;
+      const annotation = { id: uid(), parcelKey, documentId: activeDoc.id, anchorType: "parcel-field", layer: row.layer, row: row.label, field: field.path, value: field.value, text, createdAt: new Date().toISOString() };
+      await putLocalRecord("field-notes", annotation);
+      const section = activeDoc.sections.find((item) => item.id === selectedSectionId);
+      if (section) {
+        section.markdown = `${section.markdown}${section.markdown ? "\n\n" : ""}> **${parcelLabels.get(parcelKey) || parcelKey} · ${row.layer} · ${row.label} · ${field.path}**\n> ${text.replace(/\n/g, "\n> ")}`;
+        const editor = body.querySelector("textarea[aria-label$='content in Markdown']");
+        if (editor) editor.value = section.markdown;
+      }
+      note.value = ""; feedback.textContent = "Field comment saved."; saveSoon();
+    }, "hm-docs-primary");
+    panel.append(parcelSelect, layerSelect, rowSearch, rowSelect, fieldSelect, value, note, save, feedback);
+    let catalog = [];
+    panel.catalog = catalog;
+    function updateRows() {
+      const query = rowSearch.value.trim().toLowerCase();
+      const matches = catalog.filter((item) => item.layer === layerSelect.value && `${item.label} ${item.id}`.toLowerCase().includes(query));
+      rowSelect.replaceChildren(...matches.map((item) => new Option(item.label, item.id)));
+      updateFields();
+    }
+    function updateFields() {
+      const row = catalog.find((item) => item.id === rowSelect.value);
+      fieldSelect.replaceChildren(...(row?.fields ?? []).map((item, index) => new Option(`${item.label}: ${item.value}`, String(index))));
+      const field = row?.fields[Number(fieldSelect.value)];
+      value.textContent = field ? `${field.path} · ${field.value}` : "No fields in this row.";
+    }
+    async function loadParcel() {
+      layerSelect.replaceChildren(new Option("Loading parcel data…", "")); rowSelect.replaceChildren(); fieldSelect.replaceChildren();
+      let pin = dossierLoader.release ? { ok: true } : await (dossierPin ??= dossierLoader.pin());
+      if (!pin.ok) { feedback.textContent = "The parcel data release is unavailable right now."; catalog = []; return; }
+      const key = parcelSelect.value;
+      const [core, detail] = await Promise.all([dossierLoader.core(key), dossierLoader.detail(key)]);
+      if (!core.ok) { feedback.textContent = "This parcel is not in the current data release."; catalog = []; layerSelect.replaceChildren(new Option("No layers available", "")); return; }
+      catalog = dataCatalog({ core: core.record, detail: detail.ok ? detail.record : null });
+      panel.catalog = catalog;
+      const layers = [...new Set(catalog.map((item) => item.layer))];
+      layerSelect.replaceChildren(...layers.map((layer) => new Option(layer, layer)));
+      if (!layers.length) feedback.textContent = "This parcel release has no field inventory available yet.";
+      else { feedback.textContent = ""; layerSelect.value = layers[0]; updateRows(); }
+    }
+    layerSelect.addEventListener("change", updateRows); rowSearch.addEventListener("input", updateRows); rowSelect.addEventListener("change", updateFields); fieldSelect.addEventListener("change", updateFields); parcelSelect.addEventListener("change", () => void loadParcel());
+    panel.addEventListener("toggle", () => { if (panel.open) void loadParcel(); }, { once: true });
+    return panel;
   }
 
   async function persist() {
@@ -324,127 +467,6 @@ export async function mountDocsService(root) {
     return "Other";
   }
 
-  async function openSavedService() {
-    const dialog = document.querySelector("[data-docs-saved-dialog]");
-    const items = await recordsFor("saved");
-    const categories = ["All", "Parcel", "News", "Development", "Other"];
-    const panel = el("section", undefined, "hm-docs-service-panel");
-    const head = el("header", undefined, "hm-docs-service-panel-head");
-    head.append(el("div", undefined, "hm-docs-service-panel-heading"));
-    const title = el("h2", "Saved items", "hm-docs-service-panel-title");
-    title.id = "hm-docs-saved-title";
-    head.firstChild.append(el("p", "ON THIS DEVICE", "hm-docs-kicker"), title);
-    const close = button("×", () => dialog.close(), "hm-docs-service-close");
-    close.setAttribute("aria-label", "Close saved items");
-    head.append(close);
-    const filters = el("nav", undefined, "hm-docs-saved-filters");
-    filters.setAttribute("aria-label", "Filter saved items");
-    const query = document.createElement("input");
-    query.type = "search";
-    query.placeholder = "Search saved items";
-    query.setAttribute("aria-label", "Search saved items");
-    query.value = savedQuery;
-    const searchLabel = el("label", undefined, "hm-docs-saved-search");
-    searchLabel.append(el("span", "⌕", ""), query);
-    const list = el("div", undefined, "hm-docs-saved-list");
-    const render = () => {
-      filters.replaceChildren();
-      for (const category of categories) {
-        const filterButton = button(category, () => { savedFilter = category; render(); }, `hm-docs-saved-filter${savedFilter === category ? " is-active" : ""}`);
-        filterButton.setAttribute("aria-pressed", String(savedFilter === category));
-        filters.append(filterButton);
-      }
-      filters.append(searchLabel);
-      list.replaceChildren();
-      const visible = items.filter((item) => (savedFilter === "All" || savedCategory(item) === savedFilter)
-        && `${item.title ?? ""} ${item.subtitle ?? ""} ${item.key ?? ""} ${item.id ?? ""}`.toLowerCase().includes(savedQuery));
-      if (!visible.length) list.append(el("p", items.length ? "No saved items match this filter." : "Saved items will appear here.", "hm-docs-saved-empty"));
-      for (const item of visible) {
-        const row = el("article", undefined, "hm-docs-saved-row");
-        const kind = savedCategory(item);
-        const href = kind === "Parcel" && item.key ? `/map/#parcel=${encodeURIComponent(item.key)}` : item.url;
-        let open;
-        try {
-          const safeHref = href ? new URL(href, location.origin) : null;
-          if (safeHref && ["http:", "https:"].includes(safeHref.protocol)) {
-            open = el("a", undefined, "hm-docs-saved-open");
-            open.href = safeHref.href;
-          }
-        } catch { /* invalid saved links stay plain text */ }
-        open ??= el("div", undefined, "hm-docs-saved-open");
-        open.append(el("span", kind, "hm-docs-saved-kind"), el("strong", item.title || item.key || "Saved item"), el("small", item.subtitle || item.key || ""));
-        const remove = button("Remove", async () => {
-          await removeLocalRecord("saved", item.id);
-          items.splice(items.indexOf(item), 1);
-          render();
-        }, "hm-docs-quiet-button");
-        row.append(open, remove);
-        list.append(row);
-      }
-    };
-    query.addEventListener("input", () => { savedQuery = query.value.trim().toLowerCase(); render(); query.focus({ preventScroll: true }); query.setSelectionRange(savedQuery.length, savedQuery.length); });
-    panel.append(head, filters, list);
-    render();
-    dialog.replaceChildren(panel);
-    if (!dialog.open) dialog.showModal();
-    close.focus({ preventScroll: true });
-  }
-
-  async function openNotesService() {
-    const dialog = document.querySelector("[data-docs-notes-dialog]");
-    const panel = el("section", undefined, "hm-docs-service-panel");
-    const head = el("header", undefined, "hm-docs-service-panel-head");
-    const heading = el("div", undefined, "hm-docs-service-panel-heading");
-    const title = el("h2", "Parcel notes", "hm-docs-service-panel-title");
-    title.id = "hm-docs-notes-title";
-    heading.append(el("p", "SITE PROJECT", "hm-docs-kicker"), title);
-    const close = button("×", () => dialog.close(), "hm-docs-service-close");
-    close.setAttribute("aria-label", "Close parcel notes");
-    head.append(heading, close);
-    panel.append(head);
-    if (!activeDoc?.parcelKey) {
-      panel.append(el("p", "Open a document to view and add notes for its parcel.", "hm-docs-saved-empty"));
-    } else {
-      const key = activeDoc.parcelKey;
-      const address = parcelLabels.get(key) || key;
-      heading.append(el("p", address, "hm-docs-notes-address"));
-      const notes = el("div", undefined, "hm-docs-notes-list");
-      const renderNotes = async () => {
-        const currentNotes = await awaitFieldNotes(key);
-        notes.replaceChildren();
-        if (!currentNotes.length) notes.append(el("p", "No notes for this parcel yet.", "hm-docs-saved-empty"));
-        for (const note of currentNotes) {
-          const card = el("article", undefined, "hm-docs-note-card");
-          card.append(el("span", `${note.layer} · ${note.row} · ${note.field}`, "hm-docs-saved-kind"), el("p", note.text));
-          notes.append(card);
-        }
-      };
-      const form = document.createElement("form");
-      form.className = "hm-docs-note-form";
-      const note = document.createElement("textarea");
-      note.maxLength = 12000;
-      note.placeholder = "Add a note about this parcel…";
-      note.setAttribute("aria-label", "Parcel note");
-      const save = button("Save note", async () => {
-        const text = note.value.trim();
-        if (!text) return;
-        const now = new Date().toISOString();
-        await putLocalRecord("field-notes", { id: uid(), parcelKey: key, layer: "Project", row: address, field: "General note", text, createdAt: now, updatedAt: now });
-        note.value = "";
-        status.textContent = "Note saved on this device";
-        await renderNotes();
-      }, "hm-docs-primary");
-      form.addEventListener("submit", (event) => { event.preventDefault(); save.click(); });
-      form.append(note, save);
-      panel.append(form, notes);
-      await renderNotes();
-    }
-    dialog.replaceChildren(panel);
-    if (!dialog.open) dialog.showModal();
-    close.focus({ preventScroll: true });
-    dialog.querySelector("textarea")?.focus({ preventScroll: true });
-  }
-
   function openCreateDialog() {
     const dialog = root.querySelector("[data-docs-create-dialog]");
     const projects = root.querySelector("[data-docs-project]");
@@ -460,10 +482,10 @@ export async function mountDocsService(root) {
     void recordsFor("saved").then((saved) => {
       const parcelEntries = saved.filter((item) => item.kind === "parcel" && item.key);
       const known = new Map(parcelEntries.map((item) => [item.key, savedParcelLabel(item)]));
-      for (const doc of docs) if (doc.parcelKey && !known.has(doc.parcelKey)) known.set(doc.parcelKey, doc.parcelKey);
+      for (const doc of docs) for (const key of doc.parcelKeys) if (key && !known.has(key)) known.set(key, parcelLabels.get(key) || key);
       projects.replaceChildren(new Option("Choose a saved parcel…", ""));
       for (const [key, label] of known) projects.append(new Option(label, key));
-      feedback.textContent = known.size ? "A site plan belongs to one parcel project." : "Save a parcel from the map first, then create its site plan here.";
+      feedback.textContent = known.size ? "Start with a focused parcel; link more properties from the document sidebar." : "Save a parcel from the map first, then create its site plan here.";
       submit.disabled = known.size === 0;
     });
     title.value = templateFor(templateSelect.value).title;
@@ -472,11 +494,6 @@ export async function mountDocsService(root) {
   }
 
   document.querySelectorAll("[data-docs-create]").forEach((control) => control.addEventListener("click", openCreateDialog));
-  document.querySelector("[data-docs-saved-open]").addEventListener("click", () => void openSavedService());
-  document.querySelector("[data-docs-notes-open]").addEventListener("click", () => void openNotesService());
-  for (const dialog of document.querySelectorAll("[data-docs-saved-dialog], [data-docs-notes-dialog]")) {
-    dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
-  }
   root.querySelector("[data-docs-project]").addEventListener("change", (event) => {
     const parcelId = root.querySelector("[data-docs-parcel-id]");
     parcelId.textContent = event.currentTarget.value ? `Parcel ID · ${event.currentTarget.value}` : "";
@@ -494,7 +511,7 @@ export async function mountDocsService(root) {
     if (!parcelKey) return;
     const now = new Date().toISOString();
     const template = templateFor(templateSelect.value);
-    const doc = { id: uid(), parcelKey, title: root.querySelector("[data-docs-new-title]").value.trim() || template.title, template: template.id, sections: template.sections.map((title) => ({ id: uid(), title, parentId: null, markdown: "" })), createdAt: now, updatedAt: now };
+    const doc = { id: uid(), parcelKey, parcelKeys: [parcelKey], title: root.querySelector("[data-docs-new-title]").value.trim() || template.title, template: template.id, sections: template.sections.map((title) => ({ id: uid(), title, parentId: null, markdown: "" })), createdAt: now, updatedAt: now };
     await putLocalRecord("documents", doc);
     root.querySelector("[data-docs-create-dialog]").close();
     await all();
@@ -503,4 +520,161 @@ export async function mountDocsService(root) {
   search.addEventListener("input", renderList);
   projectFilter.addEventListener("change", renderList);
   await all().catch((error) => { status.textContent = `Docs could not open: ${error.message}`; });
+}
+
+async function mountGlobalService(root, service) {
+  const rail = root.querySelector("[data-service-rail]");
+  const content = root.querySelector("[data-service-content]");
+  const status = root.querySelector("[data-service-status]");
+  if (!rail || !content) return;
+  if (service === "notes") return mountNotesLibrary({ rail, content, status });
+  return mountSavedLibrary({ rail, content, status, developmentOnly: service === "development" });
+}
+
+async function mountSavedLibrary({ rail, content, status, developmentOnly }) {
+  let items = await recordsFor("saved");
+  let selected = developmentOnly ? "Development" : "All";
+  let query = "";
+  const categories = developmentOnly ? ["Development"] : ["All", "Parcel", "News", "Development", "Other"];
+  const title = developmentOnly ? "Development records" : "Saved items";
+  const search = document.createElement("input");
+  search.type = "search";
+  search.placeholder = developmentOnly ? "Search development records" : "Search saved items";
+  search.setAttribute("aria-label", search.placeholder);
+  const searchLabel = el("label", undefined, "hm-docs-search");
+  searchLabel.append(el("span", "⌕"), search);
+  rail.replaceChildren(el("p", developmentOnly ? "DEVELOPMENT" : "SAVED ITEMS", "hm-docs-kicker"), searchLabel);
+  const categoryNav = el("nav", undefined, "hm-docs-type-filters");
+  categoryNav.setAttribute("aria-label", "Saved item categories");
+  rail.append(categoryNav);
+
+  const list = el("div", undefined, "hm-docs-list hm-global-record-list");
+  const heading = el("div", undefined, "hm-global-page-heading");
+  heading.append(el("h1", title), el("p", "Kept on this device · ready when you return."));
+  const toolbar = el("div", undefined, "hm-docs-library-toolbar");
+  toolbar.append(el("p", "Filter your saved parcels, reporting, and development activity.", "hm-global-toolbar-note"));
+  content.replaceChildren(heading, toolbar, list);
+
+  const category = (item) => {
+    const kind = item.kind ?? item.type ?? "parcel";
+    if (kind === "parcel") return "Parcel";
+    if (["news", "story", "article", "editorial"].includes(kind)) return "News";
+    if (["development", "development-record", "development_record", "development-records"].includes(kind)) return "Development";
+    return "Other";
+  };
+  const render = () => {
+    categoryNav.replaceChildren();
+    for (const name of categories) {
+      const count = name === "All" ? items.length : items.filter((item) => category(item) === name).length;
+      const filter = button("", () => { selected = name; render(); }, `hm-docs-type-filter${selected === name ? " is-active" : ""}`);
+      filter.setAttribute("aria-pressed", String(selected === name));
+      filter.append(el("span", name === "All" ? "All saved" : name), el("small", String(count)));
+      categoryNav.append(filter);
+    }
+    list.replaceChildren();
+    const shown = items.filter((item) => (selected === "All" || category(item) === selected)
+      && `${item.title ?? ""} ${item.subtitle ?? ""} ${item.address ?? ""} ${item.key ?? ""} ${item.id ?? ""}`.toLowerCase().includes(query));
+    if (!shown.length) {
+      list.append(el("p", items.length ? `No ${title.toLowerCase()} match this filter.` : `${title} will appear here when you save them.`, "hm-docs-empty-copy"));
+      return;
+    }
+    for (const item of shown) {
+      const kind = category(item);
+      const row = el("article", undefined, "hm-docs-saved-row");
+      const href = kind === "Parcel" && item.key ? `/map/#parcel=${encodeURIComponent(item.key)}` : item.url;
+      let open;
+      try {
+        const safeHref = href ? new URL(href, location.origin) : null;
+        if (safeHref && ["http:", "https:"].includes(safeHref.protocol)) { open = el("a", undefined, "hm-docs-saved-open"); open.href = safeHref.href; }
+      } catch { /* Invalid saved links remain readable without navigation. */ }
+      open ??= el("div", undefined, "hm-docs-saved-open");
+      open.append(el("span", kind, "hm-docs-saved-kind"), el("strong", item.address || item.title || item.key || "Saved item"), el("small", item.subtitle || (kind === "Parcel" ? item.key : "")));
+      const remove = button("Remove", async () => {
+        await removeLocalRecord("saved", item.id);
+        items = items.filter((entry) => entry.id !== item.id);
+        if (status) status.textContent = "Saved item removed on this device";
+        render();
+      }, "hm-docs-quiet-button");
+      row.append(open, remove);
+      list.append(row);
+    }
+  };
+  search.addEventListener("input", () => { query = search.value.trim().toLowerCase(); render(); });
+  render();
+}
+
+async function mountNotesLibrary({ rail, content, status }) {
+  const [initialNotes, saved, docs] = await Promise.all([recordsFor("field-notes"), recordsFor("saved"), recordsFor("documents")]);
+  let notes = initialNotes.sort((a, b) => String(b.createdAt ?? "").localeCompare(String(a.createdAt ?? "")));
+  const parcels = new Map(saved.filter((item) => item.kind === "parcel" && item.key).map((item) => [item.key, savedParcelLabel(item)]));
+  for (const doc of docs) {
+    const keys = Array.isArray(doc.parcelKeys) && doc.parcelKeys.length ? doc.parcelKeys : [doc.parcelKey];
+    for (const key of keys) if (key && !parcels.has(key)) parcels.set(key, key);
+  }
+  for (const note of notes) if (note.parcelKey && !parcels.has(note.parcelKey)) parcels.set(note.parcelKey, note.parcelKey);
+  let query = "";
+  let project = "all";
+  const search = document.createElement("input");
+  search.type = "search";
+  search.placeholder = "Search notes";
+  search.setAttribute("aria-label", "Search notes");
+  const searchLabel = el("label", undefined, "hm-docs-search");
+  searchLabel.append(el("span", "⌕"), search);
+  const projectSelect = document.createElement("select");
+  projectSelect.setAttribute("aria-label", "Filter notes by parcel project");
+  projectSelect.append(new Option("All site projects", "all"));
+  for (const [key, label] of parcels) projectSelect.append(new Option(label, key));
+  rail.replaceChildren(el("p", "NOTES", "hm-docs-kicker"), searchLabel, projectSelect);
+  const heading = el("div", undefined, "hm-global-page-heading");
+  heading.append(el("h1", "Parcel notes"), el("p", "Short observations and longer comments, kept with their site project."));
+  const compose = el("form", undefined, "hm-global-note-compose");
+  const parcel = document.createElement("select");
+  parcel.setAttribute("aria-label", "Site project for this note");
+  parcel.append(new Option("Choose a site project…", ""));
+  for (const [key, label] of parcels) parcel.append(new Option(label, key));
+  const noteInput = document.createElement("textarea");
+  noteInput.maxLength = 12000;
+  noteInput.placeholder = "Add a note about this parcel…";
+  noteInput.setAttribute("aria-label", "New parcel note");
+  const save = button("Save note", async () => {
+    const text = noteInput.value.trim();
+    if (!parcel.value || !text) { status.textContent = "Choose a site project and write a note first"; return; }
+    const address = parcels.get(parcel.value) || parcel.value;
+    const now = new Date().toISOString();
+    const record = { id: uid(), parcelKey: parcel.value, layer: "Project", row: address, field: "General note", text, createdAt: now, updatedAt: now };
+    await putLocalRecord("field-notes", record);
+    notes.unshift(record);
+    noteInput.value = "";
+    status.textContent = "Note saved on this device";
+    render();
+  }, "hm-docs-primary");
+  compose.addEventListener("submit", (event) => { event.preventDefault(); save.click(); });
+  compose.append(parcel, noteInput, save);
+  const list = el("div", undefined, "hm-docs-list hm-global-note-list");
+  const toolbar = el("div", undefined, "hm-docs-library-toolbar");
+  toolbar.append(el("p", "Your notes stay in this browser and can be opened from the parcel workspace.", "hm-global-toolbar-note"));
+  content.replaceChildren(heading, compose, toolbar, list);
+  const render = () => {
+    list.replaceChildren();
+    const visible = notes.filter((note) => (project === "all" || note.parcelKey === project)
+      && `${note.text ?? ""} ${note.layer ?? ""} ${note.row ?? ""} ${note.field ?? ""} ${parcels.get(note.parcelKey) ?? ""}`.toLowerCase().includes(query));
+    if (!visible.length) { list.append(el("p", notes.length ? "No notes match these filters." : "Parcel notes will appear here when you add them.", "hm-docs-empty-copy")); return; }
+    for (const note of visible) {
+      const card = el("article", undefined, "hm-docs-note-card hm-global-note-card");
+      const head = el("div", undefined, "hm-global-note-head");
+      head.append(el("div", undefined, "hm-docs-saved-open"));
+      head.firstChild.append(el("span", parcels.get(note.parcelKey) || note.parcelKey, "hm-docs-saved-kind"), el("strong", `${note.layer || "Project"} · ${note.row || "General"} · ${note.field || "Note"}`));
+      head.append(button("Delete", async () => {
+        if (!confirm("Delete this note?")) return;
+        await removeLocalRecord("field-notes", note.id);
+        notes = notes.filter((entry) => entry.id !== note.id);
+        render();
+      }, "hm-docs-quiet-button"));
+      card.append(head, el("p", note.text));
+      list.append(card);
+    }
+  };
+  search.addEventListener("input", () => { query = search.value.trim().toLowerCase(); render(); });
+  projectSelect.addEventListener("change", () => { project = projectSelect.value; render(); });
+  render();
 }

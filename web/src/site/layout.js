@@ -16,6 +16,9 @@ export const docsIcon =
   '<svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 2.8h7l3.4 3.4v11H5zM12 2.8v3.8h3.4M7.7 10h5.1M7.7 12.8h5.1M7.7 15.5h3.4" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 export const mapIcon =
   '<svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><path d="m2.5 4.5 5-2 5 2 5-2v13l-5 2-5-2-5 2zM7.5 2.5v13M12.5 4.5v13" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>';
+const notesIcon = '<svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><path d="m4 14.8-.7 2.9 2.9-.7L17 6.2 13.8 3zM12.8 4l3.2 3.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const savedIcon = '<svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5h10v14l-5-3.4-5 3.4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+const developmentIcon = '<svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 17V7l4 2V5l5 3V3h5v14H3Zm3-3h1m2 0h1m2 0h1m2 0h1" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 const NAV = [
   { href: "/desks/", label: "Desks", section: "desks" },
@@ -36,7 +39,18 @@ function header(path, themes) {
     (n) =>
       `<a href="${n.href}"${n.section === current ? ' aria-current="page"' : ""}${n.icon ? ' class="reader-nav"' : ""}>${n.icon ?? ""}${n.label}</a>`,
   ).join("");
-  return `<header class="alt-header"><a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a><nav aria-label="Main navigation">${links}</nav><a class="alt-follow" href="/subscribe/"${current === "subscribe" ? ' aria-current="page"' : ""}>Follow your regions</a>${themePicker(themes)}</header>`;
+  return `<header class="alt-header"><a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>${serviceTabs(current)}<nav aria-label="Main navigation">${links}</nav><a class="alt-follow" href="/subscribe/"${current === "subscribe" ? ' aria-current="page"' : ""}>Follow your regions</a>${themePicker(themes)}</header>`;
+}
+
+function serviceTabs(current = "") {
+  const links = [
+    ["/reader/", "Reader", bookIcon, "reader"],
+    ["/notes/", "Notes", notesIcon, "notes"],
+    ["/saved/", "Saved items", savedIcon, "saved"],
+    ["/development/", "Development", developmentIcon, "development"],
+    ["/docs/", "Docs", docsIcon, "docs"],
+  ];
+  return `<nav class="hm-service-tabs" aria-label="HeavyMap services">${links.map(([href,label,icon,service]) => `<a class="hm-map-service" href="${href}" aria-label="${label}" title="${label}"${current === service ? ' aria-current="page"' : ""}>${icon}</a>`).join("")}</nav>`;
 }
 
 /* Map status words, as in pages.js: the selector names a place with its status. */
@@ -62,15 +76,12 @@ function mapHeader(regions) {
     .join("");
   return `<header class="alt-header alt-header--map">
     <a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>
+    ${serviceTabs("map")}
     <div class="hm-site-menu" data-site-menu>
       <button type="button" class="hm-site-menu-toggle" data-site-menu-toggle aria-label="Open site menu" aria-haspopup="true" aria-expanded="false" aria-controls="hm-site-menu-panel"><span aria-hidden="true">▾</span></button>
       <div class="hm-site-menu-panel" id="hm-site-menu-panel" data-site-menu-panel hidden><ul><li><a href="/desks/">Desks</a></li><li><a href="/desks/western-new-york/">Western New York</a></li><li><a href="/desks/niagara-brant/">Niagara–Brant</a></li><li><a href="/reader/">Reader</a></li><li><a href="/map/" aria-current="page">Map</a></li><li><a href="/about/">About</a></li><li><a href="/about/credits/">Credits</a></li><li><a href="/preferences/">Email preferences</a></li></ul></div>
     </div>
     <div class="hm-map-utilities" data-map-utilities>
-      <a class="hm-map-service" href="/reader/" aria-label="Reader" title="Reader">${bookIcon}</a>
-      <a class="hm-map-service" href="/docs/" aria-label="Docs" title="Docs">${docsIcon}</a>
-      <button class="hm-map-service" type="button" data-save-parcel aria-label="Saved items" title="Saved items" aria-haspopup="dialog" aria-controls="parcel-save-dialog"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5h10v14l-5-3.4-5 3.4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
-      <button class="hm-map-service" type="button" data-note-parcel aria-label="Parcel notes" title="Add a note" aria-haspopup="dialog" aria-controls="parcel-notes-dialog"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 14.8-.7 2.9 2.9-.7L17 6.2 13.8 3zM12.8 4l3.2 3.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <button class="hm-map-service" type="button" data-search-toggle aria-label="Search parcels" title="Search parcels"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m12.5 12.5 4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
       <button class="hm-map-service hm-map-profile" type="button" data-local-account-open aria-haspopup="dialog" aria-controls="hm-local-account" aria-label="Your data" title="Manage your local data"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="6.5" r="3.2" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 17c1-3.5 3.5-5 6.5-5s5.5 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
       <div class="hm-map-searchbox" data-map-searchbox hidden><label class="hm-visually-hidden" for="hm-map-search">Find a Hamilton parcel by key</label><input id="hm-map-search" type="search" placeholder="Paste parcel key" title="Open a Hamilton parcel record"><button type="button" data-search-close aria-label="Close search">×</button></div>
@@ -137,15 +148,23 @@ ${css}${js}
 </head>
 <body class="alternate ${esc(o.bodyClass ?? "")}">
 ${banner}<a class="skip-link" href="#content">Skip to content</a>
-${o.path === "/map/" ? mapHeader(o.regions) : o.path === "/docs/" ? docsHeader(o.themes) : header(o.path, o.themes)}
+${o.path === "/map/" ? mapHeader(o.regions) : mainService(o.path) ? docsHeader({ ...o.themes, service: o.path.slice(1, -1) }) : header(o.path, o.themes)}
 <main id="content" tabindex="-1">${o.main}</main>
 ${o.catalogue ? `<script type="application/json" id="hm-catalogue">${JSON.stringify(o.catalogue).replace(/</g, "\\u003c")}</script>` : ""}
-${o.path === "/docs/" ? (o.after ?? "").replace("<!-- docs-theme-picker -->", themePicker(o.themes)) : `${footer(o.regions)}${o.path === "/map/" ? (o.after ?? "").replace("<!-- map-theme-picker -->", themePicker(o.themes)) : o.after ?? ""}`}
+${mainService(o.path) ? serviceBottom(o.themes) : `${footer(o.regions)}${o.path === "/map/" ? (o.after ?? "").replace("<!-- map-theme-picker -->", themePicker(o.themes)) : o.after ?? ""}`}
 </body>
 </html>
 `;
 }
 
-function docsHeader(themes) {
-  return `<header class="alt-header alt-header--docs"><nav class="hm-docs-tabs" aria-label="Services"><a class="hm-map-service" href="/reader/" aria-label="Reader" title="Reader">${bookIcon}</a><button class="hm-map-service" type="button" data-docs-notes-open aria-label="Notes" title="Notes" aria-haspopup="dialog" aria-controls="docs-notes-dialog"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 14.8-.7 2.9 2.9-.7L17 6.2 13.8 3zM12.8 4l3.2 3.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="hm-map-service" type="button" data-docs-saved-open aria-label="Saved items" title="Saved items" aria-haspopup="dialog" aria-controls="docs-saved-dialog"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5h10v14l-5-3.4-5 3.4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button><a class="hm-map-service" href="/docs/" aria-label="Docs" title="Docs" aria-current="page">${docsIcon}</a></nav><div class="hm-docs-head-right"><button type="button" class="hm-docs-primary hm-docs-new" data-docs-create aria-label="New document"><span aria-hidden="true">＋</span><span class="hm-docs-new-label">New document</span></button><div class="hm-docs-head-actions" data-docs-header-editor hidden></div></div></header>`;
+const MAIN_SERVICES = new Set(["/reader/", "/notes/", "/saved/", "/development/", "/docs/"]);
+const mainService = (path) => MAIN_SERVICES.has(path);
+
+function docsHeader(options) {
+  const create = options.service === "docs" ? '<div class="hm-docs-head-right"><button type="button" class="hm-docs-primary hm-docs-new" data-docs-create aria-label="New document"><span aria-hidden="true">＋</span><span class="hm-docs-new-label">New document</span></button><div class="hm-docs-head-actions" data-docs-header-editor hidden></div></div>' : "";
+  return `<header class="alt-header alt-header--docs"><a class="wordmark" href="/">HeavyMap<img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>${serviceTabs(options.service)}${create}</header>`;
+}
+
+function serviceBottom(themes) {
+  return `<div class="hm-docs-bottom-bar"><span class="hm-docs-bottom-spacer"></span>${themePicker(themes)}</div>`;
 }

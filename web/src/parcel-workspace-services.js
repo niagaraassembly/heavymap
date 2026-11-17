@@ -129,7 +129,7 @@ function listsPane(parcelKey) {
   return pane;
 }
 
-function dataCatalog(records) {
+export function dataCatalog(records) {
   const rows = new Map();
   function visit(value, path, layer = "Parcel record", row = "Parcel") {
     if (Array.isArray(value)) {
@@ -162,7 +162,7 @@ function fieldNotesPane(parcelKey, sourceRecords, docState) {
     const row = catalog.find((item) => item.id === rowSelect.value);
     const field = row?.fields[Number(fieldSelect.value)];
     const text = note.value.trim(); if (!row || !field || !text) return;
-    const annotation = { id: uid(), parcelKey, layer: row.layer, row: row.label, field: field.path, value: field.value, text, createdAt: new Date().toISOString() };
+    const annotation = { id: uid(), parcelKey, documentId: docState.documentId ?? null, anchorType: "parcel-field", layer: row.layer, row: row.label, field: field.path, value: field.value, text, createdAt: new Date().toISOString() };
     await putLocalRecord("field-notes", annotation); note.value = ""; await renderNotes();
     docState.setReference?.(annotation);
   }, "parcel-btn parcel-btn-pri");
@@ -207,7 +207,7 @@ function documentsPane(parcelKey, sourceRecords) {
   listHead.append(el("h3", "Docs"));
   const create = button("＋ New document", async () => {
     const now = new Date().toISOString();
-    const doc = { id: uid(), parcelKey, title: "Untitled site plan", template: "default-general", sections: DEFAULT_SECTIONS.map((title) => ({ id: uid(), title, parentId: null, markdown: "" })), createdAt: now, updatedAt: now };
+    const doc = { id: uid(), parcelKey, parcelKeys: [parcelKey], title: "Untitled site plan", template: "default-general", sections: DEFAULT_SECTIONS.map((title) => ({ id: uid(), title, parentId: null, markdown: "" })), createdAt: now, updatedAt: now };
     await putLocalRecord("documents", doc); await open(doc, true); await renderList();
   }, "parcel-btn parcel-btn-pri");
   listHead.append(create);
@@ -279,7 +279,7 @@ function documentsPane(parcelKey, sourceRecords) {
         const reader = el("article", undefined, "parcel-ws-markdown-reader"); markdown(reader, selected.markdown); body.append(reader);
       }
     } else body.append(el("p", "Add a section to begin.", "parcel-ws-empty"));
-    const sourcePanel = fieldNotesPane(parcelKey, sourceRecords, { setReference: (item) => {
+    const sourcePanel = fieldNotesPane(parcelKey, sourceRecords, { documentId: activeDoc.id, setReference: (item) => {
       const selectedSection = activeDoc.sections.find((section) => section.id === selectedId);
       if (!selectedSection || !editing) return;
       selectedSection.markdown = `${selectedSection.markdown}${selectedSection.markdown ? "\n\n" : ""}> **Data note:** ${item.layer} · ${item.row} · ${item.field}\n> ${item.text.replace(/\n/g, "\n> ")}`;

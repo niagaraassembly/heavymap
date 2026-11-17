@@ -105,7 +105,7 @@ export function renderSite({ preview = false } = {}) {
         .split(path.sep)
         .join("/");
     const rel = fromPage(CLIENT);
-    const pageApp = page.path === "/docs/"
+    const pageApp = ["/docs/", "/saved/", "/notes/", "/development/"].includes(page.path)
       ? fromPage(path.join(web, "src/site/docs-service.js"))
       : page.path === "/map/"
       ? fromPage(path.join(web, "src/app.js"))

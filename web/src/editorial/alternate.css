@@ -161,7 +161,7 @@
   color: #425865;
   font-size: 1.1rem;
 }
-.alt-header.alt-header--map.search-open .hm-map-service {
+.alt-header.alt-header--map.search-open .hm-map-utilities .hm-map-service {
   display: none;
 }
 .alt-header.alt-header--map.search-open .hm-map-searchbox {
