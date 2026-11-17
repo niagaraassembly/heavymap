@@ -40,13 +40,14 @@ export function createHamiltonDevelopmentLoader({
       indicators = parse(indicatorBytes);
       if (indicators.schema_version !== "hamilton-parcel-development-indicators/0.2.0" || indicators.jurisdiction !== doc.jurisdiction)
         throw new Error("Hamilton parcel indicators have an incompatible schema.");
-      return {
+      const result = {
         ok: true,
         recordCount: doc.record_count,
         focusCount: doc.focus_record_count,
         reportMonths: doc.report_months ?? [],
-        activityMosaic: doc.activity_mosaic ?? null,
       };
+      if (doc.activity_mosaic) result.activityMosaic = doc.activity_mosaic;
+      return result;
     } catch (error) {
       manifest = null;
       indicators = null;
