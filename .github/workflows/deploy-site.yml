@@ -62,6 +62,21 @@ jobs:
           # Immutable screened package commit; its manifest verifies all output hashes.
           ref: d6f562d61518b9aa18d64cfa950f24d401450c06
           path: industrial-atlas-development
+      - name: Check out the pinned parcel access release (private portrait store, D-079)
+        uses: actions/checkout@v4
+        with:
+          repository: niagaraassembly/heavymap-portraits
+          # Immutable commit; the build verifies every shard hash against the manifest.
+          ref: 50f153fabf2cae2202a411a837ee4e38014b0e9f
+          path: heavymap-portraits
+          # Read-only deploy key for that one private repository.
+          ssh-key: ${{ secrets.PORTRAITS_DEPLOY_KEY }}
+          persist-credentials: false
+      - name: Refuse a portrait pin that is not a full commit hash
+        working-directory: .
+        run: |
+          grep -Eq '^\s+ref: [0-9a-f]{40}$' <(sed -n '/Check out the pinned parcel access release/,/path:/p' .github/workflows/deploy-site.yml) \
+            || { echo "Portrait release ref must be a 40-character commit SHA"; exit 1; }
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -74,6 +89,7 @@ jobs:
           HM_ATLAS_RELEASE_DIR: ${{ github.workspace }}/industrial-atlas-data/releases/ca-on-hamilton/2026-11-16-d070
           HM_MAP_LAYER_RELEASE_DIR: ${{ github.workspace }}/industrial-atlas-map-layers/map-releases/ca-on-hamilton/2026-11-17-layer-set-002
           HM_DEVELOPMENT_RELEASE_DIR: ${{ github.workspace }}/industrial-atlas-development/development-releases/ca-on-hamilton/2026-11-17-field-screen-v0.2
+          HM_ACCESS_RELEASE_DIR: ${{ github.workspace }}/heavymap-portraits/access-releases/ca-on-hamilton/2026-11-17-access-v0.1
         run: node build/prerender.mjs ${{ (github.event_name == 'push' || inputs.launch_gates) && '--launch' || '' }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
