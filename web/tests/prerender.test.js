@@ -18,6 +18,7 @@ test("every URL in spec A's table is generated, one file per URL", () => {
     "/desks/niagara-brant/",
     "/editions/western-new-york/issue-one/",
     "/reader/",
+    "/notes/",
     "/map/",
     "/subscribe/",
     "/preferences/",

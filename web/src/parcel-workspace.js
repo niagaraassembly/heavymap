@@ -7,14 +7,20 @@
  * from the summary, which itself resolves labels.
  *
  * Only Notes works in this build. Checklist, Lists, Export, Docs and
- * History are visible tabs marked "coming"; their design is separate
- * (Save, BL-106). Notes are device-only (parcel-notes.js).
+ * History are visible tabs, greyed out and inert; their design is
+ * separate (Save, BL-106). Notes are device-only (parcel-notes.js), with
+ * a link to the standalone /notes/ page.
  */
 
 import { el } from "./dossier.js";
-import { comingTag, copyLinkButton, disabledAction, thumbnail } from "./parcel-views.js";
+import { formatNoteTime } from "./parcel-notes.js";
+import { copyLinkButton, disabledAction, thumbnail } from "./parcel-views.js";
 
-const TABS = [
+/* The work-area tabs. Only Notes works; the rest are visible but greyed
+ * out (disabled, aria-disabled, not focusable, not clickable) — the word
+ * "coming" was removed from the tabs at the owner's request. Their design
+ * is separate (Save, BL-106). */
+export const WORKSPACE_TABS = [
   { id: "notes", labelKey: "parcel.workspace.tab.notes", works: true },
   { id: "checklist", labelKey: "parcel.workspace.tab.checklist", works: false },
   { id: "lists", labelKey: "parcel.workspace.tab.lists", works: false },
@@ -22,12 +28,6 @@ const TABS = [
   { id: "docs", labelKey: "parcel.workspace.tab.docs", works: false },
   { id: "history", labelKey: "parcel.workspace.tab.history", works: false },
 ];
-
-function formatNoteTime(at) {
-  const d = new Date(at);
-  if (Number.isNaN(d.getTime())) return at;
-  return d.toLocaleString("en-CA", { dateStyle: "medium", timeStyle: "short" });
-}
 
 /** One fact row: label, value, share bar; a click discloses its source,
  * join method and confidence in place. */
@@ -52,10 +52,14 @@ function factRow(labels, fact) {
       `${labels.t("parcel.workspace.source")}: ${fact.provenance.sourceLabel}`,
     ];
     if (fact.provenance.joinText) {
-      parts.push(`${labels.t("parcel.workspace.source.join")}: ${fact.provenance.joinText}`);
+      parts.push(
+        `${labels.t("parcel.workspace.source.join")}: ${fact.provenance.joinText}`,
+      );
     }
     if (fact.provenance.confText) {
-      parts.push(`${labels.t("parcel.workspace.source.confidence")}: ${fact.provenance.confText}`);
+      parts.push(
+        `${labels.t("parcel.workspace.source.confidence")}: ${fact.provenance.confText}`,
+      );
     }
     src.textContent = parts.join(" · ");
   } else {
@@ -126,7 +130,10 @@ function addressesBody(summary, labels) {
     filter.type = "search";
     filter.className = "parcel-ws-filter";
     filter.placeholder = labels.t("parcel.workspace.addresses.filter");
-    filter.setAttribute("aria-label", labels.t("parcel.workspace.addresses.filter"));
+    filter.setAttribute(
+      "aria-label",
+      labels.t("parcel.workspace.addresses.filter"),
+    );
     const countLine = el("p", "", "parcel-ws-filter-count");
     filter.addEventListener("input", () => {
       const q = filter.value.trim().toLowerCase();
@@ -152,7 +159,9 @@ function addressesBody(summary, labels) {
 /** The Notes pane: compose, list, delete, and the device-only line. */
 function notesPane(summary, labels, notesStore, releaseId, onCountChange) {
   const pane = el("div", undefined, "parcel-ws-notes");
-  pane.append(el("p", labels.t("parcel.workspace.notes.on_device"), "parcel-ws-ondevice"));
+  pane.append(
+    el("p", labels.t("parcel.workspace.notes.on_device"), "parcel-ws-ondevice"),
+  );
   const compose = el("div", undefined, "parcel-ws-compose");
   const area = document.createElement("textarea");
   area.rows = 3;
@@ -165,7 +174,11 @@ function notesPane(summary, labels, notesStore, releaseId, onCountChange) {
   compose.append(area, row);
   pane.append(compose);
   const list = el("ul", undefined, "parcel-ws-note-list");
-  const empty = el("p", labels.t("parcel.workspace.notes.empty"), "parcel-ws-empty");
+  const empty = el(
+    "p",
+    labels.t("parcel.workspace.notes.empty"),
+    "parcel-ws-empty",
+  );
   pane.append(list, empty);
 
   function renderList() {
@@ -177,7 +190,11 @@ function notesPane(summary, labels, notesStore, releaseId, onCountChange) {
       const meta = el("small");
       meta.append(document.createTextNode(formatNoteTime(note.at)));
       meta.append(document.createTextNode(" · "));
-      const del = el("button", labels.t("parcel.workspace.notes.delete"), "parcel-mini");
+      const del = el(
+        "button",
+        labels.t("parcel.workspace.notes.delete"),
+        "parcel-mini",
+      );
       del.addEventListener("click", () => {
         notesStore.remove(note.id);
         renderList();
@@ -190,7 +207,12 @@ function notesPane(summary, labels, notesStore, releaseId, onCountChange) {
     onCountChange(notes.length);
   }
   add.addEventListener("click", () => {
-    const note = notesStore.add({ key: summary.key, releaseId, text: area.value });
+    const note = notesStore.add({
+      key: summary.key,
+      releaseId,
+      text: area.value,
+      parcel: { title: summary.title, locality: summary.locality },
+    });
     if (note) {
       area.value = "";
       renderList();
@@ -198,20 +220,30 @@ function notesPane(summary, labels, notesStore, releaseId, onCountChange) {
     }
   });
   renderList();
+  const allNotes = el(
+    "a",
+    labels.t("parcel.workspace.notes.view_all"),
+    "parcel-ws-all-notes",
+  );
+  allNotes.href = "/notes/";
+  pane.append(allNotes);
   return pane;
 }
 
-/** The right-hand work area: six tabs, only Notes working. */
+/** The right-hand work area: six tabs, only Notes working. Inactive tabs
+ * are greyed out and inert; they have no pane to open. */
 function workArea(summary, labels, notesStore, releaseId, initialTab) {
   const work = el("div", undefined, "parcel-ws-work");
   const tablist = el("div", undefined, "parcel-ws-tabs");
   tablist.setAttribute("role", "tablist");
   const panes = new Map();
   let notesCount = null;
-  let activeTab = initialTab;
+  let activeTab = WORKSPACE_TABS.some((t) => t.id === initialTab && t.works)
+    ? initialTab
+    : "notes";
   let selectTab = null;
 
-  for (const tab of TABS) {
+  for (const tab of WORKSPACE_TABS) {
     const button = el("button", undefined, "parcel-ws-tab");
     button.setAttribute("role", "tab");
     button.setAttribute("aria-selected", String(tab.id === activeTab));
@@ -220,8 +252,13 @@ function workArea(summary, labels, notesStore, releaseId, initialTab) {
       notesCount = el("em", "0", "parcel-ws-tab-count");
       button.append(notesCount);
     }
-    if (!tab.works) button.append(comingTag());
-    button.addEventListener("click", () => selectTab(tab.id));
+    if (tab.works) {
+      button.addEventListener("click", () => selectTab(tab.id));
+    } else {
+      button.disabled = true;
+      button.setAttribute("aria-disabled", "true");
+      button.classList.add("parcel-ws-tab--off");
+    }
     tablist.append(button);
   }
   work.append(tablist);
@@ -230,15 +267,6 @@ function workArea(summary, labels, notesStore, releaseId, initialTab) {
     if (notesCount) notesCount.textContent = String(n);
   });
   panes.set("notes", notes);
-  for (const tab of TABS.filter((t) => !t.works)) {
-    const pane = el("div", undefined, "parcel-ws-coming-pane");
-    const line = el("p");
-    line.append(el("span", labels.t(tab.labelKey)));
-    line.append(document.createTextNode(" "));
-    line.append(comingTag());
-    pane.append(line);
-    panes.set(tab.id, pane);
-  }
   for (const [id, pane] of panes) {
     pane.hidden = id !== activeTab;
     work.append(pane);
@@ -247,23 +275,27 @@ function workArea(summary, labels, notesStore, releaseId, initialTab) {
     activeTab = id;
     for (const [tabId, pane] of panes) pane.hidden = tabId !== id;
     [...tablist.children].forEach((button, i) => {
-      button.setAttribute("aria-selected", String(TABS[i].id === id));
+      button.setAttribute("aria-selected", String(WORKSPACE_TABS[i].id === id));
     });
   };
   return { work, selectTab };
 }
 
 /** The workspace: record at left, work area at right (design §5.4). */
-export function parcelWorkspaceElement(summary, labels, {
-  geometry,
-  releaseId,
-  notesStore,
-  initialTab = "notes",
-  openSections,
-  onToggleSection,
-  onBackToMap,
-  onClose,
-}) {
+export function parcelWorkspaceElement(
+  summary,
+  labels,
+  {
+    geometry,
+    releaseId,
+    notesStore,
+    initialTab = "notes",
+    openSections,
+    onToggleSection,
+    onBackToMap,
+    onClose,
+  },
+) {
   const ws = el("section", undefined, "parcel-workspace");
   ws.setAttribute("role", "region");
   ws.setAttribute("aria-label", "Parcel workspace");
@@ -296,8 +328,16 @@ export function parcelWorkspaceElement(summary, labels, {
   ws.append(head);
 
   const mobileSwitch = el("div", undefined, "parcel-ws-switch");
-  const recordSwitch = el("button", labels.t("parcel.workspace.pane.record"), "parcel-ws-switch-btn");
-  const notesSwitch = el("button", labels.t("parcel.workspace.tab.notes"), "parcel-ws-switch-btn");
+  const recordSwitch = el(
+    "button",
+    labels.t("parcel.workspace.pane.record"),
+    "parcel-ws-switch-btn",
+  );
+  const notesSwitch = el(
+    "button",
+    labels.t("parcel.workspace.tab.notes"),
+    "parcel-ws-switch-btn",
+  );
   recordSwitch.setAttribute("aria-pressed", "true");
   notesSwitch.setAttribute("aria-pressed", "false");
   mobileSwitch.append(recordSwitch, notesSwitch);
@@ -318,7 +358,9 @@ export function parcelWorkspaceElement(summary, labels, {
       label: labels.t("parcel.attention.slivers"),
       count: summary.attention.slivers.count,
       body: listItems(
-        summary.attention.slivers.items.map((s) => `${s.name}: ${s.class} — ${s.shareText}`),
+        summary.attention.slivers.items.map(
+          (s) => `${s.name}: ${s.class} — ${s.shareText}`,
+        ),
         labels.t("parcel.none_found"),
       ),
     },
@@ -345,7 +387,9 @@ export function parcelWorkspaceElement(summary, labels, {
       label: labels.t("parcel.attention.sources"),
       count: summary.attention.sources.count,
       body: listItems(
-        summary.attention.sources.items.map((s) => `${s.label} — ${s.paths.join(", ")}`),
+        summary.attention.sources.items.map(
+          (s) => `${s.label} — ${s.paths.join(", ")}`,
+        ),
         labels.t("parcel.none_found"),
       ),
     },
@@ -361,7 +405,13 @@ export function parcelWorkspaceElement(summary, labels, {
   }
   cols.append(record);
 
-  const { work, selectTab } = workArea(summary, labels, notesStore, releaseId, initialTab);
+  const { work, selectTab } = workArea(
+    summary,
+    labels,
+    notesStore,
+    releaseId,
+    initialTab,
+  );
   cols.append(work);
   ws.append(cols);
 

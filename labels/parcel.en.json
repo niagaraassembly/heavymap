@@ -326,6 +326,14 @@
    "changed_at": "2026-11-16",
    "note": "Workspace Notes compose placeholder (BL-118)."
   },
+  "parcel.workspace.notes.view_all": {
+   "text": "View all notes",
+   "status": "draft",
+   "author": "team",
+   "reviewer": null,
+   "changed_at": "2026-11-16",
+   "note": "Workspace Notes: link to the standalone /notes/ page (BL-118 follow-up)."
+  },
   "parcel.workspace.notes.write": {
    "text": "Write a note",
    "status": "draft",
@@ -372,7 +380,7 @@
    "author": "team",
    "reviewer": null,
    "changed_at": "2026-11-16",
-   "note": "Workspace work-area tab; coming in a later pass (BL-118)."
+   "note": "Workspace work-area tab; greyed out until designed (BL-106)."
   },
   "parcel.workspace.tab.docs": {
    "text": "Docs",
@@ -380,7 +388,7 @@
    "author": "team",
    "reviewer": null,
    "changed_at": "2026-11-16",
-   "note": "Workspace work-area tab; coming in a later pass (BL-118)."
+   "note": "Workspace work-area tab; greyed out until designed (BL-106)."
   },
   "parcel.workspace.tab.export": {
    "text": "Export",
@@ -388,7 +396,7 @@
    "author": "team",
    "reviewer": null,
    "changed_at": "2026-11-16",
-   "note": "Workspace work-area tab; coming in a later pass (BL-118)."
+   "note": "Workspace work-area tab; greyed out until designed (BL-106)."
   },
   "parcel.workspace.tab.history": {
    "text": "History",
@@ -396,7 +404,7 @@
    "author": "team",
    "reviewer": null,
    "changed_at": "2026-11-16",
-   "note": "Workspace work-area tab; coming in a later pass (BL-118)."
+   "note": "Workspace work-area tab; greyed out until designed (BL-106)."
   },
   "parcel.workspace.tab.lists": {
    "text": "Lists",
@@ -404,7 +412,7 @@
    "author": "team",
    "reviewer": null,
    "changed_at": "2026-11-16",
-   "note": "Workspace work-area tab; coming in a later pass (BL-118)."
+   "note": "Workspace work-area tab; greyed out until designed (BL-106)."
   },
   "parcel.workspace.tab.notes": {
    "text": "Notes",

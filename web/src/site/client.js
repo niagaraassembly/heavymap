@@ -4,6 +4,7 @@ import "./styles.css";
 import { mountThemePicker } from "./theme-picker.js";
 import { mountMapBars } from "./map-bars.js";
 import { mountReader } from "./reader-page.js";
+import { mountNotesPage } from "./notes-page.js";
 import {
   attachArticle,
   attachEdition,
@@ -56,6 +57,10 @@ if (catalogue) {
   if (edition) attachEdition(store, edition);
   if (resume) mountResume(store, resume);
 }
+
+/* Notes: the standalone /notes/ page lists every note on this device. */
+const notesPageEl = document.querySelector("[data-notes-page]");
+if (notesPageEl) mountNotesPage(notesPageEl);
 
 /* Per-Desk signup forms (spec E). /subscribe/?desk=<slug> ticks that Desk. */
 const wanted = new URLSearchParams(location.search).get("desk");

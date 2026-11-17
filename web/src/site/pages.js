@@ -435,6 +435,20 @@ export function readerPage(c) {
   };
 }
 
+/* ---- Notes: the standalone notes service (BL-118 follow-up) ------------ */
+
+/** The shell is static; src/site/notes-page.js mounts the list from the
+ * device-only store. Without JavaScript the empty state shows. */
+export function notesPage() {
+  return {
+    path: "/notes/",
+    title: "Notes",
+    description: "Your parcel notes, kept on this device.",
+    bodyClass: "hm-notes",
+    main: `<section class="study-wrap hm-notes-page" data-notes-page>${crumb([{ text: "Notes" }])}<header class="hm-notes-head"><p class="eyebrow">Kept on this device</p><h1>Notes</h1><p>Notes you add to a parcel stay with that parcel; notes you add here have no parcel. Everything stays on this device.</p></header><div class="hm-notes-compose" data-notes-compose><label for="hm-notes-new">Add a general note</label><textarea id="hm-notes-new" rows="3" placeholder="Write a note with no parcel. It stays on this device."></textarea><div><button type="button" data-notes-add>Add note</button></div></div><p class="hm-notes-empty" data-notes-empty>No notes yet. Add one here, or open a parcel on the map and use its Notes tab.</p><div data-notes-groups></div></section>`,
+  };
+}
+
 /* ---- map introduction (decision 17, spec F section 2) -------------------- */
 
 export function mapIntro() {
@@ -581,6 +595,7 @@ export function allPages(c) {
     ...[...c.items.values()].map((it) => itemPage(c, it)),
     ...[...c.retired.values()].map((it) => tombstone(c, it)),
     readerPage(c),
+    notesPage(),
     mapIntro(c),
     subscribePage(c),
     preferencesPage(c),

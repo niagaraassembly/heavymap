@@ -53,7 +53,11 @@ const server = http.createServer((req, res) => {
       fs.createReadStream(file, { start, end }).pipe(res);
       return;
     }
-    res.writeHead(200, { "Content-Type": type, "Accept-Ranges": "bytes", "Content-Length": st.size });
+    res.writeHead(200, {
+      "Content-Type": type,
+      "Accept-Ranges": "bytes",
+      "Content-Length": st.size,
+    });
     fs.createReadStream(file).pipe(res);
   });
 });
@@ -62,11 +66,18 @@ await new Promise((resolve) => server.listen(4173, "127.0.0.1", resolve));
 const results = [];
 function check(name, ok, detail = "") {
   results.push({ name, ok, detail });
-  console.log(`${ok ? "PASS" : "FAIL"}  ${name}${detail ? ` — ${detail}` : ""}`);
+  console.log(
+    `${ok ? "PASS" : "FAIL"}  ${name}${detail ? ` — ${detail}` : ""}`,
+  );
 }
 
 const browser = await chromium.launch({
-  args: ["--no-sandbox", "--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
+  args: [
+    "--no-sandbox",
+    "--use-gl=angle",
+    "--use-angle=swiftshader",
+    "--enable-unsafe-swiftshader",
+  ],
 });
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 const errors = [];
@@ -79,7 +90,10 @@ async function mapReady() {
   await page.goto(`${BASE}/map/`);
   await page.locator("#map-status").waitFor();
   await page.waitForFunction(
-    () => document.getElementById("map-status")?.textContent.includes("selectable from zoom 14"),
+    () =>
+      document
+        .getElementById("map-status")
+        ?.textContent.includes("selectable from zoom 14"),
     { timeout: 30000 },
   );
 }
@@ -94,39 +108,111 @@ async function activeWhere() {
 
 try {
   await mapReady();
-  check("map loads, parcel tiles ready", true, await page.locator("#map-status").textContent());
+  check(
+    "map loads, parcel tiles ready",
+    true,
+    await page.locator("#map-status").textContent(),
+  );
 
   // 1. Deep link opens the workspace on the typical parcel.
   await page.goto(`${BASE}/map/#parcel=${TYPICAL}&view=work`);
-  await page.locator(".parcel-workspace").waitFor({ state: "visible", timeout: 30000 });
-  const title = await page.locator(".parcel-workspace .parcel-title").textContent();
-  check("deep link opens workspace", title === "155 Moore Cres", `title=${title}`);
+  await page
+    .locator(".parcel-workspace")
+    .waitFor({ state: "visible", timeout: 30000 });
+  const title = await page
+    .locator(".parcel-workspace .parcel-title")
+    .textContent();
+  check(
+    "deep link opens workspace",
+    title === "155 Moore Cres",
+    `title=${title}`,
+  );
   const crumb = await page.locator(".parcel-ws-crumb").textContent();
-  check("breadcrumb names place and parcel", crumb === "Hamilton › Ancaster › Parcel", crumb);
+  check(
+    "breadcrumb names place and parcel",
+    crumb === "Hamilton › Ancaster › Parcel",
+    crumb,
+  );
   const facts = await page.locator(".parcel-ws-fact").count();
   check("record has six fact rows", facts === 6, `facts=${facts}`);
   const sections = await page.locator(".parcel-ws-sec").count();
   check("record has five sections", sections === 5, `sections=${sections}`);
   const tabs = await page.locator(".parcel-ws-tab").count();
   check("work area has six tabs", tabs === 6, `tabs=${tabs}`);
-  const notesSelected = await page.locator('.parcel-ws-tab[aria-selected="true"]').textContent();
-  check("Notes is the selected tab", notesSelected.includes("Notes"), notesSelected.trim());
+  const tabBarText = await page.locator(".parcel-ws-tabs").textContent();
+  check(
+    "tab bar has no 'coming' text",
+    !tabBarText.toLowerCase().includes("coming"),
+    tabBarText.trim(),
+  );
+  const offTabs = await page.locator(".parcel-ws-tab--off").count();
+  check("five tabs are greyed out", offTabs === 5, `off=${offTabs}`);
+  let allInert = true;
+  for (const tab of ["Checklist", "Lists", "Export", "Docs", "History"]) {
+    const btn = page.locator(`.parcel-ws-tab:has-text("${tab}")`);
+    if (
+      !(await btn.isDisabled()) ||
+      (await btn.getAttribute("aria-disabled")) !== "true"
+    )
+      allInert = false;
+  }
+  check("inactive tabs are disabled and aria-disabled", allInert);
+  await page.evaluate(() => {
+    [...document.querySelectorAll(".parcel-ws-tab")]
+      .find((b) => b.textContent.includes("Checklist"))
+      ?.click();
+  });
+  check(
+    "clicking a greyed tab keeps Notes selected",
+    (
+      await page.locator('.parcel-ws-tab[aria-selected="true"]').textContent()
+    ).includes("Notes"),
+  );
+  await page.screenshot({ path: `${SHOTS}workspace-tabs-greyed.png` });
+  const notesSelected = await page
+    .locator('.parcel-ws-tab[aria-selected="true"]')
+    .textContent();
+  check(
+    "Notes is the selected tab",
+    notesSelected.includes("Notes"),
+    notesSelected.trim(),
+  );
   const onDevice = await page.locator(".parcel-ws-ondevice").textContent();
-  check("device-only line is visible", onDevice === "Notes stay on this device", onDevice);
+  check(
+    "device-only line is visible",
+    onDevice === "Notes stay on this device",
+    onDevice,
+  );
   const box = await page.locator(".parcel-workspace").boundingBox();
   const vp = page.viewportSize();
   check(
     "workspace fits the map window",
-    box.y >= 0 && box.y + box.height <= vp.height && box.x >= 0 && box.x + box.width <= vp.width,
+    box.y >= 0 &&
+      box.y + box.height <= vp.height &&
+      box.x >= 0 &&
+      box.x + box.width <= vp.width,
     `box=${Math.round(box.x)},${Math.round(box.y)} ${Math.round(box.width)}x${Math.round(box.height)} vp=${vp.width}x${vp.height}`,
   );
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-  check("no horizontal overflow on desktop", overflow <= 0, `overflow=${overflow}px`);
+  const overflow = await page.evaluate(
+    () =>
+      document.documentElement.scrollWidth -
+      document.documentElement.clientWidth,
+  );
+  check(
+    "no horizontal overflow on desktop",
+    overflow <= 0,
+    `overflow=${overflow}px`,
+  );
   await page.screenshot({ path: `${SHOTS}parcel-workspace-desktop.png` });
 
   // 2. A fact row discloses source, join and confidence in place.
-  await page.locator('.parcel-ws-fact-btn:has(> .parcel-ws-fact-label:text-is("Area"))').click();
-  const disclosure = await page.locator(".parcel-ws-fact-src").first().textContent();
+  await page
+    .locator('.parcel-ws-fact-btn:has(> .parcel-ws-fact-label:text-is("Area"))')
+    .click();
+  const disclosure = await page
+    .locator(".parcel-ws-fact-src")
+    .first()
+    .textContent();
   check(
     "Area fact discloses source, join, confidence",
     disclosure.includes("Hamilton Assessment Parcel") &&
@@ -136,25 +222,59 @@ try {
   );
 
   // 3. Sections: Addresses is closed by default for one address; open it.
-  const addrExpanded = await page.locator('.parcel-ws-sec[data-sec="addresses"] .parcel-ws-sec-btn').getAttribute("aria-expanded");
-  check("Addresses closed by default for one address", addrExpanded === "false", `aria-expanded=${addrExpanded}`);
-  await page.locator('.parcel-ws-sec[data-sec="addresses"] .parcel-ws-sec-btn').click();
-  const addrText = await page.locator('.parcel-ws-sec[data-sec="addresses"] .parcel-ws-sec-body').textContent();
-  check("Addresses list shows the address", addrText.includes("155 MOORE CRESCENT"), addrText.trim().slice(0, 80));
-  const gapsCount = await page.locator('.parcel-ws-sec[data-sec="gaps"] .parcel-ws-sec-btn em').textContent();
+  const addrExpanded = await page
+    .locator('.parcel-ws-sec[data-sec="addresses"] .parcel-ws-sec-btn')
+    .getAttribute("aria-expanded");
+  check(
+    "Addresses closed by default for one address",
+    addrExpanded === "false",
+    `aria-expanded=${addrExpanded}`,
+  );
+  await page
+    .locator('.parcel-ws-sec[data-sec="addresses"] .parcel-ws-sec-btn')
+    .click();
+  const addrText = await page
+    .locator('.parcel-ws-sec[data-sec="addresses"] .parcel-ws-sec-body')
+    .textContent();
+  check(
+    "Addresses list shows the address",
+    addrText.includes("155 MOORE CRESCENT"),
+    addrText.trim().slice(0, 80),
+  );
+  const gapsCount = await page
+    .locator('.parcel-ws-sec[data-sec="gaps"] .parcel-ws-sec-btn em')
+    .textContent();
   check("Known gaps section counts 2", gapsCount === "2", `count=${gapsCount}`);
 
   // 4. Notes: add, reload, delete.
-  await page.locator(".parcel-ws-compose textarea").fill("Check the zoning exception text.");
+  await page
+    .locator(".parcel-ws-compose textarea")
+    .fill("Check the zoning exception text.");
   await page.locator('.parcel-ws-compose button:has-text("Add note")').click();
-  const noteText = await page.locator(".parcel-ws-note p").first().textContent();
-  check("note added to the list", noteText === "Check the zoning exception text.", noteText);
+  const noteText = await page
+    .locator(".parcel-ws-note p")
+    .first()
+    .textContent();
+  check(
+    "note added to the list",
+    noteText === "Check the zoning exception text.",
+    noteText,
+  );
   const tabCount = await page.locator(".parcel-ws-tab-count").textContent();
   check("Notes tab counts 1", tabCount === "1", `count=${tabCount}`);
   await page.reload();
-  await page.locator(".parcel-workspace").waitFor({ state: "visible", timeout: 30000 });
-  const survived = await page.locator(".parcel-ws-note p").first().textContent();
-  check("note survives a reload", survived === "Check the zoning exception text.", survived);
+  await page
+    .locator(".parcel-workspace")
+    .waitFor({ state: "visible", timeout: 30000 });
+  const survived = await page
+    .locator(".parcel-ws-note p")
+    .first()
+    .textContent();
+  check(
+    "note survives a reload",
+    survived === "Check the zoning exception text.",
+    survived,
+  );
   await page.screenshot({ path: `${SHOTS}parcel-workspace-notes.png` });
   await page.locator('.parcel-ws-note button:has-text("Delete note")').click();
   check("note deleted", (await page.locator(".parcel-ws-note").count()) === 0);
@@ -171,17 +291,34 @@ try {
   check("Escape drawer -> card", true);
   await page.keyboard.press("Escape");
   await page.locator(".parcel-card").waitFor({ state: "hidden" });
-  check("Escape card -> closed, focus back to search", (await page.evaluate(() => document.activeElement?.id)) === "hm-map-search");
+  check(
+    "Escape card -> closed, focus back to search",
+    (await page.evaluate(() => document.activeElement?.id)) === "hm-map-search",
+  );
 
   // 6. Drawer buttons now open the workspace; Note lands on Notes.
   await page.goto(`${BASE}/map/#parcel=${TYPICAL}`);
-  await page.locator(".parcel-drawer").waitFor({ state: "visible", timeout: 30000 });
-  const openWsDisabled = await page.locator('.parcel-drawer .parcel-btn-pri:has-text("Open workspace")').isDisabled();
-  const noteDisabled = await page.locator('.parcel-drawer .parcel-btn:has-text("Note")').isDisabled();
-  check("drawer Open workspace and Note are enabled", !openWsDisabled && !noteDisabled);
+  await page
+    .locator(".parcel-drawer")
+    .waitFor({ state: "visible", timeout: 30000 });
+  const openWsDisabled = await page
+    .locator('.parcel-drawer .parcel-btn-pri:has-text("Open workspace")')
+    .isDisabled();
+  const noteDisabled = await page
+    .locator('.parcel-drawer .parcel-btn:has-text("Note")')
+    .isDisabled();
+  check(
+    "drawer Open workspace and Note are enabled",
+    !openWsDisabled && !noteDisabled,
+  );
   await page.locator('.parcel-drawer .parcel-btn:has-text("Note")').click();
   await page.locator(".parcel-workspace").waitFor({ state: "visible" });
-  check("Note opens the workspace on the Notes tab", (await page.locator('.parcel-ws-tab[aria-selected="true"]').textContent()).includes("Notes"));
+  check(
+    "Note opens the workspace on the Notes tab",
+    (
+      await page.locator('.parcel-ws-tab[aria-selected="true"]').textContent()
+    ).includes("Notes"),
+  );
 
   // 7. Focus stays trapped inside the workspace.
   let trapped = true;
@@ -192,39 +329,79 @@ try {
       break;
     }
   }
-  check("Tab stays inside the workspace", trapped, `focus=${await activeWhere()}`);
+  check(
+    "Tab stays inside the workspace",
+    trapped,
+    `focus=${await activeWhere()}`,
+  );
 
   // 8. Section memory: open Addresses, close it, switch parcel, come back.
   // (The reload in step 4 reset the in-memory section state, so open it
   // first if it is closed.)
-  const addrBtn = page.locator('.parcel-ws-sec[data-sec="addresses"] .parcel-ws-sec-btn');
-  if ((await addrBtn.getAttribute("aria-expanded")) === "false") await addrBtn.click();
+  const addrBtn = page.locator(
+    '.parcel-ws-sec[data-sec="addresses"] .parcel-ws-sec-btn',
+  );
+  if ((await addrBtn.getAttribute("aria-expanded")) === "false")
+    await addrBtn.click();
   await addrBtn.click();
   const closedAgain = await addrBtn.getAttribute("aria-expanded");
   check("Addresses closes on toggle", closedAgain === "false");
   await page.goto(`${BASE}/map/#parcel=${MANY}&view=work`);
-  await page.locator(".parcel-workspace").waitFor({ state: "visible", timeout: 30000 });
-  const manyAddrOpen = await page.locator('.parcel-ws-sec[data-sec="addresses"] .parcel-ws-sec-btn').getAttribute("aria-expanded");
-  check("Addresses stays closed on the next parcel", manyAddrOpen === "false", `aria-expanded=${manyAddrOpen}`);
-  await page.locator('.parcel-ws-sec[data-sec="addresses"] .parcel-ws-sec-btn').click();
+  await page
+    .locator(".parcel-workspace")
+    .waitFor({ state: "visible", timeout: 30000 });
+  const manyAddrOpen = await page
+    .locator('.parcel-ws-sec[data-sec="addresses"] .parcel-ws-sec-btn')
+    .getAttribute("aria-expanded");
+  check(
+    "Addresses stays closed on the next parcel",
+    manyAddrOpen === "false",
+    `aria-expanded=${manyAddrOpen}`,
+  );
+  await page
+    .locator('.parcel-ws-sec[data-sec="addresses"] .parcel-ws-sec-btn')
+    .click();
   const filterVisible = await page.locator(".parcel-ws-filter").isVisible();
   check("947-address parcel shows the filter box", filterVisible);
   await page.locator(".parcel-ws-filter").fill("43 HUGHSON");
-  const filterCount = await page.locator(".parcel-ws-filter-count").textContent();
+  const filterCount = await page
+    .locator(".parcel-ws-filter-count")
+    .textContent();
   const shown = Number(/Showing (\d+) of 947/.exec(filterCount)?.[1] ?? -1);
   check("filter narrows the address list", shown === 1, filterCount);
-  const visibleRows = await page.locator('.parcel-ws-sec[data-sec="addresses"] .parcel-ws-list li:not([hidden])').count();
-  check("filtered rows are a subset", visibleRows === shown, `rows=${visibleRows} shown=${shown}`);
+  const visibleRows = await page
+    .locator(
+      '.parcel-ws-sec[data-sec="addresses"] .parcel-ws-list li:not([hidden])',
+    )
+    .count();
+  check(
+    "filtered rows are a subset",
+    visibleRows === shown,
+    `rows=${visibleRows} shown=${shown}`,
+  );
 
   // 9. Phone viewport: full screen, Record / Notes switch.
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(`${BASE}/map/#parcel=${TYPICAL}&view=work`);
-  await page.locator(".parcel-workspace").waitFor({ state: "visible", timeout: 30000 });
-  const mobOverflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-  check("no horizontal overflow on phone workspace", mobOverflow <= 0, `overflow=${mobOverflow}px`);
+  await page
+    .locator(".parcel-workspace")
+    .waitFor({ state: "visible", timeout: 30000 });
+  const mobOverflow = await page.evaluate(
+    () =>
+      document.documentElement.scrollWidth -
+      document.documentElement.clientWidth,
+  );
+  check(
+    "no horizontal overflow on phone workspace",
+    mobOverflow <= 0,
+    `overflow=${mobOverflow}px`,
+  );
   const switchVisible = await page.locator(".parcel-ws-switch").isVisible();
   const workHidden = await page.locator(".parcel-ws-work").isHidden();
-  check("phone shows Record/Notes switch, record first", switchVisible && workHidden);
+  check(
+    "phone shows Record/Notes switch, record first",
+    switchVisible && workHidden,
+  );
   await page.locator('.parcel-ws-switch-btn:has-text("Notes")').click();
   const workShown = await page.locator(".parcel-ws-work").isVisible();
   const recordHidden = await page.locator(".parcel-ws-record").isHidden();
@@ -239,5 +416,7 @@ try {
 }
 
 const failed = results.filter((r) => !r.ok);
-console.log(`\n${results.length - failed.length}/${results.length} checks passed`);
+console.log(
+  `\n${results.length - failed.length}/${results.length} checks passed`,
+);
 process.exit(failed.length ? 1 : 0);
