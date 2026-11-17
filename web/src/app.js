@@ -16,7 +16,7 @@ const RELEASE_BASE = "/map/data/ca-on-hamilton/2026-11-16-d070/";
 const PARCEL_GEOMETRY_CACHE = "heavymap.parcel-geometry-cache.v1";
 // The street basemap is a separate artifact from the parcel release.
 const MAP_LAYER_BASE = "/map/layers/ca-on-hamilton-map-layers/2026-11-17-layer-set-002/";
-const DEVELOPMENT_BASE = "/map/data/ca-on-hamilton-development/2026-11-17-field-screen-v0.1/";
+const DEVELOPMENT_BASE = "/map/data/ca-on-hamilton-development/2026-11-17-field-screen-v0.2/";
 const cardSlot = document.getElementById("parcel-card-slot");
 const drawerSlot = document.getElementById("parcel-drawer-slot");
 const workspaceSlot = document.getElementById("parcel-workspace-slot");
@@ -116,7 +116,7 @@ function updateLayerLibrary() {
   const activeCount = inputs.filter((input) => input.checked).length + 1;
   document.querySelector("[data-layer-count-for='all']").textContent = String(totalCount);
   document.querySelector("[data-layer-count-for='on']").textContent = String(activeCount);
-  for (const category of ["planning", "protected", "parks"]) {
+  for (const category of ["planning", "protected", "parks", "development"]) {
     const count = content.querySelectorAll(`[data-layer-group='${category}'] .layer input[type='checkbox']`).length;
     const counter = document.querySelector(`[data-layer-count-for='${category}']`);
     if (counter) counter.textContent = String(count);
@@ -744,6 +744,64 @@ async function start() {
 
   const checkbox = document.getElementById("parcels-visible");
   checkbox.addEventListener("change", () => map.toggleParcels(checkbox.checked));
+  const developmentToggle = document.getElementById("development-activity-visible");
+  const developmentFrom = document.getElementById("development-period-from");
+  const developmentTo = document.getElementById("development-period-to");
+  const developmentPeriodStatus = document.getElementById("development-period-status");
+  const developmentMonths = developmentPackage.ok ? developmentPackage.reportMonths : [];
+  if (developmentMonths.length) {
+    developmentFrom.min = developmentTo.min = developmentMonths[0];
+    developmentFrom.max = developmentTo.max = developmentMonths.at(-1);
+    developmentFrom.value = developmentMonths[0];
+    developmentTo.value = developmentMonths.at(-1);
+    developmentFrom.disabled = developmentTo.disabled = false;
+    developmentToggle.disabled = false;
+    developmentPeriodStatus.textContent = `${developmentMonths[0]} to ${developmentMonths.at(-1)} · issued-permit records`;
+  } else {
+    developmentPeriodStatus.textContent = "Development records are unavailable.";
+  }
+  let developmentRecords = null;
+  let developmentRecordsPromise = null;
+  const updateDevelopmentActivity = async () => {
+    if (!developmentToggle.checked) {
+      map.setDevelopmentActivityParcels([]);
+      updateLayerLibrary();
+      return;
+    }
+    if (developmentFrom.value && developmentTo.value && developmentFrom.value > developmentTo.value) {
+      developmentPeriodStatus.textContent = "Choose a start month on or before the end month.";
+      map.setDevelopmentActivityParcels([]);
+      return;
+    }
+    developmentPeriodStatus.textContent = "Loading linked permit records…";
+    developmentToggle.disabled = true;
+    if (!developmentRecords) {
+      developmentRecordsPromise ??= developmentLoader.allRecords();
+      const result = await developmentRecordsPromise;
+      developmentRecords = result.ok ? result.records : null;
+      developmentRecordsPromise = null;
+    }
+    developmentToggle.disabled = false;
+    if (!developmentRecords) {
+      developmentPeriodStatus.textContent = "Development permit records could not be loaded.";
+      developmentToggle.checked = false;
+      map.setDevelopmentActivityParcels([]);
+      updateLayerLibrary();
+      return;
+    }
+    const matches = developmentRecords.filter((record) =>
+      record.parcel_ids?.length
+      && (!developmentFrom.value || record.report_month >= developmentFrom.value)
+      && (!developmentTo.value || record.report_month <= developmentTo.value),
+    );
+    const parcelKeys = new Set(matches.flatMap((record) => record.parcel_ids));
+    map.setDevelopmentActivityParcels(parcelKeys);
+    developmentPeriodStatus.textContent = `${matches.length.toLocaleString("en-CA")} permits · ${parcelKeys.size.toLocaleString("en-CA")} parcels · ${developmentFrom.value} to ${developmentTo.value}`;
+    updateLayerLibrary();
+  };
+  developmentToggle.addEventListener("change", () => void updateDevelopmentActivity());
+  developmentFrom.addEventListener("change", () => { if (developmentToggle.checked) void updateDevelopmentActivity(); });
+  developmentTo.addEventListener("change", () => { if (developmentToggle.checked) void updateDevelopmentActivity(); });
   const thematic = document.getElementById("thematic-layers");
   if (mapLayerManifest) {
     // Sections follow the release's groups, in manifest order; titles are HeavyMap wording.

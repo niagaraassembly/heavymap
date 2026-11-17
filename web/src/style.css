@@ -771,6 +771,10 @@ h2 {
 .layers-content .layer small { color: #536a75; font-size: 10.5px; }
 .layers-content .layer-group[hidden],
 .layers-content .layer[hidden] { display: none !important; }
+.development-period-controls { display: flex; gap: 12px; margin: 10px 0 5px 27px; }
+.development-period-controls label { display: grid; gap: 4px; color: #536a75; font-size: 10px; font-weight: 650; }
+.development-period-controls input { min-width: 126px; padding: 5px 7px; border: 1px solid #c5d1d5; border-radius: 7px; color: #1e3440; background: #fff; font: inherit; }
+.development-period-status { margin: 6px 0 0 27px; color: #536a75; font-size: 10px; line-height: 1.45; }
 @media (max-width: 700px) {
   .hm-map-intro #layers-panel:not(.is-collapsed) {
     top: 66px;
@@ -2669,6 +2673,8 @@ h2 {
 .hm-development-facts dt { color: var(--muted); }
 .hm-development-facts dd { margin: 0; overflow-wrap: anywhere; }
 .hm-development-source-value { white-space: pre-wrap; }
+.hm-development-field-status,
+.hm-development-field-source-text { display: block; margin-top: 4px; color: #536a75; font-size: 11px; font-weight: 450; line-height: 1.45; }
 .hm-development-names { margin: 9px 0 0; font-size: 12px; font-weight: 600; overflow-wrap: anywhere; }
 .hm-development-provenance { margin: 8px 0 0; color: var(--muted); font-size: 10px; line-height: 1.4; overflow-wrap: anywhere; }
 .hm-development-empty { color: var(--muted); font-size: 13px; }

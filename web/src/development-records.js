@@ -1,12 +1,12 @@
 /* Hamilton permit viewer adapter for the versioned Atlas field-screen package.
- * This is a provisional consumer of viewer package 0.1; it does not alter the
+ * This is a provisional consumer of viewer package 0.2; it does not alter the
  * parcel dossier contract. The package is pinned by hashes in its manifest. */
 
 import { sha256Hex } from "./hash.js";
 import { el } from "./dossier.js";
 
-const RECORDS_FILE = "viewer_development_records_v0.1.json";
-const INDICATORS_FILE = "parcel_development_indicators_v0.1.json";
+const RECORDS_FILE = "viewer_development_records_v0.2.json";
+const INDICATORS_FILE = "parcel_development_indicators_v0.2.json";
 const SNAPSHOT_FILE = "city_development_snapshot_v0.1.json";
 const MANIFEST_FILE = "development_release_manifest.json";
 const DEFAULT_FETCH = async (url) => {
@@ -31,16 +31,16 @@ export function createHamiltonDevelopmentLoader({
     try {
       const bytes = await fetchBytes(`${root}${MANIFEST_FILE}`);
       const doc = parse(bytes);
-      if (doc.schema_version !== "hamilton-development-release-manifest/0.1.0" || doc.jurisdiction !== "ca/on/hamilton")
+      if (doc.schema_version !== "hamilton-development-release-manifest/0.2.0" || doc.jurisdiction !== "ca/on/hamilton")
         throw new Error("Unsupported Hamilton development package.");
       manifest = doc;
       const indicatorBytes = await fetchBytes(`${root}${INDICATORS_FILE}`);
       if (await sha256Hex(indicatorBytes) !== doc.outputs[INDICATORS_FILE])
         throw new Error("Hamilton parcel indicators failed hash verification.");
       indicators = parse(indicatorBytes);
-      if (indicators.schema_version !== "hamilton-parcel-development-indicators/0.1.0" || indicators.jurisdiction !== doc.jurisdiction)
+      if (indicators.schema_version !== "hamilton-parcel-development-indicators/0.2.0" || indicators.jurisdiction !== doc.jurisdiction)
         throw new Error("Hamilton parcel indicators have an incompatible schema.");
-      return { ok: true, recordCount: doc.record_count, focusCount: doc.focus_record_count };
+      return { ok: true, recordCount: doc.record_count, focusCount: doc.focus_record_count, reportMonths: doc.report_months ?? [] };
     } catch (error) {
       manifest = null;
       indicators = null;
@@ -57,11 +57,11 @@ export function createHamiltonDevelopmentLoader({
         if (await sha256Hex(bytes) !== manifest.outputs[RECORDS_FILE])
           throw new Error("Hamilton development records failed hash verification.");
         const doc = parse(bytes);
-      if (doc.schema_version !== "hamilton-development-viewer/0.1.0" || doc.jurisdiction !== manifest.jurisdiction || doc.record_count !== manifest.record_count || !Array.isArray(doc.records) || doc.records.length !== doc.record_count)
+        if (doc.schema_version !== "hamilton-development-viewer/0.2.0" || doc.jurisdiction !== manifest.jurisdiction || doc.record_count !== manifest.record_count || !Array.isArray(doc.records) || doc.records.length !== doc.record_count)
           throw new Error("Hamilton development records have an incompatible schema.");
         records = [...doc.records].sort((a, b) =>
           String(b.report_month).localeCompare(String(a.report_month)) ||
-          String(b.permit_number).localeCompare(String(a.permit_number), "en", { numeric: true }),
+          String(b.source_fields?.permit_number?.value ?? "").localeCompare(String(a.source_fields?.permit_number?.value ?? ""), "en", { numeric: true }),
         );
       } catch (error) {
         onReport({ kind: "development_records_unavailable", detail: String(error) });
@@ -112,38 +112,58 @@ export function createHamiltonDevelopmentLoader({
 function displayTags(record, field) {
   return (record[field] ?? []).map((tag) => tag.label ?? tag.tag ?? String(tag)).join(" · ");
 }
+const FOCUS_SECTORS = new Set([
+  "industrial", "light_industrial", "warehouse_logistics", "commercial",
+  "commercial_retail", "commercial_office_professional", "commercial_hospitality_food",
+  "residential_multi_unit",
+]);
+const permitNumber = (record) => record.source_fields?.permit_number?.value;
 
 function permitCard(record) {
   const card = el("article", undefined, "hm-development-record");
   const header = el("header", undefined, "hm-development-record-head");
-  header.append(el("h4", record.permit_number || "Permit record"));
+  header.append(el("h4", permitNumber(record) || "Permit record"));
   header.append(el("time", record.report_month || ""));
   card.append(header);
-  if (record.site_location) card.append(el("p", record.site_location, "hm-development-site"));
+  const sourceFields = record.source_fields ?? {};
+  const fieldLabels = {
+    item_number: "Item number · source",
+    permit_number: "Permit number · source",
+    location_text: "Project location · source",
+    area: "Area · source",
+    building_type: "Building type · source",
+    building_gfa: "Building GFA · source",
+    work_type: "Work type · source",
+    construction_value: "Construction value · source",
+    permit_description: "Permit description · source",
+    owner_organization_name: "Owner name · source",
+    builder_organization_name: "Builder name · source",
+  };
   const facts = el("dl", undefined, "hm-development-facts");
-  const viewerValue = (value) => value === null || value === undefined || value === ""
-    ? "No value in the screened viewer field"
-    : String(value);
-  for (const [label, value] of [
-    ["Building type · source", viewerValue(record.source_reported_building_type)],
-    ["Work type · source", viewerValue(record.source_reported_work_type)],
-    ["Sector · derived", displayTags(record, "derived_sector_tags")],
-    ["Action · derived", displayTags(record, "derived_action_tags")],
-    ["Construction value · source", viewerValue(record.construction_value)],
-    ["Building GFA · source", viewerValue(record.building_gfa)],
-  ]) {
-    if (value === null || value === undefined || value === "") continue;
-    const valueCell = el("dd", String(value));
-    if (label === "Building type · source" || label === "Work type · source")
-      valueCell.classList.add("hm-development-source-value");
+  for (const [key, field] of Object.entries(sourceFields)) {
+    const label = fieldLabels[key] ?? key.replaceAll("_", " ");
+    const value = field.value === null || field.value === undefined || field.value === ""
+      ? `No value · ${field.status ?? "status unavailable"}`
+      : String(field.value);
+    const valueCell = el("dd", value);
+    valueCell.classList.add("hm-development-source-value");
+    if (field.status && field.status !== "observed")
+      valueCell.append(el("small", `Field status: ${field.status}`, "hm-development-field-status"));
+    if (field.source_text && field.source_text !== String(field.value ?? ""))
+      valueCell.append(el("small", `Source text: ${field.source_text}`, "hm-development-field-source-text"));
+    for (const [metadataKey, metadataValue] of Object.entries(field)) {
+      if (["value", "status", "source_text"].includes(metadataKey) || metadataValue === null || metadataValue === "") continue;
+      const label = metadataKey.replaceAll("_", " ");
+      valueCell.append(el("small", `${label}: ${String(metadataValue)}`, "hm-development-field-source-text"));
+    }
     facts.append(el("dt", label), valueCell);
   }
+  facts.append(
+    el("dt", "Sector · derived"), el("dd", displayTags(record, "derived_sector_tags") || "No derived sector tag"),
+    el("dt", "Action · derived"), el("dd", displayTags(record, "derived_action_tags") || "No derived action tag"),
+  );
   card.append(facts);
-  const names = record.source_reported_names;
-  const shownNames = names && [names.owner, names.builder].filter(Boolean);
-  if (shownNames?.length) {
-    card.append(el("p", `Source-reported names; not independently verified: ${shownNames.join(" · ")}`, "hm-development-names"));
-  }
+  card.append(el("p", "Owner and builder contact addresses are withheld. Names and permit fields are source-reported and not independently verified.", "hm-development-provenance"));
   card.append(el("p", `Classification ${record.classification_status} · taxonomy ${record.taxonomy_version} · ${record.activity_basis}`, "hm-development-provenance"));
   if (record.source_evidence_ref?.source_page) {
     card.append(el("p", `Source evidence: monthly permit audit, page ${record.source_evidence_ref.source_page}`, "hm-development-provenance"));
@@ -309,15 +329,10 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose } = 
     const query = search.value.trim().toLocaleLowerCase();
     const focusOnly = filter.value === "focus";
     const matches = records.filter((record) => {
-      if (focusOnly && record.display_profile !== "focus_with_source_reported_names") return false;
+      if (focusOnly && !(record.derived_sector_tags ?? []).some((tag) => FOCUS_SECTORS.has(tag.tag ?? tag.label ?? tag))) return false;
       if (!query) return true;
       return [
-        record.permit_number,
-        record.site_location,
-        record.source_reported_building_type,
-        record.source_reported_work_type,
-        record.source_reported_names?.owner,
-        record.source_reported_names?.builder,
+        ...Object.values(record.source_fields ?? {}).flatMap((field) => [field.value, field.source_text]),
         ...record.derived_sector_tags,
         ...record.derived_action_tags,
       ].some((value) => String(value ?? "").toLocaleLowerCase().includes(query));
@@ -332,8 +347,8 @@ export function developmentRecordsBrowserElement(records, { onBack, onClose } = 
     for (const record of matches.slice(page * pageSize, (page + 1) * pageSize)) {
       const details = el("details", undefined, "hm-development-browser-item");
       const summary = el("summary");
-      summary.append(el("strong", record.permit_number || "Permit record"));
-      summary.append(el("span", [record.report_month, record.site_location].filter(Boolean).join(" · ")));
+      summary.append(el("strong", permitNumber(record) || "Permit record"));
+      summary.append(el("span", [record.report_month, record.source_fields?.location_text?.value].filter(Boolean).join(" · ")));
       details.append(summary, permitCard(record));
       list.append(details);
     }

@@ -10,7 +10,7 @@ import { createHamiltonDevelopmentLoader } from "../src/development-records.js";
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const json = (value) => Buffer.from(`${JSON.stringify(value)}\n`);
 
-test("public Hamilton package strips internal processing paths and loads linked records", async (t) => {
+test("public Hamilton v0.2 package retains permit fields without contact addresses and loads linked records", async (t) => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "hm-development-release-"));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   const source = path.join(root, "source");
@@ -20,23 +20,26 @@ test("public Hamilton package strips internal processing paths and loads linked 
   const record = {
     development_record_id: "development-1",
     parcel_ids: ["parcel-1"],
-    source_reported_names: { owner: "Example Industrial Ltd", builder: null },
+    report_month: "2026-09",
+    source_fields: {
+      permit_number: { value: "P-1", source_text: "P-1", status: "observed" },
+      permit_description: { value: "Construction unspecified", source_text: "Construction unspecified", status: "observed" },
+      owner_organization_name: { value: "Example Industrial Ltd", source_text: "Example Industrial Ltd", status: "observed" },
+    },
+    withheld_source_fields: ["owner_address", "builder_address"],
     source_evidence_ref: {
       source_page: 1,
       source_record_id: "source-1",
-      extracted_record_file: "private-extract.jsonl",
-      page_residuals_file: "private-residuals.jsonl",
-      retention_status: "internal",
     },
   };
   const records = json({
-    schema_version: "hamilton-development-viewer/0.1.0",
+    schema_version: "hamilton-development-viewer/0.2.0",
     jurisdiction: "ca/on/hamilton",
     record_count: 1,
     records: [record],
   });
   const indicators = json({
-    schema_version: "hamilton-parcel-development-indicators/0.1.0",
+    schema_version: "hamilton-parcel-development-indicators/0.2.0",
     jurisdiction: "ca/on/hamilton",
     relationship: "development_record_to_parcel",
     linked_record_count: 1,
@@ -48,37 +51,32 @@ test("public Hamilton package strips internal processing paths and loads linked 
     jurisdiction: "ca/on/hamilton",
     monthly: [],
   });
-  fs.writeFileSync(path.join(source, "viewer_development_records_v0.1.json"), records);
-  fs.writeFileSync(path.join(source, "parcel_development_indicators_v0.1.json"), indicators);
+  fs.writeFileSync(path.join(source, "viewer_development_records_v0.2.json"), records);
+  fs.writeFileSync(path.join(source, "parcel_development_indicators_v0.2.json"), indicators);
   fs.writeFileSync(path.join(source, "city_development_snapshot_v0.1.json"), snapshot);
-  fs.writeFileSync(path.join(source, "field_screen_manifest_v0.1.json"), json({
-    schema_version: "hamilton-field-screen-manifest/0.1.0",
+  fs.writeFileSync(path.join(source, "development_release_manifest.json"), json({
+    schema_version: "hamilton-development-release-manifest/0.2.0",
     jurisdiction: "ca/on/hamilton",
-    counts: { records: 1, focus_records: 1 },
+    record_count: 1,
+    focus_record_count: 1,
+    report_months: ["2026-09"],
     outputs: {
-      "viewer_development_records_v0.1.json": hash(records),
-      "parcel_development_indicators_v0.1.json": hash(indicators),
+      "viewer_development_records_v0.2.json": hash(records),
+      "parcel_development_indicators_v0.2.json": hash(indicators),
+      "city_development_snapshot_v0.1.json": hash(snapshot),
     },
-  }));
-  fs.writeFileSync(path.join(source, "city_development_snapshot_manifest_v0.1.json"), json({
-    schema_version: "hamilton-city-development-snapshot-manifest/0.1.0",
-    jurisdiction: "ca/on/hamilton",
-    output: { "city_development_snapshot_v0.1.json": hash(snapshot) },
   }));
 
   const release = copyDevelopmentRelease({ sourceDir: source, outputDir: output });
   const packageDir = path.join(output, release.path);
-  const publishedRecords = JSON.parse(fs.readFileSync(path.join(packageDir, "viewer_development_records_v0.1.json"), "utf8"));
-  assert.deepEqual(publishedRecords.records[0].source_reported_names, record.source_reported_names);
-  assert.deepEqual(publishedRecords.records[0].source_evidence_ref, {
-    source_page: 1,
-    source_record_id: "source-1",
-  });
+  const publishedRecords = JSON.parse(fs.readFileSync(path.join(packageDir, "viewer_development_records_v0.2.json"), "utf8"));
+  assert.deepEqual(publishedRecords.records[0].source_fields, record.source_fields);
+  assert.deepEqual(publishedRecords.records[0].withheld_source_fields, ["owner_address", "builder_address"]);
   assert.deepEqual(fs.readdirSync(packageDir).sort(), [
     "city_development_snapshot_v0.1.json",
     "development_release_manifest.json",
-    "parcel_development_indicators_v0.1.json",
-    "viewer_development_records_v0.1.json",
+    "parcel_development_indicators_v0.2.json",
+    "viewer_development_records_v0.2.json",
   ]);
 
   const deployedOutput = path.join(root, "deployed-site");
@@ -96,7 +94,7 @@ test("public Hamilton package strips internal processing paths and loads linked 
     base: "https://example.test/development/",
     fetchBytes: async (url) => new Uint8Array(fs.readFileSync(path.join(deployedPackage, path.basename(url)))),
   });
-  assert.deepEqual(await loader.pin(), { ok: true, recordCount: 1, focusCount: 1 });
+  assert.deepEqual(await loader.pin(), { ok: true, recordCount: 1, focusCount: 1, reportMonths: ["2026-09"] });
   const all = await loader.allRecords();
   assert.equal(all.records.length, 1);
   const linked = await loader.forParcel("parcel-1");

@@ -48,6 +48,7 @@ export class FieldMap {
     this.minZoom = minZoom;
     this.maxZoom = maxZoom;
     this.selectedKey = null;
+    this.developmentKeys = new Set();
     this.ready = false;
     this.parcelsVisible = true;
     this.map = new maplibregl.Map({
@@ -98,10 +99,11 @@ export class FieldMap {
           if (map.getLayer("parcels-fill")) {
             const still = PARCEL_PAINT.still;
             const selected = ["boolean", ["feature-state", "selected"], false];
-            map.setPaintProperty("parcels-fill", "fill-color", ["case", selected, still.selFill, still.fill]);
-            map.setPaintProperty("parcels-fill", "fill-opacity", ["case", selected, still.selFillOpacity, still.fillOpacity]);
-            map.setPaintProperty("parcels-line", "line-color", ["case", selected, still.selLine, still.line]);
-            map.setPaintProperty("parcels-line", "line-width", ["case", selected, 2.4, still.lineWidth]);
+            const development = ["boolean", ["feature-state", "developmentActivity"], false];
+            map.setPaintProperty("parcels-fill", "fill-color", ["case", selected, still.selFill, development, "#e1a957", still.fill]);
+            map.setPaintProperty("parcels-fill", "fill-opacity", ["case", selected, still.selFillOpacity, development, 0.42, still.fillOpacity]);
+            map.setPaintProperty("parcels-line", "line-color", ["case", selected, still.selLine, development, "#a65316", still.line]);
+            map.setPaintProperty("parcels-line", "line-width", ["case", selected, 2.4, development, 1.7, still.lineWidth]);
           }
           console.error("HeavyMap street basemap failed to load", event.error);
           onStatus("The street basemap could not be loaded. The still image remains available.");
@@ -128,8 +130,8 @@ export class FieldMap {
           "source-layer": this.tileLayer,
           minzoom: this.minZoom,
           paint: {
-            "fill-color": ["case", ["boolean", ["feature-state", "selected"], false], paint.selFill, paint.fill],
-            "fill-opacity": ["case", ["boolean", ["feature-state", "selected"], false], paint.selFillOpacity, paint.fillOpacity],
+            "fill-color": ["case", ["boolean", ["feature-state", "selected"], false], paint.selFill, ["boolean", ["feature-state", "developmentActivity"], false], "#e1a957", paint.fill],
+            "fill-opacity": ["case", ["boolean", ["feature-state", "selected"], false], paint.selFillOpacity, ["boolean", ["feature-state", "developmentActivity"], false], 0.42, paint.fillOpacity],
           },
         }, beneathLabels);
         map.addLayer({
@@ -139,8 +141,8 @@ export class FieldMap {
           "source-layer": this.tileLayer,
           minzoom: this.minZoom,
           paint: {
-            "line-color": ["case", ["boolean", ["feature-state", "selected"], false], paint.selLine, paint.line],
-            "line-width": ["case", ["boolean", ["feature-state", "selected"], false], 2.4, paint.lineWidth],
+            "line-color": ["case", ["boolean", ["feature-state", "selected"], false], paint.selLine, ["boolean", ["feature-state", "developmentActivity"], false], "#a65316", paint.line],
+            "line-width": ["case", ["boolean", ["feature-state", "selected"], false], 2.4, ["boolean", ["feature-state", "developmentActivity"], false], 1.7, paint.lineWidth],
           },
         }, beneathLabels);
         map.on("click", "parcels-fill", (event) => {
@@ -162,6 +164,7 @@ export class FieldMap {
 
       this.ready = true;
       for (const [id, show] of this.overlayVisibility) if (show) this.toggleOverlay(id, true);
+      if (this.developmentKeys.size) this.applyDevelopmentFeatureState();
       map.on("error", (event) => {
         if (event.sourceId?.startsWith("overlay-source-"))
           this.onStatus("This map layer could not be loaded. Check your connection and try again.");
@@ -203,6 +206,22 @@ export class FieldMap {
     if (!this.ready || !this.map.getLayer("parcels-fill")) return;
     for (const id of ["parcels-fill", "parcels-line"])
       this.map.setLayoutProperty(id, "visibility", show ? "visible" : "none");
+  }
+
+  setDevelopmentActivityParcels(parcelKeys) {
+    if (this.ready && this.map.getSource("parcels")) {
+      for (const key of this.developmentKeys)
+        this.map.setFeatureState({ source: "parcels", sourceLayer: this.tileLayer, id: key }, { developmentActivity: false });
+    }
+    this.developmentKeys = new Set(parcelKeys);
+    if (this.ready && this.map.getSource("parcels")) this.applyDevelopmentFeatureState();
+  }
+
+  applyDevelopmentFeatureState() {
+    const source = "parcels";
+    if (!this.map.getSource(source)) return;
+    for (const key of this.developmentKeys)
+      this.map.setFeatureState({ source, sourceLayer: this.tileLayer, id: key }, { developmentActivity: true });
   }
 
   toggleOverlay(id, show) {

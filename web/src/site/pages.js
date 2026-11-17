@@ -465,6 +465,7 @@ export function mapIntro() {
                 <button type="button" data-layer-filter="planning"><span>Planning</span><small data-layer-count-for="planning">—</small></button>
                 <button type="button" data-layer-filter="protected"><span>Protected &amp; regulated</span><small data-layer-count-for="protected">—</small></button>
                 <button type="button" data-layer-filter="parks"><span>Parks</span><small data-layer-count-for="parks">—</small></button>
+                <button type="button" data-layer-filter="development"><span>Development</span><small data-layer-count-for="development">1</small></button>
               </nav>
               <section class="layers-browser" aria-label="Layer library">
                 <div class="layers-browser-head"><div><h3>LAYER LIBRARY</h3><p id="layers-result-count" aria-live="polite">Loading map layers…</p></div>
@@ -473,6 +474,7 @@ export function mapIntro() {
                 <div id="layers-content" class="layers-content">
                   <section class="layer-group" data-layer-group="basemap"><h3>Base map</h3><div class="basemap-switch" role="group" aria-label="Basemap style"><button type="button" id="basemap-light" aria-pressed="true">Light</button><button type="button" id="basemap-dark" aria-pressed="false">Dark</button></div></section>
                   <section class="layer-group" data-layer-group="parcels"><h3>Parcels</h3><label class="layer"><input id="parcels-visible" type="checkbox" checked><span><strong>Hamilton parcels</strong><small>On map · key-only tiles · zoom 14–16</small></span></label></section>
+                  <section class="layer-group" data-layer-group="development"><h3>Development activity</h3><label class="layer"><input id="development-activity-visible" type="checkbox" disabled><span><strong>Parcels with permit records</strong><small>Highlights parcels linked to permits issued in the selected report months.</small></span></label><div class="development-period-controls"><label>From <input id="development-period-from" type="month" disabled></label><label>To <input id="development-period-to" type="month" disabled></label></div><p id="development-period-status" class="development-period-status" role="status">Loading Hamilton permit coverage…</p></section>
                   <div id="thematic-layers" aria-live="polite"><p class="layer-note">Loading map layers…</p></div>
                 </div>
                 
