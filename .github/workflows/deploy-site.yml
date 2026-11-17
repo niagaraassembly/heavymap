@@ -51,6 +51,7 @@ jobs:
           ref: PENDING_LAYER_SET_002_COMMIT
           path: industrial-atlas-map-layers
       - name: Refuse a map-layer pin that is not a full commit hash
+        working-directory: .
         run: |
           grep -Eq '^\s+ref: [0-9a-f]{40}$' <(sed -n '/Check out the pinned Hamilton map-layer release/,/path:/p' .github/workflows/deploy-site.yml) \
             || { echo "Map-layer release ref must be a 40-character commit SHA"; exit 1; }
