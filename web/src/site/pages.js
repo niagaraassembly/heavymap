@@ -493,7 +493,30 @@ export function mapIntro() {
                   <label class="layers-search"><span aria-hidden="true">⌕</span><input id="layers-search" type="search" placeholder="Find a layer" aria-label="Find a map layer"></label>
                 </div>
                 <div id="layers-content" class="layers-content">
-                  <section class="layer-group" data-layer-group="basemap"><h3>Base map</h3><div class="basemap-switch" role="group" aria-label="Basemap style"><button type="button" id="basemap-white" aria-pressed="false">Bright</button><button type="button" id="basemap-dark" aria-pressed="false">Dark</button><button type="button" id="basemap-grayscale" aria-pressed="true">Mono</button></div></section>
+                  <section class="layer-group basemap-style-group" data-layer-group="basemap">
+                    <h3>Base map</h3>
+                    <p class="basemap-group-note">Choose the map’s visual character. HeavyMap layers stay on top.</p>
+                    <p class="basemap-set-label">Core</p>
+                    <div class="basemap-switch" role="group" aria-label="Core map views">
+                      <button type="button" class="basemap-option" data-basemap-style="bright" aria-pressed="false" title="Bright: clear streets with land, water, and park color"><span class="basemap-swatch swatch-bright" aria-hidden="true"></span><span class="basemap-option-name">Bright</span></button>
+                      <button type="button" class="basemap-option" data-basemap-style="dark" aria-pressed="false" title="Dark: deep ground with bright roads and labels"><span class="basemap-swatch swatch-dark" aria-hidden="true"></span><span class="basemap-option-name">Dark</span></button>
+                      <button type="button" class="basemap-option" data-basemap-style="mono" aria-pressed="true" title="Mono: strong black-and-white street hierarchy"><span class="basemap-swatch swatch-mono" aria-hidden="true"></span><span class="basemap-option-name">Mono</span></button>
+                    </div>
+                    <p class="basemap-set-label">Map moods</p>
+                    <div class="basemap-switch" role="group" aria-label="Map mood views">
+                      <button type="button" class="basemap-option" data-basemap-style="atlas" aria-pressed="false" title="Atlas: warm land, sage parks, and teal water"><span class="basemap-swatch swatch-atlas" aria-hidden="true"></span><span class="basemap-option-name">Atlas</span></button>
+                      <button type="button" class="basemap-option" data-basemap-style="survey" aria-pressed="false" title="Survey: crisp streets and a legible planning-map palette"><span class="basemap-swatch swatch-survey" aria-hidden="true"></span><span class="basemap-option-name">Survey</span></button>
+                      <button type="button" class="basemap-option" data-basemap-style="toner" aria-pressed="false" title="Toner: graphic, high-contrast monochrome"><span class="basemap-swatch swatch-toner" aria-hidden="true"></span><span class="basemap-option-name">Toner</span></button>
+                      <button type="button" class="basemap-option" data-basemap-style="terrain" aria-pressed="false" title="Terrain: natural landcover colors; no elevation shading"><span class="basemap-swatch swatch-terrain" aria-hidden="true"></span><span class="basemap-option-name">Terrain</span></button>
+                      <button type="button" class="basemap-option" data-basemap-style="field-notes" aria-pressed="false" title="Field Notes: warm paper, ink roads, and muted greens"><span class="basemap-swatch swatch-field-notes" aria-hidden="true"></span><span class="basemap-option-name">Field Notes</span></button>
+                    </div>
+                    <div class="basemap-intensity">
+                      <div class="basemap-intensity-heading"><label for="basemap-intensity">Basemap strength</label><output id="basemap-intensity-value" for="basemap-intensity">100%</output></div>
+                      <input id="basemap-intensity" type="range" min="45" max="100" step="5" value="100" aria-describedby="basemap-intensity-help">
+                      <div class="basemap-intensity-ends" aria-hidden="true"><span>Quieter</span><span>Richer</span></div>
+                      <p id="basemap-intensity-help">Adjusts street and land context; parcel and analysis layers stay full strength.</p>
+                    </div>
+                  </section>
                   <section class="layer-group" data-layer-group="parcels"><h3>Parcels</h3><label class="layer"><input id="parcels-visible" type="checkbox" checked><span><strong>Hamilton parcels</strong><small>On map · key-only tiles · zoom 14–16</small></span></label></section>
                   <section class="layer-group" data-layer-group="development"><h3>Development activity</h3><label class="layer"><input id="development-activity-visible" type="checkbox" disabled><span><strong>Permit activity</strong><small>Citywide mosaic at zoom 8–13; parcel highlights from zoom 14. Stronger cells emphasize industrial, commercial, logistics, and multi-unit residential permits.</small></span></label><div class="development-period-controls"><label>From <input id="development-period-from" type="month" disabled></label><label>To <input id="development-period-to" type="month" disabled></label></div><p id="development-period-status" class="development-period-status" role="status">Loading Hamilton permit coverage…</p></section>
                   <p class="layer-note">Layer rows show when each layer appears and its source tile range. Most planning and protected layers work at city scale; water and sewer mains start at zoom 14.</p>
