@@ -9,7 +9,7 @@ import { parcelNotesDialogElement, parcelWorkspaceElement } from "./parcel-works
 import { createNotesStore, putLocalRecord, recordsFor, removeSavedPlace, savePlace } from "./local-data.js";
 import { el } from "./dossier.js";
 import { FieldMap } from "./map.js";
-import { findBasemap } from "./basemap.js";
+import { basemapFlavor as normalizeBasemapFlavor, clampBasemapIntensity, findBasemap } from "./basemap.js";
 import { startTitleIntro } from "./brand/title-intro.js";
 import {
   cityDevelopmentSheetElement,
@@ -769,8 +769,10 @@ async function start() {
     const note = document.getElementById("map-display-note");
     if (note) note.textContent = "Street basemap · parcel selection from zoom 14";
   }
-  const requestedBasemapFlavor = new URLSearchParams(location.search).get("basemap");
-  const basemapFlavor = ["white", "dark"].includes(requestedBasemapFlavor) ? requestedBasemapFlavor : "grayscale";
+  const mapParams = new URLSearchParams(location.search);
+  let basemapFlavor = normalizeBasemapFlavor(mapParams.get("basemap") ?? "mono");
+  const requestedIntensity = Number(mapParams.get("intensity"));
+  let basemapIntensity = clampBasemapIntensity(mapParams.has("intensity") ? requestedIntensity / 100 : 1);
   map = new FieldMap({
     basemap,
     overlays: mapLayerManifest?.layers ?? [],
@@ -778,6 +780,7 @@ async function start() {
     developmentOverviewUrl: `${DEVELOPMENT_BASE}city_development_mosaic_v0.1.geojson`,
     // Style preference can be shared in a URL, e.g. /map/?basemap=dark.
     flavor: basemapFlavor,
+    basemapIntensity,
     onSelect: (parcel, trigger) => void openParcel(parcel, trigger, view ?? "card"),
     onStatus: status,
     onReady: finishMapLoading,
@@ -787,19 +790,45 @@ async function start() {
     maxZoom: tilesReady ? tileManifest.max_zoom : 16,
   });
 
-  document.body.classList.toggle("basemap-dark", basemapFlavor === "dark");
-  for (const flavor of ["white", "dark", "grayscale"]) {
-    const button = document.getElementById(`basemap-${flavor}`);
-    button.setAttribute("aria-pressed", String(flavor === basemapFlavor));
-    button.disabled = !basemap;
+  const intensitySlider = document.getElementById("basemap-intensity");
+  const intensityOutput = document.getElementById("basemap-intensity-value");
+  const styleButtons = [...document.querySelectorAll("[data-basemap-style]")];
+  const writeBasemapUrl = () => {
+    const params = new URLSearchParams(location.search);
+    if (basemapFlavor === "mono") params.delete("basemap");
+    else params.set("basemap", basemapFlavor);
+    if (basemapIntensity >= 1) params.delete("intensity");
+    else params.set("intensity", String(Math.round(basemapIntensity * 100)));
+    const query = params.toString();
+    history.replaceState(history.state, "", `${location.pathname}${query ? `?${query}` : ""}${location.hash}`);
+  };
+  const syncBasemapControls = () => {
+    document.body.classList.toggle("basemap-dark", basemapFlavor === "dark");
+    for (const button of styleButtons) {
+      button.setAttribute("aria-pressed", String(button.dataset.basemapStyle === basemapFlavor));
+      button.disabled = !basemap;
+    }
+    intensitySlider.disabled = !basemap;
+    intensitySlider.value = String(Math.round(basemapIntensity * 100));
+    intensityOutput.value = `${Math.round(basemapIntensity * 100)}%`;
+    intensityOutput.textContent = intensityOutput.value;
+  };
+  for (const button of styleButtons) {
     button.addEventListener("click", () => {
-      const params = new URLSearchParams(location.search);
-      if (flavor === "white") params.delete("basemap");
-      else params.set("basemap", flavor);
-      const query = params.toString();
-      location.search = query ? `?${query}` : "";
+      if (!basemap) return;
+      basemapFlavor = normalizeBasemapFlavor(button.dataset.basemapStyle);
+      map.setBasemapStyle(basemapFlavor, basemapIntensity);
+      syncBasemapControls();
+      writeBasemapUrl();
     });
   }
+  intensitySlider.addEventListener("input", () => {
+    basemapIntensity = clampBasemapIntensity(Number(intensitySlider.value) / 100);
+    map.setBasemapStyle(basemapFlavor, basemapIntensity);
+    syncBasemapControls();
+    writeBasemapUrl();
+  });
+  syncBasemapControls();
 
   if (tilesReady) {
     document.getElementById("parcel-count").textContent =

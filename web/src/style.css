@@ -842,33 +842,87 @@ h2 {
   letter-spacing: 0.09em;
   text-transform: uppercase;
 }
+.basemap-style-group { display: block !important; }
+.basemap-group-note { margin: -3px 0 12px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+.basemap-set-label { margin: 12px 0 6px; color: var(--muted); font-size: 9px; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; }
 .basemap-switch {
-  display: inline-flex;
-  gap: 3px;
-  padding: 3px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.basemap-option {
+  display: flex;
+  min-width: 0;
+  min-height: 48px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  padding: 5px;
   border: 1px solid var(--rule-soft);
   border-radius: 8px;
-  background: var(--surface-tint);
-}
-.basemap-switch button {
-  border: 0;
-  border-radius: 5px;
-  padding: 5px 12px;
-  color: var(--muted);
-  background: transparent;
-  font: inherit;
-  font-size: 11px;
-  cursor: pointer;
-}
-.basemap-switch button[aria-pressed="true"] {
   color: var(--ink);
   background: var(--surface);
-  box-shadow: 0 1px 3px var(--shadow);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
 }
-.basemap-switch button:disabled {
-  cursor: not-allowed;
-  opacity: 0.55;
+.basemap-option:hover { border-color: #8fa99c; filter: none; }
+.basemap-option[aria-pressed="true"] {
+  border-color: #597c6d;
+  box-shadow: 0 0 0 1px #597c6d, 0 1px 3px var(--shadow);
 }
+.basemap-option:disabled { cursor: not-allowed; opacity: .55; }
+.basemap-swatch {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 20px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--swatch-ground);
+}
+.basemap-swatch::before {
+  position: absolute;
+  z-index: 1;
+  top: 9px;
+  left: -5%;
+  width: 112%;
+  height: 4px;
+  border-top: 1px solid var(--swatch-casing);
+  border-bottom: 1px solid var(--swatch-casing);
+  background: var(--swatch-road);
+  content: "";
+  transform: rotate(-9deg);
+}
+.basemap-swatch::after {
+  position: absolute;
+  top: -8px;
+  right: -5px;
+  width: 30%;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--swatch-water);
+  content: "";
+}
+.swatch-bright { --swatch-ground: #f4f5f2; --swatch-water: #a8ccd5; --swatch-road: #fffefa; --swatch-casing: #c5bdad; }
+.swatch-dark { --swatch-ground: #1b252b; --swatch-water: #214c58; --swatch-road: #f0c56f; --swatch-casing: #7b6d55; }
+.swatch-mono { --swatch-ground: #e7e7e4; --swatch-water: #c2c9cb; --swatch-road: #fff; --swatch-casing: #8c8c87; }
+.swatch-atlas { --swatch-ground: #e9e6da; --swatch-water: #71b5c2; --swatch-road: #f4e4c6; --swatch-casing: #c5bdad; }
+.swatch-survey { --swatch-ground: #f4f1e8; --swatch-water: #b4d4dc; --swatch-road: #f3d28f; --swatch-casing: #b39a70; }
+.swatch-toner { --swatch-ground: #f2f2ef; --swatch-water: #c9cdce; --swatch-road: #fff; --swatch-casing: #737572; }
+.swatch-terrain { --swatch-ground: #e5e5d7; --swatch-water: #6da8b1; --swatch-road: #e4c581; --swatch-casing: #c5bdad; }
+.swatch-field-notes { --swatch-ground: #eee6d7; --swatch-water: #9fbec4; --swatch-road: #f6f0e5; --swatch-casing: #9b8060; }
+.basemap-option-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; font-weight: 650; }
+.basemap-intensity { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule-soft); }
+.basemap-intensity-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; color: var(--ink); font-size: 11px; font-weight: 650; }
+.basemap-intensity-heading output { color: var(--muted); font-size: 10px; font-variant-numeric: tabular-nums; }
+.basemap-intensity input[type="range"] { display: block; width: 100%; height: 20px; margin: 4px 0 0; accent-color: #557968; }
+.basemap-intensity input:disabled { opacity: .55; }
+.basemap-intensity-ends { display: flex; justify-content: space-between; margin-top: -2px; color: var(--muted); font-size: 9px; }
+.basemap-intensity p { margin: 7px 0 0; color: var(--muted); font-size: 9px; line-height: 1.45; }
 .layer-note {
   display: block;
   margin: 6px 0 3px;

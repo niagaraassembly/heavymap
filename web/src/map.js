@@ -7,7 +7,9 @@ import {
   GROUND,
   PARCEL_PAINT,
   basemapFlavor,
+  basemapKeepsStill,
   basemapLayers,
+  clampBasemapIntensity,
   firstLabelLayerId,
 } from "./basemap.js";
 import { overlayLayerSpecs } from "./overlay-layers.js";
@@ -34,9 +36,11 @@ const STILL_BOUNDS_TALL = [
 ];
 
 export class FieldMap {
-  constructor({ onSelect, onStatus, onReady, tilesUrl, tileLayer, minZoom = 14, maxZoom = 16, basemap = null, flavor = "light", overlays = [], overlaysBase = null, developmentOverviewUrl = null }) {
+  constructor({ onSelect, onStatus, onReady, tilesUrl, tileLayer, minZoom = 14, maxZoom = 16, basemap = null, flavor = "light", basemapIntensity = 1, overlays = [], overlaysBase = null, developmentOverviewUrl = null }) {
     this.basemap = basemap;
+    this.basemapFailed = false;
     this.flavor = basemapFlavor(flavor);
+    this.basemapIntensity = clampBasemapIntensity(basemapIntensity);
     this.onStatus = onStatus;
     this.onReady = onReady;
     this.tilesUrl = tilesUrl;
@@ -68,7 +72,7 @@ export class FieldMap {
         version: 8,
         glyphs: GLYPHS_URL,
         sources: {},
-        layers: [{ id: "ground", type: "background", paint: { "background-color": GROUND[basemap ? this.flavor : "white"] } }],
+        layers: [{ id: "ground", type: "background", paint: { "background-color": GROUND[basemap ? this.flavor : "bright"] } }],
       },
     });
     this.map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
@@ -82,11 +86,11 @@ export class FieldMap {
       });
       map.addLayer({ id: "hamilton-still", type: "raster", source: "hamilton-still", paint: { "raster-opacity": 0.94 } });
 
-      // Vector basemap over the still image; parcels go beneath its labels.
-      // If it cannot be read, its layers are removed and the still remains.
+      // The vector style becomes the map's visual foundation; the still image
+      // remains a fallback if these locally hosted tiles cannot be read.
       let beneathLabels;
       if (this.basemap) {
-        const list = basemapLayers(this.flavor);
+        const list = basemapLayers(this.flavor, this.basemapIntensity);
         map.addSource(BASEMAP_SOURCE, {
           type: "vector",
           url: pmtilesUrl(this.basemap.url),
@@ -94,14 +98,15 @@ export class FieldMap {
         });
         for (const layer of list) map.addLayer(layer);
         beneathLabels = firstLabelLayerId(list);
-        if (this.flavor === "dark") map.setLayoutProperty("hamilton-still", "visibility", "none");
+        map.setLayoutProperty("hamilton-still", "visibility", basemapKeepsStill(this.flavor) ? "visible" : "none");
         const dropBasemap = (event) => {
           if (event.sourceId !== BASEMAP_SOURCE) return;
           map.off("error", dropBasemap);
+          this.basemapFailed = true;
           for (const layer of list) if (map.getLayer(layer.id)) map.removeLayer(layer.id);
           if (map.getSource(BASEMAP_SOURCE)) map.removeSource(BASEMAP_SOURCE);
           map.setLayoutProperty("hamilton-still", "visibility", "visible");
-          map.setPaintProperty("ground", "background-color", GROUND.white);
+          map.setPaintProperty("ground", "background-color", GROUND.bright);
           if (map.getLayer("parcels-fill")) {
             const still = PARCEL_PAINT.still;
             const selected = ["boolean", ["feature-state", "selected"], false];
@@ -221,6 +226,39 @@ export class FieldMap {
     if (!this.ready || !this.map.getLayer("parcels-fill")) return;
     for (const id of ["parcels-fill", "parcels-line"])
       this.map.setLayoutProperty(id, "visibility", show ? "visible" : "none");
+  }
+
+  setBasemapStyle(flavor, intensity = this.basemapIntensity) {
+    const nextFlavor = basemapFlavor(flavor);
+    const nextIntensity = clampBasemapIntensity(intensity);
+    const paletteChanged = nextFlavor !== this.flavor;
+    if (!paletteChanged && nextIntensity === this.basemapIntensity) return;
+    this.flavor = nextFlavor;
+    this.basemapIntensity = nextIntensity;
+    if (!this.ready || !this.basemap) return;
+
+    const styleLayers = basemapLayers(this.flavor, this.basemapIntensity);
+    for (const layer of styleLayers) {
+      if (!this.map.getLayer(layer.id)) continue;
+      for (const [property, value] of Object.entries(layer.paint ?? {}))
+        if (paletteChanged || property.endsWith("-opacity"))
+          this.map.setPaintProperty(layer.id, property, value);
+    }
+    if (paletteChanged && this.map.getLayer("ground"))
+      this.map.setPaintProperty("ground", "background-color", GROUND[this.flavor]);
+    if (paletteChanged && this.map.getLayer("hamilton-still"))
+      this.map.setLayoutProperty("hamilton-still", "visibility", this.basemapFailed || basemapKeepsStill(this.flavor) ? "visible" : "none");
+
+    if (!paletteChanged) return;
+    const paint = PARCEL_PAINT[this.flavor] ?? PARCEL_PAINT.still;
+    if (this.map.getLayer("parcels-fill")) {
+      const selected = ["boolean", ["feature-state", "selected"], false];
+      const development = ["boolean", ["feature-state", "developmentActivity"], false];
+      this.map.setPaintProperty("parcels-fill", "fill-color", ["case", selected, paint.selFill, development, "#e1a957", paint.fill]);
+      this.map.setPaintProperty("parcels-fill", "fill-opacity", ["case", selected, paint.selFillOpacity, development, 0.42, paint.fillOpacity]);
+      this.map.setPaintProperty("parcels-line", "line-color", ["case", selected, paint.selLine, development, "#a65316", paint.line]);
+      this.map.setPaintProperty("parcels-line", "line-width", ["case", selected, 2.4, development, 1.7, paint.lineWidth]);
+    }
   }
 
   setDevelopmentActivityParcels(parcelKeys) {
