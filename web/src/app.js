@@ -431,7 +431,7 @@ function renderLevel(level, tab = "notes") {
         developmentCount: current.developmentCount ?? 0,
         onOpenDevelopment: () => {
           updateLocation(current.key, "workspace");
-          renderLevel("workspace", "notes");
+          renderLevel("workspace", "development");
         },
         onSave: () => void toggleSaveCurrentParcel(),
         onOpenRecord: () => {
@@ -457,7 +457,7 @@ function renderLevel(level, tab = "notes") {
         developmentCount: current.developmentCount ?? 0,
         onOpenDevelopment: () => {
           updateLocation(current.key, "workspace");
-          renderLevel("workspace", "notes");
+          renderLevel("workspace", "development");
         },
         // BL-107: no feedback target is configured yet, so Report a
         // problem stays hidden.

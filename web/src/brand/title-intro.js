@@ -74,6 +74,31 @@ function shortFrame(t) {
 }
 
 const FINAL = { depth: 0, scale: 0.48, glow: 0.18, word: 1, cy: 0.42 };
+const MARK_SRC = "/heavy-element-mark.png";
+const FLIGHT_MS = 900;
+
+/**
+ * Where the flat final mark sits on screen, as the box of the mark image (same geometry the
+ * renderer draws from: the node lands at the canvas centre line, one geometry unit = k px).
+ */
+function finalMarkBox(canvas) {
+  const box = canvas.getBoundingClientRect();
+  const size = Math.min(box.width, box.height) / 2 * FINAL.scale;
+  const k = (2 / Math.max(geometry.width, geometry.height)) * size;
+  return {
+    left: box.left + box.width / 2 - geometry.node.x * k,
+    top: box.top + box.height * FINAL.cy - geometry.node.y * k,
+    width: geometry.width * k,
+    height: geometry.height * k,
+  };
+}
+
+/** The layers button's mark, if it is on screen to land in. */
+function landingTarget() {
+  const target = document.querySelector("[data-layers-mark]");
+  const rect = target?.getBoundingClientRect();
+  return rect && rect.width > 0 ? { target, rect } : null;
+}
 
 /**
  * Start the intro inside the loading overlay. Returns { mapReady() } for the
@@ -92,6 +117,8 @@ export function startTitleIntro(overlay) {
   const end = reduce ? 0 : short ? SHORT_END : FULL_END;
   const frame = short ? shortFrame : fullFrame;
   markSeen();
+  // the layers button keeps its mark hidden until the intro's mark lands in it
+  if (!reduce) document.body.classList.add("hm-intro-active");
 
   let start = performance.now();
   let skipped = false;
@@ -110,14 +137,48 @@ export function startTitleIntro(overlay) {
     if (statusLine) statusLine.style.opacity = String(1 - w);
   }
 
+  /* The mark leaves the stage by flying, shrinking, into the layers button it now lives in. */
+  function land() {
+    document.body.classList.remove("hm-intro-active");
+  }
+
   function leave() {
     if (leaving) return;
     leaving = true;
     removeEventListener("keydown", onKey);
     removeEventListener("resize", onResize);
+    const landing = reduce ? null : landingTarget();
+    if (!landing || typeof document.body.animate !== "function") {
+      land();
+      overlay.classList.add("is-hidden");
+      overlay.addEventListener("transitionend", () => overlay.remove(), { once: true });
+      setTimeout(() => overlay.remove(), 700);
+      return;
+    }
+    paint(FINAL);
+    const from = finalMarkBox(canvas);
+    const to = landing.rect;
+    const flyer = document.createElement("img");
+    flyer.src = MARK_SRC;
+    flyer.alt = "";
+    flyer.className = "map-intro-flyer";
+    Object.assign(flyer.style, { left: `${from.left}px`, top: `${from.top}px`, width: `${from.width}px`, height: `${from.height}px` });
+    document.body.append(flyer);
+    // swap the drawn mark for the image in the same place, then let the stage go dark-to-map
+    canvas.style.visibility = "hidden";
+    overlay.classList.add("is-landing");
+    const flight = flyer.animate([
+      { left: `${from.left}px`, top: `${from.top}px`, width: `${from.width}px`, height: `${from.height}px`, filter: "brightness(1) drop-shadow(0 0 10px #ffffff55)" },
+      { offset: 0.55, filter: "brightness(0.9) drop-shadow(0 0 4px #ffffff40)" },
+      { left: `${to.left}px`, top: `${to.top}px`, width: `${to.width}px`, height: `${to.height}px`, filter: "brightness(0.3) drop-shadow(0 0 0 #0000)" },
+    ], { duration: FLIGHT_MS, easing: "cubic-bezier(.55,.05,.25,1)", fill: "forwards" });
     overlay.classList.add("is-hidden");
-    overlay.addEventListener("transitionend", () => overlay.remove(), { once: true });
-    setTimeout(() => overlay.remove(), 700);
+    flight.finished.then(() => {
+      land();
+      landing.target.closest("button")?.classList.add("has-landed");
+      flyer.remove();
+      overlay.remove();
+    }, () => { land(); flyer.remove(); overlay.remove(); });
   }
 
   function maybeLeave() {

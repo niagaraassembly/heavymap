@@ -315,6 +315,7 @@ export function developmentCountAction(count, onOpen) {
 }
 
 export function developmentRecordsSection(records, {
+  title: heading = "Development activity",
   count = records.length,
   loading = false,
   savedRecordIds = new Set(),
@@ -323,7 +324,7 @@ export function developmentRecordsSection(records, {
 } = {}) {
   const section = el("section", undefined, "hm-development-section");
   const head = el("header", undefined, "hm-development-section-head");
-  const title = el("h3", "Development activity");
+  const title = el("h3", heading);
   title.id = "hm-development-title";
   head.append(title);
   head.append(el("span", `${count} ${count === 1 ? "record" : "records"}`));

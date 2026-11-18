@@ -232,17 +232,20 @@ function notesPane(summary, labels, notesStore, releaseId, onCountChange) {
   return pane;
 }
 
-/** The right-hand work area: six tabs, only Notes working. */
-function workArea(summary, labels, notesStore, releaseId, initialTab, sourceRecords) {
+/** The right-hand work area: Notes, then Development when the parcel has permit records, then the rest. */
+function workArea(summary, labels, notesStore, releaseId, initialTab, sourceRecords, development = null) {
+  const tabs = development
+    ? [TABS[0], { id: "development", labelKey: "parcel.workspace.tab.development", works: true }, ...TABS.slice(1)]
+    : TABS;
   const work = el("div", undefined, "parcel-ws-work");
   const tablist = el("div", undefined, "parcel-ws-tabs");
   tablist.setAttribute("role", "tablist");
   const panes = new Map();
   let notesCount = null;
-  let activeTab = initialTab;
+  let activeTab = tabs.some((tab) => tab.id === initialTab) ? initialTab : "notes";
   let selectTab = null;
 
-  for (const tab of TABS) {
+  for (const tab of tabs) {
     const button = el("button", undefined, "parcel-ws-tab");
     button.setAttribute("role", "tab");
     button.dataset.parcelTab = tab.id;
@@ -252,6 +255,7 @@ function workArea(summary, labels, notesStore, releaseId, initialTab, sourceReco
       notesCount = el("em", "0", "parcel-ws-tab-count");
       button.append(notesCount);
     }
+    if (tab.id === "development") button.append(el("em", development.count.toLocaleString("en-CA"), "parcel-ws-tab-count"));
     button.addEventListener("click", () => selectTab(tab.id));
     tablist.append(button);
   }
@@ -261,11 +265,16 @@ function workArea(summary, labels, notesStore, releaseId, initialTab, sourceReco
     if (notesCount) notesCount.textContent = String(n);
   });
   panes.set("notes", notes);
+  if (development) {
+    const pane = el("div", undefined, "parcel-ws-development-pane");
+    pane.append(development.section);
+    panes.set("development", pane);
+  }
   const services = createWorkspaceServices({ summary, sourceRecords });
   panes.set("checklist", services.checklist);
   panes.set("lists", services.lists);
   panes.set("docs", services.docs);
-  for (const tab of TABS.filter((t) => !t.works)) {
+  for (const tab of tabs.filter((t) => !t.works)) {
     const pane = el("div", undefined, "parcel-ws-coming-pane");
     pane.append(el("p", labels.t(tab.labelKey)));
     panes.set(tab.id, pane);
@@ -278,7 +287,7 @@ function workArea(summary, labels, notesStore, releaseId, initialTab, sourceReco
     activeTab = id;
     for (const [tabId, pane] of panes) pane.hidden = tabId !== id;
     [...tablist.children].forEach((button, i) => {
-      button.setAttribute("aria-selected", String(TABS[i].id === id));
+      button.setAttribute("aria-selected", String(tabs[i].id === id));
     });
   };
   return { work, selectTab };
@@ -341,8 +350,11 @@ export function parcelWorkspaceElement(summary, labels, {
   const mobileSwitch = el("div", undefined, "parcel-ws-switch");
   const recordSwitch = el("button", labels.t("parcel.workspace.pane.record"), "parcel-ws-switch-btn");
   const notesSwitch = el("button", labels.t("parcel.workspace.tab.notes"), "parcel-ws-switch-btn");
-  recordSwitch.setAttribute("aria-pressed", "true");
-  notesSwitch.setAttribute("aria-pressed", "false");
+  // Opened for its development records, a phone shows the work pane (where they live) first.
+  const startOnWork = initialTab === "development" && developmentCount > 0;
+  if (startOnWork) ws.dataset.mobilePane = "notes";
+  recordSwitch.setAttribute("aria-pressed", String(!startOnWork));
+  notesSwitch.setAttribute("aria-pressed", String(startOnWork));
   mobileSwitch.append(recordSwitch, notesSwitch);
   ws.append(mobileSwitch);
 
@@ -354,15 +366,20 @@ export function parcelWorkspaceElement(summary, labels, {
     for (const fact of summary.access.rows) record.append(factRow(labels, fact));
     record.append(el("p", summary.access.caveat, "parcel-access-caveat"));
   }
-  if (developmentCount > 0) {
-    record.append(developmentRecordsSection(developmentRecords, {
+  /* Permit records live in the work area's Development tab, not in the record column. */
+  const development = developmentCount > 0
+    ? {
       count: developmentCount,
-      loading: developmentLoading,
-      savedRecordIds: new Set(savedDevelopmentRecordIds),
-      onSaveRecord: onSaveDevelopmentRecord,
-      onCreateNote: onCreateDevelopmentNote,
-    }));
-  }
+      section: developmentRecordsSection(developmentRecords, {
+        title: "Development",
+        count: developmentCount,
+        loading: developmentLoading,
+        savedRecordIds: new Set(savedDevelopmentRecordIds),
+        onSaveRecord: onSaveDevelopmentRecord,
+        onCreateNote: onCreateDevelopmentNote,
+      }),
+    }
+    : null;
   const sections = [
     {
       id: "addresses",
@@ -418,7 +435,7 @@ export function parcelWorkspaceElement(summary, labels, {
   }
   cols.append(record);
 
-  const { work, selectTab } = workArea(summary, labels, notesStore, releaseId, initialTab, sourceRecords);
+  const { work, selectTab } = workArea(summary, labels, notesStore, releaseId, initialTab, sourceRecords, development);
   work.addEventListener("click", (event) => {
     if (!event.target.closest('[role="tab"]')) return;
     ws.dataset.mobilePane = "notes";

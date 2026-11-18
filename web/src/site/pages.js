@@ -473,7 +473,7 @@ export function mapIntro() {
         <div id="layers-backdrop" class="layers-backdrop" data-layers-backdrop hidden></div>
         <section id="layers-panel" class="layers is-collapsed" aria-label="Map layers">
           <button type="button" id="layers-toggle" class="layers-launcher" aria-expanded="false" aria-controls="layers-dialog" title="Open map layers">
-            <span aria-hidden="true">▤</span><span class="hm-visually-hidden">Map layers</span>
+            <img class="layers-launcher-mark" data-layers-mark src="/heavy-element-mark.png" alt="" width="28" height="28"><span class="hm-visually-hidden">Map layers</span>
           </button>
           <div id="layers-dialog" class="layers-dialog" role="dialog" aria-modal="true" aria-labelledby="layers-dialog-title" hidden>
             <header class="layers-dialog-head"><div><p class="hm-map-dialog-eyebrow">HAMILTON</p><h2 id="layers-dialog-title">Map layers</h2></div><button type="button" class="hm-map-dialog-close" data-layers-close aria-label="Close map layers">×</button></header>

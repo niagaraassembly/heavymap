@@ -534,6 +534,14 @@
       "changed_at": "2026-11-16",
       "note": "Workspace work-area tab; coming in a later pass (BL-118)."
     },
+    "parcel.workspace.tab.development": {
+      "text": "Development",
+      "status": "draft",
+      "author": "team",
+      "reviewer": null,
+      "changed_at": "2026-11-17",
+      "note": "Workspace work-area tab: the parcel's linked development permit records, with their filter bar."
+    },
     "parcel.workspace.tab.docs": {
       "text": "Docs",
       "status": "draft",
