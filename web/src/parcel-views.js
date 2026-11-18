@@ -126,16 +126,19 @@ export function parcelCardElement(summary, labels, { geometry, onSave, onOpenRec
   titles.append(el("h2", summary.title, "parcel-title"));
   titles.append(el("p", summary.subtitle, "parcel-sub"));
   id.append(titles);
-  card.append(id);
+  /* Two tiers: the identity and facts across the top, then one row of actions underneath.
+   * New actions join that row (it wraps), so the facts never have to give up room for buttons. */
+  const main = el("div", undefined, "parcel-card-main");
+  main.append(id);
+  const actions = el("div", undefined, "parcel-card-actions");
   const development = developmentCountAction(developmentCount, onOpenDevelopment);
-  if (development) card.append(development);
 
   const zoning = summary.land.zoning[0];
   const plan = summary.land.planUse[0];
-  card.append(
+  main.append(
     fact(labels.t("parcel.tile.area"), summary.area.ha.toFixed(2), fmtM2(summary.area.m2)),
   );
-  card.lastElementChild.classList.add("parcel-fact-area");
+  main.lastElementChild.classList.add("parcel-fact-area");
   if (summary.buildingFacts) {
     const edge = summary.buildingFacts.nearest_building_edge_m;
     const buildings = fact(
@@ -144,7 +147,7 @@ export function parcelCardElement(summary, labels, { geometry, onSave, onOpenRec
       edge == null ? "No assigned footprint" : `Nearest edge ${edge.toLocaleString("en-CA")} m`,
     );
     buildings.classList.add("parcel-fact-buildings");
-    card.append(buildings);
+    main.append(buildings);
   }
   const zoneCell = fact(
     labels.t("parcel.field.zoning"),
@@ -157,7 +160,7 @@ export function parcelCardElement(summary, labels, { geometry, onSave, onOpenRec
       .join(" · "),
   );
   zoneCell.classList.add("parcel-fact-zone");
-  card.append(zoneCell);
+  main.append(zoneCell);
   const planCell = fact(
     labels.t("parcel.field.plan_use"),
     plan ? plan.class : labels.t("parcel.none_found"),
@@ -170,14 +173,14 @@ export function parcelCardElement(summary, labels, { geometry, onSave, onOpenRec
       .join(" · "),
   );
   planCell.classList.add("parcel-fact-plan");
-  card.append(planCell);
+  main.append(planCell);
   const settingCell = fact(
     labels.t("parcel.field.setting"),
     summary.setting.boundaryText,
     summary.setting.regulatedText,
   );
   settingCell.classList.add("parcel-fact-setting");
-  card.append(settingCell);
+  main.append(settingCell);
   const gapsCell = fact(
     labels.t("parcel.field.gaps"),
     String(summary.gaps.count),
@@ -185,22 +188,23 @@ export function parcelCardElement(summary, labels, { geometry, onSave, onOpenRec
   );
   if (summary.gaps.count > 0) gapsCell.classList.add("parcel-fact-warn");
   gapsCell.classList.add("parcel-fact-gaps");
-  card.append(gapsCell);
+  main.append(gapsCell);
 
   const save = el("button", "☆ Save", "parcel-card-save");
   save.type = "button";
   save.dataset.parcelSave = "";
   save.addEventListener("click", onSave);
-  card.append(save);
+  if (development) actions.append(development);
+  actions.append(save);
 
   const open = el("button", undefined, "parcel-go");
   open.append(el("span", "Open record"));
   open.addEventListener("click", onOpenRecord);
-  card.append(open);
+  actions.append(open);
   const close = el("button", "✕", "parcel-xx");
   close.setAttribute("aria-label", "Close parcel card");
   close.addEventListener("click", onClose);
-  card.append(close);
+  card.append(main, actions, close);
   return card;
 }
 

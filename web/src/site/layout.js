@@ -67,7 +67,8 @@ const MAP_STATUS_WORDS = {
 /**
  * The /map/ header keeps the brand, site menu, reader shortcut, and place selector.
  */
-function mapHeader(regions) {
+/** The city/region selector, shared by the map and every service bar; it sits just left of the account icon. */
+function placeSelector(regions = []) {
   const geos = regions.flatMap((r) =>
     (r.geographies ?? []).map((g) => ({ ...g, region: r.name })),
   );
@@ -78,20 +79,27 @@ function mapHeader(regions) {
         `<li><span${g === current ? ' aria-current="true"' : ""}>${esc(g.name)} · ${esc(g.region)}</span><small>Map ${esc(MAP_STATUS_WORDS[g.map.status] ?? "not yet mapped")}</small></li>`,
     )
     .join("");
+  return `<div class="hm-place" data-place-selector><button type="button" class="hm-place-button" data-place-button aria-haspopup="true" aria-expanded="false" aria-controls="hm-place-panel"><span class="hm-place-label">${current ? `${esc(current.name)} · ${esc(current.region)}` : "No place yet"}</span> <span aria-hidden="true">▾</span></button><div class="hm-place-panel" id="hm-place-panel" data-place-panel hidden><ul>${options}</ul><p><a href="/about/">About HeavyMap</a></p><p><a href="/desks/">Desks &amp; places</a></p></div></div>`;
+}
+
+const searchIcon = '<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m12.5 12.5 4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+
+/**
+ * The /map/ header: brand, service icons, a divider, the parcel search (always open on wide
+ * screens; an icon that takes over the bar on phones), then the place selector and account icon.
+ */
+function mapHeader(regions) {
   return `<header class="alt-header alt-header--map">
     <a class="wordmark" href="/"><span class="wordmark-type"><span class="wordmark-heavy">Heavy</span><span class="wordmark-map">Map</span></span><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>
     ${serviceTabs("map")}
-    <div class="hm-site-menu" data-site-menu>
-      <button type="button" class="hm-site-menu-toggle" data-site-menu-toggle aria-label="Open site menu" aria-haspopup="true" aria-expanded="false" aria-controls="hm-site-menu-panel"><span aria-hidden="true">▾</span></button>
-      <div class="hm-site-menu-panel" id="hm-site-menu-panel" data-site-menu-panel hidden><ul><li><a href="/desks/">Desks</a></li><li><a href="/desks/western-new-york/">Western New York</a></li><li><a href="/desks/niagara-brant/">Niagara–Brant</a></li><li><a href="/reader/">Reader</a></li><li><a href="/map/" aria-current="page">Map</a></li><li><a href="/about/">About</a></li><li><a href="/about/credits/">Credits</a></li><li><a href="/preferences/">Email preferences</a></li></ul></div>
-    </div>
+    <span class="hm-bar-divider" aria-hidden="true"></span>
     <div class="hm-map-utilities" data-map-utilities>
-      <button class="hm-map-service" type="button" data-search-toggle aria-label="Search parcels" title="Search parcels"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m12.5 12.5 4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-      ${accountButton()}
-      <div class="hm-map-searchbox" data-map-searchbox hidden><label class="hm-visually-hidden" for="hm-map-search">Find a Hamilton parcel by key</label><input id="hm-map-search" type="search" placeholder="Paste parcel key" title="Open a Hamilton parcel record"><button type="button" data-search-close aria-label="Close search">×</button></div>
+      <button class="hm-map-service hm-map-search-toggle" type="button" data-search-toggle aria-label="Search parcels" title="Search parcels">${searchIcon}</button>
+      <div class="hm-map-searchbox" data-map-searchbox><span class="hm-map-searchbox-icon">${searchIcon}</span><label class="hm-visually-hidden" for="hm-map-search">Find a Hamilton parcel by key</label><input id="hm-map-search" type="search" placeholder="Search parcels · paste a parcel key" title="Open a Hamilton parcel record"><button type="button" data-search-close aria-label="Close search">×</button></div>
     </div>
     <div class="hm-map-header-spacer"></div>
-    <div class="hm-place" data-place-selector><button type="button" class="hm-place-button" data-place-button aria-haspopup="true" aria-expanded="false" aria-controls="hm-place-panel"><span>${current ? `${esc(current.name)} · ${esc(current.region)}` : "No place yet"}</span> <span aria-hidden="true">▾</span></button><div class="hm-place-panel" id="hm-place-panel" data-place-panel hidden><ul>${options}</ul><p><a href="/about/">About HeavyMap</a></p><p><a href="/desks/">Desks &amp; places</a></p></div></div>
+    ${placeSelector(regions)}
+    ${accountButton()}
   </header>${accountDialog}`;
 }
 
@@ -152,7 +160,7 @@ ${css}${js}
 </head>
 <body class="alternate ${esc(o.bodyClass ?? "")}">
 ${banner}<a class="skip-link" href="#content">Skip to content</a>
-${o.path === "/map/" ? mapHeader(o.regions) : mainService(o.path) ? docsHeader({ ...o.themes, service: o.path.slice(1, -1) }) : header(o.path, o.themes)}
+${o.path === "/map/" ? mapHeader(o.regions) : mainService(o.path) ? docsHeader({ ...o.themes, service: o.path.slice(1, -1), regions: o.regions }) : header(o.path, o.themes)}
 <main id="content" tabindex="-1">${o.main}</main>
 ${o.catalogue ? `<script type="application/json" id="hm-catalogue">${JSON.stringify(o.catalogue).replace(/</g, "\\u003c")}</script>` : ""}
 ${mainService(o.path) ? serviceBottom(o.themes, o.regions, o.path) : `${footer(o.regions)}${o.path === "/map/" ? (o.after ?? "").replace("<!-- map-theme-picker -->", themePicker(o.themes)) : o.after ?? ""}`}
@@ -166,7 +174,7 @@ const mainService = (path) => MAIN_SERVICES.has(path);
 
 function docsHeader(options) {
   const create = options.service === "docs" ? '<div class="hm-docs-head-right"><button type="button" class="hm-docs-primary hm-docs-new" data-docs-create aria-label="New document"><span aria-hidden="true">＋</span><span class="hm-docs-new-label">New document</span></button><div class="hm-docs-head-actions" data-docs-header-editor hidden></div></div>' : "";
-  return `<header class="alt-header alt-header--docs"><a class="wordmark" href="/"><span class="wordmark-type"><span class="wordmark-heavy">Heavy</span><span class="wordmark-map">Map</span></span><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>${serviceTabs(options.service)}${create}</header>`;
+  return `<header class="alt-header alt-header--docs"><a class="wordmark" href="/"><span class="wordmark-type"><span class="wordmark-heavy">Heavy</span><span class="wordmark-map">Map</span></span><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>${serviceTabs(options.service)}${create}${placeSelector(options.regions)}${accountButton()}</header>${accountDialog}`;
 }
 
 function serviceBottom(themes, regions, currentPath) {

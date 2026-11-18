@@ -1861,3 +1861,78 @@ body.hm-home-leaving { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .hm-home-sheet, body.hm-home .alt-footer, .alternate .alt-header { transition: none; }
 }
+
+/* ---- Bars and parcel card, 2026-11-17 (second pass) ----------------------- */
+
+/* Service bars share the map bar's 46px height. */
+body.hm-docs-service-page { grid-template-rows: 46px minmax(0, 1fr) 38px; }
+.alt-header.alt-header--docs { height: 46px; min-height: 46px; justify-content: flex-start; gap: 10px; }
+.alt-header--docs .hm-service-tabs { margin-right: auto; }
+.alt-header--docs .hm-docs-head-right { margin-left: auto; }
+.alt-header--docs .hm-service-tabs .hm-map-service { height: 36px; min-height: 36px; }
+
+/* Place selector and account icon close the bar on the right, account last, everywhere. */
+.alt-header--docs .hm-place-button,
+.alt-header--map .hm-place-button { min-height: 32px; border-color: #ffffff59; color: #fff; background: transparent; font: .78rem/1.2 var(--sans); }
+.alt-header--docs .hm-place-button:hover,
+.alt-header--map .hm-place-button:hover { background: var(--bar-hover); }
+.hm-place-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.alt-header--docs .hm-place-panel, .alt-header--map .hm-place-panel { color: var(--text); }
+.alt-header--docs > .hm-map-profile,
+.alt-header--map > .hm-map-profile { flex: none; width: 34px; height: 32px; min-height: 32px; border: 1px solid #ffffff59; border-radius: 2px; color: #fff; }
+.alt-header--docs > .hm-map-profile:hover, .alt-header--map > .hm-map-profile:hover { background: var(--bar-hover); }
+.alt-header--docs > .hm-map-profile svg, .alt-header--map > .hm-map-profile svg { width: 19px; height: 19px; }
+
+/* Map bar: a divider where the menu was, then a parcel search that stays open on wide screens. */
+.hm-bar-divider { flex: none; width: 1px; height: 24px; margin: 0 4px; background: #ffffff40; }
+.alt-header--map .hm-map-utilities { flex: 1 1 auto; min-width: 0; max-width: 520px; }
+.alt-header--map .hm-map-search-toggle { display: none; }
+.alt-header--map .hm-map-searchbox { display: flex; width: 100%; height: 32px; border-color: #ffffff59; border-radius: 3px; color: #fff; background: #ffffff14; }
+.alt-header--map .hm-map-searchbox:focus-within { border-color: #fff; color: var(--text); background: var(--surface-raised); }
+.hm-map-searchbox-icon { display: inline-flex; flex: none; padding-left: 9px; opacity: .85; }
+.hm-map-searchbox-icon svg { width: 16px; height: 16px; }
+.alt-header--map .hm-map-searchbox input { font-size: .8rem; }
+.alt-header--map .hm-map-searchbox input::placeholder { color: currentColor; opacity: .72; }
+.alt-header--map .hm-map-searchbox button { color: inherit; opacity: .8; }
+.alt-header--map .hm-map-searchbox input:placeholder-shown + button { visibility: hidden; }
+.alt-header--map .hm-service-tabs { margin-right: 0; }
+.alt-header--map .hm-map-header-spacer { flex: 1 1 16px; }
+
+/* The selected service icon: a very soft yellow square instead of the white-ish fill. */
+.alt-header .hm-service-tabs .hm-map-service[aria-current="page"],
+.alt-header--docs nav .hm-map-service[aria-current="page"],
+.alt-header:not(.alt-header--map):not(.alt-header--docs) .hm-service-tabs .hm-map-service[aria-current="page"] {
+  color: #fff3c8;
+  background: #f4cd5524;
+  box-shadow: inset 0 0 0 1px #f4cd555c;
+}
+
+@media (max-width: 700px) {
+  /* Phones: search is an icon; opened, it takes the bar between the wordmark and the account icon. */
+  .alt-header--map .hm-map-utilities { flex: 0 0 auto; }
+  .alt-header--map .hm-map-search-toggle { display: inline-flex; }
+  .alt-header--map .hm-map-searchbox { display: none; }
+  .alt-header--map .hm-map-header-spacer { flex: 1 1 auto; }
+  .alt-header--map.search-open .hm-service-tabs,
+  .alt-header--map.search-open .hm-bar-divider,
+  .alt-header--map.search-open .hm-map-header-spacer,
+  .alt-header--map.search-open .hm-place,
+  .alt-header--map.search-open .hm-map-search-toggle { display: none; }
+  .alt-header--map.search-open .hm-map-utilities { flex: 1 1 auto; max-width: none; }
+  .alt-header--map.search-open .hm-map-searchbox { display: flex; color: var(--text); background: var(--surface-raised); }
+  .alt-header--map.search-open .hm-map-searchbox input:placeholder-shown + button { visibility: visible; }
+  .alt-header--map .hm-place-button, .alt-header--docs .hm-place-button { max-width: 7.5rem; padding-inline: .4rem; font-size: .7rem; }
+  .alt-header--docs .hm-docs-head-right { margin-left: 0; }
+  .hm-bar-divider { display: none; }
+}
+@media (max-width: 600px) {
+  /* Phones: the HeavyMap mark alone stands for the wordmark so the icons, search and account fit. */
+  .alt-header--map .wordmark-type, .alt-header--docs .wordmark-type { display: none; }
+  .alt-header--map > .wordmark, .alt-header--docs > .wordmark { margin-right: 0; }
+  .alt-header--map, .alt-header.alt-header--docs { gap: 4px; padding-inline: 8px; }
+  .alt-header--map .hm-service-tabs .hm-map-service, .alt-header--docs .hm-service-tabs .hm-map-service { width: 32px; }
+}
+@media (max-width: 480px) {
+  .alt-header--docs .hm-place, .alt-header--map .hm-place { display: none; }
+}
+.alt-header--map .hm-map-searchbox input:focus-visible { outline: none; }

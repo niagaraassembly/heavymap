@@ -2934,3 +2934,42 @@ h2 {
 .map-workspace .hm-development-record-provenance { color: var(--muted); }
 .map-workspace .hm-development-action,
 .map-workspace .hm-development-icon-action { color: var(--ink); }
+
+/* Parcel card: facts on top, one row of actions underneath that grows as actions are added. */
+.parcel-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 10px 40px 10px 12px;
+  grid-template-columns: none;
+  grid-template-areas: none;
+}
+.parcel-card-main {
+  display: grid;
+  grid-template-columns: minmax(150px, 1.35fr) repeat(auto-fit, minmax(96px, 1fr));
+  align-items: stretch;
+  min-width: 0;
+}
+.parcel-card-main .parcel-fact { padding: 3px 10px; }
+.parcel-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-top: 9px;
+  padding-top: 9px;
+  border-top: 1px solid var(--line);
+}
+.parcel-card-actions > button { flex: 0 0 auto; min-height: 34px; margin: 0; padding: 0 14px; border-radius: 8px; font-size: 12px; font-weight: 650; white-space: nowrap; }
+.parcel-card-actions .hm-development-count { margin: 0 auto 0 0; }
+.parcel-card > .parcel-xx { position: absolute; top: 8px; right: 8px; }
+@media (max-width: 900px) {
+  .parcel-card { padding: 9px 10px; }
+  .parcel-card-main { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 8px; }
+  .parcel-card-main .parcel-card-id { grid-area: auto; grid-column: 1 / -1; padding: 0 30px 7px 0; }
+  .parcel-card-main .parcel-fact { grid-area: auto; padding: 3px 0; }
+  .parcel-card-main .parcel-fact-plan { display: flex; }
+  .parcel-card-actions > button { flex: 1 1 auto; }
+  .parcel-card-actions .hm-development-count { flex-basis: 100%; margin: 0; }
+}

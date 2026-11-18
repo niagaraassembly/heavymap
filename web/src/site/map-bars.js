@@ -42,20 +42,24 @@ export function mountMapBars() {
   const close = box?.querySelector("[data-search-close]");
   if (!header || !toggle || !box || !input || !close) return;
 
-  const setOpen = (open) => {
+  /* Wide screens: the box is always shown (CSS). Phones: the icon opens it across the bar,
+   * leaving only the wordmark and account icon, and × or Escape folds it back. */
+  const compact = matchMedia("(max-width: 700px)");
+  const setOpen = (open, { focus = true } = {}) => {
     header.classList.toggle("search-open", open);
-    box.hidden = !open;
     toggle.setAttribute("aria-expanded", String(open));
+    if (!focus) return;
     if (open) input.focus({ preventScroll: true });
     else toggle.focus({ preventScroll: true });
   };
   toggle.setAttribute("aria-expanded", "false");
   toggle.addEventListener("click", () => setOpen(true));
-  close.addEventListener("click", () => setOpen(false));
+  close.addEventListener("click", () => { input.value = ""; input.dispatchEvent(new Event("input")); if (compact.matches) setOpen(false); else input.focus(); });
   box.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      event.stopPropagation();
-      setOpen(false);
-    }
+    if (event.key !== "Escape") return;
+    event.stopPropagation();
+    if (compact.matches) setOpen(false);
+    else input.blur();
   });
+  compact.addEventListener("change", () => setOpen(false, { focus: false }));
 }
