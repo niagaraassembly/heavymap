@@ -20,12 +20,15 @@ const notesIcon = '<svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="
 const savedIcon = '<svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5h10v14l-5-3.4-5 3.4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
 const developmentIcon = '<svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 17V7l4 2V5l5 3V3h5v14H3Zm3-3h1m2 0h1m2 0h1m2 0h1" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
+/* Reader, Docs and the map live in the service icons on the left, so the right side keeps only site pages. */
 const NAV = [
+  { href: "/about/", label: "About", section: "about" },
   { href: "/desks/", label: "Desks", section: "desks" },
-  { href: "/reader/", label: "Reader", section: "reader", icon: bookIcon },
-  { href: "/docs/", label: "Docs", section: "docs", icon: docsIcon },
-  { href: "/map/", label: "Map", section: "map" },
 ];
+
+const accountButton = (className = "hm-map-service hm-map-profile") =>
+  `<button class="${className}" type="button" data-local-account-open aria-haspopup="dialog" aria-controls="hm-local-account" aria-label="Your data" title="Manage your local data"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="6.5" r="3.2" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 17c1-3.5 3.5-5 6.5-5s5.5 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>`;
+const accountDialog = `<dialog class="hm-local-account" id="hm-local-account" aria-labelledby="hm-local-account-title"><div class="hm-local-account-head"><h2 id="hm-local-account-title">Your data</h2><button type="button" class="hm-local-account-close" data-local-account-close aria-label="Close">×</button></div><p class="hm-local-account-status" data-local-account-status role="status" aria-live="polite">Loading your local data…</p><ul class="hm-local-data-list" data-local-data-list></ul></dialog>`;
 
 /** `/a/b/` -> "a": which header item a path belongs to. */
 const sectionOf = (path) =>
@@ -39,11 +42,12 @@ function header(path, themes) {
     (n) =>
       `<a href="${n.href}"${n.section === current ? ' aria-current="page"' : ""}${n.icon ? ' class="reader-nav"' : ""}>${n.icon ?? ""}${n.label}</a>`,
   ).join("");
-  return `<header class="alt-header"><a class="wordmark" href="/"><span class="wordmark-type"><span class="wordmark-heavy">Heavy</span><span class="wordmark-map">Map</span></span><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>${serviceTabs(current)}<nav aria-label="Main navigation">${links}</nav><a class="alt-follow" href="/subscribe/"${current === "subscribe" ? ' aria-current="page"' : ""}>Follow your regions</a>${themePicker(themes)}</header>`;
+  return `<header class="alt-header"><a class="wordmark" href="/"><span class="wordmark-type"><span class="wordmark-heavy">Heavy</span><span class="wordmark-map">Map</span></span><img class="wordmark-mark" src="/heavy-element-mark.png" alt=""></a>${serviceTabs(current)}<nav aria-label="Main navigation">${links}</nav><a class="alt-follow" href="/subscribe/"${current === "subscribe" ? ' aria-current="page"' : ""}>Follow your regions</a>${themePicker(themes)}${accountButton("hm-account-button")}</header>${accountDialog}`;
 }
 
 function serviceTabs(current = "") {
   const links = [
+    ["/map/", "Parcel map", mapIcon, "map"],
     ["/reader/", "Reader", bookIcon, "reader"],
     ["/notes/", "Notes", notesIcon, "notes"],
     ["/saved/", "Saved items", savedIcon, "saved"],
@@ -83,12 +87,12 @@ function mapHeader(regions) {
     </div>
     <div class="hm-map-utilities" data-map-utilities>
       <button class="hm-map-service" type="button" data-search-toggle aria-label="Search parcels" title="Search parcels"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m12.5 12.5 4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-      <button class="hm-map-service hm-map-profile" type="button" data-local-account-open aria-haspopup="dialog" aria-controls="hm-local-account" aria-label="Your data" title="Manage your local data"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="6.5" r="3.2" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 17c1-3.5 3.5-5 6.5-5s5.5 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+      ${accountButton()}
       <div class="hm-map-searchbox" data-map-searchbox hidden><label class="hm-visually-hidden" for="hm-map-search">Find a Hamilton parcel by key</label><input id="hm-map-search" type="search" placeholder="Paste parcel key" title="Open a Hamilton parcel record"><button type="button" data-search-close aria-label="Close search">×</button></div>
     </div>
     <div class="hm-map-header-spacer"></div>
     <div class="hm-place" data-place-selector><button type="button" class="hm-place-button" data-place-button aria-haspopup="true" aria-expanded="false" aria-controls="hm-place-panel"><span>${current ? `${esc(current.name)} · ${esc(current.region)}` : "No place yet"}</span> <span aria-hidden="true">▾</span></button><div class="hm-place-panel" id="hm-place-panel" data-place-panel hidden><ul>${options}</ul><p><a href="/about/">About HeavyMap</a></p><p><a href="/desks/">Desks &amp; places</a></p></div></div>
-  </header><dialog class="hm-local-account" id="hm-local-account" aria-labelledby="hm-local-account-title"><div class="hm-local-account-head"><h2 id="hm-local-account-title">Your data</h2><button type="button" class="hm-local-account-close" data-local-account-close aria-label="Close">×</button></div><p class="hm-local-account-status" data-local-account-status role="status" aria-live="polite">Loading your local data…</p><ul class="hm-local-data-list" data-local-data-list></ul></dialog>`;
+  </header>${accountDialog}`;
 }
 
 /** Prebuilt picker markup; hidden until theme-picker.js enhances it (spec D section 5). The button shows the flag only; the name is in the panel and the button's accessible name. */

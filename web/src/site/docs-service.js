@@ -55,7 +55,15 @@ const TEMPLATES = [
     title: "Project funding proposal",
     sections: ["Project summary", "Need and opportunity", "Site and development plan", "Outcomes and public benefit", "Budget and funding request", "Delivery plan and milestones", "Risks and mitigation", "Evidence and supporting materials"],
   },
+  {
+    // Shaped on the property pages in the pitch site (24 Clark, 51 Hayes): headline terms, figures, details, access, fit.
+    id: "property-brief", label: "Property brief", kind: "PROPERTY BRIEF",
+    description: "Size up one property for a tenant or buyer: headline terms, key figures, costs, access, and how it fits the plan.",
+    title: "Property brief",
+    sections: ["At a glance", "Key figures", "Property details", "Lease and operating costs", "Location and access", "Area and workforce", "Strategic fit"],
+  },
 ];
+const ALL_SECTIONS = "__all__";
 const templateFor = (id) => TEMPLATES.find((template) => template.id === id) ?? TEMPLATES[0];
 const savedParcelLabel = (item) => {
   const candidates = [item.address, item.title].filter((value) => typeof value === "string");
@@ -165,7 +173,7 @@ export async function mountDocsService(root) {
     renderList();
     if (selectedDocId) {
       const selected = docs.find((doc) => doc.id === selectedDocId);
-      if (selected) open(selected, editing);
+      if (selected) void openDocument(selected, editing);
       else showEmpty();
     } else showEmpty();
   };
@@ -290,11 +298,12 @@ export async function mountDocsService(root) {
     headerActions.hidden = false;
     headerActions.replaceChildren();
     const state = el("span", editing ? "EDITING" : "READING", "hm-docs-mode");
-    const back = button("←", showEmpty, "hm-docs-back");
+    const back = button("", async () => { if (editing) await persist(); showEmpty(); }, "hm-docs-back");
+    back.innerHTML = '<svg viewBox="0 0 20 20" width="22" height="22" aria-hidden="true"><path d="M16 10H4.5m0 0 5-5m-5 5 5 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     back.setAttribute("aria-label", "Back to document library");
     back.title = "Back to document library";
     headerActions.append(back, state, el("span", "Saved on this device", "hm-docs-save-status"));
-    if (editing) headerActions.append(button("Done", async () => { await persist(); editing = false; renderDocument(); }, "hm-docs-primary"));
+    if (editing) headerActions.append(button("Save", async () => { await persist(); editing = false; renderDocument(); }, "hm-docs-primary"));
     else headerActions.append(button("Edit document", () => { editing = true; renderDocument(); }, "hm-docs-primary"));
 
     const workspace = el("div", undefined, "hm-docs-editor-workspace");
@@ -325,9 +334,16 @@ export async function mountDocsService(root) {
     if (editing) {
       const addParcel = document.createElement("select");
       addParcel.setAttribute("aria-label", "Link another parcel to this document");
-      addParcel.append(new Option("＋ Link another parcel…", ""));
-      for (const item of parcelEntries.filter((entry) => !activeDoc.parcelKeys.includes(entry.key))) addParcel.append(new Option(savedParcelLabel(item), item.key));
+      addParcel.append(new Option("＋ Link another parcel…", ""), new Option("Choose a new parcel…", "__new__"));
+      const linkable = parcelEntries.filter((entry) => !activeDoc.parcelKeys.includes(entry.key));
+      if (linkable.length) {
+        const group = document.createElement("optgroup");
+        group.label = "Your saved parcels";
+        for (const item of linkable) group.append(new Option(parcelLabels.get(item.key) || savedParcelLabel(item), item.key));
+        addParcel.append(group);
+      }
       addParcel.addEventListener("change", () => {
+        if (addParcel.value === "__new__") { addParcel.value = ""; openFindParcelDialog(); return; }
         if (!addParcel.value) return;
         activeDoc.parcelKeys = [...activeDoc.parcelKeys, addParcel.value];
         saveSoon(); renderDocument();
@@ -356,6 +372,13 @@ export async function mountDocsService(root) {
       outlineHead.append(addOptional);
     }
     outline.append(outlineHead);
+    if (activeDoc.sections?.length > 1) {
+      const allRow = el("div", undefined, "hm-docs-outline-row hm-docs-outline-all");
+      const allPick = button("", () => { selectedSectionId = ALL_SECTIONS; renderDocument(); }, `hm-docs-outline-link${selectedSectionId === ALL_SECTIONS ? " is-selected" : ""}`);
+      allPick.append(el("span", "All sections"), el("small", String(activeDoc.sections.length)));
+      allRow.append(allPick);
+      outline.append(allRow);
+    }
     for (const section of activeDoc.sections ?? []) {
       const row = el("div", undefined, `hm-docs-outline-row${section.parentId ? " is-child" : ""}`);
       const pick = button(section.title, () => { selectedSectionId = section.id; renderDocument(); }, `hm-docs-outline-link${selectedSectionId === section.id ? " is-selected" : ""}`);
@@ -378,7 +401,8 @@ export async function mountDocsService(root) {
     }
     const body = el("section", undefined, "hm-docs-writing-pane");
     const section = activeDoc.sections.find((item) => item.id === selectedSectionId);
-    if (section) {
+    if (selectedSectionId === ALL_SECTIONS) renderAllSections(body);
+    else if (section) {
       const sectionTitle = document.createElement("input");
       sectionTitle.value = section.title; sectionTitle.disabled = !editing; sectionTitle.maxLength = 180;
       sectionTitle.setAttribute("aria-label", "Section title");
@@ -418,6 +442,81 @@ export async function mountDocsService(root) {
     detail.append(workspace);
   }
 
+  /** Every section in order on one scrolling page; in edit mode each one keeps its own editor. */
+  function renderAllSections(body) {
+    body.classList.add("is-all-sections");
+    body.append(el("p", `${templateFor(activeDoc.template).kind} · ALL SECTIONS`, "hm-docs-kicker"), el("h1", activeDoc.title || "Untitled document", "hm-docs-all-title"));
+    for (const item of activeDoc.sections) {
+      const part = el("section", undefined, `hm-docs-all-section${item.parentId ? " is-child" : ""}`);
+      const heading = el(item.parentId ? "h3" : "h2", item.title);
+      const jump = button("Open", () => { selectedSectionId = item.id; renderDocument(); }, "hm-docs-quiet-button hm-docs-all-open");
+      jump.setAttribute("aria-label", `Open ${item.title} on its own`);
+      const head = el("header", undefined, "hm-docs-all-head");
+      head.append(heading, jump);
+      part.append(head);
+      if (editing) {
+        const editor = document.createElement("textarea");
+        editor.value = item.markdown ?? "";
+        editor.placeholder = "Write this section…";
+        editor.setAttribute("aria-label", `${item.title} content in Markdown`);
+        const fit = () => { editor.style.height = "auto"; editor.style.height = `${Math.max(120, editor.scrollHeight + 2)}px`; };
+        editor.addEventListener("input", () => { item.markdown = editor.value; fit(); saveSoon(); });
+        part.append(editor);
+        requestAnimationFrame(fit);
+      } else {
+        const reader = el("article", undefined, "hm-docs-markdown");
+        markdown(reader, item.markdown);
+        part.append(reader);
+      }
+      body.append(part);
+    }
+  }
+
+  /** A parcel can only be linked once it is saved, so this explains the round trip instead of a picker. */
+  function openFindParcelDialog() {
+    let dialog = document.querySelector(".hm-docs-find-parcel");
+    if (!dialog) {
+      dialog = document.createElement("dialog");
+      dialog.className = "hm-docs-find-parcel";
+      dialog.setAttribute("aria-labelledby", "hm-docs-find-parcel-title");
+      const head = el("header");
+      const close = button("×", () => dialog.close(), "hm-docs-find-close");
+      close.setAttribute("aria-label", "Close");
+      head.append(el("p", "LINK A NEW PARCEL", "hm-docs-kicker"), close);
+      const heading = el("h2", "Find it on the map, save it, then come back.");
+      heading.id = "hm-docs-find-parcel-title";
+      const steps = el("ol", undefined, "hm-docs-find-steps");
+      steps.append(
+        el("li", "Open the map and find the parcel by searching or browsing."),
+        el("li", "Open its card and press Save. It joins your saved parcels."),
+        el("li", "Return to this tab. The parcel appears in “Link another parcel”."),
+      );
+      const note = el("p", "This document is saved on this device, so nothing is lost while you look.", "hm-docs-find-note");
+      const actions = el("footer");
+      const map = el("a", "Open the map in a new tab ↗", "hm-docs-primary");
+      map.href = "/map/"; map.target = "_blank"; map.rel = "noopener";
+      map.addEventListener("click", () => dialog.close());
+      actions.append(button("Stay here", () => dialog.close(), "hm-docs-quiet-button"), map);
+      dialog.append(head, heading, steps, note, actions);
+      dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+      document.body.append(dialog);
+    }
+    dialog.showModal();
+  }
+
+  /* Coming back from the map: pick up parcels saved there so they can be linked straight away. */
+  document.addEventListener("visibilitychange", async () => {
+    if (document.visibilityState !== "visible" || !activeDoc || !editing) return;
+    const before = parcelEntries.map((item) => item.key).join("|");
+    const saved = await recordsFor("saved");
+    const fresh = saved.filter((item) => item.kind === "parcel" && item.key);
+    if (fresh.map((item) => item.key).join("|") === before) return;
+    parcelEntries = fresh;
+    for (const item of fresh) if (!parcelLabels.has(item.key)) parcelLabels.set(item.key, savedParcelLabel(item));
+    status.textContent = "New saved parcels are ready to link.";
+    renderDocument();
+  });
+
   async function awaitFieldNotes(parcelKeys) {
     if (!parcelKeys?.length) return [];
     return (await recordsFor("field-notes")).filter((note) => parcelKeys.includes(note.parcelKey)).sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
@@ -453,7 +552,10 @@ export async function mountDocsService(root) {
       }
       note.value = ""; feedback.textContent = "Field comment saved."; saveSoon();
     }, "hm-docs-primary");
-    panel.append(parcelSelect, layerSelect, rowSearch, rowSelect, fieldSelect, value, note, save, feedback);
+    // A wrapper, not the <details> itself, carries the grid: Chrome lays out details content in its own box.
+    const fields = el("div", undefined, "hm-docs-field-grid");
+    fields.append(parcelSelect, layerSelect, rowSearch, rowSelect, fieldSelect, value, note, save, feedback);
+    panel.append(fields);
     let catalog = [];
     panel.catalog = catalog;
     function updateRows() {
@@ -812,11 +914,17 @@ async function mountSavedLibrary({ rail, content, status, developmentOnly }) {
       railDetail.append(viewButton(collection.name, count, savedScope === collection.id, () => { savedScope = collection.id; render(); }));
     }
   };
+  const inSavedScope = (item) => savedScope === "all"
+    || savedScope === "recent" && dateFor(item) >= recentCutoff()
+    || savedScope === "uncollected" && (!Array.isArray(item.collectionIds) || item.collectionIds.length === 0)
+    || collections.some((collection) => collection.id === savedScope && item.collectionIds?.includes(collection.id));
   const render = () => {
     renderSidebar();
     categoryNav.replaceChildren();
+    // Chip counts follow the rail view (all, recent, uncollected or a collection), not the whole library.
+    const viewItems = developmentOnly ? items : items.filter(inSavedScope);
     for (const name of categories) {
-      const count = name === "All" ? items.length : items.filter((item) => category(item) === name).length;
+      const count = name === "All" ? viewItems.length : viewItems.filter((item) => category(item) === name).length;
       const filter = button("", () => { selected = name; render(); }, `hm-docs-type-filter${selected === name ? " is-active" : ""}`);
       filter.setAttribute("aria-pressed", String(selected === name));
       filter.append(el("span", name === "All" ? "All saved" : name), el("small", String(count)));
@@ -843,10 +951,7 @@ async function mountSavedLibrary({ rail, content, status, developmentOnly }) {
         if (value !== keys) return false;
       }
       return true;
-    }) : items.filter((item) => savedScope === "all"
-      || savedScope === "recent" && dateFor(item) >= recentCutoff()
-      || savedScope === "uncollected" && (!Array.isArray(item.collectionIds) || item.collectionIds.length === 0)
-      || collections.some((collection) => collection.id === savedScope && item.collectionIds?.includes(collection.id)));
+    }) : viewItems;
     const shown = scopedItems.filter((item) => (developmentOnly || selected === "All" || category(item) === selected)
       && `${item.title ?? ""} ${item.subtitle ?? ""} ${item.address ?? ""} ${item.key ?? ""} ${item.id ?? ""} ${parcelLabels.get(item.key) ?? ""} ${fieldValue(item, ["stage", "status", "lifecycleStage", "projectStage", "approvalStatus", "planningStatus", "sector", "industry", "industrySector", "projectType", "developmentType", "municipality", "city", "town", "region", "location"])} ${placeFor(item)}`.toLowerCase().includes(query));
     if (!shown.length) {

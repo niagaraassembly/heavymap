@@ -33,6 +33,21 @@ mountMapBars();
 mountLocalAccount();
 void mountDocsService(document.querySelector("[data-docs-service]"));
 
+/* Home: the page is a sheet over the Hamilton map. Choosing the map drops the sheet, slims the
+ * header into the map's bar, then opens /map/. A plain link underneath, so it works without this. */
+const homeMap = document.querySelector("[data-home-map]");
+if (homeMap) {
+  homeMap.addEventListener("click", (event) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    event.preventDefault();
+    document.body.classList.add("hm-home-leaving");
+    setTimeout(() => { location.href = homeMap.href; }, 620);
+  });
+  /* Coming back with the browser's Back button can restore the dropped page from cache. */
+  addEventListener("pageshow", (event) => { if (event.persisted) document.body.classList.remove("hm-home-leaving"); });
+}
+
 /* The service dock's site directory is a large, keyboard-friendly site map. */
 const directoryScrim = document.querySelector("[data-directory-scrim]");
 const directoryToggle = document.querySelector("[data-directory-toggle]");

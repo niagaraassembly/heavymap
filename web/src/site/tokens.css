@@ -37,6 +37,10 @@
   --flag-info: #1d5a8c;
   /* depth */
   --shadow-soft: #30433b0a;
+  /* top and service bars: a brighter blue with a touch of green, away from the stock docs-site blue */
+  --bar: #2b5f68;
+  --bar-hover: #3d7680;
+  --bar-rule: #1c454c;
   --shadow: #263e4220;
   --photo-scrim: #1b3038a0;
 

@@ -746,11 +746,11 @@ body.hm-map-intro .alt-footer {
 /* Full-screen Docs service: a focused project library and writing room. */
 body.hm-docs-service-page { display: grid; height: 100dvh; grid-template-rows: 50px minmax(0, 1fr) 38px; overflow: hidden; padding: 0; color: var(--text); background: var(--surface); }
 body.hm-docs-service-page main { min-height: 0; overflow: hidden; }
-.alt-header.alt-header--docs { position: relative; z-index: 5; display: flex; align-items: center; justify-content: space-between; width: 100%; height: 50px; min-height: 50px; max-width: none; gap: 12px; margin: 0; padding: 0 12px; color: #fff; background: #294d60; border-bottom-color: #193746; }
+.alt-header.alt-header--docs { position: relative; z-index: 5; display: flex; align-items: center; justify-content: space-between; width: 100%; height: 50px; min-height: 50px; max-width: none; gap: 12px; margin: 0; padding: 0 12px; color: #fff; background: var(--bar); border-bottom-color: var(--bar-rule); }
 .alt-header--docs nav.hm-docs-tabs { justify-content: flex-start; margin: 0 auto 0 0; gap: 0; }
 .alt-header--docs nav .hm-map-service { position: relative; display: inline-flex; width: 42px; height: 38px; min-height: 38px; align-items: center; justify-content: center; padding: 0; border: 0; border-radius: 2px; color: #e6eef1; background: transparent; cursor: pointer; }
 .alt-header--docs nav .hm-map-service + .hm-map-service { border-left: 1px solid #ffffff22; }
-.alt-header--docs nav .hm-map-service:hover, .alt-header--docs nav .hm-map-service[aria-current="page"] { color: #fff; background: #41657a; }
+.alt-header--docs nav .hm-map-service:hover, .alt-header--docs nav .hm-map-service[aria-current="page"] { color: #fff; background: var(--bar-hover); }
 @keyframes hm-docs-mark-glow { 0%, 100% { filter: drop-shadow(0 0 .45px currentColor); } 50% { filter: drop-shadow(0 0 3px currentColor); } }
 @media (prefers-reduced-motion: reduce) { .alt-header .wordmark-mark { animation: none; } }
 
@@ -1255,13 +1255,13 @@ body.hm-docs-service-page main { background: var(--surface); }
 .hm-docs-head-right .hm-docs-primary { min-height: 38px; color: #183947; border-color: #e3ecef; background: #f3f7f8; }
 .hm-docs-head-right .hm-docs-primary:hover { background: #fff; }
 .hm-docs-head-actions .hm-docs-back { color: #e6eef1; }
-.hm-docs-head-actions .hm-docs-back:hover { color: #fff; background: #41657a; }
+.hm-docs-head-actions .hm-docs-back:hover { color: #fff; background: var(--bar-hover); }
 .hm-docs-head-actions .hm-docs-mode { color: #e6eef1; border-color: #ffffff55; }
 .hm-docs-head-actions .hm-docs-save-status { color: #d7e3e7; }
 .hm-docs-service { height: 100%; min-height: 0; display: flex; flex-direction: column; padding: 0; }
 .hm-docs-kicker { display: block; margin: 0; color: var(--text-muted); font: 700 .62rem/1.4 var(--sans); letter-spacing: .11em; text-transform: uppercase; }
 .hm-docs-primary, .hm-docs-button { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; min-height: 38px; padding: .45rem .8rem; border: 1px solid var(--rule-mid); border-radius: 3px; color: var(--text); background: var(--surface-raised); font: 600 .76rem/1.25 var(--sans); cursor: pointer; }
-.hm-docs-primary { color: #fff; border-color: #294d60; background: #294d60; }
+.hm-docs-primary { color: #fff; border-color: var(--bar); background: var(--bar); }
 .hm-docs-primary:hover { background: #1e3b4a; }
 .hm-docs-primary:disabled { cursor: not-allowed; opacity: .45; }
 .hm-docs-library { display: grid; flex: 1 1 auto; min-height: 0; grid-template-columns: minmax(260px, 330px) minmax(0, 1fr); overflow: hidden; border: 0; background: var(--surface-raised); box-shadow: none; }
@@ -1419,7 +1419,7 @@ body.hm-docs-service-page main { background: var(--surface); }
 .alt-header .hm-service-tabs { order: 0; display: flex; flex: none; flex-basis: auto; align-items: center; justify-content: flex-start; gap: 0; margin: 0 auto 0 0; }
 .alt-header .hm-service-tabs .hm-map-service { position: relative; display: inline-flex; width: 40px; height: 38px; min-height: 38px; align-items: center; justify-content: center; padding: 0; border: 0; border-radius: 2px; color: #e6eef1; background: transparent; cursor: pointer; }
 .alt-header .hm-service-tabs .hm-map-service + .hm-map-service { border-left: 1px solid #ffffff24; }
-.alt-header .hm-service-tabs .hm-map-service:hover, .alt-header .hm-service-tabs .hm-map-service[aria-current="page"] { color: #fff; background: #41657a; }
+.alt-header .hm-service-tabs .hm-map-service:hover, .alt-header .hm-service-tabs .hm-map-service[aria-current="page"] { color: #fff; background: var(--bar-hover); }
 .alt-header .wordmark-mark { animation: heavy-element-arrive 1.15s cubic-bezier(.2, .75, .25, 1) both, hm-docs-mark-glow 7s ease-in-out 1.15s infinite; }
 .hm-docs-library-toolbar { display: flex; flex: none; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--rule-soft); }
 .hm-docs-library-toolbar .hm-docs-search { flex: 1 1 280px; margin: 0; }
@@ -1720,4 +1720,144 @@ body.hm-docs-service-page main { background: var(--surface); }
   .hm-news-article-lead { overflow: visible; padding: 16px 14px; }
   .hm-news-article-evidence { border-left: 0; border-top: 1px solid var(--rule-soft); }
   .hm-news-panel { overflow: visible; }
+}
+
+/* ---- Site polish, 2026-11-17 --------------------------------------------- */
+
+/* One rail title style for every service: same size, same weight, same colour. */
+.hm-docs-library-rail > .hm-docs-kicker,
+.hm-global-rail > .hm-docs-kicker,
+.hm-global-service[data-docs-service="notes"] .hm-global-rail > .hm-docs-kicker,
+.hm-development-rail-filters > .hm-docs-kicker,
+.hm-reader.hm-docs-service-page .hm-news-filters > .hm-docs-kicker {
+  margin: 2px 0 12px;
+  color: var(--text);
+  font: 700 .68rem/1.4 var(--sans);
+  letter-spacing: .14em;
+}
+.hm-docs-library-rail > .hm-docs-kicker { margin-top: 16px; padding: 0 6px; }
+
+/* Document cards: breathing room between rows as well as columns. */
+.hm-docs-library:not(.is-writing) .hm-docs-list { gap: 16px; padding: 18px 20px 24px; }
+
+/* The composer is a lighter card resting on the page surface. */
+.hm-docs-library.is-writing .hm-docs-detail { background: var(--surface); }
+.hm-docs-library.is-writing .hm-docs-writing-pane {
+  margin: 14px 14px 14px 0;
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  background: var(--surface-raised);
+  box-shadow: 0 2px 10px var(--shadow-soft);
+}
+.hm-docs-writing-pane > textarea,
+.hm-docs-all-section > textarea {
+  border-color: color-mix(in srgb, var(--rule-soft) 80%, transparent);
+  background: color-mix(in srgb, var(--surface-raised) 55%, var(--surface));
+}
+.hm-docs-writing-pane textarea:focus { background: var(--surface-raised); }
+
+/* Comment on parcel data: the panel and its controls use the pane's full width. */
+.hm-docs-field-browser { display: block; width: 100%; box-sizing: border-box; }
+.hm-docs-field-browser[open] { display: block; }
+.hm-docs-field-browser > .hm-docs-field-intro { margin: 8px 0 10px; }
+.hm-docs-field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 10px; width: 100%; }
+.hm-docs-field-grid > select[aria-label="Data field"], .hm-docs-field-grid > .hm-docs-field-value,
+.hm-docs-field-grid > textarea, .hm-docs-field-grid > button, .hm-docs-field-grid > .hm-docs-field-feedback { grid-column: 1 / -1; }
+.hm-docs-field-grid > button { justify-self: start; }
+.hm-docs-field-grid select, .hm-docs-field-grid input, .hm-docs-field-grid textarea { width: 100%; min-width: 0; min-height: 36px; padding: 7px 8px; border: 1px solid var(--rule-soft); border-radius: 2px; color: var(--text); background: var(--surface-raised); font: .73rem/1.4 var(--sans); }
+.hm-docs-field-grid textarea { min-height: 74px; resize: vertical; }
+.hm-docs-field-grid .hm-docs-field-value, .hm-docs-field-grid .hm-docs-field-feedback { margin: 0; }
+
+/* Edit mode header: a larger, heavier back arrow. */
+.hm-docs-head-actions .hm-docs-back { display: inline-flex; align-items: center; justify-content: center; width: 42px; min-height: 38px; padding: 0; color: #fff; }
+.hm-docs-head-actions .hm-docs-back svg { width: 24px; height: 24px; }
+
+/* All sections: the outline entry and the continuous view. */
+.hm-docs-outline-all { margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px solid var(--rule-soft); }
+.hm-docs-outline-all .hm-docs-outline-link { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-weight: 700; }
+.hm-docs-outline-all small { min-width: 22px; padding: 1px 6px; border: 1px solid var(--rule-soft); border-radius: 10px; color: var(--text-muted); background: var(--surface-raised); font: 700 .62rem/1.5 var(--sans); text-align: center; }
+.hm-docs-writing-pane.is-all-sections > .hm-docs-kicker { margin-bottom: 6px; }
+.hm-docs-all-title { margin: 0 0 18px; color: var(--text); font: 500 clamp(1.7rem, 2.8vw, 2.4rem)/1.1 var(--serif); }
+.hm-docs-all-section { padding: 18px 0 20px; border-top: 1px solid var(--rule-soft); }
+.hm-docs-all-section.is-child { margin-left: 18px; }
+.hm-docs-all-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.hm-docs-all-head h2, .hm-docs-all-head h3 { margin: 0; color: var(--text); font: 500 1.35rem/1.2 var(--serif); }
+.hm-docs-all-head h3 { font-size: 1.12rem; }
+.hm-docs-all-open { flex: none; }
+.hm-docs-all-section > textarea { display: block; width: 100%; min-height: 120px; resize: vertical; overflow: hidden; padding: 12px 14px; border: 1px solid var(--rule-soft); border-radius: 4px; color: var(--text-body); font: .85rem/1.7 var(--mono); }
+.hm-docs-all-section .hm-docs-markdown h1, .hm-docs-all-section .hm-docs-markdown h2, .hm-docs-all-section .hm-docs-markdown h3 { font-size: 1rem; }
+
+/* Link a parcel that is not saved yet: a short explanation instead of a picker. */
+.hm-docs-find-parcel { width: min(30rem, calc(100vw - 2rem)); padding: 20px 22px; border: 1px solid var(--rule-strong); border-radius: 10px; color: var(--text); background: var(--surface-raised); box-shadow: 0 14px 40px var(--shadow); }
+.hm-docs-find-parcel::backdrop { background: #152e3b80; }
+.hm-docs-find-parcel > header { display: flex; align-items: center; justify-content: space-between; }
+.hm-docs-find-close { width: 34px; min-height: 34px; border: 1px solid var(--rule-soft); border-radius: 4px; color: inherit; background: transparent; font-size: 1.25rem; cursor: pointer; }
+.hm-docs-find-parcel h2 { margin: 10px 0 12px; font: 500 1.45rem/1.15 var(--serif); }
+.hm-docs-find-steps { margin: 0 0 12px; padding-left: 1.2rem; color: var(--text-body); font: .84rem/1.6 var(--sans); }
+.hm-docs-find-note { margin: 0 0 16px; color: var(--text-muted); font: .76rem/1.5 var(--sans); }
+.hm-docs-find-parcel > footer { display: flex; justify-content: flex-end; align-items: center; gap: 8px; }
+.hm-docs-find-parcel .hm-docs-primary { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 4px; text-decoration: none; font: 700 .76rem/1 var(--sans); }
+
+/* Editorial header: same height as before, now the service-bar colour, full width. */
+.alternate .alt-header:not(.alt-header--map):not(.alt-header--docs) {
+  position: relative;
+  z-index: 3;
+  max-width: none;
+  padding-inline: max(24px, calc((100% - 1440px) / 2 + 55px));
+  color: #fff;
+  background: var(--bar);
+  border-bottom-color: var(--bar-rule);
+  transition: height .5s cubic-bezier(.3, .7, .25, 1);
+}
+.alt-header:not(.alt-header--map):not(.alt-header--docs) .wordmark,
+.alt-header:not(.alt-header--map):not(.alt-header--docs) nav a,
+.alt-header:not(.alt-header--map):not(.alt-header--docs) .alt-follow { color: #fff; }
+.alt-header:not(.alt-header--map):not(.alt-header--docs) nav a[aria-current="page"] { box-shadow: inset 0 -2px 0 #ffffffb0; }
+.alt-header:not(.alt-header--map):not(.alt-header--docs) nav a:hover, .alt-header:not(.alt-header--map):not(.alt-header--docs) .alt-follow:hover { color: #dff1ee; }
+.alt-header:not(.alt-header--map):not(.alt-header--docs) .alt-follow { border-bottom-color: #ffffff80; }
+.alt-header:not(.alt-header--map):not(.alt-header--docs) .hm-service-tabs .hm-map-service { color: #e6eef1; }
+.alt-header:not(.alt-header--map):not(.alt-header--docs) .hm-service-tabs .hm-map-service + .hm-map-service { border-left-color: #ffffff24; }
+.alt-header:not(.alt-header--map):not(.alt-header--docs) .hm-service-tabs .hm-map-service:hover,
+.alt-header:not(.alt-header--map):not(.alt-header--docs) .hm-service-tabs .hm-map-service[aria-current="page"] { color: #fff; background: var(--bar-hover); }
+.alt-header:not(.alt-header--map):not(.alt-header--docs) .hm-theme-button { border-color: #ffffff55; color: #fff; }
+.hm-account-button { display: inline-flex; flex: none; align-items: center; justify-content: center; width: 38px; height: 36px; margin-left: -18px; padding: 0; border: 1px solid #ffffff55; border-radius: 2px; color: #fff; background: transparent; cursor: pointer; }
+.hm-account-button:hover { background: var(--bar-hover); }
+.hm-account-button svg { width: 20px; height: 20px; }
+
+/* Home: the page is a sheet lying on the Hamilton map. */
+body.hm-home { background: var(--surface); overflow-x: clip; }
+.hm-home-underlay { position: fixed; inset: 0; z-index: 0; background: #dfe3dc; }
+.hm-home-underlay img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; }
+.hm-home-window { position: relative; z-index: 1; display: block; height: clamp(220px, 40vh, 440px); color: var(--text); text-decoration: none; cursor: pointer; }
+.hm-home-window-peek { position: absolute; right: max(24px, calc((100% - 1440px) / 2 + 55px)); bottom: 28px; display: flex; align-items: center; gap: 22px; padding: 14px 16px 14px 18px; border: 1px solid var(--rule-soft); border-radius: 3px; color: var(--text); background: color-mix(in srgb, var(--surface-raised) 94%, transparent); box-shadow: 0 4px 14px #1d313a2e; transition: transform .2s ease, box-shadow .2s ease; }
+.hm-home-window-peek strong, .hm-home-window-peek small { display: block; }
+.hm-home-window-peek strong { font: 600 .82rem/1.3 var(--sans); }
+.hm-home-window-peek small { color: var(--text-muted); font: .7rem/1.4 var(--sans); }
+.hm-home-window:hover .hm-home-window-peek, .hm-home-window:focus-visible .hm-home-window-peek { transform: translateY(-2px); box-shadow: 0 8px 20px #1d313a3d; }
+.hm-home-window:focus-visible { outline: 3px solid var(--bar); outline-offset: -6px; }
+.hm-home-sheet {
+  position: relative;
+  z-index: 2;
+  padding-top: 8px;
+  background: var(--surface);
+  /* A crisp edge, not a soft glow: the sheet sits just above the map. */
+  box-shadow: 0 -1px 0 #1b2e3626, 0 -5px 5px -3px #1b2e3673;
+  transition: transform .6s cubic-bezier(.55, 0, .75, .3);
+}
+body.hm-home .alt-footer { position: relative; z-index: 2; max-width: none; padding-inline: max(24px, calc((100% - 1440px) / 2 + 55px)); background: var(--surface); transition: transform .6s cubic-bezier(.55, 0, .75, .3); }
+body.hm-home .alt-header .wordmark { transition: font-size .5s ease; }
+body.hm-home .alt-header > nav, body.hm-home .alt-header > .alt-follow, body.hm-home .alt-header > .hm-theme, body.hm-home .alt-header > .hm-account-button { transition: opacity .3s ease; }
+/* Leaving for the map: the sheet falls away and the header slims to the map's bar. */
+body.hm-home-leaving .hm-home-sheet, body.hm-home-leaving .alt-footer { transform: translateY(110vh); }
+body.hm-home-leaving .alt-header:not(.alt-header--map):not(.alt-header--docs) { height: 46px; }
+body.hm-home-leaving .alt-header > nav, body.hm-home-leaving .alt-header > .alt-follow, body.hm-home-leaving .alt-header > .hm-theme, body.hm-home-leaving .alt-header > .hm-account-button { opacity: 0; }
+body.hm-home-leaving .alt-header .wordmark { font-size: 20px; }
+body.hm-home-leaving { overflow: hidden; }
+@media (max-width: 700px) {
+  .hm-home-window { height: clamp(180px, 34vh, 300px); }
+  .hm-home-window-peek { left: 16px; right: 16px; bottom: 16px; justify-content: space-between; }
+  .hm-account-button { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hm-home-sheet, body.hm-home .alt-footer, .alternate .alt-header { transition: none; }
 }
