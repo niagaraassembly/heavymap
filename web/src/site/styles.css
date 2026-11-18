@@ -1869,7 +1869,6 @@ body.hm-docs-service-page { grid-template-rows: 46px minmax(0, 1fr) 38px; }
 .alt-header.alt-header--docs { height: 46px; min-height: 46px; justify-content: flex-start; gap: 10px; }
 .alt-header--docs .hm-service-tabs { margin-right: auto; }
 .alt-header--docs .hm-docs-head-right { margin-left: auto; }
-.alt-header--docs .hm-service-tabs .hm-map-service { height: 36px; min-height: 36px; }
 
 /* Place selector and account icon close the bar on the right, account last, everywhere. */
 .alt-header--docs .hm-place-button,
@@ -1929,10 +1928,25 @@ body.hm-docs-service-page { grid-template-rows: 46px minmax(0, 1fr) 38px; }
   /* Phones: the HeavyMap mark alone stands for the wordmark so the icons, search and account fit. */
   .alt-header--map .wordmark-type, .alt-header--docs .wordmark-type { display: none; }
   .alt-header--map > .wordmark, .alt-header--docs > .wordmark { margin-right: 0; }
-  .alt-header--map, .alt-header.alt-header--docs { gap: 4px; padding-inline: 8px; }
-  .alt-header--map .hm-service-tabs .hm-map-service, .alt-header--docs .hm-service-tabs .hm-map-service { width: 32px; }
 }
 @media (max-width: 480px) {
   .alt-header--docs .hm-place, .alt-header--map .hm-place { display: none; }
 }
 .alt-header--map .hm-map-searchbox input:focus-visible { outline: none; }
+
+/* One bar for the map and every service page: the same padding, gaps, wordmark and icon sizes,
+ * so moving between them only adds or removes the search box. The home header stays larger. */
+.alt-header.alt-header--map,
+.alt-header.alt-header--docs { height: 46px; min-height: 46px; gap: 10px; padding: 0 16px; }
+.alt-header.alt-header--map > .wordmark,
+.alt-header.alt-header--docs > .wordmark { margin-right: 2px; gap: 8px; font-size: 20px; font-weight: 780; letter-spacing: -1px; }
+.alt-header.alt-header--map > .wordmark .wordmark-mark,
+.alt-header.alt-header--docs > .wordmark .wordmark-mark { flex: none; width: 32px; height: 32px; }
+.alt-header.alt-header--map .hm-service-tabs .hm-map-service,
+.alt-header.alt-header--docs .hm-service-tabs .hm-map-service { width: 40px; height: 38px; min-height: 38px; }
+@media (max-width: 600px) {
+  .alt-header.alt-header--map,
+  .alt-header.alt-header--docs { gap: 6px; padding: 0 10px; }
+  .alt-header.alt-header--map .hm-service-tabs .hm-map-service,
+  .alt-header.alt-header--docs .hm-service-tabs .hm-map-service { width: 32px; height: 32px; min-height: 32px; }
+}
