@@ -168,6 +168,15 @@ async function showPost() {
   const postView = root.querySelector("[data-post-view]");
   if (!path) { listView.hidden = false; postView.hidden = true; document.title = `${SECTIONS[here]?.name} · Journey · HeavyMap`; return; }
   listView.hidden = true; postView.hidden = false;
+  // Only pages listed in this section's own index render here; any other Telegraph path
+  // in the hash would otherwise show someone else's page under heavymap.com.
+  if (!sectionEntries.some((e) => e.path === path)) {
+    const back = el("a", null, `All ${SECTIONS[here]?.name ?? "posts"}`);
+    back.href = `/journey/${here}/`;
+    postView.replaceChildren(el("p", "jr-meta", "This post is not part of this section."), back);
+    document.title = `Not found · Journey · HeavyMap`;
+    return;
+  }
   postView.replaceChildren(el("p", "jr-meta", "Loading…"));
   let page;
   try {
