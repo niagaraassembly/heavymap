@@ -36,20 +36,55 @@ function configScript(journey, section) {
   return `<script type="application/json" id="hm-journey-config">${JSON.stringify(cfg).replace(/</g, "\\u003c")}</script>`;
 }
 
-export function journeyLanding(c) {
-  const j = c.journey ?? { collections: {}, fallback: {} };
-  const blocks = JOURNEY_SECTIONS.map((s) => {
-    const entries = (j.fallback[s.key] ?? []).slice(0, 3);
-    const n = (j.fallback[s.key] ?? []).length;
-    return `<section class="jr-block" data-journey-block="${s.key}"><h2><a href="/journey/${s.key}/">${esc(s.name)}</a><small data-block-count>${n === 1 ? "1 post" : `${n} posts`}</small></h2><p>${esc(s.about)}</p><ul class="jr-entries" data-block-entries>${entries.map((e) => entryHtml(e, s.key)).join("") || '<li class="jr-empty">First posts on their way.</li>'}</ul></section>`;
+const STAGES = ["A", "B", "C", "D", "E", "F", "G"];
+const STAGE_NAMES = { A: "Prepare", B: "Map", C: "Enumerate", D: "Screen", E: "Connect", F: "Value", G: "Learn" };
+const longDay = (iso) => {
+  try { return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "America/Toronto" }); } catch { return ""; }
+};
+const typeLabel = (t) => (t || "post").replace(/-/g, " ");
+
+function feature(f, lead) {
+  const p = f.post;
+  const visual = f.image
+    ? `<figure class="jr-feature-visual jr-feature-visual--photo"><img src="${esc(f.image)}" alt="${esc(f.alt || "")}" loading="${lead ? "eager" : "lazy"}"><figcaption>${esc(f.credit || "")}</figcaption></figure>`
+    : f.stat
+      ? `<div class="jr-feature-visual jr-feature-visual--stat" aria-hidden="true"><span class="jr-stat">${esc(f.stat)}</span><span class="jr-stat-label">${esc(f.statLabel || "")}</span></div>`
+      : "";
+  const sectionName = JOURNEY_SECTIONS.find((s) => s.key === p.section)?.name ?? p.section;
+  return `<article class="jr-feature${lead ? " jr-feature--lead" : ""}">${visual}<div class="jr-feature-text"><p class="jr-kicker">${esc(sectionName)} · ${esc(typeLabel(p.type))}${p.run ? ` · run ${esc(p.run.replace("CR-00", ""))}` : ""}</p><h${lead ? 2 : 3} class="jr-feature-title"><a href="${esc(p.site)}">${esc(p.title)}</a></h${lead ? 2 : 3}>${p.excerpt ? `<p class="jr-feature-dek">${esc(p.excerpt)}</p>` : ""}<p class="jr-meta">${esc(longDay(p.created))}${p.minutes ? ` · ${p.minutes} min read` : ""}</p></div></article>`;
+}
+
+function runStrip(j) {
+  return (j.runs ?? []).map((r) => {
+    const at = STAGES.indexOf(r.stage);
+    const pills = STAGES.map((s, i) => `<li class="${i < at || r.status !== "running" && i <= at ? "is-done" : i === at ? "is-now" : ""}" title="Stage ${s}: ${STAGE_NAMES[s]}"><b>${s}</b> ${STAGE_NAMES[s]}</li>`).join("");
+    const href = j.collections[r.collection]?.parent ? `/journey/${j.collections[r.collection].parent}/${r.collection}/` : "/journey/expansion/";
+    return `<a class="jr-run${r.status === "running" ? " is-running" : ""}" href="${href}"><span class="jr-run-status">${r.status === "running" ? "Now running" : "Earlier run"}</span><span class="jr-run-name">${esc(r.name)}</span><span class="jr-run-context">${esc(r.context || "")} · method ${esc(r.method || "")}</span><ol class="jr-run-stages" aria-label="Stages">${pills}</ol></a>`;
   }).join("");
-  const soon = COMING.map(([name, about]) => `<div class="jr-block jr-block--soon"><h2>${esc(name)}</h2><p>${esc(about)}</p></div>`).join("");
+}
+
+export function journeyLanding(c) {
+  const j = c.journey ?? { collections: {}, fallback: {}, featured: [], runs: [], counts: {} };
+  const [lead, ...rest] = j.featured ?? [];
+  const bands = JOURNEY_SECTIONS.map((s, i) => {
+    const all = j.fallback[s.key] ?? [];
+    const subs = Object.entries(j.collections).filter(([, col]) => col.parent === s.key);
+    const subPaths = new Set(subs.map(([, col]) => col.path));
+    const posts = all.filter((e) => !subPaths.has(e.path));
+    const chips = subs.map(([key, col]) => {
+      const n = (j.fallback[key] ?? []).length;
+      return `<a class="jr-chip" href="/journey/${esc(s.key)}/${esc(key)}/" data-chip-path="${esc(col.path)}"><span>${esc(col.name)}</span><small data-chip-count>${n}</small></a>`;
+    }).join("");
+    return `<section class="jr-band" data-journey-block="${s.key}"><header class="jr-band-head"><p class="jr-band-number">${String(i + 1).padStart(2, "0")}</p><div><h2 class="jr-band-title"><a href="/journey/${s.key}/">${esc(s.name)}</a></h2><p class="jr-band-about">${esc(s.about)}</p></div><p class="jr-band-more"><a href="/journey/${s.key}/">All of ${esc(s.name)} <span aria-hidden="true">→</span></a><small data-block-count>${posts.length} posts</small></p></header><ul class="jr-band-entries" data-block-entries>${posts.slice(0, 3).map((e) => entryHtml(e, s.key)).join("") || '<li class="jr-empty">First posts on their way.</li>'}</ul>${chips ? `<nav class="jr-chips" aria-label="Collections in ${esc(s.name)}">${chips}</nav>` : ""}</section>`;
+  }).join("");
+  const soon = COMING.map(([name]) => `<li>${esc(name)}</li>`).join("");
+  const counts = j.counts ?? {};
   return {
     path: "/journey/",
     title: "Journey",
     description: "Making HeavyMap, in the open: notes from building an industrial map of the world, one city at a time.",
-    bodyClass: "hm-journey",
-    main: `<div class="jr" data-journey>${boot}<h1>Making HeavyMap, in the open.</h1><p class="jr-lede">Notes from building an industrial map of the world, one city at a time. What we looked for, what we found, what we got wrong, and what we changed.</p><div class="jr-blocks">${blocks}</div><div class="jr-soon" aria-label="Coming sections">${soon}</div></div>${configScript(j, "journey")}`,
+    bodyClass: "hm-journey hm-journey-landing",
+    main: `<div class="jr jr--wide" data-journey><header class="jr-masthead"><p class="jr-kicker">The HeavyMap Journey</p><h1 class="jr-masthead-title">Making HeavyMap, in the open.</h1><p class="jr-masthead-dek">Notes from building an industrial map of the world, one city at a time. What we looked for, what we found, what we got wrong, and what we changed.</p><p class="jr-issue-line"><span data-issue-posts>${counts.posts ?? 0} pieces</span> · ${JOURNEY_SECTIONS.length} sections · ${counts.collections ?? 0} collections · updated as we work</p>${boot}</header>${lead ? `<div class="jr-front">${feature(lead, true)}<div class="jr-front-side">${rest.map((f) => feature(f, false)).join("")}</div></div>` : ""}${(j.runs ?? []).length ? `<section class="jr-runs" aria-label="City runs"><h2 class="jr-section-label">City runs</h2><div class="jr-runs-list">${runStrip(j)}</div></section>` : ""}${bands}<footer class="jr-coming"><h2 class="jr-section-label">Coming to the Journey</h2><ul>${soon}</ul></footer></div>${configScript(j, "journey")}`,
   };
 }
 

@@ -3,7 +3,44 @@
   "name": "Journey",
   "path": "HeavyMap-Journey-11-19",
   "url": "https://telegra.ph/HeavyMap-Journey-11-19",
-  "about": "Making HeavyMap, in the open: notes from building an industrial map of the world, one city at a time."
+  "about": "Making HeavyMap, in the open: notes from building an industrial map of the world, one city at a time.",
+  "featured": [
+   {
+    "path": "Predictions-for-El-Segundo-written-before-any-search-CR-002-11-19",
+    "stat": "22",
+    "statLabel": "predictions, written before any search"
+   },
+   {
+    "path": "Hamilton-retro-what-we-got-right-and-what-we-will-redo-11-19",
+    "image": "/editorial/hamilton-steel-mills.jpg",
+    "alt": "Hamilton steel mills along the industrial waterfront",
+    "credit": "Hamilton steel mills · archival photograph, CC BY 3.0"
+   },
+   {
+    "path": "How-we-find-a-citys-public-data-11-19",
+    "stat": "7",
+    "statLabel": "stages, from prepare to learn"
+   }
+  ],
+  "runs": [
+   {
+    "id": "CR-002",
+    "name": "El Segundo, California",
+    "context": "Los Angeles County · first city outside Ontario and New York",
+    "method": "0.1",
+    "collection": "working-papers-el-segundo",
+    "status": "running"
+   },
+   {
+    "id": "CR-001",
+    "name": "Hamilton, Ontario",
+    "context": "First city, mapped before the method existed",
+    "method": "before v0.1",
+    "collection": "working-papers-hamilton",
+    "status": "retrospective",
+    "stage": "G"
+   }
+  ]
  },
  "origins": {
   "name": "Origins",

@@ -171,14 +171,25 @@ async function landing() {
   const results = await Promise.all(top.map(loadIndex));
   let total = 0;
   for (const r of results) {
-    total += r.entries.length;
     const block = root.querySelector(`[data-journey-block="${r.key}"]`);
+    const posts = r.entries.filter((e) => !collectionByPath.has(e.path));
+    let inCollections = 0;
+    for (const e of r.entries.filter((x) => collectionByPath.has(x.path))) {
+      const n = Number((/^(\d+) posts?/.exec(e.excerpt) || [])[1] || 0);
+      inCollections += n;
+      const chip = block?.querySelector(`[data-chip-path="${CSS.escape(e.path)}"] [data-chip-count]`);
+      if (chip) chip.textContent = String(n);
+    }
+    total += posts.length + inCollections;
     if (!block) continue;
-    block.querySelector("[data-block-entries]").replaceChildren(...r.entries.slice(0, 3).map((e) => entryItem(e, r.key)));
-    if (!r.entries.length) block.querySelector("[data-block-entries]").append(el("li", "jr-empty", "First posts on their way."));
-    block.querySelector("[data-block-count]").textContent = countLabel(r.entries);
+    const list = block.querySelector("[data-block-entries]");
+    list.replaceChildren(...posts.slice(0, 3).map((e) => entryItem(e, r.key)));
+    if (!posts.length) list.append(el("li", "jr-empty", "First posts on their way."));
+    block.querySelector("[data-block-count]").textContent = `${posts.length} ${posts.length === 1 ? "post" : "posts"}`;
   }
-  await done(`${total} entries`);
+  const issue = root.querySelector("[data-issue-posts]");
+  if (issue) issue.textContent = `${total} pieces`;
+  await done(`${total} pieces`);
 }
 
 /* ---- a section or collection --------------------------------------------- */
