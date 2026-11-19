@@ -1,6 +1,7 @@
 {
  "author_name": "HeavyMap",
  "author_url": "https://heavymap.com/journey",
+ "can_edit": true,
  "content": [
   {
    "children": [
@@ -36,14 +37,7 @@
      ],
      "tag": "code"
     },
-    " in the planning index). Modelled on the ",
-    {
-     "children": [
-      "na-research"
-     ],
-     "tag": "code"
-    },
-    " Sector Research routine: slice the work, record every fact with its source, gate each step, and keep review decisions with the owner."
+    " in the planning index). Modelled on an earlier sector research routine: slice the work, record every fact with its source, gate each step, and keep review decisions with the owner."
    ],
    "tag": "p"
   },
@@ -1561,7 +1555,7 @@
    "tag": "pre"
   }
  ],
- "description": "working-paper, routine, method",
+ "description": "",
  "path": "Dataset-routine--discover-profile-harmonize-11-19",
  "title": "Dataset routine — discover, profile, harmonize",
  "url": "https://telegra.ph/Dataset-routine--discover-profile-harmonize-11-19",

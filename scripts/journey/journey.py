@@ -257,8 +257,30 @@ REVIEW = [
 ]
 
 
+CONFIG_DIR = Path.home() / ".config/heavymap"
+
+
+def private_rules() -> list:
+    """Private repository names and the public-repo allowlist live outside the repository
+    (a list of private names in a public repo would disclose them). Refresh with
+    `gh repo list niagaraassembly --json name,isPrivate`."""
+    rules = []
+    names = CONFIG_DIR / "journey-private-names.txt"
+    public = CONFIG_DIR / "journey-public-repos.txt"
+    if names.exists():
+        # Only distinctive names: several private repositories are ordinary words ("publish",
+        # "membership") that legitimately appear in prose.
+        words = [re.escape(w) for w in names.read_text().split() if "-" in w or w in ("workwarrior",)]
+        if words:
+            rules.append(("H3 private repository name", re.compile(r"(?<![\w-])(?:" + "|".join(words) + r")(?![\w-])")))
+    allowed = set(public.read_text().split()) if public.exists() else set()
+    rules.append(("H3 repository not on the public list",
+                  re.compile(r"niagaraassembly/(?!(?:" + "|".join(map(re.escape, sorted(allowed))) + r")\b)[\w.-]+" if allowed else r"niagaraassembly/[\w.-]+")))
+    return rules
+
+
 def check(text: str) -> tuple[str, list]:
-    hits = [name for name, rx in BLOCK if rx.search(text)]
+    hits = [name for name, rx in BLOCK + private_rules() if rx.search(text)]
     if hits:
         return "blocked", hits
     soft = [name for name, rx in REVIEW if rx.search(text)]
@@ -599,6 +621,12 @@ def cmd_edit(args, wipe=False) -> None:
     r["content_hash"] = save_copy(get_page(r["telegraph_path"]), source)
     if wipe:
         r["status"], r["wiped_at"] = "wiped", now()
+        # A withdrawal must not survive in our own copies: drop the source text and images.
+        d = PAGES / r["telegraph_path"]
+        import shutil
+        (d / "source.md").unlink(missing_ok=True)
+        shutil.rmtree(d / "media", ignore_errors=True)
+        print("  local source and images removed; if they were committed, git history still holds them", file=sys.stderr)
     else:
         r["status"] = "revised"
     write_register(rows)

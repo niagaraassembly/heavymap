@@ -8,7 +8,7 @@ working-paper, routine, method
 
 > A working paper written on 2026-10-18, published nearly as written. Local file paths, private repository names and personal names have been removed.
 
-**Status:** DRAFT, living doc. Proposed by an agent 2026-10-03 for the owner's review. Not yet owned by a Linear issue (`owner_issue` is `proposed` in the planning index). Modelled on the `na-research` Sector Research routine: slice the work, record every fact with its source, gate each step, and keep review decisions with the owner.
+**Status:** DRAFT, living doc. Proposed by an agent 2026-10-03 for the owner's review. Not yet owned by a Linear issue (`owner_issue` is `proposed` in the planning index). Modelled on an earlier sector research routine: slice the work, record every fact with its source, gate each step, and keep review decisions with the owner.
 
 HeavyMap has a large source catalog and a small number of datasets that anyone has actually opened. This routine turns catalog rows into profiled, harmonized, join-tested layers, one slice at a time. It is built on the EPIC-02 pilot (`EPIC-02-spine-and-joins.md`), which showed that the useful facts are small and checkable: record count, id field and its quirks, encoding, CRS, and how the layer joins to the parcel spine. Agents do the reading and write it down. the owner decides what is used and what is shown.
 

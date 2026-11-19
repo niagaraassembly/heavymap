@@ -47,6 +47,12 @@ def clean(text: str) -> tuple[str, dict]:
     text, n = TICKET_LINE.subn("", text); bump("ticket line", n)
     text, n = BYLINE.subn("", text); bump("byline", n)
     text, n = LINK.subn(r"\1", text); bump("private link", n)
+    names = Path.home() / ".config/heavymap/journey-private-names.txt"
+    if names.exists():
+        distinct = [re.escape(w) for w in names.read_text().split() if "-" in w or w in ("workwarrior",)]
+        if distinct:
+            text, n = re.subn(r"`?(?<![\w-])(?:" + "|".join(distinct) + r")(?![\w-])`?", "a private repository", text)
+            bump("private repo", n)
     for name, rx, rep in RULES:
         text, n = rx.subn(rep, text); bump(name, n)
     return text, counts
