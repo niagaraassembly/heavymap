@@ -26,7 +26,6 @@ The Niagara Peninsula Conservation Authority publishes parcel layers for its wat
 - **Property codes on 1,628 of 81,121 rows**, last edited in 2020, and sometimes at odds with current zoning.
 - **Postal codes empty on every row.**
 - **Ten placeholder roll numbers** made of zeros, and one from a neighbouring town.
-- **An owner-name field and a legal-description field** on one layer. We record that the fields exist. Their values are withheld from public view, and none appear anywhere we publish.
 
 ## How we use them
-Roll numbers attach to the City's parcels as attributes, never as the key. One roll number can sit on up to 49 polygons, typically condominiums. Every gap above is written into a ledger with its count, so the map can say "not in coverage" or "not published" instead of leaving a blank.
+Roll numbers attach to the City's parcels as attributes, never as the key. One roll number can sit on up to 49 polygons, typically condominiums. Every gap above is written into a ledger with its count, so the map can say "not in coverage" or "not published" instead of leaving a blank. Where any source carries personal information about property holders, we withhold it; no such values appear anywhere we publish.

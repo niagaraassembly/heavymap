@@ -1,6 +1,7 @@
 {
  "author_name": "HeavyMap",
  "author_url": "https://heavymap.com/journey",
+ "can_edit": true,
  "content": [
   {
    "children": [
@@ -101,18 +102,6 @@
       " made of zeros, and one from a neighbouring town."
      ],
      "tag": "li"
-    },
-    {
-     "children": [
-      {
-       "children": [
-        "An owner-name field and a legal-description field"
-       ],
-       "tag": "strong"
-      },
-      " on one layer. We record that the fields exist. Their values are withheld from public view, and none appear anywhere we publish."
-     ],
-     "tag": "li"
     }
    ],
    "tag": "ul"
@@ -128,7 +117,7 @@
   },
   {
    "children": [
-    "Roll numbers attach to the City's parcels as attributes, never as the key. One roll number can sit on up to 49 polygons, typically condominiums. Every gap above is written into a ledger with its count, so the map can say \"not in coverage\" or \"not published\" instead of leaving a blank."
+    "Roll numbers attach to the City's parcels as attributes, never as the key. One roll number can sit on up to 49 polygons, typically condominiums. Every gap above is written into a ledger with its count, so the map can say \"not in coverage\" or \"not published\" instead of leaving a blank. Where any source carries personal information about property holders, we withhold it; no such values appear anywhere we publish."
    ],
    "tag": "p"
   },
@@ -153,7 +142,7 @@
    "tag": "pre"
   }
  ],
- "description": "expansion, hamilton, assessment, parcels, run-1",
+ "description": "",
  "path": "Hamilton-the-assessment-question-11-19",
  "title": "Hamilton: the assessment question",
  "url": "https://telegra.ph/Hamilton-the-assessment-question-11-19",

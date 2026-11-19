@@ -1,0 +1,183 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, hamilton, gaps, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A blank on a map can mean many things. We give each gap a type and a count, so a reader knows which kind of blank they are looking at."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "Kinds-of-gap"
+   },
+   "children": [
+    "Kinds of gap"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Not present in the source."
+       ],
+       "tag": "strong"
+      },
+      " The field does not exist anywhere we looked, such as a tax class."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Sparse."
+       ],
+       "tag": "strong"
+      },
+      " The field exists but is mostly empty: property codes on 1,628 of 81,121 rows."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Stale."
+       ],
+       "tag": "strong"
+      },
+      " A snapshot last edited in 2020."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Contradictory."
+       ],
+       "tag": "strong"
+      },
+      " Old property codes that disagree with current zoning."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Placeholder."
+       ],
+       "tag": "strong"
+      },
+      " Values that stand in for nothing, such as roll numbers of all zeros on 10 parcels."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Empty."
+       ],
+       "tag": "strong"
+      },
+      " A postal code column blank on every row."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Withheld."
+       ],
+       "tag": "strong"
+      },
+      " Some source data carries personal information about property holders. It exists, and we keep it from public view. No values are shown."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Not in coverage."
+       ],
+       "tag": "strong"
+      },
+      " About 46 percent of City parcels, 74,276 of 166,745, sit outside the area where roll numbers are published."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Why-types-matter"
+   },
+   "children": [
+    "Why types matter"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "\"No data\" is not one thing. A parcel outside a watershed and a field withheld for privacy both show a blank, for different reasons. The ledger keeps the reason, the count and the source, and the map can show the right words."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Gaps-close-only-by-rule"
+   },
+   "children": [
+    "Gaps close only by rule"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Each gap has a closing rule. A new source, a re-pull or an answer from the publisher can close it, and nothing closes on its own."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0042\ntype: stage-report\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nstage: F\nmethod: pre-method\nevidence_date: 2026-10-18\nseq: 22"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, hamilton, gaps, run-1",
+ "path": "Hamilton-the-gaps-we-wrote-down-11-19",
+ "title": "Hamilton: the gaps we wrote down",
+ "url": "https://telegra.ph/Hamilton-the-gaps-we-wrote-down-11-19",
+ "views": 0
+}

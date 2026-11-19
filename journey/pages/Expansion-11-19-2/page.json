@@ -15,6 +15,25 @@
      "children": [
       {
        "attrs": {
+        "href": "/Hamilton-the-gaps-we-wrote-down-11-19"
+       },
+       "children": [
+        "Hamilton: the gaps we wrote down"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, hamilton, gaps, run-1",
+      {
+       "tag": "br"
+      },
+      "A blank on a map can mean many things. We give each gap a type and a count, so a reader knows which kind of blank they are looking at."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
         "href": "/Field-notes-Hamilton-11-19"
        },
        "children": [
