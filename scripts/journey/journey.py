@@ -275,7 +275,7 @@ def private_rules() -> list:
             rules.append(("H3 private repository name", re.compile(r"(?<![\w-])(?:" + "|".join(words) + r")(?![\w-])")))
     allowed = set(public.read_text().split()) if public.exists() else set()
     rules.append(("H3 repository not on the public list",
-                  re.compile(r"niagaraassembly/(?!(?:" + "|".join(map(re.escape, sorted(allowed))) + r")\b)[\w.-]+" if allowed else r"niagaraassembly/[\w.-]+")))
+                  re.compile(r"niagaraassembly/(?!(?:" + "|".join(map(re.escape, sorted(allowed))) + r")(?![\w.-]))[\w.-]+" if allowed else r"niagaraassembly/[\w.-]+")))
     return rules
 
 
