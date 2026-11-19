@@ -40,7 +40,8 @@
 .jr-block:not(.jr-block--soon):hover { box-shadow: 0 2px 5px var(--shadow), 0 8px 16px -4px var(--shadow), 0 20px 40px -12px var(--shadow); transform: translateY(-2px); }
 .jr-block h2 { font-family: var(--sans); font-weight: 500; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; margin: 0 0 .35rem;
   display: flex; justify-content: space-between; gap: .6rem; }
-.jr-block h2 a { color: var(--text); text-decoration: none; }
+.jr-block h2 a { color: var(--text); font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .28em; text-decoration-color: var(--accent); }
+.jr-block h2 a:hover { color: var(--accent); }
 .jr-block h2 small { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--text-muted); }
 .jr-block > p { font-size: .95rem; margin: 0 0 .8rem; }
 .jr-block .jr-entries { gap: .8rem; }
