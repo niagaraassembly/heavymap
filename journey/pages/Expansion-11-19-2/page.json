@@ -15,6 +15,25 @@
      "children": [
       {
        "attrs": {
+        "href": "/Working-papers-El-Segundo-11-19"
+       },
+       "children": [
+        "Working papers: El Segundo"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · collection, cr-002",
+      {
+       "tag": "br"
+      },
+      "3 posts. Every working document of the El Segundo run, published as it is written: predictions, publisher map, search lists, join graph and the run log."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
         "href": "/Working-papers-Hamilton-11-19"
        },
        "children": [

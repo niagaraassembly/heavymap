@@ -1,0 +1,187 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, el-segundo, los-angeles-county, run-2"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "The place file for HeavyMap's second city run, published as written when the run opened on 18 November 2026."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Place id:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "us-ca-el-segundo"
+     ],
+     "tag": "code"
+    },
+    " (provisional until the Geographical Register has a municipality tier; register change RC-009). Parent: Los Angeles County, FIPS 06037. El Segundo's own place code is to be read from the Census gazetteer."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Why El Segundo."
+     ],
+     "tag": "strong"
+    },
+    " A small coastal city of about 14 square kilometres in Los Angeles County, beside Los Angeles International Airport, with a large oil refinery and a long aerospace history. It is HeavyMap's first city outside Ontario and New York, and the first test of the public data discovery method (v0.1) from the start."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Scanning status."
+     ],
+     "tag": "strong"
+    },
+    " Registered for Industrial Atlas scanning. Desk status: no (not a MAKE news region), per D-085."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "What this folder holds."
+     ],
+     "tag": "strong"
+    },
+    " Lasting knowledge about the place (this README, publishers, join graph, insights) at the top; each run in ",
+    {
+     "children": [
+      "runs/"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Runs"
+   },
+   "children": [
+    "Runs"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "CR-002"
+       ],
+       "tag": "strong"
+      },
+      " — Started: 2026-11-18 · Method: v0.1 · Status: Stage A in progress · Folder: ",
+      {
+       "children": [
+        "runs/CR-002-2026-11-18-public-data-run/"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Run-goals-beyond-the-method"
+   },
+   "children": [
+    "Run goals beyond the method"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "County narrowing."
+       ],
+       "tag": "strong"
+      },
+      " Most data for El Segundo is likely held by Los Angeles County. For every county dataset, record whether it can be narrowed to the city at the source (by an attribute filter, a spatial filter, both, or not at all), how many records the city slice has against the whole, and whether an attribute filter and a spatial filter agree. Lessons from this decide when to pull a county dataset whole."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Infrastructure across every tier."
+       ],
+       "tag": "strong"
+      },
+      " Port, rail operators, state highways, airport, pipelines and utilities are swept from the start (lesson LL-004), not only the city's own layers."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Working papers in public."
+       ],
+       "tag": "strong"
+      },
+      " Every working document of this run is published on the HeavyMap Journey nearly as written, after the hold check."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0091\ntype: working-paper\nsection: expansion\nrun: CR-002\nplace: us-ca-el-segundo\nplace_type: city\nstage: A\nmethod: 0.1\nevidence_date: 2026-11-18\nseq: 41"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, el-segundo, los-angeles-county, run-2",
+ "path": "El-Segundo-why-this-city-and-what-the-run-will-test-11-19",
+ "title": "El Segundo: why this city, and what the run will test",
+ "url": "https://telegra.ph/El-Segundo-why-this-city-and-what-the-run-will-test-11-19",
+ "views": 0
+}

@@ -58,5 +58,14 @@
   "parent": "systems",
   "display": "list",
   "run": ""
+ },
+ "working-papers-el-segundo": {
+  "name": "Working papers: El Segundo",
+  "path": "Working-papers-El-Segundo-11-19",
+  "url": "https://telegra.ph/Working-papers-El-Segundo-11-19",
+  "about": "Every working document of the El Segundo run, published as it is written: predictions, publisher map, search lists, join graph and the run log.",
+  "parent": "expansion",
+  "display": "list",
+  "run": "CR-002"
  }
 }

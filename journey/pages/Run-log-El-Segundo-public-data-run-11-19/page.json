@@ -1,0 +1,174 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, el-segundo, run-log, run-2"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "The run's own log, one line per step, published as written and updated as the run goes."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "One line per step, newest last. Times are Eastern. Linear is out of use, so this log replaces its stage comments. Evidence labels follow the method's section 8: every fact has a URL and access date; ",
+    {
+     "children": [
+      "live read"
+     ],
+     "tag": "code"
+    },
+    " or ",
+    {
+     "children": [
+      "documented, not re-read"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Setup"
+   },
+   "children": [
+    "Setup"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "2026-11-18 23:18."
+       ],
+       "tag": "strong"
+      },
+      " Run CR-002 opened. Method v0.1. Place id ",
+      {
+       "children": [
+        "us-ca-el-segundo"
+       ],
+       "tag": "code"
+      },
+      " (provisional). Worktree and branch ",
+      {
+       "children": [
+        "cr-002-us-ca-el-segundo"
+       ],
+       "tag": "code"
+      },
+      ". Working papers will be published on the Journey under \"Working papers: El Segundo\"."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Stage-A:-Prepare"
+   },
+   "children": [
+    "Stage A: Prepare"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "2026-11-18 23:10. WU-01, Hamilton retro."
+       ],
+       "tag": "strong"
+      },
+      " Completed. Four lessons recorded earlier today (LL-001 licences late, LL-002 one sweep is not enough, LL-003 layer indices drift, LL-004 infrastructure stopped at the city line). The 13 archetype rows marked \"to backfill\" are now filled from Hamilton's evidence; four stay \"not checked in Hamilton\" (development applications, industrial land inventory, contaminated sites, and the port)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2026-11-18 23:15. WU-02, predictions."
+       ],
+       "tag": "strong"
+      },
+      " 22 predictions written, one per archetype (PR-001 to PR-022), ",
+      {
+       "children": [
+        "before any search for El Segundo"
+       ],
+       "tag": "strong"
+      },
+      ". Nothing about El Segundo was looked up in this session before this line. Average stated confidence 0.66. See ",
+      {
+       "children": [
+        "PREDICTIONS.md"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Next."
+       ],
+       "tag": "strong"
+      },
+      " Stage B: WU-03 duty by tier grid, then WU-04 channel fingerprinting, written to ",
+      {
+       "children": [
+        "PUBLISHERS.md"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0092\ntype: working-paper\nsection: expansion\nrun: CR-002\nplace: us-ca-el-segundo\nplace_type: city\nstage: A\nmethod: 0.1\nevidence_date: 2026-11-18\nseq: 42"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, el-segundo, run-log, run-2",
+ "path": "Run-log-El-Segundo-public-data-run-11-19",
+ "title": "Run log: El Segundo public data run",
+ "url": "https://telegra.ph/Run-log-El-Segundo-public-data-run-11-19",
+ "views": 0
+}
