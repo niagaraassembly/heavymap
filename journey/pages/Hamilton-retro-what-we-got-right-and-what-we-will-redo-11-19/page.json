@@ -1,0 +1,208 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, hamilton, retro, lessons, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Hamilton was mapped before we had a method. Looking back, most of what we missed came from looking in one place."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "What-worked"
+   },
+   "children": [
+    "What worked"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "A spine first."
+       ],
+       "tag": "strong"
+      },
+      " Minting stable identifiers before joining anything meant every later layer had somewhere solid to attach."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Labels instead of cleaning."
+       ],
+       "tag": "strong"
+      },
+      " Slivers, placeholders and gaps were counted and shown, not hidden."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Small, fixed releases."
+       ],
+       "tag": "strong"
+      },
+      " Every published file has a hash and never changes, so any view can be traced to its exact data."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "What-we-missed"
+   },
+   "children": [
+    "What we missed"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Catalogue search is not enough."
+       ],
+       "tag": "strong"
+      },
+      " The parcel layer we built on was missing from the catalogue. A second, independent sweep would have found it at once."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Licences came late."
+       ],
+       "tag": "strong"
+      },
+      " Most admitted layers still had unclear licence status when they reached the map."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Infrastructure stopped at the city line."
+       ],
+       "tag": "strong"
+      },
+      " Our freight pass found the City's layers and nothing from the port, railways, utilities or the province."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Layer numbers drift."
+       ],
+       "tag": "strong"
+      },
+      " The positions of layers inside a map service change over time. We now record each service and layer by name, and re-check them."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "What-changes"
+   },
+   "children": [
+    "What changes"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Two independent sweeps for every city, with an estimate of how much is still hidden."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Licences swept before profiling."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The infrastructure family swept across every tier and every special-purpose body."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Predictions written down before any search, then scored, so the method learns from each city."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Returning-to-Hamilton"
+   },
+   "children": [
+    "Returning to Hamilton"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "We will return to Hamilton for its port lands and terminals, rail sidings, yards and intermodal sites, provincial highways and truck routes, pipelines, power transmission and substations, gas, airport cargo, and warehousing."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0014\ntype: retro\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nstage: G\nmethod: pre-method\nevidence_date: 2026-11-18\nseq: 6"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, hamilton, retro, lessons, run-1",
+ "path": "Hamilton-retro-what-we-got-right-and-what-we-will-redo-11-19",
+ "title": "Hamilton retro: what we got right and what we will redo",
+ "url": "https://telegra.ph/Hamilton-retro-what-we-got-right-and-what-we-will-redo-11-19",
+ "views": 0
+}

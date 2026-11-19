@@ -1,0 +1,161 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, hamilton, permits, development, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Twenty-one months of Hamilton's building permit reports, read record by record and tied to parcels. Development activity is now a layer you can see."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "The-source"
+   },
+   "children": [
+    "The source"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The City publishes a monthly digest of issued building permits. We read every month from January 2025 to September 2026: ",
+    {
+     "children": [
+      "8,986 permit records"
+     ],
+     "tag": "strong"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Tying-permits-to-parcels"
+   },
+   "children": [
+    "Tying permits to parcels"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "8,812 of the 8,986 records"
+     ],
+     "tag": "strong"
+    },
+    " were linked to a parcel, touching ",
+    {
+     "children": [
+      "5,909 distinct parcels"
+     ],
+     "tag": "strong"
+    },
+    ". 1,905 records are in the focus set: industrial, commercial, logistics and multi-unit residential work, which the map emphasises."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-the-map-shows"
+   },
+   "children": [
+    "What the map shows"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "At city scale, a mosaic of permit activity, with stronger cells where focus permits cluster."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "From zoom 14, the parcels themselves are highlighted."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "A period control to choose the months."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "On each parcel, its permit records, with the source's own wording."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "What-it-does-not-claim"
+   },
+   "children": [
+    "What it does not claim"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A permit in a monthly report means it was issued that month. We do not infer whether the work started, finished or is still open. Owner and builder contact addresses are withheld."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Three-releases-in-a-day"
+   },
+   "children": [
+    "Three releases in a day"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The development data went out as three small releases on 17 November. Each is a versioned, hash-checked set of files that never changes once published, so the map can always point at exactly what it showed."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0012\ntype: stage-report\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nstage: E\nmethod: pre-method\nevidence_date: 2026-11-17\nseq: 4"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, hamilton, permits, development, run-1",
+ "path": "Hamilton-building-permits-on-the-parcel-map-11-19",
+ "title": "Hamilton: building permits on the parcel map",
+ "url": "https://telegra.ph/Hamilton-building-permits-on-the-parcel-map-11-19",
+ "views": 0
+}

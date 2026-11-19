@@ -1,0 +1,240 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "systems, assembly, make, dispatch, join"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Status: built and partly in use. The Assembly System is the register behind all of our research: one front door for anything new, and a human decision at every step that matters."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "A-register-of-profiles"
+   },
+   "children": [
+    "A register of profiles"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The Assembly System holds a profile of every code base, product, dataset, goal and question we work with. A profile is a pointer, never the data itself. Only the Assembly System mints identifiers. Anything new comes in through one front door, and every change is made by setting, retiring or superseding a profile, with its history kept. Every command that changes something shows a preview first and needs a second, explicit step to apply."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "MAKE"
+   },
+   "children": [
+    "MAKE"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "MAKE is our research and processing service. It owns geography, through a register of regions and places, and it runs regional news research, Dispatch and Join."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "How-research-travels"
+   },
+   "children": [
+    "How research travels"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Question."
+       ],
+       "tag": "strong"
+      },
+      " One thing we want to know."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Preparation Bundle."
+       ],
+       "tag": "strong"
+      },
+      " A frozen set of questions with framing and references, bound by a hash so later steps can prove nothing changed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Dispatch."
+       ],
+       "tag": "strong"
+      },
+      " The approved instruction sent to whoever does the work. Nothing is fetched before a Dispatch is approved. One Dispatch gets one return."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Digest."
+       ],
+       "tag": "strong"
+      },
+      " The record of what came back, with counts and numbered limitations. Accepted or rejected as a batch."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Packet."
+       ],
+       "tag": "strong"
+      },
+      " Records decided one by one: accept, edit, reject, defer, flag, hold, exclude or needs more."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Join."
+       ],
+       "tag": "strong"
+      },
+      " An exact proposal of changes to the store, reviewed on its own."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Bay."
+       ],
+       "tag": "strong"
+      },
+      " An isolated staged copy built from an accepted Join."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Promote."
+       ],
+       "tag": "strong"
+      },
+      " The owner checks the plan's hash, then the change is applied."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Edition and Publication."
+       ],
+       "tag": "strong"
+      },
+      " Drafts. Publishing is always a human push."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "Gaps-never-close-themselves"
+   },
+   "children": [
+    "Gaps never close themselves"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Unresolved items sit in a gap register with a type, priority, cost and a rule for closing them. Nothing closes without that rule being met, and blocked sources are never worked around."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Nothing-is-answered-until-confirmed"
+   },
+   "children": [
+    "Nothing is answered until confirmed"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Work can be handed out to machines and read back in, but no question counts as answered until a person confirms it."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-is-not-built-yet"
+   },
+   "children": [
+    "What is not built yet"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Join handles reviewed research records today. It is not yet the processor for map data: the parcel spine and overlay joins in this Journey run in the Industrial Atlas's own code, outside Join. Bringing those spatial joins into Join, with the same exact change-sets and reviews, is planned work. Links to the scheduler and to more providers are pending."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0016\ntype: system\nsection: systems\nevidence_date: 2026-11-18\nseq: 2"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "systems, assembly, make, dispatch, join",
+ "path": "The-Assembly-System-an-overview-11-19",
+ "title": "The Assembly System, an overview",
+ "url": "https://telegra.ph/The-Assembly-System-an-overview-11-19",
+ "views": 0
+}

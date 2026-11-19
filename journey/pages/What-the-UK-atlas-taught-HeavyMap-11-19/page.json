@@ -1,0 +1,165 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "origins, uk, lessons, prior-art"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "We went through the UK atlas module by module and asked what each one would look like with North American public data. Some ideas carried over directly. Some had no equivalent at all."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "Evidence-instead-of-scores"
+   },
+   "children": [
+    "Evidence instead of scores"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The UK atlas ranked places with one opportunity score. HeavyMap does not. Each parcel gets a profile that states what is known, where it came from, and what is not known. A reader can follow the argument rather than trust a number."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "OpenStreetMap-as-a-base,-not-an-inventory"
+   },
+   "children": [
+    "OpenStreetMap as a base, not an inventory"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Live OpenStreetMap queries were the whole of the UK atlas. In HeavyMap they are a shared background. Once a city publishes authoritative layers for parcels, zoning and buildings, those come first."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "One-module-per-source"
+   },
+   "children": [
+    "One module per source"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Each UK data source had its own small module that fetched, cleaned and drew it. That pattern carried straight into how HeavyMap prepares each dataset: one routine per layer, with its own profile and quirks."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "The-analogues-we-went-looking-for"
+   },
+   "children": [
+    "The analogues we went looking for"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Company registers."
+       ],
+       "tag": "strong"
+      },
+      " The UK panel searched a national company register. In Ontario and New York the closest open equivalents are business inventories such as Niagara's employment inventory and municipal business directories."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Rating records."
+       ],
+       "tag": "strong"
+      },
+      " The UK's non-domestic ratings had no open twin in Ontario, where assessment data is held by a provincial corporation and sold. New York's statewide tax parcels, with assessed values, came closest."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "The gap finder."
+       ],
+       "tag": "strong"
+      },
+      " Comparing a business register with mapped industrial land became a general idea: two registers that should agree, measured where they do not. In Welland, the business directory and the regional inventory disagree by about 29 percent."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Heritage, planning and permits."
+       ],
+       "tag": "strong"
+      },
+      " Each has local equivalents, scattered across municipal, regional and provincial publishers."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "What-did-not-carry-over"
+   },
+   "children": [
+    "What did not carry over"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "UK geography itself. HeavyMap does not ingest UK data. The atlas lives on as prior art: a record of what was tried, what worked and what readers asked for."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0006\ntype: origin\nsection: origins\nevidence_date: 2026-11-18\nseq: 2"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "origins, uk, lessons, prior-art",
+ "path": "What-the-UK-atlas-taught-HeavyMap-11-19",
+ "title": "What the UK atlas taught HeavyMap",
+ "url": "https://telegra.ph/What-the-UK-atlas-taught-HeavyMap-11-19",
+ "views": 0
+}

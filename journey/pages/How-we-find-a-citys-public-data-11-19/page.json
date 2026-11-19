@@ -1,0 +1,163 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "systems, framework, method, discovery"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Status: in use, version 0.1. Every city run follows the same written method, and every run feeds what it learns back into it."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "Datasets-are-the-exhaust-of-duties"
+   },
+   "children": [
+    "Datasets are the exhaust of duties"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Public data exists because an institution has a duty: to register, assess, permit, plan, regulate, inspect, serve or report. Each duty leaves records. So \"what data exists for this city?\" becomes \"which duties touch land and industry here, and who holds them?\" When a duty exists and no dataset does, that absence is a finding: unpublished, restricted, sold, or held elsewhere."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "The-same-duty,-different-holders"
+   },
+   "children": [
+    "The same duty, different holders"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Duties are stable from place to place. Who holds them is not. In Ontario, assessment belongs to a provincial corporation, the parcel fabric is often municipal, and floodplains sit with conservation authorities. In California, we expect a county assessor to hold parcels and values together; El Segundo will test that. So the first map of a new city is a grid of duties against tiers of government and special-purpose bodies."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Grain,-keys-and-time"
+   },
+   "children": [
+    "Grain, keys and time"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "For each dataset we record what one record is (a parcel, a building, a road segment, a zone, a permit, a document), which identifiers it carries, and whether it is a state, a log or a series of snapshots."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Paths-to-the-parcel"
+   },
+   "children": [
+    "Paths to the parcel"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Every dataset reaches the parcel spine by a path, or does not: a shared identifier, a location, an address, an indirect route through a building or road segment, or area context. We draw these as a join graph for each city. The shorter and stronger the path, the more a dataset is worth."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Value-is-questions-answered"
+   },
+   "children": [
+    "Value is questions answered"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A dataset is worth working on if it answers a question people bring to the map: which industrial parcels over a given size lie near a rail line, what changed on a parcel last year. A dataset that answers no planned question is catalogued and parked."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Knowing-when-to-stop"
+   },
+   "children": [
+    "Knowing when to stop"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Two independent sweeps, one through every portal and one driven by the duty grid, give a capture–recapture estimate of how much is still hidden. If sweep A finds 80, sweep B finds 60 and 40 are found by both, there are probably about 120."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Predict-first,-then-look"
+   },
+   "children": [
+    "Predict first, then look"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Before searching a new city we write down what we expect to find, who holds it and what will go wrong. Afterwards we score the predictions. The misses show where our picture of public data is wrong, and the method changes version by version."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Seven-stages"
+   },
+   "children": [
+    "Seven stages"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Prepare, map the publishers, enumerate, screen, profile and connect, value, learn. Each stage has an exit test, and each one is reported here as it finishes."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0015\ntype: framework\nsection: systems\nmethod: 0.1\nevidence_date: 2026-11-18\nseq: 1"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "systems, framework, method, discovery",
+ "path": "How-we-find-a-citys-public-data-11-19",
+ "title": "How we find a city's public data",
+ "url": "https://telegra.ph/How-we-find-a-citys-public-data-11-19",
+ "views": 0
+}

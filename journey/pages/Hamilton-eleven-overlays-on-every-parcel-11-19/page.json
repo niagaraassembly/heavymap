@@ -1,0 +1,184 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, hamilton, overlays, planning, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Zoning, plans, protected land and regulated areas all live in separate layers. We cut each one to the city and measured how much of every parcel it covers."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "The-layers"
+   },
+   "children": [
+    "The layers"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Each layer was pulled with all its fields, clipped to the City boundary, and repaired where the geometry was invalid:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Greenbelt designation (provincial)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Niagara Escarpment Plan designations and plan boundary (provincial)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Niagara Escarpment development control (City)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Hamilton Conservation Authority regulated areas"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Niagara Peninsula Conservation Authority approximate regulation lands"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Secondary plan land use: 47,206 polygons"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Employment lands: 22 areas covering 48.5 square kilometres"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Urban boundary and rural boundary"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Parks"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "How-a-parcel-gets-linked"
+   },
+   "children": [
+    "How a parcel gets linked"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "For every parcel and every overlay we measure the share of the parcel's area that the overlay covers. That gave ",
+    {
+     "children": [
+      "644,398 parcel-to-feature links"
+     ],
+     "tag": "strong"
+    },
+    ", about 3.9 per parcel."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Slivers"
+   },
+   "children": [
+    "Slivers"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "150,610 of those links are slivers: tiny overlaps where two layers drawn by different hands do not quite line up. They are flagged and kept, never dropped. A reader can see that a parcel touches a regulated area by a few square metres, and judge that for themselves."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "The-checks"
+   },
+   "children": [
+    "The checks"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A beta gate agreed on 18 October sets the checks every city must pass, with thresholds written down: one-to-one parcel matching, overlap quality, unmatched counts, placeholders, coverage, offset, identifier stability, overlay coverage, slivers, address and building linkage, and row-count drift between pulls. The same checks apply to every jurisdiction. Only the thresholds may differ, and any difference is recorded."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-came-next"
+   },
+   "children": [
+    "What came next"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The same night the first local map tiles were built from these layers, and tested for loading parcel by parcel from static files."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0011\ntype: stage-report\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nstage: E\nmethod: pre-method\nevidence_date: 2026-10-18\nseq: 3"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, hamilton, overlays, planning, run-1",
+ "path": "Hamilton-eleven-overlays-on-every-parcel-11-19",
+ "title": "Hamilton: eleven overlays on every parcel",
+ "url": "https://telegra.ph/Hamilton-eleven-overlays-on-every-parcel-11-19",
+ "views": 0
+}

@@ -1,0 +1,250 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, hamilton, catalogue, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Hamilton publishes hundreds of datasets. About 300 turned out to be usable layers, and the one we needed most was not in the catalogue at all."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "The-first-sweep"
+   },
+   "children": [
+    "The first sweep"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "On 23 August 2026 we read the City of Hamilton's whole open data catalogue: 463 datasets, 336 of them with a live map service behind them. Licences were mostly clear at the catalogue level: 391 datasets under the City of Hamilton Open Data Licence, 68 with none stated. The catalogue's theme field was no help as a taxonomy. Almost everything was simply \"geospatial\"."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Coverage,-row-by-row"
+   },
+   "children": [
+    "Coverage, row by row"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "In October a coverage study pulled together every catalogue row touching Hamilton, including Ontario-wide and Canada-wide layers: 606 rows. Then each was screened."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "237 were not relevant to industrial land and were set aside, but kept."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "A web check found 27 more that the catalogues had missed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "19 were duplicates, 62 were viewers, PDFs or web pages with no data behind them, and 11 belonged to other places."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "That left ",
+      {
+       "children": [
+        "304 usable Hamilton data layers"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Sorting-by-what-each-layer-can-join-to"
+   },
+   "children": [
+    "Sorting by what each layer can join to"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "We grouped the layers by the role they play in connecting data to parcels:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Tier 0, the base (9 rows)."
+       ],
+       "tag": "strong"
+      },
+      " Parcels, addresses, buildings, the city boundary."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tier 1, joins by identifier (4 rows)."
+       ],
+       "tag": "strong"
+      },
+      " Almost empty, because Hamilton publishes no shared parcel identifier."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tier 2, joins by location (81 rows)."
+       ],
+       "tag": "strong"
+      },
+      " Zoning, plans, regulated areas."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tier 3, context to display (76 rows)."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tier 4, registers without geometry (19 rows)."
+       ],
+       "tag": "strong"
+      },
+      " Matched by address."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tier 5, statistics (134 rows)."
+       ],
+       "tag": "strong"
+      },
+      " Area-level figures, not parcel-level."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "What-we-learned"
+   },
+   "children": [
+    "What we learned"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "The catalogue is not the whole publisher."
+       ],
+       "tag": "strong"
+      },
+      " The City's assessment parcel layer, the base of everything that followed, was found by a web check, not by searching the catalogue. Every city run now uses two independent sweeps."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Licences need checking early."
+       ],
+       "tag": "strong"
+      },
+      " Catalogue-level licences looked tidy, but when we later listed the layers on the map, 43 of 55 still had an unclear licence for the specific use. We now sweep licences before profiling."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Zero is a result."
+       ],
+       "tag": "strong"
+      },
+      " A missing business register or parcel identifier is a finding about the city, and it is written down as one."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0009\ntype: stage-report\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nstage: C\nmethod: pre-method\nevidence_date: 2026-10-17\nseq: 1"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, hamilton, catalogue, run-1",
+ "path": "Hamilton-reading-463-published-datasets-11-19",
+ "title": "Hamilton: reading 463 published datasets",
+ "url": "https://telegra.ph/Hamilton-reading-463-published-datasets-11-19",
+ "views": 0
+}

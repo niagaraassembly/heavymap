@@ -1,0 +1,215 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, hamilton, freight, infrastructure, rail, truck-routes, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "How does a truck reach a parcel, and what can it carry when it gets there? The City's own layers answer more than we expected. What sits with other owners is still to come."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "What-we-found"
+   },
+   "children": [
+    "What we found"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Truck route network."
+       ],
+       "tag": "strong"
+      },
+      " Current, edited in November 2026. 1,425 of 3,193 industrial-zoned parcels lie within 30 metres of a truck route."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Bridges and culverts with restrictions."
+       ],
+       "tag": "strong"
+      },
+      " Posted height limits on 27 structures and weight limits on 13. This answers whether a load can get through."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Average daily traffic counts."
+       ],
+       "tag": "strong"
+      },
+      " All vehicles, by year, with no geometry of their own. Located through the street centreline: 1,682 of 1,716 count locations matched."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Older traffic segments."
+       ],
+       "tag": "strong"
+      },
+      " Titled \"heavy truck traffic route\" in one City map, but they hold all-vehicle volumes from 2004 to 2020. The title is not the content."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Railways and level crossings."
+       ],
+       "tag": "strong"
+      },
+      " Rail lines last edited in October 2023."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Water and sewer networks."
+       ],
+       "tag": "strong"
+      },
+      " Pipe size, material and install date, edited in November 2026. Proximity to a main is not the same as a connection or spare capacity, and the map says so."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Traffic collisions."
+       ],
+       "tag": "strong"
+      },
+      " 134,136 rows from 2008 to 2025, about 2,700 with a truck as the first vehicle."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Airport."
+       ],
+       "tag": "strong"
+      },
+      " Five polygons, last edited in 2023."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "What-we-did-not-find"
+   },
+   "children": [
+    "What we did not find"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The Port of Hamilton was a lead we did not check. There were no rail operator layers, no provincial highway or truck network layers, no pipelines, no power transmission or gas. We looked where the City publishes. These belong to other owners: port authorities, railways, utilities and the province."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Reading-rules"
+   },
+   "children": [
+    "Reading rules"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Annual all-vehicle counts are not truck volumes."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Active permits and road closures are temporary, and are kept apart from lasting infrastructure."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "A nearby main says nothing about a parcel's connection."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Next"
+   },
+   "children": [
+    "Next"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A return to Hamilton is scheduled for the infrastructure that other owners hold. Every city run now sweeps that family across all tiers of government and special-purpose bodies."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0013\ntype: stage-report\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nstage: E\nmethod: pre-method\nevidence_date: 2026-11-17\nseq: 5"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, hamilton, freight, infrastructure, rail, truck-routes, run-1",
+ "path": "Hamilton-freight-and-infrastructure-first-pass-11-19",
+ "title": "Hamilton: freight and infrastructure, first pass",
+ "url": "https://telegra.ph/Hamilton-freight-and-infrastructure-first-pass-11-19",
+ "views": 0
+}

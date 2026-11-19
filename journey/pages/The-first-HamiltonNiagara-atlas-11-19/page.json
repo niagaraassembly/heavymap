@@ -1,0 +1,197 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "origins, hamilton, niagara, prior-art"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "In August 2026 we set out to map the physical industrial economy of Hamilton and the Niagara Peninsula. We built the foundations and stopped before drawing a single map."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "The-question"
+   },
+   "children": [
+    "The question"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Not \"where are the businesses?\" but \"what does the physical industrial economy of Hamilton–Niagara actually look like?\" Where things are made, repaired, stored and moved, and how rail, road, port and land fit together."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-the-reconnaissance-found"
+   },
+   "children": [
+    "What the reconnaissance found"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The twelve Niagara municipalities do not run twelve portals. Most publish through one shared catalogue: 11 organizations and 534 datasets."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The City of Niagara Falls published more open data than the Region itself: 329 datasets against 99."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "St. Catharines was parcel-complete: 44,265 parcels, with 498 designated for employment."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Welland's own hub listed about four times as many datasets as the shared catalogue."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Hamilton published 463 datasets, 214,293 buildings and 11,931 zoning polygons, but no business inventory. Niagara published 98,065 business records."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "That last point shaped everything. Niagara could be mapped business by business, Hamilton only by land and buildings. A map that hid this would make Hamilton look less industrial than it is."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-got-built"
+   },
+   "children": [
+    "What got built"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Every source was checked against its live endpoint, with counts, fields and licences. Hamilton and Niagara parcels, buildings, addresses and business records were cached and normalised into one unit index: 445,075 parcels, building footprints and address points, each carrying where it came from."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "The-rules"
+   },
+   "children": [
+    "The rules"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Never fabricate data. A gap is shown as a gap."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Never assume a business is still operating because an old list names it."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Provenance travels with every feature."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Observation and inference are different kinds of claim."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Respect licences, rate limits and robots rules."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Two-mistakes-caught-in-time"
+   },
+   "children": [
+    "Two mistakes caught in time"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A technical report on parcel profiles was checked before it was committed. It had stated figures more precisely than the sources allowed, and it had folded three jurisdictions into one. Both were corrected. The habit of checking every cited figure against its source stayed."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Why-it-stopped"
+   },
+   "children": [
+    "Why it stopped"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "On 28 August the work was paused at a clean boundary, to write down the general principles it was producing. Three weeks later it restarted as HeavyMap, with Hamilton as the first city."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0007\ntype: origin\nsection: origins\nplace_type: region\nevidence_date: 2026-08-28\nseq: 3"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "origins, hamilton, niagara, prior-art",
+ "path": "The-first-HamiltonNiagara-atlas-11-19",
+ "title": "The first Hamilton–Niagara atlas",
+ "url": "https://telegra.ph/The-first-HamiltonNiagara-atlas-11-19",
+ "views": 0
+}
