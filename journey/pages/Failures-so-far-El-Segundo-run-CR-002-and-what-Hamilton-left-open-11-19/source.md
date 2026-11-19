@@ -47,7 +47,7 @@ Every step of a run that did not get what it went for is written down the moment
 ### RF-002 · refused · City of El Segundo document library (elsegundo.org)
 
 - **Stage:** B · **severity:** 2 · **revisit priority:** P2 · **status:** open
-- **Tried:** GET of a zoning map PDF (https://elsegundo.orga local working copy)
+- **Tried:** GET of a zoning map PDF (https://elsegundo.org/home/showpublisheddocument/4888/637789661500370000)
 - **Result:** HTTP 403
 - **What it affects:** zoning map PDF, General Plan map PDF
 - **Retry rule:** Never circumvent. Same as the main site.

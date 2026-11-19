@@ -1,6 +1,7 @@
 {
  "author_name": "HeavyMap",
  "author_url": "https://heavymap.com/journey",
+ "can_edit": true,
  "content": [
   {
    "children": [
@@ -1262,7 +1263,7 @@
        ],
        "tag": "strong"
       },
-      " https://www.arcgis.coma local working copy, owner account SSS_Coordinator, created 2019-09-18, ",
+      " https://www.arcgis.com/home/item.html?id=6a332e4af32f423ab951689fd89ddd5e, owner account SSS_Coordinator, created 2019-09-18, ",
       {
        "children": [
         "item modified 2026-01-09"
@@ -3237,7 +3238,7 @@
    "tag": "pre"
   }
  ],
- "description": "working-paper, hamilton, freight, infrastructure, run-1",
+ "description": "",
  "path": "Hamilton-freight-and-infrastructure-datasets-discovery-and-first-profile-2026-11-17-11-19",
  "title": "Hamilton freight and infrastructure datasets: discovery and first profile (2026-11-17)",
  "url": "https://telegra.ph/Hamilton-freight-and-infrastructure-datasets-discovery-and-first-profile-2026-11-17-11-19",

@@ -1,6 +1,7 @@
 {
  "author_name": "HeavyMap",
  "author_url": "https://heavymap.com/journey",
+ "can_edit": true,
  "content": [
   {
    "children": [
@@ -366,7 +367,7 @@
        ],
        "tag": "strong"
       },
-      " GET of a zoning map PDF (https://elsegundo.orga local working copy)"
+      " GET of a zoning map PDF (https://elsegundo.org/home/showpublisheddocument/4888/637789661500370000)"
      ],
      "tag": "li"
     },
@@ -1342,7 +1343,7 @@
    "tag": "pre"
   }
  ],
- "description": "working-paper, el-segundo, failures, run-2",
+ "description": "",
  "path": "Failures-so-far-El-Segundo-run-CR-002-and-what-Hamilton-left-open-11-19",
  "title": "Failures so far: El Segundo run (CR-002), and what Hamilton left open",
  "url": "https://telegra.ph/Failures-so-far-El-Segundo-run-CR-002-and-what-Hamilton-left-open-11-19",

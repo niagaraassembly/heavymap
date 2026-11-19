@@ -81,7 +81,7 @@ Slice: Hamilton, family "context" (freight access and infrastructure). Linear is
 - **Pull:** complete, 21,062/21,062 (outSR 4326), `traffic-segments-heavy-truck-traffic-route-hamilton-2026-11-17/`.
 
 ### 1.4 Corridor Activities map
-- **Map item:** https://www.arcgis.coma local working copy, owner account SSS_Coordinator, created 2019-09-18, **item modified 2026-01-09**.
+- **Map item:** https://www.arcgis.com/home/item.html?id=6a332e4af32f423ab951689fd89ddd5e, owner account SSS_Coordinator, created 2019-09-18, **item modified 2026-01-09**.
   - Its description says the data is "updated on a nightly basis" from Municipal Consents, Road Occupancy Permits, Temporary Road Closures, Road Excavation Permits and capital projects.
   - The licence text is a City "as is" disclaimer.
 - **Freshness:** the item's date reflects edits to the map, not the data. Layer data dates confirm nightly updates.
