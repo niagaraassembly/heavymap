@@ -15,6 +15,25 @@
      "children": [
       {
        "attrs": {
+        "href": "/Failures-so-far-El-Segundo-run-CR-002-and-what-Hamilton-left-open-11-19"
+       },
+       "children": [
+        "Failures so far: El Segundo run (CR-002), and what Hamilton left open"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 4 min · working-paper, el-segundo, failures, run-2",
+      {
+       "tag": "br"
+      },
+      "What did not work in the El Segundo run so far, and what Hamilton left open: refusals, timeouts and gaps, each with a priority for the runs that follow. Published as written."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
         "href": "/El-Segundo-who-holds-what-and-how-to-read-them-stage-B-11-19"
        },
        "children": [
@@ -97,7 +116,7 @@
    "tag": "p"
   }
  ],
- "description": "",
+ "description": "Every working document of the El Segundo run, published as it is written: predictions, publisher map, search lists, join graph and the run log.\nFailures so far: El Segundo run (CR-002), and what Hamilton left open — 2026-11-18 · 4 min · working-paper, el-segundo, failures, run-2What did not work in the El Segundo run so far, and what Hamilton left open: refusals, timeouts and gaps, each with a priority for the runs that follow. Published as written.\nEl Segundo: who holds what, and how to read them (stage B)…",
  "path": "Working-papers-El-Segundo-11-19",
  "title": "Working papers: El Segundo",
  "url": "https://telegra.ph/Working-papers-El-Segundo-11-19",

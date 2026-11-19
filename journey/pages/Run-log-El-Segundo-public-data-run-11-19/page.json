@@ -203,7 +203,7 @@
        ],
        "tag": "strong"
       },
-      " City website (elsegundo.gov) returns 403 to automated clients. Recorded, not worked around (SP-004)."
+      " FAIL RF-001. City website (elsegundo.gov) returns 403 to automated clients. Recorded, not worked around (SP-004)."
      ],
      "tag": "li"
     },
@@ -248,7 +248,7 @@
        ],
        "tag": "strong"
       },
-      " State and federal catalogues read: State Geoportal 4,019 datasets, energy commission 202, BTS/NTAD 142, Caltrans 80. EnviroStor and GeoTracker download pages 403; EnviroStor export also on the Geoportal."
+      " State and federal catalogues read: State Geoportal 4,019 datasets, energy commission 202, BTS/NTAD 142, Caltrans 80. FAIL RF-004, RF-005. EnviroStor and GeoTracker download pages 403; EnviroStor export also on the Geoportal."
      ],
      "tag": "li"
     },
@@ -260,7 +260,7 @@
        ],
        "tag": "strong"
       },
-      " Southern California Edison distribution planning hub: 47 datasets (substations, transmission circuits, hosting capacity). Sanitation Districts page 403. City's second domain (elsegundo.org) 403."
+      " Southern California Edison distribution planning hub: 47 datasets (substations, transmission circuits, hosting capacity). FAIL RF-003, RF-002. Sanitation Districts page 403. City's second domain (elsegundo.org) 403."
      ],
      "tag": "li"
     },
@@ -291,7 +291,7 @@
        ],
        "tag": "code"
       },
-      " flagged sensitive (H6)."
+      " flagged sensitive (H6, RF-009)."
      ],
      "tag": "li"
     },
@@ -303,7 +303,7 @@
        ],
        "tag": "strong"
       },
-      " FEMA flood hazard service: connection failure twice. To re-check in stage C."
+      " FAIL RF-006. FEMA flood hazard service: connection failure twice. To re-check in stage C."
      ],
      "tag": "li"
     },
@@ -322,7 +322,19 @@
        ],
        "tag": "code"
       },
-      " written: 25 duties, holders and doors. Exit test met for 24 of 25 duties (gas and pipelines open)."
+      " written: 25 duties, holders and doors. Exit test met for 24 of 25 duties (gas and pipelines open: FAIL RF-007; airport, water and gas utility not fingerprinted: RF-008)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "23:50."
+       ],
+       "tag": "strong"
+      },
+      " Run failures register opened (owner request): every failure of this run gets an RF- row with kind, severity, revisit priority (P0 to P3, owner-adjustable), retry rule and status. Stage B failures are RF-001 to RF-009; Hamilton's carried-forward failures are RF-010 to RF-013."
      ],
      "tag": "li"
     },

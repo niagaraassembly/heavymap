@@ -1,0 +1,1350 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, el-segundo, failures, run-2"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "What did not work in the El Segundo run so far, and what Hamilton left open: refusals, timeouts and gaps, each with a priority for the runs that follow. Published as written."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "Every step of a run that did not get what it went for is written down the moment it happens, with what was tried, what came back, how much it cost (severity 1 to 5), how much the next runs should focus on it (revisit priority P0 to P3, which the owner changes as priorities shift), how to retry without ever working around a refusal, and its status. Generated from the run failures register."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "El-Segundo-run"
+   },
+   "children": [
+    "El Segundo run"
+   ],
+   "tag": "h3"
+  },
+  {
+   "attrs": {
+    "id": "RF-001-·-refused-·-City-of-El-Segundo-website-(elsegundo.gov)"
+   },
+   "children": [
+    "RF-001 · refused · City of El Segundo website (elsegundo.gov)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " B · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 3 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P1 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " GET of the city maps page and the root (https://www.elsegundo.gov/)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " HTTP 403 to an automated client"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " zoning text, municipal code, truck routes, documents, business registration lists"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Never circumvent. A human may read it in a browser; ask the city for a data contact or bulk files."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-006-·-unreachable-·-FEMA-National-Flood-Hazard-Layer-service"
+   },
+   "children": [
+    "RF-006 · unreachable · FEMA National Flood Hazard Layer service"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " B · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 3 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P1 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " GET ?f=json, two hosts, 2 attempts, 40 s timeout (https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " connection failure (no HTTP response)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " floodplain (DA-010)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Retry in stage C; then look for the NFHL on ArcGIS Online or the State Geoportal."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-007-·-not-read-·-Gas-and-pipeline-holders-(federal-pipeline-map,-gas-utility,-state-oil-and-gas)"
+   },
+   "children": [
+    "RF-007 · not read · Gas and pipeline holders (federal pipeline map, gas utility, state oil and gas)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " B · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 3 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P1 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " named from knowledge, no door read"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " stage B exit test not met for this duty"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " gas and pipelines (DA-016 family)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Read the doors in stage C; the federal pipeline map is restricted beyond a public viewer, so record that rather than seek access."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-002-·-refused-·-City-of-El-Segundo-document-library-(elsegundo.org)"
+   },
+   "children": [
+    "RF-002 · refused · City of El Segundo document library (elsegundo.org)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " B · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 2 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P2 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " GET of a zoning map PDF (https://elsegundo.orga local working copy)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " HTTP 403"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " zoning map PDF, General Plan map PDF"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Never circumvent. Same as the main site."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-003-·-refused-·-LA-County-Sanitation-Districts-maps-and-GIS-page"
+   },
+   "children": [
+    "RF-003 · refused · LA County Sanitation Districts maps and GIS page"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " B · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 2 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P2 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " GET (https://www.lacsd.org/about-us/who-we-are/maps-and-gis)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " HTTP 403"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " trunk sewers, treatment plants (servicing)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Never circumvent. Check for an ArcGIS Online organisation (SP-011); the district boundary service is on ArcGIS Online."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-005-·-refused-·-State-Water-Board-GeoTracker-data-download-page"
+   },
+   "children": [
+    "RF-005 · refused · State Water Board GeoTracker data download page"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " B · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 2 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P2 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " GET (https://geotracker.waterboards.ca.gov/data_download)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " HTTP 403"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " leaking tanks, cleanup sites"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Never circumvent. Look for a Water Boards export on the State Geoportal (389 Water Boards datasets there)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-008-·-not-fingerprinted-·-Los-Angeles-World-Airports;-regional-water-district;-gas-utility"
+   },
+   "children": [
+    "RF-008 · not fingerprinted · Los Angeles World Airports; regional water district; gas utility"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " B · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 2 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P2 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " not attempted in stage B"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " coverage gap"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " airport, water"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Fingerprint in stage C."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-004-·-refused-·-DTSC-EnviroStor-data-download-page"
+   },
+   "children": [
+    "RF-004 · refused · DTSC EnviroStor data download page"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " B · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 1 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P3 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " workaround official"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " GET (https://www.envirostor.dtsc.ca.gov/public/data_download)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " HTTP 403"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " contaminated and cleanup sites"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Use the official export on the California State Geoportal; re-check the page later."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Resolution:"
+       ],
+       "tag": "strong"
+      },
+      " EnviroStor export listed on the State Geoportal (official second door, not circumvention)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-009-·-held-sensitive-·-City-service-Target-Hazards"
+   },
+   "children": [
+    "RF-009 · held sensitive · City service Target_Hazards"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " B · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 1 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P3 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " accepted"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " listed only (https://services9.arcgis.com/NtAn3q92p40X6z9O/arcgis/rest/services)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " held under H6 (likely fire pre-plan for hazardous sites)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " none for HeavyMap"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Do not profile or publish; owner may decide otherwise."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Resolution:"
+       ],
+       "tag": "strong"
+      },
+      " Held by policy."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Carried-forward-from-Hamilton"
+   },
+   "children": [
+    "Carried forward from Hamilton"
+   ],
+   "tag": "h3"
+  },
+  {
+   "attrs": {
+    "id": "RF-012-·-coverage-gap-·-Port-of-Hamilton,-rail-operators,-provincial-highways,-pipelines,-transmission,-gas"
+   },
+   "children": [
+    "RF-012 · coverage gap · Port of Hamilton, rail operators, provincial highways, pipelines, transmission, gas"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " B · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 4 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P1 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " not swept (city layers only)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " infrastructure stopped at the city line"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " rail, ports, highways, utilities"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Re-sweep the infrastructure family across all tiers (BL-138)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-011-·-licence-unclear-·-43-of-55-admitted-Hamilton-and-Ontario-layers"
+   },
+   "children": [
+    "RF-011 · licence unclear · 43 of 55 admitted Hamilton and Ontario layers"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " D · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 3 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P1 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " licence column left unclear"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " licence unknown at publish time"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " all admitted layers"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Licence sweep (WU-09) before profiling; fill the 43."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-010-·-method-miss-·-City-of-Hamilton-assessment-parcel-layer-missing-from-the-catalogue"
+   },
+   "children": [
+    "RF-010 · method miss · City of Hamilton assessment parcel layer missing from the catalogue"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " C · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 4 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P3 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " resolved"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " catalogue search"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " found only by a web check"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " parcel fabric (spine)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Two independent sweeps every run (now WU-05)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Resolution:"
+       ],
+       "tag": "strong"
+      },
+      " Method v0.1 requires two sweeps."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-013-·-unreachable-·-Brant-County-own-map-server-(sm.brant.ca),-noted-in-the-roster"
+   },
+   "children": [
+    "RF-013 · unreachable · Brant County own map server (sm.brant.ca), noted in the roster"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " E · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 1 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P3 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " workaround official"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " GET (https://sm.brant.ca/arcgis/rest/services/PublicData/CountyOfBrantGIS/MapServer)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " connection failure"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " Brant County layers (Hub copies used)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Re-check before assuming it is gone."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Resolution:"
+       ],
+       "tag": "strong"
+      },
+      " Hub items on ArcGIS Online used."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0095\ntype: working-paper\nsection: expansion\nrun: CR-002\nplace: us-ca-0622412-el-segundo\nplace_type: city\nstage: B\nmethod: 0.1\nevidence_date: 2026-11-18\nseq: 45"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, el-segundo, failures, run-2",
+ "path": "Failures-so-far-El-Segundo-run-CR-002-and-what-Hamilton-left-open-11-19",
+ "title": "Failures so far: El Segundo run (CR-002), and what Hamilton left open",
+ "url": "https://telegra.ph/Failures-so-far-El-Segundo-run-CR-002-and-what-Hamilton-left-open-11-19",
+ "views": 0
+}
