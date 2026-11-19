@@ -68,5 +68,8 @@ test("the link check catches a link to a page that isn't generated", () => {
 
 test("only the editorial photos ship as static files, never prototype fixtures", () => {
   assert.deepEqual(STATIC_DIRS, ["editorial", "map", "flags", "fonts"]);
-  assert.ok(!pages.some((p) => /pmtiles|synthetic/i.test(p.html)));
+  // Journey pages quote working papers whose titles name tile formats ("first PMTiles build");
+  // that is editorial text, not a reference to a shipped prototype file.
+  assert.ok(!pages.filter((p) => !p.path.startsWith("/journey/")).some((p) => /pmtiles|synthetic/i.test(p.html)));
+  assert.ok(!pages.some((p) => /["'(=][^"'()\s]*\.pmtiles\b|synthetic-parcels/i.test(p.html)));
 });
