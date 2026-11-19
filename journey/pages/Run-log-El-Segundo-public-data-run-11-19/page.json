@@ -342,11 +342,154 @@
      "children": [
       {
        "children": [
+        "23:55."
+       ],
+       "tag": "strong"
+      },
+      " Method v0.2 adopted by the owner (MC-002, D-094): run failures register in every stage."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Stage-C:-Enumerate"
+   },
+   "children": [
+    "Stage C: Enumerate"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "23:46."
+       ],
+       "tag": "strong"
+      },
+      " Sweep A: every stage B door enumerated in full; 617 title-screened candidates across 9 publishers. Sample of 60 (seed 20261119): precision 0.43, about 267 relevant."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "23:47."
+       ],
+       "tag": "strong"
+      },
+      " Sweep B: 15 duty-driven searches, without consulting A. 24 distinct public datasets; documents, PDFs, commercial and restricted finds recorded separately."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "23:48."
+       ],
+       "tag": "strong"
+      },
+      " Overlap: 15 of B's 24 in A (two automatic matches corrected by hand). FAIL RF-015 to RF-019: five doors found only by B (Census, county planning server, air district portal and emissions, EPA risk management plans, GeoTracker without a second door)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "23:48."
+       ],
+       "tag": "strong"
+      },
+      " Capture–recapture: about 427 (Lincoln–Petersen), 418 (Chapman). Two sweeps hold roughly two thirds. Rough: B small, not fully independent."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "23:49."
+       ],
+       "tag": "strong"
+      },
+      " City boundary is a line, not a polygon (SP-013); closed into a polygon for filtering."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "23:49."
+       ],
+       "tag": "strong"
+      },
+      " County narrowing test on the assessor parcel layer: tax-rate city 5,459, all inside the boundary; situs city 5,091; 370 city parcels with blank situs (349 single space, 21 null). FAIL RF-020, resolved by using tax-rate city; lesson LL-005."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "23:50."
+       ],
+       "tag": "strong"
+      },
+      " Count sprints on 18 city services (parcels 5,499; zoning 440 to 460 in three versions; General Plan two versions; 109 oil wells; 23 developments)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "23:58."
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "STAGE-C.md"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "SWEEP-A.csv"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "SWEEP-B.csv"
+       ],
+       "tag": "code"
+      },
+      " written. Exit test: sweeps and estimate done; discovery curve not yet flat (four new doors to enumerate in stage D)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
         "Next."
        ],
        "tag": "strong"
       },
-      " Stage C: two independent sweeps (A: every door above, enumerated; B: duty-driven search without looking at A), capture–recapture estimate, count sprints, and the county narrowing test."
+      " Stage D: enumerate the four new doors, then screen (relevance, licence, sensitivity), synonyms (WU-08) and licences (WU-09); decide which zoning and General Plan versions are current."
      ],
      "tag": "li"
     }
@@ -369,7 +512,7 @@
   },
   {
    "children": [
-    "heavymap-journey/1\nid: JP-0092\ntype: working-paper\nsection: expansion\nrun: CR-002\nplace: us-ca-0622412-el-segundo\nplace_type: city\nstage: B\nmethod: 0.1\nevidence_date: 2026-11-18\nseq: 42"
+    "heavymap-journey/1\nid: JP-0092\ntype: working-paper\nsection: expansion\nrun: CR-002\nplace: us-ca-0622412-el-segundo\nplace_type: city\nstage: C\nmethod: 0.2\nevidence_date: 2026-11-18\nseq: 42"
    ],
    "tag": "pre"
   }

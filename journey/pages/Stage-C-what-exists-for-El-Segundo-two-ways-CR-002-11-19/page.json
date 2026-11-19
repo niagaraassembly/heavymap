@@ -1,0 +1,690 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, el-segundo, enumeration, stage-c, run-2"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Stage C of the El Segundo run: two independent sweeps for the city's public data, an estimate of how much is still hidden, record counts, and a test of whether county data can be narrowed to one city at the source. Published as written."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "Run CR-002, method v0.2, stage C: WU-05 (two independent sweeps and a capture–recapture estimate) and WU-07 (count sprints), plus the run's own goal: can county datasets be narrowed to the city at the source? Live reads 2026-11-19 04:46 to 04:51 UTC. Raw responses kept locally, not published. Lists: ",
+    {
+     "children": [
+      "SWEEP-A.csv"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "SWEEP-B.csv"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "1.-Sweep-A:-every-door-from-stage-B,-enumerated"
+   },
+   "children": [
+    "1. Sweep A: every door from stage B, enumerated"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Every publisher door found in stage B was listed in full (REST directories, Hub DCAT feeds, Socrata discovery, the county permitting server) and screened by title against the 25 duties. The city's REST services and Hub items were merged by name, the county's two Hubs by identifier, and layers covering only unincorporated county land were set aside (3). The city's ",
+    {
+     "children": [
+      "Target_Hazards"
+     ],
+     "tag": "code"
+    },
+    " service was excluded (held, H6)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "617 candidates"
+       ],
+       "tag": "strong"
+      },
+      " across 9 publishers: State Geoportal 239, Los Angeles County 158, energy commission 62, BTS/NTAD 47, City of El Segundo 36, Caltrans 29, Southern California Edison 23, SCAG 16, Port of Los Angeles 7."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Title screening is loose by design. On a fixed random sample of 60 (seed 20261119), ",
+      {
+       "children": [
+        "26 were relevant data layers covering El Segundo"
+       ],
+       "tag": "strong"
+      },
+      ": precision 0.43, so sweep A holds about ",
+      {
+       "children": [
+        "267 relevant datasets"
+       ],
+       "tag": "strong"
+      },
+      ". Examples of noise: grouse hunting zones, time zones, a defaulted property tax layer matched by \"fault\"."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "2.-Sweep-B:-one-search-per-duty,-without-looking-at-A"
+   },
+   "children": [
+    "2. Sweep B: one search per duty, without looking at A"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Fifteen duty-driven web searches (parcels; zoning and General Plan; permits; flood and coastal zone; contaminated sites; rail; truck routes; pipelines; electricity; airport; businesses; sewer and storm; seismic; air; specific plans). Results were sorted into machine-readable public datasets (counted), documents and PDFs, commercial lists, and restricted data (recorded, not counted)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "24 distinct datasets"
+       ],
+       "tag": "strong"
+      },
+      " found by sweep B."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "15 of them were also in sweep A"
+       ],
+       "tag": "strong"
+      },
+      " (two automatic matches were corrected by hand: one false match, one true match with the wrong evidence)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "9 were found only by B"
+       ],
+       "tag": "strong"
+      },
+      ": Sanitation Districts parcels with a 2022 roll; the county General Plan 2035 freight and passenger rail layer; Census TIGER/Line for Los Angeles County (railroads); energy commission electric substations; refinery boundaries (publisher not yet identified); the air district's annual emissions inquiry and its GIS open data portal; US EPA risk management plan facilities; the Water Boards' GeoTracker."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Most of B's extra finds sit behind doors stage B never enumerated: the Census, the county planning department's server, the air district's portal, EPA's risk management plans. Each is a failure row (RF-015 to RF-019)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Also met in B and not counted: city PDFs (zoning map, General Plan map, cumulative projects list, Smoky Hollow Specific Plan), a state pipeline database held internally by the State Fire Marshal, utility statements that substation detail can be sensitive, and commercial lists (business directories, a deep tech map)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "3.-Capture–recapture-estimate"
+   },
+   "children": [
+    "3. Capture–recapture estimate"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "With n1 = 267 (sweep A, precision-adjusted), n2 = 24 and m = 15:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Lincoln–Petersen: 267 × 24 ÷ 15 ≈ ",
+      {
+       "children": [
+        "427"
+       ],
+       "tag": "strong"
+      },
+      " relevant datasets."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Chapman (less biased for small samples): (268 × 25 ÷ 16) − 1 ≈ ",
+      {
+       "children": [
+        "418"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "So the two sweeps together hold about 276 of an estimated 420, roughly ",
+    {
+     "children": [
+      "two thirds"
+     ],
+     "tag": "strong"
+    },
+    ". The estimate is rough: sweep B is small, leans towards infrastructure and hazards, and was not fully independent (stage B had already shown the doors). Its main use is the list of what A missed, and why."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "4.-Can-county-data-be-narrowed-to-the-city?-(run-goal)"
+   },
+   "children": [
+    "4. Can county data be narrowed to the city? (run goal)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Tested on the county assessor's parcel layer (Public Works GIS, ",
+    {
+     "children": [
+      "GIS_Web_Services/MapServer/2"
+     ],
+     "tag": "code"
+    },
+    "), live counts:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Whole county"
+       ],
+       "tag": "strong"
+      },
+      " — Parcels: 2,433,681"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "TaxRateCity"
+         ],
+         "tag": "code"
+        },
+        " = EL SEGUNDO"
+       ],
+       "tag": "strong"
+      },
+      " — Parcels: 5,459"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "SitusCity"
+         ],
+         "tag": "code"
+        },
+        " = EL SEGUNDO"
+       ],
+       "tag": "strong"
+      },
+      " — Parcels: 5,091"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Intersects the city boundary"
+       ],
+       "tag": "strong"
+      },
+      " — Parcels: 5,483"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Wholly inside the city boundary"
+       ],
+       "tag": "strong"
+      },
+      " — Parcels: 5,450"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tax-rate city EL SEGUNDO and inside the boundary"
+       ],
+       "tag": "strong"
+      },
+      " — Parcels: 5,459 of 5,459"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Situs city EL SEGUNDO and inside the boundary"
+       ],
+       "tag": "strong"
+      },
+      " — Parcels: 5,089 of 5,091"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Findings:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Narrowing at the source works"
+       ],
+       "tag": "strong"
+      },
+      " for this layer, by attribute and by geometry. El Segundo is 0.22% of the county's parcels; no county-wide download is needed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Filter by tax-rate city, not by situs city."
+       ],
+       "tag": "strong"
+      },
+      " 370 parcels in the city have no situs address: 349 store a single space for blank (the same convention as Hamilton's quirk Q-008) and 21 are empty. These are the parcels most likely to be refinery, rail, utility and large industrial land. A filter on the address city drops exactly the land HeavyMap cares about most."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "The postal city spills over the city limit"
+       ],
+       "tag": "strong"
+      },
+      ", slightly: 2 parcels with an El Segundo situs address are in the City of Los Angeles (prediction PR-003 expected this)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "The city's own boundary is published as a line, not a polygon"
+       ],
+       "tag": "strong"
+      },
+      " (one closed LineString of 249 points). It had to be closed into a polygon before it could filter anything."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "5.-Count-sprints-(WU-07),-City-of-El-Segundo-services"
+   },
+   "children": [
+    "5. Count sprints (WU-07), City of El Segundo services"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "City parcels (",
+        {
+         "children": [
+          "COES_Parcels"
+         ],
+         "tag": "code"
+        },
+        ")"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 5,499"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City copy of county parcels (",
+        {
+         "children": [
+          "LACO_Parcels"
+         ],
+         "tag": "code"
+        },
+        ")"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 14,162 (extends beyond the city)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Zoning (",
+        {
+         "children": [
+          "Zoning"
+         ],
+         "tag": "code"
+        },
+        ", ",
+        {
+         "children": [
+          "Zoning_Update"
+         ],
+         "tag": "code"
+        },
+        ", ",
+        {
+         "children": [
+          "COES_zoning"
+         ],
+         "tag": "code"
+        },
+        ")"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 460, 440, 441"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "General Plan (",
+        {
+         "children": [
+          "General_Plan"
+         ],
+         "tag": "code"
+        },
+        ", ",
+        {
+         "children": [
+          "GeneralPlan"
+         ],
+         "tag": "code"
+        },
+        ")"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 441, 453"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Specific plans (",
+        {
+         "children": [
+          "COES_Specific_Plans"
+         ],
+         "tag": "code"
+        },
+        "; Smoky Hollow)"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 77; 42"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Developments"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 23"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Address points"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 9,137"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Building outlines (service named 2017, layer named 2020)"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 7,967"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "OpenGov building records (standalone; in the OpenGov layer set)"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 7,320; 16,930"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Oil wells (in the OpenGov layer set)"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 109"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Deep tech businesses (two layers)"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 50; 35"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Utilities"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 9"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LAX noise contours (latest quarter)"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 3"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Street centreline"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 881"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Notes: several versions of zoning and the General Plan coexist, and the city parcel count (5,499) is 40 higher than the county's tax-rate city count (5,459). Stage D decides which version is current; stage E profiles the priority slice."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "6.-Exit-test-for-stage-C"
+   },
+   "children": [
+    "6. Exit test for stage C"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Two sweeps done: yes. Capture–recapture estimate reported: yes. Discovery curve flat on main channels: not yet; four doors found by sweep B are still to enumerate in stage D."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0096\ntype: working-paper\nsection: expansion\nrun: CR-002\nplace: us-ca-0622412-el-segundo\nplace_type: city\nstage: C\nmethod: 0.2\nevidence_date: 2026-11-18\nseq: 46"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, el-segundo, enumeration, stage-c, run-2",
+ "path": "Stage-C-what-exists-for-El-Segundo-two-ways-CR-002-11-19",
+ "title": "Stage C: what exists for El Segundo, two ways (CR-002)",
+ "url": "https://telegra.ph/Stage-C-what-exists-for-El-Segundo-two-ways-CR-002-11-19",
+ "views": 0
+}

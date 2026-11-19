@@ -15,6 +15,25 @@
      "children": [
       {
        "attrs": {
+        "href": "/Stage-C-what-exists-for-El-Segundo-two-ways-CR-002-11-19"
+       },
+       "children": [
+        "Stage C: what exists for El Segundo, two ways (CR-002)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 4 min · working-paper, el-segundo, enumeration, stage-c, run-2",
+      {
+       "tag": "br"
+      },
+      "Stage C of the El Segundo run: two independent sweeps for the city's public data, an estimate of how much is still hidden, record counts, and a test of whether county data can be narrowed to one city at the source.…"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
         "href": "/Failures-so-far-El-Segundo-run-CR-002-and-what-Hamilton-left-open-11-19"
        },
        "children": [
@@ -22,7 +41,7 @@
        ],
        "tag": "a"
       },
-      " — 2026-11-18 · 4 min · working-paper, el-segundo, failures, run-2",
+      " — 2026-11-18 · 6 min · working-paper, el-segundo, failures, run-2",
       {
        "tag": "br"
       },
@@ -79,7 +98,7 @@
        ],
        "tag": "a"
       },
-      " — 2026-11-18 · 2 min · working-paper, el-segundo, run-log, run-2",
+      " — 2026-11-18 · 3 min · working-paper, el-segundo, run-log, run-2",
       {
        "tag": "br"
       },
@@ -116,7 +135,7 @@
    "tag": "p"
   }
  ],
- "description": "Every working document of the El Segundo run, published as it is written: predictions, publisher map, search lists, join graph and the run log.\nFailures so far: El Segundo run (CR-002), and what Hamilton left open — 2026-11-18 · 4 min · working-paper, el-segundo, failures, run-2What did not work in the El Segundo run so far, and what Hamilton left open: refusals, timeouts and gaps, each with a priority for the runs that follow. Published as written.\nEl Segundo: who holds what, and how to read them (stage B)…",
+ "description": "",
  "path": "Working-papers-El-Segundo-11-19",
  "title": "Working papers: El Segundo",
  "url": "https://telegra.ph/Working-papers-El-Segundo-11-19",

@@ -32,6 +32,113 @@
   },
   {
    "attrs": {
+    "id": "RF-020-·-method-miss-·-County-parcel-narrowing-by-address-city"
+   },
+   "children": [
+    "RF-020 · method miss · County parcel narrowing by address city"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " C · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 4 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P0 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " resolved"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " SitusCity filter (https://dpw.gis.lacounty.gov/dpw/rest/services/GIS_Web_Services/MapServer/2)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " misses 370 unaddressed city parcels (likely industrial); tax-rate city catches all 5,459"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " parcels (spine)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Always narrow county parcels by tax-rate city or geometry, never by situs city. Avoided in this run (found by test)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Resolution:"
+       ],
+       "tag": "strong"
+      },
+      " Tax-rate city adopted for the El Segundo slice; lesson LL-005."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
     "id": "RF-001-·-refused-·-City-of-El-Segundo-website-(elsegundo.gov)"
    },
    "children": [
@@ -309,6 +416,101 @@
        "tag": "strong"
       },
       " Read the doors in stage C; the federal pipeline map is restricted beyond a public viewer, so record that rather than seek access."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-017-·-method-miss-·-South-Coast-AQMD-GIS-open-data-portal-and-annual-emissions-inquiry"
+   },
+   "children": [
+    "RF-017 · method miss · South Coast AQMD GIS open data portal and annual emissions inquiry"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " C · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 3 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P1 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " stage B read only the facility lookup page (https://www.aqmd.gov/online-services/gis-open-data)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " door missing from sweep A"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " air permits, emissions"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Fingerprint the portal in stage D; check bulk export terms."
      ],
      "tag": "li"
     }
@@ -689,6 +891,493 @@
        "tag": "strong"
       },
       " Fingerprint in stage C."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-015-·-method-miss-·-US-Census-Bureau-(TIGER/Line,-place-and-tract-geography)"
+   },
+   "children": [
+    "RF-015 · method miss · US Census Bureau (TIGER/Line, place and tract geography)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " C · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 2 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P2 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " not enumerated in stage B; found by sweep B (https://catalog.data.gov/dataset/tiger-line-shapefile-current-county-los-angeles-county-ca-all-lines)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " door missing from sweep A"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " rail (TIGER lines), census, boundaries"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Add the Census to the standing door list for every US city."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-016-·-method-miss-·-Los-Angeles-County-Regional-Planning-GIS-server-(public.gis.lacounty.gov)"
+   },
+   "children": [
+    "RF-016 · method miss · Los Angeles County Regional Planning GIS server (public.gis.lacounty.gov)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " C · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 2 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P2 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " county Hubs enumerated, this server not (https://public.gis.lacounty.gov/arcgis/rest/services/DRP/GP2035_SUPPLEMENTAL/MapServer/6)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " door missing from sweep A"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " rail, planning context"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Enumerate every county ArcGIS Server REST root, not only the Hubs."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-018-·-method-miss-·-US-EPA-Risk-Management-Plan-facilities"
+   },
+   "children": [
+    "RF-018 · method miss · US EPA Risk Management Plan facilities"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " C · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 2 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P2 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " EPA read only for FRS"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " door missing from sweep A"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " hazardous processes"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Add RMP and TRI to the EPA door; note RMP's public access limits."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-019-·-unreachable-·-Water-Boards-GeoTracker-(no-bulk-door-found-yet)"
+   },
+   "children": [
+    "RF-019 · unreachable · Water Boards GeoTracker (no bulk door found yet)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " C · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 2 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P2 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " download page 403 (RF-005); Geoportal searched by title (https://geotracker.waterboards.ca.gov/data_download)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " no official second door found"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " leaking tanks, cleanup sites"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Search the 389 Water Boards Geoportal items by content, not only title."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-014-·-tool-error-·-Journey-publishing-tool,-local-path-cleaning-and-home-path-check"
+   },
+   "children": [
+    "RF-014 · tool error · Journey publishing tool, local-path cleaning and home-path check"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " B · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 2 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P3 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " resolved"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " publish working papers"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " web addresses with a home-directory path segment were cut short in two published papers (Hamilton freight study, El Segundo failures page)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " published evidence URLs"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Rules now match only paths standing on their own; every published source scanned for the damage pattern."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Resolution:"
+       ],
+       "tag": "strong"
+      },
+      " Both papers corrected in place; scan finds no other damaged addresses."
      ],
      "tag": "li"
     }
@@ -1338,7 +2027,7 @@
   },
   {
    "children": [
-    "heavymap-journey/1\nid: JP-0095\ntype: working-paper\nsection: expansion\nrun: CR-002\nplace: us-ca-0622412-el-segundo\nplace_type: city\nstage: B\nmethod: 0.1\nevidence_date: 2026-11-18\nseq: 45"
+    "heavymap-journey/1\nid: JP-0095\ntype: working-paper\nsection: expansion\nrun: CR-002\nplace: us-ca-0622412-el-segundo\nplace_type: city\nstage: C\nmethod: 0.2\nevidence_date: 2026-11-18\nseq: 45"
    ],
    "tag": "pre"
   }

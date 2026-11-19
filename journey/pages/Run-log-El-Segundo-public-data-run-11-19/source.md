@@ -6,8 +6,8 @@ country: us
 subdivision: ca
 county: los-angeles
 city: el-segundo
-method: 0.1
-stage: B
+method: 0.2
+stage: C
 type: working-paper
 evidence_date: 2026-11-18
 ---
@@ -41,4 +41,16 @@ One line per step, newest last. Times are Eastern. Linear is out of use, so this
 - **23:30.** FAIL RF-006. FEMA flood hazard service: connection failure twice. To re-check in stage C.
 - **23:35.** `PUBLISHERS.md` written: 25 duties, holders and doors. Exit test met for 24 of 25 duties (gas and pipelines open: FAIL RF-007; airport, water and gas utility not fingerprinted: RF-008).
 - **23:50.** Run failures register opened (owner request): every failure of this run gets an RF- row with kind, severity, revisit priority (P0 to P3, owner-adjustable), retry rule and status. Stage B failures are RF-001 to RF-009; Hamilton's carried-forward failures are RF-010 to RF-013.
-- **Next.** Stage C: two independent sweeps (A: every door above, enumerated; B: duty-driven search without looking at A), capture–recapture estimate, count sprints, and the county narrowing test.
+- **23:55.** Method v0.2 adopted by the owner (MC-002, D-094): run failures register in every stage.
+
+## Stage C: Enumerate
+
+- **23:46.** Sweep A: every stage B door enumerated in full; 617 title-screened candidates across 9 publishers. Sample of 60 (seed 20261119): precision 0.43, about 267 relevant.
+- **23:47.** Sweep B: 15 duty-driven searches, without consulting A. 24 distinct public datasets; documents, PDFs, commercial and restricted finds recorded separately.
+- **23:48.** Overlap: 15 of B's 24 in A (two automatic matches corrected by hand). FAIL RF-015 to RF-019: five doors found only by B (Census, county planning server, air district portal and emissions, EPA risk management plans, GeoTracker without a second door).
+- **23:48.** Capture–recapture: about 427 (Lincoln–Petersen), 418 (Chapman). Two sweeps hold roughly two thirds. Rough: B small, not fully independent.
+- **23:49.** City boundary is a line, not a polygon (SP-013); closed into a polygon for filtering.
+- **23:49.** County narrowing test on the assessor parcel layer: tax-rate city 5,459, all inside the boundary; situs city 5,091; 370 city parcels with blank situs (349 single space, 21 null). FAIL RF-020, resolved by using tax-rate city; lesson LL-005.
+- **23:50.** Count sprints on 18 city services (parcels 5,499; zoning 440 to 460 in three versions; General Plan two versions; 109 oil wells; 23 developments).
+- **23:58.** `STAGE-C.md`, `SWEEP-A.csv`, `SWEEP-B.csv` written. Exit test: sweeps and estimate done; discovery curve not yet flat (four new doors to enumerate in stage D).
+- **Next.** Stage D: enumerate the four new doors, then screen (relevance, licence, sensitivity), synonyms (WU-08) and licences (WU-09); decide which zoning and General Plan versions are current.

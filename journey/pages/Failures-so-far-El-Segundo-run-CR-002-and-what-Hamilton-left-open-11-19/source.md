@@ -6,8 +6,8 @@ country: us
 subdivision: ca
 county: los-angeles
 city: el-segundo
-method: 0.1
-stage: B
+method: 0.2
+stage: C
 type: working-paper
 evidence_date: 2026-11-18
 ---
@@ -19,6 +19,15 @@ working-paper, el-segundo, failures, run-2
 Every step of a run that did not get what it went for is written down the moment it happens, with what was tried, what came back, how much it cost (severity 1 to 5), how much the next runs should focus on it (revisit priority P0 to P3, which the owner changes as priorities shift), how to retry without ever working around a refusal, and its status. Generated from the run failures register.
 
 ## El Segundo run
+
+### RF-020 · method miss · County parcel narrowing by address city
+
+- **Stage:** C · **severity:** 4 · **revisit priority:** P0 · **status:** resolved
+- **Tried:** SitusCity filter (https://dpw.gis.lacounty.gov/dpw/rest/services/GIS_Web_Services/MapServer/2)
+- **Result:** misses 370 unaddressed city parcels (likely industrial); tax-rate city catches all 5,459
+- **What it affects:** parcels (spine)
+- **Retry rule:** Always narrow county parcels by tax-rate city or geometry, never by situs city. Avoided in this run (found by test).
+- **Resolution:** Tax-rate city adopted for the El Segundo slice; lesson LL-005.
 
 ### RF-001 · refused · City of El Segundo website (elsegundo.gov)
 
@@ -43,6 +52,14 @@ Every step of a run that did not get what it went for is written down the moment
 - **Result:** stage B exit test not met for this duty
 - **What it affects:** gas and pipelines (DA-016 family)
 - **Retry rule:** Read the doors in stage C; the federal pipeline map is restricted beyond a public viewer, so record that rather than seek access.
+
+### RF-017 · method miss · South Coast AQMD GIS open data portal and annual emissions inquiry
+
+- **Stage:** C · **severity:** 3 · **revisit priority:** P1 · **status:** open
+- **Tried:** stage B read only the facility lookup page (https://www.aqmd.gov/online-services/gis-open-data)
+- **Result:** door missing from sweep A
+- **What it affects:** air permits, emissions
+- **Retry rule:** Fingerprint the portal in stage D; check bulk export terms.
 
 ### RF-002 · refused · City of El Segundo document library (elsegundo.org)
 
@@ -75,6 +92,47 @@ Every step of a run that did not get what it went for is written down the moment
 - **Result:** coverage gap
 - **What it affects:** airport, water
 - **Retry rule:** Fingerprint in stage C.
+
+### RF-015 · method miss · US Census Bureau (TIGER/Line, place and tract geography)
+
+- **Stage:** C · **severity:** 2 · **revisit priority:** P2 · **status:** open
+- **Tried:** not enumerated in stage B; found by sweep B (https://catalog.data.gov/dataset/tiger-line-shapefile-current-county-los-angeles-county-ca-all-lines)
+- **Result:** door missing from sweep A
+- **What it affects:** rail (TIGER lines), census, boundaries
+- **Retry rule:** Add the Census to the standing door list for every US city.
+
+### RF-016 · method miss · Los Angeles County Regional Planning GIS server (public.gis.lacounty.gov)
+
+- **Stage:** C · **severity:** 2 · **revisit priority:** P2 · **status:** open
+- **Tried:** county Hubs enumerated, this server not (https://public.gis.lacounty.gov/arcgis/rest/services/DRP/GP2035_SUPPLEMENTAL/MapServer/6)
+- **Result:** door missing from sweep A
+- **What it affects:** rail, planning context
+- **Retry rule:** Enumerate every county ArcGIS Server REST root, not only the Hubs.
+
+### RF-018 · method miss · US EPA Risk Management Plan facilities
+
+- **Stage:** C · **severity:** 2 · **revisit priority:** P2 · **status:** open
+- **Tried:** EPA read only for FRS
+- **Result:** door missing from sweep A
+- **What it affects:** hazardous processes
+- **Retry rule:** Add RMP and TRI to the EPA door; note RMP's public access limits.
+
+### RF-019 · unreachable · Water Boards GeoTracker (no bulk door found yet)
+
+- **Stage:** C · **severity:** 2 · **revisit priority:** P2 · **status:** open
+- **Tried:** download page 403 (RF-005); Geoportal searched by title (https://geotracker.waterboards.ca.gov/data_download)
+- **Result:** no official second door found
+- **What it affects:** leaking tanks, cleanup sites
+- **Retry rule:** Search the 389 Water Boards Geoportal items by content, not only title.
+
+### RF-014 · tool error · Journey publishing tool, local-path cleaning and home-path check
+
+- **Stage:** B · **severity:** 2 · **revisit priority:** P3 · **status:** resolved
+- **Tried:** publish working papers
+- **Result:** web addresses with a home-directory path segment were cut short in two published papers (Hamilton freight study, El Segundo failures page)
+- **What it affects:** published evidence URLs
+- **Retry rule:** Rules now match only paths standing on their own; every published source scanned for the damage pattern.
+- **Resolution:** Both papers corrected in place; scan finds no other damaged addresses.
 
 ### RF-004 · refused · DTSC EnviroStor data download page
 
