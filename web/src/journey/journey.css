@@ -35,7 +35,7 @@
 
 /* landing blocks */
 .jr-blocks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: 1rem; margin: 1.4rem 0 0; }
-.jr-block { border: 1px solid var(--rule-soft); background: var(--surface-raised); padding: 1rem 1.1rem 1.1rem; min-width: 0;
+.jr-block { border: 1px solid color-mix(in srgb, var(--rule-strong) 72%, var(--text)); background: var(--surface-raised); padding: 1rem 1.1rem 1.1rem; min-width: 0;
   box-shadow: 0 1px 3px var(--shadow), 0 4px 10px -2px var(--shadow), 0 14px 32px -10px var(--shadow); transition: box-shadow .2s ease, transform .2s ease; }
 .jr-block:not(.jr-block--soon):hover { box-shadow: 0 2px 5px var(--shadow), 0 8px 16px -4px var(--shadow), 0 20px 40px -12px var(--shadow); transform: translateY(-2px); }
 .jr-block h2 { font-family: var(--sans); font-weight: 500; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; margin: 0 0 .35rem;
