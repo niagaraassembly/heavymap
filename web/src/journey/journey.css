@@ -194,4 +194,5 @@
   .jr-band-entries { grid-template-columns: minmax(0, 1fr); }
   .jr-band-head { grid-template-columns: auto minmax(0, 1fr); }
   .jr-band-more { grid-column: 2; text-align: left; margin-top: 0; }
+  .jr-feature--lead .jr-feature-visual--stat { min-height: 9rem; padding: 1.4rem; }
 }
