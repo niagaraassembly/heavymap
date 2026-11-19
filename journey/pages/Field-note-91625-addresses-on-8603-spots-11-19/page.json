@@ -1,0 +1,73 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, field-note, hamilton, addresses, units"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Apartment buildings stack many addresses on one point."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "What-we-saw"
+   },
+   "children": [
+    "What we saw"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "91,625 of Hamilton's address points share 8,603 locations: every unit in a building placed on the same spot. 356 points fall in no parcel at all, typically about seven metres away."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-we-do"
+   },
+   "children": [
+    "What we do"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Units are grouped under their civic address. Points that miss a parcel are matched to the nearest one within ten metres, and the rest are flagged with a stable tag so they can be listed."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0024\ntype: field-note\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-10-17\nseq: 13"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, field-note, hamilton, addresses, units",
+ "path": "Field-note-91625-addresses-on-8603-spots-11-19",
+ "title": "Field note: 91,625 addresses on 8,603 spots",
+ "url": "https://telegra.ph/Field-note-91625-addresses-on-8603-spots-11-19",
+ "views": 0
+}

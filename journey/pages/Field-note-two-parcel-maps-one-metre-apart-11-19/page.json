@@ -1,0 +1,73 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, field-note, hamilton, parcels, geometry"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "The City's parcels and the conservation authority's parcels describe the same land, about a metre apart."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "What-we-saw"
+   },
+   "children": [
+    "What we saw"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The conservation authority's parcels sit 0.297 metres west and 0.939 metres north of the City's, consistently: just under a metre in all. Before correcting for it, the median overlap between matching parcels was 0.875. After shifting by that amount, it was 1.000."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-we-do"
+   },
+   "children": [
+    "What we do"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "We measure the shift on every pull and apply it before joining. If the measured shift moves beyond a tolerance, the build fails rather than quietly joining misaligned parcels."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0021\ntype: field-note\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-10-17\nseq: 10"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, field-note, hamilton, parcels, geometry",
+ "path": "Field-note-two-parcel-maps-one-metre-apart-11-19",
+ "title": "Field note: two parcel maps, one metre apart",
+ "url": "https://telegra.ph/Field-note-two-parcel-maps-one-metre-apart-11-19",
+ "views": 0
+}

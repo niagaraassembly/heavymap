@@ -1,0 +1,155 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "systems, map, tiles, hamilton, building"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Status: in use. The Hamilton map has no map server. Everything comes from static files, measured before we chose how to cut them."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "What-we-measured"
+   },
+   "children": [
+    "What we measured"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "We built the parcel tiles two ways and weighed the downtown tile at each zoom level."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Zoom 12 to 15, dropping parcels where they are dense:"
+       ],
+       "tag": "strong"
+      },
+      " 21.4 MB in all. The downtown tile weighed 450 KB at zoom 12, with 17,399 parcels in it."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Zoom 14 to 16, dropping nothing:"
+       ],
+       "tag": "strong"
+      },
+      " 23.4 MB in all. The downtown tile weighed 121 KB at zoom 14 and 4 KB at zoom 16."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Stripping the tiles down to just the parcel key barely helped. Properties were about 15 percent of the old file. Geometry is the cost."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-we-chose"
+   },
+   "children": [
+    "What we chose"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "A still image of the lower city and harbourfront paints first, and stays as the fallback."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Parcel outlines from zoom 14 to 16, every parcel kept, carrying only its key. No parcel selection below zoom 14, and the map says so."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "A self-hosted vector basemap from an OpenStreetMap extract, in light and dark. No dependence on third-party tile services."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Facts-on-demand"
+   },
+   "children": [
+    "Facts on demand"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A parcel's facts are not in the tiles. Selecting a parcel loads its record from small files split by the end of its key. A thousand-odd shards keep each request small."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "A-lesson-from-hosting"
+   },
+   "children": [
+    "A lesson from hosting"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "One host compressed the tile archive on the fly for some browsers, then applied byte ranges to the compressed bytes, which breaks how tile archives are read. We record that kind of behaviour as a quirk before choosing where to host."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0039\ntype: system\nsection: systems\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-11-16\nseq: 9"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "systems, map, tiles, hamilton, building",
+ "path": "Drawing-166745-parcels-from-static-files-11-19",
+ "title": "Drawing 166,745 parcels from static files",
+ "url": "https://telegra.ph/Drawing-166745-parcels-from-static-files-11-19",
+ "views": 0
+}

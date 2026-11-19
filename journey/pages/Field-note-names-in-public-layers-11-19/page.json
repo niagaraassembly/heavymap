@@ -1,0 +1,73 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, field-note, hamilton, privacy, screening"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Public layers sometimes carry more than they need to."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "What-we-saw"
+   },
+   "children": [
+    "What we saw"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Some of the City's road and bridge layers carry staff account names in an editing field. Permit and rail crossing layers carry company names and the names of private rail spurs."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-we-do"
+   },
+   "children": [
+    "What we do"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Staff account fields are dropped at the point of publishing. Business names in these layers are screened pending review. We record that the fields exist and how many rows carry them, never the names."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0032\ntype: field-note\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-11-17\nseq: 21"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, field-note, hamilton, privacy, screening",
+ "path": "Field-note-names-in-public-layers-11-19",
+ "title": "Field note: names in public layers",
+ "url": "https://telegra.ph/Field-note-names-in-public-layers-11-19",
+ "views": 0
+}

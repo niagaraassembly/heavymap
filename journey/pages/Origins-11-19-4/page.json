@@ -14,6 +14,25 @@
      "children": [
       {
        "attrs": {
+        "href": "/Four-days-of-field-logs-August-2026-11-19"
+       },
+       "children": [
+        "Four days of field logs, August 2026"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · origins, hamilton, niagara, logs, prior-art",
+      {
+       "tag": "br"
+      },
+      "The first Hamilton–Niagara atlas kept a raw log, appended as work happened. Four days of it show how the habits behind HeavyMap formed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
         "href": "/Timeline-from-a-UK-atlas-to-the-Hamilton-map-11-19"
        },
        "children": [
@@ -96,7 +115,7 @@
    "tag": "p"
   }
  ],
- "description": "Where HeavyMap came from: the UK atlas, the first Hamilton–Niagara attempt, and why we started again.\nTimeline: from a UK atlas to the Hamilton map — 2026-11-18 · 1 min · origins, timelineFive months, three attempts and one city on the map. The dates below come from repositories, logs and data releases.\nThe first Hamilton–Niagara atlas — 2026-11-18 · 2 min · origins, hamilton, niagara, prior-artIn August 2026 we set out to map the physical industrial economy of Hamilton and the Niagara Peninsula. We built the…",
+ "description": "Where HeavyMap came from: the UK atlas, the first Hamilton–Niagara attempt, and why we started again.\nFour days of field logs, August 2026 — 2026-11-18 · 1 min · origins, hamilton, niagara, logs, prior-artThe first Hamilton–Niagara atlas kept a raw log, appended as work happened. Four days of it show how the habits behind HeavyMap formed.\nTimeline: from a UK atlas to the Hamilton map — 2026-11-18 · 1 min · origins, timelineFive months, three attempts and one city on the map. The dates below come from repositories…",
  "path": "Origins-11-19-4",
  "title": "Origins",
  "url": "https://telegra.ph/Origins-11-19-4",

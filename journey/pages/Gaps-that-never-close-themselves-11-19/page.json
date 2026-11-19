@@ -1,0 +1,118 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "systems, assembly, gaps, framework"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Status: built. Everything we could not find, could not reach or could not confirm is written down, and stays written down until a rule says otherwise."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "What-a-gap-records"
+   },
+   "children": [
+    "What a gap records"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Each gap has a type, a priority, a cost estimate and a closing rule. Types include a source we could not fetch, an event that has gone stale, a field a source does not publish, and coverage that stops at a boundary."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Nothing-closes-on-its-own"
+   },
+   "children": [
+    "Nothing closes on its own"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A gap closes only when its rule is met: a new source, a successful re-check, a confirmed answer. A gap that quietly disappeared would make the record look more complete than it is."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "No-circumvention"
+   },
+   "children": [
+    "No circumvention"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Some sources refuse automated access: a 403 response, a captcha, a robots rule, a block by country. We record the refusal as a gap and move on. We never work around it."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Watching-for-change"
+   },
+   "children": [
+    "Watching for change"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Sources being watched are checked when they fall due. An unchanged source records only the check. A changed one records a gap and keeps a new copy. A failed fetch records a gap of its own. The check never decides what a change means; that is left to review."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Revisits"
+   },
+   "children": [
+    "Revisits"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Events have a ladder of revisit dates. When a date passes without a stage update, a stale-event gap opens. Closing it moves the next date along the ladder."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0037\ntype: system\nsection: systems\nevidence_date: 2026-11-18\nseq: 7"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "systems, assembly, gaps, framework",
+ "path": "Gaps-that-never-close-themselves-11-19",
+ "title": "Gaps that never close themselves",
+ "url": "https://telegra.ph/Gaps-that-never-close-themselves-11-19",
+ "views": 0
+}

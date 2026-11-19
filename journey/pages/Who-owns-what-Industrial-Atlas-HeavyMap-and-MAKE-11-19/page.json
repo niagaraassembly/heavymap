@@ -1,0 +1,118 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "systems, framework, industrial-atlas, heavymap, make"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Status: in use. Three parts with three jobs. Keeping the lines clear is what lets anyone check our facts and still lets HeavyMap say something useful."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "Industrial-Atlas:-measure,-never-interpret"
+   },
+   "children": [
+    "Industrial Atlas: measure, never interpret"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Industrial Atlas gathers public datasets and connects them. It stores measurements of how datasets relate: identifier crosswalks, distances in metres, the share of a parcel an overlay covers, the nearest feature and its source attributes. Each measurement carries its method and inputs. It also grades how well each join held. It never decides what a measurement means. Its releases are versioned and never change once published, so anyone can verify them."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "HeavyMap:-interpret,-openly"
+   },
+   "children": [
+    "HeavyMap: interpret, openly"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "HeavyMap is the site and everything that interprets. Thresholds, labels, scores and selections are HeavyMap's. \"Fronts a truck route\" for a distance under 30 metres is a HeavyMap judgement applied to an Industrial Atlas measurement. Because the two are separate, a reader can always see both the number and the rule applied to it."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "MAKE:-research-and-geography"
+   },
+   "children": [
+    "MAKE: research and geography"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "MAKE is the research and processing service. It holds the register of regions and places, runs regional news research, and moves research through Dispatch and Join, with a person deciding at each gate."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-stays-private"
+   },
+   "children": [
+    "What stays private"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The site shows parcel-level measurements, such as distances to truck routes, utilities and rail, for each parcel. The compiled files that power the enriched parcel views, and the code and runs that build them, are kept private and delivered only as the site's own files. The public data releases hold the relayed facts and their sources."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Why-it-matters"
+   },
+   "children": [
+    "Why it matters"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A fact anyone can check, and a judgement anyone can see applied to it. When we get a judgement wrong, the measurement underneath is still sound."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0033\ntype: framework\nsection: systems\nevidence_date: 2026-11-18\nseq: 3"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "systems, framework, industrial-atlas, heavymap, make",
+ "path": "Who-owns-what-Industrial-Atlas-HeavyMap-and-MAKE-11-19",
+ "title": "Who owns what: Industrial Atlas, HeavyMap and MAKE",
+ "url": "https://telegra.ph/Who-owns-what-Industrial-Atlas-HeavyMap-and-MAKE-11-19",
+ "views": 0
+}

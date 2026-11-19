@@ -1,0 +1,161 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, hamilton, assessment, parcels, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Who owns a parcel, how it is classed and what it is worth are the facts people ask for first. In Ontario they are the hardest to get."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "Where-the-facts-live"
+   },
+   "children": [
+    "Where the facts live"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Ontario's property assessment is held by a provincial corporation, which sells its data. The City of Hamilton's parcel layer is geometry only: no roll number, no property class, no assessed value."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-is-public"
+   },
+   "children": [
+    "What is public"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The Niagara Peninsula Conservation Authority publishes parcel layers for its watershed with assessment roll numbers. They cover about 36 percent of Hamilton by area. The north and west of the city are outside the watershed and have none."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-we-found-in-them"
+   },
+   "children": [
+    "What we found in them"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "No tax class."
+       ],
+       "tag": "strong"
+      },
+      " One field looked like a class but holds the taxing municipality."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Property codes on 1,628 of 81,121 rows"
+       ],
+       "tag": "strong"
+      },
+      ", last edited in 2020, and sometimes at odds with current zoning."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Postal codes empty on every row."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Ten placeholder roll numbers"
+       ],
+       "tag": "strong"
+      },
+      " made of zeros, and one from a neighbouring town."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "An owner-name field and a legal-description field"
+       ],
+       "tag": "strong"
+      },
+      " on one layer. We record that the fields exist. Their values are withheld from public view, and none appear anywhere we publish."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "How-we-use-them"
+   },
+   "children": [
+    "How we use them"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Roll numbers attach to the City's parcels as attributes, never as the key. One roll number can sit on up to 49 polygons, typically condominiums. Every gap above is written into a ledger with its count, so the map can say \"not in coverage\" or \"not published\" instead of leaving a blank."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0018\ntype: stage-report\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nstage: E\nmethod: pre-method\nevidence_date: 2026-10-17\nseq: 7"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, hamilton, assessment, parcels, run-1",
+ "path": "Hamilton-the-assessment-question-11-19",
+ "title": "Hamilton: the assessment question",
+ "url": "https://telegra.ph/Hamilton-the-assessment-question-11-19",
+ "views": 0
+}

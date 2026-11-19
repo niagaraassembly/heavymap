@@ -1,0 +1,73 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, field-note, hamilton, freight, truck-routes, roads"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A layer's title said one thing; its contents said another."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "What-we-saw"
+   },
+   "children": [
+    "What we saw"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A City map titles one road layer \"Heavy Truck Traffic Route\". It holds all-vehicle daily volumes for all roads, counted between 2004 and 2020. Its older truck-route coding also disagrees with the current network: 839.6 kilometres in one against 597.9 kilometres of full-time routes in the other."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-we-do"
+   },
+   "children": [
+    "What we do"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "We call it what it is: road segments with traffic volumes. Truck routes come from the current truck route network. Volumes are never presented as truck volumes."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0028\ntype: field-note\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-11-17\nseq: 17"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, field-note, hamilton, freight, truck-routes, roads",
+ "path": "Field-note-a-heavy-truck-route-that-is-not-one-11-19",
+ "title": "Field note: a heavy truck route that is not one",
+ "url": "https://telegra.ph/Field-note-a-heavy-truck-route-that-is-not-one-11-19",
+ "views": 0
+}

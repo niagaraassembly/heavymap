@@ -1,0 +1,73 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, field-note, hamilton, hosting, tiles, building"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A tile archive is read in pieces, by byte range. One host broke that for some browsers."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "What-we-saw"
+   },
+   "children": [
+    "What we saw"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "When a browser asked for compressed responses, the host compressed the tile archive on the fly and then applied the requested byte range to the compressed bytes. The pieces that came back were not the pieces asked for."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-we-do"
+   },
+   "children": [
+    "What we do"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "We recorded it as a quirk of the host, compared alternatives before choosing where to serve the map. A range test on the deployed site, not just locally, is part of that choice."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0031\ntype: field-note\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-10-17\nseq: 20"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, field-note, hamilton, hosting, tiles, building",
+ "path": "Field-note-when-the-host-compresses-the-map-11-19",
+ "title": "Field note: when the host compresses the map",
+ "url": "https://telegra.ph/Field-note-when-the-host-compresses-the-map-11-19",
+ "views": 0
+}

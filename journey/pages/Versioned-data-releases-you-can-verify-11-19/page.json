@@ -1,0 +1,167 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "systems, industrial-atlas, releases, building"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Status: in use. Every Industrial Atlas release is a fixed set of files with a hash for each one. It never changes after it is published."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "What-a-release-holds"
+   },
+   "children": [
+    "What a release holds"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "A manifest"
+       ],
+       "tag": "strong"
+      },
+      ", read first: the release name, counts, contract versions and the hash of the file list."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "A file list"
+       ],
+       "tag": "strong"
+      },
+      " with the path, size and SHA-256 hash of every other file."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Records per parcel"
+       ],
+       "tag": "strong"
+      },
+      ", split into 1,024 small files by the last two characters of the parcel key, with fuller detail loaded on demand."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Provenance"
+       ],
+       "tag": "strong"
+      },
+      " for every source."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Verifying-one"
+   },
+   "children": [
+    "Verifying one"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Read the manifest. Hash the file list and compare."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "For any file you use, compare its size and hash with the list."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "A record's hash is the hash of its canonical JSON."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "Never-edit,-always-add"
+   },
+   "children": [
+    "Never edit, always add"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A new source version or a new build is a new release, never an edit. The site points at one release by its full commit. If a check fails at build time, the previous release stays in place."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "The-first-ones"
+   },
+   "children": [
+    "The first ones"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The first Hamilton release went out on 16 November, followed by map layer sets and three small development releases on 17 November. The first full Hamilton candidate weighed about 222 MiB, almost all of it parcel records, before anything was trimmed for the browser."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0040\ntype: system\nsection: systems\nevidence_date: 2026-11-16\nseq: 10"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "systems, industrial-atlas, releases, building",
+ "path": "Versioned-data-releases-you-can-verify-11-19",
+ "title": "Versioned data releases you can verify",
+ "url": "https://telegra.ph/Versioned-data-releases-you-can-verify-11-19",
+ "views": 0
+}

@@ -1,0 +1,73 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, field-note, hamilton, planning, secondary-plans"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A layer of current land use still carried plans that no longer apply."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "What-we-saw"
+   },
+   "children": [
+    "What we saw"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Four secondary plan names in the City's land use layer begin with \"Retired -\", across 1,056 polygons. Another 45 polygons have no plan name at all."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-we-do"
+   },
+   "children": [
+    "What we do"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Retired plans are left out of current designations, and kept for history. Names are normalised for case before grouping."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0026\ntype: field-note\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-10-17\nseq: 15"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, field-note, hamilton, planning, secondary-plans",
+ "path": "Field-note-retired-plans-in-the-current-layer-11-19",
+ "title": "Field note: retired plans in the current layer",
+ "url": "https://telegra.ph/Field-note-retired-plans-in-the-current-layer-11-19",
+ "views": 0
+}

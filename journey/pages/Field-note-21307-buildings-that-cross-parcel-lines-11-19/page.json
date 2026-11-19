@@ -1,0 +1,73 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, field-note, hamilton, buildings, parcels"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Buildings do not respect the lines on a parcel map."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "What-we-saw"
+   },
+   "children": [
+    "What we saw"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "21,307 building footprints overlap two or more parcels by more than a square metre. Some are real, such as buildings over lot lines. Others come from small mismatches between two maps drawn by different hands."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-we-do"
+   },
+   "children": [
+    "What we do"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Each building is assigned to the parcel it overlaps most, and every other overlap is kept in a table. Nothing is clipped away to look tidy."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0025\ntype: field-note\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-10-17\nseq: 14"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, field-note, hamilton, buildings, parcels",
+ "path": "Field-note-21307-buildings-that-cross-parcel-lines-11-19",
+ "title": "Field note: 21,307 buildings that cross parcel lines",
+ "url": "https://telegra.ph/Field-note-21307-buildings-that-cross-parcel-lines-11-19",
+ "views": 0
+}

@@ -1,0 +1,132 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, hamilton, buildings, parcels, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Which is the biggest building on this parcel, and does it cross the line? Simple questions, with careful answers."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "The-method"
+   },
+   "children": [
+    "The method"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Each of the City's building footprints is assigned to the parcel it overlaps most. Exact ties go to a fixed order, so the result is the same every time. Within each parcel, buildings are numbered from the largest footprint down."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "The-numbers"
+   },
+   "children": [
+    "The numbers"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "259,407 positive overlaps"
+       ],
+       "tag": "strong"
+      },
+      " between buildings and parcels, all kept in an overlap table."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "383 footprints"
+       ],
+       "tag": "strong"
+      },
+      " touch no parcel at all, and are listed rather than dropped."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "21,307 footprints overlap two or more parcels by more than a square metre."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "What-the-area-means"
+   },
+   "children": [
+    "What the area means"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Footprint area is the plan-view area of the outline. It supports filtering by size. It is not floor area, height, occupancy or current use, and the map does not call it any of those."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "On-the-map"
+   },
+   "children": [
+    "On the map"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Ranked buildings show on the Hamilton map with their area, their rank within the parcel and their distance from the parcel edge. Each parcel's building facts load on demand, in small files split by the end of the parcel's identifier."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0020\ntype: stage-report\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nstage: E\nmethod: pre-method\nevidence_date: 2026-11-17\nseq: 9"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, hamilton, buildings, parcels, run-1",
+ "path": "Hamilton-ranking-building-footprints-within-parcels-11-19",
+ "title": "Hamilton: ranking building footprints within parcels",
+ "url": "https://telegra.ph/Hamilton-ranking-building-footprints-within-parcels-11-19",
+ "views": 0
+}

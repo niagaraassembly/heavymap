@@ -1,0 +1,73 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, field-note, hamilton, freight, roads, fields"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Some fields carry codes whose meaning is not published."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "What-we-saw"
+   },
+   "children": [
+    "What we saw"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The truck route network has a restriction flag on 108 segments and 21 blank time-of-day values. A road layer carries a reduced-load code with values Y, Z and X. Neither is explained in the published metadata."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-we-do"
+   },
+   "children": [
+    "What we do"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "We keep the fields and show the source's own codes, marked \"meaning not yet confirmed\". We have asked the City for definitions. Until then the map will not call a code a load restriction."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0029\ntype: field-note\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-11-17\nseq: 18"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, field-note, hamilton, freight, roads, fields",
+ "path": "Field-note-codes-nobody-has-defined-yet-11-19",
+ "title": "Field note: codes nobody has defined yet",
+ "url": "https://telegra.ph/Field-note-codes-nobody-has-defined-yet-11-19",
+ "views": 0
+}

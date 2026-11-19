@@ -1,0 +1,162 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "systems, assembly, make, questions, bundles"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Status: built and used locally since 2 November. Before any research is sent out, the questions are frozen into a bundle, and the bundle is reviewed on its own."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "The-problem"
+   },
+   "children": [
+    "The problem"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Research drifts. A question gets reworded on the way, a reference is swapped, and by the time results come back nobody can say exactly what was asked."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "The-bundle"
+   },
+   "children": [
+    "The bundle"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A Preparation Bundle starts from a request in plain language, kept exactly as written. It then gathers a set of questions, each as an exact snapshot with its own framing, plus purpose, intended outcomes and references. The whole composition is bound by a hash. Later steps check that hash, so they can prove they are working from the same bundle."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Two-separate-reviews"
+   },
+   "children": [
+    "Two separate reviews"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Question review"
+       ],
+       "tag": "strong"
+      },
+      " accepts, reworks or rejects the exact wording of each question."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Bundle review"
+       ],
+       "tag": "strong"
+      },
+      " accepts or rejects the exact composition."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Accepting the questions does not accept the bundle, and accepting the bundle does not accept the questions. A bundle is ready only when both hold."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Reuse-without-guessing"
+   },
+   "children": [
+    "Reuse without guessing"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A helper suggests existing questions that match a request. It works by matching place names and question metadata, not by interpreting the request. New questions proposed during composition are recorded with where they came from."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Comments-that-stay-attached"
+   },
+   "children": [
+    "Comments that stay attached"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Comments can point at the whole bundle, its purpose, a single question or a single reference. If the target is removed, the comment stays visible and marked as unplaced."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Where-it-leads"
+   },
+   "children": [
+    "Where it leads"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Question banks will belong to organisations and products, such as HeavyMap's bank of map questions. MAKE reads from those banks to build bundles and writes results back."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0034\ntype: system\nsection: systems\nevidence_date: 2026-11-18\nseq: 4"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "systems, assembly, make, questions, bundles",
+ "path": "Preparation-Bundles-freezing-the-question-before-the-work-11-19",
+ "title": "Preparation Bundles: freezing the question before the work",
+ "url": "https://telegra.ph/Preparation-Bundles-freezing-the-question-before-the-work-11-19",
+ "views": 0
+}

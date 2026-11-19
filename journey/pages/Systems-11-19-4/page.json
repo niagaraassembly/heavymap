@@ -14,6 +14,158 @@
      "children": [
       {
        "attrs": {
+        "href": "/Versioned-data-releases-you-can-verify-11-19"
+       },
+       "children": [
+        "Versioned data releases you can verify"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · systems, industrial-atlas, releases, building",
+      {
+       "tag": "br"
+      },
+      "Status: in use. Every Industrial Atlas release is a fixed set of files with a hash for each one. It never changes after it is published."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Drawing-166745-parcels-from-static-files-11-19"
+       },
+       "children": [
+        "Drawing 166,745 parcels from static files"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · systems, map, tiles, hamilton, building",
+      {
+       "tag": "br"
+      },
+      "Status: in use. The Hamilton map has no map server. Everything comes from static files, measured before we chose how to cut them."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Transmission-resilience-HeavyMap-at-2G-and-at-full-resolution-11-19"
+       },
+       "children": [
+        "Transmission resilience: HeavyMap at 2G and at full resolution"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · systems, framework, performance, access",
+      {
+       "tag": "br"
+      },
+      "Status: designed, starting at the low end. HeavyMap should work over the weakest connection and the oldest browser, and also offer everything at full fidelity to those who can take it."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Gaps-that-never-close-themselves-11-19"
+       },
+       "children": [
+        "Gaps that never close themselves"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · systems, assembly, gaps, framework",
+      {
+       "tag": "br"
+      },
+      "Status: built. Everything we could not find, could not reach or could not confirm is written down, and stays written down until a rule says otherwise."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Join-Bay-and-Promote-how-facts-enter-the-store-11-19"
+       },
+       "children": [
+        "Join, Bay and Promote: how facts enter the store"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · systems, assembly, make, join",
+      {
+       "tag": "br"
+      },
+      "Status: built for reviewed research records. Map data still joins outside it, and bringing it in is planned. Facts enter our store through exactly one door."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Dispatch-Digest-and-Packet-the-review-chain-11-19"
+       },
+       "children": [
+        "Dispatch, Digest and Packet: the review chain"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · systems, assembly, make, dispatch, review",
+      {
+       "tag": "br"
+      },
+      "Status: built and partly in use. From an approved instruction to records decided one by one, with a person at every gate."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Preparation-Bundles-freezing-the-question-before-the-work-11-19"
+       },
+       "children": [
+        "Preparation Bundles: freezing the question before the work"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · systems, assembly, make, questions, bundles",
+      {
+       "tag": "br"
+      },
+      "Status: built and used locally since 2 November. Before any research is sent out, the questions are frozen into a bundle, and the bundle is reviewed on its own."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Who-owns-what-Industrial-Atlas-HeavyMap-and-MAKE-11-19"
+       },
+       "children": [
+        "Who owns what: Industrial Atlas, HeavyMap and MAKE"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · systems, framework, industrial-atlas, heavymap, make",
+      {
+       "tag": "br"
+      },
+      "Status: in use. Three parts with three jobs. Keeping the lines clear is what lets anyone check our facts and still lets HeavyMap say something useful."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
         "href": "/The-Assembly-System-an-overview-11-19"
        },
        "children": [
@@ -58,7 +210,7 @@
    "tag": "p"
   }
  ],
- "description": "The machinery behind HeavyMap: the Assembly System, MAKE, Dispatch, Join, and the frameworks they rest on.\nThe Assembly System, an overview — 2026-11-18 · 2 min · systems, assembly, make, dispatch, joinStatus: built and partly in use. The Assembly System is the register behind all of our research: one front door for anything new, and a human decision at every step that matters.\nHow we find a city's public data — 2026-11-18 · 2 min · systems, framework, method, discoveryStatus: in use, version 0.1. Every city…",
+ "description": "The machinery behind HeavyMap: the Assembly System, MAKE, Dispatch, Join, and the frameworks they rest on.\nVersioned data releases you can verify — 2026-11-18 · 1 min · systems, industrial-atlas, releases, buildingStatus: in use. Every Industrial Atlas release is a fixed set of files with a hash for each one. It never changes after it is published.\nDrawing 166,745 parcels from static files — 2026-11-18 · 1 min · systems, map, tiles, hamilton, buildingStatus: in use. The Hamilton map has no map server. Everything…",
  "path": "Systems-11-19-4",
  "title": "Systems",
  "url": "https://telegra.ph/Systems-11-19-4",

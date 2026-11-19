@@ -14,6 +14,291 @@
      "children": [
       {
        "attrs": {
+        "href": "/Field-note-names-in-public-layers-11-19"
+       },
+       "children": [
+        "Field note: names in public layers"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, field-note, hamilton, privacy, screening",
+      {
+       "tag": "br"
+      },
+      "Public layers sometimes carry more than they need to."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Field-note-when-the-host-compresses-the-map-11-19"
+       },
+       "children": [
+        "Field note: when the host compresses the map"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, field-note, hamilton, hosting, tiles, building",
+      {
+       "tag": "br"
+      },
+      "A tile archive is read in pieces, by byte range. One host broke that for some browsers."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Field-note-38000000000000003-metres-11-19"
+       },
+       "children": [
+        "Field note: 3.8000000000000003 metres"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, field-note, hamilton, bridges, fields",
+      {
+       "tag": "br"
+      },
+      "Posted bridge heights arrive with a computer's rounding noise."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Field-note-codes-nobody-has-defined-yet-11-19"
+       },
+       "children": [
+        "Field note: codes nobody has defined yet"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, field-note, hamilton, freight, roads, fields",
+      {
+       "tag": "br"
+      },
+      "Some fields carry codes whose meaning is not published."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Field-note-a-heavy-truck-route-that-is-not-one-11-19"
+       },
+       "children": [
+        "Field note: a heavy truck route that is not one"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, field-note, hamilton, freight, truck-routes, roads",
+      {
+       "tag": "br"
+      },
+      "A layer's title said one thing; its contents said another."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Field-note-Business-Park-twice-11-19"
+       },
+       "children": [
+        "Field note: Business Park, twice"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, field-note, hamilton, employment-lands, fields",
+      {
+       "tag": "br"
+      },
+      "One leading space split a category in two."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Field-note-retired-plans-in-the-current-layer-11-19"
+       },
+       "children": [
+        "Field note: retired plans in the current layer"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, field-note, hamilton, planning, secondary-plans",
+      {
+       "tag": "br"
+      },
+      "A layer of current land use still carried plans that no longer apply."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Field-note-21307-buildings-that-cross-parcel-lines-11-19"
+       },
+       "children": [
+        "Field note: 21,307 buildings that cross parcel lines"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, field-note, hamilton, buildings, parcels",
+      {
+       "tag": "br"
+      },
+      "Buildings do not respect the lines on a parcel map."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Field-note-91625-addresses-on-8603-spots-11-19"
+       },
+       "children": [
+        "Field note: 91,625 addresses on 8,603 spots"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, field-note, hamilton, addresses, units",
+      {
+       "tag": "br"
+      },
+      "Apartment buildings stack many addresses on one point."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Field-note-when-blank-is-a-single-space-11-19"
+       },
+       "children": [
+        "Field note: when blank is a single space"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, field-note, hamilton, fields, conventions",
+      {
+       "tag": "br"
+      },
+      "Empty is not always empty."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Field-note-a-field-called-full-street-that-holds-the-number-11-19"
+       },
+       "children": [
+        "Field note: a field called full street that holds the number"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, field-note, hamilton, addresses, fields",
+      {
+       "tag": "br"
+      },
+      "Field names are a promise the data does not always keep."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Field-note-two-parcel-maps-one-metre-apart-11-19"
+       },
+       "children": [
+        "Field note: two parcel maps, one metre apart"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, field-note, hamilton, parcels, geometry",
+      {
+       "tag": "br"
+      },
+      "The City's parcels and the conservation authority's parcels describe the same land, about a metre apart."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Hamilton-ranking-building-footprints-within-parcels-11-19"
+       },
+       "children": [
+        "Hamilton: ranking building footprints within parcels"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, hamilton, buildings, parcels, run-1",
+      {
+       "tag": "br"
+      },
+      "Which is the biggest building on this parcel, and does it cross the line? Simple questions, with careful answers."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Hamilton-39-quirks-in-the-public-data-11-19"
+       },
+       "children": [
+        "Hamilton: 39 quirks in the public data"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, hamilton, quirks, data-quality, run-1",
+      {
+       "tag": "br"
+      },
+      "Every layer we profiled had something odd about it. We wrote down 39 of them, each with a count and what we do about it."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Hamilton-the-assessment-question-11-19"
+       },
+       "children": [
+        "Hamilton: the assessment question"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · expansion, hamilton, assessment, parcels, run-1",
+      {
+       "tag": "br"
+      },
+      "Who owns a parcel, how it is classed and what it is worth are the facts people ask for first. In Ontario they are the hardest to get."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
         "href": "/Hamilton-retro-what-we-got-right-and-what-we-will-redo-11-19"
        },
        "children": [
@@ -134,7 +419,7 @@
    "tag": "p"
   }
  ],
- "description": "Reports from each city run. Every run follows the same written method, and every run changes it a little.\nHamilton retro: what we got right and what we will redo — 2026-11-18 · 1 min · expansion, hamilton, retro, lessons, run-1Hamilton was mapped before we had a method. Looking back, most of what we missed came from looking in one place.\nHamilton: freight and infrastructure, first pass — 2026-11-18 · 1 min · expansion, hamilton, freight, infrastructure, rail, truck-routes, run-1How does a truck reach a parcel…",
+ "description": "Reports from each city run. Every run follows the same written method, and every run changes it a little.\nField note: names in public layers — 2026-11-18 · 1 min · expansion, field-note, hamilton, privacy, screeningPublic layers sometimes carry more than they need to.\nField note: when the host compresses the map — 2026-11-18 · 1 min · expansion, field-note, hamilton, hosting, tiles, buildingA tile archive is read in pieces, by byte range. One host broke that for some browsers.\nField note: 3.8000000000000003…",
  "path": "Expansion-11-19-2",
  "title": "Expansion",
  "url": "https://telegra.ph/Expansion-11-19-2",

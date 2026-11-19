@@ -1,0 +1,168 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, hamilton, quirks, data-quality, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Every layer we profiled had something odd about it. We wrote down 39 of them, each with a count and what we do about it."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "Kinds-of-quirk"
+   },
+   "children": [
+    "Kinds of quirk"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "No stable identifier"
+       ],
+       "tag": "strong"
+      },
+      " on parcels, addresses and secondary plans. We mint our own."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Geometry problems:"
+       ],
+       "tag": "strong"
+      },
+      " stacked duplicate parcels, invalid shapes as served (205 of 271 rows in one regulated-areas layer), rows with no geometry at all."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Two maps that do not quite line up:"
+       ],
+       "tag": "strong"
+      },
+      " a consistent shift of about one metre between two parcel layers."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Fields that mean something else:"
+       ],
+       "tag": "strong"
+      },
+      " a field called \"full street\" that holds the street number; a layer titled \"heavy truck traffic route\" that holds all-vehicle counts."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Conventions:"
+       ],
+       "tag": "strong"
+      },
+      " blanks stored as a single space; yes and no stored as -1 and 0; dates stored as text; heights printed as 3.8000000000000003."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Stale or constant values:"
+       ],
+       "tag": "strong"
+      },
+      " a version field that is 0 on every row; metadata describing a plan two updates old."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Codes nobody has defined for us yet:"
+       ],
+       "tag": "strong"
+      },
+      " restriction and load codes on road layers. We show them marked \"meaning not yet confirmed\" and have asked the City."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Personal and business identifiers"
+       ],
+       "tag": "strong"
+      },
+      " in public layers: staff account names, company names, private rail spur names. These are screened at the point of publishing."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Why-write-them-down"
+   },
+   "children": [
+    "Why write them down"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A quirk found once and fixed silently will be found again by the next person, or the next city. Each one has a handling rule, so the fix is the same every time the layer is pulled. The short field notes in this section tell some of them one at a time."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0019\ntype: stage-report\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nstage: E\nmethod: pre-method\nevidence_date: 2026-11-17\nseq: 8"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, hamilton, quirks, data-quality, run-1",
+ "path": "Hamilton-39-quirks-in-the-public-data-11-19",
+ "title": "Hamilton: 39 quirks in the public data",
+ "url": "https://telegra.ph/Hamilton-39-quirks-in-the-public-data-11-19",
+ "views": 0
+}

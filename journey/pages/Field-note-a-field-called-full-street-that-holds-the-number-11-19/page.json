@@ -1,0 +1,73 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "expansion, field-note, hamilton, addresses, fields"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Field names are a promise the data does not always keep."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "What-we-saw"
+   },
+   "children": [
+    "What we saw"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "On one parcel layer, a field named for the full street holds the street number, on all 81,121 rows."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-we-do"
+   },
+   "children": [
+    "What we do"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Every field is mapped in a crosswalk by what it contains, not what it is called. The original name stays recorded beside it, so anyone can see the mismatch."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0022\ntype: field-note\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-10-17\nseq: 11"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "expansion, field-note, hamilton, addresses, fields",
+ "path": "Field-note-a-field-called-full-street-that-holds-the-number-11-19",
+ "title": "Field note: a field called full street that holds the number",
+ "url": "https://telegra.ph/Field-note-a-field-called-full-street-that-holds-the-number-11-19",
+ "views": 0
+}
