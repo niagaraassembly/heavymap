@@ -46,7 +46,7 @@ export function journeyLanding(c) {
     title: "Journey",
     description: "Making HeavyMap, in the open: notes from building an industrial map of the world, one city at a time.",
     bodyClass: "hm-journey",
-    main: `<div class="jr" data-journey>${boot}<h1>Making HeavyMap, in the open</h1><p class="jr-lede">Notes from building an industrial map of the world, one city at a time. What we looked for, what we found, what we got wrong, and what we changed.</p><div class="jr-blocks">${blocks}</div><div class="jr-soon" aria-label="Coming sections">${soon}</div></div>${configScript(j, "journey")}`,
+    main: `<div class="jr" data-journey>${boot}<h1>Making HeavyMap, in the open.</h1><p class="jr-lede">Notes from building an industrial map of the world, one city at a time. What we looked for, what we found, what we got wrong, and what we changed.</p><div class="jr-blocks">${blocks}</div><div class="jr-soon" aria-label="Coming sections">${soon}</div></div>${configScript(j, "journey")}`,
   };
 }
 
