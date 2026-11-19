@@ -12,6 +12,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadContent } from "./content-loader.mjs";
+import { loadJourney } from "./journey-loader.mjs";
 import { allPages, clientCatalogue } from "../src/site/pages.js";
 import { renderPage } from "../src/site/layout.js";
 import { SIGNUP } from "../src/site/signup-config.js";
@@ -97,6 +98,7 @@ export function renderSite({ preview = false } = {}) {
   const content = loadContent(path.join(web, "../content"), {
     includePreview: preview,
   });
+  content.journey = loadJourney(path.join(web, "../journey"));
   const themes = availableThemes(content.themes, { preview });
   const catalogue = clientCatalogue(content);
   const pages = allPages(content).map((page) => {
@@ -113,7 +115,9 @@ export function renderSite({ preview = false } = {}) {
       ? fromPage(path.join(web, "src/app.js"))
       : page.path === "/map/data-methods/"
         ? fromPage(MAP_LIBRARY_CLIENT)
-        : null;
+        : page.path.startsWith("/journey/")
+          ? fromPage(path.join(web, "src/journey/journey.js"))
+          : null;
     return {
       ...page,
       file,

@@ -24,6 +24,7 @@ const developmentIcon = '<svg width="17" height="17" viewBox="0 0 20 20" aria-hi
 const NAV = [
   { href: "/about/", label: "About", section: "about" },
   { href: "/desks/", label: "Desks", section: "desks" },
+  { href: "/journey/", label: "Journey", section: "journey" },
 ];
 
 const accountButton = (className = "hm-map-service hm-map-profile") =>

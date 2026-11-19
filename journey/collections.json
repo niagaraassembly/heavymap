@@ -1,0 +1,26 @@
+{
+ "journey": {
+  "name": "Journey",
+  "path": "HeavyMap-Journey-11-19",
+  "url": "https://telegra.ph/HeavyMap-Journey-11-19",
+  "about": "Making HeavyMap, in the open: notes from building an industrial map of the world, one city at a time."
+ },
+ "origins": {
+  "name": "Origins",
+  "path": "Origins-11-19-4",
+  "url": "https://telegra.ph/Origins-11-19-4",
+  "about": "Where HeavyMap came from: the UK atlas, the first Hamilton–Niagara attempt, and why we started again."
+ },
+ "expansion": {
+  "name": "Expansion",
+  "path": "Expansion-11-19-2",
+  "url": "https://telegra.ph/Expansion-11-19-2",
+  "about": "Reports from each city run. Every run follows the same written method, and every run changes it a little."
+ },
+ "systems": {
+  "name": "Systems",
+  "path": "Systems-11-19-4",
+  "url": "https://telegra.ph/Systems-11-19-4",
+  "about": "The machinery behind HeavyMap: the Assembly System, MAKE, Dispatch, Join, and the frameworks they rest on."
+ }
+}

@@ -1,0 +1,92 @@
+/* /journey: Telepatch's single reading column and quiet entry lines, in HeavyMap's tokens.
+ * Every colour comes from the site tokens, so all themes and dark mode follow. */
+
+.jr {
+  --jr-col: 44rem;
+  width: min(100%, var(--jr-col));
+  margin-inline: auto;
+  padding-block: 2.2rem 3.5rem;
+  padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px));
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+.jr a { color: var(--bar); }
+.jr a:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+.jr-crumb { font-family: var(--sans); font-size: .8rem; color: var(--text-muted); margin: 0 0 1rem; }
+.jr-crumb a { color: var(--text-muted); }
+.jr h1 { font-weight: 500; font-size: clamp(1.7rem, 4vw, 2.3rem); line-height: 1.15; letter-spacing: -.01em; margin: 0 0 .6rem; text-wrap: balance; }
+.jr-lede { font-size: 1.15rem; color: var(--text-body); margin: 0 0 1.4rem; }
+.jr p { color: var(--text-body); margin: 0 0 1rem; }
+
+/* narration: the page reporting its own assembly */
+.jr-boot { display: flex; align-items: flex-start; gap: .9rem; margin: 0 0 1.6rem; max-height: 12rem; overflow: hidden;
+  transition: max-height .5s ease, opacity .4s ease, margin .5s ease; }
+.jr-boot heavy-element-loader { width: 2.6rem; height: 2.6rem; flex: none; }
+.jr-boot-lines { margin: 0; font-family: var(--mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace); font-size: .74rem;
+  line-height: 1.55; color: var(--text-muted); white-space: pre-wrap; min-width: 0; overflow-wrap: anywhere; }
+.jr-boot-line { display: block; }
+.jr-boot-line b { font-weight: 400; color: var(--text); }
+.jr-boot-line.is-ready b { color: var(--green-strong); }
+.jr-boot-line.is-warn b { color: var(--flag-warn); }
+.jr-boot.is-folded { max-height: 0; opacity: 0; margin: 0; }
+.jr:not(.is-live) .jr-boot { display: none; }
+
+/* landing blocks */
+.jr-blocks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: 1rem; margin: 1.4rem 0 0; }
+.jr-block { border: 1px solid var(--rule-soft); background: var(--surface-raised); padding: 1rem 1.1rem 1.1rem; min-width: 0; }
+.jr-block h2 { font-family: var(--sans); font-weight: 500; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; margin: 0 0 .35rem;
+  display: flex; justify-content: space-between; gap: .6rem; }
+.jr-block h2 a { color: var(--text); text-decoration: none; }
+.jr-block h2 small { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--text-muted); }
+.jr-block > p { font-size: .95rem; margin: 0 0 .8rem; }
+.jr-block .jr-entries { gap: .8rem; }
+.jr-block .jr-entry-title { font-size: 1rem; }
+.jr-block .jr-excerpt { display: none; }
+.jr-block--soon { background: transparent; border-style: dashed; }
+.jr-block--soon h2 a, .jr-block--soon h2 { color: var(--text-muted); }
+.jr-soon { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: .8rem; margin-top: 1rem; }
+.jr-soon .jr-block { padding: .8rem .9rem; }
+.jr-soon .jr-block p { font-size: .88rem; margin: 0; }
+
+/* entry lines, after Telepatch */
+.jr-entries { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.3rem; }
+.jr-entry-title { font-weight: 500; font-size: 1.12rem; color: var(--text); text-decoration: none; }
+.jr a.jr-entry-title { color: var(--text); }
+.jr-entry-title:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+.jr-meta { font-family: var(--sans); font-size: .78rem; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.jr-tags { color: var(--accent); }
+.jr-excerpt { margin: .2rem 0 0; font-size: .98rem; }
+.jr-empty { font-family: var(--sans); font-size: .85rem; color: var(--text-muted); }
+
+/* section filters */
+.jr-filters { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin: 0 0 1.4rem; font-family: var(--sans); font-size: .85rem; }
+.jr-filters input, .jr-filters select { font: inherit; color: var(--text); background: var(--surface-raised); border: 1px solid var(--rule-strong);
+  padding: .35rem .55rem; min-width: 0; }
+.jr-filters input { flex: 1 1 14rem; }
+.jr-filters [data-section-count] { color: var(--text-muted); margin-left: auto; }
+
+/* a post */
+.jr-post-tags { font-family: var(--sans); font-size: .78rem; color: var(--accent); margin-bottom: .5rem; }
+.jr-standfirst { margin: 0 0 1.6rem; padding: 0; font-style: italic; font-size: 1.2rem; color: var(--text-body); }
+.jr-toc { font-family: var(--sans); font-size: .85rem; border-left: 2px solid var(--rule-soft); padding-left: .9rem; margin: 0 0 2rem; }
+.jr-toc-label { color: var(--text-muted); }
+.jr-toc ol { margin: .3rem 0 0; padding-left: 1.1rem; }
+.jr-toc a { text-decoration: none; }
+.jr-body h3 { font-weight: 500; font-size: 1.35rem; margin: 2.2rem 0 .5rem; text-wrap: balance; }
+.jr-body h4 { font-family: var(--sans); font-weight: 500; font-size: 1rem; margin: 1.6rem 0 .4rem; }
+.jr-body ul, .jr-body ol { padding-left: 1.3rem; color: var(--text-body); }
+.jr-body li { margin-bottom: .35rem; }
+.jr-body blockquote { margin: 1.2rem 0; padding-left: 1rem; border-left: 2px solid var(--accent-rule); color: var(--text-body); }
+.jr-body pre { overflow-x: auto; background: var(--surface-tint); padding: .8rem 1rem; font-size: .82rem; }
+.jr-body code { font-size: .9em; }
+.jr-body figure { margin: 1.6rem 0; }
+.jr-body img { max-width: 100%; height: auto; display: block; }
+.jr-body figcaption { font-family: var(--sans); font-size: .8rem; color: var(--text-muted); margin-top: .4rem; }
+.jr-body hr { border: 0; border-top: 1px solid var(--rule-soft); margin: 2rem 0; }
+.jr-about { font-family: var(--sans); font-size: .8rem; color: var(--text-muted); border-top: 1px solid var(--rule-soft); margin-top: 2.4rem;
+  padding-top: .9rem; display: grid; gap: .25rem; }
+.jr-pn { display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; font-family: var(--sans); font-size: .85rem; margin-top: 1.4rem; }
+
+@media (prefers-reduced-motion: reduce) { .jr-boot { transition: none; } }

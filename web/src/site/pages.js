@@ -12,6 +12,7 @@ import { arrow, bookIcon } from "./layout.js";
 import { SIGNUP } from "./signup-config.js";
 import { MESSAGES } from "./signup.js";
 import { mapDataLibraryPage } from "./map-data-library.js";
+import { journeyPages } from "./journey-pages.js";
 
 const NA_ORIGIN = "https://niagaraassembly.com";
 const ORIGINALS = {
@@ -688,6 +689,7 @@ export function allPages(c) {
     mapDataLibraryPage(),
     subscribePage(c),
     preferencesPage(c),
+    ...journeyPages(c),
     aboutPage(c),
     creditsPage(c),
     notFound(c),
