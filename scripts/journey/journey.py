@@ -252,7 +252,7 @@ BLOCK = [
 REVIEW = [
     ("H2 portrait files", re.compile(r"portrait", re.I)),
     ("H1 owner values", re.compile(r"owner name|owner_name|registered owner", re.I)),
-    ("H4 commercial", re.compile(r"pricing|customer|investor|fundrais", re.I)),
+    ("H4 commercial", re.compile(r"pricing|customer|investor(?!-owned)|fundrais", re.I)),  # "investor-owned utility" is a term of art
     ("H7 unverified claim", re.compile(r"\ballegedly\b|\brumou?r", re.I)),
 ]
 
