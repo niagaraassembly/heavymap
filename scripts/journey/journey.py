@@ -70,17 +70,40 @@ def token() -> str:
 
 
 def api(method: str, **params) -> dict:
+    """One Telegraph call. FLOOD_WAIT_n means the call was refused, so waiting n seconds and
+    sending it again cannot create a duplicate."""
+    import time
     data = urllib.parse.urlencode({k: v for k, v in params.items() if v is not None}).encode()
-    req = urllib.request.Request(f"{API}/{method}", data=data, headers={"User-Agent": "heavymap-journey/1"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        out = json.load(r)
-    if not out.get("ok"):
-        raise SystemExit(f"Telegraph {method} failed: {out.get('error')}")
-    return out["result"]
+    for attempt in range(6):
+        req = urllib.request.Request(f"{API}/{method}", data=data, headers={"User-Agent": "heavymap-journey/1"})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            out = json.load(r)
+        if out.get("ok"):
+            return out["result"]
+        m = re.match(r"FLOOD_WAIT_(\d+)", str(out.get("error", "")))
+        if not m or attempt == 5:
+            break
+        wait = int(m.group(1)) + 1
+        print(f"  Telegraph asks to wait {wait} s", file=sys.stderr)
+        time.sleep(wait)
+    raise SystemExit(f"Telegraph {method} failed: {out.get('error')}")
+
+
+# Telegraph serves a cached copy of a page for a short while after an edit, so a run that edits
+# the same index twice must not re-read it: keep what each edit returned and reuse that.
+_EDITED: dict = {}
 
 
 def get_page(path: str) -> dict:
+    if path in _EDITED:
+        return _EDITED[path]
     return api("getPage", path=path, return_content="true")
+
+
+def edit_page(**params) -> dict:
+    page = api("editPage", return_content="true", **params)
+    _EDITED[page["path"]] = page
+    return page
 
 
 # ---------------------------------------------------------------- post format
@@ -304,24 +327,129 @@ def entry_node(url, title, date, minutes, tags, text) -> dict:
     return {"tag": "li", "children": kids}
 
 
-def insert_entry(index_path: str, entry: dict, tok: str) -> None:
-    page = get_page(index_path)
+def norm_url(href: str) -> str:
+    """Telegraph stores links to its own pages as relative paths; compare full URLs."""
+    return "https://telegra.ph" + href if href.startswith("/") else href
+
+
+def li_href(li) -> str:
+    kids = li.get("children") if isinstance(li, dict) else None
+    if kids and isinstance(kids[0], dict):
+        return norm_url((kids[0].get("attrs") or {}).get("href", ""))
+    return ""
+
+
+def cmd_collection(args) -> None:
+    """A curated sub-collection under a section, e.g. a run's field notes, with a display mode."""
+    tok, cols, rows = token(), collections(), read_register()
+    if args.key in cols:
+        raise SystemExit(f"{args.key} exists")
+    if args.parent not in SECTIONS:
+        raise SystemExit(f"unknown parent section {args.parent}")
+    content = [{"tag": "p", "children": [args.about]}, {"tag": "p", "children": ["Nothing here yet."]}, marker(True)]
+    page = api("createPage", access_token=tok, title=args.name, author_name="HeavyMap",
+               author_url="https://heavymap.com/journey", content=json.dumps(content, ensure_ascii=False))
+    cols[args.key] = {"name": args.name, "path": page["path"], "url": page["url"], "about": args.about,
+                      "parent": args.parent, "display": args.display, "run": args.run or ""}
+    COLLECTIONS.write_text(json.dumps(cols, indent=1, ensure_ascii=False) + "\n")
+    rows.append({"post_id": next_id(rows), "kind": "collection", "title": args.name, "telegraph_path": page["path"],
+                 "telegraph_url": page["url"], "site_path": f"/journey/{args.parent}/{args.key}/", "section": args.parent,
+                 "run_id": args.run or "", "created_at": now(), "last_edited_at": now(), "revision": "1", "status": "live",
+                 "content_hash": save_copy(get_page(page["path"])), "gate_class": "ungated", "check_result": "pass",
+                 "language": "en", "collections": args.parent, "notes": f"display={args.display}"})
+    write_register(rows)
+    rebuild_index(args.key, tok)
+    rebuild_index(args.parent, tok)
+    print(f"created collection {args.name}: {page['url']}")
+
+
+def cmd_file(args) -> None:
+    """File existing posts into a collection; --move takes them out of their other lists."""
+    tok, cols, rows = token(), collections(), read_register()
+    target = cols.get(args.key)
+    if not target:
+        raise SystemExit(f"unknown collection {args.key}")
+    touched = {args.key}
+    for pid in args.post_ids:
+        r = find(rows, pid)
+        current = [k for k in (r.get("collections") or "").split(";") if k]
+        touched.update(current)
+        current = [args.key] if args.move else current + ([args.key] if args.key not in current else [])
+        r["collections"] = ";".join(current)
+        if args.move and target.get("parent"):
+            r["site_path"] = f"/journey/{target['parent']}/{args.key}/#{r['telegraph_path']}"
+        r["last_edited_at"] = now()
+        print(f"{pid} filed in {args.key}{' (moved)' if args.move else ''}")
+    write_register(rows)
+    if target.get("parent"):
+        touched.add(target["parent"])
+    for key in sorted(touched):
+        rebuild_index(key, tok)
+
+
+def parse_page_for_entry(page: dict) -> dict:
     content = page.get("content") or []
-    at = next((i for i, n in enumerate(content) if isinstance(n, dict) and n.get("tag") == "ul"), None)
-    keep = [n for n in content if MASTER_MARK not in node_text(n)]
-    mark = next((n for n in content if MASTER_MARK in node_text(n)), marker(True))
-    if at is None:
-        empty = next((i for i, n in enumerate(keep) if node_text(n).strip() == "Nothing here yet."), None)
-        listing = {"tag": "ul", "children": [entry]}
-        keep = keep[:empty] + [listing] + keep[empty + 1:] if empty is not None else keep + [listing]
-    else:
-        listing = next(n for n in keep if isinstance(n, dict) and n.get("tag") == "ul")
-        url = entry["children"][0]["attrs"]["href"]
-        listing["children"] = [entry] + [li for li in listing.get("children", [])
-                                         if not (isinstance(li, dict) and li.get("children") and isinstance(li["children"][0], dict)
-                                                 and (li["children"][0].get("attrs") or {}).get("href") == url)]
-    api("editPage", access_token=tok, path=index_path, title=page["title"], author_name="HeavyMap",
-        author_url="https://heavymap.com/journey", content=json.dumps(keep + [mark], ensure_ascii=False))
+    tags = [t.strip() for t in node_text(content[0]).split(",")] if content and content[0].get("tag") == "aside" else []
+    intro = node_text(content[1]) if len(content) > 1 and content[1].get("tag") == "blockquote" else ""
+    return {"tags": [t for t in tags if t], "excerpt": intro if len(intro) <= EXCERPT_LIMIT else intro[:EXCERPT_LIMIT].rsplit(" ", 1)[0] + "…"}
+
+
+def local_page(path: str) -> dict | None:
+    f = PAGES / path / "page.json"
+    return json.loads(f.read_text()) if f.exists() else None
+
+
+def local_date(iso: str) -> str:
+    """The date a reader in our own time zone would give the post (Telegraph has none)."""
+    try:
+        return dt.datetime.fromisoformat(iso).astimezone().date().isoformat()
+    except ValueError:
+        return dt.date.today().isoformat()
+
+
+def rebuild_index(key: str, tok: str) -> None:
+    """Write a section or collection index from the register, never from Telegraph's copy.
+
+    Telegraph serves cached copies for minutes after an edit, so reading an index back and
+    editing it can silently undo recent changes. The register is the source of truth: every
+    post or collection whose `collections` field names this key is listed, newest first
+    (oldest first for stream collections, which read in order)."""
+    cols, rows = collections(), read_register()
+    c = cols[key]
+    items = []
+    for r in rows:
+        if r.get("status") == "wiped" or key not in (r.get("collections") or "").split(";"):
+            continue
+        if r["kind"] == "post":
+            page = local_page(r["telegraph_path"]) or {}
+            meta = parse_page_for_entry(page) if page.get("content") else {"tags": r["tags"].split(", "), "excerpt": ""}
+            node = entry_node(r["telegraph_url"], r["title"], local_date(r["created_at"]), int(r.get("read_minutes") or 0),
+                              meta["tags"], meta["excerpt"])
+        elif r["kind"] == "collection":
+            sub = next((k for k, v in cols.items() if v["path"] == r["telegraph_path"]), None)
+            if not sub:
+                continue
+            n = sum(1 for x in rows if x["kind"] == "post" and x.get("status") != "wiped" and sub in (x.get("collections") or "").split(";"))
+            node = entry_node(r["telegraph_url"], r["title"], local_date(r["created_at"]), 0,
+                              ["collection"] + ([cols[sub]["run"].lower()] if cols[sub].get("run") else []),
+                              f"{n} {'post' if n == 1 else 'posts'}. {cols[sub]['about']}")
+        else:
+            continue
+        items.append((r["created_at"], node))
+    items.sort(key=lambda x: x[0], reverse=c.get("display") != "stream")
+    head = [{"tag": "p", "children": [c["about"]]}]
+    listing = [{"tag": "ul", "children": [n for _, n in items]}] if items else [{"tag": "p", "children": ["Nothing here yet."]}]
+    title = "HeavyMap Journey" if key == "journey" else c["name"]
+    page = edit_page(access_token=tok, path=c["path"], title=title, author_name="HeavyMap", author_url="https://heavymap.com/journey",
+                     content=json.dumps(head + listing + [marker(key != "journey")], ensure_ascii=False))
+    save_copy(page)
+    print(f"  index {c['name']}: {len(items)} entries")
+
+
+def cmd_rebuild(args) -> None:
+    tok, cols = token(), collections()
+    for key in args.keys or [k for k in cols if k != "journey"]:
+        rebuild_index(key, tok)
 
 
 # ---------------------------------------------------------------- commands
@@ -354,7 +482,7 @@ def cmd_init(args) -> None:
         today = dt.date.today().isoformat()
         j = cols["journey"]
         items = [entry_node(reader + cols[k]["path"], cols[k]["name"], today, 0, ["site"], cols[k]["about"]) for k in SECTIONS]
-        api("editPage", access_token=tok, path=j["path"], title="HeavyMap Journey", author_name="HeavyMap",
+        edit_page(access_token=tok, path=j["path"], title="HeavyMap Journey", author_name="HeavyMap",
             author_url="https://heavymap.com/journey",
             content=json.dumps([{"tag": "p", "children": [j["about"]]}, {"tag": "ul", "children": items}, marker(False)], ensure_ascii=False))
         COLLECTIONS.write_text(json.dumps(cols, indent=1, ensure_ascii=False) + "\n")
@@ -398,7 +526,6 @@ def cmd_post(args) -> None:
         raise SystemExit("run init first")
     page = api("createPage", access_token=tok, title=post["title"], author_name="HeavyMap",
                author_url="https://heavymap.com/journey", content=json.dumps(content, ensure_ascii=False))
-    insert_entry(cols[section]["path"], entry_node(page["url"], post["title"], today, minutes, post["tags"], excerpt(post)), tok)
     full = get_page(page["path"])
     m = post["meta"]
     rows.append({
@@ -415,6 +542,7 @@ def cmd_post(args) -> None:
         "related_records": m.get("related", ""), "notes": m.get("notes", ""),
     })
     write_register(rows)
+    rebuild_index(section, tok)
     print(f"published {page['url']}")
 
 
@@ -440,8 +568,13 @@ def cmd_edit(args, wipe=False) -> None:
         if result == "blocked" or (result == "review" and not args.accept_review):
             raise SystemExit(f"held: {hits}")
         title = post["title"]
-    api("editPage", access_token=tok, path=r["telegraph_path"], title=title, author_name="HeavyMap",
+    edit_page(access_token=tok, path=r["telegraph_path"], title=title, author_name="HeavyMap",
         author_url="https://heavymap.com/journey", content=json.dumps(content, ensure_ascii=False))
+    if not wipe:
+        n_words = words(post["body"]) + len((post["intro"] or "").split())
+        r["word_count"], r["read_minutes"], r["tags"] = str(n_words), str(max(1, round(n_words / WORDS_PER_MINUTE))), ", ".join(post["tags"])
+    if not wipe:
+        r["title"] = title
     r["last_edited_at"] = now()
     r["revision"] = str(int(r.get("revision") or 1) + 1)
     r["content_hash"] = save_copy(get_page(r["telegraph_path"]), source)
@@ -450,6 +583,8 @@ def cmd_edit(args, wipe=False) -> None:
     else:
         r["status"] = "revised"
     write_register(rows)
+    for key in [k for k in (r.get("collections") or "").split(";") if k]:
+        rebuild_index(key, tok)
     print(f"{r['post_id']} {'wiped' if wipe else 'revised'}: {r['telegraph_url']}")
 
 
@@ -458,6 +593,8 @@ def cmd_snapshot(args) -> None:
     for r in rows:
         if args.ids and r["post_id"] not in args.ids:
             continue
+        if r["kind"] in ("index", "collection"):
+            continue  # written from editPage results by rebuild_index; Telegraph's copy may be stale
         page = get_page(r["telegraph_path"])
         r["content_hash"] = save_copy(page)
         r["views"], r["views_checked_at"] = str(page.get("views", "")), now()
@@ -482,6 +619,13 @@ def main(argv=None) -> None:
     s = sub.add_parser("wipe"); s.add_argument("post_id"); s.set_defaults(fn=lambda a: cmd_edit(a, wipe=True))
     s = sub.add_parser("snapshot"); s.add_argument("ids", nargs="*"); s.set_defaults(fn=cmd_snapshot)
     s = sub.add_parser("check"); s.add_argument("file"); s.set_defaults(fn=cmd_check)
+    s = sub.add_parser("collection"); s.add_argument("key"); s.add_argument("--name", required=True)
+    s.add_argument("--about", required=True); s.add_argument("--parent", required=True)
+    s.add_argument("--display", default="list", choices=["list", "stream", "timeline", "gallery"])
+    s.add_argument("--run"); s.add_argument("--tags", default=""); s.set_defaults(fn=cmd_collection)
+    s = sub.add_parser("rebuild"); s.add_argument("keys", nargs="*"); s.set_defaults(fn=cmd_rebuild)
+    s = sub.add_parser("file"); s.add_argument("key"); s.add_argument("post_ids", nargs="+")
+    s.add_argument("--move", action="store_true"); s.set_defaults(fn=cmd_file)
     a = p.parse_args(argv)
     a.fn(a)
 

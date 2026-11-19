@@ -93,3 +93,18 @@
 .jr-pn { display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; font-family: var(--sans); font-size: .85rem; margin-top: 1.4rem; }
 
 @media (prefers-reduced-motion: reduce) { .jr-boot, .jr-block { transition: none; } .jr-block:not(.jr-block--soon):hover { transform: none; } }
+
+/* display modes */
+.jr-display { margin: -.6rem 0 1.2rem; }
+.jr-display-toggle { font-family: var(--sans); font-size: .82rem; color: var(--bar); background: none; border: 1px solid var(--rule-strong);
+  padding: .3rem .7rem; cursor: pointer; }
+.jr-display-toggle:hover { border-color: var(--bar); }
+.jr-kind { color: var(--text); font-weight: 500; }
+.jr-entry--collection { border-left: 3px solid var(--accent); padding-left: .8rem; }
+.jr-stream { display: grid; gap: 0; }
+.jr-stream-slot { padding-block: 1.6rem 2rem; border-bottom: 1px solid var(--rule-strong); min-width: 0; }
+.jr-stream-slot:first-child { padding-top: 0; }
+.jr-stream-title { font-weight: 500; font-size: 1.5rem; line-height: 1.2; margin: 0 0 .5rem; text-wrap: balance; }
+.jr-stream-title a { color: var(--text); text-decoration: none; }
+.jr-stream-title a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+.jr-post--inline .jr-about { margin-top: 1.2rem; }

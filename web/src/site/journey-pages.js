@@ -27,8 +27,11 @@ const boot = `<div class="jr-boot" data-journey-boot aria-live="polite"><heavy-e
 
 function configScript(journey, section) {
   const sections = Object.fromEntries(
-    JOURNEY_SECTIONS.map((s) => [s.key, { name: s.name, path: journey.collections[s.key]?.path ?? null }]),
+    JOURNEY_SECTIONS.map((s) => [s.key, { name: s.name, path: journey.collections[s.key]?.path ?? null, display: "list" }]),
   );
+  for (const [key, col] of Object.entries(journey.collections)) {
+    if (col.parent) sections[key] = { name: col.name, path: col.path, parent: col.parent, display: col.display || "list" };
+  }
   const cfg = { section, sections, fallback: journey.fallback, built: new Date().toISOString().slice(0, 10) };
   return `<script type="application/json" id="hm-journey-config">${JSON.stringify(cfg).replace(/</g, "\\u003c")}</script>`;
 }
@@ -50,16 +53,52 @@ export function journeyLanding(c) {
   };
 }
 
-export function journeySection(c, s) {
+/** Collections nested under a section (for example a run's field notes). */
+const subCollections = (j) =>
+  Object.entries(j.collections)
+    .filter(([, col]) => col.parent)
+    .map(([key, col]) => ({ key, ...col }));
+
+const pathOf = (j, key) => {
+  const col = j.collections[key];
+  return col?.parent ? `/journey/${col.parent}/${key}/` : `/journey/${key}/`;
+};
+
+function listingPage(c, s, crumbs) {
   const j = c.journey ?? { collections: {}, fallback: {} };
+  const subs = new Map(subCollections(j).map((x) => [x.path, x]));
   const entries = j.fallback[s.key] ?? [];
+  const href = pathOf(j, s.key);
+  const item = (e) => {
+    const sub = e.path && subs.get(e.path);
+    return sub
+      ? `<li class="jr-entry jr-entry--collection"><a class="jr-entry-title" href="${pathOf(j, sub.key)}">${esc(e.title)}</a><div class="jr-meta"><span class="jr-kind">Collection</span></div>${e.excerpt ? `<p class="jr-excerpt">${esc(e.excerpt)}</p>` : ""}</li>`
+      : entryHtml(e, s.key).replace(`/journey/${esc(s.key)}/#`, `${href}#`);
+  };
+  const stream = s.display === "stream";
   return {
-    path: `/journey/${s.key}/`,
+    path: href,
     title: `${s.name} · Journey`,
     description: s.about,
     bodyClass: "hm-journey",
-    main: `<div class="jr" data-journey>${boot}<p class="jr-crumb"><a href="/journey/">Journey</a> / ${esc(s.name)}</p><div data-section-view><h1>${esc(s.name)}</h1><p class="jr-lede">${esc(s.about)}</p><div class="jr-filters" data-journey-filters hidden><label class="hm-visually-hidden" for="jr-filter-text">Search ${esc(s.name)}</label><input id="jr-filter-text" type="search" maxlength="120" placeholder="Search titles, places, topics" data-filter-text><label class="hm-visually-hidden" for="jr-filter-tag">Topic or place</label><select id="jr-filter-tag" data-filter-tag></select><span data-section-count role="status"></span></div><ul class="jr-entries" data-section-entries>${entries.map((e) => entryHtml(e, s.key)).join("") || '<li class="jr-empty">First posts on their way.</li>'}</ul></div><div data-post-view hidden></div></div>${configScript(j, s.key)}`,
+    main: `<div class="jr" data-journey>${boot}<p class="jr-crumb">${crumbs}</p><div data-section-view><h1>${esc(s.name)}</h1><p class="jr-lede">${esc(s.about)}</p><div class="jr-filters" data-journey-filters hidden><label class="hm-visually-hidden" for="jr-filter-text">Search ${esc(s.name)}</label><input id="jr-filter-text" type="search" maxlength="120" placeholder="Search titles, places, topics" data-filter-text><label class="hm-visually-hidden" for="jr-filter-tag">Topic or place</label><select id="jr-filter-tag" data-filter-tag></select><span data-section-count role="status"></span></div><p class="jr-display"><button type="button" class="jr-display-toggle" data-display-toggle hidden>${stream ? "Show as a list" : "Read as one page"}</button></p><ul class="jr-entries" data-section-entries>${entries.map(item).join("") || '<li class="jr-empty">First posts on their way.</li>'}</ul><div class="jr-stream" data-section-stream hidden></div></div><div data-post-view hidden></div></div>${configScript(j, s.key)}`,
   };
 }
 
-export const journeyPages = (c) => [journeyLanding(c), ...JOURNEY_SECTIONS.map((s) => journeySection(c, s))];
+export function journeySection(c, s) {
+  return listingPage(c, { ...s, display: "list" }, `<a href="/journey/">Journey</a> / ${esc(s.name)}`);
+}
+
+export function journeyCollection(c, col) {
+  const parent = JOURNEY_SECTIONS.find((s) => s.key === col.parent);
+  return listingPage(c, col, `<a href="/journey/">Journey</a> / <a href="/journey/${esc(col.parent)}/">${esc(parent?.name ?? col.parent)}</a> / ${esc(col.name)}`);
+}
+
+export const journeyPages = (c) => {
+  const j = c.journey ?? { collections: {}, fallback: {} };
+  return [
+    journeyLanding(c),
+    ...JOURNEY_SECTIONS.map((s) => journeySection(c, s)),
+    ...subCollections(j).filter((x) => JOURNEY_SECTIONS.some((s) => s.key === x.parent)).map((x) => journeyCollection(c, x)),
+  ];
+};

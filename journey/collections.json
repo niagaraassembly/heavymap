@@ -22,5 +22,14 @@
   "path": "Systems-11-19-4",
   "url": "https://telegra.ph/Systems-11-19-4",
   "about": "The machinery behind HeavyMap: the Assembly System, MAKE, Dispatch, Join, and the frameworks they rest on."
+ },
+ "field-notes-hamilton": {
+  "name": "Field notes: Hamilton",
+  "path": "Field-notes-Hamilton-11-19",
+  "url": "https://telegra.ph/Field-notes-Hamilton-11-19",
+  "about": "Short notes on oddities in Hamilton's public data, one at a time: what we saw and what we do about it.",
+  "parent": "expansion",
+  "display": "stream",
+  "run": "CR-001"
  }
 }

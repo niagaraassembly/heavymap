@@ -1,15 +1,27 @@
 /* /journey: Telegraph content loaded live, with the page narrating its own assembly
  * (after Telepatch) beside the HeavyMap mark. The prerendered page is complete
- * without this script: it lists the local copies made at publish time (D-091). */
+ * without this script: it lists the local copies made at publish time (D-091).
+ *
+ * Collections have a display mode: "list" (default) or "stream" (every post in full,
+ * one after another, each still a post of its own at its own address). */
 
 import "./journey.css";
 import "../brand/heavy-element-loader.js";
-import { getPage, nodeText, parseIndex, parsePost, readingMinutes, sanitize, telegraphPath } from "./telegraph.js";
+import { getPage, parseIndex, parsePost, readingMinutes, sanitize, telegraphPath } from "./telegraph.js";
 
 const root = document.querySelector("[data-journey]");
 const config = JSON.parse(document.getElementById("hm-journey-config")?.textContent || "{}");
 const SECTIONS = config.sections || {};
-const here = config.section; // "journey" on the landing page, else a section key
+const here = config.section; // "journey" on the landing page, else a section or collection key
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/** Site address of a section or collection page. */
+const pageOf = (key) => {
+  const s = SECTIONS[key];
+  return s?.parent ? `/journey/${s.parent}/${key}/` : `/journey/${key}/`;
+};
+/** Telegraph path of a collection's base page -> its key. */
+const collectionByPath = new Map(Object.entries(SECTIONS).filter(([, s]) => s.path).map(([k, s]) => [s.path, k]));
 
 /* ---- narration ------------------------------------------------------------ */
 
@@ -17,7 +29,6 @@ const boot = root?.querySelector("[data-journey-boot]");
 const lines = boot?.querySelector("[data-boot-lines]");
 const mark = boot?.querySelector("heavy-element-loader");
 const t0 = performance.now();
-const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 let seenBefore = false;
 try { seenBefore = sessionStorage.getItem("hm-journey-boot") === "1"; sessionStorage.setItem("hm-journey-boot", "1"); } catch {}
 const pause = (ms) => new Promise((r) => setTimeout(r, reduced || seenBefore ? 0 : ms));
@@ -36,8 +47,7 @@ async function say(label, text, cls = "") {
 async function done(summary) {
   await say("ready", `${summary} · ${Math.round(performance.now() - t0)} ms`, "is-ready");
   mark?.finish?.();
-  if (!boot) return;
-  setTimeout(() => boot.classList.add("is-folded"), reduced ? 0 : seenBefore ? 900 : 2600);
+  if (boot) setTimeout(() => boot.classList.add("is-folded"), reduced ? 0 : seenBefore ? 900 : 2600);
 }
 
 /* ---- rendering ------------------------------------------------------------ */
@@ -53,7 +63,8 @@ const el = (tag, cls, text) => {
 const ownPaths = new Map();
 const route = (href) => {
   const p = telegraphPath(href);
-  return p && ownPaths.has(p) ? `/journey/${ownPaths.get(p)}/#${p}` : null;
+  if (p && collectionByPath.has(p)) return pageOf(collectionByPath.get(p));
+  return p && ownPaths.has(p) ? `${pageOf(ownPaths.get(p))}#${p}` : null;
 };
 
 function build(descriptors, parent) {
@@ -70,17 +81,63 @@ function build(descriptors, parent) {
   }
 }
 
-function entryItem(entry, section) {
-  const li = el("li", "jr-entry");
+function entryItem(entry, key) {
+  const sub = entry.path && collectionByPath.get(entry.path);
+  const li = el("li", sub ? "jr-entry jr-entry--collection" : "jr-entry");
   const a = el("a", "jr-entry-title", entry.title);
-  a.href = entry.path ? `/journey/${section}/#${entry.path}` : entry.url;
+  a.href = sub ? pageOf(sub) : entry.path ? `${pageOf(key)}#${entry.path}` : entry.url;
   const meta = el("div", "jr-meta");
-  meta.append(entry.date || "");
-  if (entry.minutes) meta.append(` · ${entry.minutes} min`);
-  if (entry.tags.length) meta.append(" · ", el("span", "jr-tags", entry.tags.join(", ")));
+  if (sub) meta.append(el("span", "jr-kind", SECTIONS[sub]?.display === "stream" ? "Collection · read as one page" : "Collection"));
+  else {
+    meta.append(entry.date || "");
+    if (entry.minutes) meta.append(` · ${entry.minutes} min`);
+  }
+  const tags = entry.tags.filter((t) => t !== "collection");
+  if (tags.length) meta.append(" · ", el("span", "jr-tags", tags.join(", ")));
   li.append(a, meta);
   if (entry.excerpt) li.append(el("p", "jr-excerpt", entry.excerpt));
   return li;
+}
+
+/** One post's article: tags, title, standfirst, contents, body, about line. */
+function article(page, path, { standalone = true, ms = 0 } = {}) {
+  const post = parsePost(page.content);
+  const art = el("article", standalone ? "jr-post" : "jr-post jr-post--inline");
+  art.id = `post-${path}`;
+  if (post.tags.length) art.append(el("div", "jr-post-tags", post.tags.join(" · ")));
+  const h = el(standalone ? "h1" : "h2", standalone ? null : "jr-stream-title");
+  if (standalone) h.textContent = page.title;
+  else { const a = el("a", null, page.title); a.href = `#${path}`; h.append(a); }
+  art.append(h);
+  if (post.intro) { const bq = el("blockquote", "jr-standfirst"); build(sanitize(post.intro.children, { route }), bq); art.append(bq); }
+  if (standalone && post.sections.length > 1) {
+    const toc = el("nav", "jr-toc"); toc.setAttribute("aria-label", "Contents");
+    toc.append(el("span", "jr-toc-label", "Contents"));
+    const ol = el("ol");
+    post.sections.forEach((s, i) => { const a = el("a", null, s.text); a.href = `#${path}`; a.dataset.section = String(i); const li = el("li"); li.append(a); ol.append(li); });
+    toc.append(ol); art.append(toc);
+    toc.addEventListener("click", (ev) => {
+      const a = ev.target.closest("a[data-section]");
+      if (!a) return;
+      ev.preventDefault();
+      art.querySelectorAll(".jr-body h3")[Number(a.dataset.section)]?.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+    });
+  }
+  const body = el("div", "jr-body");
+  build(sanitize(post.body, { route }), body);
+  art.append(body);
+  const about = el("div", "jr-about");
+  const c = post.colophon;
+  const bits = [c.type, c.run && `run ${c.run}`, c.stage && `stage ${c.stage}`, c.method && `method ${c.method}`, c.status && `status: ${c.status}`].filter(Boolean);
+  if (bits.length) about.append(el("span", null, bits.join(" · ")));
+  const line = el("span");
+  line.append(`${readingMinutes(post.body)} min · ${page.views ?? 0} views${ms ? ` · loaded in ${ms} ms` : ""} · `);
+  const tg = el("a", null, "Also on telegra.ph"); tg.href = page.url; tg.rel = "noopener"; tg.target = "_blank";
+  line.append(tg);
+  if (!standalone) { line.append(" · "); const own = el("a", null, "Open on its own"); own.href = `#${path}`; line.append(own); }
+  about.append(line);
+  art.append(about);
+  return art;
 }
 
 /* ---- loading collections -------------------------------------------------- */
@@ -92,36 +149,47 @@ async function loadIndex(key) {
     const { page, ms, bytes } = await getPage(c.path);
     const parsed = parseIndex(page.content);
     await say("index", `${c.name.toLowerCase()} · telegra.ph/${c.path} · ${ms} ms · ${kb(bytes)}`);
-    for (const e of parsed.entries) if (e.path) ownPaths.set(e.path, key);
+    for (const e of parsed.entries) if (e.path && !collectionByPath.has(e.path)) ownPaths.set(e.path, key);
     return { key, entries: parsed.entries, intro: parsed.intro, local: false };
-  } catch (err) {
+  } catch {
     const entries = config.fallback?.[key] ?? [];
     await say("index", `${c.name.toLowerCase()} · telegra.ph unreachable · local copy (${entries.length})`, "is-warn");
-    for (const e of entries) if (e.path) ownPaths.set(e.path, key);
+    for (const e of entries) if (e.path && !collectionByPath.has(e.path)) ownPaths.set(e.path, key);
     return { key, entries, local: true };
   }
 }
 
+const countLabel = (entries) => {
+  const posts = entries.filter((e) => !collectionByPath.has(e.path)).length;
+  const subs = entries.length - posts;
+  return [posts && `${posts} ${posts === 1 ? "post" : "posts"}`, subs && `${subs} ${subs === 1 ? "collection" : "collections"}`].filter(Boolean).join(" · ") || "0 posts";
+};
+
 async function landing() {
-  await say("journey", `built ${config.built || ""} · ${Object.keys(SECTIONS).length} live sections`);
-  const results = await Promise.all(Object.keys(SECTIONS).map(loadIndex));
+  const top = Object.keys(SECTIONS).filter((k) => !SECTIONS[k].parent);
+  await say("journey", `built ${config.built || ""} · ${top.length} live sections`);
+  const results = await Promise.all(top.map(loadIndex));
   let total = 0;
   for (const r of results) {
     total += r.entries.length;
     const block = root.querySelector(`[data-journey-block="${r.key}"]`);
     if (!block) continue;
-    const list = block.querySelector("[data-block-entries]");
-    const count = block.querySelector("[data-block-count]");
-    list.replaceChildren(...r.entries.slice(0, 3).map((e) => entryItem(e, r.key)));
-    if (!r.entries.length) list.append(el("li", "jr-empty", "First posts on their way."));
-    count.textContent = r.entries.length === 1 ? "1 post" : `${r.entries.length} posts`;
+    block.querySelector("[data-block-entries]").replaceChildren(...r.entries.slice(0, 3).map((e) => entryItem(e, r.key)));
+    if (!r.entries.length) block.querySelector("[data-block-entries]").append(el("li", "jr-empty", "First posts on their way."));
+    block.querySelector("[data-block-count]").textContent = countLabel(r.entries);
   }
-  await done(`${total} posts`);
+  await done(`${total} entries`);
 }
 
-/* ---- a section ------------------------------------------------------------ */
+/* ---- a section or collection --------------------------------------------- */
 
 let sectionEntries = [];
+const postEntries = () => sectionEntries.filter((e) => e.path && !collectionByPath.has(e.path));
+const display = () => {
+  let mode = SECTIONS[here]?.display || "list";
+  try { mode = localStorage.getItem(`hm-journey-display-${here}`) || mode; } catch {}
+  return mode;
+};
 
 function renderList() {
   const list = root.querySelector("[data-section-entries]");
@@ -134,33 +202,84 @@ function renderList() {
   list.replaceChildren(...shown.map((e) => entryItem(e, here)));
   if (!shown.length) list.append(el("li", "jr-empty", sectionEntries.length ? "Nothing matches those filters." : "First posts on their way."));
   const count = root.querySelector("[data-section-count]");
-  if (count) count.textContent = shown.length === sectionEntries.length ? `${shown.length} posts` : `${shown.length} of ${sectionEntries.length} posts`;
+  if (count) count.textContent = shown.length === sectionEntries.length ? countLabel(sectionEntries) : `${shown.length} of ${sectionEntries.length}`;
 }
 
-function mountFilters() {
+/** Stream: every post in full, loaded in order as the reader scrolls toward it. */
+function renderStream() {
+  const stream = root.querySelector("[data-section-stream]");
+  if (!stream) return;
+  const posts = postEntries();
+  stream.replaceChildren(...posts.map((e) => {
+    const slot = el("section", "jr-stream-slot");
+    slot.dataset.path = e.path;
+    const h = el("h2", "jr-stream-title"); const a = el("a", null, e.title); a.href = `#${e.path}`; h.append(a);
+    slot.append(h, el("p", "jr-meta", `${e.date}${e.minutes ? ` · ${e.minutes} min` : ""} · loading…`));
+    return slot;
+  }));
+  let queue = Promise.resolve();
+  const load = (slot) => {
+    queue = queue.then(async () => {
+      if (slot.dataset.loaded) return;
+      slot.dataset.loaded = "1";
+      try {
+        const { page, ms } = await getPage(slot.dataset.path);
+        slot.replaceChildren(article(page, slot.dataset.path, { standalone: false, ms }));
+      } catch {
+        slot.querySelector(".jr-meta").textContent = "Could not load this note just now. Open it on its own to retry.";
+      }
+    });
+  };
+  const io = "IntersectionObserver" in window
+    ? new IntersectionObserver((xs) => xs.forEach((x) => { if (x.isIntersecting) { io.unobserve(x.target); load(x.target); } }), { rootMargin: "800px 0px" })
+    : null;
+  stream.querySelectorAll(".jr-stream-slot").forEach((s) => (io ? io.observe(s) : load(s)));
+}
+
+function applyDisplay() {
+  const mode = display();
+  const stream = mode === "stream";
+  root.querySelector("[data-section-entries]").hidden = stream;
+  root.querySelector("[data-section-stream]").hidden = !stream;
+  root.querySelector("[data-journey-filters]")?.toggleAttribute("hidden", stream);
+  const toggle = root.querySelector("[data-display-toggle]");
+  if (toggle) {
+    toggle.hidden = !postEntries().length;
+    toggle.textContent = stream ? "Show as a list" : "Read as one page";
+  }
+  if (stream && !root.querySelector("[data-section-stream]").childElementCount) renderStream();
+}
+
+function mountControls() {
   const select = root.querySelector("[data-filter-tag]");
   if (select) {
-    const tags = [...new Set(sectionEntries.flatMap((e) => e.tags))].filter((t) => t !== here).sort();
-    select.replaceChildren(el("option", null, "All topics and places"), ...tags.map((t) => { const o = el("option", null, t); o.value = t; return o; }));
-    select.firstChild.value = "";
+    const tags = [...new Set(sectionEntries.flatMap((e) => e.tags))].filter((t) => t !== here && t !== "collection").sort();
+    const all = el("option", null, "All topics and places"); all.value = "";
+    select.replaceChildren(all, ...tags.map((t) => { const o = el("option", null, t); o.value = t; return o; }));
   }
   root.querySelector("[data-journey-filters]")?.removeAttribute("hidden");
   root.querySelector("[data-filter-text]")?.addEventListener("input", renderList);
   select?.addEventListener("change", renderList);
+  root.querySelector("[data-display-toggle]")?.addEventListener("click", () => {
+    const next = display() === "stream" ? "list" : "stream";
+    try { localStorage.setItem(`hm-journey-display-${here}`, next); } catch {}
+    applyDisplay();
+  });
 }
 
 async function section() {
   await say("journey", `${SECTIONS[here]?.name ?? here} · built ${config.built || ""}`);
   const r = await loadIndex(here);
   sectionEntries = r.entries;
-  mountFilters();
+  mountControls();
   renderList();
-  await done(`${r.entries.length} posts`);
+  applyDisplay();
+  await done(countLabel(r.entries));
   window.addEventListener("hashchange", showPost);
   showPost();
 }
 
-/* ---- a post --------------------------------------------------------------- */
+/* ---- one post on its own -------------------------------------------------- */
 
 async function showPost() {
   const path = decodeURIComponent(location.hash.slice(1));
@@ -168,67 +287,38 @@ async function showPost() {
   const postView = root.querySelector("[data-post-view]");
   if (!path) { listView.hidden = false; postView.hidden = true; document.title = `${SECTIONS[here]?.name} · Journey · HeavyMap`; return; }
   listView.hidden = true; postView.hidden = false;
-  // Only pages listed in this section's own index render here; any other Telegraph path
+  // Only pages listed in this page's own index render here; any other Telegraph path
   // in the hash would otherwise show someone else's page under heavymap.com.
-  if (!sectionEntries.some((e) => e.path === path)) {
-    const back = el("a", null, `All ${SECTIONS[here]?.name ?? "posts"}`);
-    back.href = `/journey/${here}/`;
+  if (!postEntries().some((e) => e.path === path)) {
+    const back = el("a", null, `All of ${SECTIONS[here]?.name ?? "this section"}`);
+    back.href = pageOf(here);
     postView.replaceChildren(el("p", "jr-meta", "This post is not part of this section."), back);
-    document.title = `Not found · Journey · HeavyMap`;
+    document.title = "Not found · Journey · HeavyMap";
     return;
   }
   postView.replaceChildren(el("p", "jr-meta", "Loading…"));
-  let page;
+  let page, ms;
   try {
     const t = performance.now();
     ({ page } = await getPage(path));
-    postView.dataset.ms = String(Math.round(performance.now() - t));
+    ms = Math.round(performance.now() - t);
   } catch {
-    const local = (config.fallback?.[here] ?? []).find((e) => e.path === path);
+    const local = postEntries().find((e) => e.path === path);
     postView.replaceChildren(el("p", "jr-meta", "This post could not be loaded from Telegraph just now."));
     if (local) { const a = el("a", null, "Open it on telegra.ph"); a.href = local.url; postView.append(a); }
     return;
   }
-  const post = parsePost(page.content);
-  const article = el("article", "jr-post");
-  if (post.tags.length) article.append(el("div", "jr-post-tags", post.tags.join(" · ")));
-  article.append(el("h1", null, page.title));
-  if (post.intro) { const bq = el("blockquote", "jr-standfirst"); build(sanitize(post.intro.children, { route }), bq); article.append(bq); }
-  if (post.sections.length > 1) {
-    const toc = el("nav", "jr-toc"); toc.setAttribute("aria-label", "Contents");
-    toc.append(el("span", "jr-toc-label", "Contents"));
-    const ol = el("ol");
-    post.sections.forEach((s, i) => { const a = el("a", null, s.text); a.href = `#${path}`; a.dataset.section = String(i); ol.append(el("li")); ol.lastChild.append(a); });
-    toc.append(ol); article.append(toc);
-    toc.addEventListener("click", (ev) => {
-      const a = ev.target.closest("a[data-section]");
-      if (!a) return;
-      ev.preventDefault();
-      article.querySelectorAll(".jr-body h3")[Number(a.dataset.section)]?.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
-    });
-  }
-  const body = el("div", "jr-body");
-  build(sanitize(post.body, { route }), body);
-  article.append(body);
-  const about = el("div", "jr-about");
-  const c = post.colophon;
-  const bits = [c.type, c.run && `run ${c.run}`, c.stage && `stage ${c.stage}`, c.method && `method v${c.method}`].filter(Boolean);
-  if (bits.length) about.append(el("span", null, bits.join(" · ")));
-  const line = el("span");
-  line.append(`${readingMinutes(post.body)} min · ${page.views ?? 0} views · loaded in ${postView.dataset.ms} ms · `);
-  const tg = el("a", null, "Also on telegra.ph"); tg.href = page.url; tg.rel = "noopener"; tg.target = "_blank";
-  line.append(tg);
-  about.append(line);
-  article.append(about);
-  const i = sectionEntries.findIndex((e) => e.path === path);
-  const nav = el("nav", "jr-pn"); nav.setAttribute("aria-label", "More in this section");
-  const newer = sectionEntries[i - 1], older = sectionEntries[i + 1];
-  const back = el("a", null, `← All ${SECTIONS[here]?.name ?? ""}`); back.href = `/journey/${here}/`;
+  const art = article(page, path, { standalone: true, ms });
+  const posts = postEntries();
+  const i = posts.findIndex((e) => e.path === path);
+  const nav = el("nav", "jr-pn"); nav.setAttribute("aria-label", "More here");
+  const back = el("a", null, `← All of ${SECTIONS[here]?.name ?? ""}`); back.href = pageOf(here);
   nav.append(back);
+  const newer = posts[i - 1], older = posts[i + 1];
   if (older) { const a = el("a", null, `Earlier: ${older.title}`); a.href = `#${older.path}`; nav.append(a); }
   if (newer) { const a = el("a", null, `Next: ${newer.title}`); a.href = `#${newer.path}`; nav.append(a); }
-  article.append(nav);
-  postView.replaceChildren(article);
+  art.append(nav);
+  postView.replaceChildren(art);
   document.title = `${page.title} · Journey · HeavyMap`;
   window.scrollTo(0, 0);
 }
@@ -240,5 +330,3 @@ if (root) {
     mark?.finish?.();
   });
 }
-
-export { nodeText };
