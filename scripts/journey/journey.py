@@ -244,7 +244,7 @@ def excerpt(post: dict) -> str:
 
 BLOCK = [
     ("H3 email address", re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")),
-    ("H3 home path", re.compile(r"(?<![\w.:/-])(?:/home/\w+|/Users/\w+)")),  # not inside web addresses
+    ("H3 home path", re.compile(r"/home/\w+|/Users/\w+")),  # checked with http(s) addresses masked
     ("H3 token-like string", re.compile(r"\b(?=[A-Za-z0-9]*\d)(?=[A-Za-z0-9]*[A-Za-z])[A-Za-z0-9]{40,}\b")),
     ("H3 private repository", re.compile(r"heavymap-portraits|heavymap-restricted|service-data|PORTRAITS_DEPLOY_KEY")),
     ("H1 phone number", re.compile(r"\(?\b\d{3}\)?[ .-]\d{3}[ .-]\d{4}\b")),
@@ -280,7 +280,8 @@ def private_rules() -> list:
 
 
 def check(text: str) -> tuple[str, list]:
-    hits = [name for name, rx in BLOCK + private_rules() if rx.search(text)]
+    masked = re.sub(r"https?://[^\s<>\"')`|]+", "URL", text)  # only real web addresses are exempt
+    hits = [name for name, rx in BLOCK + private_rules() if rx.search(masked if name == "H3 home path" else text)]
     if hits:
         return "blocked", hits
     soft = [name for name, rx in REVIEW if rx.search(text)]

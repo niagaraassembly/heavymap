@@ -21,9 +21,8 @@ sys.path.insert(0, str(Path(__file__).parent))
 import journey  # noqa: E402
 
 RULES = [
-    # Paths standing on their own only: never inside a web address (".../home/showdocument").
-    ("local path", re.compile(r"`?(?<![\w.:/-])(?:/fast/code|/home/\w+|/Users/\w+|/tmp|deb:)[^\s`|),;]*`?"), "a local working copy"),
-    ("local path", re.compile(r"`?(?<![\w.:/-])~/(?:na|making|github|work|machine-flows|\.config|\.local)[^\s`|),;]*`?"), "a local working copy"),
+    ("local path", re.compile(r"`?(?:/fast/code|/home/\w+|/Users/\w+|/tmp|deb:)[^\s`|),;]*`?"), "a local working copy"),
+    ("local path", re.compile(r"`?~/(?:na|making|github|work|machine-flows|\.config|\.local)[^\s`|),;]*`?"), "a local working copy"),
     ("local path", re.compile(r"`?local-data/[^\s`|),;]*`?"), "local data (not published)"),
     ("private repo", re.compile(r"heavymap-restricted"), "our private planning repository"),
     ("private repo", re.compile(r"heavymap-portraits"), "a private repository"),
@@ -33,6 +32,7 @@ RULES = [
     ("owner name", re.compile(r"\bMorgen\b"), "the owner"),
     ("agent name", re.compile(r"\b(?:Grok Bot|Grok|Claude Code|Claude|Codex|Cursor agent)\b"), "an agent"),
 ]
+URL = re.compile(r"https?://[^\s<>\"')`|]+")
 LINK = re.compile(r"\[([^\]]+)\]\((?!https?://)[^)]*\)")
 COMMENT = re.compile(r"<!--.*?-->", re.S)
 TICKET_LINE = re.compile(r"^\s*\*\*(?:Linear|Owner issue|By)[^\n]*\n", re.M)
@@ -54,8 +54,15 @@ def clean(text: str) -> tuple[str, dict]:
         if distinct:
             text, n = re.subn(r"`?(?<![\w-])(?:" + "|".join(distinct) + r")(?![\w-])`?", "a private repository", text)
             bump("private repo", n)
+    # Web addresses are protected while the rules run, so ".../home/showdocument" survives,
+    # but every other form (file:///home/x, host:/home/x, PATH=a:/home/x) is still cleaned.
+    urls = []
+    def keep(m):
+        urls.append(m.group(0)); return f"\x00URL{len(urls) - 1}\x00"
+    text = URL.sub(keep, text)
     for name, rx, rep in RULES:
         text, n = rx.subn(rep, text); bump(name, n)
+    text = re.sub(r"\x00URL(\d+)\x00", lambda m: urls[int(m.group(1))], text)
     return text, counts
 
 
