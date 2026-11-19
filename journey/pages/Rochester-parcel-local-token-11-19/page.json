@@ -1,0 +1,1626 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, architecture, framework"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Status:"
+     ],
+     "tag": "strong"
+    },
+    " recommendation for review, 2026-09-30. Linear ",
+    {
+     "children": [
+      "NIA-80"
+     ],
+     "tag": "strong"
+    },
+    ", under Epic 2 ",
+    {
+     "children": [
+      "NIA-24"
+     ],
+     "tag": "strong"
+    },
+    " (gate G2). Docs and one synthetic fixture. Not a locked rewrite of the spine illustration."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "MCS:"
+     ],
+     "tag": "strong"
+    },
+    " no cells changed. No ",
+    {
+     "children": [
+      "dataset_id"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "This note says how a City of Rochester parcel gets the ",
+    {
+     "children": [
+      "{local}"
+     ],
+     "tag": "code"
+    },
+    " part of its HeavyMap key. It does not fetch parcels, sample owner names, edit the Master Control Spreadsheet, or publish a site. Publication waits on G6."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Recommendation"
+   },
+   "children": [
+    "Recommendation"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Use the ",
+    {
+     "children": [
+      "20-character section-block-lot as text"
+     ],
+     "tag": "strong"
+    },
+    " (",
+    {
+     "children": [
+      "SBL20"
+     ],
+     "tag": "code"
+    },
+    "). On the city layer that string is ",
+    {
+     "children": [
+      "PARCELID"
+     ],
+     "tag": "code"
+    },
+    ". Copy it unchanged into the local token."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "ia:us:ny:rochester:parcel:{SBL20}"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Example of the ",
+    {
+     "children": [
+      "shape"
+     ],
+     "tag": "strong"
+    },
+    ", from the 2026-09-30 pilot (a real city id, cited as evidence, not loaded as a fixture row): city ",
+    {
+     "children": [
+      "PARCELID"
+     ],
+     "tag": "code"
+    },
+    " ",
+    {
+     "children": [
+      "04762000010220000000"
+     ],
+     "tag": "code"
+    },
+    ", padded print key ",
+    {
+     "children": [
+      "047.62-1-22"
+     ],
+     "tag": "code"
+    },
+    ", Monroe ",
+    {
+     "children": [
+      "countysbl"
+     ],
+     "tag": "code"
+    },
+    " ",
+    {
+     "children": [
+      "26140004762000010220000000"
+     ],
+     "tag": "code"
+    },
+    ". The fixture in this repo uses a different 20-digit string so the file is not that parcel."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The print key stays a ",
+    {
+     "children": [
+      "display"
+     ],
+     "tag": "strong"
+    },
+    " native key. It is not ",
+    {
+     "children": [
+      "{local}"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "This copies the publisher’s digit string into ",
+    {
+     "children": [
+      "{local}"
+     ],
+     "tag": "code"
+    },
+    " on purpose. The same characters remain in ",
+    {
+     "children": [
+      "native_keys"
+     ],
+     "tag": "code"
+    },
+    " under the publisher’s field name (",
+    {
+     "children": [
+      "PARCELID"
+     ],
+     "tag": "code"
+    },
+    "). That is a named minting rule. It is not a silent promotion, and it does not promote the print key."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The Erie walkthrough in parcel-identity-spine.md still uses a print-key-shaped local (",
+    {
+     "children": [
+      "SYN-999.00-1-1.1"
+     ],
+     "tag": "code"
+    },
+    "). That illustration is not rewritten here. Rochester is the place the pilot showed the padding split."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Why-the-print-key-is-not-the-token"
+   },
+   "children": [
+    "Why the print key is not the token"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Print-key padding is a property of the layer, not of the land."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "City of Rochester (",
+        {
+         "children": [
+          "PARCELID"
+         ],
+         "tag": "code"
+        },
+        ", ",
+        {
+         "children": [
+          "PRINTKEY"
+         ],
+         "tag": "code"
+        },
+        ")"
+       ],
+       "tag": "strong"
+      },
+      " — Print-key shape: padded, ",
+      {
+       "children": [
+        "047.62-1-22"
+       ],
+       "tag": "code"
+      },
+      " · Parcel id beside it: 20-character text"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Monroe ",
+        {
+         "children": [
+          "Parcels_Public"
+         ],
+         "tag": "code"
+        },
+        " (",
+        {
+         "children": [
+          "printkey"
+         ],
+         "tag": "code"
+        },
+        ")"
+       ],
+       "tag": "strong"
+      },
+      " — Print-key shape: padded, same city example · Parcel id beside it: ",
+      {
+       "children": [
+        "countysbl"
+       ],
+       "tag": "code"
+      },
+      ", 26 characters"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NYS Tax Parcels Public (",
+        {
+         "children": [
+          "PRINT_KEY"
+         ],
+         "tag": "code"
+        },
+        ")"
+       ],
+       "tag": "strong"
+      },
+      " — Print-key shape: unpadded, ",
+      {
+       "children": [
+        "47.18-1-33"
+       ],
+       "tag": "code"
+      },
+      ", and ",
+      {
+       "children": [
+        "3.-1-1"
+       ],
+       "tag": "code"
+      },
+      " · Parcel id beside it: ",
+      {
+       "children": [
+        "SBL"
+       ],
+       "tag": "code"
+      },
+      " 20 characters; ",
+      {
+       "children": [
+        "SWIS_SBL_ID"
+       ],
+       "tag": "code"
+      },
+      " 26"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Consequences:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "A string compare of print keys across layers fails when one side keeps the leading zero and the other drops it (",
+      {
+       "children": [
+        "047.62-1-22"
+       ],
+       "tag": "code"
+      },
+      " versus ",
+      {
+       "children": [
+        "47.62-1-22"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Monroe ",
+      {
+       "children": [
+        "printkey"
+       ],
+       "tag": "code"
+      },
+      " is not unique county-wide: 267,357 distinct values in 267,962 rows (pilot, 2026-09-30)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "City ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " is the same 20-character shape as the statewide ",
+      {
+       "children": [
+        "SBL"
+       ],
+       "tag": "code"
+      },
+      ". The statewide layer has ",
+      {
+       "children": [
+        "0 features for Monroe"
+       ],
+       "tag": "strong"
+      },
+      " and ",
+      {
+       "children": [
+        "0 for Niagara County"
+       ],
+       "tag": "strong"
+      },
+      ". It cannot supply Rochester’s token. A ",
+      {
+       "children": [
+        "CITYTOWN_NAME"
+       ],
+       "tag": "code"
+      },
+      " of Rochester on that layer is a name collision (Ulster County in the pilot), so the name is not a join."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The 1996 and 2012 Rochester assessment tables store ",
+      {
+       "children": [
+        "SBL"
+       ],
+       "tag": "code"
+      },
+      " / ",
+      {
+       "children": [
+        "SBL20"
+       ],
+       "tag": "code"
+      },
+      " as a ",
+      {
+       "children": [
+        "floating-point number"
+       ],
+       "tag": "strong"
+      },
+      ". Digits are already gone (",
+      {
+       "children": [
+        "4.62800001001e+18"
+       ],
+       "tag": "code"
+      },
+      " in the pilot). Zero-padding does not repair them (0 matches in the pilot samples). Those vintages are ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " by id. A float, an integer, or a scientific-notation string must not be cast into a token."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "SBL20"
+     ],
+     "tag": "code"
+    },
+    " is text. Leading zeros are part of the token (",
+    {
+     "children": [
+      "04762…"
+     ],
+     "tag": "code"
+    },
+    " is not ",
+    {
+     "children": [
+      "4762…"
+     ],
+     "tag": "code"
+    },
+    ")."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "County-composite"
+   },
+   "children": [
+    "County composite"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Compare New York parcels on ",
+    {
+     "children": [
+      "6-digit prefix + SBL20"
+     ],
+     "tag": "strong"
+    },
+    " (26 characters). Do not compare print keys across layers. Do not compare Monroe ",
+    {
+     "children": [
+      "swis"
+     ],
+     "tag": "code"
+    },
+    " to statewide ",
+    {
+     "children": [
+      "SWIS"
+     ],
+     "tag": "code"
+    },
+    ": Monroe’s field holds a ",
+    {
+     "children": [
+      "municipality name"
+     ],
+     "tag": "strong"
+    },
+    " (or null); the state’s field holds a ",
+    {
+     "children": [
+      "code"
+     ],
+     "tag": "strong"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "For the city, the pilot matched ",
+    {
+     "children": [
+      "countysbl"
+     ],
+     "tag": "code"
+    },
+    " = ",
+    {
+     "children": [
+      "261400"
+     ],
+     "tag": "code"
+    },
+    " + ",
+    {
+     "children": [
+      "PARCELID"
+     ],
+     "tag": "code"
+    },
+    " on ",
+    {
+     "children": [
+      "45/45"
+     ],
+     "tag": "strong"
+    },
+    " samples, with the same padded print key on every hit. Monroe has 64,655 rows with that prefix: 64,629 with ",
+    {
+     "children": [
+      "swis"
+     ],
+     "tag": "code"
+    },
+    " = ",
+    {
+     "children": [
+      "City of Rochester"
+     ],
+     "tag": "code"
+    },
+    ", and 26 with null ",
+    {
+     "children": [
+      "swis"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Unconfirmed."
+     ],
+     "tag": "strong"
+    },
+    " Reading ",
+    {
+     "children": [
+      "261400"
+     ],
+     "tag": "code"
+    },
+    " as a SWIS code is ",
+    {
+     "children": [
+      "inferred from the values"
+     ],
+     "tag": "strong"
+    },
+    ", not from a Monroe code table. Keep the six digits as a native prefix. Do not stamp them as an official SWIS code until a code table says so. The same caveat is in the NIA-81 crosswalk (PR #54, not required for this note). That crosswalk marks ",
+    {
+     "children": [
+      "261400"
+     ],
+     "tag": "code"
+    },
+    " + ",
+    {
+     "children": [
+      "City of Rochester"
+     ],
+     "tag": "code"
+    },
+    " as ",
+    {
+     "children": [
+      "inferred_from_prefix"
+     ],
+     "tag": "code"
+    },
+    " and leaves the 26 null-name rows unresolved."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "A null ",
+    {
+     "children": [
+      "swis"
+     ],
+     "tag": "code"
+    },
+    " on a ",
+    {
+     "children": [
+      "261400"
+     ],
+     "tag": "code"
+    },
+    " county row does not mint a second municipality and does not, by itself, mint ",
+    {
+     "children": [
+      "rochester"
+     ],
+     "tag": "code"
+    },
+    ". If the same 20 characters exist on the city layer, the city row is what mints the key and the county row joins to it. A ",
+    {
+     "children": [
+      "261400"
+     ],
+     "tag": "code"
+    },
+    " row with no city match stays ",
+    {
+     "children": [
+      "not_joined"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Slug"
+   },
+   "children": [
+    "Slug"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "rochester"
+     ],
+     "tag": "code"
+    },
+    " is the recommended jurisdiction slug for ",
+    {
+     "children": [
+      "city-published"
+     ],
+     "tag": "strong"
+    },
+    " parcel polygons. The spine slug is the publishing government of the grain. The City of Rochester publishes ",
+    {
+     "children": [
+      "PARCELID"
+     ],
+     "tag": "code"
+    },
+    ". Monroe County is the geography-v1 county name and the publisher of ",
+    {
+     "children": [
+      "countysbl"
+     ],
+     "tag": "code"
+    },
+    ", which stays a native key."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "This does ",
+    {
+     "children": [
+      "not"
+     ],
+     "tag": "strong"
+    },
+    " assign slugs to other Monroe municipalities. Their prefixes are a separate crosswalk, and the code meaning is still inferred. A single ",
+    {
+     "children": [
+      "monroe"
+     ],
+     "tag": "code"
+    },
+    " slug for every town would hide the city publisher. Whether those other municipalities wait, or use ",
+    {
+     "children": [
+      "monroe"
+     ],
+     "tag": "code"
+    },
+    " until a confirmed code table exists, is an open decision (Epic 2 decision 3). This note mints no ",
+    {
+     "children": [
+      "ia:us:ny:monroe:…"
+     ],
+     "tag": "code"
+    },
+    " key."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Native-keys-that-stay"
+   },
+   "children": [
+    "Native keys that stay"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "PARCELID"
+         ],
+         "tag": "code"
+        },
+        " / ",
+        {
+         "children": [
+          "SBL"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Retained as: 20-character digit text · Role: Source of ",
+      {
+       "children": [
+        "{local}"
+       ],
+       "tag": "code"
+      },
+      ". Also kept under its own field name."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "PRINTKEY"
+         ],
+         "tag": "code"
+        },
+        " / ",
+        {
+         "children": [
+          "printkey"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Retained as: text, city/county padded form · Role: Display only."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Statewide ",
+        {
+         "children": [
+          "PRINT_KEY"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Retained as: text, unpadded, when a row exists · Role: Not a join key. Monroe has no statewide row."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "countysbl"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Retained as: 26-character digit text · Role: County composite. Join key against ",
+      {
+       "children": [
+        "prefix + SBL20"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "swis"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Retained as: municipality name, as published · Role: Not compared to a code."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Six-digit ",
+        {
+         "children": [
+          "countysbl"
+         ],
+         "tag": "code"
+        },
+        " prefix"
+       ],
+       "tag": "strong"
+      },
+      " — Retained as: 6-character digit text · Role: Candidate code only. Meaning inferred."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "GISSBL"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Retained as: 10-character variant · Role: Not equal to ",
+      {
+       "children": [
+        "SBL20"
+       ],
+       "tag": "code"
+      },
+      ". Not the token."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "SBL_1"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Retained as: free text, sometimes several parcels · Role: Not the token. A later parse is a fuzzy join, not a mint."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Housing-inventory ",
+    {
+     "children": [
+      "SBL"
+     ],
+     "tag": "code"
+    },
+    " matched city ",
+    {
+     "children": [
+      "PARCELID"
+     ],
+     "tag": "code"
+    },
+    " on 14/15 pilot samples. Where that field is the same 20-character text, it is the same token, not a second one."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Duplicate-rows,-before-a-key-is-minted"
+   },
+   "children": [
+    "Duplicate rows, before a key is minted"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "City ",
+    {
+     "children": [
+      "TaxParcel2024"
+     ],
+     "tag": "code"
+    },
+    ": 64,828 rows, 64,825 distinct ",
+    {
+     "children": [
+      "PARCELID"
+     ],
+     "tag": "code"
+    },
+    ". Monroe: 267,962 rows, 267,904 distinct ",
+    {
+     "children": [
+      "countysbl"
+     ],
+     "tag": "code"
+    },
+    ". Fold the ",
+    {
+     "children": [
+      "key"
+     ],
+     "tag": "strong"
+    },
+    " before minting. Do not fold by picking a polygon."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Accept only a 20-character ASCII digit string. Leading zeros stay. A float, an int, a bool, null, an empty string, a scientific-notation string, or any other length or non-digit does not mint. The source row is ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      ". Do not repair it."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Group city rows by that exact string. One group mints one key, ",
+      {
+       "children": [
+        "ia:us:ny:rochester:parcel:{SBL20}"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Do not append a part suffix, an ",
+      {
+       "children": [
+        "OBJECTID"
+       ],
+       "tag": "code"
+      },
+      ", or a row index to ",
+      {
+       "children": [
+        "{local}"
+       ],
+       "tag": "code"
+      },
+      ". A second key would change when the extract’s order changed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "One row in the group: that polygon may be the outline."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "More than one row in the group: still one key. Do not choose a winning polygon. The outline is ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " until a later rule says the parts are one multipolygon or several units. The key exists either way."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "County duplicates follow the same rule on the 26-character composite. A county composite mints a ",
+      {
+       "children": [
+        "rochester"
+       ],
+       "tag": "code"
+      },
+      " key only by joining to a city ",
+      {
+       "children": [
+        "SBL20"
+       ],
+       "tag": "code"
+      },
+      " that already minted under the rules above."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "NIA-79 (",
+    {
+     "children": [
+      "industrial_atlas/ny_identifiers.py"
+     ],
+     "tag": "code"
+    },
+    " on PR #53) can report repeated ids and refuse a float. It does not choose a winner. This note is that policy. This change does not import that module. The duplicate-geometry question (condo or multi-part polygon versus two units) stays open."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Refusals-on-this-key"
+   },
+   "children": [
+    "Refusals on this key"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "1996 and 2012 float-stored ",
+        {
+         "children": [
+          "SBL"
+         ],
+         "tag": "code"
+        },
+        " / ",
+        {
+         "children": [
+          "SBL20"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Reason: ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " · What not to conclude: That the parcel had no earlier assessment"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NYS statewide parcel layer for Monroe"
+       ],
+       "tag": "strong"
+      },
+      " — Reason: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " · What not to conclude: That the county has no parcels"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Official SWIS code for prefix ",
+        {
+         "children": [
+          "261400"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Reason: ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " · What not to conclude: That the six digits are a confirmed code"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Permits, violations, licences"
+       ],
+       "tag": "strong"
+      },
+      " — Reason: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " · What not to conclude: That no activity exists"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "MPAC roll and assessed value"
+       ],
+       "tag": "strong"
+      },
+      " — Reason: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " (MPAC is Ontario-only; NY assessment is a different source) · What not to conclude: That the land is unassessed"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Owner-of-record fields (",
+    {
+     "children": [
+      "OWNERNME1"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "PSTLADDRESS"
+     ],
+     "tag": "code"
+    },
+    ", statewide ",
+    {
+     "children": [
+      "PRIMARY_OWNER"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "ADD_OWNER"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "MAIL_*"
+     ],
+     "tag": "code"
+    },
+    ") are out of this token. They are not read, not stored on the fixture, and not required for the key. Masking at presentation follows D-13. Which Rochester layer is the ingest source (the owner-bearing snapshot versus the live open-data layer that has no owner fields) is Epic 2 decision 7, and it does not change ",
+    {
+     "children": [
+      "{local}"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Snapshots ",
+    {
+     "children": [
+      "2014–2024"
+     ],
+     "tag": "strong"
+    },
+    " join on ",
+    {
+     "children": [
+      "PARCELID"
+     ],
+     "tag": "code"
+    },
+    " when the parcel was not split or merged. How far back G2 requires that join is Epic 2 decision 10. Years stored as floats do not join by id."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Fixture"
+   },
+   "children": [
+    "Fixture"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "fixtures/parcels/ia-us-ny-rochester-parcel-SYN-04799.json"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Synthetic. Not a pulled row. The local token is ",
+    {
+     "children": [
+      "04799000010010000000"
+     ],
+     "tag": "code"
+    },
+    " (leading zero kept). Padded display print key ",
+    {
+     "children": [
+      "047.99-1-1"
+     ],
+     "tag": "code"
+    },
+    ". Unpadded contrast ",
+    {
+     "children": [
+      "47.99-1-1"
+     ],
+     "tag": "code"
+    },
+    " is stored only to show why print keys are not compared. County composite ",
+    {
+     "children": [
+      "26140004799000010010000000"
+     ],
+     "tag": "code"
+    },
+    ". All three identifiers are JSON strings. The file follows the NIA-16 parcel-fixture shape (PR #13): ladder order, stamped claims, one refusal reason each. Those NIA-16 files are not copied onto this branch."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Still-open"
+   },
+   "children": [
+    "Still open"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Decision 2."
+       ],
+       "tag": "strong"
+      },
+      " Adopt ",
+      {
+       "children": [
+        "SBL20"
+       ],
+       "tag": "code"
+      },
+      " as ",
+      {
+       "children": [
+        "{local}"
+       ],
+       "tag": "code"
+      },
+      " (this recommendation), or keep a print-key local as in the Erie illustration."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Decision 3."
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "rochester"
+       ],
+       "tag": "code"
+      },
+      " for the city (this recommendation) and a later rule for other Monroe municipalities, or ",
+      {
+       "children": [
+        "monroe"
+       ],
+       "tag": "code"
+      },
+      " for all until a SWIS table is confirmed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Prefix meaning."
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "261400"
+       ],
+       "tag": "code"
+      },
+      " as SWIS is inferred, not confirmed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Duplicate geometry."
+       ],
+       "tag": "strong"
+      },
+      " One key per ",
+      {
+       "children": [
+        "SBL20"
+       ],
+       "tag": "code"
+      },
+      " is the rule above. Multipolygon versus several units is not decided."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "26 null-",
+        {
+         "children": [
+          "swis"
+         ],
+         "tag": "code"
+        },
+        " county rows"
+       ],
+       "tag": "strong"
+      },
+      " with prefix ",
+      {
+       "children": [
+        "261400"
+       ],
+       "tag": "code"
+      },
+      " stay unresolved unless a city ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " matches."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "DataROC terms were not read (Epic 2 decision 9). Nothing here admits a layer for publish."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "References"
+   },
+   "children": [
+    "References"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Spine grammar: parcel-identity-spine.md. Vocabulary: vocab/. Claim refusals: claim-refusal-contract.md."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Pilot evidence: Epic 2 study, Rochester section and joins matrix, read live 2026-09-30. Sample ratios are hits/tested, not population rates."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "NIA-79 normaliser, PR #53: ",
+      {
+       "children": [
+        "industrial_atlas/ny_identifiers.py"
+       ],
+       "tag": "code"
+      },
+      ", described in ",
+      {
+       "children": [
+        "docs/normalization/ny-sbl.md"
+       ],
+       "tag": "code"
+      },
+      " on that branch. Referenced, not duplicated, and not required to be merged."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "NIA-81 SWIS crosswalk, PR #54: ",
+      {
+       "children": [
+        "docs/data/README-monroe-swis-crosswalk.md"
+       ],
+       "tag": "code"
+      },
+      " on that branch. Same caveat on the prefix. Not required to be merged."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Prior art only: ",
+      {
+       "children": [
+        "niagara-atlas/"
+       ],
+       "tag": "code"
+      },
+      ", UK atlas (",
+      {
+       "children": [
+        "babbworks/atlas"
+       ],
+       "tag": "code"
+      },
+      "). No UK geography."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0088\ntype: working-paper\nsection: systems\nevidence_date: 2026-11-16\nseq: 21"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, architecture, framework",
+ "path": "Rochester-parcel-local-token-11-19",
+ "title": "Rochester parcel local token",
+ "url": "https://telegra.ph/Rochester-parcel-local-token-11-19",
+ "views": 0
+}

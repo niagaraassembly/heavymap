@@ -1,0 +1,1687 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, roster, jurisdictions, niagara-brant, western-new-york"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-09-25, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Companion files:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "07-jurisdiction-roster-v1.csv"
+     ],
+     "tag": "code"
+    },
+    " (32 jurisdiction rows) — the human summary and dig-priority queue; the CSV is the source of truth for tooling. ",
+    {
+     "children": [
+      "08-parcel-contextual-dataset-assessment.xlsx"
+     ],
+     "tag": "code"
+    },
+    " (new, §8) carries per-dataset granular assessment and sourcing alternatives. ",
+    {
+     "children": [
+      "Built:"
+     ],
+     "tag": "strong"
+    },
+    " 2026-09-23, updated same day with live-verified statewide-parcel-layer participation for six US counties. ",
+    {
+     "children": [
+      "Framework:"
+     ],
+     "tag": "strong"
+    },
+    " Spine (jurisdiction keys feed identity/joins). ",
+    {
+     "children": [
+      "Prior-art posture:"
+     ],
+     "tag": "strong"
+    },
+    " baseline-reference-only. Rows marked \"Baseline: <file>\" are copied from evidence already gathered in ",
+    {
+     "children": [
+      "niagara-atlas/"
+     ],
+     "tag": "code"
+    },
+    " recon docs and the MCS — re-verify before trusting after a few months, per those docs' own caution about unstable ArcGIS layer indices. Rows marked \"NEW 2026-09-23 dig\" are fresh for this ticket and are catalogue-existence confirmations (a live URL, a visible dataset list) rather than the field-level probes (record counts, live licence text) the Niagara-12 baseline passes did — that is the next lap of work, not this one."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "1.-Dig-queue-—-undiscovered-/-thin-CA-municipalities-(work-this-first)"
+   },
+   "children": [
+    "1. Dig queue — undiscovered / thin CA municipalities (work this first)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Ordered by what's most likely to move the needle for the least additional recon effort."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "~~resolved~~"
+       ],
+       "tag": "strong"
+      },
+      " — Jurisdiction: ~~Brantford~~ · Why it's here: ",
+      {
+       "children": [
+        "FIELD-VERIFIED 2026-09-23 (Linear NIA-18)."
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "data-brantford.opendata.arcgis.com"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "brantfordopendata-brantford.hub.arcgis.com"
+       ],
+       "tag": "code"
+      },
+      " are two Hub-site front-ends over the SAME ArcGIS Online org (",
+      {
+       "children": [
+        "services.arcgis.com/aji2lCmjXt0KpGzI"
+       ],
+       "tag": "code"
+      },
+      ") — not a canonical-vs-broken split. Live counts: Zoning Districts 1,906, Parcel Fabric 38,778, Building Footprints 36,862, Site Addresses 38,999. No owner-name field on any. · Next concrete step: Licence page is a JS-rendered Hub app — text not machine-readable via curl, still only \"refer to the portal\" confirmed, not the verbatim terms. Low-priority follow-up."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "~~resolved~~"
+       ],
+       "tag": "strong"
+      },
+      " — Jurisdiction: ~~County of Brant~~ · Why it's here: ",
+      {
+       "children": [
+        "FIELD-VERIFIED 2026-09-23 (Linear NIA-18)."
+       ],
+       "tag": "strong"
+      },
+      " Live counts via ",
+      {
+       "children": [
+        "services1.arcgis.com/ZG34JIhRAfwP1ItJ"
+       ],
+       "tag": "code"
+      },
+      ": Parcels 17,735, Zoning 6,520, Land Use Designation 19,231 (carries ",
+      {
+       "children": [
+        "Within_SAB"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "Within_BUA"
+       ],
+       "tag": "code"
+      },
+      " growth-boundary flags), Building Footprint 23,161, Civic Addressing 19,361. ",
+      {
+       "children": [
+        "Licence is CC0"
+       ],
+       "tag": "strong"
+      },
+      " — public domain, the most permissive of any source in this roster. No owner-name field on any. ",
+      {
+       "children": [
+        "sm.brant.ca"
+       ],
+       "tag": "code"
+      },
+      " MapServer is UNREACHABLE (connection failure, not 404) as of this check — not \"two doors,\" only one currently works. · Next concrete step: Re-check ",
+      {
+       "children": [
+        "sm.brant.ca"
+       ],
+       "tag": "code"
+      },
+      " periodically in case it comes back; not urgent since the Hub items cover the same ground."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "~~resolved~~"
+       ],
+       "tag": "strong"
+      },
+      " — Jurisdiction: ~~Norfolk County~~ · Why it's here: ",
+      {
+       "children": [
+        "FIELD-VERIFIED 2026-09-23 (Linear NIA-18)."
+       ],
+       "tag": "strong"
+      },
+      " Live counts via ",
+      {
+       "children": [
+        "services1.arcgis.com/mSGV2hCLXHNsfQqK"
+       ],
+       "tag": "code"
+      },
+      ": Parcels 33,831 (carries ",
+      {
+       "children": [
+        "ROLLNUM"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "ROLLNUMFUL"
+       ],
+       "tag": "code"
+      },
+      " assessment-roll fields — a ready join key), Civic Addresses 35,121. No owner-name field on either. · Next concrete step: Still no dataset isolating Port Dover specifically — see next row, this is expected and final, not a gap."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "P1"
+       ],
+       "tag": "strong"
+      },
+      " — Jurisdiction: ",
+      {
+       "children": [
+        "Port Dover"
+       ],
+       "tag": "strong"
+      },
+      " (place, edge) · Why it's here: Not a real jurisdiction — an unincorporated community inside Norfolk County. Zero dedicated data possible by construction. · Next concrete step: No portal dig needed. If Norfolk data is ingested, produce a Port Dover extract by spatial clip and document that it is derived, not sourced."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "~~P1~~ resolved"
+       ],
+       "tag": "strong"
+      },
+      " — Jurisdiction: ~~Wyoming / Chautauqua / Genesee counties, NY~~ · Why it's here: ",
+      {
+       "children": [
+        "RESOLVED 2026-09-23 by live query"
+       ],
+       "tag": "strong"
+      },
+      " (not search-derived): all three ARE in the statewide ",
+      {
+       "children": [
+        "NYS_Tax_Parcels_Public/FeatureServer/1"
+       ],
+       "tag": "code"
+      },
+      " layer — Wyoming 23,530 parcels (102 industrial), Chautauqua 88,396 (312 industrial), Genesee 28,266 (140 industrial). Genesee also has its own ArcGIS Hub — two independent sources. · Next concrete step: No further dig needed for parcel geometry. Still open: licence text on each county's ",
+      {
+       "children": [
+        "own"
+       ],
+       "tag": "em"
+      },
+      " viewer/Hub (secondary sources). The state layer's ",
+      {
+       "children": [
+        "PRIMARY_OWNER"
+       ],
+       "tag": "code"
+      },
+      " field is present but per ",
+      {
+       "children": [
+        "niagara-atlas/TECHNOLOGY-DECISIONS.md"
+       ],
+       "tag": "code"
+      },
+      " D-13, that's a retain-and-mask-at-presentation question, not a drop-at-ingest one."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**P1 — needs an alternative"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Jurisdiction: "
+       ],
+       "tag": "strong"
+      },
+      "Cattaraugus / Orleans counties, NY",
+      {
+       "children": [
+        " · Why it's here: "
+       ],
+       "tag": "strong"
+      },
+      "CONFIRMED 2026-09-23 by live query** that both are ABSENT from the statewide layer (count=0, same pattern as Niagara). Cattaraugus's own portal is fee-based ($0.03–0.06/parcel); Orleans has no bulk source found at all. · Next concrete step: See ",
+      {
+       "children": [
+        "08-parcel-contextual-dataset-assessment.xlsx"
+       ],
+       "tag": "code"
+      },
+      " (new, §8 below) for alternative-sourcing candidates being tracked for both."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "~~resolved~~"
+       ],
+       "tag": "strong"
+      },
+      " — Jurisdiction: ~~Monroe County, NY~~ · Why it's here: ",
+      {
+       "children": [
+        "RESOLVED, with a correction."
+       ],
+       "tag": "strong"
+      },
+      " An earlier pass this same day mistakenly identified ",
+      {
+       "children": [
+        "gishub-monroegis.hub.arcgis.com"
+       ],
+       "tag": "code"
+      },
+      " as Monroe County NY's portal — it is actually ",
+      {
+       "children": [
+        "Monroe County, OHIO"
+       ],
+       "tag": "strong"
+      },
+      " (publisher field confirms it; bbox sits near -81°,39.7°, southeastern Ohio), a decoy of the same class as the existing ",
+      {
+       "children": [
+        "eaton-county-michigan-decoy"
+       ],
+       "tag": "code"
+      },
+      " entry in ",
+      {
+       "children": [
+        "sources.json"
+       ],
+       "tag": "code"
+      },
+      ". The real portal is ",
+      {
+       "children": [
+        "maps.monroecounty.gov"
+       ],
+       "tag": "code"
+      },
+      ", a self-hosted ArcGIS Enterprise instance — ",
+      {
+       "children": [
+        "Parcels_Public"
+       ],
+       "tag": "code"
+      },
+      " feature service, ",
+      {
+       "children": [
+        "267,962 parcels, including a county-wide ",
+        {
+         "children": [
+          "totalassessedvalue"
+         ],
+         "tag": "code"
+        },
+        " field"
+       ],
+       "tag": "strong"
+      },
+      ", live-verified. · Next concrete step: No further dig needed for parcel geometry. Worth a fuller pass on the rest of that server's folders (Planning, DOT, Health, Stormwater, etc.) for other contextual layers."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "later"
+       ],
+       "tag": "strong"
+      },
+      " — Jurisdiction: ",
+      {
+       "children": [
+        "Halton Region"
+       ],
+       "tag": "strong"
+      },
+      " · Why it's here: No dedicated regional-government portal found; the only Halton-branded Hub belongs to Conservation Halton (a separate conservation-authority body, not the region). Out-of-core per the ticket's geography lock. · Next concrete step: Do not spend more dig budget here unless a specific source is needed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "~~resolved~~"
+       ],
+       "tag": "strong"
+      },
+      " — Jurisdiction: ~~Burlington~~ · Why it's here: ",
+      {
+       "children": [
+        "RESOLVED 2026-09-25 (Linear NIA-21)."
+       ],
+       "tag": "strong"
+      },
+      " Direct ",
+      {
+       "children": [
+        "curl"
+       ],
+       "tag": "code"
+      },
+      " against ",
+      {
+       "children": [
+        "opendata.burlington.ca"
+       ],
+       "tag": "code"
+      },
+      " root returns live HTTP 403 — matches the original 2026-08-22 finding, not the 2026-09-23 directory-listing one (likely a stale search-engine-indexed subpath, not the live root). The 403 is real and current. Still out-of-core per geography lock. · Next concrete step: No further action unless Burlington is pulled into core scope."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "2.-Geography-lock-—-coverage-check-against-the-ticket"
+   },
+   "children": [
+    "2. Geography lock — coverage check against the ticket"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "✅ Niagara Region + all ",
+      {
+       "children": [
+        "12"
+       ],
+       "tag": "strong"
+      },
+      " lower-tier municipalities named explicitly (§3)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "✅ Hamilton, Haldimand, Brantford, Brant, Norfolk (Port Dover) present, ",
+      {
+       "children": [
+        "in_v1"
+       ],
+       "tag": "code"
+      },
+      " flagged honestly — Port Dover is ",
+      {
+       "children": [
+        "edge"
+       ],
+       "tag": "code"
+      },
+      ", Brantford/Brant/Norfolk are ",
+      {
+       "children": [
+        "yes"
+       ],
+       "tag": "code"
+      },
+      " but thin."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "✅ Halton/Burlington present as ",
+      {
+       "children": [
+        "out"
+       ],
+       "tag": "code"
+      },
+      " (out-of-core/later) per the ticket's instruction, not omitted."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "✅ All ",
+      {
+       "children": [
+        "8"
+       ],
+       "tag": "strong"
+      },
+      " US v1 counties present (Chautauqua, Cattaraugus, Erie, Niagara, Wyoming, Genesee, Orleans, Monroe)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "✅ Notable US municipal portals as place rows under their county: Buffalo (Erie), Niagara Falls NY (Niagara), Rochester (Monroe)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "No row was silently skipped — every named geography in the ticket has a row, even where the honest answer is \"no portal found\" (Port Colborne, Thorold, Grimsby, Pelham, Wainfleet, West Lincoln, Orleans County)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "3.-CA-—-Niagara-12-lower-tier,-at-a-glance"
+   },
+   "children": [
+    "3. CA — Niagara-12 lower-tier, at a glance"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "1"
+       ],
+       "tag": "strong"
+      },
+      " — Municipality: Niagara Falls (ON) · Portal: ",
+      {
+       "children": [
+        "open.niagarafalls.ca"
+       ],
+       "tag": "code"
+      },
+      " · Catalog: arcgis · Priority: P0 — richest publisher in the study area (329 datasets)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2"
+       ],
+       "tag": "strong"
+      },
+      " — Municipality: St. Catharines · Portal: ",
+      {
+       "children": [
+        "niagaraopendata.ca"
+       ],
+       "tag": "code"
+      },
+      " org + own ArcGIS · Catalog: arcgis · Priority: P0 — parcel-complete (44k parcels, 498 Employment-zoned)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "3"
+       ],
+       "tag": "strong"
+      },
+      " — Municipality: Welland · Portal: ",
+      {
+       "children": [
+        "open.welland.ca"
+       ],
+       "tag": "code"
+      },
+      " · Catalog: arcgis · Priority: P0 — recommended engine test municipality"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "4"
+       ],
+       "tag": "strong"
+      },
+      " — Municipality: Fort Erie · Portal: ",
+      {
+       "children": [
+        "niagaraopendata.ca"
+       ],
+       "tag": "code"
+      },
+      " org · Catalog: ckan · Priority: P1 — nothing industrial"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "5"
+       ],
+       "tag": "strong"
+      },
+      " — Municipality: Lincoln · Portal: ",
+      {
+       "children": [
+        "niagaraopendata.ca"
+       ],
+       "tag": "code"
+      },
+      " org · Catalog: static · Priority: P1 — SHP-only, no REST"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "6"
+       ],
+       "tag": "strong"
+      },
+      " — Municipality: Niagara-on-the-Lake · Portal: ",
+      {
+       "children": [
+        "niagaraopendata.ca"
+       ],
+       "tag": "code"
+      },
+      " org · Catalog: ckan · Priority: P1 — 1 dataset, effectively absent"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "7"
+       ],
+       "tag": "strong"
+      },
+      " — Municipality: Port Colborne · Portal: none · Catalog: none · Priority: P1 — no presence"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "8"
+       ],
+       "tag": "strong"
+      },
+      " — Municipality: Thorold · Portal: none · Catalog: none · Priority: P1 — no presence"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "9"
+       ],
+       "tag": "strong"
+      },
+      " — Municipality: Grimsby · Portal: none · Catalog: none · Priority: P1 — no presence"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "10"
+       ],
+       "tag": "strong"
+      },
+      " — Municipality: Pelham · Portal: none · Catalog: none · Priority: P1 — no presence"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "11"
+       ],
+       "tag": "strong"
+      },
+      " — Municipality: Wainfleet · Portal: none · Catalog: none · Priority: later — smallest NEI count (72)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "12"
+       ],
+       "tag": "strong"
+      },
+      " — Municipality: West Lincoln · Portal: none · Catalog: none · Priority: later — no presence"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "All twelve are single-sourced-at-worst via Niagara Region's Consolidated NEI (98,065 business points, 2016–2022 editions) even where the municipality itself publishes nothing — see the CSV ",
+    {
+     "children": [
+      "notes"
+     ],
+     "tag": "code"
+    },
+    " column for each row's 2022 NEI business count."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "4.-CA-—-single/upper-tier-and-the-west-of-Niagara-corridor"
+   },
+   "children": [
+    "4. CA — single/upper-tier and the west-of-Niagara corridor"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Hamilton"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: ",
+      {
+       "children": [
+        "open.hamilton.ca"
+       ],
+       "tag": "code"
+      },
+      " · Confidence: High — 463 datasets, field-verified counts"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Haldimand County"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: ",
+      {
+       "children": [
+        "gis.haldimandcounty.ca"
+       ],
+       "tag": "code"
+      },
+      " · Confidence: High — 425 items, field-verified counts"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Brantford"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: ",
+      {
+       "children": [
+        "data-brantford.opendata.arcgis.com"
+       ],
+       "tag": "code"
+      },
+      " / ",
+      {
+       "children": [
+        "brantfordopendata-brantford.hub.arcgis.com"
+       ],
+       "tag": "code"
+      },
+      " (same org) · Confidence: ",
+      {
+       "children": [
+        "High"
+       ],
+       "tag": "strong"
+      },
+      " — 4 layers field-verified 2026-09-23, no owner PII"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Brant County"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: ",
+      {
+       "children": [
+        "catalogue-brant.hub.arcgis.com"
+       ],
+       "tag": "code"
+      },
+      " (Hub) — ",
+      {
+       "children": [
+        "sm.brant.ca"
+       ],
+       "tag": "code"
+      },
+      " MapServer currently unreachable · Confidence: ",
+      {
+       "children": [
+        "High"
+       ],
+       "tag": "strong"
+      },
+      " — 5 layers field-verified 2026-09-23, CC0 licence, no owner PII"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Norfolk County"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: ",
+      {
+       "children": [
+        "data-norfolk.opendata.arcgis.com"
+       ],
+       "tag": "code"
+      },
+      " · Confidence: ",
+      {
+       "children": [
+        "High"
+       ],
+       "tag": "strong"
+      },
+      " — 2 layers field-verified 2026-09-23, no owner PII"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Halton Region"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: none found (region itself) · Confidence: Confirmed-thin, out-of-core"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Burlington"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: ",
+      {
+       "children": [
+        "opendata.burlington.ca"
+       ],
+       "tag": "code"
+      },
+      " · Confidence: Unclear/possibly-changed, out-of-core"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "5.-US-—-eight-v1-counties-+-notable-places"
+   },
+   "children": [
+    "5. US — eight v1 counties + notable places"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Erie County"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: ",
+      {
+       "children": [
+        "www3.erie.gov/gis"
+       ],
+       "tag": "code"
+      },
+      " (ECIMS) · Catalog: static · Confidence: High — 370,424 parcels field-verified"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "↳ Buffalo (place)"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: ",
+      {
+       "children": [
+        "data.buffalony.gov"
+       ],
+       "tag": "code"
+      },
+      " · Catalog: socrata · Confidence: High — 51 own datasets, scanned"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Niagara County"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: ",
+      {
+       "children": [
+        "gis.niagaracounty.com"
+       ],
+       "tag": "code"
+      },
+      " · Catalog: arcgis · Confidence: High — 94,318 parcels field-verified"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "↳ Niagara Falls NY (place)"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: none dedicated · Catalog: none · Confidence: Confirmed-thin"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Monroe County"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: ",
+      {
+       "children": [
+        "maps.monroecounty.gov"
+       ],
+       "tag": "code"
+      },
+      " (self-hosted ArcGIS Enterprise — ",
+      {
+       "children": [
+        "confirmed absent from the statewide layer"
+       ],
+       "tag": "strong"
+      },
+      ", count=0) · Catalog: arcgis · Confidence: ",
+      {
+       "children": [
+        "High"
+       ],
+       "tag": "strong"
+      },
+      " — corrected 2026-09-23 after an initial mis-identification (see §1); 267,962 parcels w/ assessed value, live-verified"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "↳ Rochester (place)"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: ",
+      {
+       "children": [
+        "data.cityofrochester.gov"
+       ],
+       "tag": "code"
+      },
+      " · Catalog: socrata · Confidence: ",
+      {
+       "children": [
+        "High — the best-evidenced jurisdiction in this entire roster"
+       ],
+       "tag": "strong"
+      },
+      " (parcel + assessed value + 12 historical snapshots 1996–2024)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Genesee County"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: statewide layer (28,266 parcels, 140 industrial) ",
+      {
+       "children": [
+        "+"
+       ],
+       "tag": "strong"
+      },
+      " own Hub ",
+      {
+       "children": [
+        "gis-data-cogeneseeny.hub.arcgis.com"
+       ],
+       "tag": "code"
+      },
+      " · Catalog: arcgis · Confidence: ",
+      {
+       "children": [
+        "High"
+       ],
+       "tag": "strong"
+      },
+      " — verified live 2026-09-23, two independent sources"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Wyoming County"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: statewide layer (23,530 parcels, 102 industrial) · Catalog: arcgis · Confidence: ",
+      {
+       "children": [
+        "High"
+       ],
+       "tag": "strong"
+      },
+      " — verified live 2026-09-23, resolves prior open question"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Chautauqua County"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: statewide layer (88,396 parcels, 312 industrial) — supersedes the county's own viewer as primary route · Catalog: arcgis · Confidence: ",
+      {
+       "children": [
+        "High"
+       ],
+       "tag": "strong"
+      },
+      " — verified live 2026-09-23"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Cattaraugus County"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: ",
+      {
+       "children": [
+        "maps2.cattco.org/parcel"
+       ],
+       "tag": "code"
+      },
+      " — ",
+      {
+       "children": [
+        "confirmed absent from statewide layer"
+       ],
+       "tag": "strong"
+      },
+      " (count=0) · Catalog: arcgis · Confidence: Medium — ",
+      {
+       "children": [
+        "fee-based"
+       ],
+       "tag": "strong"
+      },
+      " ($0.03–0.06/parcel); no free bulk alternative confirmed yet"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Orleans County"
+       ],
+       "tag": "strong"
+      },
+      " — Portal: none confirmed — ",
+      {
+       "children": [
+        "confirmed absent from statewide layer"
+       ],
+       "tag": "strong"
+      },
+      " (count=0) · Catalog: unknown · Confidence: Low — thinnest of the eight, no bulk parcel source found at all"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "6.-What-this-does-not-do-(out-of-scope,-per-the-ticket)"
+   },
+   "children": [
+    "6. What this does ",
+    {
+     "children": [
+      "not"
+     ],
+     "tag": "em"
+    },
+    " do (out of scope, per the ticket)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "No dataset fetching or normalization — this is a jurisdiction/portal-existence roster, not an ingestion pass."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "UK geography: not touched."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "No claim of completeness for licence text — every \"NEW 2026-09-23 dig\" row explicitly flags licence as unverified rather than assumed open, except where a live query (Wyoming/Chautauqua/Genesee/Cattaraugus/Orleans/Monroe parcel counts, §1/§5) upgraded it to verified."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "7.-MCS-writeback-(done-2026-09-23,-second-pass)"
+   },
+   "children": [
+    "7. MCS writeback (done 2026-09-23, second pass)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The four gap rows this ticket touches — ",
+    {
+     "children": [
+      "niagara_municipal_boundaries"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "brantford_brant_port_dover_gap"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "us_v1_counties_gap"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "burlington_halton_gap"
+     ],
+     "tag": "code"
+    },
+    " — now have this roster's findings appended to their ",
+    {
+     "children": [
+      "notes"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "open_questions"
+     ],
+     "tag": "code"
+    },
+    " columns in ",
+    {
+     "children": [
+      "02-dataset-inventory-v4.xlsx"
+     ],
+     "tag": "code"
+    },
+    ", plus ",
+    {
+     "children": [
+      "NIA-10"
+     ],
+     "tag": "code"
+    },
+    " added to ",
+    {
+     "children": [
+      "linear_ids"
+     ],
+     "tag": "code"
+    },
+    ". (The lock file that initially held this file back turned out to be stale — no live LibreOffice session had it open — so the write went ahead; existing cell values were appended to, never overwritten, and sheet structure/frozen panes were verified intact after saving.) That workbook remains the ",
+    {
+     "children": [
+      "master record of datasets actually admitted into the project's working data collection"
+     ],
+     "tag": "strong"
+    },
+    " — this roster and the new assessment file (§8) are pre-admission triage, not a substitute for it."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "8.-New:-per-dataset-assessment-spreadsheet-(08-parcel-contextual-dataset-assessment.xlsx)"
+   },
+   "children": [
+    "8. New: per-dataset assessment spreadsheet (",
+    {
+     "children": [
+      "08-parcel-contextual-dataset-assessment.xlsx"
+     ],
+     "tag": "code"
+    },
+    ")"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Why a second file."
+     ],
+     "tag": "strong"
+    },
+    " The roster above answers \"does a portal exist for this jurisdiction?\" It doesn't have room for the next question this ticket now also covers: for a ",
+    {
+     "children": [
+      "specific"
+     ],
+     "tag": "em"
+    },
+    " dataset (a parcel layer, a zoning layer, an assessment-value table), what's actually usable, what are its quirks/gotchas, and — when the local government doesn't publish it or charges for it — what's the alternative? That's a different grain (dataset, not jurisdiction) and a different question (assessable/usable, not just present), so it gets its own file rather than more columns bolted onto the roster."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Relationship to the MCS."
+     ],
+     "tag": "strong"
+    },
+    " Nothing in this new file is \"admitted\" — it's a working scratchpad for evaluating candidates. A row only gets promoted into ",
+    {
+     "children": [
+      "02-dataset-inventory-v4.xlsx"
+     ],
+     "tag": "code"
+    },
+    " once someone (the owner/CoS or an agent with explicit sign-off) decides it should actually be ingested, per the MCS's own \"do not mass-insert without a the owner/CoS pass\" rule."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Sheets:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Dataset Assessment"
+       ],
+       "tag": "strong"
+      },
+      " — one row per specific dataset/access-point (not per jurisdiction), covering parcel, zoning, land-use, building-footprint, assessed-value, business-registry and environmental-constraint layers, with columns for access method, cost, licence, and a free-text quirks/gotchas field (e.g. \"layer /0 is boundaries not parcels\", \"publishes every dataset twice, ingest the WGS 1984 variant only\", \"fee-based, $0.03–0.06/parcel\")."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Alternatives & Workarounds"
+       ],
+       "tag": "strong"
+      },
+      " — candidate substitute sources for jurisdictions where the primary source is absent, thin, or fee-gated (Cattaraugus, Orleans, and the standing Ontario-wide MPAC/Teranet paywall), including third-party commercial parcel APIs, OSM as a last-resort footprint/landuse proxy, and direct FOIL/bulk-licence requests as an alternative to per-parcel API pricing. None of these are evaluated/approved yet — the sheet exists to track candidates, not endorse them."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "This ticket (NIA-10) stays open to continue that assessment work rather than being closed on the roster alone — see the Linear comment for the current status note."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "8b.-09-per-jurisdiction-dataset-catalog.xlsx-—-now-exhaustive,-and-a-superset-of-the-MCS"
+   },
+   "children": [
+    "8b. ",
+    {
+     "children": [
+      "09-per-jurisdiction-dataset-catalog.xlsx"
+     ],
+     "tag": "code"
+    },
+    " — now exhaustive, and a superset of the MCS"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Evolved twice since first created. It now has four sheets:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Counties"
+       ],
+       "tag": "strong"
+      },
+      " (911 rows) and ",
+      {
+       "children": [
+        "Municipalities"
+       ],
+       "tag": "strong"
+      },
+      " (995 rows) — every discoverable dataset per jurisdiction, tagged ",
+      {
+       "children": [
+        "review_status"
+       ],
+       "tag": "code"
+      },
+      ": ",
+      {
+       "children": [
+        "admitted_in_mcs"
+       ],
+       "tag": "code"
+      },
+      " (58 rows — has a matching row in ",
+      {
+       "children": [
+        "02-dataset-inventory-v4.xlsx"
+       ],
+       "tag": "code"
+      },
+      "), ",
+      {
+       "children": [
+        "curated_relevant"
+       ],
+       "tag": "code"
+      },
+      " (78 rows — hand-picked as relevant, not yet in the MCS), or ",
+      {
+       "children": [
+        "discovered_unreviewed"
+       ],
+       "tag": "code"
+      },
+      " (1,770 rows — pulled straight from each portal's own catalog API with no filtering at all)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Cross-Cutting Regional"
+       ],
+       "tag": "strong"
+      },
+      " (36 rows) — provincial/state/federal/cross-border datasets that don't belong to one jurisdiction (OSM, NPCA, Ontario PSEZ/Escarpment/Greenbelt, ECCC NPRI, NYS DEC/DOT, EPA TRI, etc.), plus explicitly-flagged ",
+      {
+       "children": [
+        "not-yet-probed"
+       ],
+       "tag": "strong"
+      },
+      " sources from the recon docs' own gap lists (Grand River CA, Hamilton CA, Transport Canada, CBSA, bridge authorities, Niagara District Airport, StatCan, Brock University, Indigenous governments, NYS Open Data, USDA NRCS, USGS) — so that thread of research stays visible rather than getting lost."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "README"
+       ],
+       "tag": "strong"
+      },
+      " — explains the review_status convention and lists what's still not exhaustively enumerated (Erie County, Cattaraugus, Chautauqua, Wyoming, Orleans, Burlington, Halton — each with a reason)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The MCS is now confirmed a subset of this file"
+     ],
+     "tag": "strong"
+    },
+    ": every one of its 82 rows was programmatically backfilled and matched (58 to a single jurisdiction, 24 to Cross-Cutting Regional) — verified the count sums to exactly 82, nothing dropped."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "9.-Resume-notes-for-the-next-agent-/-quota-window"
+   },
+   "children": [
+    "9. Resume notes for the next agent / quota window"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Update ",
+      {
+       "children": [
+        "dig_status"
+       ],
+       "tag": "code"
+      },
+      " per row as you go (",
+      {
+       "children": [
+        "not_started"
+       ],
+       "tag": "code"
+      },
+      " → ",
+      {
+       "children": [
+        "in_progress"
+       ],
+       "tag": "code"
+      },
+      " → ",
+      {
+       "children": [
+        "pass1_done"
+       ],
+       "tag": "code"
+      },
+      " → ",
+      {
+       "children": [
+        "blocked"
+       ],
+       "tag": "code"
+      },
+      "). Only ",
+      {
+       "children": [
+        "port_dover"
+       ],
+       "tag": "code"
+      },
+      " is still ",
+      {
+       "children": [
+        "not_started"
+       ],
+       "tag": "code"
+      },
+      ", and it may stay that way permanently (see §1)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "~~The three P0 Ontario dig items (Brantford, Brant, Norfolk)~~ — ",
+      {
+       "children": [
+        "field-verified 2026-09-23, Linear NIA-18."
+       ],
+       "tag": "strong"
+      },
+      " The equivalent US work is done for Wyoming/Chautauqua/Genesee (§1); Cattaraugus and Orleans need an alternative-sourcing decision instead (§8), not another portal search — tracked in Linear NIA-20."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Burlington's status conflict (§1, §4) is worth a two-minute ",
+      {
+       "children": [
+        "curl"
+       ],
+       "tag": "code"
+      },
+      " before anyone treats either the old 403 or this session's finding as current."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Continue logging alternative-sourcing candidates and per-dataset quirks into ",
+      {
+       "children": [
+        "08-parcel-contextual-dataset-assessment.xlsx"
+       ],
+       "tag": "code"
+      },
+      " as they're found; only promote a row into the master MCS once it's actually been decided to ingest that dataset."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0080\ntype: working-paper\nsection: expansion\nrun: CR-001\nevidence_date: 2026-09-25\nseq: 40"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, roster, jurisdictions, niagara-brant, western-new-york",
+ "path": "Jurisdiction-roster-v1--CA-municipalities--US-countiesplaces-11-19",
+ "title": "Jurisdiction roster v1 — CA municipalities + US counties/places",
+ "url": "https://telegra.ph/Jurisdiction-roster-v1--CA-municipalities--US-countiesplaces-11-19",
+ "views": 0
+}

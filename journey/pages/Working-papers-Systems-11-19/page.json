@@ -15,6 +15,177 @@
      "children": [
       {
        "attrs": {
+        "href": "/Transmission-resilience-2026-11-17-11-19"
+       },
+       "children": [
+        "Transmission resilience (2026-11-17)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 6 min · working-paper, framework, performance, access",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-11-18, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Rochester-parcel-local-token-11-19"
+       },
+       "children": [
+        "Rochester parcel local token"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 7 min · working-paper, architecture, framework",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Publish-visibility-11-19"
+       },
+       "children": [
+        "Publish visibility"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 2 min · working-paper, architecture, framework",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-18, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Parcel-Identity-Spine-11-19"
+       },
+       "children": [
+        "Parcel Identity Spine"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 9 min · working-paper, architecture, framework",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Parcel-Context-Display-Protocol-PCDP-11-19"
+       },
+       "children": [
+        "Parcel Context Display Protocol (PCDP)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 8 min · working-paper, architecture, framework",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Industrial-Atlas-ID-registry-Hamilton-first-11-19"
+       },
+       "children": [
+        "Industrial Atlas ID registry (Hamilton first)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 5 min · working-paper, architecture, framework",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Hamilton-parcel-dossier-11-19"
+       },
+       "children": [
+        "Hamilton parcel dossier"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 8 min · working-paper, architecture, framework",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Data-gaps-ledger-11-19"
+       },
+       "children": [
+        "Data-gaps ledger"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 8 min · working-paper, architecture, framework",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Claim--Refusal-Contract-11-19"
+       },
+       "children": [
+        "Claim & Refusal Contract"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 9 min · working-paper, architecture, framework",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
         "href": "/Public-data-discovery-and-correlation-method-v01-2026-11-18-11-19"
        },
        "children": [

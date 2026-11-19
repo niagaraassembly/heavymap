@@ -1,0 +1,1165 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, architecture, framework"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Status:"
+     ],
+     "tag": "strong"
+    },
+    " architecture sketch, 2026-09-23. Linear ",
+    {
+     "children": [
+      "NA-11"
+     ],
+     "tag": "strong"
+    },
+    ". Docs only."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Purpose"
+   },
+   "children": [
+    "Purpose"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The spine is how a piece of land is known. It produces the unit that the Context Band Ladder fills, that PCDP presents, and that the Claim & Refusal Contract is allowed to speak about."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "A spine record has four jobs:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Give the unit a stable HeavyMap key that does not change when a publisher renames a field."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Say what geometry grain that key is (parcel polygon, footprint, or address point)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Record native keys beside it when a publisher has them, and record the join that attached each one."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Name the jurisdiction precisely enough that a coverage refusal is checkable."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "The spine does not interpret use, constraint, activity, or a reading. Those are later bands."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Non-goals"
+   },
+   "children": [
+    "Non-goals"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Fetching municipal, provincial, state, or county layers into git (pulled rows stay in local data (not published))."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Treating MPAC, a New York owner name, or an address string as the HeavyMap key. Hamilton's roll number is a matching aid, never ",
+      {
+       "children": [
+        "{local}"
+       ],
+       "tag": "code"
+      },
+      " (ADR 0003)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Inventing one identifier that works on both sides of the border."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Editing MCS rows, drawing Chrome, or publishing a site."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Adding UK parcels or UK ports."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Hamilton now has a tested ID registry (",
+    {
+     "children": [
+      "industrial_atlas/ids/"
+     ],
+     "tag": "code"
+    },
+    ", first geography). That code is the unit index for Hamilton. It is not a public database and it does not publish. Other jurisdictions are not minted here."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "How-it-relates-to-the-other-three"
+   },
+   "children": [
+    "How it relates to the other three"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Context Band Ladder."
+       ],
+       "tag": "strong"
+      },
+      " The identity band is the first rung. Later rungs attach only to a spine key. They do not create a second identity."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "PCDP."
+       ],
+       "tag": "strong"
+      },
+      " Minimum presentation is possible once a spine key, a grain, a jurisdiction, and an outline or point exist. Without those, there is nothing to show."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Claim & Refusal Contract."
+       ],
+       "tag": "strong"
+      },
+      " A native key that did not join is a refusal (",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "not_licensed"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      "), stamped on the identity band. It is not a missing parcel."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "The-HeavyMap-key"
+   },
+   "children": [
+    "The HeavyMap key"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Every unit in v1 gets one key of the form:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "ia:{country}:{region}:{jurisdiction}:{grain}:{local}"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "country"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: ",
+      {
+       "children": [
+        "ca"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "us"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "region"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: ",
+      {
+       "children": [
+        "on"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "ny"
+       ],
+       "tag": "code"
+      },
+      " for v1"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "jurisdiction"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: The publishing government the grain comes from, in a stable slug. For a Niagara Region lower-tier municipality, the slug is the lower tier (for example ",
+      {
+       "children": [
+        "welland"
+       ],
+       "tag": "code"
+      },
+      "), not the word Niagara."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "grain"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: ",
+      {
+       "children": [
+        "parcel"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "footprint"
+       ],
+       "tag": "code"
+      },
+      ", or ",
+      {
+       "children": [
+        "address"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "local"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: A unique token inside that jurisdiction and grain. Synthetic examples use a ",
+      {
+       "children": [
+        "SYN-"
+       ],
+       "tag": "code"
+      },
+      " prefix. Hamilton, which publishes no parcel key, mints an opaque Crockford ULID; see ADR 0003. Rochester still follows the SBL20 recommendation in rochester-parcel-local-token.md."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "The key is HeavyMap’s. Publishers keep their own keys in ",
+    {
+     "children": [
+      "native_keys"
+     ],
+     "tag": "code"
+    },
+    ". A native key is never silently promoted to the spine key, because municipal parcel identifiers, assessment roll numbers, New York SWIS/SBL print keys, ",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    ", and street addresses fail in different ways and do not survive a border crossing."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Hamilton-(first-geography)"
+   },
+   "children": [
+    "Hamilton (first geography)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "City of Hamilton parcels have no published stable id (",
+    {
+     "children": [
+      "OBJECTID"
+     ],
+     "tag": "code"
+    },
+    " only; Q-002). The registry mints one ",
+    {
+     "children": [
+      "ia:ca:on:hamilton:parcel:{ULID}"
+     ],
+     "tag": "code"
+    },
+    " per distinct City geometry, collapses stacked duplicates as aliases, shifts NPCA geometry by the Q-004 translation before attaching ARN, and reconciles a re-pull by fingerprint then IoU ≥ 0.9. IDs are never reused. Operator notes: heavymap-id-registry.md. Evidence: SPINE-BASE-PULL-2026-10-17.md."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "A joining concept is a second handle for the job a native field does. The publisher’s field name stays on the claim. The closed catalog, the relation set, and ",
+    {
+     "children": [
+      "authority_scale"
+     ],
+     "tag": "code"
+    },
+    " are in ADR 0002 and vocab/joining-concepts.vocab.json. Spine grain stays ",
+    {
+     "children": [
+      "parcel"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "footprint"
+     ],
+     "tag": "code"
+    },
+    ", or ",
+    {
+     "children": [
+      "address"
+     ],
+     "tag": "code"
+    },
+    ". Claim grain is a wider set and adds ",
+    {
+     "children": [
+      "register_unit"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "zone_polygon"
+     ],
+     "tag": "code"
+    },
+    ", and ",
+    {
+     "children": [
+      "jurisdiction_aggregate"
+     ],
+     "tag": "code"
+    },
+    ". The ",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    " class is ",
+    {
+     "children": [
+      "premises_register_key"
+     ],
+     "tag": "code"
+    },
+    "; ",
+    {
+     "children": [
+      "establishment_register_key"
+     ],
+     "tag": "code"
+    },
+    " is an alias of that id. Two fields that share a concept still need their own join before either table can be linked."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Grain"
+   },
+   "children": [
+    "Grain"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Grain is part of identity, because area and containment mean different things at each tier."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "parcel"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — When it is the unit: A publisher in v1 releases a parcel polygon HeavyMap is licensed to use, and the polygon is the thing the reader would point at."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "footprint"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — When it is the unit: Building outline is the best licensed geometry. There is no joined parcel polygon."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "address"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — When it is the unit: Only a point or a normalized address is licensed and joined."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "A municipality that publishes no parcel fabric still has units. Their grain is ",
+    {
+     "children": [
+      "footprint"
+     ],
+     "tag": "code"
+    },
+    " or ",
+    {
+     "children": [
+      "address"
+     ],
+     "tag": "code"
+    },
+    ", and the identity band says the parcel polygon is ",
+    {
+     "children": [
+      "not_in_coverage"
+     ],
+     "tag": "code"
+    },
+    " or ",
+    {
+     "children": [
+      "not_licensed"
+     ],
+     "tag": "code"
+    },
+    ". The unit is not dropped, and it is not drawn as a parcel."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "One physical site may be knowable at more than one grain. v1 does not require those grains to be fused into a single polygon. If two keys refer to the same ground, each keeps its own key, and any link between them is a join with a method and a grade. An unfused pair is ",
+    {
+     "children": [
+      "not_joined"
+     ],
+     "tag": "code"
+    },
+    ", which is a true description of the index."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Canada-—-join-and-key-problems"
+   },
+   "children": [
+    "Canada — join and key problems"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "These are conceptual. Counts and field names below are prior-art observations in ",
+    {
+     "children": [
+      "first-attempts/niagara-atlas/"
+     ],
+     "tag": "code"
+    },
+    ", not a claim that Beta has loaded the layers."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "No single public provincial parcel key."
+     ],
+     "tag": "strong"
+    },
+    " Ontario’s assessment roll (MPAC) is the usual cross-municipality parcel identifier, and it is fee-based. For v1 that native key was ",
+    {
+     "children": [
+      "not_licensed"
+     ],
+     "tag": "code"
+    },
+    "; HARD-RULES 4 (amended 2026-10-17) lifts that, so the roll number may be carried as a native key, and shown publicly, where an MPAC-derived source (for example NPCA assessment parcels) provides it. The Welland illustrations now refuse the roll as ",
+    {
+     "children": [
+      "not_joined"
+     ],
+     "tag": "code"
+    },
+    " (no accepted join yet) and assessed value as ",
+    {
+     "children": [
+      "not_in_coverage"
+     ],
+     "tag": "code"
+    },
+    " (no source read so far carries a value field). Neither refusal is about licence, and neither says whether the land has an assessment."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Municipal fabrics are uneven inside Niagara-12."
+     ],
+     "tag": "strong"
+    },
+    " Prior reconnaissance found public parcel polygons for some lower-tier cities (St. Catharines, Niagara Falls) and none for others (Welland’s open data had no parcel fabric; Hamilton’s open catalogue had no parcel layer). Haldimand, Norfolk, Brantford, and Brant are inside geography v1 and are not assumed to match either pattern. Until a layer is joined, those jurisdictions are ",
+    {
+     "children": [
+      "not_joined"
+     ],
+     "tag": "code"
+    },
+    " at parcel grain, not “no industry” and not “no parcels in the world.”"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The Region is both a government and a publisher."
+     ],
+     "tag": "strong"
+    },
+    " Niagara Region is the upper-tier municipality of twelve lower tiers, and it publishes regional layers such as the Niagara Employment Inventory. A spine key names the lower tier the geometry sits in. “Niagara” alone is not a jurisdiction slug. The glossary rule in ",
+    {
+     "children": [
+      "first-attempts/niagara-atlas/GLOSSARY.md"
+     ],
+     "tag": "code"
+    },
+    " is the pattern: Niagara Region, the peninsula, and the study area are different claims."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Activity joins are not parcel joins."
+     ],
+     "tag": "strong"
+    },
+    " Where the NEI is the activity source, the stable native key on that register is ",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    ". Address text drifts across editions; an identifier join is a stronger method than a normalized address. Hamilton publishes no comparable business inventory. That gap is ",
+    {
+     "children": [
+      "not_in_coverage"
+     ],
+     "tag": "code"
+    },
+    " for the activity band. It does not mean the spine has no Hamilton units, and it does not mean employment is zero."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Upper tier, single tier, county."
+     ],
+     "tag": "strong"
+    },
+    " Hamilton, Haldimand, and Norfolk are single-tier. Brantford and Brant County are distinct. A join must name which of those governments published the geometry. Point-in-polygon against the wrong boundary is a bad join, not a small spelling issue."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "United-States-—-join-and-key-problems"
+   },
+   "children": [
+    "United States — join and key problems"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "County parcel keys, not an ARN."
+     ],
+     "tag": "strong"
+    },
+    " New York tax parcels are keyed by county geography plus a section-block-lot (SBL) print key, with SWIS identifying the municipality. That pair does not match an Ontario roll number. The HeavyMap key may be minted from a county parcel id; the SBL stays in ",
+    {
+     "children": [
+      "native_keys"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Rochester local token (recommendation, not locked)."
+     ],
+     "tag": "strong"
+    },
+    " How a City of Rochester parcel gets its permanent local token is specified in rochester-parcel-local-token.md (Linear ",
+    {
+     "children": [
+      "NA-80"
+     ],
+     "tag": "strong"
+    },
+    "). The recommendation is the 20-character text SBL, not the print key. The Erie illustration below still uses a print-key-shaped local. It is not rewritten by that note. The SWIS reading of Monroe’s six-digit ",
+    {
+     "children": [
+      "countysbl"
+     ],
+     "tag": "code"
+    },
+    " prefix remains unconfirmed."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The state parcel layer is not the map of v1."
+     ],
+     "tag": "strong"
+    },
+    " Prior reconnaissance of NYS Tax Parcels Public found Erie County present and Niagara County, New York absent from that service, with Niagara County publishing its own parcel layer. The other v1 counties — Chautauqua, Cattaraugus, Wyoming, Genesee, Orleans, Monroe — each need their own coverage stamp: state layer, county layer, or neither. A county missing from the state service still has land. The identity band says which layer was not in coverage or not joined."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Property class is not a parcel id and not zoning."
+     ],
+     "tag": "strong"
+    },
+    " The 700-series industrial class is an assessment classification. It may later fill ",
+    {
+     "children": [
+      "land_use"
+     ],
+     "tag": "code"
+    },
+    ", with the stamp saying it is property class. It does not identify the parcel, and it does not stand in for a zoning by-law."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "No shared code across the border."
+     ],
+     "tag": "strong"
+    },
+    " SWIS is New York’s. Ontario municipalities do not use it. Cross-border grouping, when it is warranted, is geometric, and the method is part of the stamp. v1 does not require a cross-border link to show either parcel."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Units and owner fields."
+     ],
+     "tag": "strong"
+    },
+    " New York area fields are often in square feet and acres. Canadian sources often use square metres. The spine stores the published unit on the native attribute. Conversion is a derived reading, not a quiet rewrite of the source. Public owner-name fields are out of presentation scope for this sketch; the spine does not need an owner to be complete."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Geography-v1-is-the-coverage-fence"
+   },
+   "children": [
+    "Geography v1 is the coverage fence"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The jurisdiction list is fixed in README.md. A spine key may be minted only inside that fence. A well-known industrial site outside it can be named in a note elsewhere; it is not given a v1 key. Halton and Burlington stay out of core unless a later lock moves them."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Inside the fence, missing data is still a key plus a refusal. Outside the fence, there is no key."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "The-two-synthetic-units"
+   },
+   "children": [
+    "The two synthetic units"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Full presentations are in PCDP.md. The table is the spine at the ",
+    {
+     "children": [
+      "maximum"
+     ],
+     "tag": "strong"
+    },
+    " illustration, after the joins that PCDP’s maximum walkthrough accepts. PCDP’s minimum is the earlier moment: key, grain, jurisdiction, and refusals, before those joins."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Spine key"
+       ],
+       "tag": "strong"
+      },
+      " — Canadian illustration: ",
+      {
+       "children": [
+        "ia:ca:on:welland:footprint:SYN-0142"
+       ],
+       "tag": "code"
+      },
+      " · American illustration: ",
+      {
+       "children": [
+        "ia:us:ny:erie:parcel:SYN-999.00-1-1.1"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Why this grain"
+       ],
+       "tag": "strong"
+      },
+      " — Canadian illustration: Illustration of a lower-tier city whose open data, in prior art, had no parcel fabric. Grain is the footprint. · American illustration: Illustration of a v1 county where a public tax-parcel polygon is the pattern. Grain is the parcel."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Jurisdiction sentence"
+       ],
+       "tag": "strong"
+      },
+      " — Canadian illustration: City of Welland, lower-tier municipality of Niagara Region, Ontario · American illustration: Erie County, New York. The municipality slug stays ",
+      {
+       "children": [
+        "erie"
+       ],
+       "tag": "code"
+      },
+      " until a SWIS join names a city or town."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Native keys"
+       ],
+       "tag": "strong"
+      },
+      " — Canadian illustration: Parcel PIN: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " (no fabric in the illustration). ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      ": ",
+      {
+       "children": [
+        "SYN-8130"
+       ],
+       "tag": "code"
+      },
+      " joined by identifier. · American illustration: SBL: ",
+      {
+       "children": [
+        "SYN-999.00-1-1.1"
+       ],
+       "tag": "code"
+      },
+      ". SWIS: ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What the key refuses"
+       ],
+       "tag": "strong"
+      },
+      " — Canadian illustration: MPAC roll number: ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      "; assessed value: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      ". · American illustration: Other v1 counties stay outside this key. Wyoming, Niagara County NY, and Monroe are unstated."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "The Welland footprint and the Erie parcel are both complete spine records. Completeness means the key, the grain, the jurisdiction, and the refusals are explicit."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Prior-art"
+   },
+   "children": [
+    "Prior art"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Patterns, not the product root:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "first-attempts/niagara-atlas/INTEGRATION.md"
+       ],
+       "tag": "code"
+      },
+      " — one cross-border subject, separate ingestion, no shared municipal identifier, original attributes kept beside the normalized reading."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "first-attempts/niagara-atlas/GLOSSARY.md"
+       ],
+       "tag": "code"
+      },
+      " — Niagara Region versus the peninsula versus the study area."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "first-attempts/niagara-atlas/us/DATA-SOURCES.md"
+       ],
+       "tag": "code"
+      },
+      " — New York public parcel coverage is county-uneven; Ontario assessment is not the same public object."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "first-attempts/niagara-atlas/DOSSIER-TECHNICAL-REPORT.md"
+       ],
+       "tag": "code"
+      },
+      " — analysis units already existed at parcel, footprint, and address tiers, and a missing fabric was reported rather than dropped."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Beta does not inherit that folder’s study-area boundary. Geography v1 is the list in the architecture index, which is wider than the old Hamilton-plus-Niagara-Region study area and includes the named New York counties."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0086\ntype: working-paper\nsection: systems\nevidence_date: 2026-11-16\nseq: 19"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, architecture, framework",
+ "path": "Parcel-Identity-Spine-11-19",
+ "title": "Parcel Identity Spine",
+ "url": "https://telegra.ph/Parcel-Identity-Spine-11-19",
+ "views": 0
+}

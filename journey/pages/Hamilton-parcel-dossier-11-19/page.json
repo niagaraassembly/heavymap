@@ -1,0 +1,1526 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, architecture, framework"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Status:"
+     ],
+     "tag": "strong"
+    },
+    " code, 2026-10-17. Linear ",
+    {
+     "children": [
+      "NA-27"
+     ],
+     "tag": "strong"
+    },
+    " (dossier), with NA-24 (registry) and NA-270 (treatment). Synthetic tests only in git. Output stays in local data (not published) until G6 opens (NA-269)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The dossier is the per-parcel lookup the v0 front end reads when a parcel is clicked. There is one record per active HeavyMap parcel ID. Every field says where it came from, how it was joined, how sure we are, and quotes the source in a short label, matching the UI copy style (classification · join · confidence)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "python3 -m industrial_atlas.dossier --data-root ../local-data \\\n  --out-dir ../local data (not published) [--core-addresses 5] [--release-id ID]"
+   ],
+   "tag": "pre"
+  },
+  {
+   "attrs": {
+    "id": "Inputs"
+   },
+   "children": [
+    "Inputs"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Registry run (",
+        {
+         "children": [
+          "heavymap-registry/hamilton/CURRENT"
+         ],
+         "tag": "code"
+        },
+        ")"
+       ],
+       "tag": "strong"
+      },
+      " — Layer id: LYR-HAM-PARCEL, LYR-HAM-ADDRESSES · What is read: ",
+      {
+       "children": [
+        "parcels.csv"
+       ],
+       "tag": "code"
+      },
+      " (id, status, area, ARN grade), ",
+      {
+       "children": [
+        "addresses.csv"
+       ],
+       "tag": "code"
+      },
+      " (address id, civic key, link method), ",
+      {
+       "children": [
+        "arn_links.csv"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Overlay run (",
+        {
+         "children": [
+          "heavymap-overlays/hamilton/CURRENT"
+         ],
+         "tag": "code"
+        },
+        ")"
+       ],
+       "tag": "strong"
+      },
+      " — Layer id: eleven overlay layers · What is read: ",
+      {
+       "children": [
+        "overlay_links.csv"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "MANIFEST.json"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NPCA Assessment_Parcels_Test all-fields pull"
+       ],
+       "tag": "strong"
+      },
+      " — Layer id: LYR-NPCA-ASSESSMENT-PARCELS-TEST · What is read: ",
+      {
+       "children": [
+        "OBJECTID_1"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "ARN"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "MPAC_STREE"
+       ],
+       "tag": "code"
+      },
+      " only"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NPCA Parcels_Cityview all-fields pull"
+       ],
+       "tag": "strong"
+      },
+      " — Layer id: LYR-NPCA-PARCELS-CITYVIEW · What is read: ",
+      {
+       "children": [
+        "ARN"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PropCode"
+       ],
+       "tag": "code"
+      },
+      " only"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Screening-(allowlist,-not-denylist)"
+   },
+   "children": [
+    "Screening (allowlist, not denylist)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Owner names, owner mailing addresses, ",
+    {
+     "children": [
+      "Legal_Txt"
+     ],
+     "tag": "code"
+    },
+    " / legal descriptions and any other personal information never appear in the output. Two allowlists in ",
+    {
+     "children": [
+      "industrial_atlas/dossier/schema.py"
+     ],
+     "tag": "code"
+    },
+    " enforce this:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "SOURCE_FIELDS"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " names the only properties read from each NPCA file. The loader keeps those keys and drops the rest of each feature at once. A field added upstream later is dropped too, without anyone listing it."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "RECORD_SPEC"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " is the only shape a record may take. ",
+      {
+       "children": [
+        "screen_record"
+       ],
+       "tag": "code"
+      },
+      " walks every record before it is written. It raises ",
+      {
+       "children": [
+        "ScreeningError"
+       ],
+       "tag": "code"
+      },
+      " on any key not in the spec, at any depth, or a value of the wrong kind (for example an object where a string label belongs). After writing, ",
+      {
+       "children": [
+        "audit_output"
+       ],
+       "tag": "code"
+      },
+      " reads every shard back and screens every record again."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "audit_spec"
+     ],
+     "tag": "code"
+    },
+    " runs at import and refuses any spec key or allowlisted source field containing ",
+    {
+     "children": [
+      "owner"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "legal"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "mail"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "postal"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "name"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "phone"
+     ],
+     "tag": "code"
+    },
+    " or ",
+    {
+     "children": [
+      "email"
+     ],
+     "tag": "code"
+    },
+    ". The tests feed fixtures with sentinel owner, mailing, legal, postal and email values. They assert that no sentinel reaches any output byte and that injected keys are refused."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Public in Ontario and shown: roll number (ARN), MPAC property code, civic addresses (City address points and NPCA MPAC street text)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Schema-2-(current)"
+   },
+   "children": [
+    "Schema 2 (current)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Draft contract: ",
+    {
+     "children": [
+      "drafts/wave-1/seam-contract-dossier.md"
+     ],
+     "tag": "code"
+    },
+    " in the private ",
+    {
+     "children": [
+      "our private planning repository"
+     ],
+     "tag": "code"
+    },
+    " repo. Changes from v1, all covered by tests:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Layout:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "shards/<KK>.json"
+       ],
+       "tag": "code"
+      },
+      " (core), ",
+      {
+       "children": [
+        "detail/<KK>.json"
+       ],
+       "tag": "code"
+      },
+      " (on demand), ",
+      {
+       "children": [
+        "provenance/sources.json"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "label-seed.json"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "files.json"
+       ],
+       "tag": "code"
+      },
+      " (path, bytes, SHA-256 of every file) and a small ",
+      {
+       "children": [
+        "manifest.json"
+       ],
+       "tag": "code"
+      },
+      " that holds ",
+      {
+       "children": [
+        "files_sha256"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "release {unit, id}"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "contract_revisions"
+       ],
+       "tag": "code"
+      },
+      ". File hashes live in ",
+      {
+       "children": [
+        "files.json"
+       ],
+       "tag": "code"
+      },
+      " because a hash per file made the manifest about 98 KB compressed against the 50 KB start-up budget."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "No display text."
+       ],
+       "tag": "strong"
+      },
+      " No ",
+      {
+       "children": [
+        "label"
+       ],
+       "tag": "code"
+      },
+      " key at any depth (",
+      {
+       "children": [
+        "assert_no_display_keys"
+       ],
+       "tag": "code"
+      },
+      "). Counts that labels used to spell out are data: ",
+      {
+       "children": [
+        "roll[].other_parcels"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "addresses.count"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "overlays.row_count"
+       ],
+       "tag": "code"
+      },
+      ". Property-code families are tokens (",
+      {
+       "children": [
+        "residential"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "vacant_land"
+       ],
+       "tag": "code"
+      },
+      ", ...). The old ",
+      {
+       "children": [
+        "confidence_words"
+       ],
+       "tag": "code"
+      },
+      " moved to ",
+      {
+       "children": [
+        "label-seed.json"
+       ],
+       "tag": "code"
+      },
+      " as a seed for the label register."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Names:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "ia_id"
+       ],
+       "tag": "code"
+      },
+      " is ",
+      {
+       "children": [
+        "key"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "area.m2"
+       ],
+       "tag": "code"
+      },
+      " is ",
+      {
+       "children": [
+        "area.value"
+       ],
+       "tag": "code"
+      },
+      " with ",
+      {
+       "children": [
+        "unit"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "crs"
+       ],
+       "tag": "code"
+      },
+      "; overlay ",
+      {
+       "children": [
+        "m2"
+       ],
+       "tag": "code"
+      },
+      " is ",
+      {
+       "children": [
+        "area_m2"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Core and detail:"
+       ],
+       "tag": "strong"
+      },
+      " the core record holds at most ",
+      {
+       "children": [
+        "--core-addresses"
+       ],
+       "tag": "code"
+      },
+      " (default 5) addresses and ",
+      {
+       "children": [
+        "addresses.complete"
+       ],
+       "tag": "code"
+      },
+      "; the detail record holds every address (no cap, D-023) and ",
+      {
+       "children": [
+        "feature_ids"
+       ],
+       "tag": "code"
+      },
+      " keyed by JSON Pointer into the core record (",
+      {
+       "children": [
+        "/overlays/rows/3"
+       ],
+       "tag": "code"
+      },
+      "). The core list is always a prefix of the full list."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Verification:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "audit_output"
+       ],
+       "tag": "code"
+      },
+      " checks ",
+      {
+       "children": [
+        "files.json"
+       ],
+       "tag": "code"
+      },
+      " against the manifest, every file hash, the exact file set, every record against ",
+      {
+       "children": [
+        "RECORD_SPEC"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "DETAIL_SPEC"
+       ],
+       "tag": "code"
+      },
+      ", key/shard agreement, address counts and prefix, and the record count. Builds are byte-identical on repeat (only ",
+      {
+       "children": [
+        "generated_at"
+       ],
+       "tag": "code"
+      },
+      " in the manifest differs)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Prepublish gate"
+       ],
+       "tag": "strong"
+      },
+      " understands the new files; record ids (random ULIDs) are no longer treated as field names."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Hamilton, 2026-10-17 inputs: 166,745 records; core shard mean 16.2 KB gzipped (p95 18.3 KB, max 21.3 KB); detail mean 15.1 KB (max 30.5 KB); manifest 3.1 KB gzipped."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The ",
+    {
+     "children": [
+      "hm:"
+     ],
+     "tag": "code"
+    },
+    " prefix is unchanged here; the rename to ",
+    {
+     "children": [
+      "ia:"
+     ],
+     "tag": "code"
+    },
+    " is a separate step (",
+    {
+     "children": [
+      "our private planning repository/tools/rename"
+     ],
+     "tag": "code"
+    },
+    ")."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Record-schema-(v1,-superseded-by-schema-2-above)"
+   },
+   "children": [
+    "Record schema (v1, superseded by schema 2 above)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "{\n \"ia_id\": \"ia:ca:on:hamilton:parcel:<ULID>\",\n \"area\":     {\"m2\": 146779.9, \"src\": \"LYR-HAM-PARCEL\", \"join\": \"registry_geometry\", \"conf\": \"high\", \"label\": \"...\"},\n \"coverage\": {\"status\": \"has_arn\", \"provisional\": false, \"grade\": \"exact_1to1\", \"src\": \"...\", \"join\": \"...\", \"conf\": \"...\", \"label\": \"...\"},\n \"roll\": [{\"arn\": \"2518xxxxxxxxxxx\", \"grade\": \"exact_1to1\", \"method\": \"representative_point\", \"iou\": 0.9994,\n           \"src\": \"LYR-NPCA-ASSESSMENT-PARCELS-TEST\", \"join\": \"exact_1to1\", \"conf\": \"high\", \"label\": \"...\",\n           \"roll_address\": \"<MPAC street text>\",\n           \"property_code\": {\"code\": \"590\", \"family\": \"Industrial\", \"src\": \"LYR-NPCA-PARCELS-CITYVIEW\",\n                             \"join\": \"arn_exact\", \"conf\": \"low\", \"label\": \"...\"}}],\n \"addresses\": {\"src\": \"LYR-HAM-ADDRESSES\", \"join\": \"point_in_polygon\", \"label\": \"...\", \"count\": 3, \"truncated\": false,\n               \"shown\": [{\"id\": \"ia:ca:on:hamilton:address:<ULID>\", \"text\": \"<number> <STREET>, <COMMUNITY>\", \"unit\": \"\", \"join\": \"pip\", \"conf\": \"high\"}]},\n \"overlays\": {\"src\": \"heavymap-overlays:<run>\", \"join\": \"area_share\", \"label\": \"...\", \"sliver_count\": 5,\n              \"rows\": [{\"layer\": \"LYR-HAM-ZONING\", \"class\": \"AA\", \"label\": \"City zoning: AA\", \"share\": 0.8524, \"m2\": 125108.7, \"fid\": \"<overlay feature id>\"},\n                       {\"layer\": \"LYR-HAM-ZONING\", \"class\": \"P7\", \"label\": \"City zoning: P7\", \"share\": 0.0, \"m2\": 1.5, \"fid\": \"<overlay feature id>\", \"sliver\": true}]},\n \"gaps\": [\"GAP-0001\", \"GAP-0002\"]\n}"
+   ],
+   "tag": "pre"
+  },
+  {
+   "attrs": {
+    "id": "Coverage-status"
+   },
+   "children": [
+    "Coverage status"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "has_arn"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — When: at least one valid Hamilton ARN (",
+      {
+       "children": [
+        "2518"
+       ],
+       "tag": "code"
+      },
+      " + 11 digits) attached · provisional: no"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "not_covered"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — When: registry grade ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " (more than 5 m from any NPCA polygon) · provisional: ",
+      {
+       "children": [
+        "yes"
+       ],
+       "tag": "strong"
+      },
+      ", pending the owner's decision on the ~46% outside NPCA roll data"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "in_coverage_unmatched"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — When: inside NPCA coverage, no ARN attached · provisional: yes"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "arn_invalid"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — When: only placeholder values attached (",
+      {
+       "children": [
+        "000000000000000"
+       ],
+       "tag": "code"
+      },
+      ", flag ",
+      {
+       "children": [
+        "placeholder"
+       ],
+       "tag": "code"
+      },
+      "); the value is not shown · provisional: no"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "not_covered"
+     ],
+     "tag": "code"
+    },
+    " corresponds to the PCDP refusal reason ",
+    {
+     "children": [
+      "not_in_coverage"
+     ],
+     "tag": "code"
+    },
+    " for the roll object."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Gaps-(transparent-view)"
+   },
+   "children": [
+    "Gaps (transparent view)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Each record has ",
+    {
+     "children": [
+      "gaps"
+     ],
+     "tag": "code"
+    },
+    ": a sorted list of ledger ",
+    {
+     "children": [
+      "gap_id"
+     ],
+     "tag": "code"
+    },
+    " strings. The reason text, counts and screening notes live in the dossier manifest (",
+    {
+     "children": [
+      "gaps_ledger"
+     ],
+     "tag": "code"
+    },
+    ") and in ",
+    {
+     "children": [
+      "Spreadsheets/20-data-gaps-ledger.csv"
+     ],
+     "tag": "code"
+    },
+    ". Do not repeat that copy on the record. ",
+    {
+     "children": [
+      "withheld_screened"
+     ],
+     "tag": "code"
+    },
+    " rows (owner-name and legal-description fields) stay in the manifest only, so a parcel list cannot imply that this unit has a withheld value. Schema: data-gaps-ledger.md. Overlay slivers stay on ",
+    {
+     "children": [
+      "overlays.rows"
+     ],
+     "tag": "code"
+    },
+    " with ",
+    {
+     "children": [
+      "sliver: true"
+     ],
+     "tag": "code"
+    },
+    " (flag, never extinguish) and are not gap ids."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Confidence-words"
+   },
+   "children": [
+    "Confidence words"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Provisional UI words, not the NA-86 ",
+    {
+     "children": [
+      "exact"
+     ],
+     "tag": "code"
+    },
+    " / ",
+    {
+     "children": [
+      "good"
+     ],
+     "tag": "code"
+    },
+    " / ",
+    {
+     "children": [
+      "weak"
+     ],
+     "tag": "code"
+    },
+    " / ",
+    {
+     "children": [
+      "refused"
+     ],
+     "tag": "code"
+    },
+    " scale (still open):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "high"
+       ],
+       "tag": "code"
+      },
+      ": one-to-one ARN match, point-in-polygon address, registry geometry."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "medium"
+       ],
+       "tag": "code"
+      },
+      ": ARN shared across City parcels (",
+      {
+       "children": [
+        "one_to_many"
+       ],
+       "tag": "code"
+      },
+      ") or several ARNs on one parcel (",
+      {
+       "children": [
+        "many_to_one"
+       ],
+       "tag": "code"
+      },
+      "); nearest address within 10 m; coverage test."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "low"
+       ],
+       "tag": "code"
+      },
+      ": exact ARN match against a stale or sparsely filled source (Cityview PropCode, last edited 2020); placeholder ARNs (",
+      {
+       "children": [
+        "grade"
+       ],
+       "tag": "code"
+      },
+      " ",
+      {
+       "children": [
+        "placeholder"
+       ],
+       "tag": "code"
+      },
+      ", not ",
+      {
+       "children": [
+        "one_to_many"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Property-code"
+   },
+   "children": [
+    "Property code"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Cityview ",
+    {
+     "children": [
+      "PropCode"
+     ],
+     "tag": "code"
+    },
+    " joins by exact 15-digit ARN (",
+    {
+     "children": [
+      "arn_exact"
+     ],
+     "tag": "code"
+    },
+    "). If only a 20-digit Cityview ARN exists, it joins on its first 15 digits (",
+    {
+     "children": [
+      "arn_prefix15"
+     ],
+     "tag": "code"
+    },
+    "). The code is quoted as given. ",
+    {
+     "children": [
+      "family"
+     ],
+     "tag": "code"
+    },
+    " names the MPAC range (1xx vacant land, 2xx farm, 3xx residential, 4xx commercial, 5xx industrial, 6xx institutional, 7xx special and exempt). The family is a range lookup, not a HeavyMap classification."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Tax class is not in this build."
+     ],
+     "tag": "strong"
+    },
+    " NPCA has no tax class field; tax class is one possible input among several. ",
+    {
+     "children": [
+      "MPAC_TAXAT"
+     ],
+     "tag": "code"
+    },
+    " holds the taxing municipality (",
+    {
+     "children": [
+      "HAMILTON CITY"
+     ],
+     "tag": "code"
+    },
+    "), not a class. The manifest lists this under ",
+    {
+     "children": [
+      "fields_unavailable"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Addresses"
+   },
+   "children": [
+    "Addresses"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Only registry links ",
+    {
+     "children": [
+      "pip"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "nearest_10m"
+     ],
+     "tag": "code"
+    },
+    " are attached. ",
+    {
+     "children": [
+      "pip_ambiguous"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "unmatched"
+     ],
+     "tag": "code"
+    },
+    " addresses stay off every parcel. The list is sorted by street, then house number, and capped at 25 (",
+    {
+     "children": [
+      "--max-addresses"
+     ],
+     "tag": "code"
+    },
+    "). ",
+    {
+     "children": [
+      "count"
+     ],
+     "tag": "code"
+    },
+    " is always the full total, and ",
+    {
+     "children": [
+      "truncated"
+     ],
+     "tag": "code"
+    },
+    " says whether the list was cut."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Overlays-and-slivers"
+   },
+   "children": [
+    "Overlays and slivers"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Flag, never extinguish."
+     ],
+     "tag": "strong"
+    },
+    " Every overlay link from the overlay run is in ",
+    {
+     "children": [
+      "rows"
+     ],
+     "tag": "code"
+    },
+    ", slivers included (the owner, 2026-10-17: slivers are an interesting observation, and we do not build habits of removing them from view). A sliver row carries ",
+    {
+     "children": [
+      "\"sliver\": true"
+     ],
+     "tag": "code"
+    },
+    "; on other rows the key is absent, which means not a sliver. ",
+    {
+     "children": [
+      "sliver_count"
+     ],
+     "tag": "code"
+    },
+    " gives the per-parcel total, and the label reads like \"11 zone or designation links, 5 flagged as slivers\". The UI may style or group slivers, but must not drop them."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The sliver rule comes from the overlay run: share under 1% of the parcel ",
+    {
+     "children": [
+      "and"
+     ],
+     "tag": "strong"
+    },
+    " under 5 m². Rows are in overlay-manifest layer order, largest share first, so slivers sort to the end of each layer. ",
+    {
+     "children": [
+      "share"
+     ],
+     "tag": "code"
+    },
+    " is rounded to 4 decimals and ",
+    {
+     "children": [
+      "m2"
+     ],
+     "tag": "code"
+    },
+    " to 0.1 m². A row with ",
+    {
+     "children": [
+      "share"
+     ],
+     "tag": "code"
+    },
+    " 0.0 and ",
+    {
+     "children": [
+      "m2"
+     ],
+     "tag": "code"
+    },
+    " > 0 is \"below 0.01%\", not absent."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Layer ids follow sheet 17. Overlay run ",
+    {
+     "children": [
+      "20261017-val2"
+     ],
+     "tag": "code"
+    },
+    " wrote ",
+    {
+     "children": [
+      "LYR-NPCA-REGULATION-LANDS"
+     ],
+     "tag": "code"
+    },
+    ". The dossier maps it to ",
+    {
+     "children": [
+      "LYR-NPCA-APPROX-REGULATION-LANDS"
+     ],
+     "tag": "code"
+    },
+    " (",
+    {
+     "children": [
+      "LAYER_ALIASES"
+     ],
+     "tag": "code"
+    },
+    "), and the overlay config now emits the sheet 17 id."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Output-format-and-why"
+   },
+   "children": [
+    "Output format and why"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "local data (not published)\n  manifest.json          # ~7 KB: schema, shard rule, counts, sources, confidence words, unavailable fields\n  shards/{KK}.json       # 1,024 files, KK = last two characters of the ia_id"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Each shard is ",
+    {
+     "children": [
+      "{\"schema\":1,\"jurisdiction\":\"hamilton\",\"shard\":\"KK\",\"records\":{\"<ia_id>\": {...}}}"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Key-hash sharding by ULID suffix."
+       ],
+       "tag": "strong"
+      },
+      " The last two characters come from the ULID's 80-bit random part, so 166,745 parcels spread evenly: 120 to about 200 per shard. The front end already has ",
+      {
+       "children": [
+        "ia_id"
+       ],
+       "tag": "code"
+      },
+      " from the clicked PMTiles feature. It fetches ",
+      {
+       "children": [
+        "shards/"
+       ],
+       "tag": "code"
+      },
+      " + ",
+      {
+       "children": [
+        "id.slice(-2)"
+       ],
+       "tag": "code"
+      },
+      " + ",
+      {
+       "children": [
+        ".json"
+       ],
+       "tag": "code"
+      },
+      " with no index and no hash code in JS. One click is one small request, cached per shard."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Not tile-aligned."
+       ],
+       "tag": "strong"
+      },
+      " Parcels cross tile edges, and a tile scheme would tie the dossier to one PMTiles zoom and rebuild. Key shards are stable across tile rebuilds."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Not one file."
+       ],
+       "tag": "strong"
+      },
+      " One file is about 250 MB. Two-character prefixes of a ULID are all ",
+      {
+       "children": [
+        "01"
+       ],
+       "tag": "code"
+      },
+      " (the timestamp part), which is why the suffix is used."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Startup payload"
+       ],
+       "tag": "strong"
+      },
+      " is ",
+      {
+       "children": [
+        "manifest.json"
+       ],
+       "tag": "code"
+      },
+      " only (about 7 KB). Shards load on click."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "2026-10-17 run, with every sliver kept: 280,129,576 bytes raw in total (min 200 KB, median 273 KB, max 360 KB per shard). Gzip brings the total to about 26.9 MB, roughly 26 KB per shard, which is what GitHub Pages sends. The earlier build that hid slivers was 252.0 MB raw and about 24 MB gzip. Every file is far under the 100 MB limit. The raw median is above the v0 spec's 250 KB-per-response target, and the raw total is over its 40 MB dossier allocation; the transfer size is under both. If raw storage matters for G6, the next step is dictionary-encoding the repeated provenance strings and source feature ids into the manifest. Do not commit shards to git (history bloat); publish them as a Pages build artifact once G6 allows."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Runtime on a local working copy about 48 s end to end (14 s load, 22 s build and write, 12 s re-audit). Peak RSS was 798 MB, mostly the two NPCA GeoJSON parses. Stdlib only."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Tests"
+   },
+   "children": [
+    "Tests"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "tests/test_heavymap_dossier.py"
+     ],
+     "tag": "code"
+    },
+    ": screening (spec keys, source allowlist, injected keys at any depth, wrong value kinds), sentinel leak scan over every output byte, coverage split, roll provenance, the 20-digit ARN prefix join, address cap, slivers flagged and never dropped (every input link row reaches output), a non-boolean sliver value refused, the layer id alias, compact ",
+    {
+     "children": [
+      "gaps"
+     ],
+     "tag": "code"
+    },
+    " lists (ledger ids only, withheld rows never on a parcel), and the CLI end to end. Ledger load: ",
+    {
+     "children": [
+      "tests/test_heavymap_gaps.py"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0083\ntype: working-paper\nsection: systems\nevidence_date: 2026-11-16\nseq: 16"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, architecture, framework",
+ "path": "Hamilton-parcel-dossier-11-19",
+ "title": "Hamilton parcel dossier",
+ "url": "https://telegra.ph/Hamilton-parcel-dossier-11-19",
+ "views": 0
+}

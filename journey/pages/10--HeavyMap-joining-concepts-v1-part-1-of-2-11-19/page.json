@@ -1,0 +1,5390 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, joins, concepts"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Built:"
+     ],
+     "tag": "strong"
+    },
+    " 2026-09-25 (revised the same day after a second live-read pass: 30 concepts, ledger at 118 rows) · ",
+    {
+     "children": [
+      "Framework:"
+     ],
+     "tag": "strong"
+    },
+    " Spine + Context Band Ladder vocabulary · ",
+    {
+     "children": [
+      "Status:"
+     ],
+     "tag": "strong"
+    },
+    " planning artifact, proposals only ",
+    {
+     "children": [
+      "Companions:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "11-synonym-parallel-ledger-v1.csv"
+     ],
+     "tag": "code"
+    },
+    " / ",
+    {
+     "children": [
+      ".md"
+     ],
+     "tag": "code"
+    },
+    " (the rows that use these IDs) · ",
+    {
+     "children": [
+      "12-authority-scale-and-meta-proposals.md"
+     ],
+     "tag": "code"
+    },
+    " (what to add to claims/fixtures) ",
+    {
+     "children": [
+      "Inputs:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "07"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "08"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "09"
+     ],
+     "tag": "code"
+    },
+    " (this ticket) · MCS v4 + ",
+    {
+     "children": [
+      "AGENTS-MCS.md"
+     ],
+     "tag": "code"
+    },
+    " (read-only) · ",
+    {
+     "children": [
+      "docs/architecture/"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "docs/architecture/vocab/"
+     ],
+     "tag": "code"
+    },
+    " on ",
+    {
+     "children": [
+      "niagaraassembly/heavymap"
+     ],
+     "tag": "code"
+    },
+    " ",
+    {
+     "children": [
+      "main"
+     ],
+     "tag": "code"
+    },
+    " (49893d0) · PR #13 fixtures · live schema reads on 2026-09-25 (see §8)"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "A ",
+    {
+     "children": [
+      "joining concept"
+     ],
+     "tag": "strong"
+    },
+    " is a stable HeavyMap ID for ",
+    {
+     "children": [
+      "the job a field does"
+     ],
+     "tag": "em"
+    },
+    ", so fields with different native names can be united, and fields with the same name can be kept apart. Native names are never renamed away: the claim keeps the publisher's field name and value (see ",
+    {
+     "children": [
+      "12"
+     ],
+     "tag": "code"
+    },
+    "), and the concept ID is an extra handle."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "1.-Ground-rules"
+   },
+   "children": [
+    "1. Ground rules"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Concept unity is not joinability."
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      " (Niagara NEI) and Welland's Business Directory ",
+      {
+       "children": [
+        "ID"
+       ],
+       "tag": "code"
+      },
+      " are both premises-level register keys, so they share ",
+      {
+       "children": [
+        "premises_register_key"
+       ],
+       "tag": "code"
+      },
+      ". They still share no key with each other, so no join between the two registers exists. A concept says \"same job\", never \"these two tables can be joined\"."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "A concept is not a band, a reading, or a stamp field."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Band"
+       ],
+       "tag": "em"
+      },
+      " (",
+      {
+       "children": [
+        "identity"
+       ],
+       "tag": "code"
+      },
+      " … ",
+      {
+       "children": [
+        "share_export"
+       ],
+       "tag": "code"
+      },
+      ") says where a claim sits on the ladder. A concept lists the bands it may feed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Reading identifier"
+       ],
+       "tag": "em"
+      },
+      " (",
+      {
+       "children": [
+        "floor_area_m2"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "coverage_ratio"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "employment_interval"
+       ],
+       "tag": "code"
+      },
+      ") is the name of a computed value. Concepts here name the ",
+      {
+       "children": [
+        "published inputs"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "floor_area_published"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "lot_area_published"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "employment_size_band"
+       ],
+       "tag": "code"
+      },
+      "), which live on the stamp of a reading, never as a copied raw field on the ",
+      {
+       "children": [
+        "derived_readings"
+       ],
+       "tag": "code"
+      },
+      " rung (claims contract)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Stamp fields"
+       ],
+       "tag": "em"
+      },
+      " (",
+      {
+       "children": [
+        "observation_on"
+       ],
+       "tag": "code"
+      },
+      " …) are separate. One concept, ",
+      {
+       "children": [
+        "assessment_roll_context"
+       ],
+       "tag": "code"
+      },
+      ", is stamp-adjacent (its year maps to ",
+      {
+       "children": [
+        "observation_on"
+       ],
+       "tag": "code"
+      },
+      ") and says so."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "IDs"
+       ],
+       "tag": "strong"
+      },
+      " are lowercase snake_case, ASCII, stable. Renaming needs an ",
+      {
+       "children": [
+        "aliases:"
+       ],
+       "tag": "code"
+      },
+      " line in this file. A concept ID is never reused for a different job."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Families"
+       ],
+       "tag": "strong"
+      },
+      " group concepts for grouping in a UI or a filter. A family has a parent ID only where one is useful (",
+      {
+       "children": [
+        "constraint_overlay"
+       ],
+       "tag": "code"
+      },
+      "). Families are not bands."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Same word, different concept is allowed and expected."
+       ],
+       "tag": "strong"
+      },
+      " The ledger records those as ",
+      {
+       "children": [
+        "false_friend"
+       ],
+       "tag": "code"
+      },
+      " rows."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Grain"
+       ],
+       "tag": "strong"
+      },
+      " here means what a claim under the concept attaches to: ",
+      {
+       "children": [
+        "parcel"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "footprint"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "address"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "register_unit"
+       ],
+       "tag": "code"
+      },
+      " (a premises or facility record), ",
+      {
+       "children": [
+        "zone_polygon"
+       ],
+       "tag": "code"
+      },
+      " (an overlay/zone that attaches to a unit by ",
+      {
+       "children": [
+        "point_in_polygon"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "containment"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "overlap"
+       ],
+       "tag": "code"
+      },
+      "), ",
+      {
+       "children": [
+        "jurisdiction_aggregate"
+       ],
+       "tag": "code"
+      },
+      " (counts for a whole county or city: ",
+      {
+       "children": [
+        "cannot attach to a spine unit"
+       ],
+       "tag": "strong"
+      },
+      ")."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "Display-genre-recommendation-(documentation-only;-the-user-selectable-rule-is-a-later-product-decision)"
+   },
+   "children": [
+    "Display-genre recommendation (documentation only; the user-selectable rule is a later product decision)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Each concept carries three labels and one default: ",
+    {
+     "children": [
+      "label_ca"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "label_us"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "label_neutral"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "default_genre"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Relation ",
+        {
+         "children": [
+          "same"
+         ],
+         "tag": "code"
+        },
+        " or ",
+        {
+         "children": [
+          "alias"
+         ],
+         "tag": "code"
+        },
+        ", CA-comparable"
+       ],
+       "tag": "strong"
+      },
+      " — Default label shown: Canadian label (",
+      {
+       "children": [
+        "ca"
+       ],
+       "tag": "code"
+      },
+      ") · Native term shown?: In the stamp or tooltip"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Relation ",
+        {
+         "children": [
+          "near"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Default label shown: Canadian label if comparable (",
+      {
+       "children": [
+        "ca"
+       ],
+       "tag": "code"
+      },
+      "), otherwise US (",
+      {
+       "children": [
+        "us"
+       ],
+       "tag": "code"
+      },
+      ") · Native term shown?: ",
+      {
+       "children": [
+        "Beside the label, always"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Relation ",
+        {
+         "children": [
+          "false_friend"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Default label shown: Neutral HeavyMap label (",
+      {
+       "children": [
+        "neutral"
+       ],
+       "tag": "code"
+      },
+      ") · Native term shown?: ",
+      {
+       "children": [
+        "Beside the label, always. Never relabelled into the other genre"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "US-only concept (no Canadian counterpart held)"
+       ],
+       "tag": "strong"
+      },
+      " — Default label shown: US label (",
+      {
+       "children": [
+        "us"
+       ],
+       "tag": "code"
+      },
+      ") · Native term shown?: In the stamp"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Label collision"
+       ],
+       "tag": "strong"
+      },
+      ": the Canadian label is itself a false friend in the other genre** — Default label shown: Neutral label (",
+      {
+       "children": [
+        "neutral"
+       ],
+       "tag": "code"
+      },
+      ") · Native term shown?: Beside the label"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "The collision case is real: ",
+    {
+     "children": [
+      "assessment_roll_key"
+     ],
+     "tag": "code"
+    },
+    " would be \"Roll number\" in a Canadian genre, and in New York \"roll\" means the annual assessment roll, not a parcel identifier. Its default is therefore ",
+    {
+     "children": [
+      "neutral"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "2.-Coverage-against-the-ticket&#39;s-acceptance-list"
+   },
+   "children": [
+    "2. Coverage against the ticket's acceptance list"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "cadastral / unit key"
+       ],
+       "tag": "strong"
+      },
+      " — Concept ID(s): ",
+      {
+       "children": [
+        "assessment_roll_key"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "parcel_gis_key"
+       ],
+       "tag": "code"
+      },
+      " (+ ",
+      {
+       "children": [
+        "assessing_unit_code"
+       ],
+       "tag": "code"
+      },
+      ")"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "establishment / register key"
+       ],
+       "tag": "strong"
+      },
+      " — Concept ID(s): ",
+      {
+       "children": [
+        "premises_register_key"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "zoning or land-use code"
+       ],
+       "tag": "strong"
+      },
+      " — Concept ID(s): ",
+      {
+       "children": [
+        "zoning_district"
+       ],
+       "tag": "code"
+      },
+      " (+ ",
+      {
+       "children": [
+        "zoning_site_modifier"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "official_plan_designation"
+       ],
+       "tag": "code"
+      },
+      ")"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "assessment / property-class code"
+       ],
+       "tag": "strong"
+      },
+      " — Concept ID(s): ",
+      {
+       "children": [
+        "assessment_property_class"
+       ],
+       "tag": "code"
+      },
+      " (+ ",
+      {
+       "children": [
+        "assessment_use_descriptor"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "assessed_value"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "assessment_roll_context"
+       ],
+       "tag": "code"
+      },
+      ")"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "environmental / constraint overlay family"
+       ],
+       "tag": "strong"
+      },
+      " — Concept ID(s): ",
+      {
+       "children": [
+        "constraint_overlay"
+       ],
+       "tag": "code"
+      },
+      " → ",
+      {
+       "children": [
+        "flood_hazard_overlay"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "natural_heritage_overlay"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "heritage_designation_overlay"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "planning_policy_overlay"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "federal activity register family"
+       ],
+       "tag": "strong"
+      },
+      " — Concept ID(s): ",
+      {
+       "children": [
+        "regulatory_activity_register"
+       ],
+       "tag": "code"
+      },
+      " (facets by authority scale), ",
+      {
+       "children": [
+        "jurisdiction_activity_aggregate"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "one derived-reading family"
+       ],
+       "tag": "strong"
+      },
+      " — Concept ID(s): ",
+      {
+       "children": [
+        "floor_area_published"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "lot_area_published"
+       ],
+       "tag": "code"
+      },
+      " → readings ",
+      {
+       "children": [
+        "floor_area_m2"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "lot_area_m2"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "coverage_ratio"
+       ],
+       "tag": "code"
+      },
+      " (§6)"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "3.-Catalog"
+   },
+   "children": [
+    "3. Catalog"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Format per concept: definition · bands it may feed · grain · labels · anchor and example native fields · watch-list · refusal hook. \"Live\" means the field list or values were read on 2026-09-25; details are in the ledger."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Family-A-—-Unit-identity-(band-identity)"
+   },
+   "children": [
+    "Family A — Unit identity (band ",
+    {
+     "children": [
+      "identity"
+     ],
+     "tag": "code"
+    },
+    ")"
+   ],
+   "tag": "h4"
+  },
+  {
+   "attrs": {
+    "id": "assessment-roll-key"
+   },
+   "children": [
+    {
+     "children": [
+      "assessment_roll_key"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " the key under which a parcel appears on a jurisdiction's assessment roll or tax map."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Bands / grain:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "identity"
+       ],
+       "tag": "code"
+      },
+      " (native key) · ",
+      {
+       "children": [
+        "parcel"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Labels:"
+       ],
+       "tag": "strong"
+      },
+      " ca \"Roll number\" · us \"SBL / print key\" · neutral \"Assessment roll parcel ID\" · ",
+      {
+       "children": [
+        "default ",
+        {
+         "children": [
+          "neutral"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " (label collision, §1)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " NY ",
+      {
+       "children": [
+        "SBL"
+       ],
+       "tag": "code"
+      },
+      " (20-char), ",
+      {
+       "children": [
+        "PRINT_KEY"
+       ],
+       "tag": "code"
+      },
+      " (47.18-1-33), ",
+      {
+       "children": [
+        "SWIS_SBL_ID"
+       ],
+       "tag": "code"
+      },
+      "; Monroe ",
+      {
+       "children": [
+        "countysbl"
+       ],
+       "tag": "code"
+      },
+      " (26-digit), ",
+      {
+       "children": [
+        "printkey"
+       ],
+       "tag": "code"
+      },
+      "; Rochester ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PRINTKEY"
+       ],
+       "tag": "code"
+      },
+      "; Ontario roll number (MPAC's ",
+      {
+       "children": [
+        "ARN"
+       ],
+       "tag": "strong"
+      },
+      "): St. Catharines ",
+      {
+       "children": [
+        "ROLL_NUMBER"
+       ],
+       "tag": "code"
+      },
+      " (19-digit), Norfolk ",
+      {
+       "children": [
+        "ROLLNUMFUL"
+       ],
+       "tag": "code"
+      },
+      " (19) plus three short forms, Haldimand ",
+      {
+       "children": [
+        "RollNumber"
+       ],
+       "tag": "code"
+      },
+      " (15), NPCA ",
+      {
+       "children": [
+        "ARN"
+       ],
+       "tag": "code"
+      },
+      " (15) and ",
+      {
+       "children": [
+        "ASSESSMENT"
+       ],
+       "tag": "code"
+      },
+      " (20)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " one key appears in several renderings (Norfolk publishes four in one layer; across Ontario sources the roll number now appears at 11, 15, 19 and 20 digits). Print-key zero-padding is county-specific. Cross-county string equality is not a join. Normalisation belongs to the normalize step, not to the ledger."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Refusal hook:"
+       ],
+       "tag": "strong"
+      },
+      " Brant's parcel layer carries no roll number at all, so ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " there. See ",
+      {
+       "children": [
+        "12"
+       ],
+       "tag": "code"
+      },
+      " §4: the roll number is openly published by several municipalities, and ",
+      {
+       "children": [
+        "NPCA publishes an MPAC-derived parcel fabric with ARN for its own area (all twelve Niagara municipalities plus parts of Hamilton and Haldimand)"
+       ],
+       "tag": "strong"
+      },
+      ". Under HARD-RULES 4/5 (amended 2026-10-17, #61) MPAC-derived data is usable, so the roll number from NPCA is a native key; where no join is accepted yet it is ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "parcel-gis-key"
+   },
+   "children": [
+    {
+     "children": [
+      "parcel_gis_key"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " a publisher's GIS-side identifier for a parcel polygon, used to join that publisher's own parcel, land-use and zoning layers."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Bands / grain:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "identity"
+       ],
+       "tag": "code"
+      },
+      " · ",
+      {
+       "children": [
+        "parcel"
+       ],
+       "tag": "code"
+      },
+      ". ",
+      {
+       "children": [
+        "Labels:"
+       ],
+       "tag": "strong"
+      },
+      " ca \"Parcel GIS ID\" · us \"Municipal parcel ID\" · neutral \"Publisher parcel ID\" · default ",
+      {
+       "children": [
+        "neutral"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " St. Catharines ",
+      {
+       "children": [
+        "PROPGISID"
+       ],
+       "tag": "code"
+      },
+      " (shared by parcel, landuse and zoning layers), Niagara Falls ",
+      {
+       "children": [
+        "pID"
+       ],
+       "tag": "code"
+      },
+      ", NYS ",
+      {
+       "children": [
+        "MUNI_PARCEL_ID"
+       ],
+       "tag": "code"
+      },
+      " (present, unsampled)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " not the roll number; not a system row id. A parcel row may carry both (St. Catharines does)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Refusal hook:"
+       ],
+       "tag": "strong"
+      },
+      " Welland and Hamilton publish no parcel fabric (spine doc), so the unit stays ",
+      {
+       "children": [
+        "footprint"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "address"
+       ],
+       "tag": "code"
+      },
+      " grain."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "assessing-unit-code"
+   },
+   "children": [
+    {
+     "children": [
+      "assessing_unit_code"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " the code of the assessing municipality that accompanies a roll key."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Bands / grain:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "identity"
+       ],
+       "tag": "code"
+      },
+      " · attribute of a parcel. ",
+      {
+       "children": [
+        "Labels:"
+       ],
+       "tag": "strong"
+      },
+      " us \"SWIS\" · ca none held · neutral \"Assessing unit code\" · default ",
+      {
+       "children": [
+        "us"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " NYS ",
+      {
+       "children": [
+        "SWIS"
+       ],
+       "tag": "code"
+      },
+      " (6-digit, 145601), ",
+      {
+       "children": [
+        "CITYTOWN_SWIS"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " New York's only. No shared code with Ontario (INTEGRATION.md); cross-border grouping is geometric. Whether an Ontario roll-number prefix encodes the municipality is ",
+      {
+       "children": [
+        "not verified"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Refusal hook:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " until a SWIS join names a city or town (matches the Erie fixture)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "municipality-label"
+   },
+   "children": [
+    {
+     "children": [
+      "municipality_label"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " the municipality named as text on a record. Not a key."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " NEI ",
+      {
+       "children": [
+        "municipality"
+       ],
+       "tag": "code"
+      },
+      " ('St Catharines'), NYS ",
+      {
+       "children": [
+        "MUNI_NAME"
+       ],
+       "tag": "code"
+      },
+      ", Welland Directory ",
+      {
+       "children": [
+        "City"
+       ],
+       "tag": "code"
+      },
+      ". Monroe's field named ",
+      {
+       "children": [
+        "swis"
+       ],
+       "tag": "code"
+      },
+      " belongs here, not to ",
+      {
+       "children": [
+        "assessing_unit_code"
+       ],
+       "tag": "code"
+      },
+      " (it holds names)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " spelling drift; NPCA writes 'CITY OF NIAGARA FALLS' where NEI writes 'Niagara Falls'. Map to the spine jurisdiction slug (",
+      {
+       "children": [
+        "st-catharines"
+       ],
+       "tag": "code"
+      },
+      "), never mint the slug from the label."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "statistical-geography-code"
+   },
+   "children": [
+    {
+     "children": [
+      "statistical_geography_code"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " a government statistical-geography code carried on a record, used to attach census-style aggregates to a jurisdiction. Not a parcel or facility key."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Bands / grain:"
+       ],
+       "tag": "strong"
+      },
+      " none as a parcel claim. Jurisdiction-level context only. ",
+      {
+       "children": [
+        "Labels:"
+       ],
+       "tag": "strong"
+      },
+      " ca \"Census subdivision ID\" · us \"County FIPS\" · neutral \"Statistical geography code\" · default ",
+      {
+       "children": [
+        "neutral"
+       ],
+       "tag": "code"
+      },
+      " (the unit levels differ)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " NPRI ",
+      {
+       "children": [
+        "Census Division (CD) Unique ID"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "Census Sub Division (CSD) Unique ID"
+       ],
+       "tag": "code"
+      },
+      " (",
+      {
+       "children": [
+        "same"
+       ],
+       "tag": "code"
+      },
+      " anchor, live); TRI ",
+      {
+       "children": [
+        "state_county_fips_code"
+       ],
+       "tag": "code"
+      },
+      " (36029 for Erie) and CBP ",
+      {
+       "children": [
+        "STATE"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "COUNTY"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "GEO_ID"
+       ],
+       "tag": "code"
+      },
+      " (",
+      {
+       "children": [
+        "near"
+       ],
+       "tag": "code"
+      },
+      ": a county is upper-tier, a CSD is roughly a municipality)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " this is how aggregates such as CBP and StatCan tables connect to anything: through a jurisdiction, never a unit. It does not make a parcel claim."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "civic-address"
+   },
+   "children": [
+    {
+     "children": [
+      "civic_address"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " street address text or split parts for a unit."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Grain:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "address"
+       ],
+       "tag": "code"
+      },
+      ". ",
+      {
+       "children": [
+        "Join method:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "normalized_address"
+       ],
+       "tag": "code"
+      },
+      ", the weakest method; the contract already prefers ",
+      {
+       "children": [
+        "identifier"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " NEI ",
+      {
+       "children": [
+        "businessstreetnumber"
+       ],
+       "tag": "code"
+      },
+      " + ",
+      {
+       "children": [
+        "businessstreetname"
+       ],
+       "tag": "code"
+      },
+      " + ",
+      {
+       "children": [
+        "businessunit"
+       ],
+       "tag": "code"
+      },
+      "; NYS ",
+      {
+       "children": [
+        "PARCEL_ADDR"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "LOC_*"
+       ],
+       "tag": "code"
+      },
+      "; Monroe ",
+      {
+       "children": [
+        "parceladdress*"
+       ],
+       "tag": "code"
+      },
+      "; Rochester ",
+      {
+       "children": [
+        "SITEADDRESS"
+       ],
+       "tag": "code"
+      },
+      "; Haldimand ",
+      {
+       "children": [
+        "StreetAddress"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " restyling ('2 Broadway' → '2 Broadway Street') created false departures in the NEI analysis."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "legal-description"
+   },
+   "children": [
+    {
+     "children": [
+      "legal_description"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " lot / concession / plan or lot-township-range text describing a parcel legally."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " Haldimand ",
+      {
+       "children": [
+        "Legal1"
+       ],
+       "tag": "code"
+      },
+      "..",
+      {
+       "children": [
+        "Legal8"
+       ],
+       "tag": "code"
+      },
+      " (contents unsampled); Monroe ",
+      {
+       "children": [
+        "description1"
+       ],
+       "tag": "code"
+      },
+      "..",
+      {
+       "children": [
+        "description3"
+       ],
+       "tag": "code"
+      },
+      " ('Lot 100 Twp 1 Sh Rng'); NPCA ",
+      {
+       "children": [
+        "Legal_Txt"
+       ],
+       "tag": "code"
+      },
+      "; NPRI ",
+      {
+       "children": [
+        "Physical Land Survey Description"
+       ],
+       "tag": "code"
+      },
+      " (a route from a facility row to a lot, if parsed)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " Haldimand's ",
+      {
+       "children": [
+        "LegalAddress"
+       ],
+       "tag": "code"
+      },
+      " looks like an address but belongs here. Not a use description."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "parcel-fabric-flag"
+   },
+   "children": [
+    {
+     "children": [
+      "parcel_fabric_flag"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " a publisher's record-type or lifecycle flag on a parcel-fabric row."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " Brant ",
+      {
+       "children": [
+        "PARCELCLASS"
+       ],
+       "tag": "code"
+      },
+      " (only value observed: 'LAND'), Haldimand ",
+      {
+       "children": [
+        "Status"
+       ],
+       "tag": "code"
+      },
+      " ('Existing')."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "never displayed as a class or use."
+       ],
+       "tag": "strong"
+      },
+      " Brant's ",
+      {
+       "children": [
+        "PARCELCLASS"
+       ],
+       "tag": "code"
+      },
+      " is the CA↔NY false friend of NY ",
+      {
+       "children": [
+        "PROP_CLASS"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "publisher-row-id"
+   },
+   "children": [
+    {
+     "children": [
+      "publisher_row_id"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " system row identifiers (",
+      {
+       "children": [
+        "OBJECTID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "GlobalID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "FID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Obj_id"
+       ],
+       "tag": "code"
+      },
+      ", NEI ",
+      {
+       "children": [
+        "GSmartID"
+       ],
+       "tag": "code"
+      },
+      "). ",
+      {
+       "children": [
+        "Excluded from joins."
+       ],
+       "tag": "strong"
+      },
+      " Listed so they are not mistaken for keys."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Family-B-—-Activity-registers-(bands-identity-for-the-native-key,-activity-registers-for-the-row)"
+   },
+   "children": [
+    "Family B — Activity registers (bands ",
+    {
+     "children": [
+      "identity"
+     ],
+     "tag": "code"
+    },
+    " for the native key, ",
+    {
+     "children": [
+      "activity_registers"
+     ],
+     "tag": "code"
+    },
+    " for the row)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "attrs": {
+    "id": "premises-register-key"
+   },
+   "children": [
+    {
+     "children": [
+      "premises_register_key"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Aliases:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "establishment_register_key"
+       ],
+       "tag": "code"
+      },
+      " (superseded working name)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " a publisher's stable key for one ",
+      {
+       "children": [
+        "premises-level record"
+       ],
+       "tag": "strong"
+      },
+      " in an activity register: a local employment survey, a business directory or licence register, or a regulatory facility registry."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Bands / grain:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "identity"
+       ],
+       "tag": "code"
+      },
+      " (native key claim, grade ",
+      {
+       "children": [
+        "joined"
+       ],
+       "tag": "code"
+      },
+      ", method ",
+      {
+       "children": [
+        "identifier"
+       ],
+       "tag": "code"
+      },
+      ") and ",
+      {
+       "children": [
+        "activity_registers"
+       ],
+       "tag": "code"
+      },
+      " (the row) · ",
+      {
+       "children": [
+        "register_unit"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Facets (",
+        {
+         "children": [
+          "register_family"
+         ],
+         "tag": "code"
+        },
+        "):"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "local_survey"
+       ],
+       "tag": "code"
+      },
+      " (NEI), ",
+      {
+       "children": [
+        "local_directory"
+       ],
+       "tag": "code"
+      },
+      " (Welland), ",
+      {
+       "children": [
+        "licence_register"
+       ],
+       "tag": "code"
+      },
+      " (Hamilton, unprobed), ",
+      {
+       "children": [
+        "regulatory"
+       ],
+       "tag": "code"
+      },
+      " (TRI, NPRI, DEC), ",
+      {
+       "children": [
+        "regulatory_cross_program"
+       ],
+       "tag": "code"
+      },
+      " (EPA FRS)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Labels:"
+       ],
+       "tag": "strong"
+      },
+      " ca \"Establishment ID\" · us \"Facility ID\" · neutral \"Register premises ID\" · default ",
+      {
+       "children": [
+        "ca"
+       ],
+       "tag": "code"
+      },
+      " for local registers, per-row ",
+      {
+       "children": [
+        "us"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "ca"
+       ],
+       "tag": "code"
+      },
+      " for regulatory facets."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      " (2022) / ",
+      {
+       "children": [
+        "NEI_ID"
+       ],
+       "tag": "code"
+      },
+      " (2017–2019); Welland ",
+      {
+       "children": [
+        "ID"
+       ],
+       "tag": "code"
+      },
+      "; Hamilton ",
+      {
+       "children": [
+        "LICENSE_NUMBER"
+       ],
+       "tag": "code"
+      },
+      " (licence-level, ",
+      {
+       "children": [
+        "near"
+       ],
+       "tag": "code"
+      },
+      ": three licence tables with no geometry); ",
+      {
+       "children": [
+        "tri_facility_id"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "epa_registry_id"
+       ],
+       "tag": "code"
+      },
+      " / ",
+      {
+       "children": [
+        "frs_id"
+       ],
+       "tag": "code"
+      },
+      "; NPRI ",
+      {
+       "children": [
+        "NPRI ID / ID INRP"
+       ],
+       "tag": "code"
+      },
+      " (bilingual header cell, keep whole); NYS DEC ",
+      {
+       "children": [
+        "DEC_ID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "CBSNO"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PBSNO"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "SITE_ID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "AUTHORIZATION_NUMBER"
+       ],
+       "tag": "code"
+      },
+      " (five registries, five key names)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      " keys a ",
+      {
+       "children": [
+        "premises, not a business"
+       ],
+       "tag": "strong"
+      },
+      ": 544 ids kept the id and changed name between 2019 and 2022, against 121 departures. ",
+      {
+       "children": [
+        "Named ",
+        {
+         "children": [
+          "premises_register_key"
+         ],
+         "tag": "code"
+        },
+        " (decided by the owner, 2026-09-25)."
+       ],
+       "tag": "strong"
+      },
+      " The extension comment's working name ",
+      {
+       "children": [
+        "establishment_register_key"
+       ],
+       "tag": "code"
+      },
+      " is kept as an ",
+      {
+       "children": [
+        "alias"
+       ],
+       "tag": "strong"
+      },
+      " so older references still resolve. The name matters because \"establishment\" is exactly the word Census CBP uses for a count, not a key (see the CBP false friend below)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Edition drift: ",
+      {
+       "children": [
+        "NEI_ID"
+       ],
+       "tag": "code"
+      },
+      " → ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      "; a first departures run returned zero because of the casing."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Register keys never join across registers (NEI ↔ Welland ↔ TRI share nothing)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "CBP ",
+        {
+         "children": [
+          "ESTAB"
+         ],
+         "tag": "code"
+        },
+        " is a false friend."
+       ],
+       "tag": "strong"
+      },
+      " It is a count of establishments by NAICS × county × size class, with no key and no unit rows. It belongs to ",
+      {
+       "children": [
+        "jurisdiction_activity_aggregate"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Refusal hook:"
+       ],
+       "tag": "strong"
+      },
+      " Hamilton publishes no comparable business inventory: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " for the register, not \"zero employment\"."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "industry-classification"
+   },
+   "children": [
+    {
+     "children": [
+      "industry_classification"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " an industry code and its title attached to a register row."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Bands / grain:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "activity_registers"
+       ],
+       "tag": "code"
+      },
+      " · ",
+      {
+       "children": [
+        "register_unit"
+       ],
+       "tag": "code"
+      },
+      ". ",
+      {
+       "children": [
+        "Labels:"
+       ],
+       "tag": "strong"
+      },
+      " ca \"NAICS\" · us \"NAICS\" · neutral \"Industry classification\" · default ",
+      {
+       "children": [
+        "ca"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " NEI ",
+      {
+       "children": [
+        "primarynaics"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "industry"
+       ],
+       "tag": "code"
+      },
+      " (title), ",
+      {
+       "children": [
+        "primarysector"
+       ],
+       "tag": "code"
+      },
+      "; CBP ",
+      {
+       "children": [
+        "NAICS2017"
+       ],
+       "tag": "code"
+      },
+      "; NPRI ",
+      {
+       "children": [
+        "NAICS / Code SCIAN"
+       ],
+       "tag": "code"
+      },
+      " (bilingual header; NAICS 4 and 6 in the single-year tables); Welland ",
+      {
+       "children": [
+        "SectorDescription"
+       ],
+       "tag": "code"
+      },
+      " (free text, ",
+      {
+       "children": [
+        "near"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " never equated with ",
+      {
+       "children": [
+        "zoning_district"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "assessment_property_class"
+       ],
+       "tag": "code"
+      },
+      " (a 710 parcel is not evidence of NAICS 31–33). NAICS edition per source vintage is not stated. ",
+      {
+       "children": [
+        "secondarynaics"
+       ],
+       "tag": "code"
+      },
+      " = 0 means \"absent\"."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "employment-size-band"
+   },
+   "children": [
+    {
+     "children": [
+      "employment_size_band"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " a published employment range for a register row."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Bands / grain:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "activity_registers"
+       ],
+       "tag": "code"
+      },
+      " · ",
+      {
+       "children": [
+        "register_unit"
+       ],
+       "tag": "code"
+      },
+      "; feeds reading ",
+      {
+       "children": [
+        "employment_interval"
+       ],
+       "tag": "code"
+      },
+      ". ",
+      {
+       "children": [
+        "Default ",
+        {
+         "children": [
+          "ca"
+         ],
+         "tag": "code"
+        },
+        "."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " NEI ",
+      {
+       "children": [
+        "sizerangeemployees"
+       ],
+       "tag": "code"
+      },
+      " (2022), ",
+      {
+       "children": [
+        "EmployeeSizeRange"
+       ],
+       "tag": "code"
+      },
+      " (2019), ",
+      {
+       "children": [
+        "SizeRange_Employees"
+       ],
+       "tag": "code"
+      },
+      " (2017–2018). Near-neighbours: Welland ",
+      {
+       "children": [
+        "FullTime"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "PartTime"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "Seasonal"
+       ],
+       "tag": "code"
+      },
+      " (counts, not a band); Hamilton ",
+      {
+       "children": [
+        "NUM_1_4"
+       ],
+       "tag": "code"
+      },
+      "…",
+      {
+       "children": [
+        "NUM_500_PLUS"
+       ],
+       "tag": "code"
+      },
+      " (aggregate); CBP ",
+      {
+       "children": [
+        "EMPSZES"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "EMP"
+       ],
+       "tag": "code"
+      },
+      " (aggregate)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " the 2019 band field also holds 'Business Permanently Closed' (a status quote: ",
+      {
+       "children": [
+        "register-quotation-only"
+       ],
+       "tag": "strong"
+      },
+      ") and 2017 holds 'Undetermined' (a refusal-like value). Band edges differ by source. Aggregates cannot attach to a unit."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "regulatory-activity-register"
+   },
+   "children": [
+    {
+     "children": [
+      "regulatory_activity_register"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " a regulator's or licensing body's register of facilities or licences, with the facts in it (releases, permits, licence status, closure indicator)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Bands / grain:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "activity_registers"
+       ],
+       "tag": "code"
+      },
+      " · ",
+      {
+       "children": [
+        "register_unit"
+       ],
+       "tag": "code"
+      },
+      ". ",
+      {
+       "children": [
+        "Facets by authority scale:"
+       ],
+       "tag": "strong"
+      },
+      " municipal (Hamilton licence tables), provincial/state (DEC registries), federal (NPRI, TRI)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " TRI ",
+      {
+       "children": [
+        "fac_closed_ind"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "pref_latitude/longitude"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "pref_accuracy"
+       ],
+       "tag": "code"
+      },
+      "; NPRI per-facility, per-substance release/disposal/transfer quantities with a ",
+      {
+       "children": [
+        "Units"
+       ],
+       "tag": "code"
+      },
+      " column, plus ",
+      {
+       "children": [
+        "Latitude/Longitude/Datum"
+       ],
+       "tag": "code"
+      },
+      "; DEC and Hamilton expiry dates (",
+      {
+       "children": [
+        "EXPIRATION"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "EXPIRY_DATE"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " it corroborates large sites; it is not a register of industry. ",
+      {
+       "children": [
+        "fac_closed_ind"
+       ],
+       "tag": "code"
+      },
+      " and NEI's 'Business Permanently Closed' are quotation-only words, and an expiry date is not a closure. Facility points join to parcels geometrically, and the regulator's own accuracy field should gate that (",
+      {
+       "children": [
+        "12"
+       ],
+       "tag": "code"
+      },
+      " §1): ",
+      {
+       "children": [
+        "TRI has one; NPRI's 39 Geolocations columns have none."
+       ],
+       "tag": "strong"
+      },
+      " Never sum quantities across substances or units."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "jurisdiction-activity-aggregate"
+   },
+   "children": [
+    {
+     "children": [
+      "jurisdiction_activity_aggregate"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " counts or statistics for a whole jurisdiction."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Grain:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "jurisdiction_aggregate"
+       ],
+       "tag": "code"
+      },
+      ": ",
+      {
+       "children": [
+        "not a claim about any spine unit."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " CBP 2022, StatCan NAICS tables, Hamilton Businesses by Employee Count, ",
+      {
+       "children": [
+        "Welland Business Licenses"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "id"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Description"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Year"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Bus_count"
+       ],
+       "tag": "code"
+      },
+      ": licence counts by type and year, not licence records)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Refusal hook:"
+       ],
+       "tag": "strong"
+      },
+      " at parcel level the object is ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      ". They attach to a jurisdiction through ",
+      {
+       "children": [
+        "statistical_geography_code"
+       ],
+       "tag": "code"
+      },
+      ", and can feed a reading or a coverage check (",
+      {
+       "children": [
+        "12"
+       ],
+       "tag": "code"
+      },
+      " §1)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Family-C-—-Land-use-and-assessment-(band-land-use)"
+   },
+   "children": [
+    "Family C — Land use and assessment (band ",
+    {
+     "children": [
+      "land_use"
+     ],
+     "tag": "code"
+    },
+    ")"
+   ],
+   "tag": "h4"
+  },
+  {
+   "attrs": {
+    "id": "zoning-district"
+   },
+   "children": [
+    {
+     "children": [
+      "zoning_district"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " the zone a by-law assigns to land, with its code, label and category."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Bands / grain:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "land_use"
+       ],
+       "tag": "code"
+      },
+      " · ",
+      {
+       "children": [
+        "zone_polygon"
+       ],
+       "tag": "code"
+      },
+      ". ",
+      {
+       "children": [
+        "Facets:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "code"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "label"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "category"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        {
+         "children": [
+          "by_law_ref"
+         ],
+         "tag": "code"
+        },
+        " (required for comparability)"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Labels:"
+       ],
+       "tag": "strong"
+      },
+      " ca \"Zoning\" · us \"Zoning district\" · neutral \"Zoning district\" · default ",
+      {
+       "children": [
+        "ca"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " Welland ",
+      {
+       "children": [
+        "Zoning"
+       ],
+       "tag": "code"
+      },
+      " + ",
+      {
+       "children": [
+        "ZoneCat"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "ZoneCatSym"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "ZoneDesc"
+       ],
+       "tag": "code"
+      },
+      "; Hamilton ",
+      {
+       "children": [
+        "ZONING_CODE"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "ZONING_DESC"
+       ],
+       "tag": "code"
+      },
+      " + ",
+      {
+       "children": [
+        "PARENT_BY_LAW_NUMBER"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "BY_LAW_NUMBER"
+       ],
+       "tag": "code"
+      },
+      "; Brant ",
+      {
+       "children": [
+        "ZONING"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "STATUS"
+       ],
+       "tag": "code"
+      },
+      "; Niagara County NY ",
+      {
+       "children": [
+        "ZoneCode"
+       ],
+       "tag": "code"
+      },
+      "; Rochester ",
+      {
+       "children": [
+        "BISZONING"
+       ],
+       "tag": "code"
+      },
+      " (",
+      {
+       "children": [
+        "near"
+       ],
+       "tag": "code"
+      },
+      ": stored on an assessment snapshot)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " a zone code means nothing without its by-law (Hamilton has eight parent by-laws; Niagara Falls unions four). Welland packs holding, zone and exception in one string (",
+      {
+       "children": [
+        "H-RH-111"
+       ],
+       "tag": "code"
+      },
+      "). Null-attribute polygons are gaps. \"Industrial\" here is a use regime: false friend of NY ",
+      {
+       "children": [
+        "PROP_CLASS"
+       ],
+       "tag": "code"
+      },
+      " 700–799. The NYS statewide parcel layer holds no zoning."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "zoning-site-modifier"
+   },
+   "children": [
+    {
+     "children": [
+      "zoning_site_modifier"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " an exception or holding provision attached to a zone."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " Hamilton ",
+      {
+       "children": [
+        "EXCEPTION1..3"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "HOLDING1..3"
+       ],
+       "tag": "code"
+      },
+      " (each with by-law and URL)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " rides with the zoning claim; it is not a separate rung. Where a publisher packs it into the code (Welland), the normalize step must split it."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "official-plan-designation"
+   },
+   "children": [
+    {
+     "children": [
+      "official_plan_designation"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " a land-use designation from an official plan: policy, not regulation."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Labels:"
+       ],
+       "tag": "strong"
+      },
+      " ca \"Designation\" · us none held · default ",
+      {
+       "children": [
+        "ca"
+       ],
+       "tag": "code"
+      },
+      ". Uses the ladder's own word (\"Designation, zoning, property class\")."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " Niagara Falls ",
+      {
+       "children": [
+        "DESIGNAT"
+       ],
+       "tag": "code"
+      },
+      "; Brant ",
+      {
+       "children": [
+        "OP_Designation"
+       ],
+       "tag": "code"
+      },
+      " (+ ",
+      {
+       "children": [
+        "Within_SAB"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Within_BUA"
+       ],
+       "tag": "code"
+      },
+      "); St. Catharines ",
+      {
+       "children": [
+        "DISTRICT_LANDUSE_DESIGNATION"
+       ],
+       "tag": "code"
+      },
+      " / ",
+      {
+       "children": [
+        "GENERAL_LANDUSE_DESIGNATION"
+       ],
+       "tag": "code"
+      },
+      "; Welland OP Schedule B ",
+      {
+       "children": [
+        "Adopted_OP"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Other_Use"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "SiteSpec"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " never presented as zoning. ",
+      {
+       "children": [
+        "SiteSpec"
+       ],
+       "tag": "code"
+      },
+      " is ",
+      {
+       "children": [
+        "near"
+       ],
+       "tag": "code"
+      },
+      " to ",
+      {
+       "children": [
+        "zoning_site_modifier"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "assessment-property-class"
+   },
+   "children": [
+    {
+     "children": [
+      "assessment_property_class"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " the assessor's classification of a property for taxation."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Bands / grain:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "land_use"
+       ],
+       "tag": "code"
+      },
+      " (stamped as \"property class, not zoning, not NAICS\") · ",
+      {
+       "children": [
+        "parcel"
+       ],
+       "tag": "code"
+      },
+      ". ",
+      {
+       "children": [
+        "Labels:"
+       ],
+       "tag": "strong"
+      },
+      " ca \"Property code\" (MPAC's ",
+      {
+       "children": [
+        "PropCode"
+       ],
+       "tag": "code"
+      },
+      ") · us \"Property class\" · neutral \"Assessment property class\" · ",
+      {
+       "children": [
+        "default ",
+        {
+         "children": [
+          "neutral"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " (changed from ",
+      {
+       "children": [
+        "us"
+       ],
+       "tag": "code"
+      },
+      " after the second live pass: an Ontario code is now observed, but the two code tables are not comparable code-for-code)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " NYS ",
+      {
+       "children": [
+        "PROP_CLASS"
+       ],
+       "tag": "code"
+      },
+      " (string 710), Monroe ",
+      {
+       "children": [
+        "propertyclass"
+       ],
+       "tag": "code"
+      },
+      " (integer 710), Rochester ",
+      {
+       "children": [
+        "CLASSCD"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "CLASSDSCRP"
+       ],
+       "tag": "code"
+      },
+      "; coarse near-neighbours Rochester ",
+      {
+       "children": [
+        "PROPERTYTYPE"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "RESCOM"
+       ],
+       "tag": "code"
+      },
+      "; Ontario NPCA Parcels Cityview ",
+      {
+       "children": [
+        "PropCode"
+       ],
+       "tag": "code"
+      },
+      " (3-digit MPAC code, 218 distinct values; code table not read)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " same code, different label text across publishers (710 'Manufacture' vs 'Manufacturer'). Rochester's rows read ",
+      {
+       "children": [
+        "PROPERTYTYPE"
+       ],
+       "tag": "code"
+      },
+      " 'Industrial' and RESCOM 'C' together. Brant ",
+      {
+       "children": [
+        "PARCELCLASS"
+       ],
+       "tag": "code"
+      },
+      " is a false friend. The NPCA layer's licence is unverified (",
+      {
+       "children": [
+        "12"
+       ],
+       "tag": "code"
+      },
+      " §4)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "assessment-use-descriptor"
+   },
+   "children": [
+    {
+     "children": [
+      "assessment_use_descriptor"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " the assessor's building-use code inside a class."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " NYS ",
+      {
+       "children": [
+        "USED_AS_CODE"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "USED_AS_DESC"
+       ],
+       "tag": "code"
+      },
+      " (F09 'Light mfg', F03 'Dstr wrhouse', E02 'Walk-up off' all seen on class 710)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " class and use can disagree inside one record, so a class 710 parcel is not necessarily a manufacturing building."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "assessed-value"
+   },
+   "children": [
+    {
+     "children": [
+      "assessed_value"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " a monetary value on the assessment roll, with facets ",
+      {
+       "children": [
+        "assessed"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "land"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "taxable"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "market_estimate"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Bands:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "land_use"
+       ],
+       "tag": "code"
+      },
+      " (claim or refusal beside the class, as in the Welland fixture). ",
+      {
+       "children": [
+        "Default ",
+        {
+         "children": [
+          "us"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " (Ontario's MPAC property class is usable under HARD-RULES 4/5 (amended 2026-10-17, #61); assessed value is ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " in the layers read)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " NYS ",
+      {
+       "children": [
+        "TOTAL_AV"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "LAND_AV"
+       ],
+       "tag": "code"
+      },
+      "; Monroe ",
+      {
+       "children": [
+        "totalassessedvalue"
+       ],
+       "tag": "code"
+      },
+      "; Rochester ",
+      {
+       "children": [
+        "CURRENT_TOTAL_VALUE"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "FULL_MARKET_VAL"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "CURRENT_TAXABLE_VALUE"
+       ],
+       "tag": "code"
+      },
+      " are ",
+      {
+       "children": [
+        "near"
+       ],
+       "tag": "code"
+      },
+      ", not assessed value. Keep apart in any calculation."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "assessment-roll-context"
+   },
+   "children": [
+    {
+     "children": [
+      "assessment_roll_context"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " the roll's year and section. Stamp-adjacent: the year maps to ",
+      {
+       "children": [
+        "observation_on"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " NYS ",
+      {
+       "children": [
+        "ROLL_YR"
+       ],
+       "tag": "code"
+      },
+      " (2025), ",
+      {
+       "children": [
+        "SPATIAL_YR"
+       ],
+       "tag": "code"
+      },
+      "; Monroe ",
+      {
+       "children": [
+        "rollyear"
+       ],
+       "tag": "code"
+      },
+      " (2026); ",
+      {
+       "children": [
+        "ROLL_SECTION"
+       ],
+       "tag": "code"
+      },
+      " (code) / ",
+      {
+       "children": [
+        "rollsection"
+       ],
+       "tag": "code"
+      },
+      " (label 'Taxable')."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " neighbouring counties carry different roll years. The geometry year and the roll year are two dates and both must survive. ",
+      {
+       "children": [
+        "\"Roll\" is the false friend of Ontario \"roll number\"."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Family-D-—-Constraint-overlays-(band-constraints)"
+   },
+   "children": [
+    "Family D — Constraint overlays (band ",
+    {
+     "children": [
+      "constraints"
+     ],
+     "tag": "code"
+    },
+    ")"
+   ],
+   "tag": "h4"
+  },
+  {
+   "attrs": {
+    "id": "constraint-overlay-(family-parent;-no-rows-of-its-own)"
+   },
+   "children": [
+    {
+     "children": [
+      "constraint_overlay"
+     ],
+     "tag": "code"
+    },
+    " (family parent; no rows of its own)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " an overlay or encumbrance a joined source states, named by its authority and never summed. Grain is usually ",
+      {
+       "children": [
+        "zone_polygon"
+       ],
+       "tag": "code"
+      },
+      " (join by ",
+      {
+       "children": [
+        "point_in_polygon"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "containment"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "overlap"
+       ],
+       "tag": "code"
+      },
+      " with a stated threshold), but ",
+      {
+       "children": [
+        "the read layers show three geometries"
+       ],
+       "tag": "strong"
+      },
+      ": polygons (NPCA, FEMA, PSEZ, BOA), a ",
+      {
+       "children": [
+        "polyline hazard limit"
+       ],
+       "tag": "strong"
+      },
+      " (Haldimand Flood Hazard Limit) and ",
+      {
+       "children": [
+        "points"
+       ],
+       "tag": "strong"
+      },
+      " (Niagara heritage). Lines and points need a stated distance or side rule, not ",
+      {
+       "children": [
+        "point_in_polygon"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " a ",
+      {
+       "children": [
+        "filled negative"
+       ],
+       "tag": "strong"
+      },
+      " is allowed only inside a layer's own coverage; a missing overlay is ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      ", never \"clear\". NPCA says its floodplain layer is not an exhaustive inventory, so absence there proves nothing. One HeavyMap concept spans many services, one per publisher/family (NES publishes one service per family, keyed by ",
+      {
+       "children": [
+        "series_cod"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Children (each row names its authority; ",
+    {
+     "children": [
+      "authority_scale"
+     ],
+     "tag": "code"
+    },
+    " is proposed in ",
+    {
+     "children": [
+      "12"
+     ],
+     "tag": "code"
+    },
+    "):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "flood_hazard_overlay"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      ": FEMA NFHL zones (",
+      {
+       "children": [
+        "FLD_ZONE"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "SFHA_TF"
+       ],
+       "tag": "code"
+      },
+      "; read from a mirror), NPCA regulation lands (2,537) and regulated floodplain (1,316; almost attribute-free), Haldimand Flood Hazard Limit (polyline with ",
+      {
+       "children": [
+        "Elevation"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Uprush"
+       ],
+       "tag": "code"
+      },
+      ", layer id 31)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "natural_heritage_overlay"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      ": Niagara NES series (",
+      {
+       "children": [
+        "series_cod"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "layername"
+       ],
+       "tag": "code"
+      },
+      "), NHS, wetlands and woodlands."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "heritage_designation_overlay"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      ": Niagara Designated Heritage Properties (318 ",
+      {
+       "children": [
+        "points"
+       ],
+       "tag": "strong"
+      },
+      ": ",
+      {
+       "children": [
+        "SITE_NAME"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "ADDRESS"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "MUNICIPALITY"
+       ],
+       "tag": "code"
+      },
+      "), Welland Designated Heritage Parcels (31 polygons with ",
+      {
+       "children": [
+        "Parcel_No"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "planning_policy_overlay"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      ": PSEZ (31 polygons Ontario-wide, dated 2019/2020; Hamilton 3, Brantford 2, Haldimand 1, none in Niagara Region), growth-boundary flags (Brant ",
+      {
+       "children": [
+        "Within_SAB"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "Within_BUA"
+       ],
+       "tag": "code"
+      },
+      "), NY BOA (",
+      {
+       "children": [
+        "BOA_Name"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Date_des"
+       ],
+       "tag": "code"
+      },
+      "), Niagara Falls Brownfield CIP (three attributes). ",
+      {
+       "children": [
+        "Band: ",
+        {
+         "children": [
+          "constraints"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " (decided by the owner, 2026-09-25), each claim named by its authority. \"Brownfield\" is a four-way false friend across BOA, CIP, Ontario RSC and OSM."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Family-E-—-Derived-reading-inputs-(feed-band-derived-readings;-never-copied-forward-as-raw-fields)"
+   },
+   "children": [
+    "Family E — Derived-reading inputs (feed band ",
+    {
+     "children": [
+      "derived_readings"
+     ],
+     "tag": "code"
+    },
+    "; never copied forward as raw fields)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "attrs": {
+    "id": "floor-area-published"
+   },
+   "children": [
+    {
+     "children": [
+      "floor_area_published"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " a published building floor area, in the source's unit."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " NYS ",
+      {
+       "children": [
+        {
+         "children": [
+          "GFA"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " (integer sq ft; populated on 1,046 of 1,159 Erie 700-series parcels); NEI ",
+      {
+       "children": [
+        "indoorgfa"
+       ],
+       "tag": "code"
+      },
+      " (premises indoor area, unit unstated: ",
+      {
+       "children": [
+        "near"
+       ],
+       "tag": "code"
+      },
+      "; absent from the 2022 CSV header read this pass)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        {
+         "children": [
+          "SQFT_LIVING"
+         ],
+         "tag": "code"
+        },
+        " and Monroe ",
+        {
+         "children": [
+          "squarefeetlivingarea"
+         ],
+         "tag": "code"
+        },
+        " are habitable residential area"
+       ],
+       "tag": "strong"
+      },
+      " (false friend, null on industrial rows). Monroe offers no GFA. NYS ",
+      {
+       "children": [
+        {
+         "children": [
+          "SQ_FT"
+         ],
+         "tag": "code"
+        },
+        " is lot area"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "lot_area_published"
+       ],
+       "tag": "code"
+      },
+      "), even though INTEGRATION.md groups it with floor area."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "lot-area-published"
+   },
+   "children": [
+    {
+     "children": [
+      "lot_area_published"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " a published parcel/lot area (acres, sq ft or m²), assessor-stated or geometry-computed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Anchor and examples:"
+       ],
+       "tag": "strong"
+      },
+      " NYS ",
+      {
+       "children": [
+        "ACRES"
+       ],
+       "tag": "code"
+      },
+      " (assessor) vs ",
+      {
+       "children": [
+        "CALC_ACRES"
+       ],
+       "tag": "code"
+      },
+      " (geometry), ",
+      {
+       "children": [
+        "SQ_FT"
+       ],
+       "tag": "code"
+      },
+      "; Monroe ",
+      {
+       "children": [
+        "acres"
+       ],
+       "tag": "code"
+      },
+      "; Norfolk ",
+      {
+       "children": [
+        "Acres"
+       ],
+       "tag": "code"
+      },
+      "; Rochester ",
+      {
+       "children": [
+        "STATEDAREA"
+       ],
+       "tag": "code"
+      },
+      "; Niagara Falls ",
+      {
+       "children": [
+        "AREA_SQM"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " zero is used as \"unknown\" (",
+      {
+       "children": [
+        "SQ_FT"
+       ],
+       "tag": "code"
+      },
+      " = 0, ",
+      {
+       "children": [
+        "STATEDAREA"
+       ],
+       "tag": "code"
+      },
+      " '0.00', ",
+      {
+       "children": [
+        "ACRES"
+       ],
+       "tag": "code"
+      },
+      " 0.01 beside ",
+      {
+       "children": [
+        "CALC_ACRES"
+       ],
+       "tag": "code"
+      },
+      " 11.59). A zero is never carried forward as a quantity (",
+      {
+       "children": [
+        "12"
+       ],
+       "tag": "code"
+      },
+      " §3)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Family-F-—-Presentation-tier-(D-13)"
+   },
+   "children": [
+    "Family F — Presentation-tier (D-13)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "attrs": {
+    "id": "owner-of-record"
+   },
+   "children": [
+    {
+     "children": [
+      "owner_of_record"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " owner name and mailing fields on an assessment record."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Watch:"
+       ],
+       "tag": "strong"
+      },
+      " per ",
+      {
+       "children": [
+        "D-13"
+       ],
+       "tag": "strong"
+      },
+      ": retain at ingest, decide tier at presentation. Public record in NY under Real Property Tax Law. PCDP v1 has no owner rung and the fixtures carry none, so no ledger row sets a band. Examples: NYS ",
+      {
+       "children": [
+        "PRIMARY_OWNER"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "ADD_OWNER"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "MAIL_*"
+       ],
+       "tag": "code"
+      },
+      "; Rochester ",
+      {
+       "children": [
+        "OWNERNME1"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "NPCA Parcels Cityview ",
+        {
+         "children": [
+          "Owner"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " (field present, values deliberately not sampled). Per 08, the Ontario ",
+      {
+       "children": [
+        "municipal"
+       ],
+       "tag": "em"
+      },
+      " layers checked carry no owner field, and the Ontario municipal parcel layers read here (Norfolk, Haldimand, Brant, St. Catharines, Niagara Falls) showed none. The NPCA layer is the exception, which makes its licence question (",
+      {
+       "children": [
+        "12"
+       ],
+       "tag": "code"
+      },
+      " §4) a D-13 question too."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "owner-category"
+   },
+   "children": [
+    {
+     "children": [
+      "owner_category"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Definition:"
+       ],
+       "tag": "strong"
+      },
+      " a non-identifying owner-type code. NYS ",
+      {
+       "children": [
+        "OWNER_TYPE"
+       ],
+       "tag": "code"
+      },
+      " (value '8' on every sampled Erie row; meaning ",
+      {
+       "children": [
+        "not verified"
+       ],
+       "tag": "strong"
+      },
+      "). Candidate for an earlier tier than the name."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "4.-Concept-to-concept-relations"
+   },
+   "children": [
+    "4. Concept-to-concept relations"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "premises_register_key"
+         ],
+         "tag": "code"
+        },
+        " (local) ↔ ",
+        {
+         "children": [
+          "premises_register_key"
+         ],
+         "tag": "code"
+        },
+        " (regulatory)"
+       ],
+       "tag": "strong"
+      },
+      " — Relation: ",
+      {
+       "children": [
+        "near"
+       ],
+       "tag": "code"
+      },
+      " · Note: Same job, different registers, no shared key."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "zoning_district"
+         ],
+         "tag": "code"
+        },
+        " ↔ ",
+        {
+         "children": [
+          "assessment_property_class"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Relation: ",
+      {
+       "children": [
+        "different concepts, false-friend pair"
+       ],
+       "tag": "strong"
+      },
+      " · Note: \"Industrial\" appears in both and means a use regime vs an assessed class."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "official_plan_designation"
+         ],
+         "tag": "code"
+        },
+        " ↔ ",
+        {
+         "children": [
+          "zoning_district"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Relation: different concepts · Note: Policy vs regulation."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "zoning_site_modifier"
+         ],
+         "tag": "code"
+        },
+        " ↔ ",
+        {
+         "children": [
+          "official_plan_designation"
+         ],
+         "tag": "code"
+        },
+        " (",
+        {
+         "children": [
+          "SiteSpec"
+         ],
+         "tag": "code"
+        },
+        ")"
+       ],
+       "tag": "strong"
+      },
+      " — Relation: ",
+      {
+       "children": [
+        "near"
+       ],
+       "tag": "code"
+      },
+      " · Note: Plan-level vs by-law-level exception."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "assessed_value"
+         ],
+         "tag": "code"
+        },
+        " (assessed) ↔ ",
+        {
+         "children": [
+          "assessed_value"
+         ],
+         "tag": "code"
+        },
+        " (market, taxable)"
+       ],
+       "tag": "strong"
+      },
+      " — Relation: ",
+      {
+       "children": [
+        "near"
+       ],
+       "tag": "code"
+      },
+      " · Note: Facets of one concept; not interchangeable."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "floor_area_published"
+         ],
+         "tag": "code"
+        },
+        " ↔ ",
+        {
+         "children": [
+          "lot_area_published"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Relation: different concepts · Note: NYS ",
+      {
+       "children": [
+        "SQ_FT"
+       ],
+       "tag": "code"
+      },
+      " sits on the lot side."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "assessment_roll_key"
+         ],
+         "tag": "code"
+        },
+        " ↔ ",
+        {
+         "children": [
+          "assessment_roll_context"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Relation: different concepts · Note: The \"roll\" false friend."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "flood_hazard_overlay"
+         ],
+         "tag": "code"
+        },
+        " (FEMA zone) ↔ (NPCA regulation limit)"
+       ],
+       "tag": "strong"
+      },
+      " — Relation: ",
+      {
+       "children": [
+        "near"
+       ],
+       "tag": "code"
+      },
+      " · Note: Hazard zone vs regulatory limit."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "5.-Deliberately-not-concepts"
+   },
+   "children": [
+    "5. Deliberately not concepts"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Owner ",
+        {
+         "children": [
+          "name"
+         ],
+         "tag": "em"
+        },
+        " as a ladder object."
+       ],
+       "tag": "strong"
+      },
+      " Handled as tiering (D-13), not a rung."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Sector or \"industrial\" scores."
+       ],
+       "tag": "strong"
+      },
+      " No composite or opaque scores; readings only."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Cross-border unified key."
+       ],
+       "tag": "strong"
+      },
+      " The spine already refuses to invent one."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "CBP ",
+        {
+         "children": [
+          "ESTAB"
+         ],
+         "tag": "code"
+        },
+        " as a register key."
+       ],
+       "tag": "strong"
+      },
+      " False friend, filed under aggregate."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0075\ntype: working-paper\nsection: expansion\nrun: CR-001\nevidence_date: 2026-10-17\nseq: 35"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, joins, concepts",
+ "path": "10--HeavyMap-joining-concepts-v1-part-1-of-2-11-19",
+ "title": "10 — HeavyMap joining concepts v1 (part 1 of 2)",
+ "url": "https://telegra.ph/10--HeavyMap-joining-concepts-v1-part-1-of-2-11-19",
+ "views": 0
+}

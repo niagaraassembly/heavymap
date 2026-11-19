@@ -1,0 +1,1806 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, architecture, framework"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Status:"
+     ],
+     "tag": "strong"
+    },
+    " architecture sketch, 2026-09-23, vacant-display nuance 2026-10-17. Linear ",
+    {
+     "children": [
+      "NA-11"
+     ],
+     "tag": "strong"
+    },
+    ". Docs only."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Purpose"
+   },
+   "children": [
+    "Purpose"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "PCDP is the contract for how any spine unit is presented to a viewer, from the smallest honest picture to the fullest one the other three concepts allow."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "A viewer should be able to answer three questions from any presentation:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Which unit is this, in which jurisdiction, at which geometry grain?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Which statements are stamped claims, and of what grade?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Which parts of the ladder are refused, and why?"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "If a presentation cannot answer those, it is below the minimum. If it answers them for every rung, it is at the maximum. Steps between are allowed. Skipping a refusal to look more complete is not."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Non-goals"
+   },
+   "children": [
+    "Non-goals"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Leaflet, basemaps, symbol design, panel layout, or any other chrome. Surfaces here are protocol roles, not screens."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Fetching data or filling the two examples from live portals. Both walkthroughs are synthetic."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Editing the Master Control Spreadsheet."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Publishing a site, a share card, or an export file."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Making the dossier the name of the architecture. The dossier is one surface that can carry a presentation."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "UK parcels, UK ports, or a claim that the UK atlas’s ",
+      {
+       "children": [
+        "property.html"
+       ],
+       "tag": "code"
+      },
+      " is this protocol."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "How-it-relates-to-the-other-three"
+   },
+   "children": [
+    "How it relates to the other three"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Parcel Identity Spine."
+       ],
+       "tag": "strong"
+      },
+      " Defines the unit. PCDP will not present a polygon that has no spine key, and it will not present a key as a parcel when the grain is a footprint or an address."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Context Band Ladder."
+       ],
+       "tag": "strong"
+      },
+      " Defines the order ",
+      {
+       "children": [
+        "identity"
+       ],
+       "tag": "code"
+      },
+      " → ",
+      {
+       "children": [
+        "land_use"
+       ],
+       "tag": "code"
+      },
+      " → ",
+      {
+       "children": [
+        "constraints"
+       ],
+       "tag": "code"
+      },
+      " → ",
+      {
+       "children": [
+        "activity_registers"
+       ],
+       "tag": "code"
+      },
+      " → ",
+      {
+       "children": [
+        "derived_readings"
+       ],
+       "tag": "code"
+      },
+      " → ",
+      {
+       "children": [
+        "share_export"
+       ],
+       "tag": "code"
+      },
+      ". PCDP does not reorder rungs and does not add a seventh."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Claim & Refusal Contract."
+       ],
+       "tag": "strong"
+      },
+      " Defines grades, stamps, and the three refusal reasons. PCDP displays them. It does not soften them into “unknown” with no reason, and it does not turn a refusal into vacancy."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Minimum-presentation"
+   },
+   "children": [
+    "Minimum presentation"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The minimum is what a viewer gets as soon as a spine record exists, even when every later rung is refused."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "In plain language, the minimum is:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "the outline or the point that is this unit"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "the Industrial Atlas spine key"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "the grain of that geometry"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "one jurisdiction sentence a person can check against geography v1"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "a list of what is not spoken for, naming each refused rung or native key and one reason: not in coverage, not licensed, or not joined"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "The minimum includes no score, no owner, no HeavyMap-asserted “vacant” or “available,” and no implication that a refused rung was inspected and found empty. A footprint is drawn as a footprint. A parcel is drawn as a parcel. A source’s own class may still appear later on a filled rung if it is quoted and attributed (see the Claim & Refusal Contract). UI naming for those surfaced classes will be refined later. Display pattern, not final copy: MPAC tax or property class (public in Ontario, HARD-RULES 4) may be shown as a cross-confirmation signal such as ",
+    {
+     "children": [
+      "Tax class confirmed: industrial"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The minimum is allowed to be almost entirely refusals. That is still a valid presentation. It tells the truth that the key exists and that the rest of the ladder has not been earned."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Maximum-presentation"
+   },
+   "children": [
+    "Maximum presentation"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The maximum is the minimum plus every ladder rung, in order, each either filled or refused under the Claim & Refusal Contract."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "In plain language, the maximum is:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "everything in the minimum"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "land and use classifications that are actually joined, each named as zoning, designation, or property class"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "constraints a source states, each attributed to its authority, unsummed"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "activity-register rows joined to this key, dated, without an invented operating status"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "derived readings whose inputs exist, labelled as readings, with method and original units"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "a share/export packet that contains the same claims and the same refusals as the screen"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "The maximum is not “every dataset in the MCS.” It is every rung prepared data can fill for this key, and an explicit refusal for each rung it cannot fill. Two neighbouring parcels can both be at maximum and look different, because their publishers differ. That difference stays visible."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Anything short of the maximum is a partial presentation: some rungs filled, the others still listed with reasons. Partial is the normal case. It is not a defective minimum, and it is not a permission to hide the unfilled rungs."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Surfaces"
+   },
+   "children": [
+    "Surfaces"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "MCS Part 2 column ",
+    {
+     "children": [
+      "ui_surfaces"
+     ],
+     "tag": "code"
+    },
+    " names which protocol surfaces may show a dataset. Tokens, ",
+    {
+     "children": [
+      "|"
+     ],
+     "tag": "code"
+    },
+    "-separated:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "selection"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Role: The minimum: outline or point, key, jurisdiction, refusals. The thing a map selection must be able to say before any dossier opens."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "dossier"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Role: The banded reading of one unit, from the current partial presentation up to the maximum. One surface among others."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "share"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Role: A human-readable packet of the same claims and refusals."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "export"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Role: A machine-readable packet of the same claims and refusals."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "The word dossier does not appear in ",
+    {
+     "children": [
+      "dossier_bands"
+     ],
+     "tag": "code"
+    },
+    " as a band token. It appears here, as a surface. A dataset that may feed zoning onto the dossier and into export carries ",
+    {
+     "children": [
+      "ui_surfaces"
+     ],
+     "tag": "code"
+    },
+    " of ",
+    {
+     "children": [
+      "dossier|export"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "dossier_bands"
+     ],
+     "tag": "code"
+    },
+    " of ",
+    {
+     "children": [
+      "land_use"
+     ],
+     "tag": "code"
+    },
+    ". A dataset that is only a selection outline carries ",
+    {
+     "children": [
+      "selection"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "identity"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Share and export are the ",
+    {
+     "children": [
+      "share_export"
+     ],
+     "tag": "code"
+    },
+    " rung made concrete. They are not a cleaner subset. If the dossier shows ",
+    {
+     "children": [
+      "constraints: not_joined"
+     ],
+     "tag": "code"
+    },
+    ", the export contains that refusal too."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Chrome that might one day host these surfaces is unspecified. A future map can implement ",
+    {
+     "children": [
+      "selection"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "dossier"
+     ],
+     "tag": "code"
+    },
+    " without this document naming a library."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-every-presentation-carries"
+   },
+   "children": [
+    "What every presentation carries"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Regardless of surface:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "spine key and grain"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "jurisdiction sentence"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "for each visible claim: grade, value, stamp"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "for each refusal: the object refused and exactly one of ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "not_licensed"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "no silent gaps and no zero standing in for a missing quantity"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "retrieved_on"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "observation_on"
+     ],
+     "tag": "code"
+    },
+    " both show when both exist. A 2017 by-law fetched later is a current legal text with an old origin. A 2022 inventory fetched later is an observation aging in place. The presentation does not collapse those into “updated.”"
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Walkthrough-—-one-Canadian-unit"
+   },
+   "children": [
+    "Walkthrough — one Canadian unit"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Synthetic."
+     ],
+     "tag": "strong"
+    },
+    " Not an observation of a real property. Chosen so the Canadian spine problems are visible: footprint grain, no public parcel key in the illustration, regional employment id, unlicensed assessment."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Spine key:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "ia:ca:on:welland:footprint:SYN-0142"
+     ],
+     "tag": "code"
+    },
+    " ",
+    {
+     "children": [
+      "Jurisdiction:"
+     ],
+     "tag": "strong"
+    },
+    " City of Welland, a lower-tier municipality of Niagara Region, Ontario. Inside geography v1. ",
+    {
+     "children": [
+      "Grain:"
+     ],
+     "tag": "strong"
+    },
+    " footprint."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Minimum-(selection)"
+   },
+   "children": [
+    "Minimum (",
+    {
+     "children": [
+      "selection"
+     ],
+     "tag": "code"
+    },
+    ")"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "The viewer sees a building outline, not a lot line."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Key ",
+      {
+       "children": [
+        "ia:ca:on:welland:footprint:SYN-0142"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "City of Welland, Niagara Region, Ontario"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "share_export"
+       ],
+       "tag": "code"
+      },
+      " is filled with this same selection: key, jurisdiction, and the refusals below. There is no fuller packet yet."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Not spoken for:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "parcel polygon — ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "assessment roll — ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      "; assessed value — ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "land_use"
+       ],
+       "tag": "code"
+      },
+      " — ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " until a zoning join is accepted"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "constraints"
+       ],
+       "tag": "code"
+      },
+      " — ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "activity_registers"
+       ],
+       "tag": "code"
+      },
+      " — ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "derived_readings"
+       ],
+       "tag": "code"
+      },
+      " — ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " (no parcel area in this illustration, so a coverage reading cannot be formed)"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "No occupancy headline. The maximum below is a later snapshot of the same key, after the zoning and NEI joins."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Maximum-(dossier,-and-the-same-content-on-share-and-export)"
+   },
+   "children": [
+    "Maximum (",
+    {
+     "children": [
+      "dossier"
+     ],
+     "tag": "code"
+    },
+    ", and the same content on ",
+    {
+     "children": [
+      "share"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "export"
+     ],
+     "tag": "code"
+    },
+    ")"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "identity"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — What is shown: Outline. Key. Grain ",
+      {
+       "children": [
+        "footprint"
+       ],
+       "tag": "code"
+      },
+      ". Jurisdiction sentence. Native ",
+      {
+       "children": [
+        "nei_id SYN-8130"
+       ],
+       "tag": "code"
+      },
+      " grade ",
+      {
+       "children": [
+        "joined"
+       ],
+       "tag": "code"
+      },
+      ", method ",
+      {
+       "children": [
+        "identifier"
+       ],
+       "tag": "code"
+      },
+      ". Parcel polygon refused ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      ". MPAC roll refused ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "land_use"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — What is shown: ",
+      {
+       "children": [
+        "L1 — Light Industrial"
+       ],
+       "tag": "code"
+      },
+      " (synthetic), grade ",
+      {
+       "children": [
+        "joined"
+       ],
+       "tag": "code"
+      },
+      ", method ",
+      {
+       "children": [
+        "point_in_polygon"
+       ],
+       "tag": "code"
+      },
+      ", publisher City of Welland, licence named, ",
+      {
+       "children": [
+        "retrieved_on"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "observation_on"
+       ],
+       "tag": "code"
+      },
+      " both shown. Assessed value still ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " inside this rung."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "constraints"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — What is shown: Refused. ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      ". The rung is present. It does not say “no constraints.”"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "activity_registers"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — What is shown: Synthetic NEI row ",
+      {
+       "children": [
+        "SYN-8130"
+       ],
+       "tag": "code"
+      },
+      ", grade ",
+      {
+       "children": [
+        "joined"
+       ],
+       "tag": "code"
+      },
+      ", method ",
+      {
+       "children": [
+        "identifier"
+       ],
+       "tag": "code"
+      },
+      ". Employment shown as the source band, for illustration ",
+      {
+       "children": [
+        "5–99"
+       ],
+       "tag": "code"
+      },
+      ", grade ",
+      {
+       "children": [
+        "observed"
+       ],
+       "tag": "code"
+      },
+      " on the band and ",
+      {
+       "children": [
+        "derived"
+       ],
+       "tag": "code"
+      },
+      " only if ",
+      {
+       "children": [
+        "employment_interval"
+       ],
+       "tag": "code"
+      },
+      " is also listed. No “departed,” no “operating today.”"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "derived_readings"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — What is shown: ",
+      {
+       "children": [
+        "coverage_ratio"
+       ],
+       "tag": "code"
+      },
+      " refused, ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      ", because parcel area is refused. Displayed as refused, not as ",
+      {
+       "children": [
+        "0"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "share_export"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — What is shown: The export lists every row in this table, including refusals. A share card that kept only “L1” and the NEI id would be under the minimum, even if it looked finished."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "A partial presentation is the same table with ",
+    {
+     "children": [
+      "land_use"
+     ],
+     "tag": "code"
+    },
+    " still refused and the NEI row already filled, or the reverse. The refused rows stay."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Walkthrough-—-one-American-unit"
+   },
+   "children": [
+    "Walkthrough — one American unit"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Synthetic."
+     ],
+     "tag": "strong"
+    },
+    " Not an observation of a real Erie County parcel. Chosen so the American spine problems are visible: public parcel grain, SBL native key, property class rather than zoning, county named while the municipal SWIS is unjoined, activity not inferred from land class."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Spine key:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "ia:us:ny:erie:parcel:SYN-999.00-1-1.1"
+     ],
+     "tag": "code"
+    },
+    " ",
+    {
+     "children": [
+      "Jurisdiction:"
+     ],
+     "tag": "strong"
+    },
+    " Erie County, New York. Inside geography v1. No city or town is named, because SWIS is ",
+    {
+     "children": [
+      "not_joined"
+     ],
+     "tag": "code"
+    },
+    ". ",
+    {
+     "children": [
+      "Grain:"
+     ],
+     "tag": "strong"
+    },
+    " parcel."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Minimum-(selection)"
+   },
+   "children": [
+    "Minimum (",
+    {
+     "children": [
+      "selection"
+     ],
+     "tag": "code"
+    },
+    ")"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "The viewer sees a parcel polygon."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Key ",
+      {
+       "children": [
+        "ia:us:ny:erie:parcel:SYN-999.00-1-1.1"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Erie County, New York"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Native SBL ",
+      {
+       "children": [
+        "SYN-999.00-1-1.1"
+       ],
+       "tag": "code"
+      },
+      " on the stamp of the parcel source (synthetic)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "share_export"
+       ],
+       "tag": "code"
+      },
+      " is filled with this selection and the refusals below."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Not spoken for:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "SWIS / municipality — ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "land_use"
+       ],
+       "tag": "code"
+      },
+      " — ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " until property class is accepted"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "constraints"
+       ],
+       "tag": "code"
+      },
+      " — ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "activity_registers"
+       ],
+       "tag": "code"
+      },
+      " — ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "derived_readings"
+       ],
+       "tag": "code"
+      },
+      " — ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " until a floor-area field is accepted"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Other v1 counties stay outside this key. The maximum below is a later snapshot, after property class and floor area are accepted."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Maximum-(dossier,-share,-export)"
+   },
+   "children": [
+    "Maximum (",
+    {
+     "children": [
+      "dossier"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "share"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "export"
+     ],
+     "tag": "code"
+    },
+    ")"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "identity"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — What is shown: Parcel polygon. Key. Grain ",
+      {
+       "children": [
+        "parcel"
+       ],
+       "tag": "code"
+      },
+      ". “Erie County, New York.” SBL ",
+      {
+       "children": [
+        "SYN-999.00-1-1.1"
+       ],
+       "tag": "code"
+      },
+      ", grade ",
+      {
+       "children": [
+        "observed"
+       ],
+       "tag": "code"
+      },
+      ". SWIS refused ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "land_use"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — What is shown: Property class ",
+      {
+       "children": [
+        "710"
+       ],
+       "tag": "code"
+      },
+      " (synthetic), grade ",
+      {
+       "children": [
+        "observed"
+       ],
+       "tag": "code"
+      },
+      ". Stamp says this is an assessment class, not zoning and not NAICS. Zoning itself is not invented to fill the gap."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "constraints"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — What is shown: Refused. ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      ". Not “unconstrained.”"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "activity_registers"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — What is shown: Refused. ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      ". Not “inactive.” Not a HeavyMap vacancy claim. A source register that itself uses “vacant” may be quoted on a filled rung, attributed, and labelled as that source’s class."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "derived_readings"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — What is shown: ",
+      {
+       "children": [
+        "floor_area_m2"
+       ],
+       "tag": "code"
+      },
+      " grade ",
+      {
+       "children": [
+        "derived"
+       ],
+       "tag": "code"
+      },
+      " from synthetic ",
+      {
+       "children": [
+        "20000"
+       ],
+       "tag": "code"
+      },
+      " square feet. Stamp keeps square feet, states the conversion, and labels the result a reading."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "share_export"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — What is shown: The packet includes class ",
+      {
+       "children": [
+        "710"
+       ],
+       "tag": "code"
+      },
+      ", the floor-area reading, and the refused constraints and activity rungs. It does not include an owner name."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Side by side, the Canadian maximum has an activity row and no parcel, and the American maximum has a parcel and no activity row. Both are maximum presentations of different publishers. PCDP does not rebalance them."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "MCS-naming-on-these-illustrations"
+   },
+   "children": [
+    "MCS naming on these illustrations"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "If a later inventory row were the synthetic Welland zoning layer, its Part 2 cells would be:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "dossier_bands: land_use\nui_surfaces:   selection|dossier|share|export\nderived_readings:"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "derived_readings"
+     ],
+     "tag": "code"
+    },
+    " empty: the zoning layer feeds no reading."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "If a later row were the synthetic Erie floor-area field:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "dossier_bands: derived_readings\nui_surfaces:   dossier|share|export\nderived_readings: floor_area_m2"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Those cells are examples of vocabulary only. This PR writes none of them into the spreadsheet."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Prior-art"
+   },
+   "children": [
+    "Prior art"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The dossier panel in ",
+      {
+       "children": [
+        "first-attempts/niagara-atlas/DOSSIER-TECHNICAL-REPORT.md"
+       ],
+       "tag": "code"
+      },
+      " is a surface pattern: one unit, ordered bands, refusals kept on the panel, claims that can be disagreed with. PCDP is the protocol that surface has to obey. Beta does not promote “dossier” to the name of the whole product."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "first-attempts/niagara-atlas/PUBLICATION-MODEL.md"
+       ],
+       "tag": "code"
+      },
+      " treats a share card and a local note as presentation ideas taken from the UK atlas. PCDP keeps share/export as a ladder rung with the same claims and refusals. It does not specify ",
+      {
+       "children": [
+        "html2canvas"
+       ],
+       "tag": "code"
+      },
+      ", accounts, or a notes module."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "first-attempts/niagara-atlas/INTEGRATION.md"
+       ],
+       "tag": "code"
+      },
+      " required uneven coverage to be shown. Minimum presentation is that requirement, stated as a contract instead of a map caption."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "No public deployment follows from this document."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0085\ntype: working-paper\nsection: systems\nevidence_date: 2026-11-16\nseq: 18"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, architecture, framework",
+ "path": "Parcel-Context-Display-Protocol-PCDP-11-19",
+ "title": "Parcel Context Display Protocol (PCDP)",
+ "url": "https://telegra.ph/Parcel-Context-Display-Protocol-PCDP-11-19",
+ "views": 0
+}

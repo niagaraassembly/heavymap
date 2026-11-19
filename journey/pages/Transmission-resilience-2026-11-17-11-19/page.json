@@ -1,0 +1,649 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, framework, performance, access"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-18, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "A permanent dimension of HeavyMap, separate from the state of any one dataset, layer or service. Decision: D-081 (affirmed by the owner). Working name; rename freely."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "1.-What-it-is"
+   },
+   "children": [
+    "1. What it is"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "HeavyMap is maintained and improved, perpetually, at both ends of the transmission range:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Extremely low resolution"
+       ],
+       "tag": "strong"
+      },
+      ": HeavyMap still works over very weak or outdated channels: 2G, old phones and browsers, no JavaScript, a terminal, an agent that needs one fact quickly."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Very high resolution"
+       ],
+       "tag": "strong"
+      },
+      ": large, complete, high-fidelity versions for people and tools that can take them: full-resolution imagery and tiles, bulk downloads, offline packages."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "The site most people see sits in the middle. The two ends are not afterthoughts of it; they are kept up as the data and services change."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Starting focus"
+     ],
+     "tag": "strong"
+    },
+    " (the owner, 2026-11-17): the low end. Options for reaching HeavyMap through the browser or other tools that let weak or old ways of receiving data succeed, for example over 2G, or a CLI that answers humans and agents very quickly."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "2.-The-ladder-(proposed)"
+   },
+   "children": [
+    "2. The ladder (proposed)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Each capability is described by the tiers it reaches. Tiers are views of the same releases, never separate truths."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "T0"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Signal · Who and what: CLI, agents, scripts, ",
+      {
+       "children": [
+        "curl"
+       ],
+       "tag": "code"
+      },
+      ", very old devices · Shape: One small text or JSON answer per question; stable URLs; no rendering · Target budget (proposed): One request, under 5 KB, for one parcel or one story; under 1 s on broadband, under 3 s on 2G"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "T1"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Lite web · Who and what: 2G, old browsers, data-saving users, no JavaScript · Shape: Server-rendered HTML; system fonts; no images unless asked; works with JS off and without ES modules · Target budget (proposed): Under 50 KB per page; readable in under 3 s and complete in under 10 s on 2G"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "T2"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Standard web · Who and what: Today's site · Shape: Current design · Target budget (proposed): Tracked, not capped; regressions flagged (D-026 performance screen)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "T3"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Rich · Who and what: Wide screens, fast links · Shape: Full map, all layers, motion, 3D mark · Target budget (proposed): No cap; must never be required for T0 to T2"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "T4"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Heavy · Who and what: Power users, offline, archives, partners · Shape: Bulk packages: whole-city tiles at high zoom, full-resolution imagery, complete public release archives · Target budget (proposed): Size published with each package; resumable downloads"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "2G reference profile used in measurements: 280 kbps down, 256 kbps up, 800 ms round trip (WebPageTest \"2G\")."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "3.-Rules-(proposed)"
+   },
+   "children": [
+    "3. Rules (proposed)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Every new service or layer states its tiers at intake."
+       ],
+       "tag": "strong"
+      },
+      " Alongside the performance screen (D-026, PO-08): which tiers it reaches, its T0/T1 form, or why it has none yet. A gap is recorded, not hidden."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "One release, many resolutions."
+       ],
+       "tag": "strong"
+      },
+      " Low and high tiers are built from the same pinned releases, carry the same release ids and provenance, and say which release they show."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Text before pixels."
+       ],
+       "tag": "strong"
+      },
+      " What the map shows has a text equivalent: a parcel's facts, a layer's meaning, a story's evidence."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Fast answers for agents."
+       ],
+       "tag": "strong"
+      },
+      " Predictable URLs, small files, machine-readable JSON with plain-text options, and a short guide for agents. Speed is measured, not assumed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Budgets are checked."
+       ],
+       "tag": "strong"
+      },
+      " Tier budgets are measured on every build; a regression is reported (and later blocks), like the app-size report under D-076."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "The high end is maintained too."
+       ],
+       "tag": "strong"
+      },
+      " Heavy packages are kept current with releases, not produced once."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "The private/public line holds at every tier (D-079)."
+       ],
+       "tag": "strong"
+      },
+      " Low tiers answer one parcel at a time, exactly as the site does. No tier, and no bulk package, ships the compiled portrait set as a dataset. T4 bulk packages carry public Industrial Atlas data only, unless a later decision says otherwise."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "4.-Where-HeavyMap-stands-today-(measured-2026-11-17-on-heavymap.com)"
+   },
+   "children": [
+    "4. Where HeavyMap stands today (measured 2026-11-17 on heavymap.com)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Desktop Chromium, cold cache. \"Readable\" = the page's main text has arrived; \"settled\" = loading finished."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Home"
+       ],
+       "tag": "strong"
+      },
+      " — Broadband: transfer: 1,060 KB, 16 requests · 2G: readable: 1.2 s · 2G: settled: 31 s · Works without JavaScript: Yes (stories and links)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Reader"
+       ],
+       "tag": "strong"
+      },
+      " — Broadband: transfer: 600 KB, 13 requests · 2G: readable: 2.2 s · 2G: settled: 17 s · Works without JavaScript: Yes (story list)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Story page"
+       ],
+       "tag": "strong"
+      },
+      " — Broadband: transfer: 600 KB, 13 requests · 2G: readable: 1.1 s · 2G: settled: 17 s · Works without JavaScript: Yes"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Docs"
+       ],
+       "tag": "strong"
+      },
+      " — Broadband: transfer: 600 KB, 13 requests · 2G: readable: 1.1 s · 2G: settled: 17 s · Works without JavaScript: Shell only (local tool)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Map"
+       ],
+       "tag": "strong"
+      },
+      " — Broadband: transfer: 1,740 KB, 38 requests · 2G: readable: n/a · 2G: settled: 69 s to the map · Works without JavaScript: No (77 characters of chrome)"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "What the bytes are on a story page (the story itself is 6 KB of HTML):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Favicon ",
+        {
+         "children": [
+          "heavy-element-favicon.png"
+         ],
+         "tag": "code"
+        },
+        " (512×512, 16-bit)"
+       ],
+       "tag": "strong"
+      },
+      " — Transfer: 182 KB"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Mark image ",
+        {
+         "children": [
+          "heavy-element-mark.png"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Transfer: 121 KB"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Wordmark fonts (Cantarell 700 and 800 as OTF) plus IBM Plex"
+       ],
+       "tag": "strong"
+      },
+      " — Transfer: about 200 KB"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Site script and stylesheet"
+       ],
+       "tag": "strong"
+      },
+      " — Transfer: 45 KB + 39 KB"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Map extras: app script 319 KB, home map image 190 KB, development indicators 129 KB, release file list 96 KB, basemap and layers."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Parcel lookup from published files (what a CLI or agent can do today): the manifest (3 KB) gives the shard rule, then one shard (about 20 KB gzipped, 181 parcels) holds the record (about 1 KB). Two requests, about 23 KB, for 1 KB of answer. There is no address-to-parcel lookup without loading the map."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Reading: the prerendered pages already put text first, so the editorial side is close to T1 once fixed costs are cut. The map has no T0 or T1 form yet, and agents have no small, direct parcel answer."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "5.-First-steps-(backlog,-proposed-order)"
+   },
+   "children": [
+    "5. First steps (backlog, proposed order)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "BL-124"
+       ],
+       "tag": "strong"
+      },
+      " — Step: Cut fixed page costs: favicon to a few KB, mark as small SVG or WebP, wordmark fonts subset to WOFF2 (or system fallback in T1) · Tier: T1, T2 · Why first: About 500 KB off every page for little work; story pages drop from about 600 KB toward 100 KB"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "BL-125"
+       ],
+       "tag": "strong"
+      },
+      " — Step: Agent and CLI access, read-only: one small JSON (and plain text) answer per parcel and per story, an address-to-parcel lookup index, and an agent guide (",
+      {
+       "children": [
+        "llms.txt"
+       ],
+       "tag": "code"
+      },
+      "-style) describing them · Tier: T0 · Why first: The CLI goal; respects D-079 (one parcel per answer)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "BL-126"
+       ],
+       "tag": "strong"
+      },
+      " — Step: A ",
+      {
+       "children": [
+        "heavymap"
+       ],
+       "tag": "code"
+      },
+      " command-line client over BL-125: look up a parcel by key or address, list stories, print text or JSON · Tier: T0 · Why first: Proves the T0 path end to end; usable by people and agents"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "BL-127"
+       ],
+       "tag": "strong"
+      },
+      " — Step: Lite web tier: a no-JS, no-font, image-free mode (and a text parcel page) that meets the T1 budget on 2G and in old browsers · Tier: T1 · Why first: Gives the map a text form"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "BL-128"
+       ],
+       "tag": "strong"
+      },
+      " — Step: Tier budgets in the build: measure each tier's sizes on every build and report regressions; a 2G and old-browser check in the test set · Tier: All · Why first: Keeps it perpetual rather than a one-off cleanup"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "BL-129"
+       ],
+       "tag": "strong"
+      },
+      " — Step: Heavy tier inventory: which high-resolution packages to offer (tiles at high zoom, imagery, public release archives), their sizes and update rhythm · Tier: T4 · Why first: Keeps the high end on the books from the start"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Related, already recorded: roadmap stage ST-6 \"Reach\" (offline and tiered delivery for extreme channels, now superseded in timing by D-081: this starts now and never ends), S-024 offline cache (candidate), performance opportunities PO-01 to PO-08."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Experiments: BL-130 browser SQL over the city (DuckDB-Wasm over a public parcels Parquet file; T3 in the browser, T0 through the ",
+    {
+     "children": [
+      "duckdb"
+     ],
+     "tag": "code"
+    },
+    " CLI), brief in ",
+    {
+     "children": [
+      "docs/2026-11-18-experiment-browser-sql.md"
+     ],
+     "tag": "code"
+    },
+    ". Ideas and insights for map loading and questions (techniques catalogue, shared edges, FlatGeobuf, question templates): ",
+    {
+     "children": [
+      "docs/2026-11-18-map-loading-and-questions-ideas.md"
+     ],
+     "tag": "code"
+    },
+    " (DOC-108)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "6.-Open-questions"
+   },
+   "children": [
+    "6. Open questions"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Name: \"transmission resilience\" for now."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Hosting: T0 and T1 as static files on GitHub Pages (166,745 parcel files is feasible but large), or a small server later. Static first keeps the current deploy model."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Should T0 answers be plain text by default with JSON on request, or the reverse? Agents favour JSON; people at a terminal favour text."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Which old browsers to support at T1 (no ES modules, no CSS grid)?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "T4: which packages are public (IA data) and which, if any, are commercial."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0089\ntype: working-paper\nsection: systems\nevidence_date: 2026-11-18\nseq: 22"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, framework, performance, access",
+ "path": "Transmission-resilience-2026-11-17-11-19",
+ "title": "Transmission resilience (2026-11-17)",
+ "url": "https://telegra.ph/Transmission-resilience-2026-11-17-11-19",
+ "views": 0
+}

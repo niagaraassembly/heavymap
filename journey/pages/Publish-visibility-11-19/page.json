@@ -1,0 +1,444 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, architecture, framework"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-18, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Status:"
+     ],
+     "tag": "strong"
+    },
+    " accepted 2026-10-18 (the owner). Linear ",
+    {
+     "children": [
+      "NA-269"
+     ],
+     "tag": "strong"
+    },
+    ". Universal back-end setting. Not a fifth product name."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Every dataset carries a ",
+    {
+     "children": [
+      "publish_visibility"
+     ],
+     "tag": "code"
+    },
+    " value in the dataset inventory (",
+    {
+     "children": [
+      "Spreadsheets/02-dataset-inventory-v4.csv"
+     ],
+     "tag": "code"
+    },
+    "). The build reads that value and emits only what the setting allows. This is a screening and shipping rule, not a licence ledger and not a UI copy guide."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Values"
+   },
+   "children": [
+    "Values"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "public"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Default. Allowlisted fields may ship in public output."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "restricted"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: The dataset was paid for, or licence permission is unconfirmed. Values do not ship in public output."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "withheld"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: No values ship. Whether the dataset is named in public output is ",
+      {
+       "children": [
+        "withheld_disclosure"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "internal_only"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Never shipped and never mentioned in public output. Used only for internal checks."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "restricted"
+     ],
+     "tag": "code"
+    },
+    " is the paid-or-unconfirmed-licence class. It is not the same as ",
+    {
+     "children": [
+      "withheld"
+     ],
+     "tag": "code"
+    },
+    " (a screening choice on a known source) or ",
+    {
+     "children": [
+      "internal_only"
+     ],
+     "tag": "code"
+    },
+    " (never mentioned)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Existing inventory rows were left ",
+    {
+     "children": [
+      "public"
+     ],
+     "tag": "code"
+    },
+    " when this column was added. Agents do not reclassify a row to ",
+    {
+     "children": [
+      "restricted"
+     ],
+     "tag": "code"
+    },
+    " unless a packet says so."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Restricted-list-(not-in-git)"
+   },
+   "children": [
+    "Restricted list (not in git)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Public files may say that a restricted dataset list exists. They do not list the restricted datasets, their paid status, or their licence papers."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The list itself is gitignored:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "live file (local only): ",
+      {
+       "children": [
+        "Spreadsheets/restricted/RESTRICTED-DATASETS.csv"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "committed template (headers only): ",
+      {
+       "children": [
+        "Spreadsheets/restricted/RESTRICTED-DATASETS.template.csv"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "committed README: ",
+      {
+       "children": [
+        "Spreadsheets/restricted/README.md"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "The live file is the place for dataset ids, restriction kind (",
+    {
+     "children": [
+      "paid"
+     ],
+     "tag": "code"
+    },
+    " or ",
+    {
+     "children": [
+      "unconfirmed_licence"
+     ],
+     "tag": "code"
+    },
+    ") and provenance notes. No pulled rows, no licence keys, no secrets."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Future private repo."
+     ],
+     "tag": "strong"
+    },
+    " Restricted atlas data and the infrastructure that holds it are planned for a private ",
+    {
+     "children": [
+      "ia-restricted"
+     ],
+     "tag": "code"
+    },
+    " repository. Until that exists, pinned restricted inputs stay in git-ignored local data (not published) on machines that are allowed to hold them (today: Deb). Cursor cloud VMs cannot see local data (not published) (it is off git) and cannot reach ArcGIS, so they cannot run a full jurisdiction rebuild or the repeat-run proofs."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "withheld-disclosure-(open;-interim-default)"
+   },
+   "children": [
+    {
+     "children": [
+      "withheld_disclosure"
+     ],
+     "tag": "code"
+    },
+    " (open; interim default)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A second setting, ",
+    {
+     "children": [
+      "withheld_disclosure"
+     ],
+     "tag": "code"
+    },
+    ", chooses whether a ",
+    {
+     "children": [
+      "withheld"
+     ],
+     "tag": "code"
+    },
+    " dataset appears as a manifest-level gap entry (",
+    {
+     "children": [
+      "manifest_entry"
+     ],
+     "tag": "code"
+    },
+    ") or is omitted (",
+    {
+     "children": [
+      "none"
+     ],
+     "tag": "code"
+    },
+    "). the owner has not closed this. ",
+    {
+     "children": [
+      "Interim default: ",
+      {
+       "children": [
+        "manifest_entry"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "strong"
+    },
+    ", marked interim. Do not treat the interim default as a decision."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Field-level-withholding"
+   },
+   "children": [
+    "Field-level withholding"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A ",
+    {
+     "children": [
+      "public"
+     ],
+     "tag": "code"
+    },
+    " dataset can still have individual fields screened (owner names, owner mailing addresses, legal descriptions, other personal fields). Those fields are never read into public output (HARD-RULES 2, D-13). The data-gaps ledger names the field and the screening rule (",
+    {
+     "children": [
+      "withheld_screened"
+     ],
+     "tag": "code"
+    },
+    "); it does not carry values."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Dossiers will signal that identifying information is held. Wording is a front-end and business decision tied to logged-in and paid tiers. This document does not write that copy."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Repo-split-(timing-pending)"
+   },
+   "children": [
+    "Repo split (timing pending)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Keep the mechanism in this repository for now. Move the back end to an ",
+    {
+     "children": [
+      "industrial-atlas"
+     ],
+     "tag": "code"
+    },
+    " repo as soon as practical, leaving ",
+    {
+     "children": [
+      "heavymap"
+     ],
+     "tag": "code"
+    },
+    " (local and GitHub) dedicated to the front end. Timing is pending the owner confirmation."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0087\ntype: working-paper\nsection: systems\nevidence_date: 2026-10-18\nseq: 20"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, architecture, framework",
+ "path": "Publish-visibility-11-19",
+ "title": "Publish visibility",
+ "url": "https://telegra.ph/Publish-visibility-11-19",
+ "views": 0
+}

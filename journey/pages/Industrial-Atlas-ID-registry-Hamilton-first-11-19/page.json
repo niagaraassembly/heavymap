@@ -1,0 +1,1114 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, architecture, framework"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Status:"
+     ],
+     "tag": "strong"
+    },
+    " code, 2026-10-17. Linear ",
+    {
+     "children": [
+      "NA-24"
+     ],
+     "tag": "strong"
+    },
+    ", with NA-270 (treatment) and NA-276 (NPCA offset). Synthetic tests only in git."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "How a City of Hamilton parcel (and its addresses and buildings) gets a permanent Industrial Atlas ID. The ID format is ADR 0003. The spine grammar is parcel-identity-spine.md. Findings that drove the rules are SPINE-BASE-PULL-2026-10-17.md and quirks Q-001–Q-019."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Nothing here is published. Pulled rows stay in local data (not published). Owner and other identifying field ",
+    {
+     "children": [
+      "names"
+     ],
+     "tag": "strong"
+    },
+    " may appear in config denylists; values are dropped on load and never written to the registry."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-gets-minted"
+   },
+   "children": [
+    "What gets minted"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "parcel"
+       ],
+       "tag": "strong"
+      },
+      " — Spine key: ",
+      {
+       "children": [
+        "ia:ca:on:hamilton:parcel:{ULID}"
+       ],
+       "tag": "code"
+      },
+      " · Source: City Assessment Parcel polygons · Collapse rule: one ID per distinct geometry; ",
+      {
+       "children": [
+        "OBJECTID"
+       ],
+       "tag": "code"
+      },
+      "s become aliases"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "address"
+       ],
+       "tag": "strong"
+      },
+      " — Spine key: ",
+      {
+       "children": [
+        "ia:ca:on:hamilton:address:{ULID}"
+       ],
+       "tag": "code"
+      },
+      " · Source: City Addresses · Collapse rule: one ID per ",
+      {
+       "children": [
+        "number|street|community|unit"
+       ],
+       "tag": "code"
+      },
+      "; several points share it"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "footprint"
+       ],
+       "tag": "strong"
+      },
+      " — Spine key: ",
+      {
+       "children": [
+        "ia:ca:on:hamilton:footprint:{ULID}"
+       ],
+       "tag": "code"
+      },
+      " · Source: City Buildings · Collapse rule: one ID per distinct footprint; overlap list kept"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "ARN is ",
+    {
+     "children": [
+      "not"
+     ],
+     "tag": "strong"
+    },
+    " minted. It is attached to a parcel ID with a grade."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Matching-aids-(never-the-ID)"
+   },
+   "children": [
+    "Matching aids (never the ID)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "geom_hash"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — SHA-256 prefix of rounded, rotation-normalised rings. Detects the 83 stacked City duplicates (Q-001) and exact re-pulls."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "fingerprint"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — ",
+      {
+       "children": [
+        "{rep_x:.2f}:{rep_y:.2f}:{area:.2f}"
+       ],
+       "tag": "code"
+      },
+      " in EPSG:26917. Second-chance re-pull key."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "ARN"
+       ],
+       "tag": "strong"
+      },
+      " — 15-digit roll number from NPCA Assessment_Parcels_Test, after the Q-004 shift."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Geometric-correction"
+   },
+   "children": [
+    "Geometric correction"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Per-source translation, applied ",
+    {
+     "children": [
+      "before"
+     ],
+     "tag": "strong"
+    },
+    " matching, in the working CRS (EPSG:26917):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "City parcels, addresses, buildings"
+       ],
+       "tag": "strong"
+      },
+      " — dx_m: 0 · dy_m: 0"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "npca_assessment_parcels_test"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — dx_m: +0.297 · dy_m: −0.939"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "npca_parcels_cityview"
+         ],
+         "tag": "code"
+        },
+        " (same hosted offset; Owner field not used)"
+       ],
+       "tag": "strong"
+      },
+      " — dx_m: +0.297 · dy_m: −0.939"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "City fabric is the reference (PI-0013). Inputs must already be in EPSG:26917. Lon/lat GeoJSON is refused so the metre shift cannot be applied to degrees."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "ARN-grades"
+   },
+   "children": [
+    "ARN grades"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Assigned to each City parcel when an NPCA layer is supplied. Reciprocal representative-point containment, then rolled up by ARN."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "exact_1to1"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: this parcel and this ARN point at each other only"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "one_to_many"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: this ARN also attaches to other City parcels (City grain is finer)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "many_to_one"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: this City parcel holds more than one ARN"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "placeholder"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: the attached value is a documented sentinel (all-zero ARN). It is recorded, not grouped with real ARNs, and not shown as a roll number"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "unmatched"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: inside or within 5 m of NPCA coverage, no attachment"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "not_in_coverage"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: farther than 5 m from any NPCA polygon (~46% of the city)"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Placeholder detection runs ",
+    {
+     "children": [
+      "before"
+     ],
+     "tag": "strong"
+    },
+    " grouping by ARN (PI-0059). All-zero values used to grade ",
+    {
+     "children": [
+      "one_to_many"
+     ],
+     "tag": "code"
+    },
+    " because the sentinel repeats. They now grade ",
+    {
+     "children": [
+      "placeholder"
+     ],
+     "tag": "code"
+    },
+    " and feed ledger type ",
+    {
+     "children": [
+      "placeholder"
+     ],
+     "tag": "code"
+    },
+    " (data-gaps-ledger.md). A non-Hamilton prefix with real digits (Grimsby ",
+    {
+     "children": [
+      "2615…"
+     ],
+     "tag": "code"
+    },
+    ", Q-019) stays ",
+    {
+     "children": [
+      "non_city_prefix"
+     ],
+     "tag": "code"
+    },
+    " and is not a placeholder. Re-running the registry does not change existing ",
+    {
+     "children": [
+      "ia_id"
+     ],
+     "tag": "code"
+    },
+    " values: placeholders change the ARN grade, not identity."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "These are registry attachment grades. They are not the NA-86 ",
+    {
+     "children": [
+      "exact"
+     ],
+     "tag": "code"
+    },
+    " / ",
+    {
+     "children": [
+      "good"
+     ],
+     "tag": "code"
+    },
+    " / ",
+    {
+     "children": [
+      "weak"
+     ],
+     "tag": "code"
+    },
+    " / ",
+    {
+     "children": [
+      "refused"
+     ],
+     "tag": "code"
+    },
+    " scale (still open)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Parcels_Cityview is a secondary, stale ARN source. This code path does not load it by default, and it will not copy ",
+    {
+     "children": [
+      "Owner"
+     ],
+     "tag": "code"
+    },
+    " or ",
+    {
+     "children": [
+      "Legal_Txt"
+     ],
+     "tag": "code"
+    },
+    " if someone passes that file."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Addresses-and-buildings"
+   },
+   "children": [
+    "Addresses and buildings"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Address → parcel: point-in-polygon. If the point is in no parcel, nearest parcel within 10 m. If it is in two distinct parcels, ",
+      {
+       "children": [
+        "pip_ambiguous"
+       ],
+       "tag": "code"
+      },
+      " and no link (stacked duplicates have already collapsed)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Building → parcel: largest intersection area. The full overlap list is stored. Waste Collection by Address is an optional unit-coverage cross-check (",
+      {
+       "children": [
+        "waste_seen"
+       ],
+       "tag": "code"
+      },
+      " = ",
+      {
+       "children": [
+        "y"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "n"
+       ],
+       "tag": "code"
+      },
+      "), not an ID source."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Re-pull"
+   },
+   "children": [
+    "Re-pull"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Match active registry rows by ",
+      {
+       "children": [
+        "geom_hash"
+       ],
+       "tag": "code"
+      },
+      ", then by ",
+      {
+       "children": [
+        "fingerprint"
+       ],
+       "tag": "code"
+      },
+      ", then by unique IoU ≥ 0.9. Those keep their ID."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Remaining one-old-to-many-new with overlap: ",
+      {
+       "children": [
+        "split"
+       ],
+       "tag": "strong"
+      },
+      " — new IDs, ",
+      {
+       "children": [
+        "split_into"
+       ],
+       "tag": "code"
+      },
+      " lineage, parent retired."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Remaining many-old-to-one-new: ",
+      {
+       "children": [
+        "merge"
+       ],
+       "tag": "strong"
+      },
+      " — new ID, ",
+      {
+       "children": [
+        "merged_from"
+       ],
+       "tag": "code"
+      },
+      " lineage, parents retired."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Remaining 1:1 below 0.9 IoU: ",
+      {
+       "children": [
+        "replaced_by"
+       ],
+       "tag": "strong"
+      },
+      " — new ID, parent retired."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Remaining new shapes mint new IDs. Remaining old rows retire. Retired locals stay in the issued set."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "Address IDs persist by civic key. Building IDs use the same polygon reconcile rule at footprint grain."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Persistence"
+   },
+   "children": [
+    "Persistence"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Configurable directory, default local data (not published) (gitignored):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "CURRENT                         # run id of the latest write\nruns/<run_id>/\n  MANIFEST.json\n  parcels.csv\n  arn_links.csv\n  addresses.csv\n  buildings.csv\n  building_overlaps.csv\n  lineage.csv"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "CSV is the v1 store so the cloud environment stays stdlib-only. Parquet can be an extra later; it is not required to mint."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "CLI"
+   },
+   "children": [
+    "CLI"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "GeoJSON FeatureCollections, already in EPSG:26917:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "python3 -m industrial_atlas.ids \\\n  --parcels local data (not published) \\\n  --npca local data (not published) \\\n  --addresses local data (not published) \\\n  --buildings local data (not published) \\\n  --registry-dir local data (not published)"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Equivalent: ",
+    {
+     "children": [
+      "python3 scripts/mint_hamilton_registry.py"
+     ],
+     "tag": "code"
+    },
+    " with the same flags. A second run against the same ",
+    {
+     "children": [
+      "--registry-dir"
+     ],
+     "tag": "code"
+    },
+    " reconciles. The run manifest is ",
+    {
+     "children": [
+      "runs/<run_id>/MANIFEST.json"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Identifying properties are stripped on load. Do not pass NPCA Parcels_Cityview as a way to get owner names into the registry; the denylist drops them anyway."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Tests"
+   },
+   "children": [
+    "Tests"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "python3 -m unittest tests.test_heavymap_ids -v"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Synthetic metre-space boxes only. No real Hamilton rows in git."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Validation-on-real-Hamilton-data-(2026-10-17,-deb)"
+   },
+   "children": [
+    "Validation on real Hamilton data (2026-10-17, deb)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The inputs were the 2026-10-17 pulls, reprojected to EPSG:26917 by local data (not published). They live under local data (not published), never in git. Runs used Python 3.11 with shapely 2.2 available."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Run 1 (initial mint):"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Runtime: 376 s wall, peak 2.7 GB RSS."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Parcels: 166,745 active from 166,828 rows. 83 stacked duplicates were collapsed into 23 alias groups."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "ARN grades:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "exact_1to1"
+       ],
+       "tag": "code"
+      },
+      " 89,412"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "one_to_many"
+       ],
+       "tag": "code"
+      },
+      " 2,803"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "many_to_one"
+       ],
+       "tag": "code"
+      },
+      " 225"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "unmatched"
+       ],
+       "tag": "code"
+      },
+      " 29"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " 74,276"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "92,440 parcels carry an ARN. The overlap ratio (IoU) of the ",
+      {
+       "children": [
+        "exact_1to1"
+       ],
+       "tag": "code"
+      },
+      " pairs is 0.9996 at the median."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Addresses: 273,955 IDs, matching the 273,955 distinct number + street + community + unit keys."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "pip"
+       ],
+       "tag": "code"
+      },
+      " 273,428"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "nearest_10m"
+       ],
+       "tag": "code"
+      },
+      " 221"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "pip_ambiguous"
+       ],
+       "tag": "code"
+      },
+      " 166"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "unmatched"
+       ],
+       "tag": "code"
+      },
+      " 140"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Buildings: 214,287 IDs, with 213,904 linked to a parcel."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Run 2 (same inputs over run 1):"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Runtime: 429 s wall, peak 3.9 GB RSS, because the previous registry is loaded as well."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Zero new IDs and zero retired IDs."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "ARN links, address-to-parcel links and building-to-parcel links are identical to run 1."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Fixes made during validation:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Polygon holes are kept. They were dropped before, so courtyard parcels claimed the parcel inside them."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The source id is the first unique id field. NPCA has ",
+      {
+       "children": [
+        "OBJECTID=0"
+       ],
+       "tag": "code"
+      },
+      " on 2,344 rows, so it now uses ",
+      {
+       "children": [
+        "OBJECTID_1"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Four O(n²) scans were removed: the NPCA lookup, the coverage test, the address 10 m fallback, and the re-pull overlap graph and pair lookups. The unfixed code sat in the NPCA lookup for over 10 minutes before being stopped."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Bounds, area, representative point and hash are cached per geometry."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The waste key now reads ",
+      {
+       "children": [
+        "STREET_NUMBER"
+       ],
+       "tag": "code"
+      },
+      ". Before the fix, all addresses showed ",
+      {
+       "children": [
+        "waste_seen=n"
+       ],
+       "tag": "code"
+      },
+      "; now 271,204 show ",
+      {
+       "children": [
+        "y"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0084\ntype: working-paper\nsection: systems\nevidence_date: 2026-11-16\nseq: 17"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, architecture, framework",
+ "path": "Industrial-Atlas-ID-registry-Hamilton-first-11-19",
+ "title": "Industrial Atlas ID registry (Hamilton first)",
+ "url": "https://telegra.ph/Industrial-Atlas-ID-registry-Hamilton-first-11-19",
+ "views": 0
+}

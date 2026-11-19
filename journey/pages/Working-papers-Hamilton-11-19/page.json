@@ -15,6 +15,120 @@
      "children": [
       {
        "attrs": {
+        "href": "/Jurisdiction-roster-v1--CA-municipalities--US-countiesplaces-11-19"
+       },
+       "children": [
+        "Jurisdiction roster v1 — CA municipalities + US counties/places"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 11 min · working-paper, roster, jurisdictions, niagara-brant, western-new-york",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-09-25, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/EPIC-2--Parcel-Identity-Spine-and-joins-part-2-of-2-11-19"
+       },
+       "children": [
+        "EPIC 2 — Parcel Identity Spine and joins (part 2 of 2)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 6 min · working-paper, spine, joins, pilots",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/EPIC-2--Parcel-Identity-Spine-and-joins-part-1-of-2-11-19"
+       },
+       "children": [
+        "EPIC 2 — Parcel Identity Spine and joins (part 1 of 2)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 17 min · working-paper, spine, joins, pilots",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Beta-gate-Hamilton-merged-G5--G6-staged-per-jurisdiction-11-19"
+       },
+       "children": [
+        "Beta gate: Hamilton (merged G5 + G6, staged, per jurisdiction)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 13 min · working-paper, hamilton, beta-gate, checks, run-1",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-11-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/10--HeavyMap-joining-concepts-v1-part-2-of-2-11-19"
+       },
+       "children": [
+        "10 — HeavyMap joining concepts v1 (part 2 of 2)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 2 min · working-paper, joins, concepts",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/10--HeavyMap-joining-concepts-v1-part-1-of-2-11-19"
+       },
+       "children": [
+        "10 — HeavyMap joining concepts v1 (part 1 of 2)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 15 min · working-paper, joins, concepts",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
         "href": "/Tile-source-options-for-the-v1-Hamilton-map-2026-11-16-11-19"
        },
        "children": [

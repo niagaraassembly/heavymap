@@ -1,0 +1,588 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, joins, concepts"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "6.-Reading-identifiers-(illustrative-catalog,-not-closed)"
+   },
+   "children": [
+    "6. Reading identifiers (illustrative catalog, not closed)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "floor_area_m2"
+         ],
+         "tag": "code"
+        },
+        " (existing)"
+       ],
+       "tag": "strong"
+      },
+      " — Inputs (concepts): ",
+      {
+       "children": [
+        "floor_area_published"
+       ],
+       "tag": "code"
+      },
+      " · Notes / refusal: Keep source unit on the stamp. ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " when none published (Monroe, Ontario municipalities in this dig)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "coverage_ratio"
+         ],
+         "tag": "code"
+        },
+        " (existing)"
+       ],
+       "tag": "strong"
+      },
+      " — Inputs (concepts): footprint area, ",
+      {
+       "children": [
+        "lot_area_m2"
+       ],
+       "tag": "code"
+      },
+      " · Notes / refusal: Never ",
+      {
+       "children": [
+        "0"
+       ],
+       "tag": "code"
+      },
+      ": refuse with the missing input's reason."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "employment_interval"
+         ],
+         "tag": "code"
+        },
+        " (existing)"
+       ],
+       "tag": "strong"
+      },
+      " — Inputs (concepts): ",
+      {
+       "children": [
+        "employment_size_band"
+       ],
+       "tag": "code"
+      },
+      " · Notes / refusal: Carry the band as a range; not a point value."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**",
+        {
+         "children": [
+          "lot_area_m2"
+         ],
+         "tag": "code"
+        },
+        " (proposed new)"
+       ],
+       "tag": "strong"
+      },
+      "** — Inputs (concepts): ",
+      {
+       "children": [
+        "lot_area_published"
+       ],
+       "tag": "code"
+      },
+      " · Notes / refusal: Needed as the denominator of ",
+      {
+       "children": [
+        "coverage_ratio"
+       ],
+       "tag": "code"
+      },
+      ". Reject sentinel zeros (see ",
+      {
+       "children": [
+        "12"
+       ],
+       "tag": "code"
+      },
+      " §3)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Other readings from ",
+    {
+     "children": [
+      "04-uk-capability-glean.md"
+     ],
+     "tag": "code"
+    },
+    " (containment deltas, register-agreement confidence, gap distance) are deliberately left for a later ticket."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "7.-Open-questions-for-the-owner"
+   },
+   "children": [
+    "7. Open questions for the owner"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "~~Keep ",
+      {
+       "children": [
+        "establishment_register_key"
+       ],
+       "tag": "code"
+      },
+      ", or rename to ",
+      {
+       "children": [
+        "premises_register_key"
+       ],
+       "tag": "code"
+      },
+      "?~~ ",
+      {
+       "children": [
+        "Decided 2026-09-25: ",
+        {
+         "children": [
+          "premises_register_key"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      ", with the old name kept as an alias."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Confirm the default genres: ",
+      {
+       "children": [
+        "assessment_roll_key"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "parcel_gis_key"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "assessment_property_class"
+       ],
+       "tag": "code"
+      },
+      " (",
+      {
+       "children": [
+        "changed from ",
+        {
+         "children": [
+          "us"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      ") and ",
+      {
+       "children": [
+        "statistical_geography_code"
+       ],
+       "tag": "code"
+      },
+      " default to ",
+      {
+       "children": [
+        "neutral"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "assessed_value"
+       ],
+       "tag": "code"
+      },
+      " to ",
+      {
+       "children": [
+        "us"
+       ],
+       "tag": "code"
+      },
+      "; everything else ",
+      {
+       "children": [
+        "ca"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "~~",
+      {
+       "children": [
+        "planning_policy_overlay"
+       ],
+       "tag": "code"
+      },
+      " band~~ ",
+      {
+       "children": [
+        "Decided 2026-09-25: ",
+        {
+         "children": [
+          "constraints"
+         ],
+         "tag": "code"
+        },
+        "."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Is ",
+      {
+       "children": [
+        "lot_area_m2"
+       ],
+       "tag": "code"
+      },
+      " welcome as a named reading?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NPCA's public MPAC-derived parcel fabric"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "12"
+       ],
+       "tag": "code"
+      },
+      " §4): does OGL v2 as stated on the item actually cover HeavyMap's use? Resolved 2026-10-17 by HARD-RULES 4/5 (amended 2026-10-17, #61): licences don't gate, so the MPAC roll is no longer ",
+      {
+       "children": [
+        "not_licensed"
+       ],
+       "tag": "code"
+      },
+      "; the \"no parcel fabric\" statements for Welland and Hamilton should be revisited."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "8.-Evidence-and-method"
+   },
+   "children": [
+    "8. Evidence and method"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Live reads, 2026-09-25"
+       ],
+       "tag": "strong"
+      },
+      ", public read-only endpoints, no keys, in two passes. Pass 1: ArcGIS REST ",
+      {
+       "children": [
+        "?f=json"
+       ],
+       "tag": "code"
+      },
+      " field lists and a few value samples for NYS Tax Parcels Public, Monroe ",
+      {
+       "children": [
+        "Parcels_Public"
+       ],
+       "tag": "code"
+      },
+      ", Rochester ",
+      {
+       "children": [
+        "TaxParcel2024"
+       ],
+       "tag": "code"
+      },
+      ", Norfolk, Haldimand, Brant, St. Catharines, Niagara Falls, Welland, Hamilton, NES; NEI 2017/2019/2022 CSV headers via HTTP Range; EPA Envirofacts ",
+      {
+       "children": [
+        "tri_facility"
+       ],
+       "tag": "code"
+      },
+      "; Census CBP ",
+      {
+       "children": [
+        "variables.json"
+       ],
+       "tag": "code"
+      },
+      ". Pass 2: Hamilton licence tables, Welland licence and heritage layers, NYS DEC registries, BOA and Brownfield CIP, Niagara heritage, Haldimand flood limit (layer 31), NPCA's ArcGIS Online services (fields, counts, item metadata), the PSEZ shapefile (DBF read), FEMA flood zones via an ArcGIS Living Atlas mirror, and NPRI via the ECCC data mart's real API (",
+      {
+       "children": [
+        "data-donnees.az.ec.gc.ca/api"
+       ],
+       "tag": "code"
+      },
+      ", found in the page's JavaScript bundle; CSV headers by Range). Raw responses were kept in the session scratchpad, not in the repo."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Still not read:"
+       ],
+       "tag": "strong"
+      },
+      " the MPAC product itself (not held); FEMA's authoritative host (",
+      {
+       "children": [
+        "hazards.fema.gov"
+       ],
+       "tag": "code"
+      },
+      " reset the connection on three paths); the NPCA licence PDF (the item's link returns 404); Niagara County NY parcels (still ",
+      {
+       "children": [
+        "Token Required"
+       ],
+       "tag": "code"
+      },
+      " on a re-check); CBP data queries (need an API key); NYS Building Footprints layer 0 (index moved); NPCA owner values (deliberately not sampled) and the MPAC property-code table. The ledger now has no ",
+      {
+       "children": [
+        "unverified"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "catalog_only"
+       ],
+       "tag": "code"
+      },
+      " rows; the remaining ",
+      {
+       "children": [
+        "documented"
+       ],
+       "tag": "code"
+      },
+      " rows are repo-doc evidence not re-read live."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Documented, not re-read:"
+       ],
+       "tag": "strong"
+      },
+      " NEI cross-year behaviour (",
+      {
+       "children": [
+        "niagara-atlas/logs/2026-08-23.md"
+       ],
+       "tag": "code"
+      },
+      "), D-13, ",
+      {
+       "children": [
+        "INTEGRATION.md"
+       ],
+       "tag": "code"
+      },
+      " crosswalk, MCS v4 rows, ",
+      {
+       "children": [
+        "07"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "08"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "09"
+       ],
+       "tag": "code"
+      },
+      " (read-only, not edited)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Not edited:"
+       ],
+       "tag": "strong"
+      },
+      " MCS, ",
+      {
+       "children": [
+        "07"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "08"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "09"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "docs/"
+       ],
+       "tag": "code"
+      },
+      ", PR #13, the Linear ticket state."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0076\ntype: working-paper\nsection: expansion\nrun: CR-001\nevidence_date: 2026-10-17\nseq: 36"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, joins, concepts",
+ "path": "10--HeavyMap-joining-concepts-v1-part-2-of-2-11-19",
+ "title": "10 — HeavyMap joining concepts v1 (part 2 of 2)",
+ "url": "https://telegra.ph/10--HeavyMap-joining-concepts-v1-part-2-of-2-11-19",
+ "views": 0
+}

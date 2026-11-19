@@ -1,0 +1,2157 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, architecture, framework"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Status:"
+     ],
+     "tag": "strong"
+    },
+    " code and sheet, 2026-10-17. Linear ",
+    {
+     "children": [
+      "NA-27"
+     ],
+     "tag": "strong"
+    },
+    " (dossier / transparent view), with ",
+    {
+     "children": [
+      "NA-24"
+     ],
+     "tag": "strong"
+    },
+    " (registry placeholder ARNs). Synthetic tests only in git."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The ledger is the machine-readable list of what was absent from a source or withheld from view, and why. It feeds a fully transparent HeavyMap view mode: empty, stale, placeholder, contradictory, too-sparse or corrupted, screened, and out-of-coverage are named, not painted over. Overlay slivers are a display rule (",
+    {
+     "children": [
+      "flag, never extinguish"
+     ],
+     "tag": "strong"
+    },
+    ", PI-0063), not a gap type."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "This is plumbing under the four-concept frame. It is not a fifth product name. Absence on a ladder rung is still a Claim & Refusal refusal reason. Gap types below are a finer honesty vocabulary for held data and for screened fields. They do not add a fourth refusal reason."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Inventory: ",
+    {
+     "children": [
+      "Spreadsheets/20-data-gaps-ledger.csv"
+     ],
+     "tag": "code"
+    },
+    " (source of truth). Loader: ",
+    {
+     "children": [
+      "industrial_atlas/gaps.py"
+     ],
+     "tag": "code"
+    },
+    ". Per-parcel ids travel on the dossier record; repeated text stays in the ledger and the dossier manifest."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Record-schema"
+   },
+   "children": [
+    "Record schema"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "One row is one gap. ",
+    {
+     "children": [
+      "gap_id"
+     ],
+     "tag": "code"
+    },
+    " is the stable key (",
+    {
+     "children": [
+      "GAP-"
+     ],
+     "tag": "code"
+    },
+    " plus a zero-padded number). Never reuse."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "gap_id"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: yes · Meaning: ",
+      {
+       "children": [
+        "GAP-0001"
+       ],
+       "tag": "code"
+      },
+      ". Take the next free number."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "scope"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: yes · Meaning: Grain of the finding. Closed set below."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "jurisdiction"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: yes · Meaning: Spine jurisdiction slug, e.g. ",
+      {
+       "children": [
+        "hamilton"
+       ],
+       "tag": "code"
+      },
+      ", or ",
+      {
+       "children": [
+        "cross-cutting"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "layer_id"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: when known · Meaning: Sheet-17 layer id. Several values joined with ",
+      {
+       "children": [
+        " | "
+       ],
+       "tag": "code"
+      },
+      ". Blank if the object is not a layer (a missing field across a family)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "field"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: when the finding is about a named source field · Meaning: Native field ",
+      {
+       "children": [
+        "name"
+       ],
+       "tag": "strong"
+      },
+      " only. Never a value (HARD-RULES 2, D-13). Blank when the field does not exist in the source."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "gap_type"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: yes · Meaning: Closed set below."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "reason"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: yes · Meaning: Plain-language subtitle for the UI. One or two short sentences. No owner values, no row dumps."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "numerator"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: when counted · Meaning: Count of the interesting subset (filled, missing, flagged). Blank if not counted. ",
+      {
+       "children": [
+        "0"
+       ],
+       "tag": "code"
+      },
+      " is allowed when a scan found none (HARD-RULES 8)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "denominator"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: when counted · Meaning: Population the numerator is of."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "unit"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: when counted · Meaning: What the counts are: ",
+      {
+       "children": [
+        "rows"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "parcels"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "registry_links"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "layers_checked"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "evidence"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: yes · Meaning: Where the count or absence was verified: PI ids, quirks, docs, PRs. No values."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "first_observed"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: yes · Meaning: ISO date ",
+      {
+       "children": [
+        "YYYY-MM-DD"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "source_pi_ids"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: yes · Meaning: ",
+      {
+       "children": [
+        "PI-"
+       ],
+       "tag": "code"
+      },
+      " ids that back the row, ",
+      {
+       "children": [
+        " | "
+       ],
+       "tag": "code"
+      },
+      "-separated."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "parcel_attach"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: yes · Meaning: How a dossier record may cite this ",
+      {
+       "children": [
+        "gap_id"
+       ],
+       "tag": "code"
+      },
+      ". Closed tokens below."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "status"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: yes · Meaning: ",
+      {
+       "children": [
+        "open"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "provisional"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "actioned"
+       ],
+       "tag": "code"
+      },
+      ", or ",
+      {
+       "children": [
+        "superseded"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "publish_priority"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: yes · Meaning: ",
+      {
+       "children": [
+        "must_solve_before_publish"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "label_and_ship"
+       ],
+       "tag": "code"
+      },
+      ", or ",
+      {
+       "children": [
+        "later"
+       ],
+       "tag": "code"
+      },
+      ". Class default lives in sheet 21. A row may override its class. the owner 2026-10-18."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "notes"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: no · Meaning: Internal. Not UI copy."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "CSV format follows HARD-RULES: UTF-8, LF, RFC-4180 quoting, ISO dates, text ids, no formula-leading cells, no semicolons or newlines inside cells, multiple values separated with ",
+    {
+     "children": [
+      " | "
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "scope"
+   },
+   "children": [
+    {
+     "children": [
+      "scope"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "dataset"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: The finding is about a publisher family or a missing object across layers."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "layer"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: The finding is about one layer (vintage, coverage, a constant field)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "field"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: The finding is about one native field (empty, sparse, withheld, lookalike)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "parcel"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: The finding is one spine unit. Seeded Hamilton rows are layer or field counts, not individual parcel rows."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "gap-type"
+   },
+   "children": [
+    {
+     "children": [
+      "gap_type"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "empty"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: The field exists and is blank (or equivalent) on the counted rows."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "sparse"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: The field exists and is filled on only a small share of rows."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "stale"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: The layer or field is a known-old vintage relative to other sources in use."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "placeholder"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: A documented sentinel stands in for a real value (all-zero ARN, constant ",
+      {
+       "children": [
+        "0"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "contradictory"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: Two stamped sources can disagree. Both stay. This row names the risk or a counted clash."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "corrupted"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: Values are unusable (wrong encoding, truncated keys, irreparable geometry). Not a sliver."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "withheld_screened"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: The field exists in the pull and is screened at the publish/display boundary. See below."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "not_in_coverage"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: The spine unit or the counted share sits outside what this source covers. Maps to PCDP ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "not_present_in_source"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: We looked, and the publisher does not carry that object or field. Lookalikes are named in ",
+      {
+       "children": [
+        "reason"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "corrupted"
+     ],
+     "tag": "code"
+    },
+    " is in the closed set so a later row can use it. Overlay slivers are ",
+    {
+     "children": [
+      "not"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "corrupted"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "not"
+     ],
+     "tag": "strong"
+    },
+    " a gap: they stay in ",
+    {
+     "children": [
+      "overlays.rows"
+     ],
+     "tag": "code"
+    },
+    " with ",
+    {
+     "children": [
+      "sliver: true"
+     ],
+     "tag": "code"
+    },
+    " (PI-0063)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "parcel-attach"
+   },
+   "children": [
+    {
+     "children": [
+      "parcel_attach"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "The dossier record holds only ",
+    {
+     "children": [
+      "gap_id"
+     ],
+     "tag": "code"
+    },
+    " strings. Tokens decide which parcels cite which rows. Several tokens on one row are OR, joined with ",
+    {
+     "children": [
+      " | "
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "manifest_only"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — The parcel cites this gap when: Never copied onto a parcel. Dataset, layer and field rows still appear in the dossier manifest. Use this for ",
+      {
+       "children": [
+        "withheld_screened"
+       ],
+       "tag": "code"
+      },
+      " and for fields the dossier does not read."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "coverage=not_covered"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — The parcel cites this gap when: Coverage status is ",
+      {
+       "children": [
+        "not_covered"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "coverage=in_coverage_unmatched"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — The parcel cites this gap when: Coverage status is ",
+      {
+       "children": [
+        "in_coverage_unmatched"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "coverage=arn_invalid"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — The parcel cites this gap when: Coverage status is ",
+      {
+       "children": [
+        "arn_invalid"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "roll_flag=placeholder"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — The parcel cites this gap when: A roll entry has ",
+      {
+       "children": [
+        "flag"
+       ],
+       "tag": "code"
+      },
+      " ",
+      {
+       "children": [
+        "placeholder"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "has_valid_arn"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — The parcel cites this gap when: At least one roll entry shows a Hamilton ARN."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "has_valid_arn+missing_property_code"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — The parcel cites this gap when: Has a Hamilton ARN and none of those rolls carry ",
+      {
+       "children": [
+        "property_code"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "has_valid_arn+has_property_code"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — The parcel cites this gap when: Has a Hamilton ARN and at least one ",
+      {
+       "children": [
+        "property_code"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "overlay=<layer_id>"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — The parcel cites this gap when: An overlay row on this parcel has that ",
+      {
+       "children": [
+        "layer"
+       ],
+       "tag": "code"
+      },
+      " id."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "withheld_screened"
+     ],
+     "tag": "code"
+    },
+    " rows must use ",
+    {
+     "children": [
+      "manifest_only"
+     ],
+     "tag": "code"
+    },
+    ". Putting them on a parcel would read as “this parcel has a withheld owner,” which implies a value."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "withheld-screened-without-revealing-values"
+   },
+   "children": [
+    {
+     "children": [
+      "withheld_screened"
+     ],
+     "tag": "code"
+    },
+    " without revealing values"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A ",
+    {
+     "children": [
+      "withheld_screened"
+     ],
+     "tag": "code"
+    },
+    " row states ",
+    {
+     "children": [
+      "that a named field exists"
+     ],
+     "tag": "strong"
+    },
+    " in a named source and ",
+    {
+     "children": [
+      "why it is not shown"
+     ],
+     "tag": "strong"
+    },
+    ". It does not state a value, a fill pattern that identifies a person, or that any one parcel’s row is populated."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Allowed on the row:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "field ",
+      {
+       "children": [
+        "name"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "Owner"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Legal_Txt"
+       ],
+       "tag": "code"
+      },
+      ")"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "layer id and publisher"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "a count of non-null rows, if it was already logged as a count (PI-0064)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "the rule: HARD-RULES 2, D-13, dossier source allowlist"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Forbidden on the row, in the manifest, and in any dossier byte:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "owner names, mailing addresses, legal-description text, contact details"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "an output key whose name contains ",
+      {
+       "children": [
+        "owner"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "legal"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "mail"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "postal"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "name"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "phone"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "email"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "The dossier still does not ",
+    {
+     "children": [
+      "read"
+     ],
+     "tag": "strong"
+    },
+    " those fields (",
+    {
+     "children": [
+      "SOURCE_FIELDS"
+     ],
+     "tag": "code"
+    },
+    " in ",
+    {
+     "children": [
+      "industrial_atlas/dossier/schema.py"
+     ],
+     "tag": "code"
+    },
+    "). The ledger records their existence so the transparent view can say “this source has an owner-name field, and HeavyMap withholds it,” without the loader ever passing a value through."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "PostalCode"
+     ],
+     "tag": "code"
+    },
+    " on Cityview is a different type (",
+    {
+     "children": [
+      "empty"
+     ],
+     "tag": "code"
+    },
+    "): the field exists and is blank on every row (PI-0064). It is also excluded from ",
+    {
+     "children": [
+      "SOURCE_FIELDS"
+     ],
+     "tag": "code"
+    },
+    " because the key contains ",
+    {
+     "children": [
+      "postal"
+     ],
+     "tag": "code"
+    },
+    ". That row is ",
+    {
+     "children": [
+      "manifest_only"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "How-it-is-wired"
+   },
+   "children": [
+    "How it is wired"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Sheet 20"
+       ],
+       "tag": "strong"
+      },
+      " is the inventory. Agents append rows. They do not rewrite another session’s row except ",
+      {
+       "children": [
+        "status"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "publish_priority"
+       ],
+       "tag": "code"
+      },
+      ". Class defaults live in ",
+      {
+       "children": [
+        "Spreadsheets/21-issue-class-register.csv"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "heavymap.gaps.load_ledger"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " reads the CSV at import-safe path ",
+      {
+       "children": [
+        "Spreadsheets/20-data-gaps-ledger.csv"
+       ],
+       "tag": "code"
+      },
+      ". Unknown ",
+      {
+       "children": [
+        "gap_type"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "scope"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "parcel_attach"
+       ],
+       "tag": "code"
+      },
+      " tokens fail the load."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Dossier manifest"
+       ],
+       "tag": "strong"
+      },
+      " includes every row whose ",
+      {
+       "children": [
+        "scope"
+       ],
+       "tag": "code"
+      },
+      " is ",
+      {
+       "children": [
+        "dataset"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "layer"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "field"
+       ],
+       "tag": "code"
+      },
+      ", under ",
+      {
+       "children": [
+        "gaps_ledger"
+       ],
+       "tag": "code"
+      },
+      ". That is the dataset/layer-level ledger the front end loads once."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Each dossier record"
+       ],
+       "tag": "strong"
+      },
+      " has ",
+      {
+       "children": [
+        "gaps"
+       ],
+       "tag": "code"
+      },
+      ": a list of ",
+      {
+       "children": [
+        "gap_id"
+       ],
+       "tag": "code"
+      },
+      " strings, sorted, for tokens that match that parcel. The UI looks up copy from the manifest. Do not copy ",
+      {
+       "children": [
+        "reason"
+       ],
+       "tag": "code"
+      },
+      " onto the record."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Registry"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "industrial_atlas/ids"
+       ],
+       "tag": "code"
+      },
+      ") classifies placeholder ARNs ",
+      {
+       "children": [
+        "before"
+       ],
+       "tag": "strong"
+      },
+      " grouping by ARN, so all-zero values are ",
+      {
+       "children": [
+        "placeholder"
+       ],
+       "tag": "code"
+      },
+      " rather than ",
+      {
+       "children": [
+        "one_to_many"
+       ],
+       "tag": "code"
+      },
+      ". That grade feeds ",
+      {
+       "children": [
+        "roll_flag=placeholder"
+       ],
+       "tag": "code"
+      },
+      " and ledger type ",
+      {
+       "children": [
+        "placeholder"
+       ],
+       "tag": "code"
+      },
+      ". Re-running a registry does not change existing ",
+      {
+       "children": [
+        "ia_id"
+       ],
+       "tag": "code"
+      },
+      " values (geometry reconcile is unchanged)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "Relation-to-Claim-&amp;-Refusal"
+   },
+   "children": [
+    "Relation to Claim & Refusal"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "not_in_coverage"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Refusal reason, if any: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "not_present_in_source"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Refusal reason, if any: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " when the publisher does not release the object"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "empty"
+         ],
+         "tag": "code"
+        },
+        ", ",
+        {
+         "children": [
+          "sparse"
+         ],
+         "tag": "code"
+        },
+        ", ",
+        {
+         "children": [
+          "stale"
+         ],
+         "tag": "code"
+        },
+        ", ",
+        {
+         "children": [
+          "placeholder"
+         ],
+         "tag": "code"
+        },
+        ", ",
+        {
+         "children": [
+          "contradictory"
+         ],
+         "tag": "code"
+        },
+        ", ",
+        {
+         "children": [
+          "corrupted"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Refusal reason, if any: Not a refusal of a rung. The source is in hand. The honest view names the defect."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "withheld_screened"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Refusal reason, if any: Not a refusal. The field is held locally and screened at display."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Do not expand the closed refusal set here. That is the owner’s call (OPEN-DECISIONS, NA-86)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Seed-(2026-10-17)"
+   },
+   "children": [
+    "Seed (2026-10-17)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Twelve rows, Hamilton, verified against PRs #74 and #75 and PI-0056..PI-0064 plus the quirks and focus notes they cite. This cloud VM cannot reach ArcGIS. Counts are from those already-logged reads, not a new pull."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "GAP-0001"
+       ],
+       "tag": "strong"
+      },
+      " — type: ",
+      {
+       "children": [
+        "not_present_in_source"
+       ],
+       "tag": "code"
+      },
+      " · What it names: NPCA has no tax class field. ",
+      {
+       "children": [
+        "MPAC_TAXAT"
+       ],
+       "tag": "code"
+      },
+      " is taxing municipality (PI-0057)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GAP-0002"
+       ],
+       "tag": "strong"
+      },
+      " — type: ",
+      {
+       "children": [
+        "sparse"
+       ],
+       "tag": "code"
+      },
+      " · What it names: Cityview ",
+      {
+       "children": [
+        "PropCode"
+       ],
+       "tag": "code"
+      },
+      " filled on 1,628 of 81,121 rows (PI-0057)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GAP-0003"
+       ],
+       "tag": "strong"
+      },
+      " — type: ",
+      {
+       "children": [
+        "stale"
+       ],
+       "tag": "code"
+      },
+      " · What it names: Cityview last edited 2020-02-27 (PI-0058, PR #74)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GAP-0004"
+       ],
+       "tag": "strong"
+      },
+      " — type: ",
+      {
+       "children": [
+        "contradictory"
+       ],
+       "tag": "code"
+      },
+      " · What it names: Those codes can disagree with current zoning. Not a measured per-parcel clash (PI-0058)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GAP-0005"
+       ],
+       "tag": "strong"
+      },
+      " — type: ",
+      {
+       "children": [
+        "placeholder"
+       ],
+       "tag": "code"
+      },
+      " · What it names: 10 registry links with all-zero ARN, previously graded ",
+      {
+       "children": [
+        "one_to_many"
+       ],
+       "tag": "code"
+      },
+      " (PI-0059). 9 NPCA source rows start ",
+      {
+       "children": [
+        "0000"
+       ],
+       "tag": "code"
+      },
+      " (Q-019)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GAP-0006"
+       ],
+       "tag": "strong"
+      },
+      " — type: ",
+      {
+       "children": [
+        "empty"
+       ],
+       "tag": "code"
+      },
+      " · What it names: Cityview ",
+      {
+       "children": [
+        "PostalCode"
+       ],
+       "tag": "code"
+      },
+      " empty on every row (PI-0064)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GAP-0007"
+       ],
+       "tag": "strong"
+      },
+      " — type: ",
+      {
+       "children": [
+        "not_present_in_source"
+       ],
+       "tag": "code"
+      },
+      " · What it names: No owner mailing-address field on either NPCA layer (PI-0064)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GAP-0008"
+       ],
+       "tag": "strong"
+      },
+      " — type: ",
+      {
+       "children": [
+        "withheld_screened"
+       ],
+       "tag": "code"
+      },
+      " · What it names: Cityview ",
+      {
+       "children": [
+        "Owner"
+       ],
+       "tag": "code"
+      },
+      " exists and is withheld. Names only, no values (PI-0064, HARD-RULES 2)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GAP-0009"
+       ],
+       "tag": "strong"
+      },
+      " — type: ",
+      {
+       "children": [
+        "withheld_screened"
+       ],
+       "tag": "code"
+      },
+      " · What it names: Cityview ",
+      {
+       "children": [
+        "Legal_Txt"
+       ],
+       "tag": "code"
+      },
+      " exists and is withheld (PI-0064)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GAP-0010"
+       ],
+       "tag": "strong"
+      },
+      " — type: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " · What it names: 74,276 of 166,745 Hamilton parcels outside NPCA roll coverage, provisional (PR #74, registry run 2)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GAP-0011"
+       ],
+       "tag": "strong"
+      },
+      " — type: ",
+      {
+       "children": [
+        "empty"
+       ],
+       "tag": "code"
+      },
+      " · What it names: 29 parcels inside NPCA coverage with no roll number (PR #74, registry ",
+      {
+       "children": [
+        "unmatched"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GAP-0012"
+       ],
+       "tag": "strong"
+      },
+      " — type: ",
+      {
+       "children": [
+        "placeholder"
+       ],
+       "tag": "code"
+      },
+      " · What it names: HCA ",
+      {
+       "children": [
+        "Version"
+       ],
+       "tag": "code"
+      },
+      " is 0 on all 134 Hamilton rows (Q-021, PI-0063’s overlay stack)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Tests"
+   },
+   "children": [
+    "Tests"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "tests/test_heavymap_gaps.py"
+     ],
+     "tag": "code"
+    },
+    " loads the real CSV, checks enums and PI citations, and checks that ",
+    {
+     "children": [
+      "withheld_screened"
+     ],
+     "tag": "code"
+    },
+    " never attaches to a parcel. Dossier tests assert compact ",
+    {
+     "children": [
+      "gaps"
+     ],
+     "tag": "code"
+    },
+    " lists and a manifest ledger. Registry tests assert placeholder ARNs are not graded ",
+    {
+     "children": [
+      "one_to_many"
+     ],
+     "tag": "code"
+    },
+    " and that a second run keeps the same ",
+    {
+     "children": [
+      "ia_id"
+     ],
+     "tag": "code"
+    },
+    " values."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0082\ntype: working-paper\nsection: systems\nevidence_date: 2026-11-16\nseq: 15"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, architecture, framework",
+ "path": "Data-gaps-ledger-11-19",
+ "title": "Data-gaps ledger",
+ "url": "https://telegra.ph/Data-gaps-ledger-11-19",
+ "views": 0
+}

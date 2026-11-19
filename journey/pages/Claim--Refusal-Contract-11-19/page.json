@@ -1,0 +1,1824 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, architecture, framework"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Status:"
+     ],
+     "tag": "strong"
+    },
+    " architecture sketch, 2026-09-23, vacant-display nuance 2026-10-17. Linear ",
+    {
+     "children": [
+      "NA-11"
+     ],
+     "tag": "strong"
+    },
+    ". Docs only."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Purpose"
+   },
+   "children": [
+    "Purpose"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The contract is the rule for anything the ladder says about a spine unit. A presentation may assert a fact only with an evidence grade and a source stamp. Where it cannot assert, it records a refusal. Silence is not a value."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The contract exists because a gap that looks like a measurement will be read as a fact about land and about the people on it. The Hamilton–Niagara prior art already hit this: a missing employment denominator rendered as zero reads as an empty site."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Non-goals"
+   },
+   "children": [
+    "Non-goals"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Implementing refutation jobs, score formulas, or a claim database."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Publishing owner names, or using “available,” “failing,” or “vacant” as HeavyMap’s own product language. A source’s classification may be quoted and attributed (see below). UI naming for surfaced source classes will be refined later."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Deciding licence negotiations with MPAC or any other vendor."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Editing MCS. The ",
+      {
+       "children": [
+        "derived_readings"
+       ],
+       "tag": "code"
+      },
+      " header is named here so later rows use it consistently."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Treating a UK atlas score module as Beta’s reading catalog."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "How-it-relates-to-the-other-three"
+   },
+   "children": [
+    "How it relates to the other three"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Parcel Identity Spine."
+       ],
+       "tag": "strong"
+      },
+      " Identity facts are claims too. “This key is a Welland footprint” needs a stamp. “No parcel polygon is joined” is a refusal on that same band, not a blank geometry class."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Context Band Ladder."
+       ],
+       "tag": "strong"
+      },
+      " Each rung is either filled with claims under this contract or marked ",
+      {
+       "children": [
+        "refused"
+       ],
+       "tag": "code"
+      },
+      " with one reason. The ladder does not have a third, silent state."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "PCDP."
+       ],
+       "tag": "strong"
+      },
+      " Minimum presentation shows identity claims and the refusal list. Maximum presentation shows every claim and every refusal. Share and export carry the same set. A dossier that hides refusals has broken the protocol."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Evidence-grades"
+   },
+   "children": [
+    "Evidence grades"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Every filled value has one grade:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "observed"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Plain meaning: Copied from a source and normalised. Not interpreted. “The by-law text says L1.”"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "joined"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Plain meaning: An observed value placed on this spine key by a named join method. The method is part of the stamp."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "derived"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Plain meaning: Computed from named inputs by a named method. A reading, not a new observation."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "refused"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Plain meaning: No assertion. A reason code is required. There is no grade that means “probably empty.”"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "joined"
+     ],
+     "tag": "code"
+    },
+    " is not more true than ",
+    {
+     "children": [
+      "observed"
+     ],
+     "tag": "code"
+    },
+    ". It records an extra step that can be wrong. A point-in-polygon zoning code is ",
+    {
+     "children": [
+      "joined"
+     ],
+     "tag": "code"
+    },
+    ". The by-law’s own polygon id, if HeavyMap ever held it as the unit itself, would be ",
+    {
+     "children": [
+      "observed"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Join methods, carried on the stamp when the grade is ",
+    {
+     "children": [
+      "joined"
+     ],
+     "tag": "code"
+    },
+    ". Names follow the prior-art set; this sketch does not re-specify tolerances:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "identifier"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Reader takeaway: The source’s own id matched."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "normalized_address"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Reader takeaway: Address text matched after normalisation. Some rows of that table will have failed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "point_in_polygon"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Reader takeaway: A point of this unit fell inside a published polygon."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "containment"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Reader takeaway: Geometry of this unit sits inside the source geometry."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "proximity"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Reader takeaway: Nearest feature under a stated distance. The distance is not access."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "overlap"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Reader takeaway: Area overlap above a stated threshold."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Source-stamp"
+   },
+   "children": [
+    "Source stamp"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A stamp is the smallest set of fields that lets someone else find the same record."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "source_name"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: Yes"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "publisher"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: Yes"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "licence"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: Yes. If the refusal is ",
+      {
+       "children": [
+        "not_licensed"
+       ],
+       "tag": "code"
+      },
+      ", the stamp names the product that was not used."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "original_id"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: Yes when the source has one."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "retrieved_on"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: Yes for anything HeavyMap holds. The date the file was obtained."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "observation_on"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: Yes. The date the source’s fact refers to. A by-law adopted in 2017 and retrieved in 2026 keeps both dates."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "join_method"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: Yes when grade is ",
+      {
+       "children": [
+        "joined"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "inputs"
+         ],
+         "tag": "code"
+        },
+        " and ",
+        {
+         "children": [
+          "method"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: Yes when grade is ",
+      {
+       "children": [
+        "derived"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "note"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Required: When a trap matters (layer index, unit of measure, address restyling)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "The original published value survives next to any normalised one. A New York floor area stays in the published square feet on the stamp even if a reading also states square metres."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Joining-concepts"
+   },
+   "children": [
+    "Joining concepts"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A claim may carry a joining-concept id beside the publisher’s field name. The id names the job. The field name stays as published. The concept does not add a ladder band."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The closed sets for relation, authority scale, claim grain, register family, and ledger evidence level, and the thirty concept ids, are in ADR 0002. Federal registers stay on the bands they already belong to, and carry an authority scale when a later slice writes that field. The source-stamp table above is unchanged. Counts for a whole jurisdiction (",
+    {
+     "children": [
+      "jurisdiction_activity_aggregate"
+     ],
+     "tag": "code"
+    },
+    ") are not claims about a spine unit. Parcel-level refusal for that object is ",
+    {
+     "children": [
+      "not_in_coverage"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Refusal-reasons"
+   },
+   "children": [
+    "Refusal reasons"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A refusal uses exactly one of:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "not_in_coverage"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: The layer, jurisdiction, or vintage is outside what v1 holds, or the responsible publisher does not release that object. Geography outside the v1 list is this reason. A city with no public parcel fabric is this reason for parcel grain."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "not_licensed"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: A source exists and HeavyMap is not allowed to use it. (MPAC was the standing example until HARD-RULES 4 was amended on 2026-10-17; it is no longer refused on licence.)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "not_joined"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Use it when: A usable source is in hand, or is expected in the joined set, and this key has no accepted join yet."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "One reason only. If a layer is both unlicensed and unjoined, ",
+    {
+     "children": [
+      "not_licensed"
+     ],
+     "tag": "code"
+    },
+    " wins: there is nothing to join. If a layer was never in the v1 set, ",
+    {
+     "children": [
+      "not_in_coverage"
+     ],
+     "tag": "code"
+    },
+    " wins: do not imply a join is the remaining step."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Words that may appear only as a quotation of a source’s own classification or register, with grade ",
+    {
+     "children": [
+      "observed"
+     ],
+     "tag": "code"
+    },
+    " or ",
+    {
+     "children": [
+      "joined"
+     ],
+     "tag": "code"
+    },
+    " and a stamp:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "vacant"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "empty"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "available"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "closed"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "departed"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "HeavyMap must not assert on its own that land is vacant. It may display the source’s class, quoted and attributed. Examples of allowed display (not final UI copy):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "City class: Vacant Lands"
+       ],
+       "tag": "code"
+      },
+      " — Hamilton Existing Land Use ",
+      {
+       "children": [
+        "PRIMARY_LA"
+       ],
+       "tag": "code"
+      },
+      " value, labelled as the City’s class"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "a Vacant Building Registry row shown as that register’s entry, not as a HeavyMap vacancy finding"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "UI naming conventions for surfaced source classes will be refined later."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Display pattern, not final copy: an MPAC tax or property class (public in Ontario, HARD-RULES 4) may be surfaced as a cross-confirmation signal such as ",
+    {
+     "children": [
+      "Tax class confirmed: industrial"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Without that quotation they are forbidden, including as friendly summaries of a refusal. “Not joined” is not “vacant.” “Not licensed” is not “unassessed.” “Not in coverage” is not “no industrial activity.”"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Also forbidden:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The number ",
+      {
+       "children": [
+        "0"
+       ],
+       "tag": "code"
+      },
+      " where the quantity could not be computed. The value is refused, and the reason says which input was missing."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Dropping a rung so the panel looks shorter."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "A single composite score that mixes a physical measure, a time series, and an evidence grade."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Upgrading a derived reading to an observation because the number looks precise."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Inferring that a business operates today because an older register listed it."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "When two stamped records disagree, both stay, grades and stamps intact, and the assertion is ",
+    {
+     "children": [
+      "contested"
+     ],
+     "tag": "code"
+    },
+    ". When a later check knocks down an assertion, the state is ",
+    {
+     "children": [
+      "refuted"
+     ],
+     "tag": "code"
+    },
+    " and both the assertion and the refutation remain visible. Deleting the contested line would hide the disagreement. Allowed assertion states are ",
+    {
+     "children": [
+      "supported"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "contested"
+     ],
+     "tag": "code"
+    },
+    ", and ",
+    {
+     "children": [
+      "refuted"
+     ],
+     "tag": "code"
+    },
+    ". A refusal is not one of those states. Most units will have no assertion beyond their observed attributes, and that is a normal filled ladder, not a thin one."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Derived-readings-and-the-MCS-column"
+   },
+   "children": [
+    "Derived readings and the MCS column"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A derived reading is grade ",
+    {
+     "children": [
+      "derived"
+     ],
+     "tag": "code"
+    },
+    ". It names its inputs, its method, and its unit. It lives on the ",
+    {
+     "children": [
+      "derived_readings"
+     ],
+     "tag": "code"
+    },
+    " rung. If an input is refused, the reading is refused with that input’s reason. Confidence does not fill a refused reading."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "MCS Part 2 column ",
+    {
+     "children": [
+      "derived_readings"
+     ],
+     "tag": "code"
+    },
+    " is a ",
+    {
+     "children": [
+      "dataset"
+     ],
+     "tag": "strong"
+    },
+    " field. It lists reading identifiers that dataset is allowed to feed, ",
+    {
+     "children": [
+      "|"
+     ],
+     "tag": "code"
+    },
+    "-separated. It uses reading names, not ladder tokens. The ladder token ",
+    {
+     "children": [
+      "derived_readings"
+     ],
+     "tag": "code"
+    },
+    " must not be written into this column; that token belongs in ",
+    {
+     "children": [
+      "dossier_bands"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "An empty ",
+    {
+     "children": [
+      "derived_readings"
+     ],
+     "tag": "code"
+    },
+    " cell means “this dataset feeds no reading.” It does not describe a parcel, and it must not be copied onto a unit as vacancy."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Illustrative reading identifiers, not a closed catalog:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "floor_area_m2"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Kind of method: Convert published floor area to square metres; keep the source unit on the stamp · Typical refusal: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " when no floor area was published"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "employment_interval"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Kind of method: Carry a published employment band as a range · Typical refusal: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " where no employment register exists"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "coverage_ratio"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Kind of method: Building footprint area divided by parcel area · Typical refusal: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "not_licensed"
+       ],
+       "tag": "code"
+      },
+      " when parcel area is missing; never ",
+      {
+       "children": [
+        "0"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "A new identifier may be added when a reading is specified. It needs a method someone can re-read. It does not need a UI."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "The-two-synthetic-units"
+   },
+   "children": [
+    "The two synthetic units"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "These are the same illustrations as in PCDP.md. They show the contract, not real parcels."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Canadian-—-ia:ca:on:welland:footprint:SYN-0142"
+   },
+   "children": [
+    "Canadian — ",
+    {
+     "children": [
+      "ia:ca:on:welland:footprint:SYN-0142"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Filled claim, grade ",
+      {
+       "children": [
+        "joined"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Rung: ",
+      {
+       "children": [
+        "land_use"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Value: ",
+      {
+       "children": [
+        "L1 — Light Industrial"
+       ],
+       "tag": "code"
+      },
+      " (synthetic)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Stamp: publisher City of Welland; source name illustrative current zoning by-law; licence Open Government Licence; ",
+      {
+       "children": [
+        "original_id"
+       ],
+       "tag": "code"
+      },
+      " ",
+      {
+       "children": [
+        "SYN-ZONE-L1"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "join_method"
+       ],
+       "tag": "code"
+      },
+      " ",
+      {
+       "children": [
+        "point_in_polygon"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "retrieved_on"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "observation_on"
+       ],
+       "tag": "code"
+      },
+      " both marked illustrative, and not the same kind of date if a real by-law is later joined."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Note: zoning text is not an employment fact."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Filled claim, grade ",
+      {
+       "children": [
+        "joined"
+       ],
+       "tag": "code"
+      },
+      ", weaker method available and rejected."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Rung: ",
+      {
+       "children": [
+        "activity_registers"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Value: NEI ",
+      {
+       "children": [
+        "nei_id SYN-8130"
+       ],
+       "tag": "code"
+      },
+      " present on this footprint (synthetic)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Stamp: ",
+      {
+       "children": [
+        "join_method"
+       ],
+       "tag": "code"
+      },
+      " ",
+      {
+       "children": [
+        "identifier"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The illustration does ",
+      {
+       "children": [
+        "not"
+       ],
+       "tag": "strong"
+      },
+      " also join on the street string. Prior art showed address restyling producing false departures. No departure assertion is made. Employment, if shown, is the source band as a range (",
+      {
+       "children": [
+        "employment_interval"
+       ],
+       "tag": "code"
+      },
+      "), grade ",
+      {
+       "children": [
+        "derived"
+       ],
+       "tag": "code"
+      },
+      " only after the observed band is on the stamp."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Refusals on the same unit."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Parcel polygon"
+       ],
+       "tag": "strong"
+      },
+      " — Reason: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " · What a reader must not conclude: That Welland has no lot here"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Assessed value (not yet joined from MPAC)"
+       ],
+       "tag": "strong"
+      },
+      " — Reason: ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " · What a reader must not conclude: That the land is unassessed"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "constraints"
+         ],
+         "tag": "code"
+        },
+        " rung"
+       ],
+       "tag": "strong"
+      },
+      " — Reason: ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " · What a reader must not conclude: That the site is unconstrained"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "coverage_ratio"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Reason: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " · What a reader must not conclude: That coverage is zero"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "American-—-ia:us:ny:erie:parcel:SYN-999.00-1-1.1"
+   },
+   "children": [
+    "American — ",
+    {
+     "children": [
+      "ia:us:ny:erie:parcel:SYN-999.00-1-1.1"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Filled claim, grade ",
+      {
+       "children": [
+        "observed"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Rung: ",
+      {
+       "children": [
+        "land_use"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Value: property class ",
+      {
+       "children": [
+        "710"
+       ],
+       "tag": "code"
+      },
+      " (synthetic)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Stamp: publisher NYS or Erie County parcel layer, named when a real extract exists; licence the public parcel licence of that layer; ",
+      {
+       "children": [
+        "original_id"
+       ],
+       "tag": "code"
+      },
+      " SBL ",
+      {
+       "children": [
+        "SYN-999.00-1-1.1"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "observation_on"
+       ],
+       "tag": "code"
+      },
+      " the roll year of that extract."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Note on the stamp: property class is an assessment code. It is not a zoning by-law and not NAICS. Those vocabularies stay unasserted."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Filled reading, grade ",
+      {
+       "children": [
+        "derived"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Rung: ",
+      {
+       "children": [
+        "derived_readings"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Identifier: ",
+      {
+       "children": [
+        "floor_area_m2"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Inputs: published floor area ",
+      {
+       "children": [
+        "20000"
+       ],
+       "tag": "code"
+      },
+      " square feet (synthetic)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Method: multiply by ",
+      {
+       "children": [
+        "0.092903"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Result labelled square metres, with the square-foot input still on the stamp"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "This number is a reading. It does not say the building is fully used."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Refusals on the same unit."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "SWIS / city or town name"
+       ],
+       "tag": "strong"
+      },
+      " — Reason: ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " · What a reader must not conclude: That the parcel is “county land” with no municipality"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "constraints"
+         ],
+         "tag": "code"
+        },
+        " rung"
+       ],
+       "tag": "strong"
+      },
+      " — Reason: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " · What a reader must not conclude: That no overlay applies in the world"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "activity_registers"
+         ],
+         "tag": "code"
+        },
+        " rung"
+       ],
+       "tag": "strong"
+      },
+      " — Reason: ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " · What a reader must not conclude: That the site is inactive or vacant"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Owner name is not a v1 ladder object, so the presentation has no owner field and no fourth refusal code. A later decision that allows an owner claim has to bring it in with a grade and a stamp."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The American activity refusal and the Canadian constraints refusal are the same kind of event in the contract: a named inability to speak. The land-use claims beside them are a different kind of event, and they do not fill the refused rungs by implication. A manufacturing property class does not prove a permit. A light-industrial zone does not prove a tenant."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Prior-art"
+   },
+   "children": [
+    "Prior art"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "first-attempts/niagara-atlas/DOSSIER-TECHNICAL-REPORT.md"
+       ],
+       "tag": "code"
+      },
+      " — attributed, dated, bounded, refusable; null is not zero; contested records both stay; “vacant” reserved for a register’s own word. Those rules are the pattern this contract keeps."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "first-attempts/niagara-atlas/README.md"
+       ],
+       "tag": "code"
+      },
+      " — provenance travels with the feature; observation is not inference; a derived score is an indicator."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "first-attempts/niagara-atlas/INTEGRATION.md"
+       ],
+       "tag": "code"
+      },
+      " — uneven coverage across Hamilton, Niagara Region, Erie, and Niagara County NY is a publishing fact. The map’s job is to say so."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "UK atlas (",
+      {
+       "children": [
+        "babbworks/atlas"
+       ],
+       "tag": "code"
+      },
+      ") — derived indicators live in a scoring step separate from source modules. Beta may copy that separation. It does not copy UK geographies, UK ports, or UK scores."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0081\ntype: working-paper\nsection: systems\nevidence_date: 2026-11-16\nseq: 14"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, architecture, framework",
+ "path": "Claim--Refusal-Contract-11-19",
+ "title": "Claim & Refusal Contract",
+ "url": "https://telegra.ph/Claim--Refusal-Contract-11-19",
+ "views": 0
+}

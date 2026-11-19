@@ -549,7 +549,7 @@ def cmd_post(args) -> None:
         "country": m.get("country", ""), "subdivision": m.get("subdivision", ""), "county": m.get("county", ""), "city": m.get("city", ""),
         "created_at": now(), "last_edited_at": now(), "revision": "1", "content_hash": save_copy(full, source), "status": "live",
         "supersedes": m.get("supersedes", ""), "gate_class": "ungated", "check_result": result, "hold_rules_hit": "; ".join(hits),
-        "approved_by": "Morgen (review)" if result == "review" else "", "word_count": str(n_words), "read_minutes": str(minutes),
+        "approved_by": "owner (review)" if result == "review" else "", "word_count": str(n_words), "read_minutes": str(minutes),
         "images": str(sum(1 for _ in image_sources(content))), "embeds": "", "sources": m.get("sources", ""),
         "evidence_date": m.get("evidence_date", ""), "language": "en", "collections": section,
         "related_records": m.get("related", ""), "notes": m.get("notes", ""),

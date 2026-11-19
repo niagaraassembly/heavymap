@@ -1,0 +1,1458 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, spine, joins, pilots"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "Conflicts-with-existing-docs-(d)"
+   },
+   "children": [
+    "Conflicts with existing docs (d)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "parcel-identity-spine.md"
+         ],
+         "tag": "code"
+        },
+        " (Canada section and synthetic table)"
+       ],
+       "tag": "strong"
+      },
+      " — Statement: Welland's open data had no parcel fabric; the Welland unit is at footprint grain with parcel PIN ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " · Finding: A public Welland parcel fabric exists, keyed by ",
+      {
+       "children": [
+        "Parcel_No"
+       ],
+       "tag": "code"
+      },
+      ", outside the DCAT catalog. Parcel PIN would be ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "observed"
+       ],
+       "tag": "code"
+      },
+      ", not ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      ", once admitted."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "parcel-identity-spine.md"
+         ],
+         "tag": "code"
+        },
+        " (spine key illustration)"
+       ],
+       "tag": "strong"
+      },
+      " — Statement: US local token shaped like a print key; municipality slug stays the county until a SWIS join names the city · Finding: Print keys are padded differently by layer; SBL20 is stable. For Rochester the SWIS join exists in ",
+      {
+       "children": [
+        "countysbl"
+       ],
+       "tag": "code"
+      },
+      " (prefix ",
+      {
+       "children": [
+        "261400"
+       ],
+       "tag": "code"
+      },
+      "), so ",
+      {
+       "children": [
+        "rochester"
+       ],
+       "tag": "code"
+      },
+      " can be the slug."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "12"
+         ],
+         "tag": "code"
+        },
+        " section 4 point 3"
+       ],
+       "tag": "strong"
+      },
+      " — Statement: Welland's \"no parcel fabric\" statement becomes out of date only if the NPCA layers are cleared · Finding: It is out of date regardless: the city serves its own fabric."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "10"
+         ],
+         "tag": "code"
+        },
+        " section 7 question 5"
+       ],
+       "tag": "strong"
+      },
+      " — Statement: NPCA clearance decides whether the Welland wording is revisited · Finding: Same point. Question 5 still governs the MPAC-derived layer only."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "11"
+         ],
+         "tag": "code"
+        },
+        " ",
+        {
+         "children": [
+          "LG-118"
+         ],
+         "tag": "code"
+        },
+        ", ",
+        {
+         "children": [
+          "LG-054"
+         ],
+         "tag": "code"
+        },
+        ", ",
+        {
+         "children": [
+          "LG-004"
+         ],
+         "tag": "code"
+        },
+        ", ",
+        {
+         "children": [
+          "LG-097"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Statement: see above · Finding: Update wording and evidence level after the owner approves. Do not edit before then."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "07"
+         ],
+         "tag": "code"
+        },
+        " roster, Rochester"
+       ],
+       "tag": "strong"
+      },
+      " — Statement: catalog type ",
+      {
+       "children": [
+        "socrata"
+       ],
+       "tag": "code"
+      },
+      "; DCAT licence field holds HTML · Finding: ArcGIS Hub; licence text points to ",
+      {
+       "children": [
+        "data.cityofrochester.gov/pages/terms"
+       ],
+       "tag": "code"
+      },
+      " (page not read in full)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "07"
+         ],
+         "tag": "code"
+        },
+        " roster, Rochester"
+       ],
+       "tag": "strong"
+      },
+      " — Statement: 12 historical snapshots 1996-2024 · Finding: Live: 11 spatial snapshots 2014-2024 on ",
+      {
+       "children": [
+        "server2"
+       ],
+       "tag": "code"
+      },
+      ", plus tabular snapshots 1996, 2000, 2004, 2008, 2012; the two float-stored tables cannot be joined by id."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "07"
+         ],
+         "tag": "code"
+        },
+        " roster / ",
+        {
+         "children": [
+          "09"
+         ],
+         "tag": "code"
+        },
+        " catalog, Rochester"
+       ],
+       "tag": "strong"
+      },
+      " — Statement: \"vacant property\", permits and business datasets on the portal · Finding: Only a vacant-land layer (4,728) exists. No permits, violations or licences in the DCAT feed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "09"
+         ],
+         "tag": "code"
+        },
+        " catalog, Rochester vacant land"
+       ],
+       "tag": "strong"
+      },
+      " — Statement: 4,730 records · Finding: 4,728 live."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "07"
+         ],
+         "tag": "code"
+        },
+        " roster, Welland"
+       ],
+       "tag": "strong"
+      },
+      " — Statement: origin server down 2026-08-22; use the Hub cache · Finding: Origin server answers today."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "07"
+         ],
+         "tag": "code"
+        },
+        " roster, Welland"
+       ],
+       "tag": "strong"
+      },
+      " — Statement: recommended as the test municipality \"for method calibration\" · Finding: Still true and stronger: two registers, a parcel fabric, an address point key and zoning."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "11"
+         ],
+         "tag": "code"
+        },
+        " note on Welland licences"
+       ],
+       "tag": "strong"
+      },
+      " — Statement: \"licence records are not public\" · Finding: Confirmed, and the aggregate table is empty today."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Proposed-sub-issues-for-NIA-24-(e)"
+   },
+   "children": [
+    "Proposed sub-issues for NIA-24 (e)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "None created."
+     ],
+     "tag": "strong"
+    },
+    " For the owner to approve. G2 has no numbered acceptance checks in the Linear milestone text (\"join keys and crosswalks demonstrated on a chosen pilot slice; fixtures merged\"). The check labels below are this study's proposal: ",
+    {
+     "children": [
+      "G2-a"
+     ],
+     "tag": "strong"
+    },
+    " key mapping approved per pilot place; ",
+    {
+     "children": [
+      "G2-b"
+     ],
+     "tag": "strong"
+    },
+    " crosswalk demonstrated with graded exactness; ",
+    {
+     "children": [
+      "G2-c"
+     ],
+     "tag": "strong"
+    },
+    " refusals stamped correctly (",
+    {
+     "children": [
+      "not_joined"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "not_in_coverage"
+     ],
+     "tag": "code"
+    },
+    ", and ",
+    {
+     "children": [
+      "not_licensed"
+     ],
+     "tag": "code"
+    },
+    " only for sources still refused on licence; MPAC is not one); ",
+    {
+     "children": [
+      "G2-d"
+     ],
+     "tag": "strong"
+    },
+    " fixtures merged (PR #13 or replacement); ",
+    {
+     "children": [
+      "G2-e"
+     ],
+     "tag": "strong"
+    },
+    " ledger and concepts reconciled with live reads."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "[ ] ",
+      {
+       "children": [
+        "Welland parcel fabric: licence and admission check"
+       ],
+       "tag": "strong"
+      },
+      " — find terms for ",
+      {
+       "children": [
+        "IMS_Parcels_Public_Cache"
+       ],
+       "tag": "code"
+      },
+      ", ask the city if it is meant for public reuse, record a verdict. Lane: ",
+      {
+       "children": [
+        "claude"
+       ],
+       "tag": "strong"
+      },
+      ". Depends on: none. Supports ",
+      {
+       "children": [
+        "G2-c"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] ",
+      {
+       "children": [
+        "Amend spine doc and fixtures for Welland parcel grain"
+       ],
+       "tag": "strong"
+      },
+      " — replace \"no parcel fabric\" wording; add a parcel-grain Welland fixture beside the footprint one. Lane: ",
+      {
+       "children": [
+        "cursor cloud"
+       ],
+       "tag": "strong"
+      },
+      ". Depends on: the item above and open decision 1. Supports ",
+      {
+       "children": [
+        "G2-d"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] ",
+      {
+       "children": [
+        "Rochester spine key spec and fixture"
+       ],
+       "tag": "strong"
+      },
+      " — write the ",
+      {
+       "children": [
+        "hm:us:ny:rochester:parcel:{SBL20}"
+       ],
+       "tag": "code"
+      },
+      " rule, the duplicate-id fold rule and a fixture using a real-shaped id. Lane: ",
+      {
+       "children": [
+        "cursor cloud"
+       ],
+       "tag": "strong"
+      },
+      ". Depends on: open decisions 2 and 3. Supports ",
+      {
+       "children": [
+        "G2-a"
+       ],
+       "tag": "strong"
+      },
+      ", ",
+      {
+       "children": [
+        "G2-d"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] ",
+      {
+       "children": [
+        "Monroe swis crosswalk table"
+       ],
+       "tag": "strong"
+      },
+      " — build the 32-name to 6-digit-SWIS table from the ",
+      {
+       "children": [
+        "countysbl"
+       ],
+       "tag": "code"
+      },
+      " prefixes (read-only, no owner fields) and check the 26 city-prefixed rows with null ",
+      {
+       "children": [
+        "swis"
+       ],
+       "tag": "code"
+      },
+      ". Lane: ",
+      {
+       "children": [
+        "codex"
+       ],
+       "tag": "strong"
+      },
+      ". Depends on: none. Supports ",
+      {
+       "children": [
+        "G2-b"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] ",
+      {
+       "children": [
+        "SBL and print-key normaliser with tests"
+       ],
+       "tag": "strong"
+      },
+      " — SBL20 validator, SWIS6+SBL20 composer, padded/unpadded print-key renderer; refuse float input. Lane: ",
+      {
+       "children": [
+        "codex"
+       ],
+       "tag": "strong"
+      },
+      ". Depends on: the two items above it in this list (crosswalk, key spec). Supports ",
+      {
+       "children": [
+        "G2-a"
+       ],
+       "tag": "strong"
+      },
+      ", ",
+      {
+       "children": [
+        "G2-b"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] ",
+      {
+       "children": [
+        "Welland join harness"
+       ],
+       "tag": "strong"
+      },
+      " — read-only script that runs the six Welland joins (Parcel_No FK, AddId, centroid in parcel, centroid in zone, NEI address text, NEI spatial) on full populations with count queries and writes a join-rate CSV. Lane: ",
+      {
+       "children": [
+        "codex"
+       ],
+       "tag": "strong"
+      },
+      ". Depends on: none for the FKs; the licence check for any storing of results. Supports ",
+      {
+       "children": [
+        "G2-b"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] ",
+      {
+       "children": [
+        "Welland address normaliser and register linkage measurement"
+       ],
+       "tag": "strong"
+      },
+      " — normalise abbreviations, ranges and units; measure NEI-to-civic and directory-to-civic hit rates; re-measure the documented 29% NEI-directory overlap. Lane: ",
+      {
+       "children": [
+        "cursor cloud"
+       ],
+       "tag": "strong"
+      },
+      ". Depends on: the join harness. Supports ",
+      {
+       "children": [
+        "G2-b"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] ",
+      {
+       "children": [
+        "Spatial-join grading spec"
+       ],
+       "tag": "strong"
+      },
+      " — centroid vs representative point vs area overlap; rules for overlapping zoning, straddling footprints and one-to-many parcel-to-premises; what grade each earns. Lane: ",
+      {
+       "children": [
+        "claude"
+       ],
+       "tag": "strong"
+      },
+      ". Depends on: none. Supports ",
+      {
+       "children": [
+        "G2-b"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] ",
+      {
+       "children": [
+        "Rochester historical id repair"
+       ],
+       "tag": "strong"
+      },
+      " — determine whether the 1996-2012 float-stored SBL tables can be rebuilt (address, house number, ",
+      {
+       "children": [
+        "SBL_ID"
+       ],
+       "tag": "code"
+      },
+      " shape) and how much of ",
+      {
+       "children": [
+        "ParcelHistory"
+       ],
+       "tag": "code"
+      },
+      " lineage covers changes; otherwise mark those years ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      ". Lane: ",
+      {
+       "children": [
+        "claude"
+       ],
+       "tag": "strong"
+      },
+      ". Depends on: none. Supports ",
+      {
+       "children": [
+        "G2-b"
+       ],
+       "tag": "strong"
+      },
+      ", ",
+      {
+       "children": [
+        "G2-c"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] ",
+      {
+       "children": [
+        "Rochester permits, violations and business licences hunt"
+       ],
+       "tag": "strong"
+      },
+      " — search the Hub's linked services, Kiva web map layers, Monroe and NYS open data for any queryable source; else stamp ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      ". Lane: ",
+      {
+       "children": [
+        "kiro"
+       ],
+       "tag": "strong"
+      },
+      ". Depends on: none. Supports ",
+      {
+       "children": [
+        "G2-c"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] ",
+      {
+       "children": [
+        "Owner and PII field register for pilot layers"
+       ],
+       "tag": "strong"
+      },
+      " — machine-readable list of fields per layer (",
+      {
+       "children": [
+        "OWNERNME1"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PSTLADDRESS"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PRIMARY_OWNER"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Owner_Class"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Comment"
+       ],
+       "tag": "code"
+      },
+      ", directory contacts) with tier proposals under D-13; no values sampled. Lane: ",
+      {
+       "children": [
+        "copilot"
+       ],
+       "tag": "strong"
+      },
+      ". Depends on: none. Supports ",
+      {
+       "children": [
+        "G2-c"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] ",
+      {
+       "children": [
+        "Ledger and concept reconciliation proposal"
+       ],
+       "tag": "strong"
+      },
+      " — draft the new ledger rows and concept gaps listed in section (c) as an appendable CSV and a diff of wording for ",
+      {
+       "children": [
+        "10"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "11"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "12"
+       ],
+       "tag": "code"
+      },
+      "; edits land only after approval. Lane: ",
+      {
+       "children": [
+        "claude"
+       ],
+       "tag": "strong"
+      },
+      ". Depends on: open decisions 4 and 5. Supports ",
+      {
+       "children": [
+        "G2-e"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] ",
+      {
+       "children": [
+        "Welland and Rochester roster and catalog corrections list"
+       ],
+       "tag": "strong"
+      },
+      " — list the row-level fixes to ",
+      {
+       "children": [
+        "07"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "09"
+       ],
+       "tag": "code"
+      },
+      " (Hub vs Socrata, snapshot list, 4,728, origin server) for a later catalog task. Lane: ",
+      {
+       "children": [
+        "copilot"
+       ],
+       "tag": "strong"
+      },
+      ". Depends on: none. Supports ",
+      {
+       "children": [
+        "G2-e"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Open-decisions-for-the-owner"
+   },
+   "children": [
+    "Open decisions for the owner"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "[ ] 1. ",
+      {
+       "children": [
+        "Welland parcel fabric."
+       ],
+       "tag": "strong"
+      },
+      " Admit ",
+      {
+       "children": [
+        "IMS_Parcels_Public_Cache"
+       ],
+       "tag": "code"
+      },
+      " as the Welland parcel grain (licence text not found), or keep Welland at address and footprint grain until the city confirms?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] 2. ",
+      {
+       "children": [
+        "Rochester local token."
+       ],
+       "tag": "strong"
+      },
+      " SBL20 (recommended) or print key?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] 3. ",
+      {
+       "children": [
+        "Rochester and Monroe slugs."
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "rochester"
+       ],
+       "tag": "code"
+      },
+      " for the city (recommended, because ",
+      {
+       "children": [
+        "countysbl"
+       ],
+       "tag": "code"
+      },
+      " carries the SWIS) and a rule for other Monroe municipalities, or ",
+      {
+       "children": [
+        "monroe"
+       ],
+       "tag": "code"
+      },
+      " for all until a SWIS table exists?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] 4. ",
+      {
+       "children": [
+        "Address-point id and footprint id."
+       ],
+       "tag": "strong"
+      },
+      " New joining concepts, or map to existing ones (",
+      {
+       "children": [
+        "civic_address"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "publisher_row_id"
+       ],
+       "tag": "code"
+      },
+      ")?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] 5. ",
+      {
+       "children": [
+        "Ledger edits."
+       ],
+       "tag": "strong"
+      },
+      " Approve appending new rows and correcting ",
+      {
+       "children": [
+        "LG-004"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "LG-054"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "LG-097"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "LG-118"
+       ],
+       "tag": "code"
+      },
+      " in a later task?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] 6. ",
+      {
+       "children": [
+        "Welland footprint key."
+       ],
+       "tag": "strong"
+      },
+      " Mint from geometry, or wait for a publisher id?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] 7. ",
+      {
+       "children": [
+        "Owner-bearing Rochester layers."
+       ],
+       "tag": "strong"
+      },
+      " Prefer the live ",
+      {
+       "children": [
+        "Tax_Parcels_Open_Data"
+       ],
+       "tag": "code"
+      },
+      " layer (no owner fields) over ",
+      {
+       "children": [
+        "TaxParcel2024"
+       ],
+       "tag": "code"
+      },
+      " for the spine, and treat owner fields as D-13 presentation-tier?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] 8. ",
+      {
+       "children": [
+        "Welland ",
+        {
+         "children": [
+          "IMS_Parcels"
+         ],
+         "tag": "code"
+        },
+        "."
+       ],
+       "tag": "strong"
+      },
+      " Confirm it is not an ingest candidate (it carries ",
+      {
+       "children": [
+        "Owner_Class"
+       ],
+       "tag": "code"
+      },
+      " and free-text fields)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] 9. ",
+      {
+       "children": [
+        "DataROC terms."
+       ],
+       "tag": "strong"
+      },
+      " Read and record the terms page before any ingestion."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] 10. ",
+      {
+       "children": [
+        "Snapshot years."
+       ],
+       "tag": "strong"
+      },
+      " How far back must Rochester snapshots join for G2 (2014-2024 join by ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      "; earlier years do not)?"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Resume-notes"
+   },
+   "children": [
+    "Resume notes"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "What is done."
+       ],
+       "tag": "strong"
+      },
+      " Phases 1 to 3 are complete. Three comments are on NIA-24. The two new files are in place and indexed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Not read, for a later pass."
+       ],
+       "tag": "strong"
+      },
+      " Welland Old Zoning (2,014 in the catalog), Environmental Protection and Control layers, Official Plan layers, ",
+      {
+       "children": [
+        "Base/Con_Zoning"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "CityView/CityView_Map"
+       ],
+       "tag": "code"
+      },
+      "; the Region ",
+      {
+       "children": [
+        "Building_Footprints"
+       ],
+       "tag": "code"
+      },
+      " Welland subset; Rochester overlay (26) and preservation (10) districts counts, ",
+      {
+       "children": [
+        "Kiva"
+       ],
+       "tag": "code"
+      },
+      " layers, ",
+      {
+       "children": [
+        "Commercial_Corridor"
+       ],
+       "tag": "code"
+      },
+      " data, ",
+      {
+       "children": [
+        "ROC_Zoning"
+       ],
+       "tag": "code"
+      },
+      " layer 0; Monroe ",
+      {
+       "children": [
+        "swis"
+       ],
+       "tag": "code"
+      },
+      " code table; the DataROC terms page; NYS layer ",
+      {
+       "children": [
+        "ROLL_YR"
+       ],
+       "tag": "code"
+      },
+      " distinct values (the query timed out); NPCA layers (rule: not ingested)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Sample sizes."
+       ],
+       "tag": "strong"
+      },
+      " Join ratios came from 12 to 45 records per test. Re-run on full populations with count queries before quoting a rate."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Method."
+       ],
+       "tag": "strong"
+      },
+      " Field lists from ",
+      {
+       "children": [
+        "?f=json"
+       ],
+       "tag": "code"
+      },
+      "; counts with ",
+      {
+       "children": [
+        "returnCountOnly=true"
+       ],
+       "tag": "code"
+      },
+      "; distinct counts with ",
+      {
+       "children": [
+        "returnDistinctValues=true&returnCountOnly=true"
+       ],
+       "tag": "code"
+      },
+      "; samples with ",
+      {
+       "children": [
+        "resultRecordCount<=5"
+       ],
+       "tag": "code"
+      },
+      ". Statewide-layer queries are slow (30 to 60 seconds)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Endpoint quirks."
+       ],
+       "tag": "strong"
+      },
+      " Welland ",
+      {
+       "children": [
+        "serverprod"
+       ],
+       "tag": "code"
+      },
+      " (not ",
+      {
+       "children": [
+        "serverprodpub"
+       ],
+       "tag": "code"
+      },
+      ") folders ",
+      {
+       "children": [
+        "Building"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "PropReports"
+       ],
+       "tag": "code"
+      },
+      " return Token Required. ",
+      {
+       "children": [
+        "niagaraopendata.ca"
+       ],
+       "tag": "code"
+      },
+      " CKAN API returned a Cloudflare challenge (403) on 2026-09-30; the Region ArcGIS service was used instead."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Rule reminders."
+       ],
+       "tag": "strong"
+      },
+      " MPAC/NPCA data usable under HARD-RULES 4/5 (amended 2026-10-17, #61) (MPAC roll ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " until a join is accepted); owner, legal description and personal info screened at publish. No owner values sampled. UK out of scope. Nothing published."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Files."
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "heavymap-planning/EPIC-02-spine-and-joins.md"
+       ],
+       "tag": "code"
+      },
+      " (this file); ",
+      {
+       "children": [
+        "Spreadsheets/15-pilot-join-matrix-welland-rochester.csv"
+       ],
+       "tag": "code"
+      },
+      "; two rows appended to ",
+      {
+       "children": [
+        "Spreadsheets/00-PLANNING-INDEX.csv"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0079\ntype: working-paper\nsection: expansion\nrun: CR-001\nevidence_date: 2026-10-17\nseq: 39"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, spine, joins, pilots",
+ "path": "EPIC-2--Parcel-Identity-Spine-and-joins-part-2-of-2-11-19",
+ "title": "EPIC 2 — Parcel Identity Spine and joins (part 2 of 2)",
+ "url": "https://telegra.ph/EPIC-2--Parcel-Identity-Spine-and-joins-part-2-of-2-11-19",
+ "views": 0
+}

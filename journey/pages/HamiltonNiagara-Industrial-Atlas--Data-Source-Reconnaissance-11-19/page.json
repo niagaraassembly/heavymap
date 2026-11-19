@@ -1,0 +1,2067 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, niagara, hamilton, sources, prior-art"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Superseded in part."
+     ],
+     "tag": "strong"
+    },
+    " The municipal, conservation-authority, provincial and federal reconnaissance below was extended on ",
+    {
+     "children": [
+      "2026-08-22/23"
+     ],
+     "tag": "strong"
+    },
+    " — see ",
+    {
+     "children": [
+      "RECON-2026-08-22.md"
+     ],
+     "tag": "strong"
+    },
+    ", which closes the \"Not yet investigated\" municipal list, reads out the Tier 2 provincial/federal catalogues, and adds NPCA, Haldimand County, the Niagara Escarpment Plan and the Greenbelt. Nothing below has been deleted; where the two disagree, the later document is current."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Reconnaissance date: 2026-08-18."
+     ],
+     "tag": "strong"
+    },
+    " Every entry below was verified by querying the live endpoint on that date — record counts, field names and licences are observed, not assumed. Anything not yet checked is listed under Not yet investigated rather than guessed at."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Re-run the probes before trusting these numbers after a few months; portals reorganize and layer indices in ArcGIS FeatureServer URLs are not stable."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Summary-of-what-exists"
+   },
+   "children": [
+    "Summary of what exists"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The good news is that the two pillars of this atlas both exist as machine-readable public data, under open licences, with real coverage:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Hamilton"
+       ],
+       "tag": "strong"
+      },
+      " publishes 463 datasets through an ArcGIS Hub, 391 of them under"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "the City of Hamilton Open Data Licence. The industrially relevant ones — employment lands, zoning, building footprints, railways, truck routes — are all live FeatureServers with GeoJSON output."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Niagara Region"
+       ],
+       "tag": "strong"
+      },
+      " publishes the ",
+      {
+       "children": [
+        "Consolidated NEI"
+       ],
+       "tag": "strong"
+      },
+      ", a 98,065-record"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "point inventory of businesses with NAICS codes, sector, employee size range and indoor floor area, under Open Government Licence 2.0."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "There is no equivalent business inventory for Hamilton. That asymmetry is the single most important finding of this pass, and §Gaps explains what it means for the build."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Tier-1-—-verified,-high-value,-use-in-the-first-milestone"
+   },
+   "children": [
+    "Tier 1 — verified, high value, use in the first milestone"
+   ],
+   "tag": "h3"
+  },
+  {
+   "attrs": {
+    "id": "1.-City-of-Hamilton-Open-Data-(ArcGIS-Hub)"
+   },
+   "children": [
+    "1. City of Hamilton Open Data (ArcGIS Hub)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Organization"
+       ],
+       "tag": "strong"
+      },
+      " — : City of Hamilton"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Portal"
+       ],
+       "tag": "strong"
+      },
+      " — : https://open.hamilton.ca"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Catalogue feed"
+       ],
+       "tag": "strong"
+      },
+      " — : https://open.hamilton.ca/api/feed/dcat-us/1.1.json"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Service root"
+       ],
+       "tag": "strong"
+      },
+      " — : ",
+      {
+       "children": [
+        "https://services.arcgis.com/rYz782eMbySr2srL/arcgis/rest/services"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Format"
+       ],
+       "tag": "strong"
+      },
+      " — : ArcGIS FeatureServer → GeoJSON (",
+      {
+       "children": [
+        "?f=geojson"
+       ],
+       "tag": "code"
+      },
+      "), CSV, Shapefile, KML"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Licence"
+       ],
+       "tag": "strong"
+      },
+      " — : ",
+      {
+       "attrs": {
+        "href": "https://www.hamilton.ca/city-initiatives/strategies-actions/open-data-licence-terms-and-conditions",
+        "target": "_blank"
+       },
+       "children": [
+        "City of Hamilton Open Data Licence"
+       ],
+       "tag": "a"
+      },
+      " — applies to 391 of 463 datasets"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Attribution"
+       ],
+       "tag": "strong"
+      },
+      " — : Required; see licence terms"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Freshness"
+       ],
+       "tag": "strong"
+      },
+      " — : Per dataset; Employment Lands last modified 2026-08-02"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Coverage"
+       ],
+       "tag": "strong"
+      },
+      " — : City of Hamilton only (includes Stoney Creek, Ancaster, Dundas, Waterdown, Flamborough)"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Layers verified live, with observed record counts:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Employment Lands"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 22 · Endpoint suffix: ",
+      {
+       "children": [
+        "Employment_Lands/FeatureServer/2"
+       ],
+       "tag": "code"
+      },
+      " · Atlas category: ",
+      {
+       "children": [
+        "land"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Zoning By-law Boundary"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 11,931 · Endpoint suffix: ",
+      {
+       "children": [
+        "Zoning_By_law_Boundary/FeatureServer/1"
+       ],
+       "tag": "code"
+      },
+      " · Atlas category: ",
+      {
+       "children": [
+        "land"
+       ],
+       "tag": "code"
+      },
+      " / ",
+      {
+       "children": [
+        "planning"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Buildings"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 214,293 · Endpoint suffix: ",
+      {
+       "children": [
+        "Buildings/FeatureServer/8"
+       ],
+       "tag": "code"
+      },
+      " · Atlas category: ",
+      {
+       "children": [
+        "building"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Railways"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 1,692 · Endpoint suffix: ",
+      {
+       "children": [
+        "Railways/FeatureServer/10"
+       ],
+       "tag": "code"
+      },
+      " · Atlas category: ",
+      {
+       "children": [
+        "rail"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Truck Route Network"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 1,250 · Endpoint suffix: ",
+      {
+       "children": [
+        "Truck_Route_Network/FeatureServer/5"
+       ],
+       "tag": "code"
+      },
+      " · Atlas category: ",
+      {
+       "children": [
+        "road"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Also present and relevant, not yet field-inspected:"
+     ],
+     "tag": "strong"
+    },
+    " Addresses, Development Applications, Vacant Building Registry, Businesses by Employee Count, City/Urban/Rural Boundary, Waterbodies, Watercourse, Airport, Business Improvement Areas, Building and Demolition Permits (2008–2016 and 2017–present), Planning Applications Reported Quarterly, Historic Railways."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Note on Employment Lands:"
+     ],
+     "tag": "strong"
+    },
+    " 22 features is a small number because these are large designated ",
+    {
+     "children": [
+      "areas"
+     ],
+     "tag": "em"
+    },
+    ", not sites. This is the authoritative answer to \"where is industrial land in Hamilton\" and should be a foundational polygon layer, not a point layer."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Caution:"
+     ],
+     "tag": "strong"
+    },
+    " the numeric layer index in each FeatureServer URL (",
+    {
+     "children": [
+      "/2"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "/8"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "/10"
+     ],
+     "tag": "code"
+    },
+    ") is assigned by the publisher and has been observed to change. Resolve layers by name through the DCAT feed at build time rather than hard-coding indices."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "2.-Niagara-Region-—-Consolidated-NEI-(Niagara-Employment-Inventory)"
+   },
+   "children": [
+    "2. Niagara Region — Consolidated NEI (Niagara Employment Inventory)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Organization"
+       ],
+       "tag": "strong"
+      },
+      " — : Niagara Region"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Catalogue record"
+       ],
+       "tag": "strong"
+      },
+      " — : https://niagaraopendata.ca/dataset/consolidated-nei-opendata"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Data portal"
+       ],
+       "tag": "strong"
+      },
+      " — : https://open.niagararegion.ca/datasets/NiagaraRegion::consolidated-nei-opendata"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Service"
+       ],
+       "tag": "strong"
+      },
+      " — : ",
+      {
+       "children": [
+        "https://services1.arcgis.com/WxiLK82TWf8W3O3f/arcgis/rest/services/OpenData_Consolidated_NEI_Opendata/FeatureServer/45"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GeoJSON download"
+       ],
+       "tag": "strong"
+      },
+      " — : ",
+      {
+       "children": [
+        "https://open.niagararegion.ca/api/download/v1/items/d23f4f781add4584904bc78b94c869b3/geojson?layers=45"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Format"
+       ],
+       "tag": "strong"
+      },
+      " — : GeoJSON, CSV, Shapefile, KML, ArcGIS REST"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Licence"
+       ],
+       "tag": "strong"
+      },
+      " — : ",
+      {
+       "children": [
+        "Open Government Licence 2.0 (Niagara Region)"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Geometry"
+       ],
+       "tag": "strong"
+      },
+      " — : Point"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Records"
+       ],
+       "tag": "strong"
+      },
+      " — : ",
+      {
+       "children": [
+        "98,065"
+       ],
+       "tag": "strong"
+      },
+      " (verified)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Coverage"
+       ],
+       "tag": "strong"
+      },
+      " — : Niagara Region — all twelve municipalities"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Temporal"
+       ],
+       "tag": "strong"
+      },
+      " — : Consolidated inventory ",
+      {
+       "children": [
+        "since 2016"
+       ],
+       "tag": "strong"
+      },
+      "; collection paused 2020–2021 (COVID)"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Verified fields:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "nei_id, Year, municipality, businessname,\nbusinessstreetnumber, businessstreetname, businessunit,\nbusinesspobox, businesspostalcode, businesswebsite,\nprimarynaics, secondarynaics, primarysector, industry,\nyearopen, indoorgfa, sizerangeemployees"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "This is the single richest source found. ",
+    {
+     "children": [
+      "primarynaics"
+     ],
+     "tag": "code"
+    },
+    " + ",
+    {
+     "children": [
+      "industry"
+     ],
+     "tag": "code"
+    },
+    " + ",
+    {
+     "children": [
+      "sizerangeemployees"
+     ],
+     "tag": "code"
+    },
+    " + ",
+    {
+     "children": [
+      "indoorgfa"
+     ],
+     "tag": "code"
+    },
+    " together support classification, weighting for the density layer, and floor-area analysis."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Critical handling requirement."
+     ],
+     "tag": "strong"
+    },
+    " This is a ",
+    {
+     "children": [
+      "multi-year consolidated"
+     ],
+     "tag": "em"
+    },
+    " inventory, so the same business appears once per survey year. It is a record of what was observed in a given year, not a register of what is trading today. Per data quality rule 2, the ingestion must:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Group by ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      " and keep the most recent ",
+      {
+       "children": [
+        "Year"
+       ],
+       "tag": "code"
+      },
+      " per entity."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Carry that ",
+      {
+       "children": [
+        "Year"
+       ],
+       "tag": "code"
+      },
+      " through to the feature as its freshness stamp."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Never render a 2016-only record as a currently operating business."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Surface the observation year in the UI."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "Note also there are two distinct Niagara portals: ",
+    {
+     "children": [
+      "niagaraopendata.ca"
+     ],
+     "tag": "code"
+    },
+    " is a ",
+    {
+     "children": [
+      "CKAN"
+     ],
+     "tag": "strong"
+    },
+    " catalogue (use ",
+    {
+     "children": [
+      "/api/3/action/package_search"
+     ],
+     "tag": "code"
+    },
+    "), while the data itself is hosted on ",
+    {
+     "children": [
+      "open.niagararegion.ca"
+     ],
+     "tag": "code"
+    },
+    ", an ",
+    {
+     "children": [
+      "ArcGIS Hub"
+     ],
+     "tag": "strong"
+    },
+    ". The Hub does ",
+    {
+     "children": [
+      "not"
+     ],
+     "tag": "em"
+    },
+    " serve a DCAT feed at the usual path; query the CKAN catalogue to discover, and the Hub to download."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "3.-OpenStreetMap-via-Overpass"
+   },
+   "children": [
+    "3. OpenStreetMap via Overpass"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Endpoint"
+       ],
+       "tag": "strong"
+      },
+      " — : https://overpass-api.de/api/interpreter"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Status"
+       ],
+       "tag": "strong"
+      },
+      " — : https://overpass-api.de/api/status"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Licence"
+       ],
+       "tag": "strong"
+      },
+      " — : ",
+      {
+       "children": [
+        "ODbL 1.0"
+       ],
+       "tag": "strong"
+      },
+      " — attribution ",
+      {
+       "children": [
+        "and"
+       ],
+       "tag": "em"
+      },
+      " share-alike on derived data"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Freshness"
+       ],
+       "tag": "strong"
+      },
+      " — : Minutes to days"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Coverage"
+       ],
+       "tag": "strong"
+      },
+      " — : Entire region, uniform across municipal boundaries"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Verified:"
+     ],
+     "tag": "strong"
+    },
+    " 311 ",
+    {
+     "children": [
+      "landuse=industrial"
+     ],
+     "tag": "code"
+    },
+    " ways within the Hamilton bounding box ",
+    {
+     "children": [
+      "(43.15,-80.05,43.35,-79.68)"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "This is the only source that covers the whole study area — Hamilton, Halton, Niagara and across the border — with one consistent schema. It is the backbone for cross-boundary features (rail corridors, the Welland Canal, the harbour) that no single municipality publishes end to end."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Relevant tags: ",
+    {
+     "children": [
+      "landuse=industrial"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "building=industrial|warehouse|factory"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "man_made=works"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "industrial=*"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "craft=*"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "shop=trade"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "railway=*"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "harbour=*"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "waterway=*"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "power=substation|line"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "ODbL is the strictest licence in this list."
+     ],
+     "tag": "strong"
+    },
+    " Any published derivative that mixes OSM geometry with other sources may trigger share-alike. Keep OSM-derived features tagged as such in the provenance block so the obligation is traceable rather than discovered later."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Tier-2-—-confirmed-reachable,-not-yet-catalogued"
+   },
+   "children": [
+    "Tier 2 — confirmed reachable, not yet catalogued"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "All returned HTTP 200 on 2026-08-18; contents not yet inspected."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Ontario GeoHub"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: https://geohub.lio.gov.on.ca · Why it matters: Provincial land use, transport, hydrography"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Ontario Open Data (CKAN)"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "https://data.ontario.ca/api/3/action/"
+       ],
+       "tag": "code"
+      },
+      " · Why it matters: Provincial datasets, employment stats"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Open Government Canada (CKAN)"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "https://open.canada.ca/data/api/3/action/"
+       ],
+       "tag": "code"
+      },
+      " · Why it matters: NRCan, Transport Canada, StatCan, rail network"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Not-yet-investigated"
+   },
+   "children": [
+    "Not yet investigated"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Listed so the gap is explicit rather than silently absent:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "**Burlington, St. Catharines, Welland, Niagara Falls, Thorold, Port"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Colborne, Grimsby, Lincoln, Fort Erie",
+    {
+     "children": [
+      "* — municipal portals not yet probed. Burlington matters most; it is in the core scope and is "
+     ],
+     "tag": "em"
+    },
+    "not* covered by either the Hamilton or the Niagara Region datasets above."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Halton Region"
+       ],
+       "tag": "strong"
+      },
+      " — Burlington's upper tier; may publish employment land."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Statistics Canada"
+       ],
+       "tag": "strong"
+      },
+      " — business counts by NAICS and CSD; useful for"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "validating the NEI and for the Hamilton business gap."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Port of Hamilton / HOPA Ports"
+       ],
+       "tag": "strong"
+      },
+      " — returned HTTP 403 to a plain request on"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "2026-08-18; needs a different approach or a human look."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "St. Lawrence Seaway"
+       ],
+       "tag": "strong"
+      },
+      " — ",
+      {
+       "children": [
+        "seaway-greatlakes.com/vessel-transit"
+       ],
+       "tag": "code"
+      },
+      " is public"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "and server-rendered, ",
+    {
+     "children": [
+      "but ",
+      {
+       "children": [
+        "robots.txt"
+       ],
+       "tag": "code"
+      },
+      " is ",
+      {
+       "children": [
+        "Disallow: /"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "strong"
+    },
+    ". Do not build an automated collector against it. Link out instead. (Already established while building the main site's Ships board.)"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "CN / CPKC / Metrolinx / VIA"
+       ],
+       "tag": "strong"
+      },
+      " — public infrastructure data not yet sought."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Assume no freight positions; see the note below."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Brownfields"
+       ],
+       "tag": "strong"
+      },
+      " — Hamilton has a brownfield programme; a spatial dataset was"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "not obvious in the DCAT scan and needs a targeted search. OSM currently supplies 263 ",
+    {
+     "children": [
+      "landuse=brownfield"
+     ],
+     "tag": "code"
+    },
+    " polygons region-wide as an interim proxy."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Hamilton \"Industrial Sectors A–N\""
+       ],
+       "tag": "strong"
+      },
+      " — the City names its industrial"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "districts on its neighbourhood boundaries map (a PDF, not a dataset: ",
+    {
+     "children": [
+      "map.hamilton.ca/Static/PDFs/General Interest maps/Overall City/"
+     ],
+     "tag": "code"
+    },
+    "). Relevant to §14 corridor detection as the authoritative naming to check discovered clusters against."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Known-dead-ends"
+   },
+   "children": [
+    "Known dead ends"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Recorded so they are not re-attempted:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "No public real-time freight rail feed exists in Canada."
+       ],
+       "tag": "strong"
+      },
+      " CN and CPKC do"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "not publish train positions; shipment tracking is customer-authenticated. Static rail infrastructure is available and is sufficient for Layers 1–3, as the brief anticipates. This was established independently while building the Ships board."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Seaway vessel transit data"
+       ],
+       "tag": "strong"
+      },
+      ": public to read, ",
+      {
+       "children": [
+        "Disallow: /"
+       ],
+       "tag": "code"
+      },
+      " to crawl."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Niagara ArcGIS Hub DCAT feed"
+       ],
+       "tag": "strong"
+      },
+      ": 404 at ",
+      {
+       "children": [
+        "/api/feed/dcat-us/1.1.json"
+       ],
+       "tag": "code"
+      },
+      ". Use"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "the CKAN catalogue at ",
+    {
+     "children": [
+      "niagaraopendata.ca"
+     ],
+     "tag": "code"
+    },
+    " for discovery instead."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "MPAC (Municipal Property Assessment Corporation)"
+       ],
+       "tag": "strong"
+      },
+      " is the obvious place to"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "look for Ontario parcel and property-assessment data, and it is a paid dead end: bulk access is fee-based and income/expense data is withheld. There is no Ontario equivalent of the UK rating-list feed that underpins the standard academic method for detecting industrial underuse. Noted so it is not re-investigated. (Established independently in ",
+    {
+     "children": [
+      "babbworks/clark-dot-babb"
+     ],
+     "tag": "code"
+    },
+    ", Track 2.)"
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Constraint-on-derived-&quot;underuse&quot;-labels"
+   },
+   "children": [
+    "Constraint on derived \"underuse\" labels"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The atlas can observe that OSM records a building as disused, or that a polygon is tagged brownfield. It cannot conclude that a named business is underperforming, that a site is vacant today, or that an owner is neglecting a property — those are claims about identifiable people and companies, and publishing them wrongly is a legal problem, not just a data-quality one."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Rules for anything in this class, including the §11 connectivity score and any future vacancy layer:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Publish observations, not judgements."
+       ],
+       "tag": "strong"
+      },
+      " \"OSM records this building as"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "disused, last edited <date>\" is an observation. \"This site is underutilized\" is a judgement."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Date-stamp everything"
+       ],
+       "tag": "strong"
+      },
+      ", and show the date next to the claim."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Derive labels only from cited public records"
+       ],
+       "tag": "strong"
+      },
+      ", never from inference over"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "several sources that individually say less."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Provide an owner correction path"
+       ],
+       "tag": "strong"
+      },
+      " before publishing anything at"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "property level."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Consider tiered detail."
+       ],
+       "tag": "strong"
+      },
+      " Precise vacancy information has misuse value —"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "squatting, metal theft, title fraud. A public heatmap with detail reserved for verified partners is the established mitigation, and it also serves brief rule 15."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The ",
+    {
+     "children": [
+      "osm-disused"
+     ],
+     "tag": "code"
+    },
+    " layer is deliberately named ",
+    {
+     "children": [
+      "\"Brownfield & recorded disused\""
+     ],
+     "tag": "strong"
+    },
+    " rather than \"underutilized\" for exactly this reason, and its features carry the category ",
+    {
+     "children": [
+      "DISUSED (RECORDED)"
+     ],
+     "tag": "code"
+    },
+    " — recording what the source says, not what we conclude."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Gaps-and-what-they-imply"
+   },
+   "children": [
+    "Gaps and what they imply"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "1. There is no Hamilton equivalent of the NEI."
+     ],
+     "tag": "strong"
+    },
+    " Niagara publishes 98,065 classified business points; Hamilton publishes building footprints, zoning and employment land, but no comparable business inventory. The first version of the atlas will therefore be ",
+    {
+     "children": [
+      "asymmetric by construction"
+     ],
+     "tag": "em"
+    },
+    ": business-level detail in Niagara, building- and land-level detail in Hamilton."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "This must be visible in the UI. A user seeing dense business points across Niagara and sparse ones across Hamilton would reasonably conclude Hamilton has less industry, which is false — it is a data artefact. Options, in preference order:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Show per-layer coverage explicitly, per §16 freshness states."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Lean on OSM for Hamilton business-level points, clearly attributed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Investigate Hamilton's \"Businesses by Employee Count\" layer to see whether"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "it is point-level or aggregated to areas."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "2. Licence mixing needs a decision before publishing derived data."
+     ],
+     "tag": "strong"
+    },
+    " OSM is ODbL (share-alike), Hamilton is a bespoke municipal licence, Niagara is OGL 2.0. A derived layer combining all three — the industrial density heatmap, for example — needs the compatibility question answered deliberately, not discovered after publication."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "3. Layer indices are unstable."
+     ],
+     "tag": "strong"
+    },
+    " Resolve by dataset name via the catalogue feeds at build time."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Prioritization"
+   },
+   "children": [
+    "Prioritization"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Scored against the brief's criteria. Implementation cost is relative."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Niagara Consolidated NEI"
+       ],
+       "tag": "strong"
+      },
+      " — Value: ★★★★★ · Freshness: ★★★ · Coverage: Niagara only · Authority: ★★★★★ · Machine-readable: ★★★★★ · Licence: ★★★★★ · Cost: Low"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Hamilton Employment Lands"
+       ],
+       "tag": "strong"
+      },
+      " — Value: ★★★★★ · Freshness: ★★★★ · Coverage: Hamilton only · Authority: ★★★★★ · Machine-readable: ★★★★★ · Licence: ★★★★ · Cost: Low"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Hamilton Buildings"
+       ],
+       "tag": "strong"
+      },
+      " — Value: ★★★★ · Freshness: ★★★★ · Coverage: Hamilton only · Authority: ★★★★★ · Machine-readable: ★★★★★ · Licence: ★★★★ · Cost: Medium (214k features)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Hamilton Zoning"
+       ],
+       "tag": "strong"
+      },
+      " — Value: ★★★★ · Freshness: ★★★★ · Coverage: Hamilton only · Authority: ★★★★★ · Machine-readable: ★★★★★ · Licence: ★★★★ · Cost: Low"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Hamilton Railways"
+       ],
+       "tag": "strong"
+      },
+      " — Value: ★★★★ · Freshness: ★★★ · Coverage: Hamilton only · Authority: ★★★★ · Machine-readable: ★★★★★ · Licence: ★★★★ · Cost: Low"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "OSM / Overpass"
+       ],
+       "tag": "strong"
+      },
+      " — Value: ★★★★ · Freshness: ★★★★★ · Coverage: ",
+      {
+       "children": [
+        "Whole region"
+       ],
+       "tag": "strong"
+      },
+      " · Authority: ★★★ · Machine-readable: ★★★★★ · Licence: ★★★ (ODbL) · Cost: Low"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Hamilton Truck Routes"
+       ],
+       "tag": "strong"
+      },
+      " — Value: ★★★ · Freshness: ★★★ · Coverage: Hamilton only · Authority: ★★★★★ · Machine-readable: ★★★★★ · Licence: ★★★★ · Cost: Low"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Recommended first build order:"
+     ],
+     "tag": "strong"
+    },
+    " OSM (region-wide backbone) → Hamilton Employment Lands + Zoning (land) → Niagara NEI (business) → Hamilton Buildings (physical fabric) → Hamilton Railways + OSM rail (corridors) → derived density."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Reference-implementation"
+   },
+   "children": [
+    "Reference implementation"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "babbworks/atlas"
+     ],
+     "tag": "code"
+    },
+    " (branch ",
+    {
+     "children": [
+      "master"
+     ],
+     "tag": "code"
+    },
+    ", last pushed 2026-06-10) — \"Discover workshops, manufacturing sites, and industrial spaces across the UK — Leaflet + OSM/Overpass\". No licence file."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Its shape confirms the pipeline this brief describes: a static Leaflet app (",
+    {
+     "children": [
+      "app.js"
+     ],
+     "tag": "code"
+    },
+    " 85KB, ",
+    {
+     "children": [
+      "map.js"
+     ],
+     "tag": "code"
+    },
+    " 21KB, ",
+    {
+     "children": [
+      "overpass.js"
+     ],
+     "tag": "code"
+    },
+    " 7KB, ",
+    {
+     "children": [
+      "styles.css"
+     ],
+     "tag": "code"
+    },
+    " 46KB) over ",
+    {
+     "children": [
+      "pre-generated JSON in ",
+      {
+       "children": [
+        "data/"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "strong"
+    },
+    " built by Python scripts in ",
+    {
+     "children": [
+      "scripts/"
+     ],
+     "tag": "code"
+    },
+    ", with per-source modules (",
+    {
+     "children": [
+      "voa.js"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "epr.js"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "fsa.js"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "planning.js"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "companies.js"
+     ],
+     "tag": "code"
+    },
+    ") and a ",
+    {
+     "children": [
+      "scoring.js"
+     ],
+     "tag": "code"
+    },
+    " for derived indicators. Large datasets are split by key into ",
+    {
+     "children": [
+      "data/voa/*.json"
+     ],
+     "tag": "code"
+    },
+    " to keep fetches small — a pattern worth copying for 214k Hamilton buildings."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "It also keeps ",
+    {
+     "children": [
+      "system/datasets.md"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "system/project-notes.md"
+     ],
+     "tag": "code"
+    },
+    ", which is the same instinct as this document."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Reproducing-this-reconnaissance"
+   },
+   "children": [
+    "Reproducing this reconnaissance"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "# Hamilton catalogue\ncurl -s https://open.hamilton.ca/api/feed/dcat-us/1.1.json -o ham_dcat.json\n\n# Any Hamilton layer's record count\ncurl -s \"https://services.arcgis.com/rYz782eMbySr2srL/arcgis/rest/services/Employment_Lands/FeatureServer/2/query?where=1=1&returnCountOnly=true&f=json\"\n\n# Niagara catalogue search (CKAN)\ncurl -s \"https://niagaraopendata.ca/api/3/action/package_search?q=NEI&rows=10\"\n\n# NEI schema\ncurl -s \"https://services1.arcgis.com/WxiLK82TWf8W3O3f/arcgis/rest/services/OpenData_Consolidated_NEI_Opendata/FeatureServer/45?f=json\"\n\n# Overpass probe\ncurl -s -X POST https://overpass-api.de/api/interpreter \\\n  --data-urlencode 'data=[out:json][timeout:50];(way\"landuse\"=\"industrial\";);out count;'"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0074\ntype: working-paper\nsection: origins\nplace_type: region\nevidence_date: 2026-10-03\nseq: 19"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, niagara, hamilton, sources, prior-art",
+ "path": "HamiltonNiagara-Industrial-Atlas--Data-Source-Reconnaissance-11-19",
+ "title": "Hamilton–Niagara Industrial Atlas — Data Source Reconnaissance",
+ "url": "https://telegra.ph/HamiltonNiagara-Industrial-Atlas--Data-Source-Reconnaissance-11-19",
+ "views": 0
+}

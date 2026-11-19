@@ -15,6 +15,44 @@
      "children": [
       {
        "attrs": {
+        "href": "/HamiltonNiagara-Industrial-Atlas--Data-Source-Reconnaissance-11-19"
+       },
+       "children": [
+        "Hamilton–Niagara Industrial Atlas — Data Source Reconnaissance"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 10 min · working-paper, niagara, hamilton, sources, prior-art",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Atlas--technology-decisions-11-19"
+       },
+       "children": [
+        "Atlas — technology decisions"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 17 min · working-paper, niagara, technology, prior-art",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
         "href": "/The-Sidebar-Dossier--a-technical-report-11-19"
        },
        "children": [

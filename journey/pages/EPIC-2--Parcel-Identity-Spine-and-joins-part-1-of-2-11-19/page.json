@@ -1,0 +1,4438 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, spine, joins, pilots"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Drafted:"
+     ],
+     "tag": "strong"
+    },
+    " 2026-09-30 from a read-only pilot study of Welland and Rochester. This is a living doc: update the tables, tick the boxes as work lands, and update the matching row in ",
+    {
+     "children": [
+      "../Spreadsheets/00-PLANNING-INDEX.csv"
+     ],
+     "tag": "code"
+    },
+    ". ",
+    {
+     "children": [
+      "Companion data:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "../Spreadsheets/15-pilot-join-matrix-welland-rochester.csv"
+     ],
+     "tag": "code"
+    },
+    " (one row per dataset, 33 rows)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-this-epic-is"
+   },
+   "children": [
+    "What this epic is"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "How a unit of land or a premises is identified in each place, and how the datasets in that place join to each other. The spine key grammar is in ",
+    {
+     "children": [
+      "../docs/architecture/parcel-identity-spine.md"
+     ],
+     "tag": "code"
+    },
+    ". The joining concepts are in ",
+    {
+     "children": [
+      "10"
+     ],
+     "tag": "code"
+    },
+    ", the ledger in ",
+    {
+     "children": [
+      "11"
+     ],
+     "tag": "code"
+    },
+    " (",
+    {
+     "children": [
+      ".md"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      ".csv"
+     ],
+     "tag": "code"
+    },
+    "), the authority and MPAC proposals in ",
+    {
+     "children": [
+      "12"
+     ],
+     "tag": "code"
+    },
+    ". This doc records what a live read of two pilot places says about all of them."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Rules kept in this study."
+     ],
+     "tag": "strong"
+    },
+    " Public HTTP GET only (ArcGIS REST ",
+    {
+     "children": [
+      "?f=json"
+     ],
+     "tag": "code"
+    },
+    ", DCAT ",
+    {
+     "children": [
+      "data.json"
+     ],
+     "tag": "code"
+    },
+    ", count and small sample queries with at most 5 records). No bulk download. No keys or logins. No owner-name values read anywhere. MPAC roll stayed ",
+    {
+     "children": [
+      "not_licensed"
+     ],
+     "tag": "code"
+    },
+    " and NPCA-derived MPAC parcel layers were not ingested at the time of this study; superseded by HARD-RULES 4/5 (amended 2026-10-17, #61): MPAC/NPCA data may be pulled, used and published, identifying fields screened at publish. Prior recon is a baseline, not truth. UK is out of scope. Nothing is published. No existing file, workbook or Linear issue was changed."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Evidence labels."
+     ],
+     "tag": "strong"
+    },
+    " Every count and field below was read live on ",
+    {
+     "children": [
+      "2026-09-30"
+     ],
+     "tag": "strong"
+    },
+    " unless the row says \"documented, not re-read\". Sample-based join results are stated as ",
+    {
+     "children": [
+      "hits/tested"
+     ],
+     "tag": "code"
+    },
+    " and are indicative, not rates."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Pilot-choice"
+   },
+   "children": [
+    "Pilot choice"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Why"
+       ],
+       "tag": "strong"
+      },
+      " — Welland (Ontario, CA): Roster ",
+      {
+       "children": [
+        "07"
+       ],
+       "tag": "code"
+      },
+      " marks it the engine test municipality. Two independent business registers (city directory and Niagara NEI). · Rochester (Monroe County, NY, US): Roster ",
+      {
+       "children": [
+        "07"
+       ],
+       "tag": "code"
+      },
+      " marks it the best-evidenced US place: parcels with assessed value, annual snapshots."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Grain the spine expects"
+       ],
+       "tag": "strong"
+      },
+      " — Welland (Ontario, CA): footprint or address (per spine doc) · Rochester (Monroe County, NY, US): parcel"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Grain the live read supports"
+       ],
+       "tag": "strong"
+      },
+      " — Welland (Ontario, CA): ",
+      {
+       "children": [
+        "parcel"
+       ],
+       "tag": "strong"
+      },
+      " (found), address, footprint · Rochester (Monroe County, NY, US): parcel, address, footprint"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Publishers involved"
+       ],
+       "tag": "strong"
+      },
+      " — Welland (Ontario, CA): City of Welland; Niagara Region (NEI, address, footprints, heritage) · Rochester (Monroe County, NY, US): City of Rochester; Monroe County; NYS ITS (statewide layer, does not cover Monroe)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Cross-border"
+       ],
+       "tag": "strong"
+      },
+      " — Welland (Ontario, CA): none required by v1 · Rochester (Monroe County, NY, US): none required by v1"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Status"
+   },
+   "children": [
+    "Status"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Phase 1, Welland live study"
+       ],
+       "tag": "strong"
+      },
+      " — State: done 2026-09-30 · Note: 11 city datasets and 4 Region layers read; NPCA noted only"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Phase 2, Rochester live study"
+       ],
+       "tag": "strong"
+      },
+      " — State: done 2026-09-30 · Note: 15 city, 1 county, 1 state layer read; DCAT scanned for permits and licences"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Phase 3, synthesis"
+       ],
+       "tag": "strong"
+      },
+      " — State: done 2026-09-30 · Note: this doc; sub-issues are proposed, none created"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Linear comments on NIA-24"
+       ],
+       "tag": "strong"
+      },
+      " — State: 3 posted · Note: one per phase"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Sub-issues"
+       ],
+       "tag": "strong"
+      },
+      " — State: ",
+      {
+       "children": [
+        "proposed, unticked"
+       ],
+       "tag": "strong"
+      },
+      " · Note: for the owner to approve; see checklist"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "G2"
+       ],
+       "tag": "strong"
+      },
+      " — State: not met · Note: needs the owner decisions below, then fixtures merged (PR #13 or replacement)"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Welland-—-findings-(live-2026-09-30)"
+   },
+   "children": [
+    "Welland — findings (live 2026-09-30)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Headline."
+     ],
+     "tag": "strong"
+    },
+    " Welland has a public parcel fabric, ",
+    {
+     "children": [
+      "Parcel_No"
+     ],
+     "tag": "code"
+    },
+    "-keyed, that no catalog lists. ",
+    {
+     "children": [
+      "open.welland.ca/data.json"
+     ],
+     "tag": "code"
+    },
+    " has 72 datasets and none is a parcel fabric. The layer sits in the city's own ArcGIS Server folder ",
+    {
+     "children": [
+      "Base"
+     ],
+     "tag": "code"
+    },
+    ", which is reachable without a token. The spine doc, ",
+    {
+     "children": [
+      "07"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "11"
+     ],
+     "tag": "code"
+    },
+    " (LG-118), ",
+    {
+     "children": [
+      "12"
+     ],
+     "tag": "code"
+    },
+    " section 4 and the Welland fixture all say Welland has no parcel fabric. That statement is out of date for the live server, and it is independent of the NPCA question. Licence text for the layer was not found, so admission is a the owner decision."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Parcels public cache"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): ",
+      {
+       "children": [
+        "Base/IMS_Parcels_Public_Cache/MapServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 23,541 · Candidate identifier fields: ",
+      {
+       "children": [
+        "Parcel_No"
+       ],
+       "tag": "code"
+      },
+      " (unique int, 10 to 96,293); ",
+      {
+       "children": [
+        "Subdiv_Lot_No"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Subdiv_Block_No"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Subdiv_Plan_No"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "Address"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Range"
+       ],
+       "tag": "code"
+      },
+      " (1,506 null) · Flags: no owner, no ARN; licence not found; not in DCAT"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "IMS parcels (sibling)"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): ",
+      {
+       "children": [
+        "Base/IMS_Parcels/MapServer/0"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Base/Parcels_NoOwners/MapServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 23,541 each · Candidate identifier fields: ",
+      {
+       "children": [
+        "Parcel_No"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "Civic_Nos"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "Municipality_Id"
+       ],
+       "tag": "code"
+      },
+      " (",
+      {
+       "children": [
+        "CoW"
+       ],
+       "tag": "code"
+      },
+      "); ",
+      {
+       "children": [
+        "Street_Name_Id"
+       ],
+       "tag": "code"
+      },
+      " · Flags: ",
+      {
+       "children": [
+        "Owner_Class"
+       ],
+       "tag": "code"
+      },
+      "; free-text ",
+      {
+       "children": [
+        "Comment"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "Research"
+       ],
+       "tag": "code"
+      },
+      " not sampled (possible PII); the \"NoOwners\" name still carries ",
+      {
+       "children": [
+        "Owner_Class"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Civic address points"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): ",
+      {
+       "children": [
+        "OpenData/OPENDATA_Civic_Addresses_Active/MapServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: point · Records: 22,461 · Candidate identifier fields: ",
+      {
+       "children": [
+        "AddId"
+       ],
+       "tag": "code"
+      },
+      " (22,461 distinct); ",
+      {
+       "children": [
+        "Address"
+       ],
+       "tag": "code"
+      },
+      " (22,448 distinct); ",
+      {
+       "children": [
+        "Civic_No"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Suffix"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "StName"
+       ],
+       "tag": "code"
+      },
+      " · Flags: none"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Building footprints"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): ",
+      {
+       "children": [
+        "OpenData/OPENDATA_Active_Building_Footprints/MapServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 26,027 · Candidate identifier fields: ",
+      {
+       "children": [
+        "AddId"
+       ],
+       "tag": "code"
+      },
+      " (2,214 null; 16,847 distinct); ",
+      {
+       "children": [
+        "Address"
+       ],
+       "tag": "code"
+      },
+      " (2,289 null) · Flags: no building id"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Current zoning"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): ",
+      {
+       "children": [
+        "OpenData/OPENDATA_Consolidated_Zoning/MapServer/2"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 1,981 · Candidate identifier fields: ",
+      {
+       "children": [
+        "Zoning"
+       ],
+       "tag": "code"
+      },
+      " (139 distinct, 4 null); ",
+      {
+       "children": [
+        "ZoneCat"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "ZoneCatSym"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "ZoneDesc"
+       ],
+       "tag": "code"
+      },
+      "; no id · Flags: 73 polygons with an industrial ",
+      {
+       "children": [
+        "ZoneCat"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Business directory"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): ",
+      {
+       "children": [
+        "OpenData/OPENDATA_Business_Layers/MapServer/2"
+       ],
+       "tag": "code"
+      },
+      " (table), ",
+      {
+       "children": [
+        "/0"
+       ],
+       "tag": "code"
+      },
+      " (871 points) · Geometry: none / point · Records: 923 · Candidate identifier fields: ",
+      {
+       "children": [
+        "ID"
+       ],
+       "tag": "code"
+      },
+      " (923 distinct); ",
+      {
+       "children": [
+        "Address"
+       ],
+       "tag": "code"
+      },
+      " (11 null); ",
+      {
+       "children": [
+        "SectorDescription"
+       ],
+       "tag": "code"
+      },
+      " · Flags: phone, fax, email, website fields present, not sampled"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Heritage parcels"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): ",
+      {
+       "children": [
+        "OpenData/OPENDATA_Heritage_Parcels/MapServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 31 · Candidate identifier fields: ",
+      {
+       "children": [
+        "Parcel_No"
+       ],
+       "tag": "code"
+      },
+      " (30 distinct); ",
+      {
+       "children": [
+        "Bylaw_No"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "Year_Desig"
+       ],
+       "tag": "code"
+      },
+      " · Flags: none"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Site plans"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): ",
+      {
+       "children": [
+        "OpenData/OPENDATA_Plan_SitePlans_Parcels/MapServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 721 · Candidate identifier fields: ",
+      {
+       "children": [
+        "Parcel_No"
+       ],
+       "tag": "code"
+      },
+      " (411 distinct, 0 null); ",
+      {
+       "children": [
+        "CivicAddr"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "MajorUse"
+       ],
+       "tag": "code"
+      },
+      " · Flags: none"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Building permits pre-May 2019"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): ",
+      {
+       "children": [
+        "OpenData/OPENDATA_Building_Permits_Pre_May_2019/MapServer/1"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: none (table) · Records: 8,862 · Candidate identifier fields: ",
+      {
+       "children": [
+        "PermitID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PermitNo"
+       ],
+       "tag": "code"
+      },
+      " (both 8,862 distinct); ",
+      {
+       "children": [
+        "parcelno"
+       ],
+       "tag": "code"
+      },
+      " (52 null); ",
+      {
+       "children": [
+        "Address"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "GrossAreaSqFt"
+       ],
+       "tag": "code"
+      },
+      " · Flags: 206 rows with an Industrial ",
+      {
+       "children": [
+        "UseCategory"
+       ],
+       "tag": "code"
+      },
+      "; later permits need a token"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Business licences, type by year"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): ",
+      {
+       "children": [
+        "OpenData/OPENDATA_Business_License_Type_Year/MapServer/1"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: none · Records: ",
+      {
+       "children": [
+        "0"
+       ],
+       "tag": "strong"
+      },
+      " · Candidate identifier fields: ",
+      {
+       "children": [
+        "id"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Description"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Year"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Bus_count"
+       ],
+       "tag": "code"
+      },
+      " · Flags: aggregate only, and empty today"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "CityView build permits parcels"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): ",
+      {
+       "children": [
+        "serverprod/.../Building/CityView_BuildPermits_Parcels/MapServer/4"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: unknown · Records: not read · Candidate identifier fields: not read · Flags: listed in DCAT; ",
+      {
+       "children": [
+        "Token Required"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Niagara Consolidated NEI"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): ",
+      {
+       "children": [
+        "services1.arcgis.com/WxiLK82TWf8W3O3f/arcgis/rest/services/OpenData_Consolidated_NEI_Opendata/FeatureServer/45"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: point · Records: 98,065; Welland 9,741 over 8 editions (2016-2019, 2022-2025); 1,299 each in 2022 and 2025; 1,605 distinct ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      " in Welland · Candidate identifier fields: ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      " (no nulls) + ",
+      {
+       "children": [
+        "Year"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "municipality"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "businessstreetnumber"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "businessstreetname"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "businessunit"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "primarynaics"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "indoorgfa"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "sizerangeemployees"
+       ],
+       "tag": "code"
+      },
+      " · Flags: ",
+      {
+       "children": [
+        "businessname"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "businesswebsite"
+       ],
+       "tag": "code"
+      },
+      "; no ARN or MPAC field; ",
+      {
+       "children": [
+        "indoorgfa"
+       ],
+       "tag": "code"
+      },
+      " is 0 or null on some Welland rows (4,007 above 0, 304 null)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Region address points"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): same service, ",
+      {
+       "children": [
+        "OpenData_Address_Points/FeatureServer/43"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: point · Records: 208,079; Welland 24,412 · Candidate identifier fields: ",
+      {
+       "children": [
+        "GSmartID"
+       ],
+       "tag": "code"
+      },
+      " (no nulls); ",
+      {
+       "children": [
+        "Full_StreetNo"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "StreetName"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Unit"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Municipality"
+       ],
+       "tag": "code"
+      },
+      " · Flags: none"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Region building footprints"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): ",
+      {
+       "children": [
+        "OpenData_Building_Footprints/FeatureServer/38"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 225,999 · Candidate identifier fields: ",
+      {
+       "children": [
+        "UniqueID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "GlobalID"
+       ],
+       "tag": "code"
+      },
+      " · Flags: no municipality field; Welland subset not measured"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Region heritage points"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): ",
+      {
+       "children": [
+        "OpenData_Designated_Heritage_Properties/FeatureServer/35"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: point · Records: 318; Welland 27 · Candidate identifier fields: none · Flags: Welland polygons are 31 vs 27 points here; not reconciled"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NPCA Assessment Parcels and Cityview"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint (under ",
+      {
+       "children": [
+        "arcgisweb.welland.ca/serverprodpub/rest/services/"
+       ],
+       "tag": "code"
+      },
+      " unless noted): ",
+      {
+       "children": [
+        "services1.arcgis.com/d0ZCwU7eGKVeNiEE"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 284,250 and 265,717 · Candidate identifier fields: ",
+      {
+       "children": [
+        "ARN"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "ASSESSMENT"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PropCode"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Owner"
+       ],
+       "tag": "code"
+      },
+      " · Flags: ",
+      {
+       "children": [
+        "documented, not re-read."
+       ],
+       "tag": "strong"
+      },
+      " MPAC-derived. Not ingested."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Coordinate system."
+     ],
+     "tag": "strong"
+    },
+    " The Welland layers read (parcels, footprints, zoning, civic points) report EPSG:26917. The Region NEI was requested with ",
+    {
+     "children": [
+      "outSR=26917"
+     ],
+     "tag": "code"
+    },
+    " for the spatial tests."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Rochester-—-findings-(live-2026-09-30)"
+   },
+   "children": [
+    "Rochester — findings (live 2026-09-30)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Headline."
+     ],
+     "tag": "strong"
+    },
+    " The city parcel id is a 20-character SBL. Monroe County's ",
+    {
+     "children": [
+      "countysbl"
+     ],
+     "tag": "code"
+    },
+    " is the same 20 characters with a 6-digit prefix (",
+    {
+     "children": [
+      "261400"
+     ],
+     "tag": "code"
+    },
+    " for the city). The statewide layer has the same 26-character composite (",
+    {
+     "children": [
+      "SWIS_SBL_ID"
+     ],
+     "tag": "code"
+    },
+    ") but has 0 features for Monroe. Print keys are zero-padded in the city and county layers and unpadded in the statewide layer."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "City ",
+        {
+         "children": [
+          "TaxParcel2024"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "maps.cityofrochester.gov/server2/rest/services/Open_Data/TaxParcel2024/FeatureServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 64,828 · Identifier fields: ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " (20 chars; 64,825 distinct); ",
+      {
+       "children": [
+        "PRINTKEY"
+       ],
+       "tag": "code"
+      },
+      " (64,825 distinct); ",
+      {
+       "children": [
+        "SITEADDRESS"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "CLASSCD"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "BISZONING"
+       ],
+       "tag": "code"
+      },
+      " (1,067 null) · Flags: ",
+      {
+       "children": [
+        "OWNERNME1"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PSTLADDRESS"
+       ],
+       "tag": "code"
+      },
+      " present, not sampled; class 7xx: 365 (710: 361)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City snapshots 2014-2023"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "server2/.../TaxParcel{year}/FeatureServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 65,923; 65,794; 65,784; 65,486; 65,351; 65,211; 65,076; 65,002; 64,920; 64,826 · Identifier fields: ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PRINTKEY"
+       ],
+       "tag": "code"
+      },
+      " (fields read for 2018-2024) · Flags: owner fields as above"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City tax parcels open data (live)"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "maps.cityofrochester.gov/server/rest/services/Open_Data/Tax_Parcels_Open_Data/FeatureServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 64,709 · Identifier fields: ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PRINTKEY"
+       ],
+       "tag": "code"
+      },
+      " · Flags: ",
+      {
+       "children": [
+        "no owner fields"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City vacant land"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "server/.../Tax_Parcels_Vacant_Land_Open_Data/FeatureServer/3"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 4,728 (catalog says 4,730) · Identifier fields: ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PRINTKEY"
+       ],
+       "tag": "code"
+      },
+      " · Flags: owner fields present"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City owned land"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "server/.../Tax_Parcels_City_Owned_Land_Open_Data/FeatureServer/4"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 2,976 · Identifier fields: ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PRINTKEY"
+       ],
+       "tag": "code"
+      },
+      " · Flags: owner fields present"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City housing inventory"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "server/.../NBD/Housing_Inventory/FeatureServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 3,387 · Identifier fields: ",
+      {
+       "children": [
+        "SBL"
+       ],
+       "tag": "code"
+      },
+      " (20), ",
+      {
+       "children": [
+        "GISSBL"
+       ],
+       "tag": "code"
+      },
+      " (10-char variant), ",
+      {
+       "children": [
+        "PRINTKEY"
+       ],
+       "tag": "code"
+      },
+      " · Flags: none seen"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Address parcels lookup"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "server/.../App_PropertyInformation/Address_Parcels_Lookup/FeatureServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: point · Records: 134,137 · Identifier fields: ",
+      {
+       "children": [
+        "AddressPointID"
+       ],
+       "tag": "code"
+      },
+      " (",
+      {
+       "children": [
+        "MONR..."
+       ],
+       "tag": "code"
+      },
+      "), ",
+      {
+       "children": [
+        "NYSStreetID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " (164 null), ",
+      {
+       "children": [
+        "PRINTKEY"
+       ],
+       "tag": "code"
+      },
+      " · Flags: owner fields present"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tax parcel centroids"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "server/.../Geodata/TaxParcel_Centroids/FeatureServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: point · Records: 64,709 · Identifier fields: ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " (0 null) · Flags: owner fields present"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Building footprints (live)"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "server/.../Open_Data/Building_Footprint_Open_Data/FeatureServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 98,449 · Identifier fields: ",
+      {
+       "children": [
+        "OBJECTID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "GlobalID"
+       ],
+       "tag": "code"
+      },
+      "; no parcel id, no address · Flags: ",
+      {
+       "children": [
+        "DEMOLISHED_TF"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "DATE_DEMOLISHED"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Zoning districts"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "server/.../Zoning_Districts_Open_Data/FeatureServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 421 · Identifier fields: ",
+      {
+       "children": [
+        "LABEL"
+       ],
+       "tag": "code"
+      },
+      " (74 distinct), ",
+      {
+       "children": [
+        "CATEGORY"
+       ],
+       "tag": "code"
+      },
+      " (13, includes Industrial) · Flags: none"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Development ready sites"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "server/.../NBD/Development_Ready_Sites/FeatureServer/1"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 10 · Identifier fields: ",
+      {
+       "children": [
+        "SBL_1"
+       ],
+       "tag": "code"
+      },
+      " (print-key text, may list several) · Flags: personal fields present (withheld)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "311 case data"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "services2.arcgis.com/yoz1ZtATTCokO9nU/arcgis/rest/services/311_Case_Data/FeatureServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: point · Records: 51,721 · Identifier fields: none usable · Flags: no address number, no parcel id"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Assessment tables 1996, 2012"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: same org: ",
+      {
+       "children": [
+        "Fixed_Assessment_Snapshot_1996"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "City_of_Rochester_Tax_Parcel_Records_Snapshot_2012"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: none · Records: 68,279; 66,254 · Identifier fields: ",
+      {
+       "children": [
+        "SBL"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "SBL20"
+       ],
+       "tag": "code"
+      },
+      " stored as floating point · Flags: see joins: not joinable by id"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Parcel lineage"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: same org: ",
+      {
+       "children": [
+        "ParcelHistory/FeatureServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 788 · Identifier fields: ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "NewSBL"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Split_Merge"
+       ],
+       "tag": "code"
+      },
+      " · Flags: ",
+      {
+       "children": [
+        "OWNERNME1"
+       ],
+       "tag": "code"
+      },
+      " present"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Monroe ",
+        {
+         "children": [
+          "Parcels_Public"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "maps.monroecounty.gov/server/rest/services/Hosted/Parcels_Public/FeatureServer/0"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 267,962 · Identifier fields: ",
+      {
+       "children": [
+        "countysbl"
+       ],
+       "tag": "code"
+      },
+      " (26 chars; 267,904 distinct); ",
+      {
+       "children": [
+        "printkey"
+       ],
+       "tag": "code"
+      },
+      " (267,357 distinct); ",
+      {
+       "children": [
+        "swis"
+       ],
+       "tag": "code"
+      },
+      " (municipality ",
+      {
+       "children": [
+        "name"
+       ],
+       "tag": "strong"
+      },
+      ", 32 distinct, 544 null); ",
+      {
+       "children": [
+        "rollyear"
+       ],
+       "tag": "code"
+      },
+      " (2026 sampled) · Flags: no owner field; class 7xx: 868"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NYS Tax Parcels Public"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: ",
+      {
+       "children": [
+        "services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Tax_Parcels_Public/FeatureServer/1"
+       ],
+       "tag": "code"
+      },
+      " · Geometry: polygon · Records: 3,827,530 over 38 counties · Identifier fields: ",
+      {
+       "children": [
+        "SBL"
+       ],
+       "tag": "code"
+      },
+      " (20), ",
+      {
+       "children": [
+        "PRINT_KEY"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "SWIS"
+       ],
+       "tag": "code"
+      },
+      " (6-digit), ",
+      {
+       "children": [
+        "SWIS_SBL_ID"
+       ],
+       "tag": "code"
+      },
+      " (26), ",
+      {
+       "children": [
+        "MUNI_PARCEL_ID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "ROLL_YR"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "SPATIAL_YR"
+       ],
+       "tag": "code"
+      },
+      " · Flags: ",
+      {
+       "children": [
+        "PRIMARY_OWNER"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "ADD_OWNER"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "MAIL_*"
+       ],
+       "tag": "code"
+      },
+      " present, not sampled. Monroe 0, Niagara 0. Erie 370,424; Genesee 28,266; Chautauqua 88,396; Wyoming 23,530."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Not in the catalog."
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "data.cityofrochester.gov"
+     ],
+     "tag": "code"
+    },
+    " is an ArcGIS Hub (its ",
+    {
+     "children": [
+      "/resource/"
+     ],
+     "tag": "code"
+    },
+    " path redirects to ",
+    {
+     "children": [
+      "hub.arcgis.com/legacy"
+     ],
+     "tag": "code"
+    },
+    "), not Socrata. Its DCAT feed has 281 entries and 267 distinct titles. None is a permits, code violations, certificate-of-occupancy or business-licence dataset. Related: 311 Case Data, Code Enforcement Inspector Areas, Kiva business locations (a web map; no queryable layer found), Commercial Corridor Business Data (a web app). The ArcGIS Online org ",
+    {
+     "children": [
+      "services2.arcgis.com/yoz1ZtATTCokO9nU"
+     ],
+     "tag": "code"
+    },
+    " lists 134 services; none matches permit, violation or licence names."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Recommended-spine-key-mapping-(a)"
+   },
+   "children": [
+    "Recommended spine key mapping (a)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Grammar: ",
+    {
+     "children": [
+      "hm:{country}:{region}:{jurisdiction}:{grain}:{local}"
+     ],
+     "tag": "code"
+    },
+    ". Native keys stay in ",
+    {
+     "children": [
+      "native_keys"
+     ],
+     "tag": "code"
+    },
+    ". These are proposals for the owner to approve; nothing is encoded."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Welland, parcel"
+       ],
+       "tag": "strong"
+      },
+      " — Proposed key: ",
+      {
+       "children": [
+        "hm:ca:on:welland:parcel:{Parcel_No}"
+       ],
+       "tag": "code"
+      },
+      " e.g. ",
+      {
+       "children": [
+        "hm:ca:on:welland:parcel:11205"
+       ],
+       "tag": "code"
+      },
+      " · Source field: ",
+      {
+       "children": [
+        "IMS_Parcels_Public_Cache.Parcel_No"
+       ],
+       "tag": "code"
+      },
+      " · Normalisation: integer as text, no zero padding · Native keys kept: ",
+      {
+       "children": [
+        "parcel_no"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Welland, address"
+       ],
+       "tag": "strong"
+      },
+      " — Proposed key: ",
+      {
+       "children": [
+        "hm:ca:on:welland:address:{AddId}"
+       ],
+       "tag": "code"
+      },
+      " · Source field: ",
+      {
+       "children": [
+        "OPENDATA_Civic_Addresses_Active.AddId"
+       ],
+       "tag": "code"
+      },
+      " · Normalisation: integer as text · Native keys kept: ",
+      {
+       "children": [
+        "add_id"
+       ],
+       "tag": "code"
+      },
+      "; Region ",
+      {
+       "children": [
+        "GSmartID"
+       ],
+       "tag": "code"
+      },
+      " is a separate key, not the same id"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Welland, footprint"
+       ],
+       "tag": "strong"
+      },
+      " — Proposed key: ",
+      {
+       "children": [
+        "no native key."
+       ],
+       "tag": "strong"
+      },
+      " Options: (1) mint from a stable content hash of geometry, (2) do not mint until the publisher supplies an id. ",
+      {
+       "children": [
+        "AddId"
+       ],
+       "tag": "code"
+      },
+      " is not unique per footprint (26,027 rows, 16,847 distinct non-null values). · Source field: none · Normalisation: none · Native keys kept: ",
+      {
+       "children": [
+        "add_id"
+       ],
+       "tag": "code"
+      },
+      " as a foreign key only"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Welland, premises (activity)"
+       ],
+       "tag": "strong"
+      },
+      " — Proposed key: not a spine unit. ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      " joins to the spine by address or spatial method and stays a native key on the activity band. · Source field: ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      " + ",
+      {
+       "children": [
+        "Year"
+       ],
+       "tag": "code"
+      },
+      " · Normalisation: integer; use the lowercase name for all editions · Native keys kept: ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      "; directory ",
+      {
+       "children": [
+        "ID"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Rochester, parcel"
+       ],
+       "tag": "strong"
+      },
+      " — Proposed key: ",
+      {
+       "children": [
+        "hm:us:ny:rochester:parcel:{SBL20}"
+       ],
+       "tag": "code"
+      },
+      " e.g. ",
+      {
+       "children": [
+        "hm:us:ny:rochester:parcel:04762000010220000000"
+       ],
+       "tag": "code"
+      },
+      " · Source field: City ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " · Normalisation: keep the 20 characters as text; never store as a number (the 1996 and 2012 tables show the damage) · Native keys kept: ",
+      {
+       "children": [
+        "printkey"
+       ],
+       "tag": "code"
+      },
+      " (padded ",
+      {
+       "children": [
+        "047.62-1-22"
+       ],
+       "tag": "code"
+      },
+      "); Monroe ",
+      {
+       "children": [
+        "countysbl"
+       ],
+       "tag": "code"
+      },
+      " (26 chars); ",
+      {
+       "children": [
+        "swis"
+       ],
+       "tag": "code"
+      },
+      " = ",
+      {
+       "children": [
+        "261400"
+       ],
+       "tag": "code"
+      },
+      " (inferred)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Rochester, address"
+       ],
+       "tag": "strong"
+      },
+      " — Proposed key: ",
+      {
+       "children": [
+        "hm:us:ny:rochester:address:{AddressPointID}"
+       ],
+       "tag": "code"
+      },
+      " · Source field: ",
+      {
+       "children": [
+        "Address_Parcels_Lookup.AddressPointID"
+       ],
+       "tag": "code"
+      },
+      " · Normalisation: text as published (",
+      {
+       "children": [
+        "MONR208416"
+       ],
+       "tag": "code"
+      },
+      ") · Native keys kept: ",
+      {
+       "children": [
+        "NYSStreetID"
+       ],
+       "tag": "code"
+      },
+      "; ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " FK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Rochester, footprint"
+       ],
+       "tag": "strong"
+      },
+      " — Proposed key: ",
+      {
+       "children": [
+        "hm:us:ny:rochester:footprint:{GlobalID}"
+       ],
+       "tag": "code"
+      },
+      " · Source field: ",
+      {
+       "children": [
+        "Building_Footprint_Open_Data.GlobalID"
+       ],
+       "tag": "code"
+      },
+      " · Normalisation: lower-case, braces stripped (proposal; not tested) · Native keys kept: none"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Other Monroe municipalities (later)"
+       ],
+       "tag": "strong"
+      },
+      " — Proposed key: ",
+      {
+       "children": [
+        "hm:us:ny:{municipality-slug}:parcel:{SBL20}"
+       ],
+       "tag": "code"
+      },
+      " or the county slug; see open decision 3 · Source field: ",
+      {
+       "children": [
+        "countysbl"
+       ],
+       "tag": "code"
+      },
+      " minus its 6-digit prefix · Normalisation: prefix goes to a ",
+      {
+       "children": [
+        "swis"
+       ],
+       "tag": "code"
+      },
+      " native key after a name-to-code table exists · Native keys kept: ",
+      {
+       "children": [
+        "countysbl"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Why the Rochester local token is the 20-character SBL and not the print key."
+     ],
+     "tag": "strong"
+    },
+    " The spine doc's illustration uses a print-key-shaped local (",
+    {
+     "children": [
+      "SYN-999.00-1-1.1"
+     ],
+     "tag": "code"
+    },
+    "). Print keys are padded differently in each layer (",
+    {
+     "children": [
+      "047.62-1-22"
+     ],
+     "tag": "code"
+    },
+    " city and county, ",
+    {
+     "children": [
+      "47.18-1-33"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "3.-1-1"
+     ],
+     "tag": "code"
+    },
+    " statewide), and Monroe ",
+    {
+     "children": [
+      "printkey"
+     ],
+     "tag": "code"
+    },
+    " has 267,357 distinct values in 267,962 rows. The SBL20 has the same shape in all three layers and has 3 fewer distinct values than rows in the city layer (64,825 of 64,828). A print key can be derived from it for display. This departs from the illustration and is flagged as an open decision."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Normalisation rules that the reads support."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "New York: compare on ",
+      {
+       "children": [
+        "SWIS6 + SBL20"
+       ],
+       "tag": "code"
+      },
+      " (26 chars). Never compare print keys across layers. Never compare ",
+      {
+       "children": [
+        "swis"
+       ],
+       "tag": "code"
+      },
+      " between Monroe (names) and the statewide layer (codes)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "New York: ",
+      {
+       "children": [
+        "SBL20"
+       ],
+       "tag": "code"
+      },
+      " is text. Leading zeros matter (",
+      {
+       "children": [
+        "04762..."
+       ],
+       "tag": "code"
+      },
+      "), and the float-stored tables cannot be repaired by padding."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "New York duplicates: 64,828 city rows vs 64,825 distinct ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      "; 267,962 Monroe rows vs 267,904 distinct ",
+      {
+       "children": [
+        "countysbl"
+       ],
+       "tag": "code"
+      },
+      ". Decide how to fold repeated ids (multi-part parcel or condo) before minting."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Ontario: ",
+      {
+       "children": [
+        "Parcel_No"
+       ],
+       "tag": "code"
+      },
+      " is a municipal id, not an ARN. Do not label it \"roll number\". No ARN is published in any open Welland layer."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Ontario: the Region publishes ",
+      {
+       "children": [
+        "municipality"
+       ],
+       "tag": "code"
+      },
+      " as ",
+      {
+       "children": [
+        "Niagara on the Lake"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "St Catharines"
+       ],
+       "tag": "code"
+      },
+      "; the slug is minted separately (",
+      {
+       "children": [
+        "niagara-on-the-lake"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "st-catharines"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "Joins-matrix-(b)"
+   },
+   "children": [
+    "Joins matrix (b)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Exactness scale: ",
+    {
+     "children": [
+      "exact"
+     ],
+     "tag": "strong"
+    },
+    " (shared identifier, tested); ",
+    {
+     "children": [
+      "exact-if-present"
+     ],
+     "tag": "strong"
+    },
+    " (shared identifier with nulls or misses); ",
+    {
+     "children": [
+      "fuzzy-spatial"
+     ],
+     "tag": "strong"
+    },
+    "; ",
+    {
+     "children": [
+      "fuzzy-text"
+     ],
+     "tag": "strong"
+    },
+    "; ",
+    {
+     "children": [
+      "impossible"
+     ],
+     "tag": "strong"
+    },
+    " (no shared key and no reliable geometry or text). Ratios are ",
+    {
+     "children": [
+      "hits/tested"
+     ],
+     "tag": "code"
+    },
+    " from small samples."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Welland"
+   },
+   "children": [
+    "Welland"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Heritage parcels"
+       ],
+       "tag": "strong"
+      },
+      " — To: Parcels · Method: ",
+      {
+       "children": [
+        "Parcel_No"
+       ],
+       "tag": "code"
+      },
+      " = ",
+      {
+       "children": [
+        "Parcel_No"
+       ],
+       "tag": "code"
+      },
+      " · Exactness: exact-if-present · Result and known failure modes: 17/20; misses undiagnosed (11680, 20199, 14391 not in the fabric)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Site plans"
+       ],
+       "tag": "strong"
+      },
+      " — To: Parcels · Method: ",
+      {
+       "children": [
+        "Parcel_No"
+       ],
+       "tag": "code"
+      },
+      " = ",
+      {
+       "children": [
+        "Parcel_No"
+       ],
+       "tag": "code"
+      },
+      " · Exactness: exact-if-present · Result and known failure modes: 25/30"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Permits (pre-May 2019)"
+       ],
+       "tag": "strong"
+      },
+      " — To: Parcels · Method: ",
+      {
+       "children": [
+        "parcelno"
+       ],
+       "tag": "code"
+      },
+      " = ",
+      {
+       "children": [
+        "Parcel_No"
+       ],
+       "tag": "code"
+      },
+      " · Exactness: exact-if-present · Result and known failure modes: 23/30; 52 permits have null ",
+      {
+       "children": [
+        "parcelno"
+       ],
+       "tag": "code"
+      },
+      "; address text is upper-case and abbreviated (",
+      {
+       "children": [
+        "LEA CRES"
+       ],
+       "tag": "code"
+      },
+      ") so it is a poor fallback"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Footprints"
+       ],
+       "tag": "strong"
+      },
+      " — To: Civic points · Method: ",
+      {
+       "children": [
+        "AddId"
+       ],
+       "tag": "code"
+      },
+      " = ",
+      {
+       "children": [
+        "AddId"
+       ],
+       "tag": "code"
+      },
+      " · Exactness: exact-if-present · Result and known failure modes: 29/30 with identical address text; 2,214 footprints have null ",
+      {
+       "children": [
+        "AddId"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Footprints"
+       ],
+       "tag": "strong"
+      },
+      " — To: Parcels · Method: centroid in polygon · Exactness: fuzzy-spatial · Result and known failure modes: 18/18 in exactly one parcel; multi-parcel or straddling footprints untested"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Footprints"
+       ],
+       "tag": "strong"
+      },
+      " — To: Zoning · Method: centroid in polygon · Exactness: fuzzy-spatial · Result and known failure modes: 18/18 in one polygon; zoning polygons overlap and have nulls (800 Niagara Street returned two, one null)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Civic points"
+       ],
+       "tag": "strong"
+      },
+      " — To: Parcels · Method: none by id; spatial or address text · Exactness: fuzzy · Result and known failure modes: parcel ",
+      {
+       "children": [
+        "Address"
+       ],
+       "tag": "code"
+      },
+      " can be a range (",
+      {
+       "children": [
+        "800-816 Niagara Street"
+       ],
+       "tag": "code"
+      },
+      "), so text equality fails; 1,506 parcels have null address"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NEI"
+       ],
+       "tag": "strong"
+      },
+      " — To: Civic points · Method: address text (",
+      {
+       "children": [
+        "businessstreetnumber"
+       ],
+       "tag": "code"
+      },
+      " + ",
+      {
+       "children": [
+        "businessstreetname"
+       ],
+       "tag": "code"
+      },
+      ") · Exactness: fuzzy-text · Result and known failure modes: 27/30 case-insensitive; misses like ",
+      {
+       "children": [
+        "14 King Street"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "815 Ontario Street"
+       ],
+       "tag": "code"
+      },
+      " (city has Ontario Road) and a double space"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NEI"
+       ],
+       "tag": "strong"
+      },
+      " — To: Parcels · Method: point in polygon · Exactness: fuzzy-spatial · Result and known failure modes: 15/15 landed in a parcel; 4 of the 15 premises share one parcel (",
+      {
+       "children": [
+        "800-816 Niagara Street"
+       ],
+       "tag": "code"
+      },
+      "), so parcel to premises is one to many"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NEI"
+       ],
+       "tag": "strong"
+      },
+      " — To: Zoning · Method: point in polygon · Exactness: fuzzy-spatial · Result and known failure modes: 15/15 landed in a polygon; some return two"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NEI"
+       ],
+       "tag": "strong"
+      },
+      " — To: Business directory · Method: none · Exactness: impossible · Result and known failure modes: no shared key; documented offline agreement about 29% (not re-read)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Business directory"
+       ],
+       "tag": "strong"
+      },
+      " — To: Civic points · Method: address text · Exactness: fuzzy-text · Result and known failure modes: 11/15; misses ",
+      {
+       "children": [
+        "Unit 6"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "46-185"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "St."
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Business directory"
+       ],
+       "tag": "strong"
+      },
+      " — To: Parcels · Method: point in polygon (871 points) · Exactness: fuzzy-spatial · Result and known failure modes: not tested"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NEI (any edition)"
+       ],
+       "tag": "strong"
+      },
+      " — To: NEI (other edition) · Method: ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      " (+ ",
+      {
+       "children": [
+        "Year"
+       ],
+       "tag": "code"
+      },
+      ") · Exactness: exact · Result and known failure modes: consolidated layer uses one lowercase name for all 8 editions; the earlier ",
+      {
+       "children": [
+        "NEI_ID"
+       ],
+       "tag": "code"
+      },
+      " casing trap is absent here"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Region address points"
+       ],
+       "tag": "strong"
+      },
+      " — To: City civic points · Method: none · Exactness: impossible by id · Result and known failure modes: ",
+      {
+       "children": [
+        "GSmartID"
+       ],
+       "tag": "code"
+      },
+      " vs ",
+      {
+       "children": [
+        "AddId"
+       ],
+       "tag": "code"
+      },
+      "; 24,412 vs 22,461 Welland points"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Region footprints"
+       ],
+       "tag": "strong"
+      },
+      " — To: City footprints · Method: spatial · Exactness: fuzzy-spatial · Result and known failure modes: not tested; no municipality field on the Region layer"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Region heritage points"
+       ],
+       "tag": "strong"
+      },
+      " — To: City heritage parcels · Method: address text · Exactness: fuzzy-text · Result and known failure modes: 27 points vs 31 polygons; not tested"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Business licences"
+       ],
+       "tag": "strong"
+      },
+      " — To: anything · Method: none · Exactness: impossible · Result and known failure modes: table has 0 rows"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NPCA parcels"
+       ],
+       "tag": "strong"
+      },
+      " — To: anything · Method: none attempted · Exactness: not ingested by rule · Result and known failure modes: documented only"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Rochester"
+   },
+   "children": [
+    "Rochester"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "City parcels 2024"
+       ],
+       "tag": "strong"
+      },
+      " — To: Monroe ",
+      {
+       "children": [
+        "Parcels_Public"
+       ],
+       "tag": "code"
+      },
+      " · Method: ",
+      {
+       "children": [
+        "countysbl"
+       ],
+       "tag": "code"
+      },
+      " = ",
+      {
+       "children": [
+        "261400"
+       ],
+       "tag": "code"
+      },
+      " + ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " · Exactness: exact · Result and known failure modes: 45/45, print key identical in all 45; Monroe has 64,655 rows with the prefix and 26 city-prefixed rows have null ",
+      {
+       "children": [
+        "swis"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City parcels 2024"
+       ],
+       "tag": "strong"
+      },
+      " — To: City parcels (other year) · Method: ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " · Exactness: exact if the parcel did not split or merge · Result and known failure modes: counts vary 64,826 to 65,923; lineage table covers only 788 changes"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City parcels 2024"
+       ],
+       "tag": "strong"
+      },
+      " — To: City open-data parcels (live) · Method: ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " · Exactness: expected exact, not tested · Result and known failure modes: 64,828 vs 64,709 rows"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Address lookup"
+       ],
+       "tag": "strong"
+      },
+      " — To: City parcels · Method: ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " · Exactness: exact-if-present · Result and known failure modes: 21/21; 164 lookup rows have null ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      "; many addresses per parcel"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Housing inventory"
+       ],
+       "tag": "strong"
+      },
+      " — To: City parcels · Method: ",
+      {
+       "children": [
+        "SBL"
+       ],
+       "tag": "code"
+      },
+      " = ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " · Exactness: exact-if-present · Result and known failure modes: 14/15; ",
+      {
+       "children": [
+        "GISSBL"
+       ],
+       "tag": "code"
+      },
+      " is a different 10-char form"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Vacant land, city owned, centroids"
+       ],
+       "tag": "strong"
+      },
+      " — To: City parcels · Method: ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " · Exactness: expected exact, not tested · Result and known failure modes: derived from the same parcel service family"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Development ready sites"
+       ],
+       "tag": "strong"
+      },
+      " — To: City parcels · Method: parse ",
+      {
+       "children": [
+        "SBL_1"
+       ],
+       "tag": "code"
+      },
+      " then match ",
+      {
+       "children": [
+        "PRINTKEY"
+       ],
+       "tag": "code"
+      },
+      " · Exactness: fuzzy-text · Result and known failure modes: free text, may list several parcels separated by semicolons"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Footprints"
+       ],
+       "tag": "strong"
+      },
+      " — To: City parcels · Method: centroid in polygon · Exactness: fuzzy-spatial · Result and known failure modes: 10/10 in one parcel; footprints carry no id or address"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Footprints"
+       ],
+       "tag": "strong"
+      },
+      " — To: Zoning districts · Method: centroid in polygon · Exactness: fuzzy-spatial · Result and known failure modes: 10/10 in one polygon"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City parcels"
+       ],
+       "tag": "strong"
+      },
+      " — To: Zoning districts · Method: ",
+      {
+       "children": [
+        "BISZONING"
+       ],
+       "tag": "code"
+      },
+      " = ",
+      {
+       "children": [
+        "LABEL"
+       ],
+       "tag": "code"
+      },
+      " · Exactness: fuzzy-text · Result and known failure modes: 92 distinct ",
+      {
+       "children": [
+        "BISZONING"
+       ],
+       "tag": "code"
+      },
+      " vs 74 distinct ",
+      {
+       "children": [
+        "LABEL"
+       ],
+       "tag": "code"
+      },
+      "; forms differ (",
+      {
+       "children": [
+        "C1"
+       ],
+       "tag": "code"
+      },
+      " vs ",
+      {
+       "children": [
+        "C-1"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "CCD"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "IPD"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "URD"
+       ],
+       "tag": "code"
+      },
+      " variants). Use spatial, and keep ",
+      {
+       "children": [
+        "BISZONING"
+       ],
+       "tag": "code"
+      },
+      " as a snapshot-vintage attribute."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City parcels"
+       ],
+       "tag": "strong"
+      },
+      " — To: 311 case data · Method: none · Exactness: impossible by id · Result and known failure modes: no address number or parcel id on 311"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Assessment tables 1996-2012"
+       ],
+       "tag": "strong"
+      },
+      " — To: City parcels 2024 · Method: ",
+      {
+       "children": [
+        "SBL"
+       ],
+       "tag": "code"
+      },
+      "/",
+      {
+       "children": [
+        "SBL20"
+       ],
+       "tag": "code"
+      },
+      " · Exactness: ",
+      {
+       "children": [
+        "impossible by id"
+       ],
+       "tag": "strong"
+      },
+      " · Result and known failure modes: stored as floating point (",
+      {
+       "children": [
+        "4.62800001001e+18"
+       ],
+       "tag": "code"
+      },
+      "); 0/5 and 0/12 matched after zero-padding; needs address plus house number or a rebuild rule"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Monroe ",
+        {
+         "children": [
+          "Parcels_Public"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — To: NYS Tax Parcels Public · Method: ",
+      {
+       "children": [
+        "SWIS"
+       ],
+       "tag": "code"
+      },
+      " + ",
+      {
+       "children": [
+        "SBL"
+       ],
+       "tag": "code"
+      },
+      " · Exactness: impossible for Monroe · Result and known failure modes: 0 Monroe features in the state layer; Monroe ",
+      {
+       "children": [
+        "swis"
+       ],
+       "tag": "code"
+      },
+      " holds names"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Any Rochester layer"
+       ],
+       "tag": "strong"
+      },
+      " — To: permits, violations, licences · Method: none · Exactness: not in coverage · Result and known failure modes: no such dataset in the DCAT feed"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NYS statewide, Erie and others"
+       ],
+       "tag": "strong"
+      },
+      " — To: each other · Method: ",
+      {
+       "children": [
+        "SWIS_SBL_ID"
+       ],
+       "tag": "code"
+      },
+      " · Exactness: exact within a county · Result and known failure modes: not a pilot layer; Erie sample verified the 26-char shape"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Concepts-and-ledger-rows:-confirmed,-contradicted,-missing-(c)"
+   },
+   "children": [
+    "Concepts and ledger rows: confirmed, contradicted, missing (c)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Confirmed live 2026-09-30"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "LG-006"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "LG-007"
+       ],
+       "tag": "code"
+      },
+      " City ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " (20 chars) and padded ",
+      {
+       "children": [
+        "PRINTKEY"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LG-004"
+       ],
+       "tag": "code"
+      },
+      " Monroe ",
+      {
+       "children": [
+        "countysbl"
+       ],
+       "tag": "code"
+      },
+      " is 26 chars. ",
+      {
+       "children": [
+        "Upgrade the equivalence note:"
+       ],
+       "tag": "strong"
+      },
+      " for city parcels, ",
+      {
+       "children": [
+        "countysbl"
+       ],
+       "tag": "code"
+      },
+      " = ",
+      {
+       "children": [
+        "261400"
+       ],
+       "tag": "code"
+      },
+      " + ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " in 45/45 tests. ",
+      {
+       "children": [
+        "LG-004"
+       ],
+       "tag": "code"
+      },
+      "'s relation ",
+      {
+       "children": [
+        "near"
+       ],
+       "tag": "code"
+      },
+      " could become ",
+      {
+       "children": [
+        "same"
+       ],
+       "tag": "code"
+      },
+      " for the city rows."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LG-002"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "LG-005"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "LG-007"
+       ],
+       "tag": "code"
+      },
+      " Padding: city and Monroe padded (",
+      {
+       "children": [
+        "047.62-1-22"
+       ],
+       "tag": "code"
+      },
+      "); state unpadded (",
+      {
+       "children": [
+        "47.18-1-33"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "3.-1-1"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LG-020"
+       ],
+       "tag": "code"
+      },
+      " Monroe ",
+      {
+       "children": [
+        "swis"
+       ],
+       "tag": "code"
+      },
+      " holds names: 32 distinct names, 544 null."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LG-001"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "LG-003"
+       ],
+       "tag": "code"
+      },
+      " State ",
+      {
+       "children": [
+        "SBL"
+       ],
+       "tag": "code"
+      },
+      " (20) and ",
+      {
+       "children": [
+        "SWIS_SBL_ID"
+       ],
+       "tag": "code"
+      },
+      " (26): Erie sample ",
+      {
+       "children": [
+        "145601"
+       ],
+       "tag": "code"
+      },
+      " + ",
+      {
+       "children": [
+        "04718000010330000000"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LG-030"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "LG-031"
+       ],
+       "tag": "code"
+      },
+      " ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      " is present, no nulls, in all 8 consolidated editions under one lowercase name."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LG-032"
+       ],
+       "tag": "code"
+      },
+      " Welland directory ",
+      {
+       "children": [
+        "ID"
+       ],
+       "tag": "code"
+      },
+      ": 923 distinct; still no shared key with the NEI."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LG-057"
+       ],
+       "tag": "code"
+      },
+      " Welland ",
+      {
+       "children": [
+        "Zoning"
+       ],
+       "tag": "code"
+      },
+      " has a null-attribute polygon: 4 null."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LG-064"
+       ],
+       "tag": "code"
+      },
+      " Rochester ",
+      {
+       "children": [
+        "BISZONING"
+       ],
+       "tag": "code"
+      },
+      " exists and is null on 1,067; its vocabulary differs from the zoning layer ",
+      {
+       "children": [
+        "LABEL"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LG-093"
+       ],
+       "tag": "code"
+      },
+      " Region heritage: 318 points (27 in Welland)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LG-094"
+       ],
+       "tag": "code"
+      },
+      " Erie 700-series: 1,159 parcels (denominator re-read; ",
+      {
+       "children": [
+        "GFA"
+       ],
+       "tag": "code"
+      },
+      " count not re-read)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LG-079"
+       ],
+       "tag": "code"
+      },
+      " Monroe 267,962 parcels."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LG-072"
+       ],
+       "tag": "code"
+      },
+      " Monroe ",
+      {
+       "children": [
+        "propertyclass"
+       ],
+       "tag": "code"
+      },
+      " integer; 868 in the 700-series."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Evidence upgrades (documented to live)"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "LG-097"
+       ],
+       "tag": "code"
+      },
+      " ",
+      {
+       "children": [
+        "indoorgfa"
+       ],
+       "tag": "code"
+      },
+      " is present in the consolidated NEI field list. Welland rows: 4,007 above 0, 304 null, the rest 0."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Contradicted or out of date"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "LG-118"
+       ],
+       "tag": "code"
+      },
+      " says the Welland heritage polygons are \"the only parcel-shaped geometry Welland's open data offers\" and that ",
+      {
+       "children": [
+        "Parcel_No"
+       ],
+       "tag": "code"
+      },
+      " values were not read. ",
+      {
+       "children": [
+        "Parcel_No"
+       ],
+       "tag": "code"
+      },
+      " values were read and join to a 23,541-parcel public fabric (17/20)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LG-054"
+       ],
+       "tag": "code"
+      },
+      " says Welland licences are counts by type and year. The table has ",
+      {
+       "children": [
+        "0 rows"
+       ],
+       "tag": "strong"
+      },
+      " today."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LG-042"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "LG-048"
+       ],
+       "tag": "code"
+      },
+      " fine as written; values not re-sampled."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The roster ",
+      {
+       "children": [
+        "07"
+       ],
+       "tag": "code"
+      },
+      " describes Rochester as ",
+      {
+       "children": [
+        "socrata"
+       ],
+       "tag": "code"
+      },
+      ": it is an ArcGIS Hub."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The roster ",
+      {
+       "children": [
+        "07"
+       ],
+       "tag": "code"
+      },
+      " says the Welland origin server was down on 2026-08-22: it answers today."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Missing from the ledger and the concept list"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Address-point id: Welland ",
+      {
+       "children": [
+        "AddId"
+       ],
+       "tag": "code"
+      },
+      ", Rochester ",
+      {
+       "children": [
+        "AddressPointID"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "NYSStreetID"
+       ],
+       "tag": "code"
+      },
+      ", Region ",
+      {
+       "children": [
+        "GSmartID"
+       ],
+       "tag": "code"
+      },
+      " (in the ledger only as a row id trap, ",
+      {
+       "children": [
+        "LG-016"
+       ],
+       "tag": "code"
+      },
+      "). ",
+      {
+       "children": [
+        "civic_address"
+       ],
+       "tag": "code"
+      },
+      " covers text, not the id. Candidate new concept, or a rule that says which existing concept it maps to."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Permit register key and its parcel foreign key: ",
+      {
+       "children": [
+        "PermitID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PermitNo"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "parcelno"
+       ],
+       "tag": "code"
+      },
+      ". Closest concept is ",
+      {
+       "children": [
+        "regulatory_activity_register"
+       ],
+       "tag": "code"
+      },
+      "; no row."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Footprint or building id: Region ",
+      {
+       "children": [
+        "UniqueID"
+       ],
+       "tag": "code"
+      },
+      ", Rochester ",
+      {
+       "children": [
+        "GlobalID"
+       ],
+       "tag": "code"
+      },
+      ". ",
+      {
+       "children": [
+        "publisher_row_id"
+       ],
+       "tag": "code"
+      },
+      " would swallow both; decide."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Parcel foreign key on overlay and event layers: ",
+      {
+       "children": [
+        "Parcel_No"
+       ],
+       "tag": "code"
+      },
+      " on heritage and site plans. ",
+      {
+       "children": [
+        "parcel_gis_key"
+       ],
+       "tag": "code"
+      },
+      " fits; no rows."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Split and merge lineage: ",
+      {
+       "children": [
+        "NewSBL"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Split_Merge"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "SBL stored as a float (",
+      {
+       "children": [
+        "SBL"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "SBL20"
+       ],
+       "tag": "code"
+      },
+      " in the 1996 and 2012 tables): a trap row on ",
+      {
+       "children": [
+        "assessment_roll_key"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "SBL_1"
+       ],
+       "tag": "code"
+      },
+      " free text with several parcels; ",
+      {
+       "children": [
+        "GISSBL"
+       ],
+       "tag": "code"
+      },
+      " 10-char variant."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Municipality_Id"
+       ],
+       "tag": "code"
+      },
+      " (",
+      {
+       "children": [
+        "CoW"
+       ],
+       "tag": "code"
+      },
+      ") on Welland IMS parcels."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Owner-class fields: ",
+      {
+       "children": [
+        "Owner_Class"
+       ],
+       "tag": "code"
+      },
+      " (Welland), ",
+      {
+       "children": [
+        "OWNERSHIPCODE"
+       ],
+       "tag": "code"
+      },
+      " (Rochester) next to ",
+      {
+       "children": [
+        "owner_category"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0078\ntype: working-paper\nsection: expansion\nrun: CR-001\nevidence_date: 2026-10-17\nseq: 38"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, spine, joins, pilots",
+ "path": "EPIC-2--Parcel-Identity-Spine-and-joins-part-1-of-2-11-19",
+ "title": "EPIC 2 — Parcel Identity Spine and joins (part 1 of 2)",
+ "url": "https://telegra.ph/EPIC-2--Parcel-Identity-Spine-and-joins-part-1-of-2-11-19",
+ "views": 0
+}

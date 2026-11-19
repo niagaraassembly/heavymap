@@ -1,0 +1,2202 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, hamilton, beta-gate, checks, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Status:"
+     ],
+     "tag": "strong"
+    },
+    " accepted 2026-10-18 (the owner). ",
+    {
+     "children": [
+      "Linear:"
+     ],
+     "tag": "strong"
+    },
+    " NA-269 (gate definition), NA-29 (reconciliation epic), NA-306 (pre-publish check subsystem), NA-305 (browser notice), NA-304 (OSM, deferred), NA-308 (run-record UI, standing), NA-309 (addresses with no parcel), NA-310 (experience profiles, standing). ",
+    {
+     "children": [
+      "Scope:"
+     ],
+     "tag": "strong"
+    },
+    " the City of Hamilton, Ontario, the first jurisdiction to open. Section 9 records the owner's 2026-10-18 decisions. Thresholds, gate rules and size budgets in sections 2, 3 and 6 are ACCEPTED."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "1.-What-the-gate-is"
+   },
+   "children": [
+    "1. What the gate is"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "One staged beta gate, for now."
+       ],
+       "tag": "strong"
+      },
+      " G5 (\"reconciled\") and G6 (\"publish\") are merged into one gate with two stages (the owner, 2026-10-18). They may split again after beta."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Stage A: reconciled."
+       ],
+       "tag": "strong"
+      },
+      " Spine, joins, labelling, screening and reproducibility checks pass for the jurisdiction (sections 2 to 5)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Stage B: publishable."
+       ],
+       "tag": "strong"
+      },
+      " Pre-publish checks pass on the actual build output, the deploy path works, and the owner signs off (sections 6 to 8)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Per jurisdiction."
+       ],
+       "tag": "strong"
+      },
+      " Each jurisdiction opens on its own checklist. Hamilton does not wait for Niagara, Western New York or any other area. A later jurisdiction reuses this document as a template."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "\"Reconciled\" means observed and labelled, not made clean."
+       ],
+       "tag": "strong"
+      },
+      " Every known conflict, gap, sliver and contradiction is detected, classified, counted and labelled. Nothing is extinguished from view to make the data look tidier. Some classes are flagged as must-solve before publishing (section 4)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Back end versus front end."
+       ],
+       "tag": "strong"
+      },
+      " The checks, metrics, run records and labels are universal back-end work (Industrial Atlas). How they appear on heavymap.com is front-end work (HeavyMap.com project) and is out of scope here, apart from naming what must be surfaced."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Repo split (plan recorded in PR #80; execution separately assigned)."
+       ],
+       "tag": "strong"
+      },
+      " Keep everything in this repo during concurrent work. Do not create the new repository, move paths or rename identifiers without a separate bounded assignment. Frontend repair and backend validation proceed independently of migration timing."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "2.-Standardized-spine-and-join-checks"
+   },
+   "children": [
+    "2. Standardized spine and join checks"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Each check runs on every build. Each one writes a value into the run record (section 3). The same definitions apply to every jurisdiction. Only the thresholds may differ, and any difference must be written down."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Notation: ",
+    {
+     "children": [
+      "City parcels"
+     ],
+     "tag": "em"
+    },
+    " = the authoritative parcel fabric (for Hamilton, the City parcel layer the registry mints from). ",
+    {
+     "children": [
+      "Attribute fabric"
+     ],
+     "tag": "em"
+    },
+    " = a second parcel fabric joined for identifiers (for Hamilton, NPCA ",
+    {
+     "children": [
+      "Assessment_Parcels_Test"
+     ],
+     "tag": "code"
+    },
+    " for ARN)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "S1"
+       ],
+       "tag": "strong"
+      },
+      " — Metric: One-to-one rate · How it is computed: Reciprocal representative-point matches between City parcels and the attribute fabric, after the offset is applied. Divided by attribute-fabric parcels in the overlap set. · Hamilton today (2026-10-17 run): 90,102 pairs, 99.77% · Threshold (ACCEPTED 2026-10-18): warn below 99.5%, fail below 99.0%"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "S2"
+       ],
+       "tag": "strong"
+      },
+      " — Metric: One-to-one quality · How it is computed: Overlap ratio (IoU) of S1 pairs: p10, p50, p90, and the count with IoU ≥ 0.9. · Hamilton today (2026-10-17 run): p10 0.999, p50 1.000, p90 1.000; 89,837 at ≥ 0.9 · Threshold (ACCEPTED 2026-10-18): fail if p10 < 0.95"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "S3"
+       ],
+       "tag": "strong"
+      },
+      " — Metric: One-to-many and many-to-one · How it is computed: Count of City parcels linked to more than one identifier, and identifiers linked to more than one City parcel. Placeholders are excluded (see S5). · Hamilton today (2026-10-17 run): Recorded in registry ",
+      {
+       "children": [
+        "arn_links"
+       ],
+       "tag": "code"
+      },
+      "; recount after the batched re-run · Threshold (ACCEPTED 2026-10-18): reported, no fail level; every case has a grade"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "S4"
+       ],
+       "tag": "strong"
+      },
+      " — Metric: Unmatched · How it is computed: City parcels in the overlap set with no identifier, and attribute-fabric parcels with no City parcel. · Hamilton today (2026-10-17 run): Recount after the batched re-run · Threshold (ACCEPTED 2026-10-18): ≤ 0.5% each, every one labelled"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "S5"
+       ],
+       "tag": "strong"
+      },
+      " — Metric: Placeholder count · How it is computed: Identifier values that are sentinels (for ARN, all zeros). Graded ",
+      {
+       "children": [
+        "placeholder"
+       ],
+       "tag": "code"
+      },
+      ", never ",
+      {
+       "children": [
+        "one_to_many"
+       ],
+       "tag": "code"
+      },
+      ". · Hamilton today (2026-10-17 run): 10 links (GAP-0005) · Threshold (ACCEPTED 2026-10-18): any count passes as long as all are flagged; 0 unflagged"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "S6"
+       ],
+       "tag": "strong"
+      },
+      " — Metric: Not in coverage · How it is computed: City parcels outside the attribute fabric's footprint. Graded ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      ", tied to the dataset that defines the coverage. · Hamilton today (2026-10-17 run): 74,276 of 166,745 (GAP-0010) · Threshold (ACCEPTED 2026-10-18): Labelled, no fail level (coverage is a fact about the source)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "S7"
+       ],
+       "tag": "strong"
+      },
+      " — Metric: Offset applied · How it is computed: The measured translation between fabrics (median dx, dy), its spread (IQR) and the sample size. The build fails if the offset in use differs from the offset measured on this pull by more than a tolerance. · Hamilton today (2026-10-17 run): dx +0.297 m, dy −0.939 m, IQR < 3 mm (Q-004, NA-276) · Threshold (ACCEPTED 2026-10-18): tolerance 0.05 m; IQR ≤ 0.01 m"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "S8"
+       ],
+       "tag": "strong"
+      },
+      " — Metric: ID stability across runs · How it is computed: Between this run and the previous registry: kept, ",
+      {
+       "children": [
+        "replaced_by"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "split_into"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "merged_from"
+       ],
+       "tag": "code"
+      },
+      ", newly minted, retired. On an unchanged input, every ID must be kept. · Hamilton today (2026-10-17 run): Synthetic test passes; first real repeat pending · Threshold (ACCEPTED 2026-10-18): Unchanged input: 100% kept (hard). Changed input: reported"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "S9"
+       ],
+       "tag": "strong"
+      },
+      " — Metric: Overlay link coverage · How it is computed: For each overlay layer (zoning, OP designations, conservation and so on): the share of City parcels with at least one link, plus layers present with zero links. · Hamilton today (2026-10-17 run): 644,398 links over all parcels · Threshold (ACCEPTED 2026-10-18): every layer has ≥ 1 link or a gap entry explaining why not"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "S10"
+       ],
+       "tag": "strong"
+      },
+      " — Metric: Sliver counts · How it is computed: Links whose area share falls under the sliver rule, per layer. Flagged, never dropped. · Hamilton today (2026-10-17 run): 150,610 of 644,398 flagged · Threshold (ACCEPTED 2026-10-18): Reported, no fail level (flag, never extinguish)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "S11"
+       ],
+       "tag": "strong"
+      },
+      " — Metric: Address and footprint linkage · How it is computed: Addresses inside exactly one parcel, more than one, or none. Footprints the same way. · Hamilton today (2026-10-17 run): 273,955 addresses, 214,287 buildings registered · Threshold (ACCEPTED 2026-10-18): reported; \"none\" cases labelled"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "S12"
+       ],
+       "tag": "strong"
+      },
+      " — Metric: Row-count drift · How it is computed: Rows per source layer against the previous pull. · Hamilton today (2026-10-17 run): First baseline 2026-10-17 · Threshold (ACCEPTED 2026-10-18): warn at > 2% change, explain at > 5%"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Notes on accepted thresholds (the owner, 2026-10-18):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "S9."
+       ],
+       "tag": "strong"
+      },
+      " The 644,398 figure is parcel-to-overlay-feature links (about 3.9 per City parcel on 166,745 parcels, including 150,610 slivers), not a parcel count. PI-0063."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "S11."
+       ],
+       "tag": "strong"
+      },
+      " Addresses with no parcel must carry a stable tag (for example ",
+      {
+       "children": [
+        "address_no_parcel"
+       ],
+       "tag": "code"
+      },
+      ", with source dataset ids) and an index so the UI can list them. Front-end element: Linear NA-309."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "S12."
+       ],
+       "tag": "strong"
+      },
+      " Row-count drift is how we tell a publisher change from a broken pull (truncated download, paging failure, swapped layer). A warn or explain is not automatically a fail; the explanation must say which of those it is."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "A check that cannot be computed writes a blank with a reason, never a zero (HARD-RULES 8)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "3.-Professional-practice:-independent-repeat-runs-as-proofs-of-work"
+   },
+   "children": [
+    "3. Professional practice: independent repeat runs as proofs of work"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Runs 1, 2 and 3."
+       ],
+       "tag": "strong"
+      },
+      " Run 1 is the production build. Run 2 and run 3 are independent repeats:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "a fresh environment (new clone, clean virtual environment from the lock file, empty output directory);"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "the same pinned inputs (the raw pulls under local data (not published), identified by hash, not re-downloaded);"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "the same code commit."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Where they run (DECIDED 2026-10-18)."
+       ],
+       "tag": "strong"
+      },
+      " Run 2 and run 3 on Deb. Run 3 in a fresh isolated container on Deb. Cursor cloud VMs cannot run the repeats until the pinned inputs live in private storage (for example the planned ",
+      {
+       "children": [
+        "ia-restricted"
+       ],
+       "tag": "code"
+      },
+      " repo): local data (not published) is off git, and ArcGIS is not reachable from Cursor."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Comparison at three levels."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Byte level:"
+       ],
+       "tag": "em"
+      },
+      " SHA-256 of every output file. Expected to match wherever the writer is deterministic. Any file that cannot be deterministic (for example, archives with embedded timestamps) is listed with a reason."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "ID level:"
+       ],
+       "tag": "em"
+      },
+      " the sets of HeavyMap IDs, aliases, lineage and identifier grades are identical."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Metric level:"
+       ],
+       "tag": "em"
+      },
+      " every metric in section 2 matches exactly."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Run record."
+       ],
+       "tag": "strong"
+      },
+      " Every run writes one JSON record:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "run_id"
+       ],
+       "tag": "code"
+      },
+      " (ULID), ",
+      {
+       "children": [
+        "run_kind"
+       ],
+       "tag": "code"
+      },
+      " (",
+      {
+       "children": [
+        "production"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "repeat-2"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "repeat-3"
+       ],
+       "tag": "code"
+      },
+      "), ",
+      {
+       "children": [
+        "jurisdiction"
+       ],
+       "tag": "code"
+      },
+      ", start and end times (UTC);"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "inputs: each source ",
+      {
+       "children": [
+        "dataset_id"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "layer_id"
+       ],
+       "tag": "code"
+      },
+      ", retrieval time, row count and SHA-256;"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "code_commit"
+       ],
+       "tag": "code"
+      },
+      ", a dirty-tree flag, lock-file hash;"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "environment: machine label, OS, Python and key library versions;"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "the metrics from section 2;"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "output files with their hashes;"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "diffs against the reference run at the byte, ID and metric levels, with the outcome (",
+      {
+       "children": [
+        "identical"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "explained"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "failed"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Where they live."
+       ],
+       "tag": "strong"
+      },
+      " Run records belong to Industrial Atlas (the universal back end), under local data (not published) at first. The ",
+      {
+       "children": [
+        "full run record, screened"
+       ],
+       "tag": "strong"
+      },
+      " (no personal fields, no local paths that reveal the machine owner) is public with each build so heavymap.com can show \"how this was made\": the run dates, the checks and their values, and the repeat agreement. They serve both general users and technical reviewers. Front-end element: standing issue NA-308 (",
+      {
+       "children": [
+        "Elements of Run Records"
+       ],
+       "tag": "code"
+      },
+      "). Linear label ",
+      {
+       "children": [
+        "standing"
+       ],
+       "tag": "code"
+      },
+      " marks near-permanent maintenance-class issues."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Gate rule (ACCEPTED 2026-10-18)."
+       ],
+       "tag": "strong"
+      },
+      " Stage A needs at least one repeat run that is identical at the ID and metric levels. Run 3 is required before the first public release of a jurisdiction and recommended after any change to the registry or linker."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "4.-Labelling:-every-known-conflict-observed-and-labelled"
+   },
+   "children": [
+    "4. Labelling: every known conflict observed and labelled"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "One taxonomy, 1:1 with the tracking sheets."
+       ],
+       "tag": "strong"
+      },
+      " Each class of issue has one label code. Each code maps to exactly one class in the tracking CSVs:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Spreadsheets/20-data-gaps-ledger.csv"
+       ],
+       "tag": "code"
+      },
+      ", column ",
+      {
+       "children": [
+        "gap_type"
+       ],
+       "tag": "code"
+      },
+      " (today: ",
+      {
+       "children": [
+        "not_present_in_source"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "sparse"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "stale"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "contradictory"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "placeholder"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "empty"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "withheld_screened"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      ");"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Spreadsheets/18-quirks-log.csv"
+       ],
+       "tag": "code"
+      },
+      ", column ",
+      {
+       "children": [
+        "quirk_type"
+       ],
+       "tag": "code"
+      },
+      " (for example ",
+      {
+       "children": [
+        "offset"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "duplicate_id"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "invalid_geometry"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "retired_values"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "range_gzip"
+       ],
+       "tag": "code"
+      },
+      ");"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Spreadsheets/19-process-insights.csv"
+       ],
+       "tag": "code"
+      },
+      ", column ",
+      {
+       "children": [
+        "insight_type"
+       ],
+       "tag": "code"
+      },
+      " (",
+      {
+       "children": [
+        "gap"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "data_quirk"
+       ],
+       "tag": "code"
+      },
+      " and so on, linked through ",
+      {
+       "children": [
+        "source_pi_ids"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "A new class gets a code, a plain-language definition and a sheet home before it is used. A label with no sheet home fails the build."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Gap labels are permanent."
+       ],
+       "tag": "strong"
+      },
+      " They stay their own set, separate from claim-refusal reasons, with a documented mapping between the two (decided 2026-10-17)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "publish_priority"
+         ],
+         "tag": "code"
+        },
+        "."
+       ],
+       "tag": "strong"
+      },
+      " Each class, and optionally each ledger row that overrides its class, carries one of:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "must_solve_before_publish"
+       ],
+       "tag": "code"
+      },
+      ": the jurisdiction does not open until it is solved or explicitly downgraded by the owner;"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "label_and_ship"
+       ],
+       "tag": "code"
+      },
+      ": shown honestly with its label at publish;"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "later"
+       ],
+       "tag": "code"
+      },
+      ": tracked, not a publish concern."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Schema (applied 2026-10-18)."
+       ],
+       "tag": "strong"
+      },
+      " Sheet 20 has a ",
+      {
+       "children": [
+        "publish_priority"
+       ],
+       "tag": "code"
+      },
+      " column after ",
+      {
+       "children": [
+        "status"
+       ],
+       "tag": "code"
+      },
+      ". The 1:1 mapping lives in ",
+      {
+       "children": [
+        "Spreadsheets/21-issue-class-register.csv"
+       ],
+       "tag": "code"
+      },
+      " (",
+      {
+       "children": [
+        "class_code"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "sheet"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "source_column"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "source_value"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "definition"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "publish_priority"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "notes"
+       ],
+       "tag": "code"
+      },
+      "). Accepted first values for Hamilton:"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "withheld_screened"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Example: Owner, ",
+      {
+       "children": [
+        "Legal_Txt"
+       ],
+       "tag": "code"
+      },
+      " · ",
+      {
+       "children": [
+        "publish_priority"
+       ],
+       "tag": "code"
+      },
+      ": ",
+      {
+       "children": [
+        "must_solve_before_publish"
+       ],
+       "tag": "code"
+      },
+      " (meaning screening must be proven, not that the data is shown)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "placeholder"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Example: ARN all zeros · ",
+      {
+       "children": [
+        "publish_priority"
+       ],
+       "tag": "code"
+      },
+      ": ",
+      {
+       "children": [
+        "label_and_ship"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "not_in_coverage"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Example: 74,276 parcels outside NPCA ARN coverage · ",
+      {
+       "children": [
+        "publish_priority"
+       ],
+       "tag": "code"
+      },
+      ": ",
+      {
+       "children": [
+        "label_and_ship"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "stale"
+         ],
+         "tag": "code"
+        },
+        ", ",
+        {
+         "children": [
+          "sparse"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Example: 2020 ",
+      {
+       "children": [
+        "PropCode"
+       ],
+       "tag": "code"
+      },
+      " · ",
+      {
+       "children": [
+        "publish_priority"
+       ],
+       "tag": "code"
+      },
+      ": ",
+      {
+       "children": [
+        "label_and_ship"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "contradictory"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Example: ",
+      {
+       "children": [
+        "PropCode"
+       ],
+       "tag": "code"
+      },
+      " vs current zoning (count pending) · ",
+      {
+       "children": [
+        "publish_priority"
+       ],
+       "tag": "code"
+      },
+      ": ",
+      {
+       "children": [
+        "label_and_ship"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "empty"
+         ],
+         "tag": "code"
+        },
+        ", ",
+        {
+         "children": [
+          "not_present_in_source"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Example: ",
+      {
+       "children": [
+        "PostalCode"
+       ],
+       "tag": "code"
+      },
+      ", tax class · ",
+      {
+       "children": [
+        "publish_priority"
+       ],
+       "tag": "code"
+      },
+      ": ",
+      {
+       "children": [
+        "label_and_ship"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "offset"
+         ],
+         "tag": "code"
+        },
+        " (quirk)"
+       ],
+       "tag": "strong"
+      },
+      " — Example: NPCA 0.984 m shift · ",
+      {
+       "children": [
+        "publish_priority"
+       ],
+       "tag": "code"
+      },
+      ": ",
+      {
+       "children": [
+        "label_and_ship"
+       ],
+       "tag": "code"
+      },
+      " (already measured and corrected; S7 stays as the guard)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "range_gzip"
+         ],
+         "tag": "code"
+        },
+        " (quirk)"
+       ],
+       "tag": "strong"
+      },
+      " — Example: Firefox + GitHub Pages · ",
+      {
+       "children": [
+        "publish_priority"
+       ],
+       "tag": "code"
+      },
+      ": ",
+      {
+       "children": [
+        "label_and_ship"
+       ],
+       "tag": "code"
+      },
+      " (browser notice, NA-305)"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Gate rule (ACCEPTED 2026-10-18)."
+       ],
+       "tag": "strong"
+      },
+      " Stage A passes only when every open ledger and quirk row has a class, a count (or a blank with a reason) and a ",
+      {
+       "children": [
+        "publish_priority"
+       ],
+       "tag": "code"
+      },
+      ", and there are no open ",
+      {
+       "children": [
+        "must_solve_before_publish"
+       ],
+       "tag": "code"
+      },
+      " rows."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "5.-Screening:-dataset-origin-visibility"
+   },
+   "children": [
+    "5. Screening: dataset-origin visibility"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Every value carries its origin."
+       ],
+       "tag": "strong"
+      },
+      " Each coverage status and attribute value in the build carries the source ",
+      {
+       "children": [
+        "dataset_id"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "layer_id"
+       ],
+       "tag": "code"
+      },
+      " it came from. Coverage and non-coverage (for example ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " for ARN) are tied to the dataset that defines that coverage, not to the parcel in the abstract."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Per-dataset publish visibility (DECIDED 2026-10-18)."
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "publish_visibility"
+       ],
+       "tag": "code"
+      },
+      " lives in the dataset inventory (",
+      {
+       "children": [
+        "Spreadsheets/02-dataset-inventory-v4.csv"
+       ],
+       "tag": "code"
+      },
+      "). Closed values:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "public"
+       ],
+       "tag": "code"
+      },
+      " (the default): allowlisted fields ship;"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "restricted"
+       ],
+       "tag": "code"
+      },
+      ": paid-for, or licence permission is unconfirmed. Public files may carry only a brief mention that a restricted dataset list exists. The list itself is gitignored (",
+      {
+       "children": [
+        "Spreadsheets/restricted/RESTRICTED-DATASETS.csv"
+       ],
+       "tag": "code"
+      },
+      "). A committed README and headers-only template stay in git. Plan: a future private ",
+      {
+       "children": [
+        "ia-restricted"
+       ],
+       "tag": "code"
+      },
+      " repo houses restricted atlas data and infrastructure. Universal wording: docs/architecture/publish-visibility.md."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "withheld"
+       ],
+       "tag": "code"
+      },
+      ": no values ship; the dataset appears only as a manifest-level gap entry (\"this source applies here and is held back\"), or not at all, per ",
+      {
+       "children": [
+        "withheld_disclosure"
+       ],
+       "tag": "code"
+      },
+      ";"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "internal_only"
+       ],
+       "tag": "code"
+      },
+      ": never shipped, never mentioned in public output, used only for internal checks."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "withheld_disclosure"
+         ],
+         "tag": "code"
+        },
+        " (open; interim default)."
+       ],
+       "tag": "strong"
+      },
+      " Not decided. Interim default is ",
+      {
+       "children": [
+        "manifest_entry"
+       ],
+       "tag": "code"
+      },
+      ", marked interim, until the owner chooses ",
+      {
+       "children": [
+        "manifest_entry"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "none"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Applied by allowlist at build time."
+       ],
+       "tag": "strong"
+      },
+      " The build reads the settings and emits only allowlisted fields from ",
+      {
+       "children": [
+        "public"
+       ],
+       "tag": "code"
+      },
+      " datasets. Withheld fields (owner names, owner mailing addresses, legal descriptions, other personal fields) are screened from parcel dossiers and other datasets. ",
+      {
+       "children": [
+        "Hamilton permit-digest exception (the owner, 2026-11-17):"
+       ],
+       "tag": "strong"
+      },
+      " source-reported owner/builder names may be shown only on the industrial, logistics, commercial and multi-unit focus profile, labeled as source-reported and not independently verified. Contact addresses and permit descriptions remain excluded; this does not change parcel-dossier screening. A test fails the build on any unapproved field."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Field-level withholding inside a public dataset"
+       ],
+       "tag": "strong"
+      },
+      " (for example ",
+      {
+       "children": [
+        "Owner"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "Legal_Txt"
+       ],
+       "tag": "code"
+      },
+      " in Cityview) stays at the dataset level for now: one manifest entry, no per-parcel hint of a value. ",
+      {
+       "children": [
+        "DECIDED 2026-10-18:"
+       ],
+       "tag": "strong"
+      },
+      " dossiers will signal that identifying information is held. Wording is tied to logged-in and paid tiers (front-end and business). That copy is not written here."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Everything not screened by these settings is public. Screening is the exception, and every screening choice is written down."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "6.-Pre-publish-checks-(incremental,-NA-306)"
+   },
+   "children": [
+    "6. Pre-publish checks (incremental, NA-306)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Run over every output file of the build, fail closed:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Leak test:"
+       ],
+       "tag": "strong"
+      },
+      " no withheld field names or known withheld values in any output."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Schema and allowlist:"
+       ],
+       "tag": "strong"
+      },
+      " every emitted field is allowlisted for that output."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Size budgets (ACCEPTED 2026-10-18):"
+       ],
+       "tag": "strong"
+      },
+      " startup payload ≤ 50 KB compressed; per-click dossier shard ≤ 50 KB compressed (p95); each ",
+      {
+       "children": [
+        ".pmtiles"
+       ],
+       "tag": "code"
+      },
+      " ≤ 100 MB; total site ≤ 1 GB (the GitHub Pages limit). Accepted, and flagged as an ongoing optimization need. Future experience profiles that need meta-stamping of back-end elements: standing issue NA-310."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Reproducibility:"
+       ],
+       "tag": "strong"
+      },
+      " the repeat-run comparison from section 3."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "Increment 1 command (synthetic fixtures in git; real-data run on Deb): ",
+    {
+     "children": [
+      "python3 -m heavymap.prepublish <output-dir> [--reference <dir>] [--report <path>]"
+     ],
+     "tag": "code"
+    },
+    ". Fail closed. Does not publish."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Later increments: licence and attribution presence, gap-ledger completeness, a cross-browser smoke test, a load test, link checks."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "7.-Build-output-shipping"
+   },
+   "children": [
+    "7. Build output shipping"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Tiles and dossier files are ",
+      {
+       "children": [
+        "generated from local data at deploy time"
+       ],
+       "tag": "strong"
+      },
+      " and published as build artifacts (for example, a Pages deployment artifact). They are ",
+      {
+       "children": [
+        "not committed to git"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Why: the repo stays small and reviewable; data never sits in git history (so a later screening change cannot leave old values behind in history); every deploy is traceable to a run record and code commit; and large binaries avoid git's size limits."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "HARD-RULES rule 3 (DECIDED 2026-10-18):"
+       ],
+       "tag": "strong"
+      },
+      " building and testing publish or deploy tooling is allowed now. Actually publishing or deploying publicly still requires the owner's per-jurisdiction sign-off on this beta gate (NA-269)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "8.-Browser-notice-and-sign-off"
+   },
+   "children": [
+    "8. Browser notice and sign-off"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Browser notice (NA-305):"
+       ],
+       "tag": "strong"
+      },
+      " v0 tells users that Chrome is optimal and Firefox support is in progress. The GitHub Pages gzip problem (PMTiles issue #584) is parked."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Sign-off:"
+       ],
+       "tag": "strong"
+      },
+      " the owner signs off each stage per jurisdiction, recorded on NA-269 with the run IDs of the production run and the repeat runs."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "9.-Decisions-for-the-owner-(2026-10-18)"
+   },
+   "children": [
+    "9. Decisions for the owner (2026-10-18)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "1"
+       ],
+       "tag": "strong"
+      },
+      " — Question: Accept or adjust each PROPOSED threshold in sections 2, 3 and 6. · Outcome: ",
+      {
+       "children": [
+        "DECIDED 2026-10-18."
+       ],
+       "tag": "strong"
+      },
+      " All S1–S12 thresholds, the repeat-run gate rule and the size budgets are ACCEPTED. Notes: (a) S9 644,398 is overlay links, not parcels; (b) S11 none-cases need a stable tag and an index (NA-309); (c) S12 drift distinguishes publisher change from a broken pull; (d) size budgets accepted, optimization ongoing (NA-310)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2"
+       ],
+       "tag": "strong"
+      },
+      " — Question: Add ",
+      {
+       "children": [
+        "publish_priority"
+       ],
+       "tag": "code"
+      },
+      " to sheet 20, and create the class register (sheet 21)? · Outcome: ",
+      {
+       "children": [
+        "DECIDED 2026-10-18."
+       ],
+       "tag": "strong"
+      },
+      " Applied."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "3"
+       ],
+       "tag": "strong"
+      },
+      " — Question: Confirm the suggested ",
+      {
+       "children": [
+        "publish_priority"
+       ],
+       "tag": "code"
+      },
+      " values in section 4. · Outcome: ",
+      {
+       "children": [
+        "DECIDED 2026-10-18."
+       ],
+       "tag": "strong"
+      },
+      " Accepted except NPCA ",
+      {
+       "children": [
+        "offset"
+       ],
+       "tag": "code"
+      },
+      ": ",
+      {
+       "children": [
+        "label_and_ship"
+       ],
+       "tag": "code"
+      },
+      " (already measured and corrected; S7 stays as the guard)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "4"
+       ],
+       "tag": "strong"
+      },
+      " — Question: Where ",
+      {
+       "children": [
+        "publish_visibility"
+       ],
+       "tag": "code"
+      },
+      " lives: inventory or class register. · Outcome: ",
+      {
+       "children": [
+        "DECIDED 2026-10-18."
+       ],
+       "tag": "strong"
+      },
+      " Dataset inventory. Values: ",
+      {
+       "children": [
+        "public"
+       ],
+       "tag": "code"
+      },
+      " / ",
+      {
+       "children": [
+        "restricted"
+       ],
+       "tag": "code"
+      },
+      " / ",
+      {
+       "children": [
+        "withheld"
+       ],
+       "tag": "code"
+      },
+      " / ",
+      {
+       "children": [
+        "internal_only"
+       ],
+       "tag": "code"
+      },
+      ". ",
+      {
+       "children": [
+        "restricted"
+       ],
+       "tag": "code"
+      },
+      " = paid or unconfirmed licence. Restricted list is gitignored; public files mention only that the list exists. Future private ",
+      {
+       "children": [
+        "ia-restricted"
+       ],
+       "tag": "code"
+      },
+      " repo."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "5"
+       ],
+       "tag": "strong"
+      },
+      " — Question: The ",
+      {
+       "children": [
+        "withheld_disclosure"
+       ],
+       "tag": "code"
+      },
+      " default: ",
+      {
+       "children": [
+        "manifest_entry"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "none"
+       ],
+       "tag": "code"
+      },
+      ". · Outcome: ",
+      {
+       "children": [
+        "OPEN."
+       ],
+       "tag": "strong"
+      },
+      " Interim default ",
+      {
+       "children": [
+        "manifest_entry"
+       ],
+       "tag": "code"
+      },
+      ", marked interim. Section 4 does not imply a close."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "6"
+       ],
+       "tag": "strong"
+      },
+      " — Question: Whether, and how, a parcel dossier signals held identifying information. · Outcome: ",
+      {
+       "children": [
+        "DECIDED 2026-10-18."
+       ],
+       "tag": "strong"
+      },
+      " Yes, dossiers will signal held identifying information. Wording is tied to logged-in and paid tiers (front-end and business)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "7"
+       ],
+       "tag": "strong"
+      },
+      " — Question: Relax HARD-RULES rule 3 so the deploy pipeline can be built before the gate opens. · Outcome: ",
+      {
+       "children": [
+        "DECIDED 2026-10-18."
+       ],
+       "tag": "strong"
+      },
+      " Tooling may be built and tested. Public publish or deploy still needs the owner's per-jurisdiction sign-off (NA-269)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "8"
+       ],
+       "tag": "strong"
+      },
+      " — Question: Is run 3 required on a different machine, or is a fresh container on Deb enough? · Outcome: ",
+      {
+       "children": [
+        "DECIDED 2026-10-18."
+       ],
+       "tag": "strong"
+      },
+      " Run 2 and run 3 on Deb. Run 3 in a fresh isolated container on Deb. Cursor VMs cannot run it until inputs live in private storage."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "9"
+       ],
+       "tag": "strong"
+      },
+      " — Question: How much of the run record is public. · Outcome: ",
+      {
+       "children": [
+        "DECIDED 2026-10-18."
+       ],
+       "tag": "strong"
+      },
+      " Full run record, screened. Front-end element: standing issue NA-308. Linear label ",
+      {
+       "children": [
+        "standing"
+       ],
+       "tag": "code"
+      },
+      " marks near-permanent maintenance-class issues."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "10"
+       ],
+       "tag": "strong"
+      },
+      " — Question: When to split universal back-end publishing into a separate ",
+      {
+       "children": [
+        "industrial-atlas"
+       ],
+       "tag": "code"
+      },
+      " repo. · Outcome: ",
+      {
+       "children": [
+        "DECIDED in principle 2026-10-18, timing pending the owner confirmation."
+       ],
+       "tag": "strong"
+      },
+      " Keep everything in this repo for now. Move the back end to ",
+      {
+       "children": [
+        "industrial-atlas"
+       ],
+       "tag": "code"
+      },
+      " as soon as practical, leaving ",
+      {
+       "children": [
+        "heavymap"
+       ],
+       "tag": "code"
+      },
+      " (local and GitHub) dedicated to the front end."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0077\ntype: working-paper\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-11-17\nseq: 37"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, hamilton, beta-gate, checks, run-1",
+ "path": "Beta-gate-Hamilton-merged-G5--G6-staged-per-jurisdiction-11-19",
+ "title": "Beta gate: Hamilton (merged G5 + G6, staged, per jurisdiction)",
+ "url": "https://telegra.ph/Beta-gate-Hamilton-merged-G5--G6-staged-per-jurisdiction-11-19",
+ "views": 0
+}

@@ -1,0 +1,2829 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, niagara, technology, prior-art"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "Why each tool and approach was chosen over its alternatives, with the comparison that produced the decision. ",
+    {
+     "children": [
+      "Append, don't rewrite"
+     ],
+     "tag": "strong"
+    },
+    " — a superseded decision stays visible with the date and reason it changed, so an incoming developer or agent can see how we got here rather than only where we landed."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Companion to ENVIRONMENT.md (what is installed and what it does) and the engine spec in ",
+    {
+     "children": [
+      "../docs/superpowers/specs/"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Format."
+     ],
+     "tag": "strong"
+    },
+    " Each decision: the question, the options with their real trade-offs, what was chosen, and what would change the answer."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "D-1-·-Geometry-engine-—-2026-08-23"
+   },
+   "children": [
+    "D-1 · Geometry engine — 2026-08-23"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Question."
+     ],
+     "tag": "strong"
+    },
+    " What performs point-in-polygon, intersection and area across ~79,000 parcels and 231 source layers?"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "**shapely 2.x"
+       ],
+       "tag": "strong"
+      },
+      " ✅** — Makeup: Python over GEOS (C++), wheels bundle GEOS · Strengths: Standard, well-tested; ",
+      {
+       "children": [
+        "STRtree"
+       ],
+       "tag": "code"
+      },
+      " index built in since 2.0; vectorized ops via numpy; no system libs needed · Weaknesses: Geometry only — no CRS handling, no file I/O"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "geopandas"
+       ],
+       "tag": "strong"
+      },
+      " — Makeup: pandas + shapely + pyogrio + pyproj · Strengths: One API for read → project → join → write; expressive · Weaknesses: Dataframe model wants whole layers in memory; pulls a heavy stack; ",
+      {
+       "children": [
+        "fights a streaming pipeline holding a 2.2 GB layer"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "pure Python"
+       ],
+       "tag": "strong"
+      },
+      " — Makeup: hand-rolled ray casting, haversine · Strengths: Zero dependencies · Weaknesses: Correct for a demo, not for production. No index → 79k × constraint polygons is ~10⁹ operations. Area on a spheroid is easy to get subtly wrong"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GDAL/OGR bindings"
+       ],
+       "tag": "strong"
+      },
+      " — Makeup: Python over GDAL · Strengths: Everything, including formats · Weaknesses: Heavy; awkward API; pyogrio covers our formats"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Chosen: shapely 2.x"
+     ],
+     "tag": "strong"
+    },
+    ", used directly rather than through geopandas."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Why not geopandas"
+     ],
+     "tag": "strong"
+    },
+    ", despite being the conventional choice: our largest layer is 2.2 GB and the pipeline is deliberately streaming (see D-4). A dataframe abstraction that wants the layer resident works against that, and the convenience it buys is a few dozen lines."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "What would change this:"
+     ],
+     "tag": "strong"
+    },
+    " if the pipeline stopped streaming — because the heavy layers were dropped at ingest (D-5) — geopandas would become reasonable and would shorten ",
+    {
+     "children": [
+      "enrich.py"
+     ],
+     "tag": "code"
+    },
+    " noticeably."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "D-2-·-Spatial-index-—-2026-08-23"
+   },
+   "children": [
+    "D-2 · Spatial index — 2026-08-23"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "**shapely ",
+        {
+         "children": [
+          "STRtree"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " ✅** — Verdict: Built into shapely ≥2.0, GEOS-backed, no extra dependency"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "rtree"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Verdict: Superseded. Needs system ",
+      {
+       "children": [
+        "libspatialindex"
+       ],
+       "tag": "code"
+      },
+      ", which is ",
+      {
+       "children": [
+        "not installed"
+       ],
+       "tag": "strong"
+      },
+      ". Listed in an earlier draft of this design in error and withdrawn"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Chosen: shapely ",
+      {
+       "children": [
+        "STRtree"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "strong"
+    },
+    " Recorded because ",
+    {
+     "children": [
+      "rtree"
+     ],
+     "tag": "code"
+    },
+    " was proposed before the environment was checked — the correction is the point."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "D-3-·-Projection-—-2026-08-23"
+   },
+   "children": [
+    "D-3 · Projection — 2026-08-23"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Question."
+     ],
+     "tag": "strong"
+    },
+    " Where does area and distance maths happen?"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Source data is WGS84 (EPSG:4326), whose units are ",
+    {
+     "children": [
+      "degrees"
+     ],
+     "tag": "strong"
+    },
+    ". A square degree is not a constant area, so area computed in WGS84 is wrong — and wrong ",
+    {
+     "children": [
+      "plausibly"
+     ],
+     "tag": "em"
+    },
+    ", producing numbers that look reasonable and are not."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Chosen: UTM zone 17N (EPSG:32617)"
+     ],
+     "tag": "strong"
+    },
+    " for all area and distance work, via pyproj. Covers the entire Hamilton–Niagara–Buffalo study area in one zone, so no zone-straddling. Asserted at the pipeline boundary."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Checkable, not assumed:"
+     ],
+     "tag": "strong"
+    },
+    " several publishers ship precomputed area (",
+    {
+     "children": [
+      "AREA_SQM"
+     ],
+     "tag": "code"
+    },
+    " on Niagara Falls Official Plan, ",
+    {
+     "children": [
+      "GeometrySTArea"
+     ],
+     "tag": "code"
+    },
+    " on Welland zoning). Our computed areas must agree with theirs."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "D-4-·-Fetching-—-amended-2026-08-23"
+   },
+   "children": [
+    "D-4 · Fetching — amended 2026-08-23"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Original:"
+     ],
+     "tag": "strong"
+    },
+    " accumulate paged responses in memory, write once."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Failed in practice."
+     ],
+     "tag": "strong"
+    },
+    " On Hamilton Contour Lines (221,518 polylines) the fetcher reached ",
+    {
+     "children": [
+      "4.7 GB RSS on a 7 GB machine with zero available"
+     ],
+     "tag": "strong"
+    },
+    " and was killed. Every large layer was at risk; Niagara escaped only because no single layer there was big enough."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Amended:"
+     ],
+     "tag": "strong"
+    },
+    " features stream to disk as pages arrive. Same layer now runs at ",
+    {
+     "children": [
+      "152 MB RSS"
+     ],
+     "tag": "strong"
+    },
+    ". A second pass fixed the skip path, which parsed a whole file just to count features — now stream-counted with a marker of ",
+    {
+     "children": [
+      "\"type\":\"Feature\","
+     ],
+     "tag": "code"
+    },
+    " (the trailing comma excludes the ",
+    {
+     "children": [
+      "FeatureCollection"
+     ],
+     "tag": "code"
+    },
+    " header) and a chunk overlap of exactly ",
+    {
+     "children": [
+      "len(marker)-1"
+     ],
+     "tag": "code"
+    },
+    " so nothing is double-counted at a boundary."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Standing rule:"
+     ],
+     "tag": "strong"
+    },
+    " no pipeline stage may hold a whole layer in memory unless it has been shown that the layer is small."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "D-5-·-Large-layer-disposition-—-2026-08-23"
+   },
+   "children": [
+    "D-5 · Large-layer disposition — 2026-08-23"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Question."
+     ],
+     "tag": "strong"
+    },
+    " We hold 4.91 GB across 200 layers. GitHub Pages serves from the repo; GitHub's hard per-file limit is 100 MB and a repo should stay well under 1 GB. What actually ships?"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The distribution is extremely skewed:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Two contour layers (#260, #114)"
+       ],
+       "tag": "strong"
+      },
+      " — Files: 2 · Size: ",
+      {
+       "children": [
+        "3.11 GB"
+       ],
+       "tag": "strong"
+      },
+      " · Share: ",
+      {
+       "children": [
+        "63%"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Files > 100 MB (GitHub hard limit)"
+       ],
+       "tag": "strong"
+      },
+      " — Files: 5 · Size: 3.51 GB · Share: 71%"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Files > 50 MB"
+       ],
+       "tag": "strong"
+      },
+      " — Files: 14 · Size: 4.20 GB · Share: 86%"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Everything else"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Files: "
+       ],
+       "tag": "strong"
+      },
+      "186",
+      {
+       "children": [
+        " · Size: "
+       ],
+       "tag": "strong"
+      },
+      "0.71 GB** · Share: 14%"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Files ≤ 10 MB"
+       ],
+       "tag": "strong"
+      },
+      " — Files: 163 · Size: 0.16 GB · Share: 3%"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "163 of 200 layers fit in 162 MB."
+     ],
+     "tag": "strong"
+    },
+    " The weight is almost entirely in fourteen files, and nearly two thirds of it in two."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "The-disposition-taxonomy"
+   },
+   "children": [
+    "The disposition taxonomy"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Every layer gets one of five dispositions, recorded in the manifest:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "ship"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: small enough as-is · Shipped?: yes"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "simplify"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: shipped as topology-simplified display geometry (mapshaper), precise version kept build-side · Shipped?: yes, reduced"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "derive"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: consumed at build, collapsed to attributes on units · Shipped?: ",
+      {
+       "children": [
+        "no"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "tile"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: served as vector tiles for display at zoom · Shipped?: via tiles"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "link"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: referenced at source, not hosted · Shipped?: no"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Contours-are-derive"
+   },
+   "children": [
+    "Contours are ",
+    {
+     "children": [
+      "derive"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Contour lines are not an analysis input and barely a display need."
+     ],
+     "tag": "strong"
+    },
+    " What an industrial atlas actually wants from terrain is ",
+    {
+     "children": [
+      "slope and elevation"
+     ],
+     "tag": "strong"
+    },
+    ", which are scalars, not 221,518 polylines."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "From the contour layers, ",
+    {
+     "children": [
+      "enrich.py"
+     ],
+     "tag": "code"
+    },
+    " computes per unit:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "elev_min_m · elev_max_m · relief_m (= max − min) · slope_pct"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Four floats — about 32 bytes per parcel. Across ~79,000 parcels that is ",
+    {
+     "children": [
+      "≈ 2.5 MB, from 3.11 GB."
+     ],
+     "tag": "strong"
+    },
+    " A reduction of roughly ",
+    {
+     "children": [
+      "1,200:1"
+     ],
+     "tag": "strong"
+    },
+    ", and the 2.5 MB is the part anyone can actually use: ",
+    {
+     "children": [
+      "\"this parcel falls 4 m across its length\""
+     ],
+     "tag": "em"
+    },
+    " is a siting fact; a contour polyline is not."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "For visual terrain, see ",
+    {
+     "children": [
+      "D-10"
+     ],
+     "tag": "strong"
+    },
+    " — a hillshade basemap is an ",
+    {
+     "children": [
+      "optional"
+     ],
+     "tag": "em"
+    },
+    " variant rather than a default, because the escarpment is already vectorised (#255 plus the NEP layers) and ",
+    {
+     "children": [
+      "slope_pct"
+     ],
+     "tag": "code"
+    },
+    " answers the siting question. The basemap covers only the aesthetic need."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The contour GeoJSON stays in the local cache"
+     ],
+     "tag": "strong"
+    },
+    " (gitignored) as the input to that derivation, and is re-pullable from the ledger endpoints. It is never committed and never served."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "The-other-twelve-heavy-layers"
+   },
+   "children": [
+    "The other twelve heavy layers"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "simplify"
+     ],
+     "tag": "code"
+    },
+    " for display, precise build-side for analysis. The environmental constraint layers are the extreme case — ",
+    {
+     "children": [
+      "#62 Provincial Natural Heritage System is 137 KB per feature"
+     ],
+     "tag": "strong"
+    },
+    " across 51 polygons; #63 is 78 MB for 7,774. They are geometrically dense because they trace natural boundaries, and they are exactly the layers we most want to test containment against. Precision belongs at build time; the browser gets a simplified outline."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Consequence:"
+     ],
+     "tag": "strong"
+    },
+    " the shipped atlas should land in the low hundreds of MB, well inside GitHub Pages' practical limits, while the analysis retains full precision. This is the same separation the engine spec already requires between display geometry and analysis attributes — D-5 is that principle applied to concrete file sizes."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "What would change this:"
+     ],
+     "tag": "strong"
+    },
+    " if a genuinely large layer must be ",
+    {
+     "children": [
+      "displayed"
+     ],
+     "tag": "em"
+    },
+    " at full detail, the answer is ",
+    {
+     "children": [
+      "tile"
+     ],
+     "tag": "code"
+    },
+    " — PMTiles, a single file served by HTTP range requests, which works on static hosting. That still exceeds GitHub's 100 MB file limit for the contour case, so it would mean hosting the tile file elsewhere. Not needed for anything we currently hold."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "D-6-·-Simplification-tool-—-2026-08-23"
+   },
+   "children": [
+    "D-6 · Simplification tool — 2026-08-23"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "**mapshaper"
+       ],
+       "tag": "strong"
+      },
+      " ✅",
+      {
+       "children": [
+        " — Makeup: Node CLI · Strengths: "
+       ],
+       "tag": "strong"
+      },
+      "Topology-aware** — shared borders simplify identically on both sides · Weaknesses: Extra runtime (Node already present)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "shapely ",
+        {
+         "children": [
+          ".simplify()"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Makeup: Douglas–Peucker per geometry · Strengths: No new dependency; fine for isolated shapes · Weaknesses: ",
+      {
+       "children": [
+        "Tears shared borders."
+       ],
+       "tag": "strong"
+      },
+      " Adjacent zoning polygons simplified independently open slivers and overlaps"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "topojson (Python)"
+       ],
+       "tag": "strong"
+      },
+      " — Makeup: topology encoding · Strengths: Topology-aware · Weaknesses: Less mature; mapshaper is the reference implementation"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Chosen: mapshaper"
+     ],
+     "tag": "strong"
+    },
+    " for anything that tiles (parcels, zoning, land use, catchments); shapely ",
+    {
+     "children": [
+      ".simplify()"
+     ],
+     "tag": "code"
+    },
+    " is acceptable for isolated geometries such as individual constraint areas."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Measured,-2026-08-23-—-the-claim-holds,-but-it-is-smaller-than-asserted"
+   },
+   "children": [
+    "Measured, 2026-08-23 — the claim holds, but it is smaller than asserted"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Tested on a 60-polygon adjacent cluster from Welland Current Zoning, with 8 originally-touching pairs, both methods tuned to comparable vertex reduction (1,541 → ~557 vertices). Overlap measured in UTM 17N:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "original"
+       ],
+       "tag": "strong"
+      },
+      " — Overlap between neighbours: 0.0 m² · Pairs affected: 0"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**mapshaper"
+       ],
+       "tag": "strong"
+      },
+      " (topology)",
+      {
+       "children": [
+        " — Overlap between neighbours: "
+       ],
+       "tag": "strong"
+      },
+      "0.0 m²",
+      {
+       "children": [
+        " · Pairs affected: "
+       ],
+       "tag": "strong"
+      },
+      "0** · Union area Δ: +0.001%"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "shapely (per-geometry, 0.54 m tol)"
+       ],
+       "tag": "strong"
+      },
+      " — Overlap between neighbours: ",
+      {
+       "children": [
+        "5.7 m²"
+       ],
+       "tag": "strong"
+      },
+      " · Pairs affected: ",
+      {
+       "children": [
+        "2 of 8"
+       ],
+       "tag": "strong"
+      },
+      " · Union area Δ: −0.000%"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "So per-geometry simplification ",
+    {
+     "children": [
+      "does"
+     ],
+     "tag": "em"
+    },
+    " tear shared borders — but at moderate tolerance the damage is 5.7 m² across a 60-polygon cluster, not the visible mess the original argument implied. It grows with tolerance."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "A bigger practical finding, and one nobody warns you about:"
+     ],
+     "tag": "strong"
+    },
+    " at ",
+    {
+     "children": [
+      "-simplify 10%"
+     ],
+     "tag": "code"
+    },
+    " mapshaper collapsed ",
+    {
+     "children": [
+      "27 of 60 polygons to null geometry"
+     ],
+     "tag": "strong"
+    },
+    " — small features vanish entirely. ",
+    {
+     "children": [
+      "-simplify 30% keep-shapes"
+     ],
+     "tag": "code"
+    },
+    " collapsed none. ",
+    {
+     "children": [
+      "Always pass ",
+      {
+       "children": [
+        "keep-shapes"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "strong"
+    },
+    ", and verify the output feature count matches the input, or simplification silently deletes small parcels."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Honest position:"
+     ],
+     "tag": "strong"
+    },
+    " mapshaper is still the right choice for tiling layers, but on the strength of ",
+    {
+     "children": [
+      "keep-shapes"
+     ],
+     "tag": "code"
+    },
+    " and predictable behaviour as much as on sliver-avoidance. The sliver argument alone would not have justified a second runtime."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "D-7-·-JSON-parsing-—-2026-08-23"
+   },
+   "children": [
+    "D-7 · JSON parsing — 2026-08-23"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "**orjson"
+       ],
+       "tag": "strong"
+      },
+      " ✅** — Note: Rust; typically 2–5× stdlib; returns ",
+      {
+       "children": [
+        "bytes"
+       ],
+       "tag": "code"
+      },
+      "; lower peak memory"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "ujson 5.7.0"
+       ],
+       "tag": "strong"
+      },
+      " — Note: already installed; faster than stdlib but slower than orjson and less strict"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "stdlib ",
+        {
+         "children": [
+          "json"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Note: the baseline; the current bottleneck at 4.9 GB"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Chosen: orjson"
+     ],
+     "tag": "strong"
+    },
+    ", on volume grounds alone. Not architectural — the pipeline is correct with stdlib ",
+    {
+     "children": [
+      "json"
+     ],
+     "tag": "code"
+    },
+    ", just slower to iterate on."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "D-8-·-Shapefile-reading-—-2026-08-23"
+   },
+   "children": [
+    "D-8 · Shapefile reading — 2026-08-23"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "**pyogrio"
+       ],
+       "tag": "strong"
+      },
+      " ✅** — Note: GDAL-backed, columnar, fast; bundles GDAL in the wheel"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "fiona"
+       ],
+       "tag": "strong"
+      },
+      " — Note: the older GDAL binding; record-at-a-time, slower; no reason to carry both"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Chosen: pyogrio."
+     ],
+     "tag": "strong"
+    },
+    " Required, not optional: three sources publish shapefiles only (#24, #69, provincial PSEZ) and cannot be ingested otherwise."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "D-9-·-Rejected-without-adoption-—-2026-08-23"
+   },
+   "children": [
+    "D-9 · Rejected without adoption — 2026-08-23"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "geopandas"
+       ],
+       "tag": "strong"
+      },
+      " — Why not: D-1"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "rtree"
+       ],
+       "tag": "strong"
+      },
+      " — Why not: D-2"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "fiona"
+       ],
+       "tag": "strong"
+      },
+      " — Why not: D-8"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "h3"
+       ],
+       "tag": "strong"
+      },
+      " — Why not: The public grid is 250 m squares in UTM 17N (engine spec §6.3); pyproj covers it. Hex indexing solves a problem we do not have"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GDAL Python bindings"
+       ],
+       "tag": "strong"
+      },
+      " — Why not: Heavy; pyogrio covers our formats"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "PostGIS / any database"
+       ],
+       "tag": "strong"
+      },
+      " — Why not: The atlas is deliberately static, pre-generated GeoJSON on GitHub Pages. A database would be the right answer for interactive server-side queries, which the architecture explicitly rejects (engine spec §11)"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "D-10-·-Basemap-and-terrain-—-2026-08-23"
+   },
+   "children": [
+    "D-10 · Basemap and terrain — 2026-08-23"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Question."
+     ],
+     "tag": "strong"
+    },
+    " How is terrain represented, and on what basemap?"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Context."
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "map.js:30"
+     ],
+     "tag": "code"
+    },
+    " already states the working decision: ",
+    {
+     "children": [
+      "\"A muted basemap is a working decision, not a style one … a standard colour basemap spends all its contrast on roads and [labels].\""
+     ],
+     "tag": "em"
+    },
+    " CARTO dark is in place. External raster tiles are therefore already accepted architecture — the question is which, and whether terrain earns a place."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Terrain:-mostly-answered-without-a-basemap"
+   },
+   "children": [
+    "Terrain: mostly answered without a basemap"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "\"Is this parcel awkward to build on?\""
+       ],
+       "tag": "strong"
+      },
+      " — Answered by: ",
+      {
+       "children": [
+        "slope_pct"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "relief_m"
+       ],
+       "tag": "code"
+      },
+      " — derived attributes (D-5) · Cost: ~32 bytes/unit"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "\"Where is the escarpment?\""
+       ],
+       "tag": "strong"
+      },
+      " — Answered by: #255 Escarpment, plus NEP boundary / policy area / land-use designations · Cost: already held"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "\"What does the land feel like?\""
+       ],
+       "tag": "strong"
+      },
+      " — Answered by: a hillshade — ",
+      {
+       "children": [
+        "the only need nothing else covers"
+       ],
+       "tag": "strong"
+      },
+      " · Cost: see below"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Only the third row is a genuine gap, and it is aesthetic rather than analytical. ",
+    {
+     "children": [
+      "Hillshade is therefore an optional basemap variant, never a default layer"
+     ],
+     "tag": "strong"
+    },
+    " — an always-on shaded raster would add ambient texture across the whole viewport, which is precisely what the muted-basemap decision rejects."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Basemap-options"
+   },
+   "children": [
+    "Basemap options"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "**CARTO dark"
+       ],
+       "tag": "strong"
+      },
+      " (current)** — Auth: none · Trade-offs: muted by design; no terrain"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Stadia"
+       ],
+       "tag": "strong"
+      },
+      " (Stamen Terrain, Alidade Smooth Dark)",
+      {
+       "children": [
+        " — Auth: "
+       ],
+       "tag": "strong"
+      },
+      "domain-based, no key** · Trade-offs: styles are strong; adds a third-party dependency and a terms-of-service relationship"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Esri World Hillshade"
+       ],
+       "tag": "strong"
+      },
+      " — Auth: none, attribution required · Trade-offs: free, zero setup; ",
+      {
+       "children": [
+        "{z}/{y}/{x}"
+       ],
+       "tag": "code"
+      },
+      " tile order, not the usual ",
+      {
+       "children": [
+        "{z}/{x}/{y}"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "OpenTopoMap"
+       ],
+       "tag": "strong"
+      },
+      " — Auth: none · Trade-offs: contours ",
+      {
+       "children": [
+        "and"
+       ],
+       "tag": "em"
+      },
+      " hillshade baked in; cartographically busy, fights the muted intent"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Mapbox / MapTiler terrain-RGB"
+       ],
+       "tag": "strong"
+      },
+      " — Auth: API key · Trade-offs: GPU hillshade from encoded elevation — a ",
+      {
+       "children": [
+        "MapLibre/Mapbox GL"
+       ],
+       "tag": "strong"
+      },
+      " feature. Leaflet 1.9 has no equivalent, so this means changing map library"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Self-hosted"
+       ],
+       "tag": "strong"
+      },
+      " (NRCan CDEM or Ontario DEM)",
+      {
+       "children": [
+        " — Auth: none · Trade-offs: full independence. ",
+        {
+         "children": [
+          "gdaldem hillshade"
+         ],
+         "tag": "code"
+        },
+        " → tile pyramid. Study area z10–14 ≈ 2,700 greyscale tiles ≈ "
+       ],
+       "tag": "strong"
+      },
+      "55 MB** — feasible. z15 alone would add ~165 MB, so cap the zoom range"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "On-API-keys-in-a-static-site"
+   },
+   "children": [
+    "On API keys in a static site"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Recorded because the question recurs and the intuition is wrong."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "GitHub Actions secrets do not protect a client-side map key."
+     ],
+     "tag": "strong"
+    },
+    " Secrets are available at ",
+    {
+     "children": [
+      "build"
+     ],
+     "tag": "em"
+    },
+    " time; injecting one into the built JavaScript makes it readable by anyone with view-source. The benefit is real but narrow — the key stays out of git history and can be rotated without a source commit — and it is ",
+    {
+     "children": [
+      "not"
+     ],
+     "tag": "strong"
+    },
+    " confidentiality."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "What actually protects a browser tile key is domain restriction."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Stadia supports domain-based authentication with no API key at all."
+     ],
+     "tag": "strong"
+    },
+    " Their documentation calls it the recommended production method: the service validates the ",
+    {
+     "children": [
+      "Origin"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "Referer"
+     ],
+     "tag": "code"
+    },
+    " headers the browser sets itself, which JavaScript cannot forge. Register ",
+    {
+     "children": [
+      "niagaraassembly.com"
+     ],
+     "tag": "code"
+    },
+    " in the Stadia dashboard and the map authenticates with ",
+    {
+     "children": [
+      "nothing in the source at all"
+     ],
+     "tag": "strong"
+    },
+    " — no key, no secret, no rotation, no Action step. ",
+    {
+     "children": [
+      "localhost"
+     ],
+     "tag": "code"
+    },
+    " needs no authentication either, so local development works unchanged."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "One dependency this creates:"
+     ],
+     "tag": "strong"
+    },
+    " domain auth relies on the browser sending ",
+    {
+     "children": [
+      "Origin"
+     ],
+     "tag": "code"
+    },
+    "/",
+    {
+     "children": [
+      "Referer"
+     ],
+     "tag": "code"
+    },
+    ". The site currently sets ",
+    {
+     "children": [
+      "no ",
+      {
+       "children": [
+        "Referrer-Policy"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "strong"
+    },
+    ", so the browser default (",
+    {
+     "children": [
+      "strict-origin-when-cross-origin"
+     ],
+     "tag": "code"
+    },
+    ") sends the origin on cross-origin requests — which is what Stadia needs. ",
+    {
+     "children": [
+      "Adding ",
+      {
+       "children": [
+        "Referrer-Policy: no-referrer"
+       ],
+       "tag": "code"
+      },
+      " at any point would silently break the basemap."
+     ],
+     "tag": "strong"
+    },
+    " Recorded here so that change is made knowingly."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Chosen (amended 2026-08-23): both."
+     ],
+     "tag": "strong"
+    },
+    " CARTO dark stays the default; a basemap switcher offers Stadia's styles ",
+    {
+     "children": [
+      "and"
+     ],
+     "tag": "em"
+    },
+    " a self-hosted NRCan hillshade. See D-11 for the basemap catalogue and D-12 for how the hillshade is produced."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "What would change this:"
+     ],
+     "tag": "strong"
+    },
+    " a move to MapLibre would make terrain-RGB with GPU hillshade the better option, and would also open vector basemaps. That is a larger change than terrain alone justifies."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "D-11-·-Basemap-catalogue-—-2026-08-23"
+   },
+   "children": [
+    "D-11 · Basemap catalogue — 2026-08-23"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Question."
+     ],
+     "tag": "strong"
+    },
+    " Which basemaps does the switcher offer?"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The muted default is a ",
+    {
+     "children": [
+      "working"
+     ],
+     "tag": "em"
+    },
+    " decision (D-10), not a claim that one basemap suits every task. A satellite backdrop suits site inspection; a terrain backdrop suits reading the escarpment; Toner suits printing. Offering several adds real analytical range, provided the default stays quiet."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Stadia-—-domain-authenticated,-no-API-key"
+   },
+   "children": [
+    "Stadia — domain-authenticated, no API key"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Verified against Stadia's own documentation 2026-08-23. Registering ",
+    {
+     "children": [
+      "niagaraassembly.com"
+     ],
+     "tag": "code"
+    },
+    " authenticates browser requests via ",
+    {
+     "children": [
+      "Origin"
+     ],
+     "tag": "code"
+    },
+    "/",
+    {
+     "children": [
+      "Referer"
+     ],
+     "tag": "code"
+    },
+    "; ",
+    {
+     "children": [
+      "nothing goes in the source"
+     ],
+     "tag": "strong"
+    },
+    ". ",
+    {
+     "children": [
+      "localhost"
+     ],
+     "tag": "code"
+    },
+    " needs no auth, so development is unchanged."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "**Stamen Terrain"
+       ],
+       "tag": "strong"
+      },
+      "** — Character: hill shading + natural vegetation colouring · Use here: the escarpment, read as landform"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Stamen Toner"
+       ],
+       "tag": "strong"
+      },
+      "** — Character: high-contrast black and white · Use here: print, and maximum overlay contrast"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Stamen Watercolor"
+       ],
+       "tag": "strong"
+      },
+      "** — Character: hand-drawn washes over paper texture · Use here: narrative and presentation use"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Alidade Smooth Dark"
+       ],
+       "tag": "strong"
+      },
+      "** — Character: muted dark, low POI density · Use here: closest analogue to the CARTO dark default"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Alidade Smooth"
+       ],
+       "tag": "strong"
+      },
+      "** — Character: muted light · Use here: light-mode equivalent"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Alidade Satellite"
+       ],
+       "tag": "strong"
+      },
+      "** — Character: imagery with labels and outlines · Use here: site inspection — what is actually on the ground"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Stadia Outdoors"
+       ],
+       "tag": "strong"
+      },
+      "** — Character: OSM Bright derivative, trails and terrain · Use here: recreational context"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**OSM Bright"
+       ],
+       "tag": "strong"
+      },
+      "** — Character: full-colour general purpose · Use here: orientation and street detail"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The dependency this creates."
+     ],
+     "tag": "strong"
+    },
+    " Domain auth relies on the browser sending ",
+    {
+     "children": [
+      "Origin"
+     ],
+     "tag": "code"
+    },
+    "/",
+    {
+     "children": [
+      "Referer"
+     ],
+     "tag": "code"
+    },
+    ". The site sets ",
+    {
+     "children": [
+      "no ",
+      {
+       "children": [
+        "Referrer-Policy"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "strong"
+    },
+    ", so the default (",
+    {
+     "children": [
+      "strict-origin-when-cross-origin"
+     ],
+     "tag": "code"
+    },
+    ") sends it. ",
+    {
+     "children": [
+      "Adding ",
+      {
+       "children": [
+        "Referrer-Policy: no-referrer"
+       ],
+       "tag": "code"
+      },
+      " would silently break every Stadia style."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "And the honest trade-off:"
+     ],
+     "tag": "strong"
+    },
+    " eight styles is a terms-of-service relationship and a per-tile call to a third party. Stamen's own tiles moved to Stadia in 2023 — the same thing could happen again. D-12 exists so at least one terrain option survives that."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "D-12-·-Hillshade-production-—-2026-08-23"
+   },
+   "children": [
+    "D-12 · Hillshade production — 2026-08-23"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Question."
+     ],
+     "tag": "strong"
+    },
+    " If we self-host terrain, where does the elevation come from and at what resolution?"
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Resolution-decides-everything"
+   },
+   "children": [
+    "Resolution decides everything"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Ontario Lidar DTM (bare earth)"
+       ],
+       "tag": "strong"
+      },
+      " — Res: ",
+      {
+       "children": [
+        "1 m"
+       ],
+       "tag": "strong"
+      },
+      " · Study area (110 × 60 km) raw float32: ",
+      {
+       "children": [
+        "26.4 GB"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "—"
+       ],
+       "tag": "strong"
+      },
+      " — Res: 10 m · Study area (110 × 60 km) raw float32: 0.3 GB"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**NRCan MRDEM"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Res: "
+       ],
+       "tag": "strong"
+      },
+      "30 m",
+      {
+       "children": [
+        " · Study area (110 × 60 km) raw float32: "
+       ],
+       "tag": "strong"
+      },
+      "0.03 GB**"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Local disk free is 5.7 GB and the source cache already holds 4.9 GB, so the 1 m product is not merely wasteful — it is impossible here."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "And it would be wasted anyway."
+     ],
+     "tag": "strong"
+    },
+    " At zoom 14 one screen pixel is about 7 m at this latitude. A 1 m DEM carries seven times more detail than the highest zoom the hillshade will ever be drawn at. Resolution beyond the display resolution is storage spent on nothing."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "NRCan-MRDEM,-and-it-already-ships-a-hillshade"
+   },
+   "children": [
+    "NRCan MRDEM, and it already ships a hillshade"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "30 m, complete national coverage"
+       ],
+       "tag": "strong"
+      },
+      ", extending across the border for shared"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "watersheds — which suits an atlas that deliberately spans one"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Open Government Licence – Canada"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Vertical datum CGVD2013 / CGG2013 geoid"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Published as ",
+      {
+       "children": [
+        "DTM, DSM ",
+        {
+         "children": [
+          "and"
+         ],
+         "tag": "em"
+        },
+        " a precomputed hillshade"
+       ],
+       "tag": "strong"
+      },
+      ", as GDAL VRTs on S3,"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "with a ",
+    {
+     "children": [
+      "STAC API"
+     ],
+     "tag": "strong"
+    },
+    " and ",
+    {
+     "children": [
+      "WMS"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "NRCan's own note: *\"files in this dataset are designed for streaming, not"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "downloading\"*"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "We therefore do not run ",
+      {
+       "children": [
+        "gdaldem hillshade"
+       ],
+       "tag": "code"
+      },
+      " at all."
+     ],
+     "tag": "strong"
+    },
+    " The hillshade is already produced, by the agency that owns the elevation data, to a national standard. We read their VRT for our bounding box and cut an XYZ tile pyramid."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Estimated output: zoom 10–14, ~2,700 greyscale PNG tiles, ",
+    {
+     "children": [
+      "≈55 MB"
+     ],
+     "tag": "strong"
+    },
+    " — inside GitHub's limits and committable. Zoom 15 alone would add ~165 MB, so the pyramid is capped and higher zooms fall through to the vector layers, where the escarpment already exists as #255 plus the NEP designations."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Ontario&#39;s-lidar-DTM-is-not-rejected-—-it-is-reassigned"
+   },
+   "children": [
+    "Ontario's lidar DTM is not rejected — it is reassigned"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "The 1 m bare-earth DTM is the better product for ",
+    {
+     "children": [
+      "analysis"
+     ],
+     "tag": "strong"
+    },
+    ", and analysis is where per-metre accuracy actually changes an answer. But we do not need to download it: ",
+    {
+     "children": [
+      "the contour layers already held (#114, #260) are derived from the same lidar"
+     ],
+     "tag": "strong"
+    },
+    " at 1 m interval, and D-5 already collapses them to ",
+    {
+     "children": [
+      "elev_min_m"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "elev_max_m"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "relief_m"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "slope_pct"
+     ],
+     "tag": "code"
+    },
+    " per unit."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "So the split is:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "**Analysis"
+       ],
+       "tag": "strong"
+      },
+      " — slope, relief per unit** — Source: contours already cached (#114, #260) · Resolution: 1 m lidar-derived · Cost: none, already held"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Display"
+       ],
+       "tag": "strong"
+      },
+      " — hillshade basemap** — Source: NRCan MRDEM hillshade · Resolution: 30 m · Cost: ~55 MB of tiles"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Fine where it changes a decision, coarse where it only has to look right."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "What would change this:"
+     ],
+     "tag": "strong"
+    },
+    " if the atlas ever needed terrain analysis beyond per-unit slope — cut-and-fill volumes, viewsheds, drainage modelling — the Ontario lidar DTM becomes necessary and brings a storage problem that needs solving on its own terms."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "D-13-·-Sensitive-field-handling-—-retain,-don&#39;t-strip;-mask-at-the-presentation-layer-—-2026-09-23"
+   },
+   "children": [
+    "D-13 · Sensitive field handling — retain, don't strip; mask at the presentation layer — 2026-09-23"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Question."
+     ],
+     "tag": "strong"
+    },
+    " Several admitted-or-candidate parcel datasets carry a named-owner field — ",
+    {
+     "children": [
+      "PRIMARY_OWNER"
+     ],
+     "tag": "code"
+    },
+    " on NYS Tax Parcels Public (Erie/Chautauqua/Wyoming/ Genesee), ",
+    {
+     "children": [
+      "OwnrName"
+     ],
+     "tag": "code"
+    },
+    "/",
+    {
+     "children": [
+      "own_street_address"
+     ],
+     "tag": "code"
+    },
+    "/",
+    {
+     "children": [
+      "own_city_state_zip"
+     ],
+     "tag": "code"
+    },
+    " on Niagara County's own parcel server, ",
+    {
+     "children": [
+      "OWNERNME1"
+     ],
+     "tag": "code"
+    },
+    " on Rochester's TaxParcel2024, and (unverified but signalled by its own fee schedule) Cattaraugus's paid \"with Real Property data attached\" tier. A first pass at flagging these (",
+    {
+     "children": [
+      "heavymap-planning/09-per-jurisdiction-dataset-catalog.xlsx"
+     ],
+     "tag": "code"
+    },
+    ", sensitivity review 2026-09-23) recorded the instruction as \"drop before any public-facing use.\" ",
+    {
+     "children": [
+      "That was wrong"
+     ],
+     "tag": "strong"
+    },
+    ", corrected the same day."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Why \"drop the field\" is the wrong answer."
+     ],
+     "tag": "strong"
+    },
+    " In several of these source jurisdictions the owner-of-record is already public information, published by the jurisdiction itself for exactly this kind of lookup (NY Real Property Tax Law makes assessment rolls, including owner name, public record; Ontario's equivalent varies by dataset). Stripping the field at ingest destroys information the atlas is otherwise well-positioned to make more useful than the source portal does — the problem was never \"this field is secret,\" it was \"this field should not be the ",
+    {
+     "children": [
+      "default"
+     ],
+     "tag": "em"
+    },
+    ", anonymous, no-login view.\""
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Chosen: full precision at ingest, masking is a presentation-layer decision made later."
+     ],
+     "tag": "strong"
+    },
+    " This is the same shape as D-5's disposition taxonomy (a layer's ",
+    {
+     "children": [
+      "storage"
+     ],
+     "tag": "em"
+    },
+    " form and its ",
+    {
+     "children": [
+      "served"
+     ],
+     "tag": "em"
+    },
+    " form are different decisions) applied to ",
+    {
+     "children": [
+      "access"
+     ],
+     "tag": "em"
+    },
+    " instead of ",
+    {
+     "children": [
+      "size"
+     ],
+     "tag": "em"
+    },
+    ". Concretely:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The parcel intelligence layer is built out to maximum information content —"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "owner-of-record included where the source jurisdiction makes it public — not truncated at ingest to whatever the most permissive viewer should see."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Presentation-layer ",
+      {
+       "children": [
+        "masks"
+       ],
+       "tag": "strong"
+      },
+      " decide what a given audience sees: an"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "anonymous/logged-out view likely omits owner identity by default even where it's technically public, matching reader expectation rather than the jurisdiction's technical permissiveness; an authenticated view can show more; a paid/licensed tier (nominal paywall, per the discussion that produced this decision) could be the gate for the fullest detail on sensitive layers specifically, independent of whatever tier gates the rest of the atlas."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "This is a ",
+      {
+       "children": [
+        "principle, not a mechanism"
+       ],
+       "tag": "strong"
+      },
+      " — the actual auth/paywall system,"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "the mask implementation, and which fields go in which tier are explicitly ",
+    {
+     "children": [
+      "deferred to later development"
+     ],
+     "tag": "strong"
+    },
+    ", not decided here. What's locked in now is that ",
+    {
+     "children": [
+      "sensitivity_flag"
+     ],
+     "tag": "code"
+    },
+    " in the dataset catalog means \"needs a tiering decision,\" never \"delete this column.\""
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "What this changes immediately."
+     ],
+     "tag": "strong"
+    },
+    " The 8 rows in ",
+    {
+     "children": [
+      "09-per-jurisdiction-dataset-catalog.xlsx"
+     ],
+     "tag": "code"
+    },
+    " flagged ",
+    {
+     "children": [
+      "property_ownership_pii"
+     ],
+     "tag": "code"
+    },
+    " (and the 2 flagged ",
+    {
+     "children": [
+      "protected_class_business_data"
+     ],
+     "tag": "code"
+    },
+    ") have their notes corrected from \"drop before public-facing use\" to point at this decision instead."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "What would change this:"
+     ],
+     "tag": "strong"
+    },
+    " if a specific source jurisdiction's owner field turns out to be ",
+    {
+     "children": [
+      "not"
+     ],
+     "tag": "em"
+    },
+    " public record there (unlike the NY Real Property Tax Law default), that field would need real suppression, not just tiering, for that jurisdiction — a per-source legal check the project hasn't done yet and should before shipping any owner-identity field in even the most gated tier."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Amendment-log"
+   },
+   "children": [
+    "Amendment log"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "2026-09-23"
+       ],
+       "tag": "strong"
+      },
+      " — D-13 recorded: sensitive-field handling (owner-of-record on"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "several parcel datasets) is retain-and-mask, not strip-at-ingest. Corrects guidance written the same day in the jurisdiction dataset catalog."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "2026-08-23"
+       ],
+       "tag": "strong"
+      },
+      " — Packages installed and each verified against real cached"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "data; D-6 amended with measured results rather than assertion. See ENVIRONMENT.md §5."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "2026-08-23"
+       ],
+       "tag": "strong"
+      },
+      " — Document created. D-1…D-12 recorded."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "D-10 amended the same day: the basemap offering widens to Stadia's eight styles plus a self-hosted NRCan hillshade, rather than one optional terrain layer. D-4 amended the same day after the in-memory fetcher hit 4.7 GB RSS and was killed."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0073\ntype: working-paper\nsection: origins\nplace_type: region\nevidence_date: 2026-10-03\nseq: 18"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, niagara, technology, prior-art",
+ "path": "Atlas--technology-decisions-11-19",
+ "title": "Atlas — technology decisions",
+ "url": "https://telegra.ph/Atlas--technology-decisions-11-19",
+ "views": 0
+}

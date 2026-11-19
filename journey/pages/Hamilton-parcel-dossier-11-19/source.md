@@ -1,0 +1,138 @@
+---
+status: see document
+type: working-paper
+evidence_date: 2026-11-16
+---
+Hamilton parcel dossier
+working-paper, architecture, framework
+
+> A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed.
+
+**Status:** code, 2026-10-17. Linear **NA-27** (dossier), with NA-24 (registry) and NA-270 (treatment). Synthetic tests only in git. Output stays in local data (not published) until G6 opens (NA-269).
+
+The dossier is the per-parcel lookup the v0 front end reads when a parcel is clicked. There is one record per active HeavyMap parcel ID. Every field says where it came from, how it was joined, how sure we are, and quotes the source in a short label, matching the UI copy style (classification · join · confidence).
+
+```
+python3 -m industrial_atlas.dossier --data-root ../local-data \
+  --out-dir ../local data (not published) [--core-addresses 5] [--release-id ID]
+```
+
+## Inputs
+
+| Input | Layer id | What is read |
+|---|---|---|
+| Registry run (`heavymap-registry/hamilton/CURRENT`) | LYR-HAM-PARCEL, LYR-HAM-ADDRESSES | `parcels.csv` (id, status, area, ARN grade), `addresses.csv` (address id, civic key, link method), `arn_links.csv` |
+| Overlay run (`heavymap-overlays/hamilton/CURRENT`) | eleven overlay layers | `overlay_links.csv` and `MANIFEST.json` |
+| NPCA Assessment_Parcels_Test all-fields pull | LYR-NPCA-ASSESSMENT-PARCELS-TEST | `OBJECTID_1`, `ARN`, `MPAC_STREE` only |
+| NPCA Parcels_Cityview all-fields pull | LYR-NPCA-PARCELS-CITYVIEW | `ARN`, `PropCode` only |
+
+## Screening (allowlist, not denylist)
+
+Owner names, owner mailing addresses, `Legal_Txt` / legal descriptions and any other personal information never appear in the output. Two allowlists in `industrial_atlas/dossier/schema.py` enforce this:
+
+1. **`SOURCE_FIELDS`** names the only properties read from each NPCA file. The loader keeps those keys and drops the rest of each feature at once. A field added upstream later is dropped too, without anyone listing it.
+2. **`RECORD_SPEC`** is the only shape a record may take. `screen_record` walks every record before it is written. It raises `ScreeningError` on any key not in the spec, at any depth, or a value of the wrong kind (for example an object where a string label belongs). After writing, `audit_output` reads every shard back and screens every record again.
+
+`audit_spec` runs at import and refuses any spec key or allowlisted source field containing `owner`, `legal`, `mail`, `postal`, `name`, `phone` or `email`. The tests feed fixtures with sentinel owner, mailing, legal, postal and email values. They assert that no sentinel reaches any output byte and that injected keys are refused.
+
+Public in Ontario and shown: roll number (ARN), MPAC property code, civic addresses (City address points and NPCA MPAC street text).
+
+## Schema 2 (current)
+
+Draft contract: `drafts/wave-1/seam-contract-dossier.md` in the private `our private planning repository` repo. Changes from v1, all covered by tests:
+
+- **Layout:** `shards/<KK>.json` (core), `detail/<KK>.json` (on demand), `provenance/sources.json`, `label-seed.json`, `files.json` (path, bytes, SHA-256 of every file) and a small `manifest.json` that holds `files_sha256`, `release {unit, id}` and `contract_revisions`. File hashes live in `files.json` because a hash per file made the manifest about 98 KB compressed against the 50 KB start-up budget.
+- **No display text.** No `label` key at any depth (`assert_no_display_keys`). Counts that labels used to spell out are data: `roll[].other_parcels`, `addresses.count`, `overlays.row_count`. Property-code families are tokens (`residential`, `vacant_land`, ...). The old `confidence_words` moved to `label-seed.json` as a seed for the label register.
+- **Names:** `ia_id` is `key`; `area.m2` is `area.value` with `unit` and `crs`; overlay `m2` is `area_m2`.
+- **Core and detail:** the core record holds at most `--core-addresses` (default 5) addresses and `addresses.complete`; the detail record holds every address (no cap, D-023) and `feature_ids` keyed by JSON Pointer into the core record (`/overlays/rows/3`). The core list is always a prefix of the full list.
+- **Verification:** `audit_output` checks `files.json` against the manifest, every file hash, the exact file set, every record against `RECORD_SPEC` and `DETAIL_SPEC`, key/shard agreement, address counts and prefix, and the record count. Builds are byte-identical on repeat (only `generated_at` in the manifest differs).
+- **Prepublish gate** understands the new files; record ids (random ULIDs) are no longer treated as field names.
+
+Hamilton, 2026-10-17 inputs: 166,745 records; core shard mean 16.2 KB gzipped (p95 18.3 KB, max 21.3 KB); detail mean 15.1 KB (max 30.5 KB); manifest 3.1 KB gzipped.
+
+The `hm:` prefix is unchanged here; the rename to `ia:` is a separate step (`our private planning repository/tools/rename`).
+
+## Record schema (v1, superseded by schema 2 above)
+
+```json
+{
+ "ia_id": "ia:ca:on:hamilton:parcel:<ULID>",
+ "area":     {"m2": 146779.9, "src": "LYR-HAM-PARCEL", "join": "registry_geometry", "conf": "high", "label": "..."},
+ "coverage": {"status": "has_arn", "provisional": false, "grade": "exact_1to1", "src": "...", "join": "...", "conf": "...", "label": "..."},
+ "roll": [{"arn": "2518xxxxxxxxxxx", "grade": "exact_1to1", "method": "representative_point", "iou": 0.9994,
+           "src": "LYR-NPCA-ASSESSMENT-PARCELS-TEST", "join": "exact_1to1", "conf": "high", "label": "...",
+           "roll_address": "<MPAC street text>",
+           "property_code": {"code": "590", "family": "Industrial", "src": "LYR-NPCA-PARCELS-CITYVIEW",
+                             "join": "arn_exact", "conf": "low", "label": "..."}}],
+ "addresses": {"src": "LYR-HAM-ADDRESSES", "join": "point_in_polygon", "label": "...", "count": 3, "truncated": false,
+               "shown": [{"id": "ia:ca:on:hamilton:address:<ULID>", "text": "<number> <STREET>, <COMMUNITY>", "unit": "", "join": "pip", "conf": "high"}]},
+ "overlays": {"src": "heavymap-overlays:<run>", "join": "area_share", "label": "...", "sliver_count": 5,
+              "rows": [{"layer": "LYR-HAM-ZONING", "class": "AA", "label": "City zoning: AA", "share": 0.8524, "m2": 125108.7, "fid": "<overlay feature id>"},
+                       {"layer": "LYR-HAM-ZONING", "class": "P7", "label": "City zoning: P7", "share": 0.0, "m2": 1.5, "fid": "<overlay feature id>", "sliver": true}]},
+ "gaps": ["GAP-0001", "GAP-0002"]
+}
+```
+
+### Coverage status
+
+| status | When | provisional |
+|---|---|---|
+| `has_arn` | at least one valid Hamilton ARN (`2518` + 11 digits) attached | no |
+| `not_covered` | registry grade `not_in_coverage` (more than 5 m from any NPCA polygon) | **yes**, pending the owner's decision on the ~46% outside NPCA roll data |
+| `in_coverage_unmatched` | inside NPCA coverage, no ARN attached | yes |
+| `arn_invalid` | only placeholder values attached (`000000000000000`, flag `placeholder`); the value is not shown | no |
+
+`not_covered` corresponds to the PCDP refusal reason `not_in_coverage` for the roll object.
+
+### Gaps (transparent view)
+
+Each record has `gaps`: a sorted list of ledger `gap_id` strings. The reason text, counts and screening notes live in the dossier manifest (`gaps_ledger`) and in `Spreadsheets/20-data-gaps-ledger.csv`. Do not repeat that copy on the record. `withheld_screened` rows (owner-name and legal-description fields) stay in the manifest only, so a parcel list cannot imply that this unit has a withheld value. Schema: data-gaps-ledger.md. Overlay slivers stay on `overlays.rows` with `sliver: true` (flag, never extinguish) and are not gap ids.
+
+### Confidence words
+
+Provisional UI words, not the NA-86 `exact` / `good` / `weak` / `refused` scale (still open):
+
+- `high`: one-to-one ARN match, point-in-polygon address, registry geometry.
+- `medium`: ARN shared across City parcels (`one_to_many`) or several ARNs on one parcel (`many_to_one`); nearest address within 10 m; coverage test.
+- `low`: exact ARN match against a stale or sparsely filled source (Cityview PropCode, last edited 2020); placeholder ARNs (`grade` `placeholder`, not `one_to_many`).
+
+### Property code
+
+Cityview `PropCode` joins by exact 15-digit ARN (`arn_exact`). If only a 20-digit Cityview ARN exists, it joins on its first 15 digits (`arn_prefix15`). The code is quoted as given. `family` names the MPAC range (1xx vacant land, 2xx farm, 3xx residential, 4xx commercial, 5xx industrial, 6xx institutional, 7xx special and exempt). The family is a range lookup, not a HeavyMap classification.
+
+**Tax class is not in this build.** NPCA has no tax class field; tax class is one possible input among several. `MPAC_TAXAT` holds the taxing municipality (`HAMILTON CITY`), not a class. The manifest lists this under `fields_unavailable`.
+
+### Addresses
+
+Only registry links `pip` and `nearest_10m` are attached. `pip_ambiguous` and `unmatched` addresses stay off every parcel. The list is sorted by street, then house number, and capped at 25 (`--max-addresses`). `count` is always the full total, and `truncated` says whether the list was cut.
+
+### Overlays and slivers
+
+**Flag, never extinguish.** Every overlay link from the overlay run is in `rows`, slivers included (the owner, 2026-10-17: slivers are an interesting observation, and we do not build habits of removing them from view). A sliver row carries `"sliver": true`; on other rows the key is absent, which means not a sliver. `sliver_count` gives the per-parcel total, and the label reads like "11 zone or designation links, 5 flagged as slivers". The UI may style or group slivers, but must not drop them.
+
+The sliver rule comes from the overlay run: share under 1% of the parcel **and** under 5 m². Rows are in overlay-manifest layer order, largest share first, so slivers sort to the end of each layer. `share` is rounded to 4 decimals and `m2` to 0.1 m². A row with `share` 0.0 and `m2` > 0 is "below 0.01%", not absent.
+
+Layer ids follow sheet 17. Overlay run `20261017-val2` wrote `LYR-NPCA-REGULATION-LANDS`. The dossier maps it to `LYR-NPCA-APPROX-REGULATION-LANDS` (`LAYER_ALIASES`), and the overlay config now emits the sheet 17 id.
+
+## Output format and why
+
+```
+local data (not published)
+  manifest.json          # ~7 KB: schema, shard rule, counts, sources, confidence words, unavailable fields
+  shards/{KK}.json       # 1,024 files, KK = last two characters of the ia_id
+```
+
+Each shard is `{"schema":1,"jurisdiction":"hamilton","shard":"KK","records":{"<ia_id>": {...}}}`.
+
+- **Key-hash sharding by ULID suffix.** The last two characters come from the ULID's 80-bit random part, so 166,745 parcels spread evenly: 120 to about 200 per shard. The front end already has `ia_id` from the clicked PMTiles feature. It fetches `shards/` + `id.slice(-2)` + `.json` with no index and no hash code in JS. One click is one small request, cached per shard.
+- **Not tile-aligned.** Parcels cross tile edges, and a tile scheme would tie the dossier to one PMTiles zoom and rebuild. Key shards are stable across tile rebuilds.
+- **Not one file.** One file is about 250 MB. Two-character prefixes of a ULID are all `01` (the timestamp part), which is why the suffix is used.
+- **Startup payload** is `manifest.json` only (about 7 KB). Shards load on click.
+
+2026-10-17 run, with every sliver kept: 280,129,576 bytes raw in total (min 200 KB, median 273 KB, max 360 KB per shard). Gzip brings the total to about 26.9 MB, roughly 26 KB per shard, which is what GitHub Pages sends. The earlier build that hid slivers was 252.0 MB raw and about 24 MB gzip. Every file is far under the 100 MB limit. The raw median is above the v0 spec's 250 KB-per-response target, and the raw total is over its 40 MB dossier allocation; the transfer size is under both. If raw storage matters for G6, the next step is dictionary-encoding the repeated provenance strings and source feature ids into the manifest. Do not commit shards to git (history bloat); publish them as a Pages build artifact once G6 allows.
+
+Runtime on a local working copy about 48 s end to end (14 s load, 22 s build and write, 12 s re-audit). Peak RSS was 798 MB, mostly the two NPCA GeoJSON parses. Stdlib only.
+
+## Tests
+
+`tests/test_heavymap_dossier.py`: screening (spec keys, source allowlist, injected keys at any depth, wrong value kinds), sentinel leak scan over every output byte, coverage split, roll provenance, the 20-digit ARN prefix join, address cap, slivers flagged and never dropped (every input link row reaches output), a non-boolean sliver value refused, the layer id alias, compact `gaps` lists (ledger ids only, withheld rows never on a parcel), and the CLI end to end. Ledger load: `tests/test_heavymap_gaps.py`.
