@@ -1,0 +1,1146 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, waterloo, rochester, prior-art"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Time-boxed spike, 2026-08-27."
+     ],
+     "tag": "strong"
+    },
+    " Purpose: not to catalogue these regions, but to answer one question — ",
+    {
+     "children": [
+      "which join methods does each support?"
+     ],
+     "tag": "strong"
+    },
+    " — so that the enrichment stage is designed against what varies rather than against Niagara's particular mix."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Every count below was observed by live query on 2026-08-27."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "1.-The-six-join-methods"
+   },
+   "children": [
+    "1. The six join methods"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The pipeline cannot assume any particular source, but it can assume a small set of ways evidence gets joined. Ordered by how much each can be trusted:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "J1"
+       ],
+       "tag": "strong"
+      },
+      " — Method: ",
+      {
+       "children": [
+        "Identifier"
+       ],
+       "tag": "strong"
+      },
+      " · Joins: record → record · Trust: strongest · Output: exact, or absent"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J2"
+       ],
+       "tag": "strong"
+      },
+      " — Method: ",
+      {
+       "children": [
+        "Normalized address"
+       ],
+       "tag": "strong"
+      },
+      " · Joins: table → anchor · Trust: strong · Output: a ",
+      {
+       "children": [
+        "measurable match rate"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J3"
+       ],
+       "tag": "strong"
+      },
+      " — Method: ",
+      {
+       "children": [
+        "Point-in-polygon"
+       ],
+       "tag": "strong"
+      },
+      " · Joins: anchor → unit; unit → constraint · Trust: strong · Output: containment, exact"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J4"
+       ],
+       "tag": "strong"
+      },
+      " — Method: ",
+      {
+       "children": [
+        "Containment"
+       ],
+       "tag": "strong"
+      },
+      " · Joins: footprint → parcel · Trust: strong · Output: exact"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J5"
+       ],
+       "tag": "strong"
+      },
+      " — Method: ",
+      {
+       "children": [
+        "Proximity"
+       ],
+       "tag": "strong"
+      },
+      " · Joins: unit → linear feature · Trust: weak · Output: a distance, always stated"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J6"
+       ],
+       "tag": "strong"
+      },
+      " — Method: ",
+      {
+       "children": [
+        "Geometric overlap"
+       ],
+       "tag": "strong"
+      },
+      " · Joins: polygon → polygon · Trust: weakest · Output: a threshold, always stated"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "A region's capability is which of these it can support, not how many datasets it publishes."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "2.-Waterloo-Region-—-the-Niagara-pattern-again"
+   },
+   "children": [
+    "2. Waterloo Region — the Niagara pattern again"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "data.waterloo.ca/data.json"
+     ],
+     "tag": "code"
+    },
+    " — ",
+    {
+     "children": [
+      "548 datasets, one shared catalogue, four publishers"
+     ],
+     "tag": "strong"
+    },
+    ":"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "221  City of Kitchener      133  City of Waterloo\n125  Region of Waterloo      69  Cambridge, Ontario"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "This is structurally identical to ",
+    {
+     "children": [
+      "niagaraopendata.ca"
+     ],
+     "tag": "code"
+    },
+    ": an upper tier and its lower-tier municipalities publishing through one feed, each on its own ArcGIS org. ",
+    {
+     "children": [
+      "Four separate ",
+      {
+       "children": [
+        "Addresses"
+       ],
+       "tag": "code"
+      },
+      " layers"
+     ],
+     "tag": "strong"
+    },
+    ", one per municipality, on four different service hosts — including one on ",
+    {
+     "children": [
+      "maps.cambridge.ca"
+     ],
+     "tag": "code"
+    },
+    " and one behind ",
+    {
+     "children": [
+      "utility.arcgis.com"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-it-supports"
+   },
+   "children": [
+    "What it supports"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "J1 Identifier"
+       ],
+       "tag": "strong"
+      },
+      " — Supported?: ",
+      {
+       "children": [
+        "unknown"
+       ],
+       "tag": "strong"
+      },
+      " · Evidence: business directory and licences exist; stability across editions unverified"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J2 Address"
+       ],
+       "tag": "strong"
+      },
+      " — Supported?: ",
+      {
+       "children": [
+        "yes"
+       ],
+       "tag": "strong"
+      },
+      " · Evidence: 4 municipal address layers, plus building permits, business licences, business directory"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J3 Point-in-polygon"
+       ],
+       "tag": "strong"
+      },
+      " — Supported?: ",
+      {
+       "children": [
+        "yes"
+       ],
+       "tag": "strong"
+      },
+      " · Evidence: Cambridge Official Plan + Zoning Lookup; Kitchener zoning map"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J4 Containment"
+       ],
+       "tag": "strong"
+      },
+      " — Supported?: ",
+      {
+       "children": [
+        "partial"
+       ],
+       "tag": "strong"
+      },
+      " · Evidence: building footprints for 2 of 4 municipalities; ",
+      {
+       "children": [
+        "no parcel layer found"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J5 Proximity"
+       ],
+       "tag": "strong"
+      },
+      " — Supported?: yes · Evidence: standard"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J6 Overlap"
+       ],
+       "tag": "strong"
+      },
+      " — Supported?: n/a · Evidence: no competing polygon sources to reconcile"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Ceiling: ",
+      {
+       "children": [
+        "footprint"
+       ],
+       "tag": "code"
+      },
+      " tier"
+     ],
+     "tag": "strong"
+    },
+    ", same as Hamilton — no parcels published."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "No assessment data"
+     ],
+     "tag": "strong"
+    },
+    ", as expected: MPAC is a paid dead end province-wide, and this confirms it is not a Niagara-specific gap."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "3.-Rochester-—-a-different-kind-of-region-entirely"
+   },
+   "children": [
+    "3. Rochester — a different kind of region entirely"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "data.cityofrochester.gov/data.json"
+     ],
+     "tag": "code"
+    },
+    " — 281 datasets. But the structure is what matters, not the count."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Tax-parcels-carry-assessed-value"
+   },
+   "children": [
+    "Tax parcels carry assessed value"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Open_Data/TaxParcel2024/FeatureServer/0"
+     ],
+     "tag": "code"
+    },
+    " — ",
+    {
+     "children": [
+      "64,828 parcels"
+     ],
+     "tag": "strong"
+    },
+    ", polygon, 42 fields. The join-relevant ones:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "PARCELID  SITEADDRESS  CLASSCD  CLASSDSCRP  OWNERNME1  STATEDAREA\nCURRENT_LAND_VALUE  CURRENT_TOTAL_VALUE  CURRENT_TAXABLE_VALUE\nTENTATIVE_LAND_VALUE  TENTATIVE_TOTAL_VALUE  TENTATIVE_TAXABLE_VALUE"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Observed distribution:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "all"
+       ],
+       "tag": "strong"
+      },
+      " — Parcels: ",
+      {
+       "children": [
+        "64,828"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "industrial (700-series)"
+       ],
+       "tag": "strong"
+      },
+      " — Parcels: 365"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "commercial (400-series)"
+       ],
+       "tag": "strong"
+      },
+      " — Parcels: 6,663"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "vacant land (300-series)"
+       ],
+       "tag": "strong"
+      },
+      " — Parcels: 4,768"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**total value = land value"
+       ],
+       "tag": "strong"
+      },
+      " (zero improvement value)",
+      {
+       "children": [
+        " — Parcels: "
+       ],
+       "tag": "strong"
+      },
+      "4,717**"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "This is the VOA equivalent."
+     ],
+     "tag": "strong"
+    },
+    " The UK reference atlas's whole method rests on rating-list data — assessed value per property. Ontario denies it (MPAC, paid, income and expense withheld). ",
+    {
+     "children": [
+      "Rochester publishes it free."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The load-bearing signal is the ratio of land value to total value. Observed samples:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "total 185,500 / land 172,500  ->  13,000 of improvement value  (near-derelict)\ntotal 641,600 / land 185,000  ->  456,600 of improvement value (well built)\ntotal 475,000 /  land 88,000  ->  387,000 of improvement value"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "A parcel whose total value approaches its land value has little building value left. ",
+    {
+     "children": [
+      "4,717 parcels are in exactly that state"
+     ],
+     "tag": "strong"
+    },
+    ", and that is an ",
+    {
+     "children": [
+      "observation from an assessment register"
+     ],
+     "tag": "em"
+    },
+    ", not an inference from absence — a categorically stronger claim than anything the Niagara method can make."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "And-it-has-depth-in-time"
+   },
+   "children": [
+    "And it has depth in time"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Tax parcel snapshots for 1996, 2000, 2004, 2008, 2012, 2018, 2019, 2020, 2021, 2022, 2023 and 2024"
+     ],
+     "tag": "strong"
+    },
+    ", published as separate datasets. Nearly thirty years of assessed value per parcel. Under-occupancy in Rochester is not a static ratio but a ",
+    {
+     "children": [
+      "trajectory"
+     ],
+     "tag": "em"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-it-supports"
+   },
+   "children": [
+    "What it supports"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "J1 Identifier"
+       ],
+       "tag": "strong"
+      },
+      " — Supported?: ",
+      {
+       "children": [
+        "yes, strongest in the project"
+       ],
+       "tag": "strong"
+      },
+      " · Evidence: ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " across 12 snapshots 1996–2024"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J2 Address"
+       ],
+       "tag": "strong"
+      },
+      " — Supported?: yes · Evidence: ",
+      {
+       "children": [
+        "SITEADDRESS"
+       ],
+       "tag": "code"
+      },
+      " on every parcel"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J3 Point-in-polygon"
+       ],
+       "tag": "strong"
+      },
+      " — Supported?: yes · Evidence: parcels are polygons"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J4 Containment"
+       ],
+       "tag": "strong"
+      },
+      " — Supported?: ",
+      {
+       "children": [
+        "yes"
+       ],
+       "tag": "strong"
+      },
+      " · Evidence: ",
+      {
+       "children": [
+        "Building Footprints: Live"
+       ],
+       "tag": "code"
+      },
+      " + parcels"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J5 Proximity"
+       ],
+       "tag": "strong"
+      },
+      " — Supported?: yes · Evidence: standard"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J6 Overlap"
+       ],
+       "tag": "strong"
+      },
+      " — Supported?: yes · Evidence: city-owned parcels vs tax parcels"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Ceiling: ",
+      {
+       "children": [
+        "parcel"
+       ],
+       "tag": "code"
+      },
+      " tier, with assessed value."
+     ],
+     "tag": "strong"
+    },
+    " Higher than anywhere in the Ontario study area."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "4.-What-this-changes"
+   },
+   "children": [
+    "4. What this changes"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The regions are not variations on one theme; they sit at different rungs."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Niagara Falls, St. Catharines"
+       ],
+       "tag": "strong"
+      },
+      " — Unit ceiling: parcel · Assessment: ✗ · Business register: NEI · Temporal depth: 4 NEI editions"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Welland, Hamilton, Waterloo Region"
+       ],
+       "tag": "strong"
+      },
+      " — Unit ceiling: footprint · Assessment: ✗ · Business register: NEI (Niagara only) · Temporal depth: permits"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Other 9 Niagara municipalities"
+       ],
+       "tag": "strong"
+      },
+      " — Unit ceiling: address · Assessment: ✗ · Business register: NEI · Temporal depth: 4 NEI editions"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Rochester"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Unit ceiling: "
+       ],
+       "tag": "strong"
+      },
+      "parcel + value",
+      {
+       "children": [
+        " · Assessment: "
+       ],
+       "tag": "strong"
+      },
+      "✓",
+      {
+       "children": [
+        " · Business register: ✗ · Temporal depth: "
+       ],
+       "tag": "strong"
+      },
+      "12 snapshots, 1996–2024**"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Three consequences for the design:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "1. Under-occupancy must be method-agnostic."
+     ],
+     "tag": "strong"
+    },
+    " In Niagara it is a ratio of floor area and employment against parcel area, computed from the employment ",
+    {
+     "children": [
+      "upper"
+     ],
+     "tag": "em"
+    },
+    " bound so the engine understates itself. In Rochester it is ",
+    {
+     "children": [
+      "improvement value / total value"
+     ],
+     "tag": "code"
+    },
+    " from an assessment register — a different computation, a stronger evidence class, and it deserves to be labelled as such rather than averaged into the same number."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "2. The evidence class must travel with the score."
+     ],
+     "tag": "strong"
+    },
+    " The spec already separates observation from inference. This makes it concrete: Rochester's under-occupancy is ",
+    {
+     "children": [
+      "observed"
+     ],
+     "tag": "code"
+    },
+    ", Niagara's is ",
+    {
+     "children": [
+      "inferred"
+     ],
+     "tag": "code"
+    },
+    ". Rendering them identically would be the same category error as the ",
+    {
+     "children": [
+      "HISTORICAL"
+     ],
+     "tag": "code"
+    },
+    " vs ",
+    {
+     "children": [
+      "INFERRED"
+     ],
+     "tag": "code"
+    },
+    " freshness question."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "3. Region configuration, not region code."
+     ],
+     "tag": "strong"
+    },
+    " Waterloo needs: four address layers on four hosts, zoning from two municipalities, no parcels. Rochester needs: one parcel layer with value fields, twelve historical snapshots, a building layer. Neither fits a hardcoded module. Source descriptors, field mappings, CRS and the municipality allow-list all belong in configuration."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "5.-What-was-NOT-probed"
+   },
+   "children": [
+    "5. What was NOT probed"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Recorded so the gap is explicit rather than silently absent."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Region of Waterloo's own 125 datasets"
+       ],
+       "tag": "strong"
+      },
+      " — none matched the planning"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "keyword scan; not individually inspected."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Monroe County"
+       ],
+       "tag": "strong"
+      },
+      " (Rochester's county tier) — ",
+      {
+       "children": [
+        "data.monroecounty.gov"
+       ],
+       "tag": "code"
+      },
+      " does not"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "resolve. NYS GIS Clearinghouse is the likely route and is already a source for the existing ",
+    {
+     "children": [
+      "us-*"
+     ],
+     "tag": "code"
+    },
+    " layers."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Licence terms for both regions"
+       ],
+       "tag": "strong"
+      },
+      " — Rochester's DCAT licence field contains"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "HTML rather than a licence name and needs a human look. Waterloo's not checked."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Whether Rochester's ",
+        {
+         "children": [
+          "PARCELID"
+         ],
+         "tag": "code"
+        },
+        " is genuinely stable across all 12 snapshots"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "— assumed from its name and format, not verified. This is the single most load-bearing assumption in the whole spike and should be tested before any trajectory work, exactly as ",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    " stability was tested for Niagara."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Buffalo"
+       ],
+       "tag": "strong"
+      },
+      " — not touched; it is the nearer US city and already partly in the"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "atlas via NYS layers."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0056\ntype: working-paper\nsection: origins\nevidence_date: 2026-10-03\nseq: 16"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, waterloo, rochester, prior-art",
+ "path": "Reconnaissance-spike--Waterloo-Region-and-Rochester-11-19",
+ "title": "Reconnaissance spike — Waterloo Region and Rochester",
+ "url": "https://telegra.ph/Reconnaissance-spike--Waterloo-Region-and-Rochester-11-19",
+ "views": 0
+}

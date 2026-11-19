@@ -1,0 +1,2079 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, niagara, hamilton, log, prior-art"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "§23-Task-6:-The-unit-index,-and-the-municipality-join-ruling-(F2/F4)"
+   },
+   "children": [
+    "§23 Task 6: The unit index, and the municipality-join ruling (F2/F4)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Date:"
+     ],
+     "tag": "strong"
+    },
+    " 2026-08-23"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Created ",
+    {
+     "children": [
+      "atlas/scripts/units.py"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "atlas/tests/test_units.py"
+     ],
+     "tag": "code"
+    },
+    " per task-6-brief.md, with two rulings applied that were decided before execution began (see task instructions): F2 (assert the municipality join, don't assume it) and F4 (memoize ",
+    {
+     "children": [
+      "build_units()"
+     ],
+     "tag": "code"
+    },
+    ")."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Ruling-F2-—-why-raw-comparison-would-have-been-wrong"
+   },
+   "children": [
+    "Ruling F2 — why raw comparison would have been wrong"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Raw anchor municipality strings observed directly (",
+    {
+     "children": [
+      "normalize.addresses. load_anchors()"
+     ],
+     "tag": "code"
+    },
+    ", counted by raw value):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "'city of hamilton' 171360\n'niagara falls' 33333\n'st. catharines' 44215\n'welland' 22543\n'fort erie' 16314          'thorold' 11790\n'grimsby' 9412             'wainfleet' 3388\n'port colborne' 9963       'west lincoln' 5609\n'pelham' 7721               'lincoln' 10026\n'niagara-on-the-lake' 8916\n'county of brant' 1        'regional municipality of halton' 8\n'regional municipality of niagara' 1     'wellington county' 1"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "geometry_sources.PARCEL_SOURCES"
+     ],
+     "tag": "code"
+    },
+    "/",
+    {
+     "children": [
+      "FOOTPRINT_SOURCES"
+     ],
+     "tag": "code"
+    },
+    " hardcode ",
+    {
+     "children": [
+      "\"hamilton\""
+     ],
+     "tag": "code"
+    },
+    " (no prefix) for the same place. Comparing these raw would have left ",
+    {
+     "children": [
+      "\"city of hamilton\""
+     ],
+     "tag": "code"
+    },
+    " (171,360 anchors) out of the covered set, so ",
+    {
+     "children": [
+      "build_units()"
+     ],
+     "tag": "code"
+    },
+    " would have minted 171,360 address-tier \"Hamilton\" units on top of the 214,293 footprint units Hamilton already has — a near-doubling of Hamilton's unit count from a string-form mismatch, not a real gap. ",
+    {
+     "children": [
+      "units.py"
+     ],
+     "tag": "code"
+    },
+    " runs both sides through ",
+    {
+     "children": [
+      "normalize.addresses. normalize_municipality()"
+     ],
+     "tag": "code"
+    },
+    " before comparing (see ",
+    {
+     "children": [
+      "_covered_municipalities()"
+     ],
+     "tag": "code"
+    },
+    " and the anchor-skip check in ",
+    {
+     "children": [
+      "build_units()"
+     ],
+     "tag": "code"
+    },
+    "), which folds ",
+    {
+     "children": [
+      "\"city of hamilton\""
+     ],
+     "tag": "code"
+    },
+    " to ",
+    {
+     "children": [
+      "\"hamilton\""
+     ],
+     "tag": "code"
+    },
+    " and leaves the polygon-source strings unchanged (none of them carry a civic-status prefix), so they compare equal."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Added ",
+    {
+     "children": [
+      "test_municipality_join_holds_between_polygon_sources_and_anchors"
+     ],
+     "tag": "code"
+    },
+    " to ",
+    {
+     "children": [
+      "test_units.py"
+     ],
+     "tag": "code"
+    },
+    ", asserting every normalized ",
+    {
+     "children": [
+      "PARCEL_SOURCES"
+     ],
+     "tag": "code"
+    },
+    "/ ",
+    {
+     "children": [
+      "FOOTPRINT_SOURCES"
+     ],
+     "tag": "code"
+    },
+    " municipality has a matching normalized anchor municipality, printing both sets on failure."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Ruling-F4-—-memoization,-measured"
+   },
+   "children": [
+    "Ruling F4 — memoization, measured"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "test_units.py"
+     ],
+     "tag": "code"
+    },
+    " calls ",
+    {
+     "children": [
+      "units.build_units()"
+     ],
+     "tag": "code"
+    },
+    " from four separate test functions (5 in the original brief plus the F2 join test, though the join test itself only calls ",
+    {
+     "children": [
+      "load_anchors()"
+     ],
+     "tag": "code"
+    },
+    ", not ",
+    {
+     "children": [
+      "build_units()"
+     ],
+     "tag": "code"
+    },
+    " — so 4 of the 6 tests call ",
+    {
+     "children": [
+      "build_units()"
+     ],
+     "tag": "code"
+    },
+    "). With the module-level memo in place, only the first call does the full parcel+footprint load and ~360,000 shapely UTM reprojections; the other 3 calls in the same process return the cached list. Observed: ",
+    {
+     "children": [
+      "tests/test_units.py -v"
+     ],
+     "tag": "code"
+    },
+    " (6 tests) ran in 127.22s, barely more than ",
+    {
+     "children": [
+      "tests/test_geometry_sources.py"
+     ],
+     "tag": "code"
+    },
+    " alone (101.81s, which does two independent ",
+    {
+     "children": [
+      "load_polygons()"
+     ],
+     "tag": "code"
+    },
+    " calls itself) — evidence the memo is doing its job, since without it four independent ",
+    {
+     "children": [
+      "build_units()"
+     ],
+     "tag": "code"
+    },
+    " calls would be expected to cost roughly 4x a single load."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "TDD-sequence"
+   },
+   "children": [
+    "TDD sequence"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Failing test:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -m pytest tests/test_units.py -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "ModuleNotFoundError: No module named 'units'"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "After implementation:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -m pytest tests/test_units.py -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "tests/test_units.py::test_tier_order_is_the_spec_ladder PASSED\ntests/test_units.py::test_units_exist_for_every_lower_tier_municipality PASSED\ntests/test_units.py::test_wainfleet_is_address_tier_only PASSED\ntests/test_units.py::test_address_tier_units_have_no_area PASSED\ntests/test_units.py::test_parcel_tier_units_have_area PASSED\ntests/test_units.py::test_municipality_join_holds_between_polygon_sources_and_anchors PASSED\n6 passed in 127.22s (0:02:07)"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "The join test passed on the first run once ",
+    {
+     "children": [
+      "normalize_municipality"
+     ],
+     "tag": "code"
+    },
+    " was applied on both sides in the implementation — it was written and run alongside the implementation (not proven to fail first against a raw-string version), since the point of Ruling F2 was to build the normalized comparison correctly from the start rather than reproduce the bug and then fix it."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Observed-unit-counts"
+   },
+   "children": [
+    "Observed unit counts"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -c \"\nimport sys; sys.path.insert(0,'scripts')\nimport units\nfrom collections import Counter\nbuilt = units.build_units()\nprint('total units:', len(built))\nprint('by tier:', Counter(u['unit_tier'] for u in built))\nby_muni_tier = Counter((u['municipality'], u['unit_tier']) for u in built)\nfor k in sorted(by_muni_tier):\n    print(k, by_muni_tier[k])\n\""
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "total units: 445086\nby tier: Counter({'footprint': 282567, 'address': 83150, 'parcel': 79369})\n\n('county of brant', 'address') 1\n('fort erie', 'address') 16314\n('grimsby', 'address') 9412\n('hamilton', 'footprint') 214293\n('lincoln', 'address') 10026\n('niagara falls', 'footprint') 42247\n('niagara falls', 'parcel') 35104\n('niagara-on-the-lake', 'address') 8916\n('pelham', 'address') 7721\n('port colborne', 'address') 9963\n('regional municipality of halton', 'address') 8\n('regional municipality of niagara', 'address') 1\n('st. catharines', 'parcel') 44265\n('thorold', 'address') 11790\n('wainfleet', 'address') 3388\n('welland', 'footprint') 26027\n('wellington county', 'address') 1\n('west lincoln', 'address') 5609"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Note: ",
+    {
+     "children": [
+      "hamilton"
+     ],
+     "tag": "code"
+    },
+    " appears ONLY as ",
+    {
+     "children": [
+      "footprint"
+     ],
+     "tag": "code"
+    },
+    " (214,293), with zero ",
+    {
+     "children": [
+      "address"
+     ],
+     "tag": "code"
+    },
+    "-tier duplicate — direct evidence the F2 join held for the one municipality where a raw-string comparison would have failed. ",
+    {
+     "children": [
+      "niagara falls"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "st. catharines"
+     ],
+     "tag": "code"
+    },
+    ", and ",
+    {
+     "children": [
+      "welland"
+     ],
+     "tag": "code"
+    },
+    " likewise show no address-tier duplicate."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Observed but not required by any test:"
+     ],
+     "tag": "strong"
+    },
+    " four anchor municipality values are noise, not real lower-tier municipalities of the study area — ",
+    {
+     "children": [
+      "'county of brant'"
+     ],
+     "tag": "code"
+    },
+    " (1), ",
+    {
+     "children": [
+      "'regional municipality of halton'"
+     ],
+     "tag": "code"
+    },
+    " (8), ",
+    {
+     "children": [
+      "'regional municipality of niagara'"
+     ],
+     "tag": "code"
+    },
+    " (1), ",
+    {
+     "children": [
+      "'wellington county'"
+     ],
+     "tag": "code"
+    },
+    " (1) — almost certainly mis-tagged ",
+    {
+     "children": [
+      "MUNICIPALITY"
+     ],
+     "tag": "code"
+    },
+    "/",
+    {
+     "children": [
+      "Municipality"
+     ],
+     "tag": "code"
+    },
+    " values a small number of rows carry in the underlying Niagara Region or Hamilton address point sources, not a defect introduced here. They currently surface as 11 address-tier units under those four labels. Logged here as a \"not probed further\" per the raw-logging rule, since resolving them is outside this task's scope; a later task should decide whether to fold, drop, or flag them."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Interpretation"
+   },
+   "children": [
+    "Interpretation"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "The unit index totals 445,086 units: 79,369 parcel, 282,567 footprint, 83,150 address. The address tier is entirely concentrated in the six non-publishing lower-tier municipalities named in the brief's spec-6.1 note (wainfleet, west lincoln, pelham, grimsby, thorold, port colborne) plus fort erie, lincoln, and niagara-on-the-lake, which likewise publish no parcel or footprint layer we hold - all correctly present, none double-counted against the four municipalities (hamilton, niagara falls, st. catharines, welland) that do have polygon coverage."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Ruling F2 mattered in practice, not just in principle: without it, this run would have silently produced ~171,360 spurious address-tier Hamilton units alongside the 214,293 real footprint ones - a defect of the same shape and comparable scale to the address-anchor defects fixed in §20, and one that would have inflated every later count derived from ",
+    {
+     "children": [
+      "build_units()"
+     ],
+     "tag": "code"
+    },
+    " (Task 7's aggregation, Task 8's scoring) by construction, not by degree."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "§24-Task-7:-Coverage-report-per-municipality"
+   },
+   "children": [
+    "§24 Task 7: Coverage report per municipality"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Date:"
+     ],
+     "tag": "strong"
+    },
+    " 2026-08-23"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Raw changes:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Created ",
+    {
+     "children": [
+      "atlas/scripts/coverage_report.py"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "atlas/tests/test_coverage_report.py"
+     ],
+     "tag": "code"
+    },
+    " per task-7-brief.md, verbatim."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Test command and full output:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -m pytest tests/test_coverage_report.py -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "============================= test session starts ==============================\nplatform linux -- Python 3.11.2, pytest-9.1.1, pluggy-1.6.0\ncachedir: .pytest_cache\nrootdir: a local working copy\ncollected 3 items\n\ntests/test_coverage_report.py::test_summarize_counts_tiers_per_municipality PASSED [ 33%]\ntests/test_coverage_report.py::test_best_tier_prefers_parcel PASSED      [ 66%]\ntests/test_coverage_report.py::test_missing_tier_reports_zero_not_absent PASSED [100%]\n\n============================== 3 passed in 0.23s ==============================="
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Run for real — coverage per municipality:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas/scripts && ../.venv/bin/python coverage_report.py"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Output:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "hamilton                          parcel       0  footprint 214,293  address       0  best: footprint\nniagara falls                     parcel  35,104  footprint  42,247  address       0  best: parcel\nst. catharines                    parcel  44,265  footprint       0  address       0  best: parcel\nwelland                           parcel       0  footprint  26,027  address       0  best: footprint\nfort erie                         parcel       0  footprint       0  address  16,314  best: address\nthorold                           parcel       0  footprint       0  address  11,790  best: address\nlincoln                           parcel       0  footprint       0  address  10,026  best: address\nport colborne                     parcel       0  footprint       0  address   9,963  best: address\ngrimsby                           parcel       0  footprint       0  address   9,412  best: address\nniagara-on-the-lake               parcel       0  footprint       0  address   8,916  best: address\npelham                            parcel       0  footprint       0  address   7,721  best: address\nwest lincoln                      parcel       0  footprint       0  address   5,609  best: address\nwainfleet                         parcel       0  footprint       0  address   3,388  best: address\nregional municipality of halton   parcel       0  footprint       0  address       8  best: address\ncounty of brant                   parcel       0  footprint       0  address       1  best: address\nregional municipality of niagara  parcel       0  footprint       0  address       1  best: address\nwellington county                 parcel       0  footprint       0  address       1  best: address"
+   ],
+   "tag": "pre"
+  },
+  {
+   "attrs": {
+    "id": "Interpretation"
+   },
+   "children": [
+    "Interpretation"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Coverage is published as a structured query, not a footnote. Six of twelve Niagara Region lower-tier municipalities publish no parcel or footprint data (wainfleet, west lincoln, pelham, grimsby, thorold, port colborne). Address-tier coverage—via the universal anchor index, supported by every table that carries a civic address—exists across all twelve, plus four neighboring jurisdictions whose addresses appear in the edge rows of the Hamilton and Niagara sources."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The four non-lower-tier labels (county of brant, regional municipality of halton, regional municipality of niagara, wellington county) carry only 11 units total and are noise in the source data—address points mis-tagged with an incorrect ",
+    {
+     "children": [
+      "MUNICIPALITY"
+     ],
+     "tag": "code"
+    },
+    "/ ",
+    {
+     "children": [
+      "Municipality"
+     ],
+     "tag": "code"
+    },
+    " value. They do not block the finding that all twelve lower-tier municipalities are covered at address tier or better."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "§25-Task-8:-Wire-the-pipeline-and-set-the-geocoding-floor"
+   },
+   "children": [
+    "§25 Task 8: Wire the pipeline and set the geocoding floor"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Date:"
+     ],
+     "tag": "strong"
+    },
+    " 2026-08-23"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Raw changes:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Created ",
+    {
+     "children": [
+      "atlas/scripts/build_units.py"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "atlas/tests/test_pipeline.py"
+     ],
+     "tag": "code"
+    },
+    " per task-8-brief.md. Modified ",
+    {
+     "children": [
+      "atlas/scripts/geocode.py"
+     ],
+     "tag": "code"
+    },
+    " to add ",
+    {
+     "children": [
+      "GEOCODE_FLOORS"
+     ],
+     "tag": "code"
+    },
+    " constant and a regression test. Updated ",
+    {
+     "children": [
+      "atlas/README.md"
+     ],
+     "tag": "code"
+    },
+    " status section."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Test command and full output — pipeline tests:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && timeout 300 .venv/bin/python -m pytest tests/test_pipeline.py -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "============================= test session starts ==============================\nplatform linux -- Python 3.11.2, pytest-9.1.1, pluggy-1.6.0\ncachedir: .pytest_cache\nrootdir: a local working copy\ncollected 2 items\n\ntests/test_pipeline.py::test_pipeline_writes_units_and_a_manifest PASSED [ 50%]\ntests/test_pipeline.py::test_output_is_valid_json_with_provenance PASSED [100%]\n\n======================== 2 passed in 125.57s (0:02:05) ========================="
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Full suite (40 tests) command and summary:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && timeout 600 .venv/bin/python -m pytest tests/ -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Result: ",
+    {
+     "children": [
+      "40 passed in 229.19s"
+     ],
+     "tag": "strong"
+    },
+    " (25 pre-existing from Tasks 1–7 + 15 new from Tasks 7–8). All tests pass including the new geocoding floor assertion."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Pipeline run for real — full study area:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas/scripts && timeout 300 ../.venv/bin/python build_units.py"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Output:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "wrote 445,086 units to a local working copy\n  county of brant          best tier: address\n  fort erie                best tier: address\n  grimsby                  best tier: address\n  hamilton                 best tier: footprint\n  lincoln                  best tier: address\n  niagara falls            best tier: parcel\n  niagara-on-the-lake      best tier: address\n  pelham                   best tier: address\n  port colborne            best tier: address\n  regional municipality of halton best tier: address\n  regional municipality of niagara best tier: address\n  st. catharines           best tier: parcel\n  thorold                  best tier: address\n  wainfleet                best tier: address\n  welland                  best tier: footprint\n  wellington county        best tier: address\n  west lincoln             best tier: address"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "File generated:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "ls -lh atlas/scripts/.cache/units.json\n→ 122 MB JSON file, 445,086 units total"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Geocoding floor added to ",
+      {
+       "children": [
+        "atlas/scripts/geocode.py"
+       ],
+       "tag": "code"
+      },
+      ":"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Added ",
+      {
+       "children": [
+        "GEOCODE_FLOORS"
+       ],
+       "tag": "code"
+      },
+      " module constant with observed rate (0.869) and floor"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "(0.80) for \"hamilton-vacant-registry\"."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Floor is set BELOW the observed rate (0.80 < 0.869), so it cannot already be"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "failing."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Comment documents the 11 unmatched rows out of 84 as: highway/concession naming"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "drift (5 rows), missing directions in source (2 rows), fractional civic number (1 row), streets absent from anchors (2 rows)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "NOTE: Hamilton's building/demolition permits (194,466 rows) and licensed"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "businesses (590 rows) are separate schemas that have not been measured yet. Do not apply the vacant-registry floor to them."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Geocoding floor regression test added to ",
+      {
+       "children": [
+        "atlas/tests/test_geocode.py"
+       ],
+       "tag": "code"
+      },
+      ":"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "def test_geocode_floor_below_observed_rate():\n    \"\"\"The floor is set BELOW the observed rate so it cannot already be failing.\"\"\"\n    observed_rate = 0.869  # 73/84 against 221-vacant-building-registry\n    floor = geocode.GEOCODE_FLOORS[\"hamilton-vacant-registry\"]\n    assert floor < observed_rate"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Test passes: 0.80 < 0.869 ✓"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "README.md status updated:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Changed from \"reconnaissance complete, no application code yet\" to \"reconnaissance and normalization complete\". Updated ",
+    {
+     "children": [
+      "Done:"
+     ],
+     "tag": "strong"
+    },
+    " section to list ingestion, normalization (including NEI stabilization, departures fix, anchor index), and unit index (445,086 units in three tiers). Updated ",
+    {
+     "children": [
+      "Not started:"
+     ],
+     "tag": "strong"
+    },
+    " to drop normalization and add specification that enrichment, change detection, scoring, emit, dossier, and app remain to be built."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Interpretation"
+   },
+   "children": [
+    "Interpretation"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "The unit index is the artefact every later stage consumes: 445,086 parcel, footprint, and address-tier units, each carrying centroid, tier, municipality, area (for parcel/footprint), and provenance. The index is split across 17 municipality labels (13 Niagara Region lower-tier plus 4 noise entries from edge rows in the source), with the finding published that six of twelve Niagara Region municipalities publish no geometry of their own—a data-landscape fact that belongs on the map."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Geocoding against Hamilton's 84-row vacant building registry achieved 86.9% match rate (73/84). The 11 unmatched rows fell into four categories, none representing a defect in the geocoder: (1) highway naming convention drift (\"HWY\" vs \"Highway No.\"), (2) source data gaps (two rows omit a direction their matching addresses carry), (3) fractional civic numbers (not handled by address normalization), and (4) streets not present in the anchor index at all. A floor of 0.80 is conservative (80% below the 86.9% observed), ensuring the production pipeline never silently ships below this demonstrated capability."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "§26-Consolidated-fix-round:-weak-join-test,-orphaned-provenance,-raw"
+   },
+   "children": [
+    "§26 Consolidated fix round: weak join test, orphaned provenance, raw"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "municipality storage, out-of-scope municipalities"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Date:"
+     ],
+     "tag": "strong"
+    },
+    " 2026-08-23"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Four items, all traced to defects in the plan (three) or an under-specified test (one), not to the Task 6/7/8 implementers. Fixed in ",
+    {
+     "children": [
+      "atlas/scripts/units.py"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "atlas/scripts/normalize/addresses.py"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "atlas/scripts/build_units.py"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "atlas/tests/test_units.py"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "atlas/sources/sources.json"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "atlas/README.md"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Item-1-—-the-join-test-never-called-build-units()"
+   },
+   "children": [
+    "Item 1 — the join test never called build_units()"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Before:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "test_municipality_join_holds_between_polygon_sources_and_anchors"
+     ],
+     "tag": "code"
+    },
+    " computed normalized municipality sets directly from ",
+    {
+     "children": [
+      "PARCEL_SOURCES"
+     ],
+     "tag": "code"
+    },
+    " / ",
+    {
+     "children": [
+      "FOOTPRINT_SOURCES"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "load_anchors()"
+     ],
+     "tag": "code"
+    },
+    ", never calling ",
+    {
+     "children": [
+      "units.build_units()"
+     ],
+     "tag": "code"
+    },
+    ". It would still pass if ",
+    {
+     "children": [
+      "units.py"
+     ],
+     "tag": "code"
+    },
+    " regressed to raw-string comparison."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "After:"
+     ],
+     "tag": "strong"
+    },
+    " rewritten to call ",
+    {
+     "children": [
+      "units.build_units()"
+     ],
+     "tag": "code"
+    },
+    " and assert the actual property the join exists to guarantee: no municipality on a ",
+    {
+     "children": [
+      "parcel"
+     ],
+     "tag": "code"
+    },
+    " or ",
+    {
+     "children": [
+      "footprint"
+     ],
+     "tag": "code"
+    },
+    " unit may also appear on an ",
+    {
+     "children": [
+      "address"
+     ],
+     "tag": "code"
+    },
+    " unit."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Test command and full output:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && timeout 400 .venv/bin/python -m pytest tests/test_units.py -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "tests/test_units.py::test_tier_order_is_the_spec_ladder PASSED           [ 14%]\ntests/test_units.py::test_units_exist_for_every_lower_tier_municipality PASSED [ 28%]\ntests/test_units.py::test_wainfleet_is_address_tier_only PASSED          [ 42%]\ntests/test_units.py::test_address_tier_units_have_no_area PASSED         [ 57%]\ntests/test_units.py::test_parcel_tier_units_have_area PASSED             [ 71%]\ntests/test_units.py::test_municipality_join_holds_between_polygon_sources_and_anchors PASSED [ 85%]\ntests/test_units.py::test_index_contains_only_allowed_municipalities PASSED [100%]\n\n7 passed in 98.41s (0:01:38)"
+   ],
+   "tag": "pre"
+  },
+  {
+   "attrs": {
+    "id": "Item-2-—-address-tier-provenance-pointed-nowhere"
+   },
+   "children": [
+    "Item 2 — address-tier provenance pointed nowhere"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Before:"
+     ],
+     "tag": "strong"
+    },
+    " all 83,150 address-tier units carried ",
+    {
+     "children": [
+      "\"licence\": \"see sources.json\""
+     ],
+     "tag": "code"
+    },
+    ". ",
+    {
+     "children": [
+      "sources.json"
+     ],
+     "tag": "code"
+    },
+    " held exactly 5 records; neither ",
+    {
+     "children": [
+      "niagara-address-points"
+     ],
+     "tag": "code"
+    },
+    " nor ",
+    {
+     "children": [
+      "hamilton-addresses"
+     ],
+     "tag": "code"
+    },
+    " (the two ",
+    {
+     "children": [
+      "source_id"
+     ],
+     "tag": "code"
+    },
+    " values actually used) was among them."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "After:"
+     ],
+     "tag": "strong"
+    },
+    " added both records to ",
+    {
+     "children": [
+      "atlas/sources/sources.json"
+     ],
+     "tag": "code"
+    },
+    " (verified counts 208,004 and 273,535 taken from ",
+    {
+     "children": [
+      "atlas/sources/manifest.json"
+     ],
+     "tag": "code"
+    },
+    " entries #43 and #220, already observed in this project's own catalogue sweep). Added a ",
+    {
+     "children": [
+      "\"licence\""
+     ],
+     "tag": "code"
+    },
+    " field to each entry in ",
+    {
+     "children": [
+      "normalize.addresses.SOURCES"
+     ],
+     "tag": "code"
+    },
+    ", threaded it through into ",
+    {
+     "children": [
+      "load_anchors()"
+     ],
+     "tag": "code"
+    },
+    "'s per-anchor dict, and ",
+    {
+     "children": [
+      "units.py"
+     ],
+     "tag": "code"
+    },
+    " now sets ",
+    {
+     "children": [
+      "\"source\": {\"id\": anchor[\"source_id\"], \"licence\": anchor[\"licence\"]}"
+     ],
+     "tag": "code"
+    },
+    " — the real licence string, not a pointer."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    ".venv/bin/python -c \"import json; d=json.load(open('atlas/sources/sources.json')); print(len(d)); print([r['id'] for r in d])\""
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "7\n['osm-overpass', 'hamilton-open-data', 'niagara-nei', 'seaway-vessel-transit', 'niagara-address-points', 'hamilton-addresses', 'niagara-employment-inventory']"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Confirmed in the regenerated index — every address-tier unit's ",
+    {
+     "children": [
+      "source.licence"
+     ],
+     "tag": "code"
+    },
+    " is now a real licence string:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Counter(u['source']['licence'] for u in units if u['unit_tier']=='address')\n# Counter({'Open Government Licence 2.0 (Niagara Region)': 83139})"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "(All 83,139 surviving address-tier units are Niagara Region's, because Hamilton is fully covered at footprint tier — no ",
+    {
+     "children": [
+      "hamilton-addresses"
+     ],
+     "tag": "code"
+    },
+    "-sourced unit reaches address tier. That is consistent with the pre-existing coverage finding, not new.)"
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Item-3-—-raw-municipality-string-stored,-not-the-canonical-one"
+   },
+   "children": [
+    "Item 3 — raw municipality string stored, not the canonical one"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Before:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "units.py"
+     ],
+     "tag": "code"
+    },
+    " compared municipalities through ",
+    {
+     "children": [
+      "normalize_municipality"
+     ],
+     "tag": "code"
+    },
+    " for the join, but stored the raw source string (",
+    {
+     "children": [
+      "poly[\"municipality\"]"
+     ],
+     "tag": "code"
+    },
+    " / ",
+    {
+     "children": [
+      "anchor[\"municipality\"]"
+     ],
+     "tag": "code"
+    },
+    ") on the unit itself."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "After:"
+     ],
+     "tag": "strong"
+    },
+    " every unit — parcel, footprint, and address tier — now stores ",
+    {
+     "children": [
+      "normalize_municipality(...)"
+     ],
+     "tag": "code"
+    },
+    " as its ",
+    {
+     "children": [
+      "municipality"
+     ],
+     "tag": "code"
+    },
+    " field. One field, one meaning; ",
+    {
+     "children": [
+      "coverage_report.summarize()"
+     ],
+     "tag": "code"
+    },
+    " now aggregates on the canonical form everywhere."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Item-4-—-four-stray-municipality-labels,-11-units,-excluded-rather-than-relabelled"
+   },
+   "children": [
+    "Item 4 — four stray municipality labels, 11 units, excluded rather than relabelled"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Raw before (pipeline run prior to this fix round, from §25):"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "wrote 445,086 units to .../units.json"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "17 municipality labels in the coverage table, including: ",
+    {
+     "children": [
+      "regional municipality of halton"
+     ],
+     "tag": "code"
+    },
+    " (8), ",
+    {
+     "children": [
+      "county of brant"
+     ],
+     "tag": "code"
+    },
+    " (1), ",
+    {
+     "children": [
+      "regional municipality of niagara"
+     ],
+     "tag": "code"
+    },
+    " (1), ",
+    {
+     "children": [
+      "wellington county"
+     ],
+     "tag": "code"
+    },
+    " (1) = 11 units."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Fix:"
+     ],
+     "tag": "strong"
+    },
+    " added ",
+    {
+     "children": [
+      "units.LOWER_TIER_MUNICIPALITIES"
+     ],
+     "tag": "code"
+    },
+    " (the twelve Niagara Region lower-tier names from ",
+    {
+     "children": [
+      "atlas/GLOSSARY.md"
+     ],
+     "tag": "code"
+    },
+    ") and ",
+    {
+     "children": [
+      "units.ALLOWED_MUNICIPALITIES"
+     ],
+     "tag": "code"
+    },
+    " (that set plus ",
+    {
+     "children": [
+      "\"hamilton\""
+     ],
+     "tag": "code"
+    },
+    "). ",
+    {
+     "children": [
+      "build_units()"
+     ],
+     "tag": "code"
+    },
+    " now excludes any unit whose ",
+    {
+     "children": [
+      "canonical"
+     ],
+     "tag": "em"
+    },
+    " municipality (after ",
+    {
+     "children": [
+      "normalize_municipality"
+     ],
+     "tag": "code"
+    },
+    ") is not in that set, counts the exclusions, and exposes the count via ",
+    {
+     "children": [
+      "units.excluded_municipality_count()"
+     ],
+     "tag": "code"
+    },
+    " (returns ",
+    {
+     "children": [
+      "None"
+     ],
+     "tag": "code"
+    },
+    ", never ",
+    {
+     "children": [
+      "0"
+     ],
+     "tag": "code"
+    },
+    ", until ",
+    {
+     "children": [
+      "build_units()"
+     ],
+     "tag": "code"
+    },
+    " has actually run once — a gap is shown as a gap). Deliberately NOT normalized into a bucket: ",
+    {
+     "children": [
+      "normalize_municipality(\"regional municipality of niagara\")"
+     ],
+     "tag": "code"
+    },
+    " yields ",
+    {
+     "children": [
+      "\"niagara\""
+     ],
+     "tag": "code"
+    },
+    ", which is itself checked against the allow-list and rejected, so it is excluded, not silently accepted under a new spelling."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Raw after — full pipeline re-run:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas/scripts && timeout 400 ../.venv/bin/python build_units.py"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "wrote 445,075 units to a local working copy\nexcluded 11 units outside the study-area municipality allow-list\n  fort erie                best tier: address\n  grimsby                  best tier: address\n  hamilton                 best tier: footprint\n  lincoln                  best tier: address\n  niagara falls            best tier: parcel\n  niagara-on-the-lake      best tier: address\n  pelham                   best tier: address\n  port colborne            best tier: address\n  st. catharines           best tier: parcel\n  thorold                  best tier: address\n  wainfleet                best tier: address\n  welland                  best tier: footprint\n  west lincoln             best tier: address"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "445,086 − 11 = 445,075. Matches exactly."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Coverage report re-run (Task 7 output), municipality bucket count:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas/scripts && timeout 400 ../.venv/bin/python coverage_report.py"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "hamilton             parcel       0  footprint 214,293  address       0  best: footprint\nniagara falls        parcel  35,104  footprint  42,247  address       0  best: parcel\nst. catharines       parcel  44,265  footprint       0  address       0  best: parcel\nwelland              parcel       0  footprint  26,027  address       0  best: footprint\nfort erie            parcel       0  footprint       0  address  16,314  best: address\nthorold              parcel       0  footprint       0  address  11,790  best: address\nlincoln              parcel       0  footprint       0  address  10,026  best: address\nport colborne        parcel       0  footprint       0  address   9,963  best: address\ngrimsby              parcel       0  footprint       0  address   9,412  best: address\nniagara-on-the-lake  parcel       0  footprint       0  address   8,916  best: address\npelham               parcel       0  footprint       0  address   7,721  best: address\nwest lincoln         parcel       0  footprint       0  address   5,609  best: address\nwainfleet            parcel       0  footprint       0  address   3,388  best: address"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "13 rows — 12 lower-tier + Hamilton. Down from 17 (§25). Observed directly, not assumed."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Tier totals, before/after:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "total units"
+       ],
+       "tag": "strong"
+      },
+      " — before (§25): 445,086 · after: 445,075"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "parcel"
+       ],
+       "tag": "strong"
+      },
+      " — before (§25): 79,369 · after: 79,369"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "footprint"
+       ],
+       "tag": "strong"
+      },
+      " — before (§25): 282,567 · after: 282,567"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "address"
+       ],
+       "tag": "strong"
+      },
+      " — before (§25): 83,150 · after: 83,139"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "municipality buckets"
+       ],
+       "tag": "strong"
+      },
+      " — before (§25): 17 · after: 13"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "excluded (out of scope)"
+       ],
+       "tag": "strong"
+      },
+      " — before (§25): 0 (not tracked) · after: 11"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Only the address tier changed (83,150 → 83,139, a drop of 11), confirming the exclusion is address-tier-only, as expected — all 11 stray-labelled rows were address anchors, never parcels or footprints."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "New test added"
+     ],
+     "tag": "strong"
+    },
+    " (",
+    {
+     "children": [
+      "test_index_contains_only_allowed_municipalities"
+     ],
+     "tag": "code"
+    },
+    " in ",
+    {
+     "children": [
+      "atlas/tests/test_units.py"
+     ],
+     "tag": "code"
+    },
+    "): asserts ",
+    {
+     "children": [
+      "{u[\"municipality\"] for u in build_units()} == units.ALLOWED_MUNICIPALITIES"
+     ],
+     "tag": "code"
+    },
+    " exactly — no extra label, no missing one."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Full suite:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && timeout 600 .venv/bin/python -m pytest tests/ -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "42 passed in 195.83s (0:03:15)"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "§25 reported \"40 passed\" for the state as of Task 8; re-collecting against that exact commit (",
+    {
+     "children": [
+      "git stash"
+     ],
+     "tag": "code"
+    },
+    " back to the working tree at the start of this fix round) gives ",
+    {
+     "children": [
+      "41 tests collected"
+     ],
+     "tag": "strong"
+    },
+    ", not 40 — §25's figure was stale by one test even before this round started (the codebase had grown since that count was written). This round's own change is unambiguous either way: ",
+    {
+     "children": [
+      "atlas/tests/test_units.py"
+     ],
+     "tag": "code"
+    },
+    " contributed 6 tests before this round and 7 after — item 1 rewrote ",
+    {
+     "children": [
+      "test_municipality_join_holds_between_polygon_sources_and_anchors"
+     ],
+     "tag": "code"
+    },
+    " in place (no count change), item 4 added ",
+    {
+     "children": [
+      "test_index_contains_only_allowed_municipalities"
+     ],
+     "tag": "code"
+    },
+    " (+1) — taking the suite from 41 to 42, both counts observed directly via ",
+    {
+     "children": [
+      "pytest --collect-only -q"
+     ],
+     "tag": "code"
+    },
+    ", not assumed from a prior report."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Note: ",
+    {
+     "children": [
+      "tests/test_pipeline.py"
+     ],
+     "tag": "code"
+    },
+    " writes to the same ",
+    {
+     "children": [
+      ".cache/units.json"
+     ],
+     "tag": "code"
+    },
+    " path using ",
+    {
+     "children": [
+      "limit_municipalities={\"welland\"}"
+     ],
+     "tag": "code"
+    },
+    ", so running the full suite leaves ",
+    {
+     "children": [
+      "units.json"
+     ],
+     "tag": "code"
+    },
+    " holding only Welland's units as a side effect of the last test that touches the file. ",
+    {
+     "children": [
+      "build_units.py"
+     ],
+     "tag": "code"
+    },
+    " was re-run standalone, after the full suite, to leave ",
+    {
+     "children": [
+      "units.json"
+     ],
+     "tag": "code"
+    },
+    " holding the complete 445,075-unit index — this is what the committed artefact reflects."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Interpretation"
+   },
+   "children": [
+    "Interpretation"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Item 4 is the one worth dwelling on, because the wrong fix was available and looked almost as easy: fold ",
+    {
+     "children": [
+      "regional municipality of niagara"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "regional municipality of halton"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "county of brant"
+     ],
+     "tag": "code"
+    },
+    ", and ",
+    {
+     "children": [
+      "wellington county"
+     ],
+     "tag": "code"
+    },
+    " into their nearest normalized form and move on. That would have been wrong for two different reasons layered on top of each other."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "First, ",
+    {
+     "children": [
+      "county of brant"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "wellington county"
+     ],
+     "tag": "code"
+    },
+    ", and ",
+    {
+     "children": [
+      "regional municipality of halton"
+     ],
+     "tag": "code"
+    },
+    " are not Niagara Region or Hamilton at all — they are neighbouring jurisdictions on the Niagara Peninsula (",
+    {
+     "children": [
+      "atlas/GLOSSARY.md"
+     ],
+     "tag": "code"
+    },
+    ": the peninsula \"extends west to Brantford,\" i.e. through Brant and Wellington, and Halton borders Hamilton to the north). Relabelling them into a Niagara Region or Hamilton bucket would have manufactured coverage of places the atlas has not verified any data for — the opposite of \"a gap is shown as a gap.\""
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Second, and more specifically: ",
+    {
+     "children": [
+      "regional municipality of niagara"
+     ],
+     "tag": "code"
+    },
+    " is not a stray label at all in the sense the other three are — it is Niagara Region itself, the upper-tier municipality, appearing on an address point where it has no business appearing (an address sits inside a lower-tier municipality, never inside the upper tier that publishes the data). ",
+    {
+     "children": [
+      "normalize_municipality"
+     ],
+     "tag": "code"
+    },
+    " would strip the \"Regional Municipality of\" prefix and yield ",
+    {
+     "children": [
+      "\"niagara\""
+     ],
+     "tag": "code"
+    },
+    " — a string that reads as if it names a place, but is not one of the twelve lower-tier municipalities and is not Niagara Region either once stripped of its own name. Accepting it into the allow-list under that spelling would have recreated, inside the code, exactly the \"Niagara\" vs \"Niagara Region\" collapse that ",
+    {
+     "children": [
+      "atlas/GLOSSARY.md"
+     ],
+     "tag": "code"
+    },
+    " was written on 2026-08-23 to stop after a finding was published against the wrong jurisdiction. The correct move was to check the ",
+    {
+     "children": [
+      "normalized"
+     ],
+     "tag": "em"
+    },
+    " result against the explicit twelve-plus-Hamilton allow-list and exclude anything that fails, whatever spelling produced it — so a future stray label (a thirteenth neighbouring county, a different regional-name variant) is caught by the same rule instead of needing its own patch."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Excluding and counting, rather than dropping silently, matters for the same reason DATA-SOURCES.md's evidence rules exist: \"not probed\" and \"found to be out of scope\" are different findings from \"does not exist,\" and only the first two are defensible claims about the world. ",
+    {
+     "children": [
+      "excluded_municipality_count()"
+     ],
+     "tag": "code"
+    },
+    " returning ",
+    {
+     "children": [
+      "None"
+     ],
+     "tag": "code"
+    },
+    " before ",
+    {
+     "children": [
+      "build_units()"
+     ],
+     "tag": "code"
+    },
+    " runs (rather than ",
+    {
+     "children": [
+      "0"
+     ],
+     "tag": "code"
+    },
+    ") is the same discipline applied to the exclusion mechanism itself."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0049\ntype: working-paper\nsection: origins\nplace_type: region\nevidence_date: 2026-10-03\nseq: 9"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, niagara, hamilton, log, prior-art",
+ "path": "2026-08-23--raw-findings-log-part-3-of-3-11-19",
+ "title": "2026-08-23 — raw findings log (part 3 of 3)",
+ "url": "https://telegra.ph/2026-08-23--raw-findings-log-part-3-of-3-11-19",
+ "views": 0
+}

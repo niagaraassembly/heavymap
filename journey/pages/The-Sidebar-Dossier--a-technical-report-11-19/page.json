@@ -1,0 +1,2619 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, niagara, dossier, prior-art"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Audience:"
+     ],
+     "tag": "strong"
+    },
+    " a reviewer with a background in statistics and applied mathematics who has not seen this codebase. ",
+    {
+     "children": [
+      "Purpose:"
+     ],
+     "tag": "strong"
+    },
+    " to specify precisely what the Atlas asserts about a single property, how each assertion is constructed, and what substantiates it. ",
+    {
+     "children": [
+      "Date:"
+     ],
+     "tag": "strong"
+    },
+    " 2026-08-27."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Companion to ",
+    {
+     "children": [
+      "../docs/superpowers/specs/2026-08-23-atlas-engine-design.md"
+     ],
+     "tag": "code"
+    },
+    " (the engine) and ",
+    {
+     "children": [
+      "2026-08-27-atlas-enrichment-design.md"
+     ],
+     "tag": "code"
+    },
+    " (the attributes)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Throughout, ",
+    {
+     "children": [
+      "observed"
+     ],
+     "tag": "strong"
+    },
+    " values are drawn from the live cache and are marked as such. Values used only to demonstrate a calculation are marked ",
+    {
+     "children": [
+      "illustrative"
+     ],
+     "tag": "strong"
+    },
+    ". Nothing in this document is a real assertion about a real business."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "1.-What-the-dossier-is"
+   },
+   "children": [
+    "1. What the dossier is"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The Atlas holds 445,075 analysis units across thirteen municipalities. The dossier is what a reader sees when they select ",
+    {
+     "children": [
+      "one"
+     ],
+     "tag": "strong"
+    },
+    " of them."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "It is not a scorecard. A scorecard reports a verdict; the dossier reports a ",
+    {
+     "children": [
+      "structured argument"
+     ],
+     "tag": "strong"
+    },
+    " — a set of claims, each with its evidence, its method, its uncertainty and its provenance, arranged so that a reader may reach a different conclusion than the engine did and be right."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "That framing is not decoration. It follows from a constraint the project cannot relax: the Atlas makes claims about identifiable real property, often occupied by named businesses. A verdict that cannot be interrogated is, in that setting, a liability rather than a product."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "1.1-The-reader&#39;s-contract"
+   },
+   "children": [
+    "1.1 The reader's contract"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Every element of the panel satisfies four properties:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "**Attributed"
+       ],
+       "tag": "strong"
+      },
+      "** — Meaning: every number names the dataset it came from and the date it was retrieved"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Dated"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        "* — Meaning: every claim carries the observation date of its "
+       ],
+       "tag": "em"
+      },
+      "source*, not of the build"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Bounded"
+       ],
+       "tag": "strong"
+      },
+      "** — Meaning: quantities derived from ranges are reported as intervals, not midpoints"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Refusable"
+       ],
+       "tag": "strong"
+      },
+      "** — Meaning: where evidence is absent the panel says so; it never substitutes a zero"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "The fourth is the one most often violated in practice and is treated formally in §7."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "2.-Anatomy-of-the-panel"
+   },
+   "children": [
+    "2. Anatomy of the panel"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The dossier is composed of eight bands. Bands render in a fixed order, and any band whose evidence is unavailable renders ",
+    {
+     "children": [
+      "as unavailable"
+     ],
+     "tag": "strong"
+    },
+    " rather than being omitted — absence of a band would be indistinguishable from absence of the condition it describes."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "┌─ SUBJECT ─────────────────────────────────────────────────────┐\n│  unit id · tier · municipality · geometry class                │\n├─ ASSERTION (optional) ────────────────────────────────────────┤\n│  present only where a record states something specific         │\n│  carries claim_state ∈ {supported, contested, refuted}         │\n├─ REGULATORY ──────────────────────────────────────────────────┤\n│  zoning now · zoning previously · designation · CIP areas      │\n├─ PHYSICAL ────────────────────────────────────────────────────┤\n│  area · footprint · coverage · frontage · relief               │\n├─ CONSTRAINT ──────────────────────────────────────────────────┤\n│  encumbrance fractions, each naming its authority              │\n│  vetoes reported separately and never summed                   │\n├─ ACCESS ──────────────────────────────────────────────────────┤\n│  distances to access POINTS, each with its tag confidence      │\n├─ NEIGHBOURS ──────────────────────────────────────────────────┤\n│  count and sector mix within 100 / 250 / 500 m                 │\n├─ HISTORY ─────────────────────────────────────────────────────┤\n│  imagery epochs · rezoning · permits · register appearances    │\n├─ EVIDENCE ────────────────────────────────────────────────────┤\n│  registers covering this unit · staleness · disagreements      │\n└───────────────────────────────────────────────────────────────┘"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The assertion band is optional; the context bands are not."
+     ],
+     "tag": "strong"
+    },
+    " Most units carry no assertion — nothing departed, nothing is dormant — and their context is still the point. An atlas that renders a full panel only where it suspects abandonment is a decline map."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "3.-A-worked-subject"
+   },
+   "children": [
+    "3. A worked subject"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "All values in this section are ",
+    {
+     "children": [
+      "observed"
+     ],
+     "tag": "strong"
+    },
+    " from the cache unless marked."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Unit:"
+     ],
+     "tag": "strong"
+    },
+    " Hopkins Steel Works, 2 Broadway, Welland."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "This subject is chosen deliberately. On 2026-08-23 the Atlas shipped a layer asserting that this business had departed. Assembling its dossier placed the business in its own neighbours band, and the contradiction was visible in one step. Checking all 68 claims in that layer found 64 false. The dossier is therefore not only a presentation surface; §6 treats it as a verification stage."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "SUBJECT\n  unit_tier      footprint            (Welland publishes no parcel fabric)\n  municipality   welland\n  nei_id         8130\n\nASSERTION\n  claim_state    refuted\n  claim          \"departed — last seen 2018, gone by 2022\"\n                 source: derived departures layer, build of 2026-08-21\n  refutation     nei_id 8130 present in NEI editions 2017, 2018, 2019 AND 2022\n                 source: Niagara Region Employment Inventory, OGL 2.0\n  displayed as   \"Records disagree about this site.\" — both records shown,\n                 neither adopted\n\nREGULATORY\n  zoning now     L1 — Light Industrial        (Welland By-law 2017-117)\n  zoning before  I2                           (superseded by-law)\n  designation    Light Industrial             (Official Plan Schedule B)\n  incentive      Brownfield CIA               (Community Improvement Plan area)\n\nPHYSICAL\n  building       present · nearest neighbouring structure 17 m\n\nACCESS\n  rail_served    513 m       tag_confidence: partial (2,223 of 4,399 rail\n                             features regionally carry no usage tag)\n  site plan      247 m       (nearest active application)\n\nNEIGHBOURS\n  within 500 m   18 businesses · 3 manufacturing\n\nHISTORY\n  business       recorded in NEI 2017, 2018, 2019, 2022\n  address form   \"2 Broadway\" (2017, 2018) → \"2 Broadway Street\" (2019, 2022)\n  rezoning       I2 → L1"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "The address-form line is not trivia. That restyling is what produced the false departure: a join keyed on the address string failed across editions, while ",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    " held. The dossier surfaces it because the reason a claim was wrong is itself evidence about how much to trust neighbouring claims."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "4.-Citation"
+   },
+   "children": [
+    "4. Citation"
+   ],
+   "tag": "h3"
+  },
+  {
+   "attrs": {
+    "id": "4.1-The-unit-of-citation-is-the-claim,-not-the-panel"
+   },
+   "children": [
+    "4.1 The unit of citation is the claim, not the panel"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Each rendered value carries a superscript marker resolving to a ",
+    {
+     "children": [
+      "source record"
+     ],
+     "tag": "strong"
+    },
+    ", not a bibliography entry. The distinction matters: two values from the same dataset but different editions cite differently."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "zoning now   L1 — Light Industrial ¹\n\n¹ City of Welland, Current Zoning By-law 2017-117\n  layer            welland-zoning-current\n  retrieved        2026-08-22\n  licence          Open Government Licence 2.0 (Welland)\n  join method      J3 point-in-polygon\n  observation date by-law adopted 2017\n  note             retrieved via ArcGIS Online Hub cache; the City's own\n                   server was unreachable on the retrieval date"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Six fields are mandatory: ",
+    {
+     "children": [
+      "layer, retrieved, licence, join method, observation date, note-if-any"
+     ],
+     "tag": "strong"
+    },
+    ". The separation of ",
+    {
+     "children": [
+      "retrieved"
+     ],
+     "tag": "em"
+    },
+    " from ",
+    {
+     "children": [
+      "observation date"
+     ],
+     "tag": "em"
+    },
+    " is load-bearing — a 2017 by-law fetched in 2026 is a current fact with an old origin, whereas a 2022 business inventory fetched in 2026 is a four-year-old observation being read today."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "4.2-Join-method-is-part-of-the-citation"
+   },
+   "children": [
+    "4.2 Join method is part of the citation"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Because the six join methods differ in trustworthiness, the method that produced a value is part of what substantiates it:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "J1 identifier"
+       ],
+       "tag": "strong"
+      },
+      " — Notation: ",
+      {
+       "children": [
+        "id"
+       ],
+       "tag": "code"
+      },
+      " · What a reader should infer: exact; the source asserts this linkage"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J2 normalized address"
+       ],
+       "tag": "strong"
+      },
+      " — Notation: ",
+      {
+       "children": [
+        "addr(r)"
+       ],
+       "tag": "code"
+      },
+      " · What a reader should infer: matched at rate ",
+      {
+       "children": [
+        "r"
+       ],
+       "tag": "em"
+      },
+      "; some records did not match"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J3 point-in-polygon"
+       ],
+       "tag": "strong"
+      },
+      " — Notation: ",
+      {
+       "children": [
+        "pip"
+       ],
+       "tag": "code"
+      },
+      " · What a reader should infer: geometric containment; exact given geometry"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J4 containment"
+       ],
+       "tag": "strong"
+      },
+      " — Notation: ",
+      {
+       "children": [
+        "in"
+       ],
+       "tag": "code"
+      },
+      " · What a reader should infer: exact given geometry"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J5 proximity"
+       ],
+       "tag": "strong"
+      },
+      " — Notation: ",
+      {
+       "children": [
+        "≈d"
+       ],
+       "tag": "code"
+      },
+      " · What a reader should infer: a distance under a stated ceiling"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "J6 overlap"
+       ],
+       "tag": "strong"
+      },
+      " — Notation: ",
+      {
+       "children": [
+        "∩t"
+       ],
+       "tag": "code"
+      },
+      " · What a reader should infer: matched above threshold ",
+      {
+       "children": [
+        "t"
+       ],
+       "tag": "em"
+      },
+      "; a judgement call"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "A value carrying ",
+    {
+     "children": [
+      "addr(0.869)"
+     ],
+     "tag": "code"
+    },
+    " tells a reader that 13.1% of that table did not place, and therefore that absence in this panel is weaker evidence than presence."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "4.3-Grouped-source-rail"
+   },
+   "children": [
+    "4.3 Grouped source rail"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Beneath the bands, sources are grouped by ",
+    {
+     "children": [
+      "evidence class"
+     ],
+     "tag": "strong"
+    },
+    " rather than by publisher, because the class is what governs how much weight a claim carries:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "OBSERVED — a register states this\n  Niagara Region Employment Inventory (2017, 2018, 2019, 2022) · OGL 2.0\n  Welland Zoning By-law 2017-117 · OGL 2.0 (Welland)\n\nINFERRED — computed by this Atlas\n  departure detection · nei_id absence across later editions\n  rail-served proximity · OSM service and usage tags\n\nUNAVAILABLE — sought and absent\n  parcel fabric · Welland publishes none\n  assessed value · MPAC is fee-based province-wide"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "The third group is deliberate. A reader who cannot see what was looked for and not found will misread absence as irrelevance."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "5.-From-attribute-to-assertion"
+   },
+   "children": [
+    "5. From attribute to assertion"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The engine constructs claims through four ascending levels. Each level is a strictly stronger epistemic commitment than the one below, and the panel labels which level it is operating at."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Level-0-—-Attribute"
+   },
+   "children": [
+    "Level 0 — Attribute"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "A value copied from a source, normalised but not interpreted. ",
+    {
+     "children": [
+      "\"Zoning is L1.\""
+     ],
+     "tag": "em"
+    },
+    " Substantiated by citation alone."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Level-1-—-Derived-quantity"
+   },
+   "children": [
+    "Level 1 — Derived quantity"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "An arithmetic function of attributes, with no threshold applied. ",
+    {
+     "children": [
+      "\"Building coverage is 0.19.\""
+     ],
+     "tag": "em"
+    },
+    " Substantiated by citation of inputs plus the formula, which is published (Appendix A)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Level-2-—-Signal"
+   },
+   "children": [
+    "Level 2 — Signal"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "A derived quantity compared against a threshold, producing a contribution to a score. ",
+    {
+     "children": [
+      "\"Coverage 0.19 is below the regional median 0.41 → +18.\""
+     ],
+     "tag": "em"
+    },
+    " Substantiated by inputs, formula, threshold, ",
+    {
+     "children": [
+      "and the provenance of the threshold"
+     ],
+     "tag": "strong"
+    },
+    ", which is the part most often omitted in practice."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Level-3-—-Assertion"
+   },
+   "children": [
+    "Level 3 — Assertion"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "A claim about the world. ",
+    {
+     "children": [
+      "\"Records disagree about this site.\""
+     ],
+     "tag": "em"
+    },
+    " Substantiated by everything above plus an explicit ",
+    {
+     "children": [
+      "claim_state"
+     ],
+     "tag": "code"
+    },
+    ", and — critically — subject to refutation checks (§6)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The panel never renders a Level 3 assertion without displaying the Level 2 signals that produced it."
+     ],
+     "tag": "strong"
+    },
+    " This is the \"show your work\" property, and it is what makes a disagreeing reader possible."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "6.-Refutation-as-a-pipeline-stage"
+   },
+   "children": [
+    "6. Refutation as a pipeline stage"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Each assertion type has a defined refutation condition:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "business departed"
+       ],
+       "tag": "strong"
+      },
+      " — Refuted by: that ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      " present in ",
+      {
+       "children": [
+        "any later"
+       ],
+       "tag": "strong"
+      },
+      " edition"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "site dormant"
+       ],
+       "tag": "strong"
+      },
+      " — Refuted by: an open permit, application or current licence"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "building demolished"
+       ],
+       "tag": "strong"
+      },
+      " — Refuted by: a footprint present in a later epoch at that location"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "land under-occupied"
+       ],
+       "tag": "strong"
+      },
+      " — Refuted by: recent permit activity, or employment above band"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Resulting in ",
+    {
+     "children": [
+      "claim_state ∈ {supported, contested, refuted}"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "A failed check does not delete the finding — it changes what is shown."
+     ],
+     "tag": "strong"
+    },
+    " Suppression would hide the most informative thing on the panel, which is that two records disagree about the same ground, and would leave the reader trusting a silence they cannot inspect."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "What is withheld is the ",
+    {
+     "children": [
+      "unqualified claim"
+     ],
+     "tag": "strong"
+    },
+    ", never the information:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "not published:"
+       ],
+       "tag": "em"
+      },
+      " \"Hopkins Steel Works ceased operating at 2 Broadway.\""
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "published:"
+       ],
+       "tag": "em"
+      },
+      " both records, cited and dated, and the discrepancy between them."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "A ",
+    {
+     "children": [
+      "computed claim"
+     ],
+     "tag": "strong"
+    },
+    " — the engine's own reading — may sit alongside, labelled as computed, with inputs listed and confidence stated. It never replaces the underlying records."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "7.-Missing-data"
+   },
+   "children": [
+    "7. Missing data"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The single most consequential design rule in the system:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "A quantity that cannot be computed is ",
+      {
+       "children": [
+        "null"
+       ],
+       "tag": "code"
+      },
+      ". It is never ",
+      {
+       "children": [
+        "0"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "The motivating case: under-occupancy is a ratio whose denominator is employment. Hamilton publishes no business register. Reporting Hamilton at ",
+    {
+     "children": [
+      "0% occupied"
+     ],
+     "tag": "em"
+    },
+    " inverts the meaning — zero reads as ",
+    {
+     "children": [
+      "empty"
+     ],
+     "tag": "em"
+    },
+    " when the truth is ",
+    {
+     "children": [
+      "unmeasured"
+     ],
+     "tag": "em"
+    },
+    ". A subagent working outside this rule produced exactly that error, together with a regional claim of \"93% vacancy\" formed by dividing business count by every building footprint including houses."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Null propagates strictly: any function with a null argument returns null, and the panel renders the reason rather than the value."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "under-occupancy   unavailable\n                  no employment denominator — Hamilton publishes no\n                  business inventory comparable to the NEI"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Confidence is a separate quantity (Appendix A.4) and never compensates for a null. A high-confidence null is still null; it merely means we are certain we cannot say."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "8.-Three-scores-and-a-flag"
+   },
+   "children": [
+    "8. Three scores and a flag"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The engine emits three scores and never composites them:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Under-occupancy"
+       ],
+       "tag": "strong"
+      },
+      " — is this land carrying less activity than its size implies?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Transition"
+       ],
+       "tag": "strong"
+      },
+      " — has something changed here recently?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Evidence"
+       ],
+       "tag": "strong"
+      },
+      " — how much do we actually know?"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Plus ",
+    {
+     "children": [
+      "dormancy"
+     ],
+     "tag": "strong"
+    },
+    ", which is a ",
+    {
+     "children": [
+      "flag"
+     ],
+     "tag": "em"
+    },
+    " rather than a score, present only where a record states something and ",
+    {
+     "children": [
+      "null"
+     ],
+     "tag": "code"
+    },
+    " otherwise (§9)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "There is no fourth field and no place to add one."
+     ],
+     "tag": "strong"
+    },
+    " A single number would be the most requested feature and the most dishonest: it would average a physical observation, a temporal observation and an epistemic one into a quantity with no referent. Evidence in particular ",
+    {
+     "children": [
+      "qualifies"
+     ],
+     "tag": "strong"
+    },
+    " the other two rather than adding to them — high under-occupancy at low evidence is a lead, not a finding, and the panel renders it as such."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "9.-Dormancy-is-sized-to-its-evidence"
+   },
+   "children": [
+    "9. Dormancy is sized to its evidence"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Measured 2026-08-23. The coverage column is not a footnote — the three signal families are scoped to three different territories and cannot be summed:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "OSM ",
+        {
+         "children": [
+          "brownfield"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Count: 316 · Coverage: study area"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "OSM ",
+        {
+         "children": [
+          "disused"
+         ],
+         "tag": "code"
+        },
+        " (recorded)"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 71 · Coverage: study area"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NEI departures 2019→2022, all sectors"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 121 · Coverage: Niagara Region (12 municipalities)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "↳ industrial sector only"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 15 · Coverage: Niagara Region"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Hamilton demolition permits (typed ",
+        {
+         "children": [
+          "DP"
+         ],
+         "tag": "code"
+        },
+        ")"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 3,007 · Coverage: City of Hamilton"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Hamilton registered vacant"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 84 · Coverage: City of Hamilton"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "The denominator matters: 121 departures arise from 12,016 businesses over three years. A convergence rule requiring three or four of these to agree on one unit returns approximately nothing. Dormancy is therefore ",
+    {
+     "children": [
+      "not scored for every unit"
+     ],
+     "tag": "strong"
+    },
+    "; it is a flag computed only where at least one qualifying observation exists, at one of three levels — ",
+    {
+     "children": [
+      "recorded"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "corroborated"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "single-signal"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "dormancy = null"
+     ],
+     "tag": "code"
+    },
+    " is the normal case and means ",
+    {
+     "children": [
+      "no dormancy evidence recorded here"
+     ],
+     "tag": "em"
+    },
+    ", never ",
+    {
+     "children": [
+      "this site is active"
+     ],
+     "tag": "em"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The words ",
+    {
+     "children": [
+      "vacant"
+     ],
+     "tag": "em"
+    },
+    ", ",
+    {
+     "children": [
+      "empty"
+     ],
+     "tag": "em"
+    },
+    " and ",
+    {
+     "children": [
+      "available"
+     ],
+     "tag": "em"
+    },
+    " are reserved for ",
+    {
+     "children": [
+      "recorded"
+     ],
+     "tag": "code"
+    },
+    ", where a register supplies them, and are then quoted with attribution."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Validation:"
+     ],
+     "tag": "strong"
+    },
+    " Hamilton's 84 registered-vacant buildings are the test set. Dormancy is aimed at exactly what that register measures, so the flag should fire on them. This test can fail, which is its value."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "10.-What-the-dossier-refuses-to-say"
+   },
+   "children": [
+    "10. What the dossier refuses to say"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Stated plainly because a reviewer should be able to check that the system honours its own limits:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "\"This site is vacant\""
+       ],
+       "tag": "strong"
+      },
+      " — Why: unless a register says so, and then quoted"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "\"This business is failing\""
+       ],
+       "tag": "strong"
+      },
+      " — Why: never; no source supports it and the harm is real"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "\"This site is available\""
+       ],
+       "tag": "strong"
+      },
+      " — Why: no source we hold records availability; the word is barred"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "a single composite score"
+       ],
+       "tag": "strong"
+      },
+      " — Why: §8"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "a distance implying access"
+       ],
+       "tag": "strong"
+      },
+      " — Why: access is to points, not networks"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "a zero standing for missing"
+       ],
+       "tag": "strong"
+      },
+      " — Why: §7"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Appendix-A-—-Formulas"
+   },
+   "children": [
+    "Appendix A — Formulas"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Notation. For unit ",
+    {
+     "children": [
+      "u"
+     ],
+     "tag": "em"
+    },
+    ":"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "$A_p$"
+       ],
+       "tag": "strong"
+      },
+      " — Quantity: parcel area · Units: m² · Domain: $(0,\\infty)$, null at address tier"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "$A_b$"
+       ],
+       "tag": "strong"
+      },
+      " — Quantity: building footprint area · Units: m² · Domain: $[0,\\infty)$"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "$G$"
+       ],
+       "tag": "strong"
+      },
+      " — Quantity: indoor gross floor area · Units: m² · Domain: $[0,\\infty)$, null where unreported"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "$E$"
+       ],
+       "tag": "strong"
+      },
+      " — Quantity: employment · Units: persons · Domain: an ",
+      {
+       "children": [
+        "interval"
+       ],
+       "tag": "strong"
+      },
+      " $[E_\\ell, E_h]$"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "$\\kappa$"
+       ],
+       "tag": "strong"
+      },
+      " — Quantity: building coverage · Domain: $[0,1]$"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "$c_j$"
+       ],
+       "tag": "strong"
+      },
+      " — Quantity: encumbrance fraction, constraint ",
+      {
+       "children": [
+        "j"
+       ],
+       "tag": "em"
+      },
+      " · Domain: $[0,1]$"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "$C$"
+       ],
+       "tag": "strong"
+      },
+      " — Quantity: confidence · Domain: $[0,1]$"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "All areas are computed in ",
+    {
+     "children": [
+      "EPSG:32617"
+     ],
+     "tag": "strong"
+    },
+    " (UTM 17N). Areas computed in EPSG:4326 are wrong by a latitude-dependent factor and — worse — wrong ",
+    {
+     "children": [
+      "plausibly"
+     ],
+     "tag": "em"
+    },
+    ". Verified 2026-08-23: shapely areas in EPSG:32617 agree with Welland's published ",
+    {
+     "children": [
+      "GeometrySTArea"
+     ],
+     "tag": "code"
+    },
+    " across ",
+    {
+     "children": [
+      "1,980 polygons"
+     ],
+     "tag": "strong"
+    },
+    " at median relative error ",
+    {
+     "children": [
+      "0.0000%"
+     ],
+     "tag": "strong"
+    },
+    ", p95 ",
+    {
+     "children": [
+      "0.0000%"
+     ],
+     "tag": "strong"
+    },
+    " — agreement to the reported precision of the check, which is the strongest statement that measurement supports."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "A.1-Employment-is-an-interval,-not-a-scalar"
+   },
+   "children": [
+    "A.1 Employment is an interval, not a scalar"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The NEI reports employment as a ",
+    {
+     "children": [
+      "band"
+     ],
+     "tag": "strong"
+    },
+    ", e.g. ",
+    {
+     "children": [
+      "\"Small (5-99 Employees)\""
+     ],
+     "tag": "code"
+    },
+    ". Collapsing a band to its midpoint manufactures precision the source does not have, and every downstream ratio inherits the fabrication."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Employment is therefore carried as an interval $E = [E_\\ell, E_h]$ and all derived quantities are computed under interval arithmetic. For a positive quantity $X$ divided by $E$:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$$\\frac{X}{E} = \\left[\\frac{X}{E_h},\\ \\frac{X}{E_\\ell}\\right]$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Note the inversion of endpoints: dividing by the ",
+    {
+     "children": [
+      "larger"
+     ],
+     "tag": "strong"
+    },
+    " employment bound gives the ",
+    {
+     "children": [
+      "smaller"
+     ],
+     "tag": "strong"
+    },
+    " area-per-employee."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Where the source reports an exact count (Welland's business directory gives integer ",
+    {
+     "children": [
+      "FullTime"
+     ],
+     "tag": "code"
+    },
+    "), $E_\\ell = E_h$ and the interval degenerates to a point. The record carries ",
+    {
+     "children": [
+      "employees_basis ∈ {band, exact, mixed}"
+     ],
+     "tag": "code"
+    },
+    " so a reader can see which."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Calibration."
+     ],
+     "tag": "strong"
+    },
+    " Welland is the only municipality where both forms exist for the same ground — 923 businesses with exact counts against NEI bands. It is the sole available estimate of midpoint error and should be reported, not assumed."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "A.2-Derived-ratios"
+   },
+   "children": [
+    "A.2 Derived ratios"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "$$\\kappa = \\frac{A_b}{A_p} \\qquad \\alpha = \\frac{A_p}{E} \\qquad \\gamma = \\frac{G}{E}$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$\\alpha$ and $\\gamma$ are intervals by construction. $\\kappa$ is a scalar."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The conservatism convention (D7)."
+     ],
+     "tag": "strong"
+    },
+    " Where a single value is required for scoring, the engine uses the endpoint that ",
+    {
+     "children": [
+      "minimises"
+     ],
+     "tag": "em"
+    },
+    " apparent under-occupancy:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$$\\tilde\\alpha = \\frac{A_p}{E_h}$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Using $E_\\ell$ would maximise apparent under-use — it would make the engine flattering to its own thesis. The engine is deliberately biased ",
+    {
+     "children": [
+      "against"
+     ],
+     "tag": "strong"
+    },
+    " the conclusion it exists to find. The full interval is reported alongside so the reader sees the uncertainty rather than inheriting the choice silently."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "A.3-Signals-and-the-additive-form"
+   },
+   "children": [
+    "A.3 Signals and the additive form"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Each signal $s_i$ is a triple (condition, delta, label). The score is"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$$U \\;=\\; \\mathrm{clip}\\!\\left(\\sum_{i} w_i \\cdot \\mathbf{1}[\\phi_i(u)],\\; 0,\\; 100\\right)$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "with $w_i$ read from a ",
+    {
+     "children": [
+      "versioned weight table"
+     ],
+     "tag": "strong"
+    },
+    " and $\\phi_i$ the firing condition. Every score carries ",
+    {
+     "children": [
+      "weights_version"
+     ],
+     "tag": "code"
+    },
+    "; a score computed under v1 is not comparable to one under v2, and a chart mixing them is a bug that looks like a trend."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Why additive and not learned."
+     ],
+     "tag": "strong"
+    },
+    " A fitted model would almost certainly rank better. It is rejected because:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "No labels exist."
+       ],
+       "tag": "strong"
+      },
+      " There is no ground-truth register of \"sites worth"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "investigating.\" Hamilton's 84 recorded vacancies are the only labelled set, and 84 is a validation set, not a training set."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Interpretability is the product."
+       ],
+       "tag": "strong"
+      },
+      " Every point of score must be traceable"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "to a named piece of evidence a reader can dispute. A gradient-boosted ranking cannot be argued with by a municipal planner."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "The weights are contested by design."
+       ],
+       "tag": "strong"
+      },
+      " They are published, versioned, and"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "changed by pull request with the score deltas posted. That governance model requires coefficients that mean something individually."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The cost is accepted openly: ",
+    {
+     "children": [
+      "additive independence is false."
+     ],
+     "tag": "strong"
+    },
+    " A large parcel with low coverage and no operator triple-counts one underlying fact. Mitigations are (a) signal families are constructed to be as near-disjoint as the data allows, and (b) the signal list is always displayed, so a reader can see the triple-count and discount it. This is a real limitation, not a solved problem."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "A.4-Confidence"
+   },
+   "children": [
+    "A.4 Confidence"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Confidence is ",
+    {
+     "children": [
+      "multiplicative"
+     ],
+     "tag": "strong"
+    },
+    ", over factors in $(0,1]$:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$$C \\;=\\; f_{\\text{tier}} \\cdot f_{\\text{reg}} \\cdot f_{\\text{stale}} \\cdot f_{\\text{tag}}$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$$f_{\\text{tier}} = \\begin{cases} 1.0 & \\text{parcel} \\\\ 0.8 & \\text{footprint} \\\\ 0.5 & \\text{address (area-derived scores only)} \\end{cases}$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$$f_{\\text{reg}} = 1 - e^{-\\lambda n}, \\quad n = \\text{independent registers covering } u$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$$f_{\\text{stale}} = e^{-\\mu \\Delta t}, \\quad \\Delta t = \\text{years since observation}$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$f_{\\text{tag}}$ carries source-tagging completeness — for rail-derived access, the fraction of relevant features carrying the ",
+    {
+     "children": [
+      "usage"
+     ],
+     "tag": "code"
+    },
+    " tag (regionally $2176/4399 \\approx 0.49$)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Multiplicative rather than additive"
+     ],
+     "tag": "strong"
+    },
+    " because the factors are not compensatory: excellent freshness does not repair a missing denominator. A product also has the correct absorbing behaviour — any factor at zero drives $C$ to zero, which is the right answer when a necessary input is absent."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$\\lambda$ and $\\mu$ are weight-table parameters, versioned with the rest."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Confidence is never multiplied into a score."
+     ],
+     "tag": "strong"
+    },
+    " It is reported beside it. A score of 78 at confidence 0.2 is a different object from a score of 16, and collapsing them would destroy exactly the distinction the reader needs."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "A.5-Constraint-fractions"
+   },
+   "children": [
+    "A.5 Constraint fractions"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "For unit geometry $\\Omega_u$ and constraint layer $j$ with geometry $\\Gamma_j$:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$$c_j \\;=\\; \\frac{\\mathrm{area}\\!\\left(\\Omega_u \\cap \\Gamma_j\\right)}{\\mathrm{area}(\\Omega_u)} \\in [0,1]$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "computed in EPSG:32617."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Fractions rather than booleans because a parcel 5% clipped by a watercourse setback is a materially different proposition from one wholly inside a regulated area, and the fraction costs nothing extra — the intersection is already computed."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "At address tier $\\Omega_u$ is a point"
+     ],
+     "tag": "strong"
+    },
+    ", $\\mathrm{area}(\\Omega_u) = 0$, and the expression is undefined. Address-tier units receive boolean containment and the record's ",
+    {
+     "children": [
+      "unit_tier"
+     ],
+     "tag": "code"
+    },
+    " states why. A point must never report $c_j \\in \\{0,1\\}$ as though a fraction had been evaluated."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Summaries: $c_{\\max} = \\max_j c_j$, $\\;n_c = |\\{j : c_j > 0\\}|$."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "A.6-Vetoes-are-not-weights"
+   },
+   "children": [
+    "A.6 Vetoes are not weights"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Let $V(u) \\in \\{0,1\\}$ indicate any veto condition — a low-clearance access route, a subsurface contaminant attenuation zone, a landlocked parcel, absence of a commercially permitted border crossing for a border-dependent use."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$V$ is ",
+    {
+     "children": [
+      "not"
+     ],
+     "tag": "strong"
+    },
+    " folded into $U$. Representing a disqualifying condition as a large negative weight is a category error: it implies compensability, and a site that a standard trailer cannot reach is not redeemed by excellent rail access."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$$\\text{panel} \\;=\\; \\big(U,\\ T,\\ C,\\ \\text{dormancy},\\ V,\\ \\text{signals}\\big)$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "with $V$ rendered as a named condition citing the record that produced it."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "A.7-Two-pass-spatial-evaluation"
+   },
+   "children": [
+    "A.7 Two-pass spatial evaluation"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Naïve evaluation of A.5 over $|U| \\approx 3.6\\times10^5$ polygon units against constraint layers whose densest feature occupies 137 KB is intractable. The engine evaluates in two passes:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Construct $\\mathcal{T}_j$, an STR-tree over $\\Gamma_j$."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "For each $u$, retrieve candidates $\\{ \\gamma \\in \\Gamma_j : \\mathrm{bbox}(\\gamma) \\cap \\mathrm{bbox}(\\Omega_u) \\neq \\emptyset \\}$."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Evaluate the exact intersection only on candidates."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "Correctness is preserved because bounding-box overlap is a ",
+    {
+     "children": [
+      "necessary"
+     ],
+     "tag": "strong"
+    },
+    " condition for geometric intersection. The prefilter can only produce false positives, which the exact pass removes; it cannot produce false negatives."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "That guarantee holds only if the bounding boxes are correct, which is a non-obvious failure surface: a bbox defect silently drops true intersections and every test still passes. The required test is therefore that a ",
+    {
+     "children": [
+      "known-encumbered unit returns encumbered"
+     ],
+     "tag": "strong"
+    },
+    ", not merely that the routine executes."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "A.8-Distances"
+   },
+   "children": [
+    "A.8 Distances"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "$$d_k(u) = \\begin{cases} \\min_{p \\in P_k} \\lVert u - p \\rVert & \\text{if } \\min < D_{\\max} \\\\ \\texttt{null} & \\text{otherwise} \\end{cases}$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "where $P_k$ is the set of ",
+    {
+     "children": [
+      "access points"
+     ],
+     "tag": "strong"
+    },
+    " for mode $k$ and $D_{\\max} = 5{,}000$ m."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$P_k$ is emphatically not the mode's network. For rail, $P_k$ comprises track with ",
+    {
+     "children": [
+      "service ∈ {spur, siding, yard}"
+     ],
+     "tag": "code"
+    },
+    " or ",
+    {
+     "children": [
+      "usage ∈ {industrial, branch}"
+     ],
+     "tag": "code"
+    },
+    " — excluding mainline, from which nothing can be loaded, and excluding ",
+    {
+     "children": [
+      "crossover"
+     ],
+     "tag": "code"
+    },
+    ", which is junction geometry rather than track. Equivalent restrictions apply to highway (interchanges, not carriageway), water (docks, quays, cranes — not the canal centreline) and border (commercially permitted crossings only)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The null beyond $D_{\\max}$ means ",
+    {
+     "children": [
+      "we did not look further"
+     ],
+     "tag": "em"
+    },
+    ", which is a different statement from a large distance, and is rendered as such."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Appendix-B-—-Worked-evaluation"
+   },
+   "children": [
+    "Appendix B — Worked evaluation"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Subject: the Hopkins Steel Works unit (§3). Values marked ",
+    {
+     "children": [
+      "[obs]"
+     ],
+     "tag": "strong"
+    },
+    " are observed; ",
+    {
+     "children": [
+      "[ill]"
+     ],
+     "tag": "strong"
+    },
+    " are illustrative, supplied only to complete an arithmetic demonstration."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "unit_tier              footprint                                    [obs]\nA_b                    3,400 m²                                     [ill]\nA_p                    null  — Welland publishes no parcel fabric   [obs]\nG                      null  — indoorgfa unreported this edition    [obs]\nE                      [5, 99]  band \"Small (5-99 Employees)\"       [obs]"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Step 1 — coverage."
+     ],
+     "tag": "strong"
+    },
+    " $\\kappa = A_b / A_p$. $A_p$ is null $\\Rightarrow \\kappa = \\texttt{null}$."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Step 2 — area per employee."
+     ],
+     "tag": "strong"
+    },
+    " $\\alpha = A_p / E$. $A_p$ is null $\\Rightarrow \\alpha = \\texttt{null}$."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Step 3 — under-occupancy."
+     ],
+     "tag": "strong"
+    },
+    " Every area-denominated input is null. Therefore"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$$U = \\texttt{null}$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "rendered as:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "under-occupancy   unavailable\n                  no parcel geometry — the City of Welland publishes\n                  building footprints but no parcel fabric"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "This is the correct output and the most important line in the appendix."
+     ],
+     "tag": "strong"
+    },
+    " A system that returned 0 here would rank a fully occupied steel fabricator as maximally under-occupied on the strength of a missing denominator. The observed counterexample — a subagent reporting Hamilton at \"0% occupied\" because Hamilton has no business register — is precisely this failure."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Step 4 — confidence for the scores that ",
+      {
+       "children": [
+        "are"
+       ],
+       "tag": "em"
+      },
+      " computable."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$$f_{\\text{tier}} = 0.8 \\;\\text{(footprint)}, \\quad f_{\\text{reg}} = 1 - e^{-\\lambda \\cdot 3}, \\quad f_{\\text{stale}} = e^{-\\mu \\cdot 4}$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "with $n = 3$ registers (NEI, Welland zoning, Welland Official Plan) ",
+    {
+     "children": [
+      "[obs]"
+     ],
+     "tag": "strong"
+    },
+    " and $\\Delta t = 4$ years since the 2022 NEI edition ",
+    {
+     "children": [
+      "[obs]"
+     ],
+     "tag": "strong"
+    },
+    ". Taking $\\lambda = 0.6,\\ \\mu = 0.05$ ",
+    {
+     "children": [
+      "[ill]"
+     ],
+     "tag": "strong"
+    },
+    ":"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$$f_{\\text{reg}} = 1 - e^{-1.8} = 0.835, \\qquad f_{\\text{stale}} = e^{-0.2} = 0.819$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$$C = 0.8 \\times 0.835 \\times 0.819 \\times 1.0 \\approx 0.547$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Reported as ",
+    {
+     "children": [
+      "evidence 0.55"
+     ],
+     "tag": "code"
+    },
+    ", beside — never multiplied into — the scores."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Step 5 — access."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$d_{\\text{rail-served}} = 513\\ \\text{m}$ ",
+    {
+     "children": [
+      "[obs]"
+     ],
+     "tag": "strong"
+    },
+    ", below $D_{\\max}$, tag confidence ",
+    {
+     "children": [
+      "partial"
+     ],
+     "tag": "code"
+    },
+    " because 2,223 of 4,399 regional rail features carry no ",
+    {
+     "children": [
+      "usage"
+     ],
+     "tag": "code"
+    },
+    " tag ",
+    {
+     "children": [
+      "[obs]"
+     ],
+     "tag": "strong"
+    },
+    ". Rendered with that qualification attached, since a unit reporting no rail-served track nearby may be near untagged track."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Step 6 — assertion."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The departure claim is evaluated against its refutation condition: ",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    " 8130 appears in the 2019 and 2022 editions, both later than the claimed ",
+    {
+     "children": [
+      "last_seen = 2018"
+     ],
+     "tag": "code"
+    },
+    " ",
+    {
+     "children": [
+      "[obs]"
+     ],
+     "tag": "strong"
+    },
+    ". Therefore"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "$$\\texttt{claim\\_state} = \\texttt{refuted}$$"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "and the panel renders the discrepancy — both records, cited and dated — rather than either the claim or a blank."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Appendix-C-—-Open-questions-for-the-reviewer"
+   },
+   "children": [
+    "Appendix C — Open questions for the reviewer"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Points where the design makes a defensible choice among alternatives, offered for challenge:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Additive scoring"
+       ],
+       "tag": "strong"
+      },
+      " (A.3). Independence is false and known to be false."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "Is displaying the signal list an adequate mitigation, or does the triple-counting warrant an explicit correlation adjustment?"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Multiplicative confidence"
+       ],
+       "tag": "strong"
+      },
+      " (A.4). The product form gives correct absorbing"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "behaviour but compounds pessimistically across many weak factors. Is a noisy-or or a weighted geometric mean better behaved?"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "The conservatism convention"
+       ],
+       "tag": "strong"
+      },
+      " (A.2). Using $E_h$ biases the engine against"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "its own thesis. Is a deliberate one-sided bias preferable to reporting the interval and letting the reader choose?"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "$\\lambda$ and $\\mu$"
+       ],
+       "tag": "strong"
+      },
+      " (A.4) are unfitted. With 84 labelled vacancies in"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "Hamilton, is any calibration defensible, or does fitting on 84 points invite worse error than a stated prior?"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Interval arithmetic"
+       ],
+       "tag": "strong"
+      },
+      " (A.1) is used for employment but not propagated into"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "confidence. Should $C$ itself be an interval?"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "The 5 km ceiling"
+       ],
+       "tag": "strong"
+      },
+      " (A.8) is a judgement. Is a mode-specific ceiling — rail"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "shorter, highway longer — better justified than one constant?"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0057\ntype: working-paper\nsection: origins\nplace_type: region\nevidence_date: 2026-10-03\nseq: 17"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, niagara, dossier, prior-art",
+ "path": "The-Sidebar-Dossier--a-technical-report-11-19",
+ "title": "The Sidebar Dossier — a technical report",
+ "url": "https://telegra.ph/The-Sidebar-Dossier--a-technical-report-11-19",
+ "views": 0
+}

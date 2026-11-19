@@ -1,0 +1,1398 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, hamilton, overlays, tiles, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "Owner issue: NA-24.  This is a local build only. Nothing is published or deployed: HARD-RULES rule 3 holds until G6. Tiles, prep files and pulls live in git-ignored local data (not published). This file records statistics, commands and budgets only. It contains no data values beyond class names."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "A.-Overlay-pulls"
+   },
+   "children": [
+    "A. Overlay pulls"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "For each layer: all fields (",
+    {
+     "children": [
+      "outFields=*"
+     ],
+     "tag": "code"
+    },
+    "), an envelope query on the City extent, then intersection with ",
+    {
+     "children": [
+      "City_Boundary/FeatureServer/13"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Script:"
+       ],
+       "tag": "strong"
+      },
+      " local data (not published). It calls ",
+      {
+       "children": [
+        "pull_arcgis_layer.py"
+       ],
+       "tag": "code"
+      },
+      ", then ",
+      {
+       "children": [
+        "clip_to_hamilton.py"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Outputs per pull directory:"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "<dataset>.geojson"
+       ],
+       "tag": "code"
+      },
+      " (EPSG:4326, clipped)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "<dataset>-26917.geojson"
+       ],
+       "tag": "code"
+      },
+      " (EPSG:26917, clipped; the input for the overlay linker)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "raw/<dataset>-bbox.geojson"
+       ],
+       "tag": "code"
+      },
+      " (unclipped)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "PULL-SUMMARY.json"
+       ],
+       "tag": "code"
+      },
+      ", with clip statistics"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "lio/greenbelt-designation"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: LIO_Open06/MapServer/15 · Server ids in extent: 20 · Rows in Hamilton: 9 · Cut at boundary: 5 · Invalid geometries fixed: 0 · Area km²: 887.49"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "lio/nep-designation"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: LIO_Open06/MapServer/26 · Server ids in extent: 197 · Rows in Hamilton: 115 · Cut at boundary: 23 · Invalid geometries fixed: 0 · Area km²: 125.84"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "lio/nep-plan-boundary"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: LIO_Open06/MapServer/25 · Server ids in extent: 1 · Rows in Hamilton: 1 · Cut at boundary: 1 · Invalid geometries fixed: 0 · Area km²: 125.84"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "hamilton-city/nep-development-control"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: spatialsolutions PolicyPlanning/MapServer/10 · Server ids in extent: 1 · Rows in Hamilton: 1 · Cut at boundary: 1 · Invalid geometries fixed: 0 · Area km²: 92.22"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "hca/regulated-areas"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: HCA_Regulated_Areas/FeatureServer/0 · Server ids in extent: 137 · Rows in Hamilton: 134 · Cut at boundary: 1 · Invalid geometries fixed: 4 · Area km²: 149.47"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "npca/approximate-regulation-lands"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: NPCA_APPROXIMATE_REGULATION_LANDS/FeatureServer/0 · Server ids in extent: 443 · Rows in Hamilton: 271 · Cut at boundary: 40 · Invalid geometries fixed: 205 · Area km²: 52.97"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "hamilton-city/secondary-plan-land-use"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: spatialsolutions PolicyPlanning/MapServer/6 · Server ids in extent: 47,206 of 47,212 · Rows in Hamilton: 47,206 · Cut at boundary: 166 · Invalid geometries fixed: 10 · Area km²: 83.77"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "hamilton-city/employment-lands"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: Employment_Lands/FeatureServer/2 · Server ids in extent: 22 · Rows in Hamilton: 22 · Cut at boundary: 3 · Invalid geometries fixed: 1 · Area km²: 48.50"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "hamilton-city/urban-boundary"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: Urban_Boundary/FeatureServer/6 · Server ids in extent: 1 · Rows in Hamilton: 1 · Cut at boundary: 1 · Invalid geometries fixed: 1 · Area km²: 260.90"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "hamilton-city/rural-boundary"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: Rural_Boundary/FeatureServer/9 · Server ids in extent: 1 · Rows in Hamilton: 1 · Cut at boundary: 1 · Invalid geometries fixed: 1 · Area km²: 887.90"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "hamilton-city/parks"
+       ],
+       "tag": "strong"
+      },
+      " — Endpoint: Parks_OD/FeatureServer/6 · Server ids in extent: 633 · Rows in Hamilton: 633 · Cut at boundary: 11 · Invalid geometries fixed: 0 · Area km²: 27.86"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Reused without a new pull:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "GRCA regulation limits (",
+      {
+       "children": [
+        "grca/regulation-limits-hamilton-2026-10-17"
+       ],
+       "tag": "code"
+      },
+      ", 199 rows). Its 26917 copy is ",
+      {
+       "children": [
+        "regulation-limits-26917.geojson"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Zoning C002 (",
+      {
+       "children": [
+        "hamilton-city/zoning-bylaw-boundary-hamilton-2026-10-17"
+       ],
+       "tag": "code"
+      },
+      ", 11,860 rows). Its 26917 copy is ",
+      {
+       "children": [
+        "zoning-bylaw-boundary-26917.geojson"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Notes on the pulls:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "NEP Development Control Area:"
+       ],
+       "tag": "strong"
+      },
+      " LIO does not publish it. None of LIO_Open01–10 has the layer, and Ontario GeoHub links only the Source Protection atlas viewer. The NEC's own copy is a feature collection embedded in a web map, not a service. The City republishes it as ",
+      {
+       "children": [
+        "PolicyPlanning/MapServer/10"
+       ],
+       "tag": "code"
+      },
+      " (\"NEC NEP Development Control\", 13 parts province-wide, fields OBJECTID | PART | AREA_HA), and that is the source used here. One part intersects Hamilton."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Secondary Plan Land Use:"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "6 of the 47,212 rows have null geometry, so the envelope query does not return them."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "ID"
+       ],
+       "tag": "code"
+      },
+      " is null on every row, so the row key is ",
+      {
+       "children": [
+        "OBJECTID"
+       ],
+       "tag": "code"
+      },
+      ". The class field is ",
+      {
+       "children": [
+        "LANDUSE_CLASS"
+       ],
+       "tag": "code"
+      },
+      " and the plan field is ",
+      {
+       "children": [
+        "SEC_PLAN_NAME"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "4 plan names start with ",
+      {
+       "children": [
+        "Retired - "
+       ],
+       "tag": "code"
+      },
+      ": Greensville, Downtown Hamilton, Clappisons Corner and Lower Spencer Creek."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "HCA Regulated Areas:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "Version"
+       ],
+       "tag": "code"
+      },
+      " is 0 on all 134 rows, and there is no class field."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Employment Lands:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "CATEGORY"
+       ],
+       "tag": "code"
+      },
+      " values carry a leading space on 14 of 22 rows (for example ",
+      {
+       "children": [
+        " Business Park"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "Business Park"
+       ],
+       "tag": "code"
+      },
+      " both occur)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NPCA regulation lands:"
+       ],
+       "tag": "strong"
+      },
+      " 205 of 271 rows are invalid as served (fixed with make_valid). The 26917 copy is 48.5 MB for 271 rows, because the vertices are very dense."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Urban and Rural Boundary:"
+       ],
+       "tag": "strong"
+      },
+      " the two areas sum to 1,148.8 km², the City area."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "B.-First-PMTiles-build"
+   },
+   "children": [
+    "B. First PMTiles build"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Tools:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "tippecanoe 2.53.0, from the Debian trixie package. There is no sudo on deb, so the package was extracted with ",
+      {
+       "children": [
+        "apt-get download"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "dpkg -x"
+       ],
+       "tag": "code"
+      },
+      " into local data (not published) and symlinked into a local working copy. The deb's sha256 starts b929ec1c."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "go-pmtiles 1.31.2, from the GitHub release binary (tgz sha256 starts 3ed7dbf4)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Scripts"
+     ],
+     "tag": "strong"
+    },
+    " (committed in ",
+    {
+     "children": [
+      "scripts/tiles/"
+     ],
+     "tag": "code"
+    },
+    "):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "prep_tiles_hamilton.py <layer>"
+       ],
+       "tag": "code"
+      },
+      " writes EPSG:4326 line-delimited GeoJSON with public fields only."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "build_tiles_hamilton.sh [layer]"
+       ],
+       "tag": "code"
+      },
+      " runs tippecanoe."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "range_http_server.py"
+       ],
+       "tag": "code"
+      },
+      " is a local Range test server bound to 127.0.0.1. It is not deploy tooling."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Output:"
+     ],
+     "tag": "strong"
+    },
+    " local data (not published)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Fields per layer (public fields only):"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "parcels:"
+       ],
+       "tag": "strong"
+      },
+      " heavymap_id (registry CURRENT run ",
+      {
+       "children": [
+        "20261017T0725Z-run2"
+       ],
+       "tag": "code"
+      },
+      "), arn (first), arn_all (when more than one), arn_count, arn_grade, area_m2. Duplicate stacked geometries become one feature per HeavyMap ID. ",
+      {
+       "children": [
+        "Owner"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "Legal_Txt"
+       ],
+       "tag": "code"
+      },
+      " exist only on NPCA Parcels_Cityview, which the prep never reads, and the prep asserts that no screened field name is present."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "buildings:"
+       ],
+       "tag": "strong"
+      },
+      " heavymap_id, parcel_heavymap_id, name (City building name, when present), area_m2."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "zoning:"
+       ],
+       "tag": "strong"
+      },
+      " all C002 attributes except Creator | Editor | GlobalID | Shape__Area | Shape__Length | CreationDate | EditDate. ",
+      {
+       "children": [
+        "*_DATE"
+       ],
+       "tag": "code"
+      },
+      " fields become ISO dates."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "nature-frame:"
+       ],
+       "tag": "strong"
+      },
+      " three layers:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "greenbelt (",
+      {
+       "children": [
+        "designation"
+       ],
+       "tag": "code"
+      },
+      ")"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "conservation (",
+      {
+       "children": [
+        "authority"
+       ],
+       "tag": "code"
+      },
+      ": HCA | NPCA | GRCA, the regulation limits)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "parks (",
+      {
+       "children": [
+        "name"
+       ],
+       "tag": "code"
+      },
+      " | ",
+      {
+       "children": [
+        "park_class"
+       ],
+       "tag": "code"
+      },
+      " | ",
+      {
+       "children": [
+        "type"
+       ],
+       "tag": "code"
+      },
+      ")"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "parcels.pmtiles"
+       ],
+       "tag": "strong"
+      },
+      " — Features in: 166,745 · Zooms: z12–15 · Size: 25.3 MB · Tiles: 2,217 · Build wall / peak RSS: 32 s / 257 MB"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "buildings.pmtiles"
+       ],
+       "tag": "strong"
+      },
+      " — Features in: 214,287 · Zooms: z13–15 · Size: 29.9 MB · Tiles: 2,018 · Build wall / peak RSS: 29 s / 175 MB"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "zoning.pmtiles"
+       ],
+       "tag": "strong"
+      },
+      " — Features in: 11,829 (31 null geometries skipped) · Zooms: z10–15 · Size: 7.9 MB · Tiles: 2,166 · Build wall / peak RSS: 14 s / 110 MB"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "nature-frame.pmtiles"
+       ],
+       "tag": "strong"
+      },
+      " — Features in: 1,246 (9 + 604 + 633) · Zooms: z6–13 · Size: 0.72 MB · Tiles: 195 · Build wall / peak RSS: 10 s / 187 MB"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Total"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Size: "
+       ],
+       "tag": "strong"
+      },
+      "63.8 MB**"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "All files are well under the 100 MB per-file target, the total is well under 300 MB, and the nature frame is far under its 3 MB startup budget. Prep took 5–14 s per layer, with a peak of 749 MB (buildings)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Completeness at maximum zoom"
+     ],
+     "tag": "strong"
+    },
+    " (counted by decoding with tippecanoe-decode):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Parcels:"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "166,743 of 166,745 HeavyMap IDs at z15."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The 2 missing are sub-square-metre slivers that vanish at tile precision."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "At z12 the densest tiles keep only the sparsest features, so 55,664 IDs appear; z14 has 166,742."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Buildings:"
+       ],
+       "tag": "strong"
+      },
+      " 214,278 of 214,287 at z15, and 135,804 at z13."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Overzooming past z15 is left to the client."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Commands"
+     ],
+     "tag": "strong"
+    },
+    " (from ",
+    {
+     "children": [
+      "build_tiles_hamilton.sh"
+     ],
+     "tag": "code"
+    },
+    "):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Common flags:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "TIPPECANOE_MAX_THREADS=2 tippecanoe --force --read-parallel --temporary-directory=<tiles>a local working copy --no-progress-indicator"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "parcels:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "-l parcels -Z12 -z15 --detect-shared-borders --simplification=2 --no-tiny-polygon-reduction --drop-densest-as-needed --extend-zooms-if-still-dropping"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "buildings:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "-l buildings -Z13 -z15 --simplification=2 --drop-densest-as-needed --extend-zooms-if-still-dropping"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "zoning:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "-l zoning -Z10 -z15 --detect-shared-borders --simplification=4 --coalesce-densest-as-needed --extend-zooms-if-still-dropping"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "nature-frame:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "-Z6 -z13 --simplification=10 --detect-shared-borders --coalesce-smallest-as-needed --maximum-tile-bytes=300000 -L greenbelt:… -L conservation:… -L parks:…"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Memory:"
+     ],
+     "tag": "strong"
+    },
+    " deb had about 2.3 GB free (about 5.4 GB available) during the build. The two-thread cap and temp files on ",
+    {
+     "children": [
+      "/fast"
+     ],
+     "tag": "code"
+    },
+    " kept tippecanoe under 260 MB, so builds can run alongside other work. Tile size stays at the default 500 KB cap. The largest parcel tiles at z12–13 downtown drop to the sparsest 25–81% of features to fit, and a z13 parcel tile in the core is about 450 KB."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Budget notes for later:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The parcel string pool (heavymap_id plus ARN) is about 10.7 MB of the 25 MB."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "If parcels must start at z11, expect about 35 MB."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Address points (274k) are not built yet. Expect about 15–25 MB at z14–15."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "C.-Range-request-tests"
+   },
+   "children": [
+    "C. Range-request tests"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Local, both passed:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "range_http_server.py"
+       ],
+       "tag": "code"
+      },
+      " returned ",
+      {
+       "children": [
+        "206 Partial Content"
+       ],
+       "tag": "code"
+      },
+      " with ",
+      {
+       "children": [
+        "Content-Range: bytes 0-126/25327712"
+       ],
+       "tag": "code"
+      },
+      ", and the body started with the ",
+      {
+       "children": [
+        "PMTiles"
+       ],
+       "tag": "code"
+      },
+      " magic. ",
+      {
+       "children": [
+        "pmtiles show parcels.pmtiles --bucket=http://127.0.0.1:8731"
+       ],
+       "tag": "code"
+      },
+      " read the header and directory over HTTP ranges."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "pmtiles serve"
+       ],
+       "tag": "code"
+      },
+      " served z13 tiles from all four archives (HTTP 200, application/x-protobuf)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "GitHub Pages"
+     ],
+     "tag": "strong"
+    },
+    " (existing public sites only; no site, workflow or deploy tooling was created):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Range is honoured."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Accept-Encoding: identity"
+       ],
+       "tag": "code"
+      },
+      " returned 206 with a correct ",
+      {
+       "children": [
+        "Content-Range"
+       ],
+       "tag": "code"
+      },
+      ":"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "pages.github.com"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "heavymap.com (this repo's existing CNAME)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "a binary at protomaps.github.io/basemaps-assets"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "the bdon.github.io range-bug repro object (5 MB offset)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "A real ",
+      {
+       "children": [
+        ".pmtiles"
+       ],
+       "tag": "code"
+      },
+      " on the Pages origin (demotiles.maplibre.org/pmtiles/vector/world.pmtiles, via ",
+      {
+       "children": [
+        "--resolve"
+       ],
+       "tag": "code"
+      },
+      " to 185.199.108.153) returned 206 ",
+      {
+       "children": [
+        "bytes 0-126/3829650"
+       ],
+       "tag": "code"
+      },
+      " with the PMTiles magic."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Breaks when the client accepts gzip."
+       ],
+       "tag": "strong"
+      },
+      " Firefox sends ",
+      {
+       "children": [
+        "Accept-Encoding: gzip, deflate, br, zstd, identity"
+       ],
+       "tag": "code"
+      },
+      ", and Pages then compresses ",
+      {
+       "children": [
+        "application/octet-stream"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        ".pmtiles"
+       ],
+       "tag": "code"
+      },
+      " included, and applies the range to the compressed representation:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "world.pmtiles:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "content-encoding: gzip"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "content-range: bytes 0-126/3748416"
+       ],
+       "tag": "code"
+      },
+      ", and the body starts with ",
+      {
+       "children": [
+        "1f8b"
+       ],
+       "tag": "code"
+      },
+      " instead of ",
+      {
+       "children": [
+        "PMTiles"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "bdon repro:"
+       ],
+       "tag": "strong"
+      },
+      " the 5 MB-offset range returns 416 with ",
+      {
+       "children": [
+        "bytes */5183"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "This is the open protomaps/PMTiles#584 issue, still reproducible on 2026-10-17. Chrome and Safari send ",
+    {
+     "children": [
+      "identity"
+     ],
+     "tag": "code"
+    },
+    ", so they work. Known workaround, not tested here: name archives ",
+    {
+     "children": [
+      ".pmtiles.gz"
+     ],
+     "tag": "code"
+    },
+    ", or host them on a non-transforming store. Decide this at G6."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0068\ntype: working-paper\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-10-17\nseq: 33"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, hamilton, overlays, tiles, run-1",
+ "path": "Hamilton-overlay-pulls-and-first-PMTiles-build-2026-10-17-11-19",
+ "title": "Hamilton overlay pulls and first PMTiles build (2026-10-17)",
+ "url": "https://telegra.ph/Hamilton-overlay-pulls-and-first-PMTiles-build-2026-10-17-11-19",
+ "views": 0
+}

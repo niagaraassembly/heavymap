@@ -1,0 +1,3245 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, hamilton, freight, infrastructure, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Owner decisions 2026-11-17:"
+     ],
+     "tag": "strong"
+    },
+    " show the water and sewer networks in HeavyMap (D-077, planning repo), keeping proximity distinct from service. Keep the coded fields (",
+    {
+     "children": [
+      "RESTRICTED"
+     ],
+     "tag": "code"
+    },
+    ", blank ",
+    {
+     "children": [
+      "TIME_OF_DAY"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "REDUCEDLOAD"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "TRUCK_ROUTE"
+     ],
+     "tag": "code"
+    },
+    ") in use, shown as the source's codes marked \"meaning not yet confirmed by the City\", while the definitions are requested (BL-120)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Slice: Hamilton, family \"context\" (freight access and infrastructure). Linear is out of use (D-075); the Hamilton slice id NA-24 is cited for continuity. Routine: ",
+    {
+     "children": [
+      "heavymap-planning/DATASET-ROUTINE.md"
+     ],
+     "tag": "code"
+    },
+    ", stages 1 to 3 for the first slice, stage 1 for the rest. No MCS edit, schema change, UI or publication."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Evidence labels."
+     ],
+     "tag": "strong"
+    },
+    " Every fact below was ",
+    {
+     "children": [
+      "live read on 2026-11-17"
+     ],
+     "tag": "strong"
+    },
+    " from the source URL given, unless marked ",
+    {
+     "children": [
+      "documented, not re-read"
+     ],
+     "tag": "em"
+    },
+    ". Counts are server counts (",
+    {
+     "children": [
+      "returnCountOnly"
+     ],
+     "tag": "code"
+    },
+    "). Join results are ",
+    {
+     "children": [
+      "hits/tested"
+     ],
+     "tag": "code"
+    },
+    ". Owner or identifying fields are named, never quoted. Raw pulls, scripts and summaries are local only: a local working copy (scripts ",
+    {
+     "children": [
+      "recon.py"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "recon2.py"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "measure.py"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "pull.py"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "join_test.py"
+     ],
+     "tag": "code"
+    },
+    "; metadata in ",
+    {
+     "children": [
+      "raw/"
+     ],
+     "tag": "code"
+    },
+    ") and the pull folders named in each section."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Reading rules applied."
+     ],
+     "tag": "strong"
+    },
+    " Annual all-vehicle counts are not truck volumes. Active permits and closures are temporary and are kept apart from durable infrastructure. A catchment, pressure district or nearby main says nothing about a parcel's connection or spare capacity."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Prioritized-shortlist"
+   },
+   "children": [
+    "Prioritized shortlist"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "1"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Truck Route Network · Publisher, service: City of Hamilton, AGOL ",
+      {
+       "children": [
+        "Truck_Route_Network/FeatureServer/5"
+       ],
+       "tag": "code"
+      },
+      " · Recommendation: ",
+      {
+       "children": [
+        "Profile further: first slice."
+       ],
+       "tag": "strong"
+      },
+      " Current (edited 2026-11-09); parcel adjacency tested 1,425/3,193 industrial-zoned parcels within 30 m"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Bridges and culverts with height and weight restrictions · Publisher, service: City, ",
+      {
+       "children": [
+        "spatialsolutions …/General/Traffic/MapServer/13"
+       ],
+       "tag": "code"
+      },
+      " · Recommendation: ",
+      {
+       "children": [
+        "Profile further."
+       ],
+       "tag": "strong"
+      },
+      " Answers the load and clearance question: posted height on 27 structures, weight limits on 13"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "3"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Average Daily Traffic Count · Publisher, service: City, AGOL ",
+      {
+       "children": [
+        "Average_Daily_Traffic_Count/FeatureServer/39"
+       ],
+       "tag": "code"
+      },
+      " · Recommendation: ",
+      {
+       "children": [
+        "Profile further"
+       ],
+       "tag": "strong"
+      },
+      " as segment context. All-vehicle annual counts, no geometry; located through the street centreline (1,682/1,716 GEO_IDs)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "4"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Traffic road segments (titled \"Heavy Truck Traffic Route\" in the Corridor Activities map) · Publisher, service: City, ",
+      {
+       "children": [
+        "spatialsolutions …/General/Traffic/MapServer/9"
+       ],
+       "tag": "code"
+      },
+      " · Recommendation: ",
+      {
+       "children": [
+        "Profile further, carefully."
+       ],
+       "tag": "strong"
+      },
+      " Not a truck-volume layer: all-vehicle 24 h volumes (counts 2004 to 2020) plus older truck codes and an undocumented ",
+      {
+       "children": [
+        "REDUCEDLOAD"
+       ],
+       "tag": "code"
+      },
+      " flag"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "5"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Corridor Activities: overload and superload truck permits · Publisher, service: City corridor-permits AGOL org (",
+      {
+       "children": [
+        "services1 …/DkpbFZAaJs7sZX2x"
+       ],
+       "tag": "code"
+      },
+      ") · Recommendation: ",
+      {
+       "children": [
+        "Defer as map context"
+       ],
+       "tag": "strong"
+      },
+      "; event data, nightly, temporary. Useful as evidence that a route carries heavy movements"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "6"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Corridor Activities: closures, lane/sidewalk occupancy, municipal consents, access permits, maintenance, capital projects · Publisher, service: Same org, plus spatialsolutions · Recommendation: ",
+      {
+       "children": [
+        "Defer."
+       ],
+       "tag": "strong"
+      },
+      " Current-conditions layer, not parcel context. Municipal consents (1,125) mark where utilities are being worked on"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "7"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Railways and railway crossings · Publisher, service: City AGOL ",
+      {
+       "children": [
+        "Railways"
+       ],
+       "tag": "code"
+      },
+      "; spatialsolutions ",
+      {
+       "children": [
+        "Traffic/MapServer/45"
+       ],
+       "tag": "code"
+      },
+      " · Recommendation: ",
+      {
+       "children": [
+        "Profile further"
+       ],
+       "tag": "strong"
+      },
+      " (rail corridor adjacency, level crossings on access routes). Rail lines last edited 2023-10-22"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "8"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Water and sewer networks · Publisher, service: City AGOL: Watermain, Water Valve/Node/Hydrant, Water Pressure District; Sewermain, Manhole, Node, Valve, Lift Station · Recommendation: ",
+      {
+       "children": [
+        "Profile further, with an owner decision on exposure."
+       ],
+       "tag": "strong"
+      },
+      " Open City services, edited 2026-11-14; pipe size, material and install date. Proximity only, never connection or capacity"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "9"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Traffic Collisions · Publisher, service: City AGOL ",
+      {
+       "children": [
+        "Traffic Collisions"
+       ],
+       "tag": "code"
+      },
+      " (table) · Recommendation: ",
+      {
+       "children": [
+        "Defer."
+       ],
+       "tag": "strong"
+      },
+      " 134,136 rows 2008 to 2025, about 2,700 with a truck as vehicle 1; located by GEO_ID"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "10"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Stormwater management facilities, watercourses · Publisher, service: City AGOL · Recommendation: ",
+      {
+       "children": [
+        "Defer"
+       ],
+       "tag": "strong"
+      },
+      " to the environment family"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "11"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Airport · Publisher, service: City AGOL ",
+      {
+       "children": [
+        "Airport"
+       ],
+       "tag": "code"
+      },
+      " · Recommendation: ",
+      {
+       "children": [
+        "Defer."
+       ],
+       "tag": "strong"
+      },
+      " Five polygons (Hamilton International boundary and runway, three small fields); last edited 2023-10-03"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "12"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Port of Hamilton (HOPA) · Publisher, service: Hamilton-Oshawa Port Authority · Recommendation: ",
+      {
+       "children": [
+        "Lead only, not checked."
+       ],
+       "tag": "strong"
+      },
+      " No City layer found"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "—"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: McMaster \"Enhanced water and sewer data\" · Publisher, service: McMaster University Library · Recommendation: ",
+      {
+       "children": [
+        "Blocked"
+       ],
+       "tag": "strong"
+      },
+      " for automated access (bot check). Not needed: the City publishes the networks openly"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "1.-First-slice"
+   },
+   "children": [
+    "1. First slice"
+   ],
+   "tag": "h3"
+  },
+  {
+   "attrs": {
+    "id": "1.1-Truck-Route-Network"
+   },
+   "children": [
+    "1.1 Truck Route Network"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Source:"
+       ],
+       "tag": "strong"
+      },
+      " https://services.arcgis.com/rYz782eMbySr2srL/ArcGIS/rest/services/Truck_Route_Network/FeatureServer/5 (service page: https://www.hamilton.ca/home-neighbourhood/getting-around/driving-traffic/truck-route-network). Access 2026-11-17, live read."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Shape:"
+       ],
+       "tag": "strong"
+      },
+      " 1,250 polylines, EPSG:26917, maxRecordCount 2000, query only. Data last edited ",
+      {
+       "children": [
+        "2026-11-09"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Fields:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "OBJECTID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "STREET_NAME"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "FUNCTIONAL_ROAD_CLASS"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "IS_TRUCK_ROUTE"
+       ],
+       "tag": "code"
+      },
+      " (all \"Yes\"), ",
+      {
+       "children": [
+        "RECOMMENDATION"
+       ],
+       "tag": "code"
+      },
+      " (one value on every row), ",
+      {
+       "children": [
+        "RESTRICTED"
+       ],
+       "tag": "code"
+      },
+      " (No 1,140, Yes 108, null 2), ",
+      {
+       "children": [
+        "TIME_OF_DAY"
+       ],
+       "tag": "code"
+      },
+      " (Full Time 1,157, Part Time 72, blank 21), ",
+      {
+       "children": [
+        "Shape__Length"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Network:"
+       ],
+       "tag": "strong"
+      },
+      " 631 km: full time 597.9, part time 32.1, blank 1.2. ",
+      {
+       "children": [
+        "RESTRICTED = Yes"
+       ],
+       "tag": "code"
+      },
+      " on 36.7 km."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Pull:"
+       ],
+       "tag": "strong"
+      },
+      " complete, 1,250/1,250, ",
+      {
+       "children": [
+        "truck-route-network-hamilton-2026-11-17/"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Join (stage 6 evidence, spatial):"
+       ],
+       "tag": "strong"
+      },
+      " industrial-zoned parcels (largest zoning row an ",
+      {
+       "children": [
+        "M"
+       ],
+       "tag": "code"
+      },
+      " zone covering at least half the parcel, overlay run 20261017-val2-ia1), shortest distance from parcel boundary to a route centreline: within 20 m ",
+      {
+       "children": [
+        "1,313/3,193"
+       ],
+       "tag": "strong"
+      },
+      ", 30 m ",
+      {
+       "children": [
+        "1,425/3,193"
+       ],
+       "tag": "strong"
+      },
+      ", 50 m 1,590/3,193, 100 m 1,974/3,193. Of the 30 m hits, 1,388 are nearest a full-time route, 31 part time, 6 unspecified. Method: ",
+      {
+       "children": [
+        "join_test.py"
+       ],
+       "tag": "code"
+      },
+      "; boundary vertices sampled (about 60 per parcel)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Limits and risks:"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The service description still says \"identified as part of the 2010 Truck Route Master Plan and updated in 2017\". The City page describes a 2022 Master Plan Update, signage completed October 2023, and a restriction on trucks with more than four axles in parts of the lower city (",
+      {
+       "children": [
+        "documented on the City page, read 2026-11-17"
+       ],
+       "tag": "em"
+      },
+      ")."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "What ",
+      {
+       "children": [
+        "RESTRICTED"
+       ],
+       "tag": "code"
+      },
+      " encodes (the axle rule, time limits, or something else) is not stated anywhere. Show the source value with \"meaning not yet confirmed\" until the City replies (BL-120)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Directional routes are not distinguishable in this layer."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "There is no stable id, only ",
+      {
+       "children": [
+        "OBJECTID"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Adjacency to a route is not access: driveways, medians and turn restrictions are unknown."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Use:"
+       ],
+       "tag": "strong"
+      },
+      " a dossier fact (\"on or within 30 m of a full-time truck route\") and a map layer."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "1.2-Average-Daily-Traffic-Count"
+   },
+   "children": [
+    "1.2 Average Daily Traffic Count"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Source:"
+       ],
+       "tag": "strong"
+      },
+      " https://services.arcgis.com/rYz782eMbySr2srL/ArcGIS/rest/services/Average_Daily_Traffic_Count/FeatureServer/39. Access 2026-11-17, live read."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Shape:"
+       ],
+       "tag": "strong"
+      },
+      " declared as points, but ",
+      {
+       "children": [
+        "all 2,350 rows have no geometry"
+       ],
+       "tag": "strong"
+      },
+      ", the ",
+      {
+       "children": [
+        "COORDINATES"
+       ],
+       "tag": "code"
+      },
+      " field is empty, and the layer has no extent. Data last edited ",
+      {
+       "children": [
+        "2026-10-06"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Fields:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "OBJECTID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "GEO_ID"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "LOCATION_DESCRIPTION"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "AVERAGE_DAILY_TRAFFIC_COUNT"
+       ],
+       "tag": "code"
+      },
+      " (7 to 89,108, mean 5,524), ",
+      {
+       "children": [
+        "COUNT_YEAR"
+       ],
+       "tag": "code"
+      },
+      " (text, 2008 to 2024)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Grain:"
+       ],
+       "tag": "strong"
+      },
+      " one count per location per year. There are 1,716 locations; 426 have more than one year; there are no duplicate location-year pairs. Latest year per location: 791 in 2022 to 2024, 390 in 2008 to 2012."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Join:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "GEO_ID"
+       ],
+       "tag": "code"
+      },
+      " matches the street centreline ",
+      {
+       "children": [
+        "SEGID"
+       ],
+       "tag": "code"
+      },
+      " (pulled 2026-10-17) for ",
+      {
+       "children": [
+        "1,682/1,716"
+       ],
+       "tag": "strong"
+      },
+      ", and the traffic segments ",
+      {
+       "children": [
+        "SEGID_NEW"
+       ],
+       "tag": "code"
+      },
+      " for ",
+      {
+       "children": [
+        "1,713/1,716"
+       ],
+       "tag": "strong"
+      },
+      ". So counts can be drawn on road segments and then related to parcels by frontage."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Pull:"
+       ],
+       "tag": "strong"
+      },
+      " complete, 2,350/2,350, ",
+      {
+       "children": [
+        "average-daily-traffic-count-hamilton-2026-11-17/"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Limits:"
+       ],
+       "tag": "strong"
+      },
+      " all vehicles, not trucks. Counts are years apart between locations, so always show the count year. The layer cannot be drawn without the centreline join."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "1.3-Traffic-road-segments-(&quot;Heavy-Truck-Traffic-Route&quot;)"
+   },
+   "children": [
+    "1.3 Traffic road segments (\"Heavy Truck Traffic Route\")"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Source:"
+       ],
+       "tag": "strong"
+      },
+      " https://spatialsolutions.hamilton.ca/webgis/rest/services/General/Traffic/MapServer/9 (layer name \"Traffic - Streets\"; titled \"Heavy Truck Traffic Route\" in the Corridor Activities map). Access 2026-11-17, live read."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Shape:"
+       ],
+       "tag": "strong"
+      },
+      " 21,062 polylines, EPSG:3857, map and query capability, no edit-tracking dates exposed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Fields (selection):"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Ids:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "SEGID_NEW"
+       ],
+       "tag": "code"
+      },
+      " (unique, no nulls), ",
+      {
+       "children": [
+        "SEGID_ORG"
+       ],
+       "tag": "code"
+      },
+      " (2,021 null)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Road:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "CATEGORY"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "SPEED_LIMIT"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "ONE_WAY"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Volumes:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "VOLUME_24HR"
+       ],
+       "tag": "code"
+      },
+      " plus a directional pair, and ",
+      {
+       "children": [
+        "VOLUME_STAT"
+       ],
+       "tag": "code"
+      },
+      " (method or source code)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Truck and load:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "TRUCK_ROUTE"
+       ],
+       "tag": "code"
+      },
+      " (F 3,122, P 219, D 16, X 16,347, null 1,358) and ",
+      {
+       "children": [
+        "REDUCEDLOAD"
+       ],
+       "tag": "code"
+      },
+      " (Y 1,436, Z 11, X 14,546, null 5,069)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Dates and status:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "COUNT_DATE"
+       ],
+       "tag": "code"
+      },
+      " (2004 to 2020), ",
+      {
+       "children": [
+        "TRF_CHK"
+       ],
+       "tag": "code"
+      },
+      " (2020 or null), ",
+      {
+       "children": [
+        "CURRENT_STATUS"
+       ],
+       "tag": "code"
+      },
+      " (Active 17,682, For Review 2,278, Retired 807, other 295)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "How it compares with 1.1:"
+       ],
+       "tag": "strong"
+      },
+      " active ",
+      {
+       "children": [
+        "TRUCK_ROUTE = F"
+       ],
+       "tag": "code"
+      },
+      " covers 839.6 km, against 597.9 km full time in the current network. The difference is unexplained: possibly divided roads counted per carriageway, or the pre-2022 network."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "This is not a duplicate. It is an older, different product."
+       ],
+       "tag": "strong"
+      },
+      " Use 1.1 for truck routes."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Volumes:"
+       ],
+       "tag": "strong"
+      },
+      " 16,176 segments have a 24-hour volume above zero. This is all-vehicle traffic, mostly estimated or modelled (",
+      {
+       "children": [
+        "VOLUME_STAT"
+       ],
+       "tag": "code"
+      },
+      " codes such as MS2FLOW5), not truck counts."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "REDUCEDLOAD:"
+       ],
+       "tag": "strong"
+      },
+      " \"Y\" on 796.6 km of active segments. No documentation was found. It may mark seasonal reduced-load roads, but ",
+      {
+       "children": [
+        "that is unconfirmed"
+       ],
+       "tag": "strong"
+      },
+      ". Keep the field, show the raw code marked \"meaning not yet confirmed\", and do not describe it as a load restriction until the City confirms (BL-120)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Pull:"
+       ],
+       "tag": "strong"
+      },
+      " complete, 21,062/21,062 (outSR 4326), ",
+      {
+       "children": [
+        "traffic-segments-heavy-truck-traffic-route-hamilton-2026-11-17/"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "1.4-Corridor-Activities-map"
+   },
+   "children": [
+    "1.4 Corridor Activities map"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Map item:"
+       ],
+       "tag": "strong"
+      },
+      " https://www.arcgis.coma local working copy, owner account SSS_Coordinator, created 2019-09-18, ",
+      {
+       "children": [
+        "item modified 2026-01-09"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Its description says the data is \"updated on a nightly basis\" from Municipal Consents, Road Occupancy Permits, Temporary Road Closures, Road Excavation Permits and capital projects."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The licence text is a City \"as is\" disclaimer."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Freshness:"
+       ],
+       "tag": "strong"
+      },
+      " the item's date reflects edits to the map, not the data. Layer data dates confirm nightly updates."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Active Overload Truck Permits"
+       ],
+       "tag": "strong"
+      },
+      " — Geometry: line · Count: 36 · Data last edit: 2026-11-16 · Date range in data: moves 2026-03-09 to 2027-05-07 · Personal-like fields (names): ",
+      {
+       "children": [
+        "Company_Name"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Active SuperLoad Truck Permits"
+       ],
+       "tag": "strong"
+      },
+      " — Geometry: line · Count: 1 · Data last edit: 2026-11-04 · Date range in data: move 2026-11-30 to 2026-12-04 · Personal-like fields (names): ",
+      {
+       "children": [
+        "Company_Name"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Active Temporary Full Road Closure Permit"
+       ],
+       "tag": "strong"
+      },
+      " — Geometry: line · Count: 9 · Data last edit: 2026-11-17 · Date range in data: 2026-02-16 to 2028-11-30 · Personal-like fields (names): ",
+      {
+       "children": [
+        "Project_Name"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Active Temporary Lane and Sidewalk Occupancy Permits"
+       ],
+       "tag": "strong"
+      },
+      " — Geometry: point · Count: 42 · Data last edit: 2026-11-17 · Date range in data: 2024-03-25 to 2028-10-27 · Personal-like fields (names): none"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Active Utility Temporary Lane and Sidewalk Occupancy Approvals"
+       ],
+       "tag": "strong"
+      },
+      " — Geometry: point · Count: 40 · Data last edit: 2026-11-17 · Date range in data: 2026-08-31 to 2027-01-29 · Personal-like fields (names): ",
+      {
+       "children": [
+        "Company_Name"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Active Municipal Consents Utility Permits"
+       ],
+       "tag": "strong"
+      },
+      " — Geometry: line · Count: 1,125 · Data last edit: 2026-11-17 · Date range in data: approved 2020-12-08 to 2026-11-16 · Personal-like fields (names): ",
+      {
+       "children": [
+        "Utility_Company_Name"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Project_Name"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Active Access Permits"
+       ],
+       "tag": "strong"
+      },
+      " — Geometry: point · Count: 7 · Data last edit: 2026-10-29 · Date range in data: none · Personal-like fields (names): none"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Active Film Permits"
+       ],
+       "tag": "strong"
+      },
+      " — Geometry: point · Count: 5 · Data last edit: 2026-11-17 · Date range in data: 2026-11-16 to 2026-11-27 · Personal-like fields (names): none"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Maintenance Works (spatialsolutions)"
+       ],
+       "tag": "strong"
+      },
+      " — Geometry: line · Count: 6,343 · Data last edit: not exposed · Date range in data: completed 2023-05-09 to 2026-11-16 · Personal-like fields (names): ",
+      {
+       "children": [
+        "CONTRACTORS"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Current Linear Projects (spatialsolutions)"
+       ],
+       "tag": "strong"
+      },
+      " — Geometry: line · Count: 44 · Data last edit: not exposed · Date range in data: est. start 2022-10-01 to 2026-12-01 · Personal-like fields (names): ",
+      {
+       "children": [
+        "PROJECT_NAME"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "CONTRACTORS"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Current Point Projects (spatialsolutions)"
+       ],
+       "tag": "strong"
+      },
+      " — Geometry: multipoint · Count: 13 · Data last edit: not exposed · Date range in data: est. end to 2030-11-29 · Personal-like fields (names): ",
+      {
+       "children": [
+        "PROJECT_NAME"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "CONTRACTORS"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Heavy Truck Traffic Route"
+       ],
+       "tag": "strong"
+      },
+      " — Geometry: see 1.3"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Ward Boundaries"
+       ],
+       "tag": "strong"
+      },
+      " — Geometry: reference"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Overload and superload permits"
+       ],
+       "tag": "strong"
+      },
+      " carry a free-text route description, permit type (single trip 20, project 16) and times. They show real heavy movements, for example port and rail-yard origins. Company names are business names, but keep them out of public output until reviewed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "A separate older City service, \"Temporary Road Closures\" (AGOL), holds one record from 2026-02-06. Use the Corridor layer instead."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Recommendation: do not join these to parcels as durable facts. If used, show them as a dated \"current activity\" map layer with the data date visible."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "2.-Load-restrictions-and-utility-networks:-obtainable-and-worth-pursuing?"
+   },
+   "children": [
+    "2. Load restrictions and utility networks: obtainable and worth pursuing?"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Bridge and culvert restrictions: yes, obtainable now."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Source:"
+       ],
+       "tag": "strong"
+      },
+      " https://spatialsolutions.hamilton.ca/webgis/rest/services/General/Traffic/MapServer/13 (\"Traffic Bridges\"). Access 2026-11-17, live read. 446 points."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Structure types:"
+       ],
+       "tag": "strong"
+      },
+      " culvert 244, bridge 170, railway grade crossing 27, pedestrian bridge 4, tunnel 1."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Restriction fields:"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "HEIGHT_RESTRICTION"
+       ],
+       "tag": "code"
+      },
+      " (−1 = yes on 27), ",
+      {
+       "children": [
+        "POSTED_HEIGHT"
+       ],
+       "tag": "code"
+      },
+      " (27), ",
+      {
+       "children": [
+        "MEASURED_HEIGHT"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "LOW_CLEARANCE_MARKS"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "NARROW_STRUCTURE_SIGN"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "WEIGHT_RESTRICTED"
+       ],
+       "tag": "code"
+      },
+      " (−1 = yes on 13), ",
+      {
+       "children": [
+        "MAXWEIGHT_TONNE"
+       ],
+       "tag": "code"
+      },
+      " (11), ",
+      {
+       "children": [
+        "MAXWEIGHT_PER_AXLE"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "WEIGHTREV_DATE"
+       ],
+       "tag": "code"
+      },
+      " (2005 to 2017)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "YEAR_BUILT"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "REVIEWED_DATE"
+       ],
+       "tag": "code"
+      },
+      " (one value: 2022-06-09), ",
+      {
+       "children": [
+        "MOD_DATE"
+       ],
+       "tag": "code"
+      },
+      " (to 2025-07-29)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Fields to keep internal:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "GIS_USER"
+       ],
+       "tag": "code"
+      },
+      " (staff account names; never expose) and ",
+      {
+       "children": [
+        "OWNER_CATEGORY"
+       ],
+       "tag": "code"
+      },
+      " (empty)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "AGOL \"Bridges\" layer:"
+       ],
+       "tag": "strong"
+      },
+      " 450 points, edited 2026-11-14, but only an id, names, community, ward and category; no restrictions. ",
+      {
+       "children": [
+        "Use the MapServer layer."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Worth it:"
+       ],
+       "tag": "strong"
+      },
+      " yes. A low or weight-limited structure on a parcel's likely route is a real freight constraint. Join method: nearest route segment or structure; never a parcel attribute directly."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Seasonal or reduced-load roads:"
+       ],
+       "tag": "strong"
+      },
+      " no clear source yet. The only candidate is the undocumented ",
+      {
+       "children": [
+        "REDUCEDLOAD"
+       ],
+       "tag": "code"
+      },
+      " flag in 1.3. Ask the City (Transportation Operations) what Y, Z and X mean before using it."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Detailed water and sewer networks: obtainable now; exposure needs an owner decision."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Sources"
+       ],
+       "tag": "strong"
+      },
+      " (City AGOL, all edited 2026-11-14, access 2026-11-17, live read):"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Watermain"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 38,357"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Water Valve"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 24,488"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Water Node"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 18,327"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Water Hydrant"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 14,217"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Water Pressure District"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 28"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Sewermain"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 54,209"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Sewer Manhole"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 48,906"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Sewer Node"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 3,686"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Sewer Lift Station"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 96"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Sewer Valve"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 163"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Fields:"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Water mains:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "PIPETYPE"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "INSTDATE"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "OWN"
+       ],
+       "tag": "code"
+      },
+      " (HA 38,348, PR 8), ",
+      {
+       "children": [
+        "PRESZONE"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "WAT_SIZE"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Sewer mains:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "PIPETYPE"
+       ],
+       "tag": "code"
+      },
+      " (RCP, VCP, PVC …), ",
+      {
+       "children": [
+        "SUBTYPE"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PIPEDIAM"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PIPEHT"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "INSTDATE"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "OWN"
+       ],
+       "tag": "code"
+      },
+      " (HA 54,089, PR 94)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "No personal fields."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Licence:"
+       ],
+       "tag": "strong"
+      },
+      " City open data portal terms; read the published licence page before use. Licence text is ",
+      {
+       "children": [
+        "not yet confirmed per layer"
+       ],
+       "tag": "em"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "McMaster record:"
+       ],
+       "tag": "strong"
+      },
+      " https://library.mcmaster.ca/maps/geospatial/enhanced-water-and-sewer-data-city-hamilton returned an automated bot check. ",
+      {
+       "children": [
+        "Blocked."
+       ],
+       "tag": "strong"
+      },
+      " It is not needed, since the City layers cover the same asset classes."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Worth it:"
+       ],
+       "tag": "strong"
+      },
+      " yes for context (\"water main of 300 mm along the frontage, installed 1974\"; \"nearest sewer lift station\"). Proximity is not service: a main along a frontage does not mean the parcel is connected or that capacity exists."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Sensitivity:"
+       ],
+       "tag": "strong"
+      },
+      " the MCS catalogue flags these layers ",
+      {
+       "children": [
+        "infrastructure_ownership_attribute"
+       ],
+       "tag": "code"
+      },
+      ". ",
+      {
+       "children": [
+        "Owner decision 2026-11-17 (D-077): show them"
+       ],
+       "tag": "strong"
+      },
+      ", with proximity worded distinctly from service."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Existing work:"
+       ],
+       "tag": "strong"
+      },
+      " sanitary, combined-overflow and treatment-plant catchments and subwatersheds were pulled on 2026-11-16 (",
+      {
+       "children": [
+        "LOCAL-DATA-REGISTER-2026-11-16.csv"
+       ],
+       "tag": "code"
+      },
+      "). Keep catchment membership separate from pipe proximity."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "3.-Other-candidates-found-(stage-1-only)"
+   },
+   "children": [
+    "3. Other candidates found (stage 1 only)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Railways"
+       ],
+       "tag": "strong"
+      },
+      " (City AGOL): 1,692 lines; categories railway line 1,301, tunnel 83, bridge 72; last edited 2023-10-22; no owner or operator field."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Railway crossings"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "Traffic/MapServer/45"
+       ],
+       "tag": "code"
+      },
+      "): 353 points; types level 141, private level 73, tunnel 70, bridge 65. ",
+      {
+       "children": [
+        "TRACK_OWNER"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "XING_OWNER"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "TRACK_SPUR_NAME"
+       ],
+       "tag": "code"
+      },
+      " name railway companies and spurs (business names; review before public use). Inspection dates run 2021 to 2022."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Traffic Collisions"
+       ],
+       "tag": "strong"
+      },
+      " (City AGOL table): 134,136 rows, 2008 to 2025, edited 2026-06-26. Located by ",
+      {
+       "children": [
+        "GEO_ID"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "LOCATIONTYPE"
+       ],
+       "tag": "code"
+      },
+      " (intersection 76,888, segment 57,238). Driver age is grouped."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Prefer it to the spatialsolutions \"TES Collisions\" layer (128,169 points), which records ",
+      {
+       "children": [
+        "DRIVER_*_AGE"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "DRIVER_*_SEX"
+       ],
+       "tag": "code"
+      },
+      " and should not be used."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Safety features:"
+       ],
+       "tag": "strong"
+      },
+      " Traffic Signals 693, Pedestrian Crossovers 215, Traffic Speed Humps 859, Community Safety Zones 72 (two copies, both edited 2026-11). Useful as street character, not as parcel facts."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Stormwater Management Facilities"
+       ],
+       "tag": "strong"
+      },
+      " (148 polygons) and ",
+      {
+       "children": [
+        "Watercourse"
+       ],
+       "tag": "strong"
+      },
+      " (11,252 lines): environment family."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Airport:"
+       ],
+       "tag": "strong"
+      },
+      " 5 polygons, edited 2023-10-03."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Port:"
+       ],
+       "tag": "strong"
+      },
+      " not found in City services. HOPA is a separate federal authority; a lead only."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "4.-Proposed-next-steps"
+   },
+   "children": [
+    "4. Proposed next steps"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Truck Route Network:"
+       ],
+       "tag": "strong"
+      },
+      " profile stage 6 fully with a reviewed sample of the 30 m hits, and ask the City what ",
+      {
+       "children": [
+        "RESTRICTED"
+       ],
+       "tag": "code"
+      },
+      " and the blank ",
+      {
+       "children": [
+        "TIME_OF_DAY"
+       ],
+       "tag": "code"
+      },
+      " mean."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Bridges:"
+       ],
+       "tag": "strong"
+      },
+      " pull and profile the restriction layer; relate structures to truck-route and centreline segments."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Traffic counts:"
+       ],
+       "tag": "strong"
+      },
+      " build the ",
+      {
+       "children": [
+        "GEO_ID"
+       ],
+       "tag": "code"
+      },
+      " to centreline link as a derived segment table, showing count year with every value."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Code definitions (BL-120):"
+       ],
+       "tag": "strong"
+      },
+      " ask the City what ",
+      {
+       "children": [
+        "RESTRICTED"
+       ],
+       "tag": "code"
+      },
+      ", blank ",
+      {
+       "children": [
+        "TIME_OF_DAY"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "REDUCEDLOAD"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "TRUCK_ROUTE"
+       ],
+       "tag": "code"
+      },
+      " mean. Meanwhile keep the fields, shown as unconfirmed codes."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Water and sewer:"
+       ],
+       "tag": "strong"
+      },
+      " approved for display (D-077). Pull and profile next."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Corridor permits:"
+       ],
+       "tag": "strong"
+      },
+      " decide whether a dated \"current activity\" layer belongs in HeavyMap at all."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "5.-Round-2:-bridges,-utilities,-traffic-counts,-rail-(2026-11-17)"
+   },
+   "children": [
+    "5. Round 2: bridges, utilities, traffic counts, rail (2026-11-17)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Pulls (all complete, server count = pulled, native EPSG:26917, local only, folders ",
+      {
+       "children": [
+        "<name>-hamilton-2026-11-17/"
+       ],
+       "tag": "code"
+      },
+      " in a local working copy):"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "traffic-bridges"
+       ],
+       "tag": "strong"
+      },
+      " — Pulled: 446/446"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "railways"
+       ],
+       "tag": "strong"
+      },
+      " — Pulled: 1,692/1,692"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "railway-crossings"
+       ],
+       "tag": "strong"
+      },
+      " — Pulled: 353/353"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "watermain"
+       ],
+       "tag": "strong"
+      },
+      " — Pulled: 38,357/38,357"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "water-valve"
+       ],
+       "tag": "strong"
+      },
+      " — Pulled: 24,488/24,488"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "water-node"
+       ],
+       "tag": "strong"
+      },
+      " — Pulled: 18,327/18,327"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "water-hydrant"
+       ],
+       "tag": "strong"
+      },
+      " — Pulled: 14,217/14,217"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "water-pressure-district"
+       ],
+       "tag": "strong"
+      },
+      " — Pulled: 28/28"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "sewermain"
+       ],
+       "tag": "strong"
+      },
+      " — Pulled: 54,209/54,209"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "sewer-manhole"
+       ],
+       "tag": "strong"
+      },
+      " — Pulled: 48,906/48,906"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "sewer-node"
+       ],
+       "tag": "strong"
+      },
+      " — Pulled: 3,686/3,686"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "sewer-valve"
+       ],
+       "tag": "strong"
+      },
+      " — Pulled: 163/163"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "sewer-lift-station"
+       ],
+       "tag": "strong"
+      },
+      " — Pulled: 96/96"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Reference:"
+     ],
+     "tag": "strong"
+    },
+    " OpenStreetMap railway ways (rail with yard, siding and spur service values; 1,111 ways; OSM data timestamp 2026-07-24) from an Overpass mirror (the main server was at capacity), in ",
+    {
+     "children": [
+      "osm-railways-hamilton-2026-11-17/"
+     ],
+     "tag": "code"
+    },
+    ". © OpenStreetMap contributors, ODbL. Used only to check currency."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Method:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "measure2.py"
+     ],
+     "tag": "code"
+    },
+    " (local). Outputs are measurement tables in ",
+    {
+     "children": [
+      "_freight-recon-2026-11-17/derived/"
+     ],
+     "tag": "code"
+    },
+    ": distances in metres, ids and source attributes, with no thresholds or labels applied (proposed D-078). The population is the 3,193 active industrial-zoned parcels used in 1.1. Distances run from parcel boundary vertices (about 60 per parcel)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "5.1-Bridges,-culverts-and-grade-separations-with-restrictions"
+   },
+   "children": [
+    "5.1 Bridges, culverts and grade separations with restrictions"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Restricted structures:"
+       ],
+       "tag": "strong"
+      },
+      " 40 of 446: 27 height-restricted, 13 weight-restricted, none both. By type: bridge 28, railway grade separation 11, pedestrian bridge 1."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Posted heights:"
+       ],
+       "tag": "strong"
+      },
+      " 3.3 to 4.4 m."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Link to streets:"
+       ],
+       "tag": "strong"
+      },
+      " each structure was joined to its nearest street centreline segment: ",
+      {
+       "children": [
+        "439/446 within 15 m"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "bridge-segment-links.csv"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "On truck routes:"
+       ],
+       "tag": "strong"
+      },
+      " 11 of the 40 restricted structures lie within 15 m of a truck route, all full-time routes. Eight are low clearances of 4.0 to 4.4 m posted (one measured 4.25 m against 4.1 posted); three are weight limits of 27, 51 and 54 t."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Use:"
+       ],
+       "tag": "strong"
+      },
+      " a route-level constraint (\"the nearest truck route passes under a 4.1 m posted structure\"), never a parcel attribute."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Quirks:"
+       ],
+       "tag": "strong"
+      },
+      " heights carry floating-point artefacts (Q-035); flags use −1/0 (Q-036); ",
+      {
+       "children": [
+        "GIS_USER"
+       ],
+       "tag": "code"
+      },
+      " holds staff account names (Q-037, never expose)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "5.2-Water-and-sewer-networks-(show,-per-D-077)"
+   },
+   "children": [
+    "5.2 Water and sewer networks (show, per D-077)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Frontage proximity, boundary to main (",
+        {
+         "children": [
+          "parcel-utility-measurements.csv"
+         ],
+         "tag": "code"
+        },
+        "):"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Watermain within 30 m: ",
+      {
+       "children": [
+        "2,937/3,193"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Sewer main within 30 m: ",
+      {
+       "children": [
+        "2,816/3,193"
+       ],
+       "tag": "strong"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "No watermain within 300 m: 129. No sewer main within 300 m: 227."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Pressure district:"
+       ],
+       "tag": "strong"
+      },
+      " assigned by representative point for 3,055/3,193."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Nearest-main attributes:"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Watermain ",
+      {
+       "children": [
+        "WAT_SIZE"
+       ],
+       "tag": "code"
+      },
+      ": 150 (815), 200 (738), 300 (727), 400 (299), up to 1200."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Sewer ",
+      {
+       "children": [
+        "PIPEDIAM"
+       ],
+       "tag": "code"
+      },
+      ": 300 (643), 375 (410), 450 (262), 600 (241), up to 900+."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Also ",
+      {
+       "children": [
+        "PIPETYPE"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "SUBTYPE"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "INSTDATE"
+       ],
+       "tag": "code"
+      },
+      ", and ",
+      {
+       "children": [
+        "OWN"
+       ],
+       "tag": "code"
+      },
+      " (HA = City, PR = private)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The table also holds the distance to the nearest of 96 sewer lift stations."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Reading rule:"
+       ],
+       "tag": "strong"
+      },
+      " a main near the frontage is not a service connection, and its size is not available capacity. The sewer ",
+      {
+       "children": [
+        "SUBTYPE"
+       ],
+       "tag": "code"
+      },
+      " distinguishes sanitary, storm and combined; check it before any wording."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Quirk:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "INSTDATE"
+       ],
+       "tag": "code"
+      },
+      " is text in YYYYMMDD form (Q-038)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "5.3-Traffic-counts-on-street-segments"
+   },
+   "children": [
+    "5.3 Traffic counts on street segments"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Count table:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "adt-by-centreline-segment.csv"
+       ],
+       "tag": "code"
+      },
+      " lists each counted segment with its latest year, latest count, number of years counted and all counts. 1,716 segments, 1,682 present in the centreline."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Coverage of the truck network:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "185.9 of 631.2 km"
+       ],
+       "tag": "strong"
+      },
+      " of truck routes fall on a counted segment (midpoint within 12 m)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Latest count year on those routes (km):"
+       ],
+       "tag": "strong"
+      },
+      " 2008 to 2012 → 39.8; 2014 to 2018 → 19.4; 2019 → 31.8; 2020 to 2022 → 34.7; 2023 → 42.2; 2024 → 18.0."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Use:"
+       ],
+       "tag": "strong"
+      },
+      " \"latest all-vehicle count on the fronting segment, and its year\", never as truck volume. Most truck routes have no count at all."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "5.4-Rail"
+   },
+   "children": [
+    "5.4 Rail"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Currency against OpenStreetMap:"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Of 386.0 km of City rail, ",
+      {
+       "children": [
+        "359.9 km (93%)"
+       ],
+       "tag": "strong"
+      },
+      " lies within 25 m of OSM rail."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Of 386.8 km of OSM rail near the City data, ",
+      {
+       "children": [
+        "349.5 km (90%)"
+       ],
+       "tag": "strong"
+      },
+      " lies within 25 m of City rail."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The City layer (edited 2023-10-22) is broadly current. The roughly 10% differences are worth a reviewed look (sidings and yards are likely candidates)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Industrial parcels within 50 m of a surface railway:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "719/3,193"
+       ],
+       "tag": "strong"
+      },
+      " (tunnels excluded; ",
+      {
+       "children": [
+        "parcel-rail-distance.csv"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Level crossings:"
+       ],
+       "tag": "strong"
+      },
+      " 214 (public and private at-grade). 73 of them lie within 15 m of a truck route: at-grade rail on a freight route."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Crossing fields:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "TRACK_OWNER"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "XING_OWNER"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "TRACK_SPUR_NAME"
+       ],
+       "tag": "code"
+      },
+      " name railway companies and private spurs (Q-039; business names, review before public use). The spur names could identify rail-served industrial sites, a strong freight signal to profile next."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "5.5-Where-these-outputs-belong-(proposed,-D-078-in-the-planning-repo)"
+   },
+   "children": [
+    "5.5 Where these outputs belong (proposed, D-078 in the planning repo)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "The four derived tables are measurements (distances, ids, source attributes) and fit Industrial Atlas releases. Any wording such as \"fronts a truck route\", \"rail-served\" or \"low bridge on route\" is HeavyMap's judgement over them. Nothing here is released yet."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0065\ntype: working-paper\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-11-17\nseq: 30"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, hamilton, freight, infrastructure, run-1",
+ "path": "Hamilton-freight-and-infrastructure-datasets-discovery-and-first-profile-2026-11-17-11-19",
+ "title": "Hamilton freight and infrastructure datasets: discovery and first profile (2026-11-17)",
+ "url": "https://telegra.ph/Hamilton-freight-and-infrastructure-datasets-discovery-and-first-profile-2026-11-17-11-19",
+ "views": 0
+}

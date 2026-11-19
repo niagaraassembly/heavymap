@@ -15,6 +15,25 @@
      "children": [
       {
        "attrs": {
+        "href": "/Working-papers-Systems-11-19"
+       },
+       "children": [
+        "Working papers: Systems"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · collection",
+      {
+       "tag": "br"
+      },
+      "3 posts. The architecture and method documents behind HeavyMap and the Industrial Atlas, published nearly as written."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
         "href": "/Versioned-data-releases-you-can-verify-11-19"
        },
        "children": [
@@ -211,7 +230,7 @@
    "tag": "p"
   }
  ],
- "description": "The machinery behind HeavyMap: the Assembly System, MAKE, Dispatch, Join, and the frameworks they rest on.\nVersioned data releases you can verify — 2026-11-18 · 1 min · systems, industrial-atlas, releases, buildingStatus: in use. Every Industrial Atlas release is a fixed set of files with a hash for each one. It never changes after it is published.\nDrawing 166,745 parcels from static files — 2026-11-18 · 1 min · systems, map, tiles, hamilton, buildingStatus: in use. The Hamilton map has no map server. Everything…",
+ "description": "",
  "path": "Systems-11-19-4",
  "title": "Systems",
  "url": "https://telegra.ph/Systems-11-19-4",

@@ -1,0 +1,1792 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, hamilton, catalogue, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Scope."
+     ],
+     "tag": "strong"
+    },
+    " Every relevant Hamilton dataset, grouped by its role in joining, matching and spine development. The row-level detail is in ",
+    {
+     "children": [
+      "hamilton-dataset-groupings.csv"
+     ],
+     "tag": "code"
+    },
+    " (396 rows)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Inputs:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "hamilton-dataset-coverage.csv"
+       ],
+       "tag": "code"
+      },
+      " (606 rows, 2026-10-16), ",
+      {
+       "children": [
+        "mpac-data-inventory.md"
+       ],
+       "tag": "code"
+      },
+      ", the NPCA pull ",
+      {
+       "children": [
+        "PULL-SUMMARY.json"
+       ],
+       "tag": "code"
+      },
+      " on deb, and heavymap ",
+      {
+       "children": [
+        "main"
+       ],
+       "tag": "code"
+      },
+      " df55512 (",
+      {
+       "children": [
+        "parcel-identity-spine.md"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "context-band-ladder.md"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "PCDP.md"
+       ],
+       "tag": "code"
+      },
+      ", planning doc 10, joining concepts)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Live metadata:"
+       ],
+       "tag": "strong"
+      },
+      " ArcGIS REST ",
+      {
+       "children": [
+        "?f=json"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "returnCountOnly"
+       ],
+       "tag": "code"
+      },
+      " were queried on 2026-10-17 for 200+ layers on the City, HCA, Conservation Halton source protection, NPCA, LIO and GRCA-proxy servers. Fields and counts in the CSV marked ",
+      {
+       "children": [
+        "live REST"
+       ],
+       "tag": "code"
+      },
+      " are measured. The CSV ",
+      {
+       "children": [
+        "evidence"
+       ],
+       "tag": "code"
+      },
+      " column says ",
+      {
+       "children": [
+        "live_rest"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "local_pull"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "catalog_only"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "inferred"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Nothing was downloaded, committed or published."
+       ],
+       "tag": "strong"
+      },
+      " The vocabulary follows the Context Band Ladder (",
+      {
+       "children": [
+        "identity"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "land_use"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "constraints"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "activity_registers"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "derived_readings"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "share_export"
+       ],
+       "tag": "code"
+      },
+      ") and the PCDP minimum and maximum."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Counts"
+   },
+   "children": [
+    "Counts"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "606 coverage rows:"
+       ],
+       "tag": "strong"
+      },
+      " 237 ",
+      {
+       "children": [
+        "reviewed_not_relevant"
+       ],
+       "tag": "code"
+      },
+      " are excluded and 369 are grouped. The 2026-10-17 web check added 27 more, so the CSV has 396 rows."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Duplicates:"
+       ],
+       "tag": "strong"
+      },
+      " 19 rows are duplicates, mostly MCS \"Hamilton …\" rows that point at the same layer. That leaves 377 distinct datasets."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Not data layers:"
+       ],
+       "tag": "strong"
+      },
+      " 62 rows are viewers, PDFs or pages, and 11 are other geographies (New York, Welland, Seaway, Brant, CBSA)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Usable layers:"
+       ],
+       "tag": "strong"
+      },
+      " 304 data-bearing Hamilton datasets."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Proposed re-admits:"
+       ],
+       "tag": "strong"
+      },
+      " 3 datasets are marked ",
+      {
+       "children": [
+        "reviewed_not_relevant"
+       ],
+       "tag": "code"
+      },
+      " but are needed for the nature-framed first view: Parks_OD, Trails and HCA Trails (A04, A05, A27). They are listed as proposals, not re-admitted."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Tier-summary"
+   },
+   "children": [
+    "Tier summary"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Tier 0"
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: True base / identity (defines spine keys) · Rows: 9 · P1: 5 · P2: 2 · P3: 0 · Dup: 2"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tier 1"
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Key-joinable attributes (ID join) · Rows: 4 · P1: 0 · P2: 0 · P3: 4 · Dup: 0"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tier 2"
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Spatial-match layers (overlay / point-in-polygon) · Rows: 81 · P1: 11 · P2: 25 · P3: 34 · Dup: 11"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tier 3"
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Pure context overlays (display, not joined) · Rows: 76 · P1: 9 · P2: 8 · P3: 57 · Dup: 2"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tier 4"
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Registers without geometry (address/geocode) · Rows: 19 · P1: 0 · P2: 5 · P3: 11 · Dup: 3"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tier 5"
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Aggregate / derived stats (not parcel-level) · Rows: 134 · P1: 0 · P2: 0 · P3: 133 · Dup: 1"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Viewer/document only"
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Web app, story map, PDF or page — no layer · Rows: 62 · P1: 0 · P2: 0 · P3: 0 · Dup: 0"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Out of geography"
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Not Hamilton (NY, Welland, Seaway, Brant, CBSA) · Rows: 11 · P1: 0 · P2: 0 · P3: 0 · Dup: 0"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**All"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Rows: "
+       ],
+       "tag": "strong"
+      },
+      "396",
+      {
+       "children": [
+        " · P1: "
+       ],
+       "tag": "strong"
+      },
+      "25",
+      {
+       "children": [
+        " · P2: "
+       ],
+       "tag": "strong"
+      },
+      "40",
+      {
+       "children": [
+        " · P3: "
+       ],
+       "tag": "strong"
+      },
+      "239",
+      {
+       "children": [
+        " · Dup: "
+       ],
+       "tag": "strong"
+      },
+      "19**"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "How to read the tiers:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Tier 0 is thin on purpose."
+       ],
+       "tag": "strong"
+      },
+      " Hamilton parcel geometry has no key, so the spine key is minted from the geometry. NPCA ARN parcels, address points and buildings attach to it, and the City Boundary is the clip mask."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tier 1 is almost empty."
+       ],
+       "tag": "strong"
+      },
+      " Hamilton publishes no shared parcel ID. The only ID joins are by ARN, which exists on 36% of the city through the NPCA pull (MPAC itself, plus 23 HCA managed-forest rows), and by address string between two address sets."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Most of the work is in Tier 2 and Tier 4."
+       ],
+       "tag": "strong"
+      },
+      " Spatial overlays attach almost all parcel context. The registers attach by address, through the address points linked to the spine."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tier 5 is mostly noise."
+       ],
+       "tag": "strong"
+      },
+      " 59 of its 133 rows are StatCan Business Counts releases at CMA/CSD level. The rest are City dashboard tables by year or ward, and census polygons."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Recommended-processing-order-(P1,-dependency-sequence)"
+   },
+   "children": [
+    "Recommended processing order (P1, dependency sequence)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Steps 1 to 16 are the spine track and run in order. Steps 17 to 25 are the nature and context track. That track depends only on the City Boundary, so it can run in parallel from the start, for example as a separate an agent batch."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "1"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C205 · Dataset: City Boundary · Tier: 0 · Count (live): 1 · Join key: n/a (single polygon) · Join method: clip / containment · Difficulty: easy · Feeds: identity"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C358 · Dataset: Hamilton Assessment Parcel (166,828 polygons, geometry only) · Tier: 0 · Count (live): 166828 · Join key: none published; mint hm:ca:on:hamilton:parcel:{geom-hash} (quantised … · Join method: n/a — mints the spine key · Difficulty: medium · Needs first: City Boundary (clip/QA) · Feeds: identity"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "3"
+       ],
+       "tag": "strong"
+      },
+      " — Row: A01 · Dataset: NPCA Assessment Parcels with ARN (Hamilton clip, pulled 202… · Tier: 0 · Count (live): 90306 · Join key: ARN (15-digit); ASSESSMENT (20) → 19-digit roll form · Join method: reciprocal representative-point match to Hamilton Assessment Parcel (99.6% 1:1 … · Difficulty: medium · Needs first: Hamilton Assessment Parcel · Feeds: identity"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "4"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C004 · Dataset: Addresses · Tier: 0 · Count (live): 274725 · Join key: normalised civic address (NUMBER_COMPLETE + UNIT + FULL_STREET_NAME +… · Join method: point-in-polygon to parcel; 1 parcel : many addresses · Difficulty: medium · Needs first: Hamilton Assessment Parcel · Feeds: identity"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "5"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C003 · Dataset: Buildings · Tier: 0 · Count (live): 214292 · Join key: none (NAME only); mint footprint geometry hash · Join method: polygon overlay — assign footprint to parcel of largest overlap · Difficulty: medium · Needs first: Hamilton Assessment Parcel · Feeds: identity"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "6"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C206 · Dataset: Community Boundaries · Tier: 2 · Count (live): 6 · Join key: COMMUNITY_NAME · Join method: parcel centroid-in-polygon · Difficulty: easy · Needs first: Hamilton Assessment Parcel · Feeds: identity"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "7"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C002 · Dataset: Zoning By-law Boundary · Tier: 2 · Count (live): 11860 · Join key: ZONING_CODE, BY_LAW_NUMBER, EXCEPTION1-3, HOLDING1-3 · Join method: polygon overlay; area-weighted dominant zone + list of all zones touching parcel · Difficulty: medium · Needs first: Hamilton Assessment Parcel · Feeds: land_use"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "8"
+       ],
+       "tag": "strong"
+      },
+      " — Row: A02 · Dataset: Existing Land Use Primary Blocks (LandUsePrimaryBlockHam_sh… · Tier: 2 · Count (live): 22391 · Join key: PRIMARY_LA · Join method: polygon overlay; area-weighted dominant class per parcel · Difficulty: medium · Needs first: Hamilton Assessment Parcel · Feeds: land_use"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "9"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C001 · Dataset: Employment Lands · Tier: 2 · Count (live): 22 · Join key: AREA_NAME, CATEGORY · Join method: parcel centroid-in-polygon (large districts) · Difficulty: easy · Needs first: Hamilton Assessment Parcel · Feeds: land_use"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "10"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C164 · Dataset: Urban Boundary · Tier: 2 · Count (live): 1 · Join key: n/a · Join method: parcel centroid-in-polygon flag · Difficulty: easy · Needs first: Hamilton Assessment Parcel · Feeds: land_use"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "11"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C180 · Dataset: Rural Settlement Areas · Tier: 2 · Count (live): 19 · Join key: NAME · Join method: parcel centroid-in-polygon · Difficulty: easy · Needs first: Hamilton Assessment Parcel · Feeds: land_use"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "12"
+       ],
+       "tag": "strong"
+      },
+      " — Row: A07 · Dataset: Conservation authority watershed areas in Hamilton (HCA / C… · Tier: 2 · Count (live): 4 (1 each) · Join key: CONSERVATION_AUTHORITY · Join method: parcel centroid-in-polygon · Difficulty: easy · Needs first: Hamilton Assessment Parcel · Feeds: constraints"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "13"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C255 · Dataset: HCA: HCA Regulated Areas · Tier: 2 · Count (live): 137 · Join key: n/a (Version only) · Join method: polygon intersect; % of parcel area regulated · Difficulty: medium · Needs first: Hamilton Assessment Parcel · Feeds: constraints"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "14"
+       ],
+       "tag": "strong"
+      },
+      " — Row: A09 · Dataset: NPCA Approximate Regulation Lands · Tier: 2 · Count (live): 443 in Hamilton bbox · Join method: polygon intersect; % area · Difficulty: medium · Needs first: Hamilton Assessment Parcel · Feeds: constraints"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "15"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C114 · Dataset: Heritage Properties · Tier: 2 · Count (live): 10273 · Join key: STREET_NO_1 + STREET_NAME (address); BYLAW_NO · Join method: point-in-polygon; address match as cross-check · Difficulty: easy · Needs first: Hamilton Assessment Parcel; Addresses (cross… · Feeds: constraints"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "16"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C160 · Dataset: Development Applications · Tier: 2 · Count (live): 5237 · Join key: FILE_NUM, ADDRESS · Join method: point-in-polygon; address match as fallback · Difficulty: easy · Needs first: Hamilton Assessment Parcel; Addresses · Feeds: activity_registers"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "17"
+       ],
+       "tag": "strong"
+      },
+      " — Row: A12 · Dataset: Greenbelt Outer Boundary · Tier: 3 · Count (live): 1 in Hamilton bbox · Join method: display · Difficulty: easy · Needs first: City Boundary"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "18"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C363 · Dataset: Greenbelt Designation (LIO Open06/15) · Tier: 3 · Count (live): 20 in Hamilton bbox (90 Ontario-wide) · Join key: DESIGNATION · Join method: display (can become a Tier 2 constraint overlay later) · Difficulty: easy · Needs first: City Boundary · Feeds: land_use"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "19"
+       ],
+       "tag": "strong"
+      },
+      " — Row: A17 · Dataset: Niagara Escarpment Plan Area boundary · Tier: 3 · Count (live): 1 in Hamilton bbox · Join method: display · Difficulty: easy · Needs first: City Boundary"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "20"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C364 · Dataset: Niagara Escarpment Plan Boundary + Designation (LIO Open06/… · Tier: 3 · Count (live): 197 in Hamilton bbox (1,211 Ontario-wid… · Join key: DESIGNATION · Join method: display (can become Tier 2 overlay later) · Difficulty: easy · Needs first: City Boundary · Feeds: land_use"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "21"
+       ],
+       "tag": "strong"
+      },
+      " — Row: A04 · Dataset: Parks (Parks_OD) · Tier: 3 · Count (live): 633 · Join key: NAME, PARK_CLASS, ZONING_COD · Join method: display (nature frame) · Difficulty: easy · Needs first: City Boundary"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "22"
+       ],
+       "tag": "strong"
+      },
+      " — Row: A22 · Dataset: Wooded Areas (provincial) · Tier: 3 · Count (live): 7483 in Hamilton bbox · Join key: CLASS_SUBTYPE;CLASS_SUBTYPE_NUM;WOODED_AREA_TYPE;TYPE_OTHER_DESCR · Join method: display (nature frame) · Difficulty: easy · Needs first: City Boundary"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "23"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C145 · Dataset: Escarpment · Tier: 3 · Count (live): 1 · Join method: display · Difficulty: easy · Needs first: City Boundary"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "24"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C005 · Dataset: Railways · Tier: 3 · Count (live): 1692 · Join key: RAILWAY_CATEGORY · Join method: display; optional distance-to-rail reading · Difficulty: easy · Needs first: City Boundary · Feeds: derived_readings"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "25"
+       ],
+       "tag": "strong"
+      },
+      " — Row: C006 · Dataset: Truck Route Network · Tier: 3 · Count (live): 1250 · Join key: STREET_NAME, IS_TRUCK_ROUTE, RESTRICTED · Join method: display; optional frontage-on-truck-route reading · Difficulty: easy · Needs first: City Boundary · Feeds: derived_readings"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Stage-view"
+   },
+   "children": [
+    "Stage view"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage A, fetch (parallel)."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Pull every P1 layer clipped to the City Boundary."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Most are under 2k features. The big ones are parcels (166,828), addresses (274,725), buildings (214,292), existing land use (22,391) and zoning (11,860)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Parcels and NPCA ARN are already local on deb."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Stage B, spine (Tier 0)."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Mint ",
+      {
+       "children": [
+        "hm:ca:on:hamilton:parcel:{hash}"
+       ],
+       "tag": "code"
+      },
+      " from each parcel geometry."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Attach the NPCA ARN by reciprocal representative point. Attach addresses by point-in-polygon, and buildings by largest overlap."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Output one parcels table carrying: key, grain, community, ARN where present, address list and building count."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "This is the only stage that needs an agent-grade care."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Stage C, land_use (Tier 2)."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Zoning: dominant code plus all touching codes, with exceptions and holdings kept as ",
+      {
+       "children": [
+        "zoning_site_modifier"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Existing land use: dominant class."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Employment Lands, Urban Boundary and Rural Settlements: centroid flags."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Stage D, constraints (Tier 2)."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Name the regulating conservation authority from the CA areas layer (A07)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Take the % of each parcel inside the HCA and NPCA regulated areas."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Attach heritage by point-in-polygon."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Parcels in Conservation Halton or GRCA territory get ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " / ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " refusals rather than silence."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Stage E, activity_registers."
+       ],
+       "tag": "strong"
+      },
+      " Attach development applications by point-in-polygon. (P2 adds permits 2017+, licences and NPRI by address match. See below.)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Stage F, nature and context."
+       ],
+       "tag": "strong"
+      },
+      " Display-only PMTiles layers: Greenbelt outer boundary and designation, NEP boundary and designation, Parks, Wooded Area, Escarpment, Railways, Truck Routes."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "Next-after-P1-(P2,-in-dependency-order)"
+   },
+   "children": [
+    "Next after P1 (P2, in dependency order)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Identity helpers:"
+       ],
+       "tag": "strong"
+      },
+      " Street Centreline, the geocoder fallback for Tier 4 (C163), and the LIO municipal boundary, whose ",
+      {
+       "children": [
+        "ASSESSMENT_CODE"
+       ],
+       "tag": "code"
+      },
+      " checks the ARN prefix 2518 (A25)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "More constraints:"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Wetlands (A06), ESA (C134) and ANSI (A21)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The 10 HCA/CH source-water protection layers (WHPA, IPZ, HVA, SGRA)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "GRCA regulation limits through the Region of Waterloo proxy, 188 Hamilton polygons (A10)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Conservation Halton, which has no open endpoint (A11)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Land-use extras:"
+       ],
+       "tag": "strong"
+      },
+      " PSEZ (C365), OSM industrial land (C244), City Properties (C224), land disposition parcels (C359), and the Official Plan designations (C362), which exist only as PDFs."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Address-matched registers (Tier 4):"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Building and demolition permits from 2017 on (51,846)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Licensed public garages (578) and salvage yards (12)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The vacant building registry (84)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "NPRI, matched by reported coordinates with an address check."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Context:"
+       ],
+       "tag": "strong"
+      },
+      " Planning applications (C040), Neighbourhoods, Wards, Rural Boundary, the Airport, HCA forest cover, the Natural Heritage System, Trails, the provincial park, Watercourse and Waterbodies."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Findings-that-change-the-plan"
+   },
+   "children": [
+    "Findings that change the plan"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "The City has an uncatalogued existing-land-use layer."
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "LandUsePrimaryBlockHam_shp"
+       ],
+       "tag": "code"
+      },
+      " has 22,391 polygons and was last edited 2024-04. Its ",
+      {
+       "children": [
+        "PRIMARY_LA"
+       ],
+       "tag": "code"
+      },
+      " classes are Industrial, Warehousing, Vacant Lands, Commercial, Office and others. Until an Official Plan layer exists, it is the strongest open \"what is this land used for\" signal, so it is P1."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Conservation authority coverage is now mapped."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City CA layer:"
+       ],
+       "tag": "strong"
+      },
+      " the City publishes one dissolved polygon per CA (HCA, Conservation Halton, NPCA, GRCA), so every parcel can name its regulator (A07)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NPCA:"
+       ],
+       "tag": "strong"
+      },
+      " regulation lands are open (A09)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GRCA:"
+       ],
+       "tag": "strong"
+      },
+      " limits are reachable only through a Region of Waterloo proxy service, with 188 polygons tagged City of Hamilton (A10)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Conservation Halton:"
+       ],
+       "tag": "strong"
+      },
+      " no open regulation layer was found (A11)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "The nature layers were marked not relevant."
+       ],
+       "tag": "strong"
+      },
+      " Parks (633 polygons), Trails (3,437) and HCA Trails sit in ",
+      {
+       "children": [
+        "reviewed_not_relevant"
+       ],
+       "tag": "code"
+      },
+      ". The \"encased by nature\" view needs at least Parks."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "The city has its own copy of the provincial wetlands."
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "Wetlands_COH_shp"
+       ],
+       "tag": "code"
+      },
+      " has 2,693 polygons, cleaner than clipping the LIO layer."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Greenbelt and NEP extras."
+       ],
+       "tag": "strong"
+      },
+      " LIO publishes the Greenbelt Outer Boundary, Specialty Crop, Towns/Villages and Hamlets, the NEP Boundary, Policy Areas and Minor Urban Centres, and the Natural Heritage System. None of these are catalogued for Hamilton."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "There is no hidden ID."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Addresses expose no address ID; Cooling Towers' ",
+      {
+       "children": [
+        "ADDRESS_ID"
+       ],
+       "tag": "code"
+      },
+      " has nothing to join to."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Buildings have only ",
+      {
+       "children": [
+        "NAME"
+       ],
+       "tag": "code"
+      },
+      ", and permits carry ",
+      {
+       "children": [
+        "PERMITNUMBER"
+       ],
+       "tag": "code"
+      },
+      " plus a free-text address."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "So every Tier 4 join is an address-string match. Address normalisation is a shared prerequisite and is worth building once."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Owner-like fields need dropping at ingest under D-13:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "RECIPIENT"
+       ],
+       "tag": "code"
+      },
+      " on the Heritage Property Grant table, and councillor contact fields on Ward Boundaries."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "&quot;City-encased-by-nature&quot;:-layers-that-feed-the-first-view"
+   },
+   "children": [
+    "\"City encased by nature\": layers that feed the first view"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Must have (P1):"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Greenbelt Outer Boundary (A12) and Greenbelt Designation (C363, 20 polygons in the Hamilton bbox)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "NEP Boundary (A17) and NEP Designation (C364, 197)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Parks_OD (A04, re-admit), LIO Wooded Area (A22, 7,483 in bbox) and the Escarpment line (C145)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The regulated-area overlays: HCA (C255), NPCA (A09) and the CA areas (A07)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Next (P2):"
+       ],
+       "tag": "strong"
+      },
+      " Natural Heritage System (A13), wetlands (A06), ESA (C134), ANSI (A21), HCA forest cover (C279), Trails (A05), Watercourse and Waterbodies (C130, C169), the provincial park (A23) and the GRCA and CH regulation limits (A10, A11)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Framing note [inference]:"
+       ],
+       "tag": "strong"
+      },
+      " most of the green ring sits outside the Urban Boundary. One way to get the encased look is to render Greenbelt, NEP and woodland at full opacity, and to dim or shade the area outside the Urban Boundary polygon (C164). Filed for INSIGHTS.md."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Open-questions-for-the-owner"
+   },
+   "children": [
+    "Open questions for the owner"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Public ARN."
+       ],
+       "tag": "strong"
+      },
+      " PR #61 lifted the MPAC/NPCA rule only for a password-protected site. On public GitHub Pages, do ARN and ",
+      {
+       "children": [
+        "MPAC_TAXAT"
+       ],
+       "tag": "code"
+      },
+      " ship in tiles, or are they used build-side only, for example to flag \"assessed as industrial\" without the roll number? This blocks the Stage F tiles, not the spine."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Spine key recipe."
+       ],
+       "tag": "strong"
+      },
+      " Is a geometry hash, such as a quantised representative point plus area, acceptable as the Hamilton parcel key, NA-83-style? How should it survive City refreshes, given the layer is tagged \"Temp\" and was last edited 2024-12-20?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Centroid join and the offset."
+       ],
+       "tag": "strong"
+      },
+      " Do you accept the reciprocal representative-point join (99.6%) as the NPCA-to-City link and log the IoU offset (p50 0.88) as a separate task? Or should the offset be measured and corrected first?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "The 64% with no ARN."
+       ],
+       "tag": "strong"
+      },
+      " For the parcels outside NPCA's watershed: render refusals (",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      "), ask the City for an ARN-attributed parcel layer, or get an MPAC/Propertyline quote?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Official Plan."
+       ],
+       "tag": "strong"
+      },
+      " For v0, do we refuse ",
+      {
+       "children": [
+        "official_plan_designation"
+       ],
+       "tag": "code"
+      },
+      " and lean on Employment Lands plus Existing Land Use as clearly labelled proxies? Or should someone digitise UHOP E-1 / RHOP D, or request the layer from the City?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Conservation Halton gap."
+       ],
+       "tag": "strong"
+      },
+      " Request the regulation limit from CH, or ship CH-area parcels with a named refusal? And is the GRCA layer through the Region of Waterloo proxy acceptable as the source?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "\"Vacant\" wording."
+       ],
+       "tag": "strong"
+      },
+      " Existing Land Use has a \"Vacant Lands\" class and there is a Vacant Building Registry. The PCDP forbids \"vacant/available\" claims. Are these OK if shown as a quoted source class with its authority?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Catalog writes."
+       ],
+       "tag": "strong"
+      },
+      " Should the 27 web-check rows (A01 to A27) and the 3 proposed re-admits go into catalog 09 and the MCS? That needs a commit. Separately, are the ",
+      {
+       "children": [
+        "PED_ZONING_*"
+       ],
+       "tag": "code"
+      },
+      " layers superseded and safe to ignore?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Greenbelt and NEP role."
+       ],
+       "tag": "strong"
+      },
+      " Display-only Tier 3 for v0, or claimed ",
+      {
+       "children": [
+        "constraints"
+       ],
+       "tag": "code"
+      },
+      " on each parcel (a cheap overlay) from day one?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Split-zoned parcels."
+       ],
+       "tag": "strong"
+      },
+      " Show the dominant zone only, or every zone touching the parcel with area shares? The latter is more honest but needs more UI space."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "Dependency-flow"
+   },
+   "children": [
+    "Dependency flow"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "flowchart LR\n  CB[City Boundary C205]:::t0 --> P[Hamilton Assessment Parcel C358<br/>mint geometry-hash spine key]:::t0\n  P --> ARN[NPCA ARN parcels A01<br/>reciprocal rep-point, 36% of area]:::t0\n  P --> AD[Addresses C004<br/>point-in-polygon]:::t0\n  P --> BL[Buildings C003<br/>largest overlap]:::t0\n  AD --> SC[Street Centreline C163<br/>geocoder fallback]:::t0\n  ARN --> T1[Tier 1 ARN joins<br/>MPAC, HCA managed forest]:::t1\n  AD --> T1b[Tier 1 address joins<br/>Waste Collection QA]:::t1\n  P --> LU[Tier 2 land_use<br/>Zoning, Existing Land Use, Employment Lands,<br/>Urban/Rural, PSEZ, OP-pdf]:::t2\n  P --> CO[Tier 2 constraints<br/>CA areas, HCA/NPCA/GRCA/CH regulated,<br/>Heritage, Wetlands, ESA, ANSI, SWP]:::t2\n  P --> AR[Tier 2 activity points<br/>Dev Applications, Planning Apps, City Properties]:::t2\n  AD --> T4[Tier 4 registers<br/>Permits, Licences, Vacant Bldg, Grants, NPRI]:::t4\n  SC --> T4\n  CB --> T3[Tier 3 context / nature frame<br/>Greenbelt, NEP, Parks, Wooded, Escarpment,<br/>Rail, Truck routes, utilities]:::t3\n  P --> T5[Tier 5 area stats<br/>census, ward and CMA tables]:::t5\n  LU --> PC[PCDP parcel record<br/>identity → land_use → constraints → activity]\n  CO --> PC\n  AR --> PC\n  T4 --> PC\n  T1 --> PC\n  classDef t0 fill:#1f4e79,color:#fff\n  classDef t1 fill:#2e75b6,color:#fff\n  classDef t2 fill:#70ad47,color:#fff\n  classDef t3 fill:#a9d18e\n  classDef t4 fill:#ffc000\n  classDef t5 fill:#d9d9d9"
+   ],
+   "tag": "pre"
+  },
+  {
+   "attrs": {
+    "id": "Method-notes"
+   },
+   "children": [
+    "Method notes"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Tier rules."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Tables with an address field go to Tier 4. Tables with only year, ward or total fields go to Tier 5."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Ward, census tract and FSA polygons go to Tier 5."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "infrastructure_context"
+       ],
+       "tag": "code"
+      },
+      " rows and asset layers with a ",
+      {
+       "children": [
+        "COMPKEY"
+       ],
+       "tag": "code"
+      },
+      " go to Tier 3."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Other points and polygons go to Tier 2, with manual overrides for about 90 named datasets."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Generic rows have role and join text like \"point layer\" or \"polygon overlay\". Treat those as defaults, not reviewed judgements."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Counts."
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "City and HCA counts are whole-layer counts, since those layers are Hamilton-scoped."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "LIO counts are envelope intersections of the City bounding box (-80.252, 43.049, -79.617, 43.472). They overcount slightly, because the box catches Burlington, Grimsby and west Lincoln."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The catalog's counts for Addresses (273,535) and Buildings (214,293) differ slightly from today's live counts (274,725 and 214,292)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Not done."
+       ],
+       "tag": "strong"
+      },
+      " No layer was downloaded. One service was unreachable: ",
+      {
+       "children": [
+        "Average Unemployment Rate"
+       ],
+       "tag": "code"
+      },
+      ", a MapServer that returned \"not started\". Conservation Halton's ",
+      {
+       "children": [
+        "RegulationsExternalMapping"
+       ],
+       "tag": "code"
+      },
+      " returned no layers."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0063\ntype: working-paper\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-10-17\nseq: 28"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, hamilton, catalogue, run-1",
+ "path": "Hamilton-dataset-groupings-by-spine-role-read-only-2026-10-17-ET-11-19",
+ "title": "Hamilton dataset groupings by spine role (read-only, 2026-10-17 ET)",
+ "url": "https://telegra.ph/Hamilton-dataset-groupings-by-spine-role-read-only-2026-10-17-ET-11-19",
+ "views": 0
+}

@@ -1,0 +1,1146 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, architecture, framework"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Status:"
+     ],
+     "tag": "strong"
+    },
+    " architecture sketch, 2026-09-23, vacant-display nuance 2026-10-17. Linear ",
+    {
+     "children": [
+      "NA-11"
+     ],
+     "tag": "strong"
+    },
+    ". Docs only."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Purpose"
+   },
+   "children": [
+    "Purpose"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The ladder is the ordered list of context a spine unit may carry. PCDP presents the ladder from a minimum honest subset to the full ordered list. The Claim & Refusal Contract decides what is allowed to appear inside a band."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Order is fixed:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "identity"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "land_use"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "constraints"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "activity_registers"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "derived_readings"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "share_export"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "A later band may use an earlier one. It may not be shown as if it were the same kind of fact. A zoning code, a flood overlay, a licence register, and a coverage ratio are four rungs, even when they are drawn in one dossier."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Non-goals"
+   },
+   "children": [
+    "Non-goals"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Designing panels, typography, or Leaflet layers. Chrome is deferred. The ladder is not a wireframe."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Requiring every band to be full before any parcel can be shown. Empty bands are allowed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Collapsing the six rungs into one score."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Treating the older eight-band dossier sketch in ",
+      {
+       "children": [
+        "first-attempts/niagara-atlas/"
+       ],
+       "tag": "code"
+      },
+      " as this ladder. That panel is prior art."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Editing MCS cells. This document only names the tokens the ",
+      {
+       "children": [
+        "dossier_bands"
+       ],
+       "tag": "code"
+      },
+      " column should use."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "How-it-relates-to-the-other-three"
+   },
+   "children": [
+    "How it relates to the other three"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Parcel Identity Spine."
+       ],
+       "tag": "strong"
+      },
+      " Supplies the unit and fills the ",
+      {
+       "children": [
+        "identity"
+       ],
+       "tag": "code"
+      },
+      " rung: key, grain, jurisdiction, outline or point, native keys, and identity-level refusals."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "PCDP."
+       ],
+       "tag": "strong"
+      },
+      " Minimum presentation is the identity rung plus an explicit list of rungs not spoken for. Maximum presentation is all six rungs, in this order, each filled or refused."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Claim & Refusal Contract."
+       ],
+       "tag": "strong"
+      },
+      " A rung is empty only as a refusal with a reason. A rung is filled only with stamped claims. “Empty” never means vacant, idle, unconstrained, or unlicensed-as-a-fact-about-the-business. HeavyMap still must not assert vacancy on its own. A source’s class such as ",
+      {
+       "children": [
+        "City class: Vacant Lands"
+       ],
+       "tag": "code"
+      },
+      " may be shown as a quoted, attributed claim on a filled rung."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "The-rungs"
+   },
+   "children": [
+    "The rungs"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "1"
+       ],
+       "tag": "strong"
+      },
+      " — Token: ",
+      {
+       "children": [
+        "identity"
+       ],
+       "tag": "code"
+      },
+      " · What may sit here: Spine key, grain, jurisdiction, geometry handle, native keys, identity refusals · What must not sit here: Use, risk, activity, scores"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2"
+       ],
+       "tag": "strong"
+      },
+      " — Token: ",
+      {
+       "children": [
+        "land_use"
+       ],
+       "tag": "code"
+      },
+      " · What may sit here: Designation, zoning, property class, or other published land classification, each labelled as which vocabulary it is · What must not sit here: A NAICS code pretending to be a by-law; a by-law pretending to be a New York property class"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "3"
+       ],
+       "tag": "strong"
+      },
+      " — Token: ",
+      {
+       "children": [
+        "constraints"
+       ],
+       "tag": "code"
+      },
+      " · What may sit here: Overlays and encumbrances a joined source states (flood, heritage, environmental, easement, and similar), each named by authority · What must not sit here: A sum of unrelated overlays into one “constraint score”; a missing overlay shown as “clear”"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "4"
+       ],
+       "tag": "strong"
+      },
+      " — Token: ",
+      {
+       "children": [
+        "activity_registers"
+       ],
+       "tag": "code"
+      },
+      " · What may sit here: Registers of activity placed on this key: employment inventory, permits, licences, facility registrations · What must not sit here: An inference that a business is operating, closed, or failing"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "5"
+       ],
+       "tag": "strong"
+      },
+      " — Token: ",
+      {
+       "children": [
+        "derived_readings"
+       ],
+       "tag": "code"
+      },
+      " · What may sit here: Named readings computed from earlier rungs, each with inputs and method · What must not sit here: Raw source fields copied forward; a composite of every reading"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "6"
+       ],
+       "tag": "strong"
+      },
+      " — Token: ",
+      {
+       "children": [
+        "share_export"
+       ],
+       "tag": "code"
+      },
+      " · What may sit here: The packet a reader can take away: the same claims and the same refusals, on the ",
+      {
+       "children": [
+        "share"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "export"
+       ],
+       "tag": "code"
+      },
+      " surfaces · What must not sit here: A postcard that drops refusals to look complete"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Bands render in this order whenever more than the minimum is shown. Share/export is last because it packages the others. It is not a second copy of the facts with weaker rules."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The ladder stays these six tokens. Federal registers are claims on the band they already belong to, with an authority scale, and they do not add a rung. Planning-policy overlays (",
+    {
+     "children": [
+      "planning_policy_overlay"
+     ],
+     "tag": "code"
+    },
+    ") feed ",
+    {
+     "children": [
+      "constraints"
+     ],
+     "tag": "code"
+    },
+    ", each named by its authority. See ADR 0002."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Empty-bands-without-lying"
+   },
+   "children": [
+    "Empty bands without lying"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Each rung on a presented unit has one of two statuses:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "filled"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: At least one claim that passes the Claim & Refusal Contract."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "refused"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: No claim. Exactly one reason: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "not_licensed"
+       ],
+       "tag": "code"
+      },
+      ", or ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "A refused rung stays in the order. Omitting it would look like “nothing of that kind is true here.” Vacancy, emptiness, availability, and a numeric zero are claims about the land. They are not synonyms for refusal."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Two different negatives:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Refused rung."
+       ],
+       "tag": "strong"
+      },
+      " HeavyMap cannot speak. Example: no constraint layer is joined, so ",
+      {
+       "children": [
+        "constraints"
+       ],
+       "tag": "code"
+      },
+      " is ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      ". The reader is not told the site is unconstrained."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Filled negative."
+       ],
+       "tag": "strong"
+      },
+      " A joined source states an absence inside its own coverage. Example: a joined zoning layer’s overlay table has no heritage designation for this key, and the stamp says so. That is an observation about that layer, quoted, not a refusal of the whole rung."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "A rung can be ",
+    {
+     "children": [
+      "filled"
+     ],
+     "tag": "code"
+    },
+    " and still carry a separate refusal for something that rung does not have. The Welland illustration below fills ",
+    {
+     "children": [
+      "land_use"
+     ],
+     "tag": "code"
+    },
+    " with a synthetic zoning claim and refuses assessed value as ",
+    {
+     "children": [
+      "not_in_coverage"
+     ],
+     "tag": "code"
+    },
+    " inside the same rung (no source read so far carries an assessed-value field)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Minimum presentation does not draw six panels. It still accounts for every rung: identity is shown, and every rung without a claim is named in the “not spoken for” list with its reason. Maximum presentation shows the six rungs in order."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "MCS-column-dossier-bands"
+   },
+   "children": [
+    "MCS column ",
+    {
+     "children": [
+      "dossier_bands"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Part 2 column ",
+    {
+     "children": [
+      "dossier_bands"
+     ],
+     "tag": "code"
+    },
+    " lists the ladder tokens a ",
+    {
+     "children": [
+      "dataset"
+     ],
+     "tag": "strong"
+    },
+    " may fill. Tokens are the six names in the table above, separated by ",
+    {
+     "children": [
+      "|"
+     ],
+     "tag": "code"
+    },
+    ", written in ladder order. A zoning layer might carry:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "land_use|constraints"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Rules for the cell:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Use only the six tokens. Do not invent ",
+      {
+       "children": [
+        "regulatory"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "physical"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "neighbours"
+       ],
+       "tag": "code"
+      },
+      ", or ",
+      {
+       "children": [
+        "dossier"
+       ],
+       "tag": "code"
+      },
+      " as band names. Those words belong to prior-art panels or to the ",
+      {
+       "children": [
+        "dossier"
+       ],
+       "tag": "code"
+      },
+      " surface."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "List a token only if the dataset can actually put a stamped claim on that rung."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Leave the cell empty only when the dataset feeds no band. Do not write ",
+      {
+       "children": [
+        "none"
+       ],
+       "tag": "code"
+      },
+      " in a way that could be read as a parcel with no context."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The header stays ",
+      {
+       "children": [
+        "dossier_bands"
+       ],
+       "tag": "code"
+      },
+      " because that is the MCS name. The product noun for the list is the Context Band Ladder."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "The column describes datasets. A parcel’s refused rung is a PCDP fact, not a blank MCS cell."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "The-two-synthetic-units-as-ladders"
+   },
+   "children": [
+    "The two synthetic units as ladders"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Illustrations only, at the ",
+    {
+     "children": [
+      "maximum"
+     ],
+     "tag": "strong"
+    },
+    " snapshot defined in PCDP.md. Values are not observations. Stamps are abbreviated; grade and stamp rules are in the claims document. The minimum snapshot is identity plus a refusal for every rung that has no claim yet."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "ia:ca:on:welland:footprint:SYN-0142"
+   },
+   "children": [
+    {
+     "children": [
+      "ia:ca:on:welland:footprint:SYN-0142"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "identity"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Status: filled · Illustration: Footprint key in the City of Welland, Niagara Region, Ontario. Parcel polygon ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      ". MPAC roll ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      " (allowed under HARD-RULES 4; no accepted join from an MPAC-derived source yet)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "land_use"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Status: filled, with a refusal beside it · Illustration: Synthetic zoning “L1 — Light Industrial”, joined by point-in-polygon. Assessed value ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "constraints"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Status: refused · Illustration: ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "activity_registers"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Status: filled · Illustration: Synthetic NEI row ",
+      {
+       "children": [
+        "nei_id SYN-8130"
+       ],
+       "tag": "code"
+      },
+      ", joined by identifier. Employment stays an interval if the source gave a band. No departure claim."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "derived_readings"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Status: refused · Illustration: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " for a coverage ratio: the illustration has no parcel area to divide by. The reading is absent. It is not zero."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "share_export"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Status: filled · Illustration: Packet repeats the rows above, including both refusals."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "ia:us:ny:erie:parcel:SYN-999.00-1-1.1"
+   },
+   "children": [
+    {
+     "children": [
+      "ia:us:ny:erie:parcel:SYN-999.00-1-1.1"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "identity"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Status: filled · Illustration: Parcel key in Erie County, New York. SBL ",
+      {
+       "children": [
+        "SYN-999.00-1-1.1"
+       ],
+       "tag": "code"
+      },
+      ". SWIS ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      ", so no city or town is named."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "land_use"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Status: filled · Illustration: Synthetic property class ",
+      {
+       "children": [
+        "710"
+       ],
+       "tag": "code"
+      },
+      ", labelled property class, not zoning and not NAICS."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "constraints"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Status: refused · Illustration: ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      ". No constraint layer is held for this key in the illustration."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "activity_registers"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Status: refused · Illustration: ",
+      {
+       "children": [
+        "not_joined"
+       ],
+       "tag": "code"
+      },
+      ". Permit or facility points are not attached. This is not “no activity”."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "derived_readings"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Status: filled · Illustration: Synthetic reading ",
+      {
+       "children": [
+        "floor_area_m2"
+       ],
+       "tag": "code"
+      },
+      ", derived from a published square-foot figure. Original square feet remain on the stamp."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "share_export"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Status: filled · Illustration: Packet includes the property-class claim, the reading, and the refused rungs."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "An empty-looking American activity rung and an empty-looking Canadian constraints rung are both refusals. They are allowed. They are not vacancies."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Prior-art"
+   },
+   "children": [
+    "Prior art"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "first-attempts/niagara-atlas/DOSSIER-TECHNICAL-REPORT.md"
+     ],
+     "tag": "code"
+    },
+    " drew a fixed panel (subject, assertion, regulatory, physical, constraint, access, neighbours, history, evidence) and required unavailable bands to stay visible. That is the right instinct and the wrong noun list for Beta."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "PCDP keeps the instinct: order is stable, and a missing rung is shown as missing. The Beta ladder is the six tokens above, so MCS ",
+    {
+     "children": [
+      "dossier_bands"
+     ],
+     "tag": "code"
+    },
+    " has one vocabulary across Canadian and American datasets. Assertion state lives in the Claim & Refusal Contract, not in its own rung. Access distances and neighbour mixes, if they are built later, are ",
+    {
+     "children": [
+      "derived_readings"
+     ],
+     "tag": "code"
+    },
+    " with methods, not extra rungs."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0070\ntype: working-paper\nsection: systems\nevidence_date: 2026-11-16\nseq: 11"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, architecture, framework",
+ "path": "Context-Band-Ladder-11-19",
+ "title": "Context Band Ladder",
+ "url": "https://telegra.ph/Context-Band-Ladder-11-19",
+ "views": 0
+}

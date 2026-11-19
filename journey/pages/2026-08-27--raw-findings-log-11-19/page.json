@@ -1,0 +1,1138 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, niagara, log, prior-art"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "1-·-Reconnaissance-spike:-Waterloo-Region-and-Rochester"
+   },
+   "children": [
+    "1 · Reconnaissance spike: Waterloo Region and Rochester"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Purpose: determine which join methods each region supports, not to catalogue them."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Portal-discovery"
+   },
+   "children": [
+    "Portal discovery"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "000  https://opendata.regionofwaterloo.ca/data.json\n200  https://data.waterloo.ca/data.json\n404  https://openkitchenerrmow.opendata.arcgis.com/data.json\n000  https://open.kitchener.ca/data.json\n000  https://data.cambridge.ca/data.json\n\n200  https://data.cityofrochester.gov/data.json\n404  https://cityofrochester.opendata.arcgis.com/data.json\n404  https://data-rochesterny.opendata.arcgis.com/data.json\n000  https://roc.gov/data.json\n000  https://data.monroecounty.gov/data.json"
+   ],
+   "tag": "pre"
+  },
+  {
+   "attrs": {
+    "id": "Waterloo-—-548-datasets,-shared-catalogue"
+   },
+   "children": [
+    "Waterloo — 548 datasets, shared catalogue"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "221  City of Kitchener\n133  City of Waterloo\n125  Region of Waterloo\n 69  Cambridge, Ontario"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "4x \"Addresses\" on four different hosts: ",
+    {
+     "children": [
+      "services.arcgis.com/ZpeBVw5o1kjit7LT"
+     ],
+     "tag": "code"
+    },
+    " · ",
+    {
+     "children": [
+      "services1.arcgis.com/qAo1OsXi67t7XgmS"
+     ],
+     "tag": "code"
+    },
+    " · ",
+    {
+     "children": [
+      "utility.arcgis.com/usrsvcs/servers/d4d0c6de..."
+     ],
+     "tag": "code"
+    },
+    " · ",
+    {
+     "children": [
+      "maps.cambridge.ca/arcgispub03"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "2x \"Building Footprints\" (Cambridge, one other). Planning datasets by publisher: Cambridge 5 (Official Plan, Zoning Lookup, Business Parks, BIA, Core Areas), Kitchener 8 (Building Permits, Business Directory, Business Licenses, Business Park, zoning map, OPA status), Waterloo 1 (Building Permits). No parcel layer found. No assessment data."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Rochester-—-TaxParcel2024"
+   },
+   "children": [
+    "Rochester — TaxParcel2024"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "maps.cityofrochester.gov/server2/rest/services/Open_Data/TaxParcel2024/FeatureServer/0"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "layer: TaxParcel2024 | geom: Polygon | fields: 42\njoin/assessment-relevant: PARCELID, SITEADDRESS, CLASSCD, CLASSDSCRP,\nOWNERNME1, PSTLADDRESS, STATEDAREA, CURRENT_LAND_VALUE, CURRENT_TOTAL_VALUE,\nCURRENT_TAXABLE_VALUE, TENTATIVE_LAND_VALUE, TENTATIVE_TOTAL_VALUE,\nTENTATIVE_TAXABLE_VALUE, OWNERSHIPCODE, PARCEL_SOURCE, Shape__Area"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Counts by class:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "all                        64828\nindustrial 700s              365\ncommercial 400s             6663\nvacant land 300s            4768\nzero improvement value      4717     (CURRENT_TOTAL_VALUE = CURRENT_LAND_VALUE)"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Sample records:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "{\"PARCELID\":\"04628000010010000000\",\"CLASSCD\":\"312\",\"CLASSDSCRP\":\"Residential with Improvements\",\"CURRENT_TOTAL_VALUE\":185500,\"CURRENT_LAND_VALUE\":172500,\"STATEDAREA\":\"0.00\"}\n{\"PARCELID\":\"04628000010020000000\",\"CLASSCD\":\"210\",\"CLASSDSCRP\":\"1 Family Residential\",\"CURRENT_TOTAL_VALUE\":641600,\"CURRENT_LAND_VALUE\":185000,\"STATEDAREA\":\"0.00\"}\n{\"PARCELID\":\"04628000010030000000\",\"CLASSCD\":\"210\",\"CLASSDSCRP\":\"1 Family Residential\",\"CURRENT_TOTAL_VALUE\":475000,\"CURRENT_LAND_VALUE\":88000,\"STATEDAREA\":\"0.38\"}"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Tax parcel snapshots published for: 1996, 2000, 2004, 2008, 2012, 2018, 2019, 2020, 2021, 2022, 2023, 2024."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Failures worth recording: a ",
+    {
+     "children": [
+      "CLASSCD LIKE '7%'"
+     ],
+     "tag": "code"
+    },
+    " distinct-values query returned HTTP 500 from the server, and a ",
+    {
+     "children": [
+      "returnCountOnly"
+     ],
+     "tag": "code"
+    },
+    " on the bare layer also returned 500 before succeeding on a retry with an explicit where clause. Shell quoting broke two range queries before they were rewritten in Python."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Interpretation"
+   },
+   "children": [
+    "Interpretation"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Rochester publishes the assessment data Ontario denies."
+     ],
+     "tag": "strong"
+    },
+    " The UK reference atlas's method rests on VOA rating-list values; MPAC withholds the Ontario equivalent. Rochester's ",
+    {
+     "children": [
+      "CURRENT_LAND_VALUE"
+     ],
+     "tag": "code"
+    },
+    " against ",
+    {
+     "children": [
+      "CURRENT_TOTAL_VALUE"
+     ],
+     "tag": "code"
+    },
+    " gives improvement value directly, and ",
+    {
+     "children": [
+      "4,717 parcels currently carry zero of it"
+     ],
+     "tag": "strong"
+    },
+    " — an observation from a register, not an inference from absence. That is a categorically stronger evidence class than anything the Niagara method can produce, and twelve snapshots make it a trajectory rather than a snapshot."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Waterloo repeats the Niagara structural pattern"
+     ],
+     "tag": "strong"
+    },
+    " — one shared catalogue, an upper tier plus lower-tier municipalities, separate address layers per municipality on separate hosts. Its ceiling is the ",
+    {
+     "children": [
+      "footprint"
+     ],
+     "tag": "code"
+    },
+    " tier: no parcels."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Consequence for the engine:"
+     ],
+     "tag": "strong"
+    },
+    " under-occupancy cannot be one computation. In Ontario it is a ratio of floor area and employment against parcel area, computed from the employment upper bound. In Rochester it is improvement value over total value from an assessment register. Same question, different method, different evidence class — and the class has to travel with the score rather than being averaged away."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Not probed, recorded so the gap is explicit:"
+     ],
+     "tag": "strong"
+    },
+    " Region of Waterloo's own 125 datasets; Monroe County (portal does not resolve); licence terms for either region; Buffalo. And critically, ",
+    {
+     "children": [
+      "whether ",
+      {
+       "children": [
+        "PARCELID"
+       ],
+       "tag": "code"
+      },
+      " is genuinely stable across all twelve Rochester snapshots is assumed, not verified"
+     ],
+     "tag": "strong"
+    },
+    " — it is the single most load-bearing assumption here and needs the same test ",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    " got."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "2-·-Enrichment-design-written"
+   },
+   "children": [
+    "2 · Enrichment design written"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Wrote ",
+    {
+     "children": [
+      "docs/superpowers/specs/2026-08-27-atlas-enrichment-design.md"
+     ],
+     "tag": "code"
+    },
+    " (413 lines, 14 sections). Design conversation ran through a long discovery phase; every correction below was checked against real data before being written in."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Access attributes corrected — six of the engine spec's original access attributes measured the wrong geometry:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "dist_rail_m       -> dist_rail_served_m      (spur/siding/yard/industrial; exclude crossover, mainline)\ndist_regional_road_m -> dist_truck_route_m   (+ RESTRICTED, TIME_OF_DAY)\ndist_highway_m    -> dist_interchange_m      (265 motorway junctions observed)\ndist_border_m     -> dist_commercial_crossing_m (Rainbow Bridge is passenger-only)\ndist_canal_m      -> dist_water_loading_m    (~18 real points; canal is transit not loading)\ndist_airport_m    -> dist_cargo_airport_m    (Hamilton J.C. Munro is cargo; Niagara District is not)\ntransit_400m      -> transit_service_at_shift_times (GTFS)"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Servicing recovered as capacity rather than membership: Hamilton sewer main 54,115 features carry PIPEDIAM/PIPEHT/INSTDATE; watermain 38,298 carry WAT_SIZE/PRESZONE/INSTDATE."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Two constraint reclassifications: archaeological potential is a screening trigger not a prohibition; heritage designated and listed are different legal states. New veto class for conditions that disqualify rather than subtract — low clearance (229 maxheight features), attenuation zones (subsurface), landlocked parcels, non-commercial crossings."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Seven provincial regulatory registers added as a source class: HWIN (annual 2002-), EWRB, Permit to Take Water, Spills (2003-2022), Aggregate Sites, Waste Management Sites, Attenuation Zones. All OGL Ontario, all address-keyed, all consumed through the J2 join built in plan 1."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Agri-industrial: 612 greenhouses, 836 vineyards, 176 orchards, 82 wineries observed in the study area."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Interpretation"
+   },
+   "children": [
+    "Interpretation"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "The design's substance is corrections, not additions. Every one of the six access attributes computed cleanly and answered a question nobody asked — the same failure that produced 64 false departures in plan 1, and the reason the discovery phase ran as long as it did."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Two findings changed what the engine can claim rather than merely how it computes. HWIN beats the NEI on regulatory standing, time depth and scale measurement. EWRB closes a gap the engine spec had recorded as structural: it observes occupancy through energy consumption where MPAC denies it through assessment. The general lesson, written into the design as §8: regulation leaves better evidence than planning does, and none of these registers appears in any municipal catalogue."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "3-·-Dossier-technical-report-written"
+   },
+   "children": [
+    "3 · Dossier technical report written"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Requested: a technical report bringing the sidebar dossier to life for a reviewer who is a data scientist and mathematician, building up across sections to how formulas, assertions and ratings are created and substantiated, with an optional mathematical appendix."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Written to ",
+    {
+     "children": [
+      "atlas/DOSSIER-TECHNICAL-REPORT.md"
+     ],
+     "tag": "code"
+    },
+    " — 658 lines. Ten body sections, three appendices (A formulas, B worked evaluation, C open questions)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Figures-cited,-and-where-each-was-verified"
+   },
+   "children": [
+    "Figures cited, and where each was verified"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Every observed figure in the document was checked against the logs and specs before commit rather than recalled. Results:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "units in index"
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 445,075 · Source of truth: ",
+      {
+       "children": [
+        "logs/2026-08-24.md"
+       ],
+       "tag": "code"
+      },
+      " verification run · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "municipalities"
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 13 · Source of truth: same · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "rail features total"
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 4,399 · Source of truth: ",
+      {
+       "children": [
+        "specs/2026-08-27"
+       ],
+       "tag": "code"
+      },
+      " §69 · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "rail untagged ",
+        {
+         "children": [
+          "usage"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 2,223 · Source of truth: ",
+      {
+       "children": [
+        "specs/2026-08-27"
+       ],
+       "tag": "code"
+      },
+      " §73, §84, §368 · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "rail tagged (derived 4399−2223)"
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 2,176 → 0.49 · Source of truth: arithmetic on the above · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "OSM ",
+        {
+         "children": [
+          "brownfield"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 316 · Source of truth: ",
+      {
+       "children": [
+        "specs/2026-08-23"
+       ],
+       "tag": "code"
+      },
+      " §264 · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "OSM ",
+        {
+         "children": [
+          "disused"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 71 · Source of truth: ",
+      {
+       "children": [
+        "specs/2026-08-23"
+       ],
+       "tag": "code"
+      },
+      " §265 · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NEI departures 2019→2022 all sectors"
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 121 · Source of truth: ",
+      {
+       "children": [
+        "specs/2026-08-23"
+       ],
+       "tag": "code"
+      },
+      " §266 · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "↳ industrial only"
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 15 · Source of truth: ",
+      {
+       "children": [
+        "specs/2026-08-23"
+       ],
+       "tag": "code"
+      },
+      " §267 · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Hamilton demolition permits ",
+        {
+         "children": [
+          "DP"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 3,007 · Source of truth: ",
+      {
+       "children": [
+        "logs/2026-08-23.md:115"
+       ],
+       "tag": "code"
+      },
+      " (97.2% of typed) · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Hamilton registered vacant"
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 84 · Source of truth: ",
+      {
+       "children": [
+        "logs/2026-08-23.md:28"
+       ],
+       "tag": "code"
+      },
+      " · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Welland businesses w/ exact counts"
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 923 · Source of truth: prior session, calibration set · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Hamilton geocode rate"
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 0.869 · Source of truth: ",
+      {
+       "children": [
+        "logs/2026-08-23.md:1103"
+       ],
+       "tag": "code"
+      },
+      " · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Hopkins rail distance"
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 513 m · Source of truth: prior session dossier walk · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Hopkins nearest building"
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 17 m · Source of truth: same · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Hopkins nearest site plan"
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 247 m · Source of truth: same · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Hopkins neighbours 500 m"
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 18 / 3 manufacturing · Source of truth: same · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Welland zoning polygons checked"
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: 1,980 (of 1,981; 1 null geom) · Source of truth: ",
+      {
+       "children": [
+        "logs/2026-08-23.md:251,255"
+       ],
+       "tag": "code"
+      },
+      " · Verdict: OK"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "area agreement vs ",
+        {
+         "children": [
+          "GeometrySTArea"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Claimed in doc: ",
+      {
+       "children": [
+        "3.6×10⁻⁷ median rel. err."
+       ],
+       "tag": "strong"
+      },
+      " · Source of truth: ",
+      {
+       "children": [
+        "logs/2026-08-23.md:251"
+       ],
+       "tag": "code"
+      },
+      " · Verdict: ",
+      {
+       "children": [
+        "WRONG — FABRICATED"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Defect-1-—-fabricated-precision-(found-and-corrected-pre-commit)"
+   },
+   "children": [
+    "Defect 1 — fabricated precision (found and corrected pre-commit)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "I wrote that computed areas agree with Welland's published ",
+    {
+     "children": [
+      "GeometrySTArea"
+     ],
+     "tag": "code"
+    },
+    " to a \"median relative error of 3.6×10⁻⁷ across 1,980 polygons.\""
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "No such measurement exists."
+     ],
+     "tag": "strong"
+    },
+    " What was actually measured on 2026-08-23 and recorded at ",
+    {
+     "children": [
+      "logs/2026-08-23.md:251"
+     ],
+     "tag": "code"
+    },
+    " is:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "| shapely area vs Welland `GeometrySTArea`, 1,980 polygons | median 0.0000%, p95 0.0000% |"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "The polygon count was right; the error figure was invented. 3.6×10⁻⁷ is consistent with a reading that rounds to 0.0000%, which is exactly what makes it dangerous — it is not detectably wrong, it is merely unsourced. Anyone recomputing it would get a different number in that range and have no way to know which of us had measured."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "This is precisely the failure mode §7 of the document warns against, committed in the document itself, in the appendix that argues for measurement over assumption. Logged in full rather than quietly patched."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Corrected to:"
+     ],
+     "tag": "strong"
+    },
+    " median ",
+    {
+     "children": [
+      "0.0000%"
+     ],
+     "tag": "strong"
+    },
+    ", p95 ",
+    {
+     "children": [
+      "0.0000%"
+     ],
+     "tag": "strong"
+    },
+    ", with the added sentence that this is agreement to the reported precision of the check — the strongest statement the measurement supports and no stronger."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Defect-2-—-three-jurisdictions-collapsed-into-one-(found-and-corrected-pre-commit)"
+   },
+   "children": [
+    "Defect 2 — three jurisdictions collapsed into one (found and corrected pre-commit)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "The dormancy table was headed \"Measured 2026-08-23 across the study area\" over all six rows. The source table at ",
+    {
+     "children": [
+      "specs/2026-08-23-atlas-engine-design.md:263"
+     ],
+     "tag": "code"
+    },
+    " carries a Coverage column with three distinct values:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "OSM ",
+      {
+       "children": [
+        "brownfield"
+       ],
+       "tag": "code"
+      },
+      " / ",
+      {
+       "children": [
+        "disused"
+       ],
+       "tag": "code"
+      },
+      " — study-area wide"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "NEI departures — ",
+      {
+       "children": [
+        "Niagara Region"
+       ],
+       "tag": "strong"
+      },
+      " only (the twelve lower-tier municipalities;"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "the NEI is a Niagara Region product and does not cover Hamilton)"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "demolition permits / registered vacant — ",
+      {
+       "children": [
+        "City of Hamilton"
+       ],
+       "tag": "strong"
+      },
+      " only"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Presenting all six under one heading implies they are commensurable and invites a reader to sum or compare them. It also violates the binding rule in ",
+    {
+     "children": [
+      "GLOSSARY.md"
+     ],
+     "tag": "code"
+    },
+    ": \"Niagara Region\" is an upper-tier municipality and a data publisher, never a synonym for the area."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Corrected:"
+     ],
+     "tag": "strong"
+    },
+    " Coverage column restored with all three values, plus an explicit sentence that the three families cannot be summed, plus the denominator (121 departures from 12,016 businesses) which the original table omitted and without which 121 is uninterpretable."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Content-notes"
+   },
+   "children": [
+    "Content notes"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Worked subject is Hopkins Steel Works, 2 Broadway, Welland — chosen because"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "assembling its dossier is what falsified the departures layer on 2026-08-23 (64 of 68 claims false). §6 therefore treats refutation as a pipeline stage, not a display concern."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Appendix B's worked evaluation deliberately terminates in ",
+      {
+       "children": [
+        "U = null"
+       ],
+       "tag": "code"
+      },
+      ": Welland"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "publishes no parcel fabric, so every area-denominated input is null. The correct output of the flagship worked example is \"unavailable.\" This is the strongest available statement of the silent-zero rule."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Illustrative values are marked ",
+      {
+       "children": [
+        "[ill]"
+       ],
+       "tag": "code"
+      },
+      " and confined to: footprint area"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "3,400 m², and the decay parameters λ=0.6, μ=0.05. Everything else is ",
+    {
+     "children": [
+      "[obs]"
+     ],
+     "tag": "code"
+    },
+    ". λ and μ are unfitted and Appendix C.4 says so."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Appendix C lists six design choices as open questions rather than settled"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "results: additive independence (known false), multiplicative confidence compounding, the one-sided E_h conservatism convention, the unfitted decay parameters, whether confidence should itself be an interval, and the flat 5 km ceiling."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Not-done"
+   },
+   "children": [
+    "Not done"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "No new computation was run. This document reports existing measurements; it"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "does not produce any."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "logs/2026-08-24.md"
+       ],
+       "tag": "code"
+      },
+      " still carries the runaway agent's fabricated figures and"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "still needs its append-only correction entry. Unchanged by this work."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0051\ntype: working-paper\nsection: origins\nplace_type: region\nevidence_date: 2026-10-03\nseq: 11"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, niagara, log, prior-art",
+ "path": "2026-08-27--raw-findings-log-11-19",
+ "title": "2026-08-27 — raw findings log",
+ "url": "https://telegra.ph/2026-08-27--raw-findings-log-11-19",
+ "views": 0
+}

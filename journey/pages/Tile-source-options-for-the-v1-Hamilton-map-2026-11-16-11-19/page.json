@@ -1,0 +1,616 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, hamilton, map, tiles, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "Status: review with measurements and a recommendation. The decision is yours (proposed as D-070). Measurements were taken on 2026-11-16 from the 2026-10-17 Hamilton data."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-v1-needs"
+   },
+   "children": [
+    "What v1 needs"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "A viewer opens the Hamilton map, sees where things are, clicks a parcel, and gets its dossier (selection feedback within 100 ms, D-068). The map must work from static files, show where its background came from, and let a viewer know why a parcel cannot be selected. Parcel tiles carry the record key only (contract CN-03)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-we-have"
+   },
+   "children": [
+    "What we have"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Still render of the lower city and harbourfront (decision 67): two WebP images (2000x1250 and 900x1100) with a provenance record"
+       ],
+       "tag": "strong"
+      },
+      " — State: Exists and is live in the site. Cannot select a parcel. Source: Protomaps build 20261109 of OpenStreetMap."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "parcels.pmtiles"
+         ],
+         "tag": "code"
+        },
+        " (2026-10-17)"
+       ],
+       "tag": "strong"
+      },
+      " — State: 25.3 MB, zoom 12 to 15, 2,216 tiles. Properties: ",
+      {
+       "children": [
+        "heavymap_id"
+       ],
+       "tag": "code"
+      },
+      " (old name), ",
+      {
+       "children": [
+        "arn"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "arn_all"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "arn_count"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "arn_grade"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "area_m2"
+       ],
+       "tag": "code"
+      },
+      ". Stale: old id field and more properties than the contract allows."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "zoning.pmtiles"
+         ],
+         "tag": "code"
+        },
+        " 7.9 MB, ",
+        {
+         "children": [
+          "buildings.pmtiles"
+         ],
+         "tag": "code"
+        },
+        " 29.9 MB, ",
+        {
+         "children": [
+          "nature-frame.pmtiles"
+         ],
+         "tag": "code"
+        },
+        " 0.7 MB"
+       ],
+       "tag": "strong"
+      },
+      " — State: Exist. Not in the v1 contract."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tooling"
+       ],
+       "tag": "strong"
+      },
+      " — State: tippecanoe 2.53, go-pmtiles 1.31, MapLibre and the ",
+      {
+       "children": [
+        "pmtiles"
+       ],
+       "tag": "code"
+      },
+      " JS package are already in the site. ",
+      {
+       "children": [
+        "scripts/tiles/"
+       ],
+       "tag": "code"
+      },
+      " rebuilds from source GeoJSON and the registry."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Measurements"
+   },
+   "children": [
+    "Measurements"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Existing options, z12 to z15, parcels dropped when dense"
+       ],
+       "tag": "strong"
+      },
+      " — File: 21.4 MB · Downtown tile at z12 / z13 / z14 / z15 / z16 (gzipped): 450 KB / 444 KB / 121 KB / 26 KB / n/a · Features in that tile: 17,399 / 16,071 / 3,852 / 704"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "z14 to z16, nothing dropped"
+       ],
+       "tag": "strong"
+      },
+      " — File: 23.4 MB · Downtown tile at z12 / z13 / z14 / z15 / z16 (gzipped): n/a / n/a / 121 KB / 26 KB / 4 KB · Features in that tile: 3,852 / 704 / 86"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Key-only barely shrinks the tiles."
+       ],
+       "tag": "strong"
+      },
+      " Properties were about 15% of the old file. Geometry is the cost."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Parcels are dropped at z12 and z13."
+       ],
+       "tag": "strong"
+      },
+      " tippecanoe reported keeping \"the sparsest 65.85%\" of features. The z14 tile holds 3,852 parcels in both builds, so z14 and above are complete. Clicking at z12 or z13 would miss parcels without saying so."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "A z12 tile is 450 KB"
+       ],
+       "tag": "strong"
+      },
+      ", large for first interaction. At z14 it is 121 KB."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "The basemap source is not re-fetchable."
+       ],
+       "tag": "strong"
+      },
+      " An extract from Protomaps build 20261109 returned HTTP 404 on 2026-11-16; daily builds are not kept. The still render's provenance record points at a source that no longer exists, so any basemap must be archived by us (D-033) at the time it is taken."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "Options"
+   },
+   "children": [
+    "Options"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "What the viewer gets"
+       ],
+       "tag": "strong"
+      },
+      " — A. Still render only: A fixed picture of the lower city · B. Vector parcel tiles, own data: Pan, zoom and click any parcel in Hamilton, on a plain background · C. B plus self-hosted vector basemap: The same on a background with roads, water and labels · D. Third-party hosted tiles: The same as C"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Parcel selection"
+       ],
+       "tag": "strong"
+      },
+      " — A. Still render only: No · B. Vector parcel tiles, own data: Yes, from z14 · C. B plus self-hosted vector basemap: Yes, from z14 · D. Third-party hosted tiles: Yes"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Size to ship"
+       ],
+       "tag": "strong"
+      },
+      " — A. Still render only: 2 images, small (live) · B. Vector parcel tiles, own data: 23 MB PMTiles (z14 to z16) · C. B plus self-hosted vector basemap: B plus an extract of tens of MB (estimate; not measured because the source 404s) · D. Third-party hosted tiles: Parcel file only"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Static hosting"
+       ],
+       "tag": "strong"
+      },
+      " — A. Still render only: Yes · B. Vector parcel tiles, own data: Yes (range requests) · C. B plus self-hosted vector basemap: Yes · D. Third-party hosted tiles: Depends on someone else"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Provenance and archive"
+       ],
+       "tag": "strong"
+      },
+      " — A. Still render only: Source no longer fetchable · B. Vector parcel tiles, own data: Ours, fully recorded · C. B plus self-hosted vector basemap: Archive the extract when taken · D. Third-party hosted tiles: No archive; terms may change"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Risk"
+       ],
+       "tag": "strong"
+      },
+      " — A. Still render only: Not \"the actual map\" · B. Vector parcel tiles, own data: No context around the parcels; low zoom · C. B plus self-hosted vector basemap: Larger payload; basemap and parcel alignment · D. Third-party hosted tiles: A dependency we do not control; conflicts with D-033 and our transparency principle"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Effort"
+       ],
+       "tag": "strong"
+      },
+      " — A. Still render only: Done · B. Vector parcel tiles, own data: Small (rebuild with the contract schema) · C. B plus self-hosted vector basemap: Medium (extract, archive, style) · D. Third-party hosted tiles: Small, and we should not choose it"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Recommendation"
+   },
+   "children": [
+    "Recommendation"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Do B now and C next; keep A as the first paint. Do not use D."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Keep the still render"
+       ],
+       "tag": "strong"
+      },
+      " as the instant first paint and as the fallback when tiles fail (contract failure table). Record its dead source URL in its provenance file."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Build parcel tiles from the migrated ia runs"
+       ],
+       "tag": "strong"
+      },
+      " with the key as the only property, zoom 14 to 16, nothing dropped (23.4 MB; the build takes about 30 seconds). Drop ",
+      {
+       "children": [
+        "arn"
+       ],
+       "tag": "code"
+      },
+      " and the other properties; the shard has them."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Below z14, do not offer parcel selection."
+       ],
+       "tag": "strong"
+      },
+      " Show the zoning and nature tiles we already have (they carry no parcel-level selection) and a plain message: \"Zoom in to select a parcel\". Wording goes to the label register. This is honest about why a click does nothing."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Add the basemap (C) before launch if time allows"
+       ],
+       "tag": "strong"
+      },
+      ", taken from a current Protomaps build and archived in ",
+      {
+       "children": [
+        "industrial-atlas-data"
+       ],
+       "tag": "code"
+      },
+      " with its date, licence (ODbL attribution) and checksum the day it is extracted. Without it the map is parcels on a blank ground, which is workable for a first release but weak for orientation."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Hosting:"
+       ],
+       "tag": "strong"
+      },
+      " put tiles in ",
+      {
+       "children": [
+        "industrial-atlas-data"
+       ],
+       "tag": "code"
+      },
+      " under the release, listed in ",
+      {
+       "children": [
+        "files.json"
+       ],
+       "tag": "code"
+      },
+      " with their hashes. 23 MB per tile build is fine for a handful of releases in git; revisit if releases become frequent."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "Current-status-(2026-11-16)"
+   },
+   "children": [
+    "Current status (2026-11-16)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "the owner affirmed D-070: keep the still render as first paint/fallback; use key-only parcel tiles at z14–16 with no parcels dropped; begin selection at z14; add a self-hosted basemap next. The parcel release and tile manifest are live on ",
+    {
+     "children": [
+      "industrial-atlas-data"
+     ],
+     "tag": "code"
+    },
+    " (",
+    {
+     "children": [
+      "ca-on-hamilton/2026-11-16-d070"
+     ],
+     "tag": "code"
+    },
+    "); HeavyMap parcel clicks are live."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The required Protomaps extract has been archived locally on deb at a local working copy (25,368,361 bytes; SHA-256 ",
+    {
+     "children": [
+      "38d2d0e13e62… (SHA-256, shortened)"
+     ],
+     "tag": "code"
+    },
+    ") with ",
+    {
+     "children": [
+      "PROVENANCE.md"
+     ],
+     "tag": "code"
+    },
+    ". It is not yet in ",
+    {
+     "children": [
+      "industrial-atlas-data"
+     ],
+     "tag": "code"
+    },
+    "; style comparison and release packaging remain (BL-114, BL-116)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Next-work"
+   },
+   "children": [
+    "Next work"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Compare light and high-contrast dark treatments; the latter is captured separately in EX-062."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Transfer the archive to the data-repo work area before continuing on another machine, or fetch a fresh dated extract and record its provenance."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Package the archive and self-hosted style assets in a versioned data release, preserving ODbL attribution."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Keep the still render as first paint/fallback and wire the basemap into HeavyMap after release packaging."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Refine the low-zoom prompt and test selection latency on a mid-range phone (BL-089)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Building tiles remain out of the current contract; revisit only if they are added to scope."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0069\ntype: working-paper\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-11-16\nseq: 34"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, hamilton, map, tiles, run-1",
+ "path": "Tile-source-options-for-the-v1-Hamilton-map-2026-11-16-11-19",
+ "title": "Tile source options for the v1 Hamilton map (2026-11-16)",
+ "url": "https://telegra.ph/Tile-source-options-for-the-v1-Hamilton-map-2026-11-16-11-19",
+ "views": 0
+}

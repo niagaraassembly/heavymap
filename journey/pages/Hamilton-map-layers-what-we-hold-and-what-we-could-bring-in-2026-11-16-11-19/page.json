@@ -1,0 +1,771 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, hamilton, map, layers, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "Purpose: ground the redesign of the map's layers panel in the data that exists. Sources read: ",
+    {
+     "children": [
+      "heavymap/Spreadsheets/02-dataset-inventory-v4.csv"
+     ],
+     "tag": "code"
+    },
+    " (control sheet), ",
+    {
+     "children": [
+      "09-per-jurisdiction-dataset-catalog-counties.csv"
+     ],
+     "tag": "code"
+    },
+    " (Hamilton catalogue), the overlay run manifest a local working copy, and the pulls and tiles under a local working copy on deb. Nothing was pulled or changed for this note."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Numbers"
+   },
+   "children": [
+    "Numbers"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "480 datasets are catalogued for the City of Hamilton. Reviewed: 228 not relevant, 106 context only, 27 unclear, 119 relevant (of which 23 are admitted to the control sheet and 7 curated)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "55 control-sheet rows touch Hamilton or Ontario. All are marked ",
+      {
+       "children": [
+        "publish_visibility = public"
+       ],
+       "tag": "code"
+      },
+      ". ",
+      {
+       "children": [
+        "Licence clearance is recorded as \"unclear\" for 43 of the 55"
+       ],
+       "tag": "strong"
+      },
+      "; that column needs filling before a layer is shown (record the licence for provenance even where a hard rule already permits publication)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "11 layers are already joined to all 166,745 parcels (the overlay run). Their facts are in the dossier today; none is drawn on the map."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Tier-1:-on-the-map-now"
+   },
+   "children": [
+    "Tier 1: on the map now"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Parcels (166,745; key only; zoom 14 to 16)"
+       ],
+       "tag": "strong"
+      },
+      " — State: Live"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Street basemap (OpenStreetMap via Protomaps, light and dark)"
+       ],
+       "tag": "strong"
+      },
+      " — State: Built on branch ",
+      {
+       "children": [
+        "web/hamilton-basemap"
+       ],
+       "tag": "code"
+      },
+      "; archive not yet published"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Tier-2:-held,-verified-and-already-joined-to-parcels-(geometry-on-disk;-cheapest-to-draw)"
+   },
+   "children": [
+    "Tier 2: held, verified and already joined to parcels (geometry on disk; cheapest to draw)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Zoning by-law boundary"
+       ],
+       "tag": "strong"
+      },
+      " — Source: City of Hamilton · Features: 11,860 · Group: Planning"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Secondary plan land use"
+       ],
+       "tag": "strong"
+      },
+      " — Source: City of Hamilton · Features: 47,206 · Group: Planning"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Urban boundary"
+       ],
+       "tag": "strong"
+      },
+      " — Source: City of Hamilton · Features: 1 · Group: Planning"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Rural boundary"
+       ],
+       "tag": "strong"
+      },
+      " — Source: City of Hamilton · Features: 1 · Group: Planning"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Employment lands"
+       ],
+       "tag": "strong"
+      },
+      " — Source: City of Hamilton · Features: 22 · Group: Planning"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Niagara Escarpment development control"
+       ],
+       "tag": "strong"
+      },
+      " — Source: City of Hamilton · Features: 1 · Group: Protected and regulated"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Greenbelt designation"
+       ],
+       "tag": "strong"
+      },
+      " — Source: Ontario (LIO) · Features: 9 · Group: Protected and regulated"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Niagara Escarpment Plan designation"
+       ],
+       "tag": "strong"
+      },
+      " — Source: Ontario (LIO) · Features: 115 · Group: Protected and regulated"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "HCA regulated areas"
+       ],
+       "tag": "strong"
+      },
+      " — Source: Hamilton Conservation Authority · Features: 134 · Group: Protected and regulated"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NPCA approximate regulation lands"
+       ],
+       "tag": "strong"
+      },
+      " — Source: Niagara Peninsula CA · Features: 271 · Group: Protected and regulated"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GRCA regulation limits"
+       ],
+       "tag": "strong"
+      },
+      " — Source: Grand River CA · Features: 199 · Group: Protected and regulated"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Tier-3:-pulled-and-on-disk,-not-joined-and-not-drawn"
+   },
+   "children": [
+    "Tier 3: pulled and on disk, not joined and not drawn"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Buildings (City)"
+       ],
+       "tag": "strong"
+      },
+      " — Note: 108 MB source; an older 28.5 MB tile file exists (2026-10-17, old id field)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Addresses (City)"
+       ],
+       "tag": "strong"
+      },
+      " — Note: 129 MB of points; already used for the dossier's address list"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Street centreline (City)"
+       ],
+       "tag": "strong"
+      },
+      " — Note: Superseded for display by the basemap; useful for address search"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Parks (City)"
+       ],
+       "tag": "strong"
+      },
+      " — Note: Small; allowlist entry ",
+      {
+       "children": [
+        "nature-parks"
+       ],
+       "tag": "code"
+      },
+      " already exists"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Community boundaries, city boundary (City); municipal boundary (LIO)"
+       ],
+       "tag": "strong"
+      },
+      " — Note: Small; good for orientation and search"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Niagara Escarpment Plan boundary (LIO)"
+       ],
+       "tag": "strong"
+      },
+      " — Note: Small"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "HCA managed forest 2017"
+       ],
+       "tag": "strong"
+      },
+      " — Note: Small"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Surface water quality (City)"
+       ],
+       "tag": "strong"
+      },
+      " — Note: Monitoring points"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Waste collection by address (City)"
+       ],
+       "tag": "strong"
+      },
+      " — Note: Low value for this product"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Older tiles: ",
+        {
+         "children": [
+          "zoning.pmtiles"
+         ],
+         "tag": "code"
+        },
+        " 7.6 MB, ",
+        {
+         "children": [
+          "nature-frame.pmtiles"
+         ],
+         "tag": "code"
+        },
+        " 0.7 MB"
+       ],
+       "tag": "strong"
+      },
+      " — Note: Built 2026-10-17 on the old schema; rebuild rather than reuse"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Tier-4:-admitted-to-the-control-sheet,-not-yet-pulled"
+   },
+   "children": [
+    "Tier 4: admitted to the control sheet, not yet pulled"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Most relevant to industrial land and investment:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Movement:"
+       ],
+       "tag": "strong"
+      },
+      " Hamilton railways; truck route network; trails; MTO controlled areas."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Activity on land:"
+       ],
+       "tag": "strong"
+      },
+      " development applications; building and demolition permits (2008 to present); vacant building registry; city-owned properties; licence registers (salvage yards, public garages, trades); businesses by employee count."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Planning:"
+       ],
+       "tag": "strong"
+      },
+      " existing land use primary blocks; Provincially Significant Employment Zones; older zoning (pre-rural)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Environment:"
+       ],
+       "tag": "strong"
+      },
+      " wetlands (City and provincial); natural heritage system; areas of natural and scientific interest; wooded areas; provincial parks; subwatersheds; conservation authority areas; NPCA regulated floodplain; Conservation Halton regulation limit; contours."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Infrastructure:"
+       ],
+       "tag": "strong"
+      },
+      " wastewater and combined-sewer catchments with water pressure districts."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Link only (not shipped):"
+       ],
+       "tag": "strong"
+      },
+      " Ontario brownfields environmental site registry."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "OpenStreetMap themes already committed thin:"
+       ],
+       "tag": "strong"
+      },
+      " industrial land, rail corridors, brownfield and disused sites, industrial facilities."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Tier-5:-catalogued-as-relevant,-not-yet-admitted"
+   },
+   "children": [
+    "Tier 5: catalogued as relevant, not yet admitted"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Business improvement areas; community improvement project areas; heritage properties; environmentally sensitive areas; rural settlement areas; airport; landfills and transfer stations; air monitoring sites; cooling towers; real estate sales; growth targets; the \"SiteSelector\" service. Water and sewer network layers (mains, valves, nodes, lift stations) are catalogued but flagged ",
+    {
+     "children": [
+      "infrastructure_ownership_attribute"
+     ],
+     "tag": "code"
+    },
+    " and should stay out until reviewed."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "What-stands-between-the-data-and-the-map"
+   },
+   "children": [
+    "What stands between the data and the map"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Tile contract."
+       ],
+       "tag": "strong"
+      },
+      " A release carries one tileset (",
+      {
+       "children": [
+        "tiles-manifest.json"
+       ],
+       "tag": "code"
+      },
+      " is singular) and the prepublish allowlist permits only ",
+      {
+       "children": [
+        "key"
+       ],
+       "tag": "code"
+      },
+      " on parcel features. The allowlist already has entries for ",
+      {
+       "children": [
+        "buildings"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "nature-parks"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "nature-greenbelt"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "nature-conservation"
+       ],
+       "tag": "code"
+      },
+      ", so more layers were anticipated; the manifest and layer catalogue need to carry several tilesets."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Properties per layer."
+       ],
+       "tag": "strong"
+      },
+      " Each thematic layer needs a short allowlist (for zoning: the zone code; for land use: the class) and label register entries for its classes."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Licences."
+       ],
+       "tag": "strong"
+      },
+      " Fill the 43 \"unclear\" clearances for whatever is chosen."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Size."
+       ],
+       "tag": "strong"
+      },
+      " Tier 2 is small except secondary plan land use and zoning; buildings is the heavy one (about 28 MB as tiles)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "Suggested-waves"
+   },
+   "children": [
+    "Suggested waves"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Wave 1 (no new pulls):"
+       ],
+       "tag": "strong"
+      },
+      " zoning, secondary plan land use, urban boundary, employment lands, Greenbelt, Niagara Escarpment Plan, conservation authority regulated areas (three sources shown as one group), parks."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Wave 2 (new pulls, high value for industrial readers):"
+       ],
+       "tag": "strong"
+      },
+      " railways, truck routes, Provincially Significant Employment Zones, development applications, building permits, vacant building registry, licensed salvage yards and garages, wetlands and natural heritage."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Wave 3:"
+       ],
+       "tag": "strong"
+      },
+      " buildings, existing land use, infrastructure catchments, business counts, heritage, improvement areas."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Implication-for-the-layers-panel"
+   },
+   "children": [
+    "Implication for the layers panel"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The panel should be organised by theme, not as a flat list, and should be honest about state: ",
+    {
+     "children": [
+      "on the map"
+     ],
+     "tag": "strong"
+    },
+    ", ",
+    {
+     "children": [
+      "held (can be switched on once tiled)"
+     ],
+     "tag": "strong"
+    },
+    ", ",
+    {
+     "children": [
+      "planned"
+     ],
+     "tag": "strong"
+    },
+    ". Proposed groups: Base map (style), Parcels, Planning, Protected and regulated, Movement, Activity on land, Built form, Environment. Each layer row needs its source, date and a legend; a layer with classes (zoning, land use) needs a class legend that can be filtered."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0066\ntype: working-paper\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-11-16\nseq: 31"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, hamilton, map, layers, run-1",
+ "path": "Hamilton-map-layers-what-we-hold-and-what-we-could-bring-in-2026-11-16-11-19",
+ "title": "Hamilton map layers: what we hold and what we could bring in (2026-11-16)",
+ "url": "https://telegra.ph/Hamilton-map-layers-what-we-hold-and-what-we-could-bring-in-2026-11-16-11-19",
+ "views": 0
+}

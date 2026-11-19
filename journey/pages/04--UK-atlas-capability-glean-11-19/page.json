@@ -1,0 +1,1390 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, uk, prior-art, lessons"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Created:"
+     ],
+     "tag": "strong"
+    },
+    " 2026-09-22 (America/New_York) ",
+    {
+     "children": [
+      "Purpose:"
+     ],
+     "tag": "strong"
+    },
+    " Capture ",
+    {
+     "children": [
+      "capability types and calculations"
+     ],
+     "tag": "strong"
+    },
+    " the UK Industrial Atlas (",
+    {
+     "children": [
+      "babbworks/atlas"
+     ],
+     "tag": "code"
+    },
+    ") achieved that Niagara/HeavyMap has ",
+    {
+     "children": [
+      "not yet implemented"
+     ],
+     "tag": "strong"
+    },
+    " or only thinly noted in arch/design. ",
+    {
+     "children": [
+      "Not a dataset inventory."
+     ],
+     "tag": "strong"
+    },
+    " Do not ingest UK geography. ",
+    {
+     "children": [
+      "Sources:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "_src_UK-ATLAS-INVENTORY.md"
+     ],
+     "tag": "code"
+    },
+    " (site PR#7 cache), ",
+    {
+     "children": [
+      "_src_TECHNOLOGY-DECISIONS.md"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "_src_PUBLICATION-MODEL.md"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "_src_DATA-SOURCES.md"
+     ],
+     "tag": "code"
+    },
+    " / ",
+    {
+     "children": [
+      "_src_us_DATA-SOURCES.md"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "00-operating-model-and-architecture.md"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "01-data-status-and-work-plan-draft.md"
+     ],
+     "tag": "code"
+    },
+    ". No separate UK ",
+    {
+     "children": [
+      "datasets.md"
+     ],
+     "tag": "code"
+    },
+    " cache on disk — inventory § covers ",
+    {
+     "children": [
+      "system/datasets.md"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Framing-(what-HeavyMap-already-decided)"
+   },
+   "children": [
+    "Framing (what HeavyMap already decided)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "From operating model + publication model (already noted, not gaps):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prefer ",
+      {
+       "children": [
+        "dossier-as-argument"
+       ],
+       "tag": "strong"
+      },
+      " (claims + evidence + refusal) over opaque UK-style single scores.  "
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "UK share cards / notes / ",
+      {
+       "children": [
+        "property.html"
+       ],
+       "tag": "code"
+      },
+      " cited as prior art for local-first share.  "
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Per-source modules (",
+      {
+       "children": [
+        "voa.js"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "epr.js"
+       ],
+       "tag": "code"
+      },
+      ", …) and VOA shard pattern cited as ETL inspiration.  "
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "OSM as shared base experience; live Overpass-as-primary-inventory is ",
+      {
+       "children": [
+        "rejected"
+       ],
+       "tag": "strong"
+      },
+      " once authoritative layers exist."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "This glean focuses on ",
+    {
+     "children": [
+      "patterns still missing as product behaviour or derived readings"
+     ],
+     "tag": "strong"
+    },
+    ", even where the ",
+    {
+     "children": [
+      "idea"
+     ],
+     "tag": "em"
+    },
+    " is mentioned once in a doc."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "A.-Data-type-analogues-to-seek-in-NA-sources"
+   },
+   "children": [
+    "A. Data-type analogues to seek in NA sources"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Capability the UK shipped or designed → what to hunt in CA/US open data (not UK copies)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "**Companies House panel"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "companies.js"
+       ],
+       "tag": "code"
+      },
+      " + ",
+      {
+       "children": [
+        "server.py"
+       ],
+       "tag": "code"
+      },
+      " proxy)",
+      {
+       "children": [
+        " — What it did: Live company search by postcode/name; SIC industrial highlight; officers on top actives · NA analogue to seek: ON corporate profile / business number joins; US SOS / SAM where open; "
+       ],
+       "tag": "strong"
+      },
+      "NEI + Welland Directory + Hamilton licence registers",
+      {
+       "children": [
+        " as the honest substitutes · Niagara/HeavyMap status: NEI / OSM places / Welland Directory in inventory; "
+       ],
+       "tag": "strong"
+      },
+      "no live company-intelligence panel**; CH itself is out-of-geo"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**VOA non-domestic ratings"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "voa.js"
+       ],
+       "tag": "code"
+      },
+      " + postcode shards; ",
+      {
+       "children": [
+        "voa_geo.js"
+       ],
+       "tag": "code"
+      },
+      ")",
+      {
+       "children": [
+        " — What it did: Rateable value, use description, floorspace-ish signal by postcode; industrial filter · NA analogue to seek: "
+       ],
+       "tag": "strong"
+      },
+      "MPAC = dead end (CA)",
+      {
+       "children": [
+        "; "
+       ],
+       "tag": "strong"
+      },
+      "NYS Tax Parcels AV + GFA",
+      {
+       "children": [
+        "; Buffalo assessment roll; Rochester spike method (improvement/total under-occupancy) · Niagara/HeavyMap status: US AV path partially inventoried; "
+       ],
+       "tag": "strong"
+      },
+      "no “rates gap” UX**; CA floorspace mainly NEI indoor GFA"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**VOA Gap Finder"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "voa_geo.js"
+       ],
+       "tag": "code"
+      },
+      " + ",
+      {
+       "children": [
+        "app.js"
+       ],
+       "tag": "code"
+      },
+      " Gap Finder)",
+      {
+       "children": [
+        " — What it did: Register postcodes vs OSM industrial within ~60 m → unmatched “gaps” · NA analogue to seek: "
+       ],
+       "tag": "strong"
+      },
+      "NEI / Directory / DEC / NPRI vs OSM industrial land",
+      {
+       "children": [
+        " disagreement map; Welland NEI↔Directory ~29% already measured offline · Niagara/HeavyMap status: Offline disagreement noted; "
+       ],
+       "tag": "strong"
+      },
+      "no interactive gap-finder mode**"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**NHLE heritage"
+       ],
+       "tag": "strong"
+      },
+      " (designed, not fully wired)",
+      {
+       "children": [
+        " — What it did: Listed fabric constraint near sites · NA analogue to seek: Designated Heritage Properties (RGN + munis + Hamilton) · Niagara/HeavyMap status: In candidates ★★★; "
+       ],
+       "tag": "strong"
+      },
+      "omitted from curated inventory** (see ",
+      {
+       "children": [
+        "03"
+       ],
+       "tag": "code"
+      },
+      ")"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**HMLR INSPIRE title polygons"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — What it did: Freehold title boundaries at high zoom · NA analogue to seek: Municipal / NYS "
+       ],
+       "tag": "strong"
+      },
+      "parcel fabric",
+      {
+       "children": [
+        " (already spine strategy); no CA title API · Niagara/HeavyMap status: Parcel spine in inventory for NF/STC/US; "
+       ],
+       "tag": "strong"
+      },
+      "MPAC closed**"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Planning Data API"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "planning.js"
+       ],
+       "tag": "code"
+      },
+      ")",
+      {
+       "children": [
+        " — What it did: Live designations + applications by bbox; scoring deltas · NA analogue to seek: Municipal development applications / permits / OP & zoning (static pulls) · Niagara/HeavyMap status: Permits/apps partially in inventory; "
+       ],
+       "tag": "strong"
+      },
+      "no live bbox planning API module**"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**EA EPR + FSA"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "epr.js"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "fsa.js"
+       ],
+       "tag": "code"
+      },
+      ")",
+      {
+       "children": [
+        " — What it did: Permit / food-industry activity overlays, sector colour, inactive fade · NA analogue to seek: "
+       ],
+       "tag": "strong"
+      },
+      "NPRI",
+      {
+       "children": [
+        ", "
+       ],
+       "tag": "strong"
+      },
+      "NYS DEC registries",
+      {
+       "children": [
+        ", "
+       ],
+       "tag": "strong"
+      },
+      "EPA TRI",
+      {
+       "children": [
+        " (inventory); food premises if a NA open hygiene API appears · Niagara/HeavyMap status: Datasets inventoried; "
+       ],
+       "tag": "strong"
+      },
+      "no clustered permit overlay module with inactive styling**"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Strategy zones"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "strategy_zones.js"
+       ],
+       "tag": "code"
+      },
+      " + hand GeoJSON)",
+      {
+       "children": [
+        " — What it did: Hand-curated freeport / investment / strategy polygons · NA analogue to seek: PSEZ, Strategic Locations for Investment, CIP / BOA / Employment Generator CIP · Niagara/HeavyMap status: Mostly in inventory; "
+       ],
+       "tag": "strong"
+      },
+      "no typed strategy-zone style language in UI**"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**BRES employment"
+       ],
+       "tag": "strong"
+      },
+      " (designed only)",
+      {
+       "children": [
+        " — What it did: Area employment choropleth · NA analogue to seek: Census labour / CBP 2022 (inventory); Hamilton/NF census tables in candidates · Niagara/HeavyMap status: CBP shipped thin; "
+       ],
+       "tag": "strong"
+      },
+      "no employment choropleth product**"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "B.-UI-/-interaction-patterns"
+   },
+   "children": [
+    "B. UI / interaction patterns"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "**Mode presets"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: workshop-explorer / urban-manufacturing / hidden-industry filter bundles · HeavyMap / Niagara note: Filters→OSM tags mentioned in arch; no named industrial modes · Gap?: "
+       ],
+       "tag": "strong"
+      },
+      "Gap** — define dossier-first modes (e.g. expand / redevelop / logistics) without copying OSM-only filters"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Draw-area analysis panel"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: Leaflet.Draw rectangle → aggregate analysis · HeavyMap / Niagara note: Not in niagara-atlas shipped UI; not in arch as a M0 feature · Gap?: "
+       ],
+       "tag": "strong"
+      },
+      "Gap** — useful for corridor selection; park until unit spine stable"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Inset navigator map"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: Second Leaflet + viewport rect sync · HeavyMap / Niagara note: Not noted for HeavyMap chrome · Gap?: "
+       ],
+       "tag": "strong"
+      },
+      "Park** — nice-to-have navigation"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Named region + industrial district presets"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: Click-to-zoom UK regions / GEO_PRESETS · HeavyMap / Niagara note: Geography v1 is cross-border counties — needs NA preset list · Gap?: "
+       ],
+       "tag": "strong"
+      },
+      "Gap** — ship CA/US presets (not UK boxes)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**External layer toggles"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: FSA / EPR / strategy / INSPIRE checkboxes · HeavyMap / Niagara note: Publication/atlas layers TBD; thin ",
+        {
+         "children": [
+          "data/*"
+         ],
+         "tag": "code"
+        },
+        " committed without toggle taxonomy · Gap?: "
+       ],
+       "tag": "strong"
+      },
+      "Gap** — layer taxonomy aligned to ",
+      {
+       "children": [
+        "atlas_role"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**URL hash state"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: view + filters + mode shareable · HeavyMap / Niagara note: Explicitly noted as UK keep in arch §10 · Gap?: "
+       ],
+       "tag": "strong"
+      },
+      "Noted, not implemented** in HeavyMap Beta"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Planning coverage warning"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: Soft warning when viewport outside data jurisdiction · HeavyMap / Niagara note: Highly relevant cross-border (CA vs NY licence/data holes) · Gap?: "
+       ],
+       "tag": "strong"
+      },
+      "Gap** — “no NEI / no AV / no NPCA licence” viewport honesty"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Clustered markers + lifecycle styling"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: Abandoned/disused faded; EPR inactive faded · HeavyMap / Niagara note: OSM disused labelling exists in data naming; no product styling system documented for Beta · Gap?: "
+       ],
+       "tag": "strong"
+      },
+      "Partial**"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Feature panel multi-register cards"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: CH + VOA + planning chips on one feature · HeavyMap / Niagara note: Dossier bands with provenance are the chosen replacement · Gap?: "
+       ],
+       "tag": "strong"
+      },
+      "Not a gap to copy** — implement as dossier sections, not CH/VOA cards"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Mobile FAB sidebars"
+       ],
+       "tag": "strong"
+      },
+      "** — Detail: Small-screen chrome · HeavyMap / Niagara note: Not specified for Beta · Gap?: Park"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "C.-Calculations-/-derived-readings"
+   },
+   "children": [
+    "C. Calculations / derived readings"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "UK ",
+    {
+     "children": [
+      "scoring.js"
+     ],
+     "tag": "code"
+    },
+    " is ",
+    {
+     "children": [
+      "OSM-probabilistic opportunity 0–100"
+     ],
+     "tag": "strong"
+    },
+    " with confidence. HeavyMap product lock: ",
+    {
+     "children": [
+      "dossier readings, not opaque scorecard"
+     ],
+     "tag": "strong"
+    },
+    ". Still glean the ",
+    {
+     "children": [
+      "calculation kinds"
+     ],
+     "tag": "em"
+    },
+    ":"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Tag baseline + area from polygon"
+       ],
+       "tag": "strong"
+      },
+      " — Inputs (UK): OSM tags, geom area · Suggested NA dossier reading (non-score): Unit area / building coverage ratio from footprints × parcels · Status: Footprints in inventory; ",
+      {
+       "children": [
+        "ratio reading not specified"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Lifecycle boosts / activity penalties"
+       ],
+       "tag": "strong"
+      },
+      " — Inputs (UK): OSM lifecycle tags · Suggested NA dossier reading (non-score): NEI departures; dual-epoch footprints; vacant registry; BOA/CIP · Status: Departures shipped; ",
+      {
+       "children": [
+        "no unified lifecycle reading"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Spatial context radii (100/250/500 m)"
+       ],
+       "tag": "strong"
+      },
+      " — Inputs (UK): Nearby loaded OSM elements · Suggested NA dossier reading (non-score): Nearby NEI employment, rail, truck AADT class, NPCA flag, heritage · Status: ",
+      {
+       "children": [
+        "Not designed"
+       ],
+       "tag": "strong"
+      },
+      " as a reading set"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Planning designation deltas"
+       ],
+       "tag": "strong"
+      },
+      " — Inputs (UK): Listed, Article 4, brownfield, flood, etc. · Suggested NA dossier reading (non-score): Contained-in: flood/reg, NHS/NES, Greenbelt/NEP, PSEZ, zoning industrial, ag land, MTO buffer, heritage · Status: Containment principle in D-5; ",
+      {
+       "children": [
+        "no named delta catalogue"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Confidence from tag richness"
+       ],
+       "tag": "strong"
+      },
+      " — Inputs (UK): OSM completeness · Suggested NA dossier reading (non-score): Confidence from ",
+      {
+       "children": [
+        "register agreement"
+       ],
+       "tag": "strong"
+      },
+      " (NEI↔Directory↔OSM↔DEC) + geometry provenance · Status: Disagreement measured once (Welland); ",
+      {
+       "children": [
+        "no confidence field on dossiers"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Gap distance (VOA↔OSM ≤60 m)"
+       ],
+       "tag": "strong"
+      },
+      " — Inputs (UK): Geocoded ratings vs OSM · Suggested NA dossier reading (non-score): Gap between business register and landuse / parcels · Status: ",
+      {
+       "children": [
+        "Gap"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Postcode-exact company filter"
+       ],
+       "tag": "strong"
+      },
+      " — Inputs (UK): CH + postcode · Suggested NA dossier reading (non-score): Address-join exact / fuzzy match rates (Hamilton permits, Welland Directory) · Status: Handling notes demand match-rate reporting; ",
+      {
+       "children": [
+        "not a product metric yet"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Slope / relief (Niagara D-5, not UK)"
+       ],
+       "tag": "strong"
+      },
+      " — Inputs (UK): Contours → elev/slope · Suggested NA dossier reading (non-score): Already decided — ",
+      {
+       "children": [
+        "implement"
+       ],
+       "tag": "strong"
+      },
+      "; UK did not have this · Status: NA advantage — ship"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Do not port:"
+     ],
+     "tag": "strong"
+    },
+    " single 0–100 “opportunity score” as the primary intelligence UX (arch already rejects). If a score appears later, it must be one optional derived chip with full formula disclosure — not the dossier spine."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "D.-Share-/-dossier-patterns"
+   },
+   "children": [
+    "D. Share / dossier patterns"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "**",
+        {
+         "children": [
+          "property.html"
+         ],
+         "tag": "code"
+        },
+        " deep-link dossier"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: Fetch by OSM id; score; notes; Street View; printable · HeavyMap note: Product = rich per-parcel dossiers; niagara-atlas dossier “not fully built”; site PR publication model cites this · Gap?: "
+       ],
+       "tag": "strong"
+      },
+      "Core gap** — deep-link unit dossier is v1 intelligence"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**",
+        {
+         "children": [
+          "property-map.html"
+         ],
+         "tag": "code"
+        },
+        " sibling"
+       ],
+       "tag": "strong"
+      },
+      "** — Detail: Map-centric twin · HeavyMap note: Optional · Gap?: Park"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Postcard / minimal card + html2canvas PNG"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: Shareable image card · HeavyMap note: PUBLICATION-MODEL §2.1 explicitly cites UK · Gap?: "
+       ],
+       "tag": "strong"
+      },
+      "Noted, not built**"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Web Share API"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: When available · HeavyMap note: Cited with postcard · Gap?: "
+       ],
+       "tag": "strong"
+      },
+      "Noted, not built**"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**CSV export of results"
+       ],
+       "tag": "strong"
+      },
+      "** — Detail: id, type, score, lifecycle, osm_url, … · HeavyMap note: Not in Beta plan as first surface · Gap?: Park behind dossier; prefer claim CSV later"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Hash “Share Link”"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: Restores view/filters · HeavyMap note: Noted in arch · Gap?: "
+       ],
+       "tag": "strong"
+      },
+      "Noted, not built**"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Local notes on property page"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: Save-as-standalone HTML discussed in publication model · HeavyMap note: Local-first notes are a keep · Gap?: "
+       ],
+       "tag": "strong"
+      },
+      "Designed, not implemented**"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Street View outbound"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: External ground truth · HeavyMap note: Trivial; good dossier affordance · Gap?: "
+       ],
+       "tag": "strong"
+      },
+      "Gap (cheap)**"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Provenance links to source object"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Detail: OSM URL in UI/CSV · HeavyMap note: Extend to FeatureServer item + retrieval date + licence stamp · Gap?: Ledger/provenance culture strong in docs; "
+       ],
+       "tag": "strong"
+      },
+      "UI stamp pattern missing**"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "E.-What-not-to-glean-as-capability-debt"
+   },
+   "children": [
+    "E. What ",
+    {
+     "children": [
+      "not"
+     ],
+     "tag": "em"
+    },
+    " to glean as capability debt"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Committing API keys / ",
+      {
+       "children": [
+        "server.py"
+       ],
+       "tag": "code"
+      },
+      " Basic auth pattern (UK inventory critical liability).  "
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Live Overpass-at-browse as primary inventory once NEI/parcels exist.  "
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "England-only planning coverage assumptions.  "
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Hand-maintained UK strategy_zones.geojson content (keep the ",
+      {
+       "children": [
+        "typed overlay"
+       ],
+       "tag": "em"
+      },
+      " idea; use PSEZ/CIP/BOA).  "
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Opaque vacancy claims from OSM absence (UK scoring.js explicitly non-claims vacancy — keep that discipline)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Draft-titles-for-future-Linear-issues"
+   },
+   "children": [
+    "Draft titles for future Linear issues"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "(Do not create issues — titles only for parent / the owner.)"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Dossier derived readings v0 — containment deltas, register-agreement confidence, and lifecycle signals (no opaque opportunity score)"
+       ],
+       "tag": "strong"
+      },
+      "  "
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Parcel dossier deep-link + share card — ",
+        {
+         "children": [
+          "property.html"
+         ],
+         "tag": "code"
+        },
+        " analogue with provenance stamps, hash URL state, and Street View outbound"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "Optional later (if parent wants a third):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Register↔landuse gap-finder mode (NEI/Directory/DEC vs OSM industrial) — NA replacement for VOA Gap Finder"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Honesty"
+   },
+   "children": [
+    "Honesty"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "UK atlas is a ",
+    {
+     "children": [
+      "small static SPA"
+     ],
+     "tag": "strong"
+    },
+    " with impressive interaction density on thin data. HeavyMap’s bottleneck is ",
+    {
+     "children": [
+      "authoritative cross-border data + dossier honesty"
+     ],
+     "tag": "strong"
+    },
+    ", not missing Leaflet widgets. Highest leverage glean is: ",
+    {
+     "children": [
+      "(1) named derived readings with confidence"
+     ],
+     "tag": "strong"
+    },
+    ", ",
+    {
+     "children": [
+      "(2) deep-link dossier + share"
+     ],
+     "tag": "strong"
+    },
+    ", ",
+    {
+     "children": [
+      "(3) gap-finder / coverage warnings"
+     ],
+     "tag": "strong"
+    },
+    " — not re-implementing CH/VOA/INSPIRE."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0046\ntype: working-paper\nsection: origins\nplace_type: country\nevidence_date: 2026-10-17\nseq: 6"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, uk, prior-art, lessons",
+ "path": "04--UK-atlas-capability-glean-11-19",
+ "title": "04 — UK atlas capability glean",
+ "url": "https://telegra.ph/04--UK-atlas-capability-glean-11-19",
+ "views": 0
+}

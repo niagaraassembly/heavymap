@@ -1,0 +1,202 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, hamilton, planning, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "Summary written 2026-10-17. The an agent branch ",
+    {
+     "children": [
+      "claude/modest-cannon-kols9r"
+     ],
+     "tag": "code"
+    },
+    " was not on origin, so this records the reported findings from that search."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Finding"
+   },
+   "children": [
+    "Finding"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "There is ",
+    {
+     "children": [
+      "no public machine-readable citywide designation layer"
+     ],
+     "tag": "strong"
+    },
+    " for UHOP Schedule E-1 (Urban Land Use Designations) or RHOP Schedule D (Rural Land Use Designations)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The City's internal GIS server (",
+      {
+       "children": [
+        "itvpgisappint.hamilton.ca"
+       ],
+       "tag": "code"
+      },
+      ") is not reachable from outside."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Searched: 1,697 public layers, 594 ArcGIS Online services, McMaster, Mohawk, Waterloo, Hamilton Conservation Authority and Ontario GeoHub."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Usable-now"
+   },
+   "children": [
+    "Usable now"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Secondary Plan Land Use"
+       ],
+       "tag": "strong"
+      },
+      " — URL: https://spatialsolutions.hamilton.ca/webgis/rest/services/General/PolicyPlanning/MapServer/6 · Notes: 47,212 lot-cut polygons, 31 plans, 67 classes, last amended 2026-05-12. Filter out four retired plans. Plan names don't match the secondary plan boundary layer. Not on open.hamilton.ca. No licence stated (not a gate per HARD-RULES 6; record it for provenance)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "PolicyPlanning MapServer (service)"
+       ],
+       "tag": "strong"
+      },
+      " — URL: https://spatialsolutions.hamilton.ca/webgis/rest/services/General/PolicyPlanning/MapServer · Notes: Parent service; layers catalogued separately."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Employment Lands"
+       ],
+       "tag": "strong"
+      },
+      " — URL: Employment_Lands/FeatureServer/2 (open.hamilton.ca) · Notes: 22 polygons, derived from Schedule E-1 employment designations."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Provincial overlays"
+       ],
+       "tag": "strong"
+      },
+      " — URL: LIO · Notes: Niagara Escarpment Plan, Greenbelt Plan, 2019 Provincially Significant Employment Zones."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "All three Hamilton rows are in the catalog (merged in PR #62)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Fallback-for-the-citywide-designation"
+   },
+   "children": [
+    "Fallback for the citywide designation"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Ask the City for the internal E-1 / D designation layer."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Vector-extract the schedule PDFs. They are vector CorelDRAW exports, so polygons can be pulled out and georeferenced. Estimate: about 6–7 person-days."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "The schedule PDFs carry a Teranet copyright notice. Under HARD-RULES 6 (licences don't gate) this doesn't block use, but record it for provenance."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0067\ntype: working-paper\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-10-17\nseq: 32"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, hamilton, planning, run-1",
+ "path": "Hamilton-Official-Plan-designation-sources-11-19",
+ "title": "Hamilton Official Plan designation sources",
+ "url": "https://telegra.ph/Hamilton-Official-Plan-designation-sources-11-19",
+ "views": 0
+}

@@ -1,0 +1,1092 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, hamilton, parcels, spine, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "Rows for these results are in ",
+    {
+     "children": [
+      "Spreadsheets/16-service-profile.csv"
+     ],
+     "tag": "code"
+    },
+    " (3 services), ",
+    {
+     "children": [
+      "17-layer-profile.csv"
+     ],
+     "tag": "code"
+    },
+    " (13 layers), ",
+    {
+     "children": [
+      "18-quirks-log.csv"
+     ],
+     "tag": "code"
+    },
+    " (Q-001 to Q-019) and ",
+    {
+     "children": [
+      "19-process-insights.csv"
+     ],
+     "tag": "code"
+    },
+    " (PI-0012 to PI-0020)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Where-the-data-and-scripts-are-(deb,-outside-git)"
+   },
+   "children": [
+    "Where the data and scripts are (deb, outside git)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Data: a local working copy with ",
+      {
+       "children": [
+        "<dataset>.geojson"
+       ],
+       "tag": "code"
+      },
+      " (EPSG:4326, ",
+      {
+       "children": [
+        "outFields=*"
+       ],
+       "tag": "code"
+      },
+      "), ",
+      {
+       "children": [
+        "PULL-SUMMARY.json"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "raw/layer_metadata.json"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Scripts in a local working copy:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "pull_arcgis_layer.py"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "pull_hamilton_base.sh"
+       ],
+       "tag": "code"
+      },
+      ": the pull."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "profile_hamilton_layers.py"
+       ],
+       "tag": "code"
+      },
+      ": the layer profiles."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "spine_check_hamilton.py"
+       ],
+       "tag": "code"
+      },
+      ": the spine check."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "join_checks_hamilton.py"
+       ],
+       "tag": "code"
+      },
+      ": the candidate join checks."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "offset_cityview_check.py"
+       ],
+       "tag": "code"
+      },
+      ": the Parcels_Cityview offset sample."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Stats output: a local working copy, holding ",
+      {
+       "children": [
+        "layer-profiles.json"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "spine-check.json"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "join-checks.json"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "offset-cityview.json"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Runtime: the 11 new pulls (about 1.0M features) took under 6 minutes with no retries. Each analysis step ran in under 2 minutes."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Datasets"
+   },
+   "children": [
+    "Datasets"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The groupings' Tier 0 (base, 9 rows) and Tier 1 (key-join, 4 rows) are shown here. Two Tier 0 rows are catalog duplicates (C010, C013). Zoning and Community Boundaries (Tier 2) were added because the spine track needs them."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "C205"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: City Boundary · Source: City AGOL · Rows: 1 · Key field: OBJECTID · Native CRS: 26917 · Last edit: 2023-10-03 · Status: new pull"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "C358"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Hamilton Assessment Parcel · Source: City AGOL · Rows: 166,828 · Key field: none (OBJECTID only) · Native CRS: 3857 · Last edit: 2024-06-27 (data) · Status: new pull, all fields"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "A01"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: NPCA Assessment_Parcels_Test · Source: NPCA AGOL · Rows: 90,306 · Key field: ARN (15) · Native CRS: 3857 · Status: reused"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "—"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: NPCA Parcels_Cityview · Source: NPCA AGOL · Rows: 81,121 · Key field: ARN (15 or 20) · Native CRS: 3857 · Last edit: 2020-02-27 · Status: reused"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "C004"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Addresses · Source: City AGOL · Rows: 274,725 · Key field: none (composite address) · Native CRS: 26917 · Last edit: 2026-10-16 · Status: new pull"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "C003"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Buildings · Source: City AGOL · Rows: 214,292 · Key field: none (OBJECTID only) · Native CRS: 26917 · Last edit: 2026-10-06 · Status: new pull"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "A25"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: LIO Municipal boundary · Source: LIO Open03/14 · Rows: 16 · Key field: MUNID, ASSESSMENT_CODE · Native CRS: 4269 · Last edit: effective 2024-02-15 · Status: new pull"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "C163"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Street Centreline · Source: City AGOL · Rows: 19,855 · Key field: SEGID (unique) · Native CRS: 26917 · Last edit: 2026-10-16 · Status: new pull"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "C147"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Waste Collection by Address · Source: City AGOL · Rows: 277,701 · Key field: FULL_ADDRESS · Native CRS: 26917 · Last edit: 2026-10-10 · Status: new pull"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "C170"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Surface Water Quality Program · Source: City AGOL · Rows: 3,172 · Key field: UNITID (68 stations) · Native CRS: table · Last edit: 2026-10-10 · Status: new pull"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "C275"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: HCA Managed Forest 2017 · Source: NPCA AGOL · Rows: 23 · Key field: ROLL_NUMBER · Native CRS: 26917 · Last edit: 2025-05-23 · Status: new pull"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "C250"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: MPAC land parcels · Source: fee-based · Key field: ARN · Status: not pullable (dead end)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "C002"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Zoning By-law Boundary · Source: City AGOL · Rows: 11,860 · Key field: GlobalID, ZONING_CODE · Native CRS: 3857 · Last edit: 2026-10-10 · Status: new pull (Tier 2)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "C206"
+       ],
+       "tag": "strong"
+      },
+      " — Dataset: Community Boundaries · Source: City AGOL · Rows: 6 · Key field: COMMUNITY_NAME · Native CRS: 26917 · Last edit: 2023-10-03 · Status: new pull (Tier 2)"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "GRCA regulation limits were already pulled and were not re-pulled."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "First-spine-check:-City-parcels-vs-NPCA-ARN-parcels"
+   },
+   "children": [
+    "First spine check: City parcels vs NPCA ARN parcels"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The check covers the full population of both layers, in EPSG:26917. The match is by representative point (point on surface) in both directions. The \"overlap\" set is the City parcels whose point lies within 5 m of an NPCA parcel. NPCA geometry was shifted by the measured median offset (dx +0.297 m, dy -0.939 m; NA-276)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "NPCA parcels"
+       ],
+       "tag": "strong"
+      },
+      " — Raw: 90,306 · Shifted: 90,306"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City parcels in overlap"
+       ],
+       "tag": "strong"
+      },
+      " — Raw: 92,490 · Shifted: 92,481"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Reciprocal 1:1 pairs"
+       ],
+       "tag": "strong"
+      },
+      " — Raw: 90,057 (99.72% of NPCA) · Shifted: ",
+      {
+       "children": [
+        "90,102 (99.77%)"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "IoU of 1:1 pairs, p10 / p50 / p90"
+       ],
+       "tag": "strong"
+      },
+      " — Raw: 0.817 / 0.875 / 0.938 · Shifted: ",
+      {
+       "children": [
+        "0.999 / 1.000 / 1.000"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "1:1 pairs with IoU ≥ 0.9"
+       ],
+       "tag": "strong"
+      },
+      " — Raw: 25,402 · Shifted: ",
+      {
+       "children": [
+        "89,837"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NPCA parcels with no City parcel"
+       ],
+       "tag": "strong"
+      },
+      " — Raw: 25 · Shifted: 13"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City parcels in overlap with no NPCA parcel"
+       ],
+       "tag": "strong"
+      },
+      " — Raw: 43 · Shifted: 31"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NPCA point inside 2 City parcels (stacked duplicates)"
+       ],
+       "tag": "strong"
+      },
+      " — Raw: 46 · Shifted: 46"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City parcels that get an ARN"
+       ],
+       "tag": "strong"
+      },
+      " — Raw: 90,128 · Shifted: 90,162 (54.0% of the city)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City parcels with more than one ARN"
+       ],
+       "tag": "strong"
+      },
+      " — Raw: 122 · Shifted: 101"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "ARNs that span more than one City parcel"
+       ],
+       "tag": "strong"
+      },
+      " — Raw: 141 · Shifted: 141"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "One-to-many (shifted):"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "189 NPCA parcels each contain the points of 2 or more City parcels, 2,538 City parcels in all. Here the City fabric is finer than NPCA's."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "In the other direction, 275 NPCA rows reuse an ARN; one ARN sits on 49 polygons."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Offset source:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Over the 90,102 pairs, the offset is constant: the interquartile range is under 3 mm on both axes."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Parcels_Cityview shows the same offset (5,000-row sample)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "NPCA's own stored ",
+      {
+       "children": [
+        "CentroidX"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "CentroidY"
+       ],
+       "tag": "code"
+      },
+      " (UTM metres) sit +0.30 m and -0.93 m from its served geometry. So the NPCA attribute values agree with the City, and the shift enters in NPCA's hosted geometry. The City fabric should be the reference."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Other-candidate-joins"
+   },
+   "children": [
+    "Other candidate joins"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Address point → City parcel"
+       ],
+       "tag": "strong"
+      },
+      " — Result: 273,509 in exactly 1 parcel, 356 in none (median 7 m away), 860 in 2–3 stacked parcels. 2,991 parcels have no address."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Building rep point → City parcel"
+       ],
+       "tag": "strong"
+      },
+      " — Result: 213,676 in exactly 1 parcel, 522 in none. 21,307 footprints overlap 2 or more parcels by more than 1 m². 20,416 parcels have no building."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NPCA civic address → City address on the same parcel"
+       ],
+       "tag": "strong"
+      },
+      " — Result: 84,387 of 88,167 exact (95.7%), plain upper-case. 4,051 NPCA parcels have a blank address."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Waste Collection → Addresses (number + street + community + unit)"
+       ],
+       "tag": "strong"
+      },
+      " — Result: 271,875 of 277,701 exact. 275,466 match without the unit."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Parcel rep point → Zoning"
+       ],
+       "tag": "strong"
+      },
+      " — Result: 165,766 in exactly 1 zone, 1,061 in none, 1 in 2"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Parcel rep point → Community / City Boundary"
+       ],
+       "tag": "strong"
+      },
+      " — Result: 166,708 inside, 120 outside"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Managed forest ROLL_NUMBER → NPCA ARN"
+       ],
+       "tag": "strong"
+      },
+      " — Result: 8 of 23 (hyphens stripped). 19 of 23 start 2518."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Parcels_Cityview ARN → Assessment_Parcels_Test ARN"
+       ],
+       "tag": "strong"
+      },
+      " — Result: 80,244 of 80,801 distinct"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Address street name → Centreline STREET_NAME_COMPLETE"
+       ],
+       "tag": "strong"
+      },
+      " — Result: 4,215 of 4,233 names (274,591 of 274,725 rows)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "ARN prefix → LIO ASSESSMENT_CODE"
+       ],
+       "tag": "strong"
+      },
+      " — Result: Hamilton is 2518 (MUNID 25005). 90,296 of 90,306 NPCA ARN start 2518."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Top-quirks"
+   },
+   "children": [
+    "Top quirks"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The full list is Q-001 to Q-019 in ",
+    {
+     "children": [
+      "18-quirks-log.csv"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "No stable IDs"
+       ],
+       "tag": "strong"
+      },
+      " on the City's parcels, addresses or buildings: OBJECTID only (Q-002, Q-011). The parcel layer carries no attributes at all."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NPCA offset of 0.984 m"
+       ],
+       "tag": "strong"
+      },
+      ", constant across the city (Q-004). The fix is a translation; no reprojection is needed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Grain mismatch:"
+       ],
+       "tag": "strong"
+      },
+      " 189 NPCA parcels cover 2,538 City parcels (Q-007), and 275 duplicate ARN rows (Q-006). ARN is an attribute, not a key."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Stacked duplicate City parcels:"
+       ],
+       "tag": "strong"
+      },
+      " 83 rows (Q-001)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Storage CRS mix:"
+       ],
+       "tag": "strong"
+      },
+      " parcels and zoning are hosted in EPSG:3857, the other City layers in 26917 (Q-003)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Cityview ",
+        {
+         "children": [
+          "Full_Stree"
+         ],
+         "tag": "code"
+        },
+        " holds the street number"
+       ],
+       "tag": "strong"
+      },
+      " (Q-010). NPCA text blanks are a single space (Q-008)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Zoning geometry:"
+       ],
+       "tag": "strong"
+      },
+      " 31 null and 72 invalid shapes (Q-015)."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "Recommended-next-steps-for-the-HeavyMap-ID-registry"
+   },
+   "children": [
+    "Recommended next steps for the HeavyMap ID registry"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Mint parcel IDs from the City fabric."
+       ],
+       "tag": "strong"
+      },
+      " Use one ",
+      {
+       "children": [
+        "hm:ca:on:hamilton:parcel:<id>"
+       ],
+       "tag": "code"
+      },
+      " per distinct City parcel geometry. Collapse the 83 stacked duplicates, keeping their OBJECTIDs as aliases. Use an opaque, permanent ID. Store a geometry fingerprint (rounded rep point plus area, in 26917) only as a matching aid for later re-pulls."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Register NPCA as an aligned source."
+       ],
+       "tag": "strong"
+      },
+      " Record the translation (+0.297, -0.939 m) as a per-source transform in the registry, applied before every match. Attach ARN as a many-to-many attribute, with grades:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "exact"
+       ],
+       "tag": "code"
+      },
+      ": reciprocal 1:1 with IoU of at least 0.9."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "one_to_many"
+       ],
+       "tag": "code"
+      },
+      ": the 189 NPCA parcels covering several City parcels."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "unmatched"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Mint address IDs"
+       ],
+       "tag": "strong"
+      },
+      " from Addresses: one per number + street + community + unit, with points grouped under the civic address. Link each to its parcel by point-in-polygon, falling back to the nearest parcel within 10 m. Use Waste Collection as a cross-check of unit coverage."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Mint building IDs"
+       ],
+       "tag": "strong"
+      },
+      " from a footprint fingerprint. Link each building to the parcel of largest overlap, and keep the overlap list for the 21,307 that cross parcel lines."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Define the re-pull reconciliation rule."
+       ],
+       "tag": "strong"
+      },
+      " On a fresh pull, match new geometry to registry IDs by fingerprint, then by IoU of at least 0.9. Splits and merges get new IDs plus lineage links. Never reuse an ID."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Fill the ARN gap for the 46% of parcels outside NPCA coverage"
+       ],
+       "tag": "strong"
+      },
+      " (north and west Hamilton). Options: another MPAC-derived open layer (Conservation Halton or GRCA side), or a decision to carry ",
+      {
+       "children": [
+        "not_in_coverage"
+       ],
+       "tag": "code"
+      },
+      " refusals."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Write the registry and spine as a code PR"
+       ],
+       "tag": "strong"
+      },
+      " with tests, in ",
+      {
+       "children": [
+        "heavymap/"
+       ],
+       "tag": "code"
+      },
+      " (stdlib plus an optional shapely extra). Run it as a an agent or an agent task, using these scripts as the reference implementation. Landed as ",
+      {
+       "children": [
+        "heavymap/ids/"
+       ],
+       "tag": "code"
+      },
+      " plus ADR 0003 (Cursor Cloud, 2026-10-17); still needs owner review of the ULID format."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0061\ntype: working-paper\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-10-17\nseq: 26"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, hamilton, parcels, spine, run-1",
+ "path": "Hamilton-base-and-key-join-pull-profile-and-first-spine-check-2026-10-17-ET-11-19",
+ "title": "Hamilton base and key-join pull, profile and first spine check (2026-10-17 ET)",
+ "url": "https://telegra.ph/Hamilton-base-and-key-join-pull-profile-and-first-spine-check-2026-10-17-ET-11-19",
+ "views": 0
+}

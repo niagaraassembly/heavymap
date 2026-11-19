@@ -1,0 +1,257 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "can_edit": true,
+ "content": [
+  {
+   "children": [
+    "The documents written during the Hamilton work, published nearly as written: studies, pulls, checks and plans."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Tile-source-options-for-the-v1-Hamilton-map-2026-11-16-11-19"
+       },
+       "children": [
+        "Tile source options for the v1 Hamilton map (2026-11-16)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 5 min · working-paper, hamilton, map, tiles, run-1",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Hamilton-overlay-pulls-and-first-PMTiles-build-2026-10-17-11-19"
+       },
+       "children": [
+        "Hamilton overlay pulls and first PMTiles build (2026-10-17)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 6 min · working-paper, hamilton, overlays, tiles, run-1",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Hamilton-Official-Plan-designation-sources-11-19"
+       },
+       "children": [
+        "Hamilton Official Plan designation sources"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · working-paper, hamilton, planning, run-1",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Hamilton-map-layers-what-we-hold-and-what-we-could-bring-in-2026-11-16-11-19"
+       },
+       "children": [
+        "Hamilton map layers: what we hold and what we could bring in (2026-11-16)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 4 min · working-paper, hamilton, map, layers, run-1",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Hamilton-freight-and-infrastructure-datasets-discovery-and-first-profile-2026-11-17-11-19"
+       },
+       "children": [
+        "Hamilton freight and infrastructure datasets: discovery and first profile (2026-11-17)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 14 min · working-paper, hamilton, freight, infrastructure, run-1",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-11-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Hamilton-decisions-log-11-19"
+       },
+       "children": [
+        "Hamilton decisions log"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 3 min · working-paper, hamilton, decisions, run-1",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-11-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Hamilton-dataset-groupings-by-spine-role-read-only-2026-10-17-ET-11-19"
+       },
+       "children": [
+        "Hamilton dataset groupings by spine role (read-only, 2026-10-17 ET)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 14 min · working-paper, hamilton, catalogue, run-1",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Hamilton-building-footprints-parcel-links-and-size-ranks-11-19"
+       },
+       "children": [
+        "Hamilton building footprints: parcel links and size ranks"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 3 min · working-paper, hamilton, buildings, run-1",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-11-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Hamilton-base-and-key-join-pull-profile-and-first-spine-check-2026-10-17-ET-11-19"
+       },
+       "children": [
+        "Hamilton base and key-join pull, profile and first spine check (2026-10-17 ET)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 7 min · working-paper, hamilton, parcels, spine, run-1",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Dataset-routine--discover-profile-harmonize-11-19"
+       },
+       "children": [
+        "Dataset routine — discover, profile, harmonize"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 7 min · working-paper, routine, method",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-18, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Data-delivery-benchmark-Hamilton-schema-2-candidate-11-19"
+       },
+       "children": [
+        "Data delivery benchmark: Hamilton schema 2 candidate"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 3 min · working-paper, hamilton, hosting, releases, run-1",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Conservation-authority-sources-for-Hamilton-2026-10-17-11-19"
+       },
+       "children": [
+        "Conservation authority sources for Hamilton (2026-10-17)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 1 min · working-paper, hamilton, conservation, run-1",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Index generated by Telepatch. byline=plain collection=extra"
+   ],
+   "tag": "p"
+  }
+ ],
+ "description": "",
+ "path": "Working-papers-Hamilton-11-19",
+ "title": "Working papers: Hamilton",
+ "url": "https://telegra.ph/Working-papers-Hamilton-11-19",
+ "views": 0
+}

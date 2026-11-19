@@ -1,0 +1,1057 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, architecture, framework"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-16, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Status:"
+     ],
+     "tag": "strong"
+    },
+    " code, 2026-10-17. Linear ",
+    {
+     "children": [
+      "NA-24"
+     ],
+     "tag": "strong"
+    },
+    ", ",
+    {
+     "children": [
+      "NA-27"
+     ],
+     "tag": "strong"
+    },
+    ", ",
+    {
+     "children": [
+      "NA-270"
+     ],
+     "tag": "strong"
+    },
+    ". Synthetic tests only in git."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Attaches every overlapping zone or designation to each HeavyMap parcel ID with area shares. The ID registry (",
+    {
+     "children": [
+      "industrial_atlas/ids/"
+     ],
+     "tag": "code"
+    },
+    ", heavymap-id-registry.md) mints the parcel keys. This package does not mint IDs and does not publish."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "the owner’s decisions that this code follows:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Store every intersecting zone (provisional). The dossier explains overlaps; this table does not simplify to a dominant class."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Join Greenbelt designation, Niagara Escarpment Plan designation, and NEP Development Control Area to every parcel, with area shares (firm)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Labels are source-quoted (",
+      {
+       "children": [
+        "City zoning: M11"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "City class: Vacant Lands"
+       ],
+       "tag": "code"
+      },
+      "). HeavyMap does not assert vacancy."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Nothing here is published. Pulled rows stay in local data (not published)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Output"
+   },
+   "children": [
+    "Output"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Long-format CSV, one row per parcel × overlay feature intersection:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "ia_id"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Registry parcel ID (",
+      {
+       "children": [
+        "ia:ca:on:hamilton:parcel:{ULID}"
+       ],
+       "tag": "code"
+      },
+      ")"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "layer_id"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Overlay config id (",
+      {
+       "children": [
+        "LYR-HAM-ZONING"
+       ],
+       "tag": "code"
+      },
+      ", …)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "feature_source_id"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Source feature id (GlobalID, OGF_ID, OBJECTID, …)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "class"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Source class field, or a constant such as ",
+      {
+       "children": [
+        "urban"
+       ],
+       "tag": "code"
+      },
+      " / ",
+      {
+       "children": [
+        "regulated"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "quoted_label"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Source-quoted label from the layer template"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "area_m2"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Intersection area in the working CRS (EPSG:26917)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "parcel_share"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: ",
+      {
+       "children": [
+        "area_m2 / parcel_area"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "feature_share"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: ",
+      {
+       "children": [
+        "area_m2 / overlay_feature_area"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "sliver"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: ",
+      {
+       "children": [
+        "y"
+       ],
+       "tag": "code"
+      },
+      " when share ",
+      {
+       "children": [
+        "and"
+       ],
+       "tag": "strong"
+      },
+      " area are under the sliver caps; still kept"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Default sliver rule: ",
+    {
+     "children": [
+      "parcel_share < 0.01"
+     ],
+     "tag": "code"
+    },
+    " ",
+    {
+     "children": [
+      "and"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "area_m2 < 5"
+     ],
+     "tag": "code"
+    },
+    ". Flagged, not dropped."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Working CRS is EPSG:26917, same as the registry. Lon/lat GeoJSON is refused."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "How-it-scales"
+   },
+   "children": [
+    "How it scales"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Overlay polygons for ",
+      {
+       "children": [
+        "one layer"
+       ],
+       "tag": "strong"
+      },
+      " sit in a shapely 2 ",
+      {
+       "children": [
+        "STRtree"
+       ],
+       "tag": "code"
+      },
+      ". The tree is built once per layer, not once per chunk."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Polygons with more than 256 vertices are cut into quadrant pieces once per layer, like PostGIS ",
+      {
+       "children": [
+        "ST_Subdivide"
+       ],
+       "tag": "code"
+      },
+      ". The pieces partition the feature, so their summed intersections equal the whole-feature intersection. Pieces are prepared, so a parcel that sits inside a piece takes its own area without a GEOS overlay. The remaining pairs are intersected in one vectorised call per chunk."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Registry parcels stream from ",
+      {
+       "children": [
+        "parcels.csv"
+       ],
+       "tag": "code"
+      },
+      " in chunks (default 2,500). Peak RAM is one overlay layer plus one chunk, aimed well under 2 GB on a machine with about 3–4 GB free."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Invalid geometries are repaired with ",
+      {
+       "children": [
+        "make_valid"
+       ],
+       "tag": "code"
+      },
+      " (zoning: 72 invalid, 31 missing — Q-015). Counts go in the run manifest."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Secondary-plan lot-cut polygons are ",
+      {
+       "children": [
+        "not"
+       ],
+       "tag": "strong"
+      },
+      " dissolved. Each lot polygon that overlaps a parcel is a row."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Requires ",
+    {
+     "children": [
+      "shapely 2"
+     ],
+     "tag": "strong"
+    },
+    ". The ID registry remains stdlib-only."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Persistence"
+   },
+   "children": [
+    "Persistence"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Configurable directory, default local data (not published) (gitignored):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "CURRENT\nruns/<run_id>/\n  MANIFEST.json\n  overlay_links.csv"
+   ],
+   "tag": "pre"
+  },
+  {
+   "attrs": {
+    "id": "CLI"
+   },
+   "children": [
+    "CLI"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "python3 -m industrial_atlas.overlays \\\n  --registry-dir local data (not published) \\\n  --data-root local-data \\\n  --overlay LYR-HAM-ZONING=local data (not published)"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Equivalent: ",
+    {
+     "children": [
+      "python3 scripts/link_hamilton_overlays.py"
+     ],
+     "tag": "code"
+    },
+    ". Missing layer paths are skipped unless ",
+    {
+     "children": [
+      "--require-all"
+     ],
+     "tag": "code"
+    },
+    ". Inputs must already be in EPSG:26917."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "This cloud VM cannot reach ArcGIS. Run the linker on the owner’s machine against local pulls. Never commit those files."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Hamilton-layers"
+   },
+   "children": [
+    "Hamilton layers"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "See ",
+    {
+     "children": [
+      "industrial_atlas/overlays/config.py"
+     ],
+     "tag": "code"
+    },
+    ". Field names come from catalog 09, 17-layer-profile, ",
+    {
+     "children": [
+      "hamilton-dataset-groupings.csv"
+     ],
+     "tag": "code"
+    },
+    " and the live REST reads made on 2026-10-17 (see ",
+    {
+     "children": [
+      "heavymap-planning/focus/hamilton/TILES-BUILD-2026-10-17.md"
+     ],
+     "tag": "code"
+    },
+    "):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "NEP Development Control Area:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "PolicyPlanning/MapServer/10"
+       ],
+       "tag": "code"
+      },
+      ", the City's republication of the NEC layer. LIO does not publish it (Q-020). The id is ",
+      {
+       "children": [
+        "OBJECTID"
+       ],
+       "tag": "code"
+      },
+      ", the label uses ",
+      {
+       "children": [
+        "PART"
+       ],
+       "tag": "code"
+      },
+      ", and the class is the constant ",
+      {
+       "children": [
+        "development_control"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Secondary Plan Land Use:"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "class ",
+      {
+       "children": [
+        "LANDUSE_CLASS"
+       ],
+       "tag": "code"
+      },
+      ", plan name ",
+      {
+       "children": [
+        "SEC_PLAN_NAME"
+       ],
+       "tag": "code"
+      },
+      ", id ",
+      {
+       "children": [
+        "OBJECTID"
+       ],
+       "tag": "code"
+      },
+      " (",
+      {
+       "children": [
+        "ID"
+       ],
+       "tag": "code"
+      },
+      " is always null, Q-024)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "four retired plans are filtered: ",
+      {
+       "children": [
+        "Retired - Greensville"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Retired - Downtown Hamilton"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "Retired - Clappisons Corner"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "Retired - Lower Spencer Creek"
+       ],
+       "tag": "code"
+      },
+      " (Q-025)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "HCA Regulated Areas:"
+       ],
+       "tag": "strong"
+      },
+      " the id field is ",
+      {
+       "children": [
+        "OID"
+       ],
+       "tag": "code"
+      },
+      ". ",
+      {
+       "children": [
+        "Version"
+       ],
+       "tag": "code"
+      },
+      " is 0 on every row, so the class is the constant ",
+      {
+       "children": [
+        "regulated"
+       ],
+       "tag": "code"
+      },
+      " (Q-021)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Default input paths:"
+       ],
+       "tag": "strong"
+      },
+      " each ",
+      {
+       "children": [
+        "default_rel"
+       ],
+       "tag": "code"
+      },
+      " names the real deb pull (",
+      {
+       "children": [
+        "<source>/<dataset>-hamilton-2026-10-17/<dataset>-26917.geojson"
+       ],
+       "tag": "code"
+      },
+      "), so ",
+      {
+       "children": [
+        "--data-root local-data"
+       ],
+       "tag": "code"
+      },
+      " finds all 11 layers."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Conservation Halton has no open regulation layer. It is a named gap, not a config row."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Validation-on-real-Hamilton-data-(2026-10-17,-deb)"
+   },
+   "children": [
+    "Validation on real Hamilton data (2026-10-17, deb)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The CLI was run against the CURRENT registry run (166,745 active parcels) and the 11 EPSG:26917 overlay pulls, with shapely 2.2."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "LYR-HAM-ZONING"
+       ],
+       "tag": "strong"
+      },
+      " — Features loaded: 11,829 (31 null geometries, 72 repaired) · Link rows: 229,937 · Slivers: 51,961 · Parcels with a non-sliver row: 165,793"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LYR-LIO-GREENBELT-DESIGNATION"
+       ],
+       "tag": "strong"
+      },
+      " — Features loaded: 9 · Link rows: 41,941 · Slivers: 64 · Parcels with a non-sliver row: 41,758"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LYR-LIO-NEP-DESIGNATION"
+       ],
+       "tag": "strong"
+      },
+      " — Features loaded: 115 · Link rows: 25,549 · Slivers: 130 · Parcels with a non-sliver row: 23,185"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LYR-HAM-NEP-DEVELOPMENT-CONTROL"
+       ],
+       "tag": "strong"
+      },
+      " — Features loaded: 1 · Link rows: 3,186 · Slivers: 434 · Parcels with a non-sliver row: 2,752"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LYR-NPCA-APPROX-REGULATION-LANDS (written as LYR-NPCA-REGULATION-LANDS in run 20261017-val2; renamed to the sheet 17 id)"
+       ],
+       "tag": "strong"
+      },
+      " — Features loaded: 271 · Link rows: 3,612 · Slivers: 84 · Parcels with a non-sliver row: 2,361"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LYR-HCA-REGULATED-AREAS"
+       ],
+       "tag": "strong"
+      },
+      " — Features loaded: 134 · Link rows: 12,123 · Slivers: 207 · Parcels with a non-sliver row: 11,722"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LYR-GRCA-REGULATION-LIMITS-WATERLOO"
+       ],
+       "tag": "strong"
+      },
+      " — Features loaded: 199 · Link rows: 1,193 · Slivers: 32 · Parcels with a non-sliver row: 834"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LYR-HAM-SECONDARY-PLAN-LAND-USE"
+       ],
+       "tag": "strong"
+      },
+      " — Features loaded: 46,149 (1,056 retired filtered) · Link rows: 155,721 · Slivers: 96,636 · Parcels with a non-sliver row: 54,358"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LYR-HAM-EMPLOYMENT-LANDS"
+       ],
+       "tag": "strong"
+      },
+      " — Features loaded: 22 · Link rows: 3,706 · Slivers: 390 · Parcels with a non-sliver row: 3,308"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LYR-HAM-URBAN-BOUNDARY"
+       ],
+       "tag": "strong"
+      },
+      " — Features loaded: 1 · Link rows: 151,910 · Slivers: 105 · Parcels with a non-sliver row: 151,805"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "LYR-HAM-RURAL-BOUNDARY"
+       ],
+       "tag": "strong"
+      },
+      " — Features loaded: 1 · Link rows: 15,520 · Slivers: 567 · Parcels with a non-sliver row: 14,953"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "**Total"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Link rows: "
+       ],
+       "tag": "strong"
+      },
+      "644,398",
+      {
+       "children": [
+        " · Slivers: "
+       ],
+       "tag": "strong"
+      },
+      "150,610**"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Coverage."
+     ],
+     "tag": "strong"
+    },
+    " 166,729 of 166,745 parcels have at least one overlay row. The other 16 fall outside both the urban and the rural boundary, which together equal the City boundary."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Slivers."
+     ],
+     "tag": "strong"
+    },
+    " Most slivers come from edges: zoning and lot-cut boundaries do not follow the parcel fabric exactly. Secondary-plan lot-cuts give 62% of that layer's rows as slivers. They are flagged, not dropped."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Runtime and memory."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The first run, with the tree rebuilt per chunk and whole-polygon intersections, took 861 s wall at 345 MB peak RSS."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "After the subdivide, prepared-piece and vectorised changes, it took 184 s at 395 MB."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The two runs gave the same 644,398 (parcel, layer, feature) keys and identical class, label and sliver values. The largest area difference was 1.0e-6 m²."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Most of the remaining time is parsing parcel geometry_json once per layer."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Tests"
+   },
+   "children": [
+    "Tests"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "python3 -m unittest tests.test_heavymap_overlays -v"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Synthetic metre-space boxes only. No real Hamilton rows in git. Overlay tests skip if shapely is not installed."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0071\ntype: working-paper\nsection: systems\nevidence_date: 2026-11-16\nseq: 12"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, architecture, framework",
+ "path": "HeavyMap-overlay-linker-Hamilton-first-11-19",
+ "title": "HeavyMap overlay linker (Hamilton first)",
+ "url": "https://telegra.ph/HeavyMap-overlay-linker-Hamilton-first-11-19",
+ "views": 0
+}

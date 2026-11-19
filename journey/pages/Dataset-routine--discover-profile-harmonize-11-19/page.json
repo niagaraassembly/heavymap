@@ -1,0 +1,1569 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, routine, method"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-18, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Status:"
+     ],
+     "tag": "strong"
+    },
+    " DRAFT, living doc. Proposed by an agent 2026-10-03 for the owner's review. Not yet owned by a Linear issue (",
+    {
+     "children": [
+      "owner_issue"
+     ],
+     "tag": "code"
+    },
+    " is ",
+    {
+     "children": [
+      "proposed"
+     ],
+     "tag": "code"
+    },
+    " in the planning index). Modelled on the ",
+    {
+     "children": [
+      "na-research"
+     ],
+     "tag": "code"
+    },
+    " Sector Research routine: slice the work, record every fact with its source, gate each step, and keep review decisions with the owner."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "HeavyMap has a large source catalog and a small number of datasets that anyone has actually opened. This routine turns catalog rows into profiled, harmonized, join-tested layers, one slice at a time. It is built on the EPIC-02 pilot (",
+    {
+     "children": [
+      "EPIC-02-spine-and-joins.md"
+     ],
+     "tag": "code"
+    },
+    "), which showed that the useful facts are small and checkable: record count, id field and its quirks, encoding, CRS, and how the layer joins to the parcel spine. Agents do the reading and write it down. the owner decides what is used and what is shown."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "For write-ups at the verify stage, model them on the NA-79 evidence docs: ",
+    {
+     "children": [
+      "docs/normalization/ny-sbl-sources.md"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "docs/normalization/ny-sbl-real-data-evidence.md"
+     ],
+     "tag": "code"
+    },
+    " (on PR #56)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "1.-Purpose-and-rules"
+   },
+   "children": [
+    "1. Purpose and rules"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Purpose"
+       ],
+       "tag": "strong"
+      },
+      " — Detail: Produce, per layer: a profile, a quirks log, a harmonization result, a spine-join grade, and a use decision."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Pull needs no licence confirmation"
+       ],
+       "tag": "strong"
+      },
+      " — Detail: Pulling is for profiling only. Licence and use are decided later (",
+      {
+       "children": [
+        "not_used"
+       ],
+       "tag": "code"
+      },
+      " or a use decision)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Pulled data stays local"
+       ],
+       "tag": "strong"
+      },
+      " — Detail: Raw pulls live in git-ignored local data (not published), never in git."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Owner and personal fields"
+       ],
+       "tag": "strong"
+      },
+      " — Detail: Pulled with everything else (",
+      {
+       "children": [
+        "outFields=*"
+       ],
+       "tag": "code"
+      },
+      ") and kept local. Screened out of anything public (tiles, site files, UI, exports) at the publish boundary, per D-13 and HARD-RULES 2. Record field names only, never values, in sheets, docs, PRs and comments."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "MPAC"
+       ],
+       "tag": "strong"
+      },
+      " — Detail: May be pulled, used and published. In Ontario, roll numbers, tax or property class and parcel civic addresses may be shown publicly (HARD-RULES 4)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NPCA-derived layers"
+       ],
+       "tag": "strong"
+      },
+      " — Detail: May be pulled, used and published, all fields pulled, identifying fields screened from public view (HARD-RULES 2, 5)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Publication"
+       ],
+       "tag": "strong"
+      },
+      " — Detail: Public publish still needs the owner's per-jurisdiction beta-gate sign-off (NA-269). Publish/deploy tooling may be built and tested (HARD-RULES 3)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Repo hygiene"
+       ],
+       "tag": "strong"
+      },
+      " — Detail: Docs and CSVs only on a branch and PR. No MCS edits, no secrets, no UK datasets."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "2.-Inputs"
+   },
+   "children": [
+    "2. Inputs"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Jurisdiction"
+       ],
+       "tag": "strong"
+      },
+      " — Example: Welland; Rochester/Monroe · Notes: From roster ",
+      {
+       "children": [
+        "07"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Layer family"
+       ],
+       "tag": "strong"
+      },
+      " — Example: parcels; address; footprints; zoning; permits/business; context · Notes: Fixed order, see Batching."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Linear IDs"
+       ],
+       "tag": "strong"
+      },
+      " — Example: slice issue, parent epic, any NA-86 grading issue · Notes: Every output cites one."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Catalog rows"
+       ],
+       "tag": "strong"
+      },
+      " — Example: ",
+      {
+       "children": [
+        "09-per-jurisdiction-dataset-catalog.xlsx"
+       ],
+       "tag": "code"
+      },
+      " row refs · Notes: Written to ",
+      {
+       "children": [
+        "catalog_row_ref"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Prior recon"
+       ],
+       "tag": "strong"
+      },
+      " — Example: ",
+      {
+       "children": [
+        "15-pilot-join-matrix-welland-rochester.csv"
+       ],
+       "tag": "code"
+      },
+      " · Notes: A baseline, not truth."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "3.-Service-vs-layer-model"
+   },
+   "children": [
+    "3. Service-vs-layer model"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Profile each publisher service once. Layers inherit service defaults and override only where they differ."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Unit"
+       ],
+       "tag": "strong"
+      },
+      " — Service profile (",
+      {
+       "children": [
+        "16-service-profile.csv"
+       ],
+       "tag": "code"
+      },
+      "): one ArcGIS server, portal or API · Layer profile (",
+      {
+       "children": [
+        "17-layer-profile.csv"
+       ],
+       "tag": "code"
+      },
+      "): one layer or table"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Holds"
+       ],
+       "tag": "strong"
+      },
+      " — Service profile (",
+      {
+       "children": [
+        "16-service-profile.csv"
+       ],
+       "tag": "code"
+      },
+      "): base URL, access method, auth, paging limit, default encoding and CRS, licence text, reliability · Layer profile (",
+      {
+       "children": [
+        "17-layer-profile.csv"
+       ],
+       "tag": "code"
+      },
+      "): counts, id analysis, geometry, dates, nulls, owner field names, spine join, use decision"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Key"
+       ],
+       "tag": "strong"
+      },
+      " — Service profile (",
+      {
+       "children": [
+        "16-service-profile.csv"
+       ],
+       "tag": "code"
+      },
+      "): ",
+      {
+       "children": [
+        "service_id"
+       ],
+       "tag": "code"
+      },
+      " · Layer profile (",
+      {
+       "children": [
+        "17-layer-profile.csv"
+       ],
+       "tag": "code"
+      },
+      "): ",
+      {
+       "children": [
+        "layer_id"
+       ],
+       "tag": "code"
+      },
+      ", with ",
+      {
+       "children": [
+        "service_id"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "inherits_from_service"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Overrides"
+       ],
+       "tag": "strong"
+      },
+      " — Service profile (",
+      {
+       "children": [
+        "16-service-profile.csv"
+       ],
+       "tag": "code"
+      },
+      "): n/a · Layer profile (",
+      {
+       "children": [
+        "17-layer-profile.csv"
+       ],
+       "tag": "code"
+      },
+      "): a layer value wins; say why in ",
+      {
+       "children": [
+        "notes"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Quirks"
+       ],
+       "tag": "strong"
+      },
+      " — Service profile (",
+      {
+       "children": [
+        "16-service-profile.csv"
+       ],
+       "tag": "code"
+      },
+      "): service-wide quirks go in ",
+      {
+       "children": [
+        "notes"
+       ],
+       "tag": "code"
+      },
+      " · Layer profile (",
+      {
+       "children": [
+        "17-layer-profile.csv"
+       ],
+       "tag": "code"
+      },
+      "): per-field quirks go in ",
+      {
+       "children": [
+        "18-quirks-log.csv"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "3a.-Files"
+   },
+   "children": [
+    "3a. Files"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "Spreadsheets/16-service-profile.csv"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Holds: One row per service"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "Spreadsheets/17-layer-profile.csv"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Holds: One row per layer"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "Spreadsheets/18-quirks-log.csv"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Holds: One row per quirk (",
+      {
+       "children": [
+        "Q-NNN"
+       ],
+       "tag": "code"
+      },
+      ")"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "heavymap-planning/drafts/dataset-routine-SKILL.md"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Holds: Skill draft, not registered"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "CSV format: UTF-8, no BOM, LF, RFC-4180 quoting, dates ",
+    {
+     "children": [
+      "YYYY-MM-DD"
+     ],
+     "tag": "code"
+    },
+    ", no ",
+    {
+     "children": [
+      ";"
+     ],
+     "tag": "code"
+    },
+    " inside a cell (use ",
+    {
+     "children": [
+      " | "
+     ],
+     "tag": "code"
+    },
+    "), no owner values."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "4.-Stages"
+   },
+   "children": [
+    "4. Stages"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Linear comment rule: ",
+    {
+     "children": [
+      "the agent doing a step posts its own comment on the slice issue at every step."
+     ],
+     "tag": "strong"
+    },
+    " an agent posts only roll-ups. Every comment uses the header ",
+    {
+     "children": [
+      "Stage N / jurisdiction / family / layers touched / evidence URLs"
+     ],
+     "tag": "code"
+    },
+    ", then the stage line below."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "0"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Slice plan · Output: Slice list: jurisdiction, family, 15-25 layers, lane per layer · Gate: the owner or Chief of Staff approves the slice · Comment template (after the header): ",
+      {
+       "children": [
+        "Planned: <n> layers / <services> / lanes / order / out of scope"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "1"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Discover and catalog · Output: Service profile row; layer rows at ",
+      {
+       "children": [
+        "catalogued"
+       ],
+       "tag": "code"
+      },
+      " · Gate: Every layer has an endpoint, a catalog row ref and a live check · Comment template (after the header): ",
+      {
+       "children": [
+        "Found: <n> services, <n> layers. New vs catalog: <n>. Not reachable: <list>"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Pull · Output: Files in local data (not published); rows to ",
+      {
+       "children": [
+        "pulled"
+       ],
+       "tag": "code"
+      },
+      " · Gate: Pulled count equals the server count, or the gap is explained · Comment template (after the header): ",
+      {
+       "children": [
+        "Pulled: <layer> <n>/<n> records, method, paging, size. Failures: <list>"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "3"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Profile · Output: Layer profile filled; rows to ",
+      {
+       "children": [
+        "profiled"
+       ],
+       "tag": "code"
+      },
+      " · Gate: All id, encoding, date, CRS, null and owner-name columns filled, with no owner values · Comment template (after the header): ",
+      {
+       "children": [
+        "Profiled: <layer> id <field> <n> distinct / <n> null / <n> dup; encoding; CRS; owner fields (names only)"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "4"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Quirks log · Output: Rows in ",
+      {
+       "children": [
+        "18-quirks-log.csv"
+       ],
+       "tag": "code"
+      },
+      "; layers with open quirks to ",
+      {
+       "children": [
+        "formatting_needed"
+       ],
+       "tag": "code"
+      },
+      " · Gate: Each quirk has a type, count, example id and proposed handling · Comment template (after the header): ",
+      {
+       "children": [
+        "Quirks: <n> new (<ids>). Blocking: <ids>. Example: <id>"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "5"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Harmonize · Output: Handling applied in a script or doc; rows to ",
+      {
+       "children": [
+        "format_resolved"
+       ],
+       "tag": "code"
+      },
+      " · Gate: Each quirk is ",
+      {
+       "children": [
+        "resolved"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "accepted"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "wontfix"
+       ],
+       "tag": "code"
+      },
+      ", with a re-run count · Comment template (after the header): ",
+      {
+       "children": [
+        "Resolved: <ids>. Method: <how>. Before/after counts"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "6"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Verify · Output: Join test against the spine; method (exact, fuzzy, spatial) and grade (NA-86); rows to ",
+      {
+       "children": [
+        "spined"
+       ],
+       "tag": "code"
+      },
+      " · Gate: ",
+      {
+       "children": [
+        "hits/tested"
+       ],
+       "tag": "code"
+      },
+      " stated, with the sample or full population named; evidence write-up in the NA-79 style · Comment template (after the header): ",
+      {
+       "children": [
+        "Spine join: <layer> -> <spine key> <method> <grade> <hits>/<tested>. Evidence: <url>"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "7"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Use decision · Output: Recommendation: use, ",
+      {
+       "children": [
+        "not_used"
+       ],
+       "tag": "code"
+      },
+      " or defer; licence status noted · Gate: the owner records the decision · Comment template (after the header): ",
+      {
+       "children": [
+        "Recommend: <use / not_used / defer>. Licence: <found / not found>. Risks: <list>"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "8"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Promote · Output: ",
+      {
+       "children": [
+        "dormant"
+       ],
+       "tag": "code"
+      },
+      ", then ",
+      {
+       "children": [
+        "surfaced"
+       ],
+       "tag": "code"
+      },
+      " · Gate: the owner's call. Public ",
+      {
+       "children": [
+        "surfaced"
+       ],
+       "tag": "code"
+      },
+      " needs per-jurisdiction beta-gate sign-off (NA-269) · Comment template (after the header): ",
+      {
+       "children": [
+        "Promoted: <layer> to <status> by the owner on <date>"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "5.-Lifecycle-statuses"
+   },
+   "children": [
+    "5. Lifecycle statuses"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Stored in ",
+    {
+     "children": [
+      "17-layer-profile.csv"
+     ],
+     "tag": "code"
+    },
+    " ",
+    {
+     "children": [
+      "lifecycle_status"
+     ],
+     "tag": "code"
+    },
+    ", with ",
+    {
+     "children": [
+      "status_changed_date"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "catalogued"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Found and recorded. Not pulled. · Enters at: Stage 1 · Moved by: Agent"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "pulled"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Data is in local data (not published). · Enters at: Stage 2 · Moved by: Agent"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "profiled"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Profile columns filled. · Enters at: Stage 3 · Moved by: Agent"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "formatting_needed"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Open quirks block use. · Enters at: Stage 4 · Moved by: Agent"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "format_resolved"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Every blocking quirk is handled. · Enters at: Stage 5 · Moved by: Agent"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "spined"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Joined to the spine, with ",
+      {
+       "children": [
+        "spine_join_method"
+       ],
+       "tag": "code"
+      },
+      " (exact, fuzzy, spatial) and ",
+      {
+       "children": [
+        "spine_join_grade"
+       ],
+       "tag": "code"
+      },
+      " (NA-86). · Enters at: Stage 6 · Moved by: Agent"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "dormant"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: In the live map, not shown to users. · Enters at: Stage 8 · Moved by: ",
+      {
+       "children": [
+        "the owner"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "surfaced"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Visible to users. Public only after the owner's per-jurisdiction beta-gate sign-off (NA-269). · Enters at: Stage 8 · Moved by: ",
+      {
+       "children": [
+        "the owner"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "blocked"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Side state. Cannot proceed; reason and unblocker named. · Enters at: Any stage · Moved by: Agent sets, the owner clears"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "not_used"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — Meaning: Side state. Will not be used (no value, or a the owner decision). · Enters at: Any stage · Moved by: the owner"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "A layer with no quirks goes from ",
+    {
+     "children": [
+      "profiled"
+     ],
+     "tag": "code"
+    },
+    " to ",
+    {
+     "children": [
+      "spined"
+     ],
+     "tag": "code"
+    },
+    ". Agents log every status move in a Linear comment."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "6.-Batching"
+   },
+   "children": [
+    "6. Batching"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The catalog has about 4,079 rows. 1,195 are relevant. Work per jurisdiction, at service level first."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Priority places"
+       ],
+       "tag": "strong"
+      },
+      " — Rule: Welland, then Rochester/Monroe, then other P0 places"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Family order"
+       ],
+       "tag": "strong"
+      },
+      " — Rule: parcels, address, footprints, zoning, permits/business, context"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Slice size"
+       ],
+       "tag": "strong"
+      },
+      " — Rule: 15 to 25 layers. One slice, one Linear issue"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Service first"
+       ],
+       "tag": "strong"
+      },
+      " — Rule: Profile the service, then its layers in family order"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "7.-Agent-lanes"
+   },
+   "children": [
+    "7. Agent lanes"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "an agent"
+       ],
+       "tag": "strong"
+      },
+      " — Use for: Slice plans, profiles, grading, roll-up review"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "an agent"
+       ],
+       "tag": "strong"
+      },
+      " — Use for: Hunts and scripted profiling in a clone"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Cursor Cloud"
+       ],
+       "tag": "strong"
+      },
+      " — Use for: Multi-file documentary and fixture PRs"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "an agent"
+       ],
+       "tag": "strong"
+      },
+      " — Use for: Runs on deb with ",
+      {
+       "children": [
+        "</dev/null"
+       ],
+       "tag": "code"
+      },
+      ", in a writable clone"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Copilot"
+       ],
+       "tag": "strong"
+      },
+      " — Use for: Gated, bounded packets (for example field registers)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Kiro"
+       ],
+       "tag": "strong"
+      },
+      " — Use for: Unavailable"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "8.-Briefs"
+   },
+   "children": [
+    "8. Briefs"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Every brief must include the Evidence and research contract. Draft contents (confirm with the owner):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Source URL and access date for every fact."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Label each fact ",
+      {
+       "children": [
+        "live read"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "documented, not re-read"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Counts come from the server (",
+      {
+       "children": [
+        "returnCountOnly"
+       ],
+       "tag": "code"
+      },
+      "), samples are at most 5 records, and join results are stated as ",
+      {
+       "children": [
+        "hits/tested"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Prior recon is a baseline. Show conflicts side by side."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "No owner values. No keys, logins or bulk scraping beyond the pull stage."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Unknown stays unknown. A zero result is valid."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "attrs": {
+    "id": "9.-Open-questions"
+   },
+   "children": [
+    "9. Open questions"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "[ ] MCS child-table relationship: is ",
+      {
+       "children": [
+        "17-layer-profile.csv"
+       ],
+       "tag": "code"
+      },
+      " a child of the MCS, and how does it key to ",
+      {
+       "children": [
+        "dataset_id"
+       ],
+       "tag": "code"
+      },
+      "?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] ",
+      {
+       "children": [
+        "dataset_id"
+       ],
+       "tag": "code"
+      },
+      " assignment rule for profiled layers. ",
+      {
+       "children": [
+        "mcs_dataset_id"
+       ],
+       "tag": "code"
+      },
+      " stays blank until decided."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] Catalog total: 4,020 (README v9, EPIC-01) vs 4,079 rows (audit ",
+      {
+       "children": [
+        "13"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] Is a validator script wanted (header, enums, no ",
+      {
+       "children": [
+        ";"
+       ],
+       "tag": "code"
+      },
+      ", status order)?"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "[ ] Add local data (not published) to ",
+      {
+       "children": [
+        ".gitignore"
+       ],
+       "tag": "code"
+      },
+      "? It is not listed there today."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "10.-Refinement-log"
+   },
+   "children": [
+    "10. Refinement log"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "2026-10-03"
+       ],
+       "tag": "strong"
+      },
+      " — Change: First draft with CSV templates and skill draft · By: an agent"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0060\ntype: working-paper\nsection: expansion\nrun: CR-001\nevidence_date: 2026-10-18\nseq: 25"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, routine, method",
+ "path": "Dataset-routine--discover-profile-harmonize-11-19",
+ "title": "Dataset routine — discover, profile, harmonize",
+ "url": "https://telegra.ph/Dataset-routine--discover-profile-harmonize-11-19",
+ "views": 0
+}

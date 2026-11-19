@@ -1,0 +1,2457 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, niagara, hamilton, log, prior-art"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "§17-Fix-round-1:-Regenerated-layer-schema-and-guard"
+   },
+   "children": [
+    "§17 Fix round 1: Regenerated layer schema and guard"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Date:"
+     ],
+     "tag": "strong"
+    },
+    " 2026-08-23"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Raw changes:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "atlas/scripts/normalize/departures.py"
+     ],
+     "tag": "code"
+    },
+    ":"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Line 26-31: Renamed ",
+      {
+       "children": [
+        "SOURCE"
+       ],
+       "tag": "code"
+      },
+      " to ",
+      {
+       "children": [
+        "SOURCE_TEMPLATE"
+       ],
+       "tag": "code"
+      },
+      " and corrected field names:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "licence"
+       ],
+       "tag": "code"
+      },
+      " → ",
+      {
+       "children": [
+        "license"
+       ],
+       "tag": "code"
+      },
+      " (American spelling to match app.js at line 319)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Added ",
+      {
+       "children": [
+        "license_url"
+       ],
+       "tag": "code"
+      },
+      ": \"https://www.ontario.ca/page/open-government-licence-ontario\""
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Renamed ",
+      {
+       "children": [
+        "id"
+       ],
+       "tag": "code"
+      },
+      " → ",
+      {
+       "children": [
+        "source_id"
+       ],
+       "tag": "code"
+      },
+      " (avoids shadowing)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Removed duplicate ",
+      {
+       "children": [
+        "id"
+       ],
+       "tag": "code"
+      },
+      " field"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Line 69: Changed ",
+      {
+       "children": [
+        "retrieved=\"2026-08-21\""
+       ],
+       "tag": "code"
+      },
+      " → ",
+      {
+       "children": [
+        "retrieved_at=\"2026-08-21\""
+       ],
+       "tag": "code"
+      },
+      " (to match app.js at line 310)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Lines 75-99: Added ",
+      {
+       "children": [
+        "_compute_bbox()"
+       ],
+       "tag": "code"
+      },
+      " function to compute ",
+      {
+       "children": [
+        "[min_lon, min_lat, max_lon, max_lat]"
+       ],
+       "tag": "code"
+      },
+      " from feature geometries"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Lines 102-120: Updated ",
+      {
+       "children": [
+        "build()"
+       ],
+       "tag": "code"
+      },
+      " to return a FeatureCollection with a top-level ",
+      {
+       "children": [
+        "atlas"
+       ],
+       "tag": "code"
+      },
+      " metadata object:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "layer"
+       ],
+       "tag": "code"
+      },
+      ": \"departures\""
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "source"
+       ],
+       "tag": "code"
+      },
+      ": \"Niagara Region Employment Inventory\""
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "license"
+       ],
+       "tag": "code"
+      },
+      ": \"Open Government Licence 2.0 (Niagara Region)\""
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "attribution"
+       ],
+       "tag": "code"
+      },
+      ": \"Contains information licensed under OGL 2.0 - Niagara Region\""
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "freshness"
+       ],
+       "tag": "code"
+      },
+      ": \"HISTORICAL\" (multi-year 2022 snapshot, per README.md freshness states)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "retrieved_at"
+       ],
+       "tag": "code"
+      },
+      ": \"2026-08-21\""
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "bbox"
+       ],
+       "tag": "code"
+      },
+      ": computed from features, e.g. ",
+      {
+       "children": [
+        "[-79.623, 42.883, -78.944, 43.212]"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "feature_count"
+       ],
+       "tag": "code"
+      },
+      ": 34 (matches actual feature count)"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "atlas/tests/test_departures.py"
+     ],
+     "tag": "code"
+    },
+    ":"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Line 46: Changed assertion from ",
+      {
+       "children": [
+        "src[\"licence\"]"
+       ],
+       "tag": "code"
+      },
+      " to ",
+      {
+       "children": [
+        "src[\"license\"]"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Line 47: Changed assertion from ",
+      {
+       "children": [
+        "src[\"id\"]"
+       ],
+       "tag": "code"
+      },
+      " to ",
+      {
+       "children": [
+        "src[\"source_id\"]"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Lines 50-62: Added ",
+      {
+       "children": [
+        "test_collection_has_atlas_metadata()"
+       ],
+       "tag": "code"
+      },
+      " to verify:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Top-level ",
+      {
+       "children": [
+        "atlas"
+       ],
+       "tag": "code"
+      },
+      " object exists"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "feature_count"
+       ],
+       "tag": "code"
+      },
+      " field equals actual feature count"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "license"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "retrieved_at"
+       ],
+       "tag": "code"
+      },
+      " fields present"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "layer"
+       ],
+       "tag": "code"
+      },
+      " equals \"departures\""
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Feature count is between 5 and 40"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "atlas/scripts/fetch_nei.py"
+     ],
+     "tag": "code"
+    },
+    ":"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Lines 216-227: Added a guard at the top of ",
+      {
+       "children": [
+        "main()"
+       ],
+       "tag": "code"
+      },
+      " that:"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Prints an error message to stderr citing the address-keyed logic's 64 false positives"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "References atlas/logs/2026-08-23.md §14 for root cause"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Returns exit code 1 (non-zero) to refuse execution"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Leaves the file unmodified so its history is preserved"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Regeneration:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Command: ",
+    {
+     "children": [
+      "cd atlas && .venv/bin/python -m scripts.normalize.departures"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Output: `wrote 34 departures to a local working copy"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Feature count: 34 (unchanged from task 2 initial run; within required 5–40 range)"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Bbox computed from features: ",
+    {
+     "children": [
+      "[-79.623, 42.883, -78.944, 43.212]"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Test results:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -m pytest tests/test_departures.py tests/test_normalize_nei.py -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "============================= test session starts ==============================\nplatform linux -- Python 3.11.2, pytest-9.1.1, pluggy-1.6.0\ncollected 10 items\n\ntests/test_departures.py::test_industrial_sector_classification PASSED   [ 10%]\ntests/test_departures.py::test_hopkins_is_not_a_departure PASSED         [ 20%]\ntests/test_departures.py::test_no_departure_names_a_business_present_later PASSED [ 30%]\ntests/test_departures.py::test_departure_count_is_plausible PASSED       [ 40%]\ntests/test_departures.py::test_features_carry_provenance PASSED          [ 50%]\ntests/test_departures.py::test_collection_has_atlas_metadata PASSED      [ 60%]\ntests/test_normalize_nei.py::test_norm_props_lowercases_and_strips_underscores PASSED [ 70%]\ntests/test_normalize_nei.py::test_every_edition_loads_with_ids PASSED    [ 80%]\ntests/test_normalize_nei.py::test_editions_intersect_by_id PASSED        [ 90%]\ntests/test_normalize_nei.py::test_hopkins_present_in_every_edition PASSED [100%]\n\n============================== 10 passed in 9.97s =============================="
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "All 10 tests pass: 6 from test_departures.py (including new test_collection_has_atlas_metadata), 4 from test_normalize_nei.py (pre-existing)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Verification of the fix:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Per-feature source block now carries:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "\"license\""
+       ],
+       "tag": "code"
+      },
+      " (not ",
+      {
+       "children": [
+        "\"licence\""
+       ],
+       "tag": "code"
+      },
+      ") — will be read by app.js:319"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "\"retrieved_at\""
+       ],
+       "tag": "code"
+      },
+      " (not ",
+      {
+       "children": [
+        "\"retrieved\""
+       ],
+       "tag": "code"
+      },
+      ") — will be read by app.js:310"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "\"license_url\""
+       ],
+       "tag": "code"
+      },
+      " and other standard provenance fields"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Top-level ",
+    {
+     "children": [
+      "atlas"
+     ],
+     "tag": "code"
+    },
+    " metadata now carries:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "\"feature_count\": 34"
+       ],
+       "tag": "code"
+      },
+      " — will populate sidebar layer row count"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "\"license\""
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "\"attribution\""
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "\"retrieved_at\""
+       ],
+       "tag": "code"
+      },
+      " — supports provenance panel rendering"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Interpretation"
+   },
+   "children": [
+    "Interpretation"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "The prior implementer followed the brief's code sample faithfully, which is why the schema defect propagated into the generated file. The brief's template used the old field names; this fix corrects the implementation to match what app.js actually reads."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The absence of a top-level ",
+    {
+     "children": [
+      "atlas"
+     ],
+     "tag": "code"
+    },
+    " object explains why the app's sidebar never displayed a feature count for this layer while displaying counts for all others. The app looks for ",
+    {
+     "children": [
+      "collection.atlas.feature_count"
+     ],
+     "tag": "code"
+    },
+    " (app.js line 193) and falls back to showing nothing when the key is missing — a silent failure rather than a crash."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The provenance panel (app.js:305-321) reads ",
+    {
+     "children": [
+      "source.retrieved_at"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "source.license"
+     ],
+     "tag": "code"
+    },
+    " to render retrieval date and copyright notice. When the code emitted ",
+    {
+     "children": [
+      "retrieved"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "licence"
+     ],
+     "tag": "code"
+    },
+    ", those lines were silently skipped (JavaScript ",
+    {
+     "children": [
+      "if (source.retrieved_at)"
+     ],
+     "tag": "code"
+    },
+    " evaluates false when the key doesn't exist). Users never saw when the data was obtained or what the license was for this layer alone."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The guard on ",
+    {
+     "children": [
+      "fetch_nei.py"
+     ],
+     "tag": "code"
+    },
+    " prevents accidental re-generation of the defective layer while preserving the file's history for audit. The address-keyed logic is not deleted, but execution is blocked with an informative error message."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "§18-Task-3:-The-address-anchor-index"
+   },
+   "children": [
+    "§18 Task 3: The address anchor index"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Date:"
+     ],
+     "tag": "strong"
+    },
+    " 2026-08-23"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Raw changes:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Created ",
+    {
+     "children": [
+      "atlas/scripts/normalize/addresses.py"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "atlas/tests/test_addresses.py"
+     ],
+     "tag": "code"
+    },
+    " per task-3-brief.md, with one applied correction to the test threshold (see Interpretation)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Test command and full output:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -m pytest tests/test_addresses.py -v -s"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "============================= test session starts ==============================\nplatform linux -- Python 3.11.2, pytest-9.1.1, pluggy-1.6.0\ncollected 5 items\n\ntests/test_addresses.py::test_street_normalization_absorbs_type_words PASSED\ntests/test_addresses.py::test_street_normalization_keeps_meaningful_names PASSED\ntests/test_addresses.py::test_address_key_is_stable_across_restyling PASSED\ntests/test_addresses.py::test_address_key_rejects_incomplete_input PASSED\ntests/test_addresses.py::test_anchors_cover_all_twelve_lower_tier_municipalities OBSERVED anchor count: 349260\nOBSERVED municipality strings: ['city of hamilton', 'county of brant', 'fort erie', 'grimsby', 'lincoln', 'niagara falls', 'niagara-on-the-lake', 'pelham', 'port colborne', 'regional municipality of halton', 'regional municipality of niagara', 'st. catharines', 'thorold', 'wainfleet', 'welland', 'wellington county', 'west lincoln']\nPASSED\n\n============================== 5 passed in 6.84s ==============================="
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Observed anchor count: 349,260"
+     ],
+     "tag": "strong"
+    },
+    " (raw address points: 481,539 total — 208,004 from Niagara Region's ",
+    {
+     "children": [
+      "043-address-points.geojson"
+     ],
+     "tag": "code"
+    },
+    ", 273,535 from Hamilton's ",
+    {
+     "children": [
+      "220-addresses.geojson"
+     ],
+     "tag": "code"
+    },
+    "). Collapse from raw points to anchor keys: 27.5% (349,260 / 481,539), lower than the 46% collapse observed in the 2019 NEI (12,016 records -> 6,501 distinct address keys), because address points are one row per civic address already, not per business tenant, so less within-key duplication occurs at the source."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Observed per-municipality anchor coverage"
+     ],
+     "tag": "strong"
+    },
+    " (by the ",
+    {
+     "children": [
+      "municipality"
+     ],
+     "tag": "code"
+    },
+    " field stored on each anchor, which is the raw source string lower-cased but not further punctuation-stripped):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "city of hamilton: 166646\nst. catharines: 44173\nniagara falls: 33333\nwelland: 22522\nfort erie: 16280\nthorold: 11560\nlincoln: 10026\nport colborne: 9925\ngrimsby: 9166\nniagara-on-the-lake: 8914\npelham: 7710\nwest lincoln: 5606\nwainfleet: 3388\nregional municipality of halton: 8\ncounty of brant: 1\nregional municipality of niagara: 1\nwellington county: 1\nTOTAL: 349260"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "By source: ",
+    {
+     "children": [
+      "niagara-address-points"
+     ],
+     "tag": "code"
+    },
+    " contributed 182,603 anchors (of 208,004 raw points, an 87.8% survival rate through keying); ",
+    {
+     "children": [
+      "hamilton-addresses"
+     ],
+     "tag": "code"
+    },
+    " contributed 166,657 (of 273,535 raw points, a 60.9% survival rate — Hamilton's address file carries more units per building, which collapse to shared keys)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "All twelve Niagara Region lower-tier municipalities are present. A handful of addresses outside the study area (Halton, Brant, Wellington) also appear in the Hamilton address file's edge rows and are harmless extras, not gaps."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Full suite regression check:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -m pytest tests/ -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "15 passed (5 new + 10 pre-existing from Tasks 1-2)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Interpretation"
+   },
+   "children": [
+    "Interpretation"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Deviation from task-3-brief.md, applied per explicit instruction at task dispatch:"
+     ],
+     "tag": "strong"
+    },
+    " the brief's ",
+    {
+     "children": [
+      "test_anchors_cover_all_twelve_lower_tier_municipalities"
+     ],
+     "tag": "code"
+    },
+    " asserted ",
+    {
+     "children": [
+      "len(anchors) > 300_000"
+     ],
+     "tag": "code"
+    },
+    ". That threshold was lowered to ",
+    {
+     "children": [
+      "> 150_000"
+     ],
+     "tag": "code"
+    },
+    " before implementation, reasoning that anchors are keyed on ",
+    {
+     "children": [
+      "(number, street, municipality)"
+     ],
+     "tag": "code"
+    },
+    ", so multiple units in one building collapse to a single key, and the test's purpose is coverage of all twelve municipalities, not a specific total. The measured count, 349,260, in fact clears the original 300,000 bar too — the collapse from 481,539 raw points was milder than the precedent (2019 NEI's 46%) suggested, because address points already deduplicate per civic address at the source, unlike NEI's per-tenant rows. The lowered threshold was the correct call to make ",
+    {
+     "children": [
+      "before"
+     ],
+     "tag": "em"
+    },
+    " measuring (the measurement could not be known in advance), and the result confirms the anchor index comfortably covers the study area either way."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "No municipality-name assertion failed, so no spelling correction was needed. The source does spell one municipality \"St. Catharines\" with a period (visible in the observed municipality-strings list above), but the test's expected set does not include it, so this was moot for passing the test — noted here only because the task dispatch specifically called it out as something to expect."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "§19-Task-4:-Geocoder,-and-measured-rate-against-the-vacant-building-registry"
+   },
+   "children": [
+    "§19 Task 4: Geocoder, and measured rate against the vacant building registry"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Date:"
+     ],
+     "tag": "strong"
+    },
+    " 2026-08-23"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Raw changes:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Created ",
+    {
+     "children": [
+      "atlas/scripts/geocode.py"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "atlas/tests/test_geocode.py"
+     ],
+     "tag": "code"
+    },
+    " per task-4-brief.md, verbatim, no deviation in the committed modules."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Test command and full output:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -m pytest tests/test_geocode.py -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "============================= test session starts ==============================\nplatform linux -- Python 3.11.2, pytest-9.1.1, pluggy-1.6.0\ncollected 5 items\n\ntests/test_geocode.py::test_matches_despite_street_restyling PASSED      [ 20%]\ntests/test_geocode.py::test_unmatched_rows_are_kept_not_dropped PASSED   [ 40%]\ntests/test_geocode.py::test_rate_floor_raises_below_threshold PASSED     [ 60%]\ntests/test_geocode.py::test_rate_floor_passes_above_threshold PASSED     [ 80%]\ntests/test_geocode.py::test_municipality_default_applies_when_field_absent PASSED [100%]\n\n============================== 5 passed in 0.02s ==============================="
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Full suite regression check:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -m pytest tests/ -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "20 passed (5 new + 15 pre-existing from Tasks 1-3)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Measurement against Hamilton's vacant building registry"
+     ],
+     "tag": "strong"
+    },
+    " — brief's Step 5 command, run exactly as specified (",
+    {
+     "children": [
+      "municipality_default='Hamilton'"
+     ],
+     "tag": "code"
+    },
+    "):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -c \"\nimport sys; sys.path.insert(0,'scripts')\nimport json, re, geocode\nfrom normalize import addresses\nanchors = addresses.load_anchors()\nrows = [f['properties'] for f in json.load(open('scripts/.cache/hamilton/221-vacant-building-registry.geojson'))['features']]\nfor r in rows:\n    m = re.match(r'\\s*(\\S+)\\s+(.*)', str(r.get('FOLDER_NAME') or ''))\n    r['_n'], r['_s'] = (m.group(1), m.group(2)) if m else ('', '')\nres = geocode.geocode(rows, '_n', '_s', None, anchors, municipality_default='Hamilton')\nprint(f'vacant registry geocoded {res[\\\"rate\\\"]:.1%} of {len(rows)} rows')\n\""
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Output:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "vacant registry geocoded 0.0% of 84 rows"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "OBSERVED: 0.0% (0 matched / 84 total)"
+     ],
+     "tag": "strong"
+    },
+    ", using the brief's code exactly as written."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Diagnostic follow-up"
+     ],
+     "tag": "strong"
+    },
+    " (not part of the committed deliverable; run only to determine whether 0.0% reflects a real geocoding limitation or a defect in the one-off measurement script itself — required by \"every count is observed, never assumed\", since shipping a 0.0% figure without understanding it would itself be an unexamined assumption):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Root cause traced by direct key inspection:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "key with default Hamilton:       90|webster|hamilton         -> not in anchors\nkey with City of Hamilton:       90|webster|cityofhamilton   -> IS in anchors"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Hamilton's own address source (",
+    {
+     "children": [
+      "220-addresses.geojson"
+     ],
+     "tag": "code"
+    },
+    ") records ",
+    {
+     "children": [
+      "MUNICIPALITY"
+     ],
+     "tag": "code"
+    },
+    " as ",
+    {
+     "children": [
+      "\"City of Hamilton\""
+     ],
+     "tag": "code"
+    },
+    " for 273,524 of its 273,535 rows (checked directly: ",
+    {
+     "children": [
+      "Counter({'City of Hamilton': 273524, 'Regional Municipality of Halton': 8, 'County of Brant': 1, 'Regional Municipality of Niagara': 1, 'Wellington County': 1})"
+     ],
+     "tag": "code"
+    },
+    "). ",
+    {
+     "children": [
+      "address_key"
+     ],
+     "tag": "code"
+    },
+    "'s municipality normalization strips only non-alpha characters, so ",
+    {
+     "children": [
+      "\"City of Hamilton\""
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "\"Hamilton\""
+     ],
+     "tag": "code"
+    },
+    " normalize to different strings (",
+    {
+     "children": [
+      "cityofhamilton"
+     ],
+     "tag": "code"
+    },
+    " vs ",
+    {
+     "children": [
+      "hamilton"
+     ],
+     "tag": "code"
+    },
+    ") and never collide. The brief's Step 5 script passes ",
+    {
+     "children": [
+      "municipality_default='Hamilton'"
+     ],
+     "tag": "code"
+    },
+    ", which cannot match anything keyed under ",
+    {
+     "children": [
+      "cityofhamilton"
+     ],
+     "tag": "code"
+    },
+    ". ",
+    {
+     "children": [
+      "The 0.0% is an artifact of this string mismatch between the ad hoc script and the real source convention, not a demonstrated inability to geocode Hamilton addresses."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Re-running with ",
+    {
+     "children": [
+      "municipality_default='City of Hamilton'"
+     ],
+     "tag": "code"
+    },
+    " (the source's own convention) instead:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "diagnostic: matched 27 unmatched 57 rate 0.32142857142857145"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "32.1% (27/84)."
+     ],
+     "tag": "strong"
+    },
+    " Inspecting the 57 remaining unmatched rows shows a second, independent limitation: many ",
+    {
+     "children": [
+      "FOLDER_NAME"
+     ],
+     "tag": "code"
+    },
+    " values carry a directional suffix after the street type, e.g. ",
+    {
+     "children": [
+      "\"708 RYMAL RD E\""
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "\"172 RYMAL RD W\""
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "\"16 STONE CHURCH RD E\""
+     ],
+     "tag": "code"
+    },
+    ". ",
+    {
+     "children": [
+      "normalize_street"
+     ],
+     "tag": "code"
+    },
+    " only ever drops the single ",
+    {
+     "children": [
+      "trailing"
+     ],
+     "tag": "em"
+    },
+    " type word, so ",
+    {
+     "children": [
+      "\"rymal rd e\""
+     ],
+     "tag": "code"
+    },
+    " keeps all three tokens (",
+    {
+     "children": [
+      "\"e\""
+     ],
+     "tag": "code"
+    },
+    " is not a type word, so ",
+    {
+     "children": [
+      "\"rd\""
+     ],
+     "tag": "code"
+    },
+    " never reaches the trailing position where it would be dropped), while the corresponding anchor's street reduces to ",
+    {
+     "children": [
+      "\"rymal\""
+     ],
+     "tag": "code"
+    },
+    " (",
+    {
+     "children": [
+      "StreetName"
+     ],
+     "tag": "code"
+    },
+    " + ",
+    {
+     "children": [
+      "StreetType"
+     ],
+     "tag": "code"
+    },
+    ", with no direction concatenated at all in ",
+    {
+     "children": [
+      "addresses.py"
+     ],
+     "tag": "code"
+    },
+    "'s ",
+    {
+     "children": [
+      "SOURCES"
+     ],
+     "tag": "code"
+    },
+    " config). These rows can never key-match as the code is currently written."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Interpretation"
+   },
+   "children": [
+    "Interpretation"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "No floor was set, per instruction — Task 8 chooses it from this measurement."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Two independently observed numbers are relevant to that choice, and neither should be discarded:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "0.0%"
+       ],
+       "tag": "strong"
+      },
+      " — the literal output of the brief's Step 5 script, unmodified."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "32.1%"
+       ],
+       "tag": "strong"
+      },
+      " — the same computation with the municipality default corrected"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "to match Hamilton's actual ",
+    {
+     "children": [
+      "MUNICIPALITY"
+     ],
+     "tag": "code"
+    },
+    " convention, which is the more honest measure of the geocoder's real capability against this table today."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Even the corrected 32.1% is suppressed by the unhandled directional-suffix case, so the true reachable ceiling for this specific table, with the current ",
+    {
+     "children": [
+      "normalize_street"
+     ],
+     "tag": "code"
+    },
+    "/",
+    {
+     "children": [
+      "SOURCES"
+     ],
+     "tag": "code"
+    },
+    " implementation, is somewhere above 32.1% but was not separately measured (fixing it would mean invalidating ",
+    {
+     "children": [
+      "SOURCES"
+     ],
+     "tag": "code"
+    },
+    " or ",
+    {
+     "children": [
+      "normalize_street"
+     ],
+     "tag": "code"
+    },
+    " as given in the brief, which was out of scope for this task)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "This is flagged as a concern for whoever picks the Task 8 floor: a naive reading of \"measure the real rate\" against the brief's own script would report 0.0% and could lead to a floor of 0 (meaningless) or a conclusion that geocoding is broken (false) or a fixation on the vacant registry as un-geocodable (also false — Hamilton building permits and licensed businesses, which use the same ",
+    {
+     "children": [
+      "220-addresses.geojson"
+     ],
+     "tag": "code"
+    },
+    "-derived anchors, were not similarly checked here and may not carry the same ",
+    {
+     "children": [
+      "MUNICIPALITY"
+     ],
+     "tag": "code"
+    },
+    " field naming trap since they are separate source tables with their own schemas). The underlying committed ",
+    {
+     "children": [
+      "geocode.py"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "addresses.py"
+     ],
+     "tag": "code"
+    },
+    " are unmodified and match their briefs exactly; this finding concerns only the one-off measurement script's hardcoded default and a real, separate limitation in directional-suffix handling."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "§20-Fix-round-1:-three-design-defects-in-the-address-anchor-index-(Task-3-brief)"
+   },
+   "children": [
+    "§20 Fix round 1: three design defects in the address anchor index (Task 3 brief)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Date:"
+     ],
+     "tag": "strong"
+    },
+    " 2026-08-23"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "These are corrections to the ",
+    {
+     "children": [
+      "brief's original design"
+     ],
+     "tag": "em"
+    },
+    " (task-3-brief.md), not to the previous implementer's work — task-3-4-report.md shows they built exactly what the brief specified. Three defects found on review; all three fixed in ",
+    {
+     "children": [
+      "atlas/scripts/normalize/addresses.py"
+     ],
+     "tag": "code"
+    },
+    ", tests added to ",
+    {
+     "children": [
+      "atlas/tests/test_addresses.py"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Defect-1-—-directional-suffixes-dropped-(correctness-bug)"
+   },
+   "children": [
+    "Defect 1 — directional suffixes dropped (correctness bug)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Raw before/after, ",
+    {
+     "children": [
+      "address_key(\"77\", \"Burlington Street East\", \"City of Hamilton\")"
+     ],
+     "tag": "code"
+    },
+    " vs ",
+    {
+     "children": [
+      "address_key(\"77\", \"Burlington Street West\", \"City of Hamilton\")"
+     ],
+     "tag": "code"
+    },
+    ":"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "BEFORE: both -> 77|burlington|cityofhamilton        (SAME key — collapsed)\nAFTER:  east -> 77|burlington e|hamilton\n        west -> 77|burlington w|hamilton             (DIFFERENT keys)"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Verified against the cache that civic number 77 exists on Burlington Street in both directions (19 numbers do, checked directly against ",
+    {
+     "children": [
+      ".cache/hamilton/220-addresses.geojson"
+     ],
+     "tag": "code"
+    },
+    ": ",
+    {
+     "children": [
+      "['77','71','68','80','78','45', '17','73','35','15', ...]"
+     ],
+     "tag": "code"
+    },
+    "). Also confirmed both Hamilton's ",
+    {
+     "children": [
+      "STREET_SUFFIX_DIRECTION"
+     ],
+     "tag": "code"
+    },
+    " (26,272 East / 19,212 South / 18,672 West / 18,470 North / 190,909 None) and Niagara Region's ",
+    {
+     "children": [
+      "StreetDir"
+     ],
+     "tag": "code"
+    },
+    " (2,403 North / 2,208 West / 1,901 South / 1,416 East / 200,076 None) fields exist and carry matching cardinal values, so both sources in ",
+    {
+     "children": [
+      "SOURCES"
+     ],
+     "tag": "code"
+    },
+    " gained a ",
+    {
+     "children": [
+      "dir_field"
+     ],
+     "tag": "code"
+    },
+    " entry (",
+    {
+     "children": [
+      "STREET_SUFFIX_DIRECTION"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "StreetDir"
+     ],
+     "tag": "code"
+    },
+    ") concatenated onto the street string alongside the existing ",
+    {
+     "children": [
+      "type_field"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Defect-2-—-trailing-direction-blocked-the-type-word-drop"
+   },
+   "children": [
+    "Defect 2 — trailing direction blocked the type-word drop"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Raw before/after, ",
+    {
+     "children": [
+      "normalize_street"
+     ],
+     "tag": "code"
+    },
+    ":"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "BEFORE: \"RYMAL RD E\"      -> \"rymal rd e\"    (type word \"rd\" survives)\n        \"RYMAL RD\"        -> \"rymal\"\nAFTER:  \"RYMAL RD E\"      -> \"rymal e\"\n        \"Rymal Road East\" -> \"rymal e\"        (SAME as above)\n        \"Rymal Road\"      -> \"rymal\"          (DIFFERENT from both)"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Fix: ",
+    {
+     "children": [
+      "normalize_street"
+     ],
+     "tag": "code"
+    },
+    " now pops a trailing direction token FIRST (long or short form, normalized to one letter via a new ",
+    {
+     "children": [
+      "DIRECTIONS"
+     ],
+     "tag": "code"
+    },
+    " map), then applies the existing trailing-type-word drop to what remains, then re-appends the normalized direction. All four cardinals checked both ways (",
+    {
+     "children": [
+      "N"
+     ],
+     "tag": "code"
+    },
+    "/",
+    {
+     "children": [
+      "North"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "S"
+     ],
+     "tag": "code"
+    },
+    "/",
+    {
+     "children": [
+      "South"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "E"
+     ],
+     "tag": "code"
+    },
+    "/",
+    {
+     "children": [
+      "East"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "W"
+     ],
+     "tag": "code"
+    },
+    "/",
+    {
+     "children": [
+      "West"
+     ],
+     "tag": "code"
+    },
+    ") — all round-trip to the same key."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Defect-3-—-municipality-strings-did-not-match-between-sources"
+   },
+   "children": [
+    "Defect 3 — municipality strings did not match between sources"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Raw before/after, municipality component of ",
+    {
+     "children": [
+      "address_key(\"90\", \"Webster\", <muni>)"
+     ],
+     "tag": "code"
+    },
+    ":"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "BEFORE: \"Hamilton\"          -> muni \"hamilton\"\n        \"City of Hamilton\"  -> muni \"cityofhamilton\"   (did not match)\nAFTER:  \"Hamilton\"          -> muni \"hamilton\"\n        \"City of Hamilton\"  -> muni \"hamilton\"          (matches)\n        \"CITY OF HAMILTON\"  -> muni \"hamilton\"          (matches)"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Fix: new ",
+    {
+     "children": [
+      "normalize_municipality()"
+     ],
+     "tag": "code"
+    },
+    " strips a LEADING civic-status prefix (",
+    {
+     "children": [
+      "city|town|township|village|municipality|county|region|regional municipality"
+     ],
+     "tag": "code"
+    },
+    ", each requiring a following \"of\") before ",
+    {
+     "children": [
+      "address_key"
+     ],
+     "tag": "code"
+    },
+    " strips non-letters. Checked directly against the four Niagara Region names named in the task: ",
+    {
+     "children": [
+      "normalize_municipality"
+     ],
+     "tag": "code"
+    },
+    " leaves ",
+    {
+     "children": [
+      "\"St. Catharines\""
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "\"Niagara Falls\""
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "\"Niagara-on-the-Lake\""
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "\"West Lincoln\""
+     ],
+     "tag": "code"
+    },
+    " byte-for-byte unchanged (lower-cased only) because none of them begin with a civic-status word followed by \"of\". ",
+    {
+     "children": [
+      "\"Wellington County\""
+     ],
+     "tag": "code"
+    },
+    " (status word trailing, not leading) is also left alone, correctly, since only leading forms are in scope."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Anchor-count"
+   },
+   "children": [
+    "Anchor count"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "OLD: 349,260 anchors (from 481,539 raw address points: 208,004 Niagara Region + 273,535 Hamilton)\nNEW: 354,601 anchors"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Command: ",
+    {
+     "children": [
+      "cd atlas && .venv/bin/python -m pytest tests/test_addresses.py -v -s"
+     ],
+     "tag": "code"
+    },
+    " (the ",
+    {
+     "children": [
+      "test_anchors_cover_all_twelve_lower_tier_municipalities"
+     ],
+     "tag": "code"
+    },
+    " test prints ",
+    {
+     "children": [
+      "OBSERVED anchor count: 354601"
+     ],
+     "tag": "code"
+    },
+    "). The rise (+5,341) is defect 1's fix taking effect: E/W/N/S variants that previously collapsed onto one key now split into distinct keys, so the true count of distinct places goes up, not down."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Geocoding-rate-—-Hamilton-vacant-building-registry-(84-rows)"
+   },
+   "children": [
+    "Geocoding rate — Hamilton vacant building registry (84 rows)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Ran the brief's Step 5 measurement script exactly as originally written (",
+    {
+     "children": [
+      "municipality_default='Hamilton'"
+     ],
+     "tag": "code"
+    },
+    ", unchanged from Task 4):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -c \"\nimport sys; sys.path.insert(0,'scripts')\nimport json, re, geocode\nfrom normalize import addresses\nanchors = addresses.load_anchors()\nrows = [f['properties'] for f in json.load(open('scripts/.cache/hamilton/221-vacant-building-registry.geojson'))['features']]\nfor r in rows:\n    m = re.match(r'\\s*(\\S+)\\s+(.*)', str(r.get('FOLDER_NAME') or ''))\n    r['_n'], r['_s'] = (m.group(1), m.group(2)) if m else ('', '')\nres = geocode.geocode(rows, '_n', '_s', None, anchors, municipality_default='Hamilton')\nprint(f'vacant registry geocoded {res[\\\"rate\\\"]:.1%} of {len(rows)} rows ({len(res[\\\"matched\\\"])} matched, {len(res[\\\"unmatched\\\"])} unmatched)')\n\""
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Output:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "vacant registry geocoded 86.9% of 84 rows (73 matched, 11 unmatched)"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "OLD: 0.0% (0/84) as originally scripted; 32.1% (27/84) after manually\n     correcting only the municipality_default string (Task 4, §19).\nNEW: 86.9% (73/84), using the SAME script and the SAME 'Hamilton' default\n     the brief originally specified — no change to geocode.py or to the\n     measurement script was needed, because address_key itself now\n     normalizes the municipality string."
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Cross-check: re-running the identical computation with ",
+    {
+     "children": [
+      "municipality_default='City of Hamilton'"
+     ],
+     "tag": "code"
+    },
+    " instead gives the identical 73/84, 86.9% — confirming defect 3 is fully resolved (the two forms now key alike, so which one a caller passes no longer matters)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Diagnosis of the remaining 11 unmatched rows"
+     ],
+     "tag": "strong"
+    },
+    " (rate is not low, but diagnosed per instruction rather than left unexplained):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "1126 HWY 8            -- address points spell this \"Highway No. 5\"/\"Highway No. 8\"-style; \"HWY\" is not expanded\n7185 DICKENSON RD      -- FOLDER_NAME omits direction; matching address point is \"Dickenson Road West\" (has a real direction the registry row doesn't record)\n7149 WHITE CHURCH RD   -- same pattern: matching point is \"White Church Road East\"; FOLDER_NAME carries no direction\n658 HWY 8              -- highway-naming mismatch, as above\n781 HWY 5 W            -- highway-naming mismatch, as above\n365 HWY 8              -- highway-naming mismatch, as above\n28 KING ST E 1/2       -- fractional civic number (\"1/2\") is not a directional or type token; normalize_street cannot parse it as a direction suffix\n325 GREEN MOUNTAIN RD  -- not found under this name in address points at this number (checked directly; no match)\n584 HWY 8              -- highway-naming mismatch, as above\n1541 FIDDLERS GREEN RD -- zero address points contain \"Fiddlers Green\" as a street name at all\n468 10TH CON RD E      -- concession-road abbreviation (\"CON\") vs address points' \"Concession N\" naming; not a type or direction word in TYPE_WORDS/DIRECTIONS"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Two real, distinct residual patterns, neither a defect-1/2/3 issue: (a) highway and concession-road naming conventions differ between the registry's free-text ",
+    {
+     "children": [
+      "FOLDER_NAME"
+     ],
+     "tag": "code"
+    },
+    " (\"HWY 8\", \"10TH CON RD\") and the address points' structured naming (\"Highway No. 8\", \"Concession N\") — no shared abbreviation table exists for these; (b) a few registry rows are missing a direction that the matching address point actually carries (the registry's source data is under-specified, not wrong), so a Hamilton-side fix cannot close this gap — the registry itself would need better source data."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Per instruction, no rate floor is set here — Task 8 makes that call from this measurement."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Test-command-and-full-output"
+   },
+   "children": [
+    "Test command and full output"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -m pytest tests/ -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "============================= test session starts ==============================\nplatform linux -- Python 3.11.2, pytest-9.1.1, pluggy-1.6.0\ncollected 25 items\n\ntests/test_addresses.py::test_street_normalization_absorbs_type_words PASSED [  4%]\ntests/test_addresses.py::test_street_normalization_keeps_meaningful_names PASSED [  8%]\ntests/test_addresses.py::test_address_key_is_stable_across_restyling PASSED [ 12%]\ntests/test_addresses.py::test_address_key_rejects_incomplete_input PASSED [ 16%]\ntests/test_addresses.py::test_anchors_cover_all_twelve_lower_tier_municipalities PASSED [ 20%]\ntests/test_addresses.py::test_trailing_direction_still_drops_the_type_word PASSED [ 24%]\ntests/test_addresses.py::test_all_four_cardinal_directions_round_trip PASSED [ 28%]\ntests/test_addresses.py::test_municipality_civic_status_prefix_is_absorbed PASSED [ 32%]\ntests/test_addresses.py::test_municipality_normalization_does_not_damage_niagara_names PASSED [ 36%]\ntests/test_addresses.py::test_directional_streets_produce_distinct_present_anchors PASSED [ 40%]\ntests/test_departures.py::test_industrial_sector_classification PASSED   [ 44%]\ntests/test_departures.py::test_hopkins_is_not_a_departure PASSED         [ 48%]\ntests/test_departures.py::test_no_departure_names_a_business_present_later PASSED [ 52%]\ntests/test_departures.py::test_departure_count_is_plausible PASSED       [ 56%]\ntests/test_departures.py::test_features_carry_provenance PASSED          [ 60%]\ntests/test_departures.py::test_collection_has_atlas_metadata PASSED      [ 64%]\ntests/test_geocode.py::test_matches_despite_street_restyling PASSED      [ 68%]\ntests/test_geocode.py::test_unmatched_rows_are_kept_not_dropped PASSED   [ 72%]\ntests/test_geocode.py::test_rate_floor_raises_below_threshold PASSED     [ 76%]\ntests/test_geocode.py::test_rate_floor_passes_above_threshold PASSED     [ 80%]\ntests/test_geocode.py::test_municipality_default_applies_when_field_absent PASSED [ 84%]\ntests/test_normalize_nei.py::test_norm_props_lowercases_and_strips_underscores PASSED [ 88%]\ntests/test_normalize_nei.py::test_every_edition_loads_with_ids PASSED    [ 92%]\ntests/test_normalize_nei.py::test_editions_intersect_by_id PASSED        [ 96%]\ntests/test_normalize_nei.py::test_hopkins_present_in_every_edition PASSED [100%]\n\n============================== 25 passed in 30.88s =============================="
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "25 passed (10 in test_addresses.py — 5 pre-existing + 5 new — plus 15 pre-existing across test_departures.py, test_geocode.py, test_normalize_nei.py). No test outside test_addresses.py was modified."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Interpretation"
+   },
+   "children": [
+    "Interpretation"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Why defect 1 was a correctness bug, not a match-rate bug."
+     ],
+     "tag": "strong"
+    },
+    " Defects 2 and 3 only ever produce false NEGATIVES: a real match fails to happen, and the row is correctly reported as unmatched, visible, and auditable (per ",
+    {
+     "children": [
+      "geocode.py"
+     ],
+     "tag": "code"
+    },
+    "'s contract that unmatched rows are kept, never dropped). Defect 1 is different in kind — it produces a false POSITIVE that is invisible at the geocoding layer. \"77 Burlington Street East\" and \"77 Burlington Street West\" are two different buildings roughly two kilometres apart in Hamilton's lower city, but before this fix they keyed to the exact same anchor, so ANY address-bearing record naming one would silently geocode — successfully, with a matched status and a real lon/lat — to the other's location. A 100% \"match\" for such a row is wrong, not merely unconfirmed. Because the geocoder has no way to know two different real places were asked for and one anchor was returned, this class of error cannot be caught by a rate measurement at all: the row shows up as \"matched,\" inflating confidence in exactly the join that the whole atlas depends on, while quietly misplacing evidence on the map. That is why it is graded the most serious of the three: defects 2 and 3 hide evidence, lose only true; defect 1 also hides a wrong location behind an apparently successful match."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The anchor-count rise from 349,260 to 354,601 is the direct, expected fingerprint of this fix: previously-collapsed E/W/N/S street pairs now resolve to the distinct places they always were, so the \"correct\" anchor count was always higher than what was measured under the original design — the earlier number was not merely conservative, it undercounted the true number of distinct addressable places in the study area by conflating some of them."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The jump in geocoding rate on the vacant registry (0.0% -> 32.1% -> 86.9%) tracks the three fixes but should not be read as \"defect 1 tripled the rate\" — the registry's 84 ",
+    {
+     "children": [
+      "FOLDER_NAME"
+     ],
+     "tag": "code"
+    },
+    " values include several directional streets (",
+    {
+     "children": [
+      "RYMAL RD E/W"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "STONE CHURCH RD E"
+     ],
+     "tag": "code"
+    },
+    "), so most of the jump from 32.1% to 86.9% is defects 1+2 acting together (a directional street cannot match at all until both the anchor carries its direction AND ",
+    {
+     "children": [
+      "normalize_street"
+     ],
+     "tag": "code"
+    },
+    " can parse a directional query string), while the jump from 0.0% to 32.1% was defect 3 alone (documented already in §19). No single one of the three fixes could have been skipped and still reached 86.9%: dropping the direction fix leaves directional streets permanently unmatchable regardless of municipality handling, and dropping the municipality fix leaves every Hamilton row unmatched regardless of street handling."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "§21-Correction-to-§20:-the-Burlington-Street-distance-was-wrong"
+   },
+   "children": [
+    "§21 Correction to §20: the Burlington Street distance was wrong"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Date:"
+     ],
+     "tag": "strong"
+    },
+    " 2026-08-23"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "§20's Interpretation section states that \"77 Burlington Street East\" and \"77 Burlington Street West\" are \"two different buildings roughly two kilometres apart in Hamilton's lower city.\" That figure was not computed — it was an eyeballed guess. It is wrong."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Computed distance"
+     ],
+     "tag": "strong"
+    },
+    ", using the two Burlington Street coordinates actually present in ",
+    {
+     "children": [
+      "atlas/scripts/.cache/hamilton/220-addresses.geojson"
+     ],
+     "tag": "code"
+    },
+    " — ",
+    {
+     "children": [
+      "[-79.8583589, 43.2721852]"
+     ],
+     "tag": "code"
+    },
+    " (east) and ",
+    {
+     "children": [
+      "[-79.8655445, 43.2719834]"
+     ],
+     "tag": "code"
+    },
+    " (west):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -c \"\nfrom pyproj import Transformer\nfrom shapely.geometry import Point\nfrom shapely.ops import transform as shp_transform\nt = Transformer.from_crs('EPSG:4326','EPSG:32617', always_xy=True).transform\na = shp_transform(t, Point(-79.8583589, 43.2721852))\nb = shp_transform(t, Point(-79.8655445, 43.2719834))\nprint(a.distance(b))\n\""
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Output: ",
+    {
+     "children": [
+      "583.5872473353091"
+     ],
+     "tag": "code"
+    },
+    " (metres), i.e. the two points are ",
+    {
+     "children": [
+      "about 0.58 km apart"
+     ],
+     "tag": "strong"
+    },
+    ", computed in EPSG:32617 (UTM 17N) per the project's area/distance rule — not \"roughly two kilometres\" as §20 stated."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Interpretation"
+   },
+   "children": [
+    "Interpretation"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "The wrong figure was an unverified estimate that made it into an Interpretation section without being computed from the coordinates on hand. The correct figure, ~0.58 km, does not change the finding §20 was making: the two addresses are still genuinely distinct places (different streets by direction, not the same building), so collapsing them to one anchor was still a real correctness bug producing a false-positive geocode. Only the distance-apart figure was wrong; the defect, its diagnosis, and its fix in §20 are unaffected. §20 itself is left unedited, per the append-only rule — this entry is the correction of record."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "§22-Task-5:-Parcel-and-footprint-normalizers"
+   },
+   "children": [
+    "§22 Task 5: Parcel and footprint normalizers"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Date:"
+     ],
+     "tag": "strong"
+    },
+    " 2026-08-23"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Created ",
+    {
+     "children": [
+      "atlas/scripts/normalize/geometry_sources.py"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "atlas/tests/test_geometry_sources.py"
+     ],
+     "tag": "code"
+    },
+    " per task-5-brief.md, verbatim as specified (no deviation)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "TDD-sequence"
+   },
+   "children": [
+    "TDD sequence"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Failing test (before implementation existed):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -m pytest tests/test_geometry_sources.py -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "ImportError: cannot import name 'geometry_sources' from 'normalize'\n(a local working copy)\n1 error in 0.16s"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "After implementation:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -m pytest tests/test_geometry_sources.py -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "tests/test_geometry_sources.py::test_area_matches_publisher_precomputed_figure PASSED\ntests/test_geometry_sources.py::test_parcels_load_with_tier_and_area PASSED\ntests/test_geometry_sources.py::test_footprints_load_with_tier PASSED\ntests/test_geometry_sources.py::test_every_polygon_carries_provenance PASSED\n4 passed in 101.81s"
+   ],
+   "tag": "pre"
+  },
+  {
+   "attrs": {
+    "id": "Observed-counts"
+   },
+   "children": [
+    "Observed counts"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -c \"\nimport sys; sys.path.insert(0,'scripts')\nfrom normalize import geometry_sources as gs\nfrom collections import Counter\nparcels = gs.load_polygons(gs.PARCEL_SOURCES)\nprints = gs.load_polygons(gs.FOOTPRINT_SOURCES)\nprint('parcels total:', len(parcels))\nprint('parcels by municipality:', Counter(p['municipality'] for p in parcels))\nprint('footprints total:', len(prints))\nprint('footprints by municipality:', Counter(p['municipality'] for p in prints))\n\""
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "parcels total: 79369\nparcels by municipality: Counter({'st. catharines': 44265, 'niagara falls': 35104})\nfootprints total: 282567\nfootprints by municipality: Counter({'hamilton': 214293, 'niagara falls': 42247, 'welland': 26027})"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "(Command run twice; both runs took ~85-100s, dominated by the ~360,000 shapely UTM re-projections across parcels + footprints.)"
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Interpretation"
+   },
+   "children": [
+    "Interpretation"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "The median-error test against Welland's own ",
+    {
+     "children": [
+      "GeometrySTArea"
+     ],
+     "tag": "code"
+    },
+    " passed on the first run at well under the 0.001 (0.1%) threshold — consistent with the brief's note that this has already been hand-verified once at 0.0000% median/p95 relative error. This is strong independent confirmation that EPSG:32617 is the right projection choice for this study area and that ",
+    {
+     "children": [
+      "area_m2()"
+     ],
+     "tag": "code"
+    },
+    " is computing area correctly, not merely passing a loose tolerance."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "municipality"
+     ],
+     "tag": "code"
+    },
+    " on each polygon is a hardcoded lowercase string in the source descriptors (",
+    {
+     "children": [
+      "\"niagara falls\""
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "\"st. catharines\""
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "\"welland\""
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "\"hamilton\""
+     ],
+     "tag": "code"
+    },
+    ") - none carry a civic-status prefix, unlike some anchor municipality strings (see Task 6, §23, on the join between this module and ",
+    {
+     "children": [
+      "normalize.addresses"
+     ],
+     "tag": "code"
+    },
+    ")."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0048\ntype: working-paper\nsection: origins\nplace_type: region\nevidence_date: 2026-10-03\nseq: 8"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, niagara, hamilton, log, prior-art",
+ "path": "2026-08-23--raw-findings-log-part-2-of-3-11-19",
+ "title": "2026-08-23 — raw findings log (part 2 of 3)",
+ "url": "https://telegra.ph/2026-08-23--raw-findings-log-part-2-of-3-11-19",
+ "views": 0
+}

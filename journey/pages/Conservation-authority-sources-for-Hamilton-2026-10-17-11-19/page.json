@@ -1,0 +1,330 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, hamilton, conservation, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "Hamilton is split across four conservation authorities: HCA, NPCA, GRCA and Conservation Halton (CH). The City's dissolved CA watershed layers name each parcel's regulator."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "HCA"
+       ],
+       "tag": "strong"
+      },
+      " — Regulation-limit source: HCA open data (Regulated Areas) · Status: catalogued, reviewed_context"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "NPCA"
+       ],
+       "tag": "strong"
+      },
+      " — Regulation-limit source: NPCA ArcGIS Online · Status: catalogued"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "GRCA"
+       ],
+       "tag": "strong"
+      },
+      " — Regulation-limit source: Region of Waterloo ITS-GIS proxy: ",
+      {
+       "children": [
+        "_GRCA_Regulatory/MapServer/2"
+       ],
+       "tag": "code"
+      },
+      " · Status: ",
+      {
+       "children": [
+        "trial pull done, see below"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Conservation Halton"
+       ],
+       "tag": "strong"
+      },
+      " — Regulation-limit source: ",
+      {
+       "children": [
+        "no open endpoint found"
+       ],
+       "tag": "strong"
+      },
+      " · Status: ",
+      {
+       "children": [
+        "named gap."
+       ],
+       "tag": "strong"
+      },
+      " Options: request the layer from CH, or give CH-area parcels a named refusal"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "GRCA-trial-pull"
+   },
+   "children": [
+    "GRCA trial pull"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Source:"
+       ],
+       "tag": "strong"
+      },
+      " https://utility.arcgis.com/usrsvcs/servers/7816f003cfd74d6591ccc5023a62b230/rest/services/_GRCA_Regulatory/MapServer/2. \"Regulation Limits (GRCA)\", Ontario Regulation 150/06. The copyright text says GRCA; the service is hosted by Region of Waterloo ITS-GIS. Native CRS is EPSG:26917."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Clip:"
+       ],
+       "tag": "strong"
+      },
+      " Hamilton ",
+      {
+       "children": [
+        "City_Boundary/FeatureServer/13"
+       ],
+       "tag": "code"
+      },
+      ". Envelope query, then exact intersection and clip."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Pulled:"
+       ],
+       "tag": "strong"
+      },
+      " 2026-10-17 01:47 ET."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Stored (local, outside git):"
+       ],
+       "tag": "strong"
+      },
+      " a local working copy"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "grca_regulation_limits_hamilton_clipped.geojson"
+       ],
+       "tag": "code"
+      },
+      " (EPSG:4326, 6.4 MB)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "raw/"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "PULL-SUMMARY.json"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Features:"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "199 intersect Hamilton, all ",
+      {
+       "children": [
+        "GR_FEATURE = REGULATION LIMIT"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "By ",
+      {
+       "children": [
+        "MU_LTIER"
+       ],
+       "tag": "code"
+      },
+      ": 187 City of Hamilton, 9 County of Brant, 3 North Dumfries. The neighbour polygons straddle the boundary and are clipped."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The layer has 188 features tagged Hamilton in total; one of them does not touch the boundary."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Fields:"
+       ],
+       "tag": "strong"
+      },
+      " OBJECTID, MU_UTIER, MU_LTIER, GR_FEATURE, REG_NUMBER, CREATION_DATE, LAST_REVISION_DATE, crcValue, GlobalID. There are no owner or personal fields. The script now uses ",
+      {
+       "children": [
+        "outFields=*"
+       ],
+       "tag": "code"
+      },
+      " (all fields); the stored pull already holds every field."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Coverage:"
+       ],
+       "tag": "strong"
+      },
+      " 49.37 km² regulated, or 4.3% of Hamilton's 1,148.8 km² (regulated area only, not the whole GRCA watershed)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Vintage:"
+       ],
+       "tag": "strong"
+      },
+      " CREATION_DATE 2006-04-20; LAST_REVISION_DATE 2026-06-28 on all features. The layer has no editingInfo."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Caveat:"
+       ],
+       "tag": "strong"
+      },
+      " Esri rings were assembled into polygons by symmetric difference. Spot-check holes before relying on exact areas."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0058\ntype: working-paper\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-10-17\nseq: 23"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, hamilton, conservation, run-1",
+ "path": "Conservation-authority-sources-for-Hamilton-2026-10-17-11-19",
+ "title": "Conservation authority sources for Hamilton (2026-10-17)",
+ "url": "https://telegra.ph/Conservation-authority-sources-for-Hamilton-2026-10-17-11-19",
+ "views": 0
+}

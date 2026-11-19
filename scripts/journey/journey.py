@@ -172,6 +172,19 @@ def parse_post(text: str) -> dict:
             while i < len(lines) and not lines[i].strip().startswith("```"):
                 buf.append(lines[i]); i += 1
             nodes.append({"tag": "pre", "children": ["\n".join(buf)]}); i += 1; continue
+        if s.startswith("|") and i + 1 < len(lines) and re.match(r"^\|?\s*:?-{2,}", lines[i + 1].strip()):
+            flush()
+            split = lambda row: [c.strip().replace("\\|", "|") for c in re.split(r"(?<!\\)\|", row.strip().strip("|"))]
+            head = split(s); i += 2; items = []
+            while i < len(lines) and lines[i].strip().startswith("|"):
+                cells = split(lines[i]); i += 1
+                first = cells[0] if cells else ""
+                rest = [f"{h}: {c}" for h, c in zip(head[1:], cells[1:]) if c and c not in ("—", "-")]
+                text = (f"**{first}**" if first else "") + (" — " + " · ".join(rest) if rest else "")
+                items.append({"tag": "li", "children": inline(text)})
+            nodes.append({"tag": "ul", "children": items}); continue
+        if re.match(r"^#{4,6} ", s):
+            flush(); nodes.append({"tag": "h4", "children": inline(s.split(" ", 1)[1])}); i += 1; continue
         if s.startswith("### "):
             flush(); nodes.append({"tag": "h4", "children": inline(s[4:])}); i += 1; continue
         if s.startswith("## ") or s.startswith("# "):
@@ -515,7 +528,7 @@ def cmd_post(args) -> None:
     n_words = words(post["body"]) + len((post["intro"] or "").split())
     minutes = max(1, round(n_words / WORDS_PER_MINUTE))
     print(f"{post_id} {post['title']!r} · {n_words} words · {minutes} min · check {result}{' ' + str(hits) if hits else ''}")
-    if len(json.dumps(content).encode()) > 64000:
+    if len(json.dumps(content, ensure_ascii=False).encode()) > 62000:
         raise SystemExit("content over Telegraph's 64 kB limit; split the post")
     if result == "blocked" or (result == "review" and not args.accept_review):
         raise SystemExit("held: fix the post or rerun with --accept-review after a human read")
@@ -541,8 +554,14 @@ def cmd_post(args) -> None:
         "evidence_date": m.get("evidence_date", ""), "language": "en", "collections": section,
         "related_records": m.get("related", ""), "notes": m.get("notes", ""),
     })
+    if args.collection:
+        rows[-1]["collections"] = args.collection
+        rows[-1]["site_path"] = f"/journey/{section}/{args.collection}/#{page['path']}"
     write_register(rows)
-    rebuild_index(section, tok)
+    if not args.defer_index:
+        rebuild_index(args.collection or section, tok)
+        if args.collection:
+            rebuild_index(section, tok)
     print(f"published {page['url']}")
 
 
@@ -613,6 +632,8 @@ def main(argv=None) -> None:
     sub = p.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("init"); s.add_argument("--dry-run", action="store_true"); s.set_defaults(fn=cmd_init)
     s = sub.add_parser("post"); s.add_argument("file"); s.add_argument("--section", required=True)
+    s.add_argument("--collection", help="file straight into this sub-collection instead of the section list")
+    s.add_argument("--defer-index", action="store_true", help="skip index rebuilds (run `rebuild` after a batch)")
     s.add_argument("--dry-run", action="store_true"); s.add_argument("--accept-review", action="store_true"); s.set_defaults(fn=cmd_post)
     s = sub.add_parser("edit"); s.add_argument("post_id"); s.add_argument("file"); s.add_argument("--accept-review", action="store_true")
     s.set_defaults(fn=lambda a: cmd_edit(a))

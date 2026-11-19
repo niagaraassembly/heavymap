@@ -1,0 +1,464 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, hamilton, buildings, run-1"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Status:"
+     ],
+     "tag": "strong"
+    },
+    " published in the owner-authorized live map release; source data and full relationship tables remain local."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Public data pin:"
+     ],
+     "tag": "strong"
+    },
+    " Industrial Atlas data commit ",
+    {
+     "children": [
+      "e3ab71d32660 (commit, shortened)"
+     ],
+     "tag": "code"
+    },
+    ", map-layer set ",
+    {
+     "children": [
+      "2026-11-17-layer-set-003"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Deliverables"
+   },
+   "children": [
+    "Deliverables"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The full generated package is stored outside Git at a local working copy."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "hamilton_buildings_ranked_shapefile.zip"
+       ],
+       "tag": "code"
+      },
+      ": EPSG:26917 polygon shapefile with one feature per active registered footprint."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "building_parcel_ranks.csv"
+       ],
+       "tag": "code"
+      },
+      ": one row per active footprint, including the 383 with no positive parcel intersection."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "building_parcel_overlaps.csv"
+       ],
+       "tag": "code"
+      },
+      ": all 259,407 positive building–parcel intersections and the primary assignment flag."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "parcel_building_summary.csv"
+       ],
+       "tag": "code"
+      },
+      ": assigned footprint counts, summed plan-view area, largest footprint, and multi-parcel count by primary parcel."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "hamilton_buildings_ranked_wgs84.ndjson"
+       ],
+       "tag": "code"
+      },
+      ": screened map features for the public vector-tile release; includes numeric ",
+      {
+       "children": [
+        "AREA_M2"
+       ],
+       "tag": "code"
+      },
+      ", stable ",
+      {
+       "children": [
+        "BUILD_ID"
+       ],
+       "tag": "code"
+      },
+      ", parcel rank, overlap count and parcel-edge distance."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "parcel-building-facts-index.json"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "parcel-building-facts/*.json"
+       ],
+       "tag": "code"
+      },
+      ": all-active-parcel modal facts, sharded by the final two stable parcel-ID characters for on-demand loading."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "manifest.json"
+       ],
+       "tag": "code"
+      },
+      ": source/input hashes, output hashes, processing rules, feature counts and limitations."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Reproducer: ",
+      {
+       "children": [
+        "scripts/export_hamilton_building_ranks.py"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Method-and-identity"
+   },
+   "children": [
+    "Method and identity"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The source is the City of Hamilton Buildings FeatureServer layer 8, pulled 2026-10-17; its metadata records a 2026-10-06 data edit. Processing uses the immutable registry run ",
+    {
+     "children": [
+      "20261017T0725Z-run2-ia1"
+     ],
+     "tag": "code"
+    },
+    " in EPSG:26917. The five inactive source rows are excluded; all 214,287 active registered footprints are retained."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Each footprint is assigned to the parcel with the greatest positive polygon-intersection area. Exact overlap-area ties resolve by lexical parcel ID. Every other positive parcel intersection stays in the overlap table. Six zero-area rows in the registry overlap input are ignored, not treated as parcel links. The selected parcel agrees with the registry's stored primary assignment for all 213,904 linked footprints."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Within each primary parcel, ",
+    {
+     "children": [
+      "building_no"
+     ],
+     "tag": "code"
+    },
+    " is assigned from 1 upward by full footprint area descending, then stable ",
+    {
+     "children": [
+      "building_id"
+     ],
+     "tag": "code"
+    },
+    " ascending. Equal area groups are reported by ",
+    {
+     "children": [
+      "equal_area_tie_count"
+     ],
+     "tag": "code"
+    },
+    ". ",
+    {
+     "children": [
+      "building_id"
+     ],
+     "tag": "code"
+    },
+    " remains the durable cross-release identity; ",
+    {
+     "children": [
+      "building_no"
+     ],
+     "tag": "code"
+    },
+    " is a convenient rank that can change when geometry or parcel membership changes. The rank scope is one parcel. Site-wide ranks require a separately defined site grouping."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "footprint_area_m2"
+     ],
+     "tag": "code"
+    },
+    " / shapefile ",
+    {
+     "children": [
+      "AREA_M2"
+     ],
+     "tag": "code"
+    },
+    " is continuous plan-view polygon area, so it supports numeric size filtering. It is not floor area, gross floor area, building height, occupancy or current use. The shapefile also includes ",
+    {
+     "children": [
+      "BUILD_ID"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "PARCEL_ID"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "BUILD_NO"
+     ],
+     "tag": "code"
+    },
+    ", primary overlap area/share, the count of intersected parcels, and the equal-size tie count. Source ",
+    {
+     "children": [
+      "NAME"
+     ],
+     "tag": "code"
+    },
+    ", OID, and source geometry fields are screened out."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "For the parcel modal and map popup, the derivation also records the minimum distance from each assigned building footprint to its primary parcel boundary line. EPSG:26917 metre coordinates are used; touching, crossing, or a parcel boundary inside a footprint has distance zero. Parcel summaries expose nearest and median building-edge distance, buildings within 3 m, largest and median footprint size, assigned whole-footprint area sum, and the count of all intersecting footprints. Whole-footprint area sum is explicitly not parcel coverage. Parcels without assigned footprints receive zero counts and null size/distance statistics."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Population-and-quality-notes"
+   },
+   "children": [
+    "Population and quality notes"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "214,287 active footprints; 213,904 assigned to 146,307 parcels; 383 remain unassigned."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "259,407 positive building–parcel intersections; 33,485 footprints intersect more than one parcel."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "146,307 parcels have at least one primary-assigned footprint; 20,438 of the 166,745 registry parcels do not."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "One invalid polygon and seven duplicate geometry rows were noted in the source profile. This export preserves registered geometry without silently repairing or removing it."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "The City describes footprints as digitized from aerial imagery; most residential outlines are best-fit rectangles, and small structures such as sheds may be absent."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "The numbers support parcel-level discovery and size filtering. They do not establish that an unassigned parcel has no building, or that an outline represents a separate occupied building. Individual-building stories and documentation can use the stable footprint ID later, with the source and geometric limitations shown alongside it."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Evidence"
+   },
+   "children": [
+    "Evidence"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "City layer: https://services.arcgis.com/rYz782eMbySr2srL/arcgis/rest/services/Buildings/FeatureServer/8"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "City layer metadata: https://services.arcgis.com/rYz782eMbySr2srL/arcgis/rest/services/Buildings/FeatureServer/8/metadata?f=html&format=default"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Local input run and output checksums/counts: ",
+      {
+       "children": [
+        "manifest.json"
+       ],
+       "tag": "code"
+      },
+      " in the local package."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Prior profile and multi-parcel quirk: ",
+      {
+       "children": [
+        "Spreadsheets/17-layer-profile.csv"
+       ],
+       "tag": "code"
+      },
+      " (",
+      {
+       "children": [
+        "LYR-HAM-BUILDINGS"
+       ],
+       "tag": "code"
+      },
+      ") and ",
+      {
+       "children": [
+        "Spreadsheets/18-quirks-log.csv"
+       ],
+       "tag": "code"
+      },
+      " (",
+      {
+       "children": [
+        "Q-014"
+       ],
+       "tag": "code"
+      },
+      ")."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0062\ntype: working-paper\nsection: expansion\nrun: CR-001\nplace: ca-on-3525005-hamilton\nplace_type: city\nevidence_date: 2026-11-17\nseq: 27"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, hamilton, buildings, run-1",
+ "path": "Hamilton-building-footprints-parcel-links-and-size-ranks-11-19",
+ "title": "Hamilton building footprints: parcel links and size ranks",
+ "url": "https://telegra.ph/Hamilton-building-footprints-parcel-links-and-size-ranks-11-19",
+ "views": 0
+}

@@ -1,0 +1,1272 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, niagara, log, prior-art"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "Backfilled from the session transcript. Entries are in order observed. Everything below is raw observation unless marked ",
+    {
+     "children": [
+      "Interpretation"
+     ],
+     "tag": "strong"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "§1-·-Fix-1-—-Registry-normalization;-five-missing-polygon-source-records"
+   },
+   "children": [
+    "§1 · Fix 1 — Registry normalization; five missing polygon source records"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Task:"
+     ],
+     "tag": "strong"
+    },
+    " Add five missing source records to ",
+    {
+     "children": [
+      "atlas/sources/sources.json"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Raw observations:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Verified existing structure by reading ",
+    {
+     "children": [
+      "hamilton-addresses"
+     ],
+     "tag": "code"
+    },
+    " entry (sources.json lines 206–231). The file is a JSON array of source objects, one per line. Each entry contains:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "id"
+       ],
+       "tag": "code"
+      },
+      " (string)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "name"
+       ],
+       "tag": "code"
+      },
+      " (string)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "organization"
+       ],
+       "tag": "code"
+      },
+      " (string)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "license"
+       ],
+       "tag": "code"
+      },
+      " / ",
+      {
+       "children": [
+        "licence"
+       ],
+       "tag": "code"
+      },
+      " (both forms observed; varies by entry)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "last_retrieved"
+       ],
+       "tag": "code"
+      },
+      " (ISO date string)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "verified"
+       ],
+       "tag": "code"
+      },
+      " block with ",
+      {
+       "children": [
+        "date"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "records"
+       ],
+       "tag": "code"
+      },
+      " fields"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "coverage"
+       ],
+       "tag": "code"
+      },
+      " (string, municipality or region name)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "status"
+       ],
+       "tag": "code"
+      },
+      " (string, e.g. \"active\")"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Optional fields: ",
+      {
+       "children": [
+        "url"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "service_url"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "format"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "category"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "attribution"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "share_alike"
+       ],
+       "tag": "code"
+      },
+      ", etc."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Five missing source ids, unit counts from the index (observed by querying geometry_sources.py and the unit builder):"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "nf-property-parcels"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — units: 35,104 · name: Niagara Falls Property Parcels · organization: City of Niagara Falls · licence: Open Government Licence 2.0 (Niagara Falls) · retrieved: 2026-08-22"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "stc-parcel-fabric"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — units: 44,265 · name: St. Catharines Parcel Fabric Public · organization: City of St. Catharines · licence: Open Government Licence 2.0 (Corporation of the City of St. Catharines) · retrieved: 2026-08-22"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "nf-footprints-2018"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — units: 42,247 · name: Niagara Falls Building Footprints 2018 · organization: City of Niagara Falls · licence: Open Government Licence 2.0 (Niagara Falls) · retrieved: 2026-08-22"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "welland-footprints"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — units: 26,027 · name: Welland Building Footprints · organization: City of Welland · licence: Open Government Licence 2.0 (Welland) · retrieved: 2026-08-22"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        {
+         "children": [
+          "hamilton-buildings"
+         ],
+         "tag": "code"
+        }
+       ],
+       "tag": "strong"
+      },
+      " — units: 214,293 · name: Hamilton Buildings · organization: City of Hamilton · licence: City of Hamilton Open Data Licence · retrieved: 2026-08-23"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Action:"
+     ],
+     "tag": "strong"
+    },
+    " Added five new records to ",
+    {
+     "children": [
+      "atlas/sources/sources.json"
+     ],
+     "tag": "code"
+    },
+    ", appended to the existing array, matching the structure of existing entries."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Verification:"
+     ],
+     "tag": "strong"
+    },
+    " File now contains 12 records (7 pre-existing + 5 added)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "File changed:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "atlas/sources/sources.json"
+     ],
+     "tag": "code"
+    },
+    " (2 inserts: one comma after the last pre-existing entry, one closing bracket after the new entries)"
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "§2-·-Fix-1-—-Test-assertion-for-source-registry-binding"
+   },
+   "children": [
+    "§2 · Fix 1 — Test assertion for source registry binding"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Task:"
+     ],
+     "tag": "strong"
+    },
+    " Add a test to ",
+    {
+     "children": [
+      "atlas/tests/test_units.py"
+     ],
+     "tag": "code"
+    },
+    " verifying that every ",
+    {
+     "children": [
+      "source.id"
+     ],
+     "tag": "code"
+    },
+    " in the unit index exists in ",
+    {
+     "children": [
+      "atlas/sources/sources.json"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Raw observations:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Created ",
+    {
+     "children": [
+      "test_every_source_id_exists_in_registry()"
+     ],
+     "tag": "code"
+    },
+    ":"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Loads the full unit index via ",
+      {
+       "children": [
+        "units.build_units()"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Extracts all unique ",
+      {
+       "children": [
+        "source.id"
+       ],
+       "tag": "code"
+      },
+      " values"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Loads ",
+      {
+       "children": [
+        "sources.json"
+       ],
+       "tag": "code"
+      },
+      " and extracts all registry ",
+      {
+       "children": [
+        "id"
+       ],
+       "tag": "code"
+      },
+      " values"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Asserts: ",
+      {
+       "children": [
+        "source_ids - registry_ids == empty set"
+       ],
+       "tag": "code"
+      },
+      " (no IDs in units but missing from registry)"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Initial path resolution error:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "FileNotFoundError: [Errno 2] No such file or directory: 'a local working copy"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Corrected path from ",
+    {
+     "children": [
+      "parents[2]"
+     ],
+     "tag": "code"
+    },
+    " to ",
+    {
+     "children": [
+      "parents[1]"
+     ],
+     "tag": "code"
+    },
+    " (sources.json is at ",
+    {
+     "children": [
+      "atlas/sources/sources.json"
+     ],
+     "tag": "code"
+    },
+    ", not at repo root)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Test result after fix:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "atlas/tests/test_units.py::test_every_source_id_exists_in_registry PASSED [100%]"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Passed in 97.02 seconds."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "File changed:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "atlas/tests/test_units.py"
+     ],
+     "tag": "code"
+    },
+    " (added ",
+    {
+     "children": [
+      "import json"
+     ],
+     "tag": "code"
+    },
+    ", added test function)"
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "§3-·-Fix-2-—-Pipeline-artifact-isolation"
+   },
+   "children": [
+    "§3 · Fix 2 — Pipeline artifact isolation"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Task:"
+     ],
+     "tag": "strong"
+    },
+    " Modify ",
+    {
+     "children": [
+      "build_units.run()"
+     ],
+     "tag": "code"
+    },
+    " to accept an optional ",
+    {
+     "children": [
+      "output_path"
+     ],
+     "tag": "code"
+    },
+    " parameter, defaulting to the production location. Update ",
+    {
+     "children": [
+      "test_pipeline.py"
+     ],
+     "tag": "code"
+    },
+    " to pass ",
+    {
+     "children": [
+      "tmp_path"
+     ],
+     "tag": "code"
+    },
+    " fixture, so tests never overwrite the real cache."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Raw observations:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Before:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "build_units.run(limit_municipalities={\"welland\"})"
+     ],
+     "tag": "code"
+    },
+    " wrote directly to ",
+    {
+     "children": [
+      "atlas/scripts/.cache/units.json"
+     ],
+     "tag": "code"
+    },
+    " (the production artifact)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Changes to ",
+      {
+       "children": [
+        "atlas/scripts/build_units.py"
+       ],
+       "tag": "code"
+      },
+      ":"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Added ",
+      {
+       "children": [
+        "output_path=None"
+       ],
+       "tag": "code"
+      },
+      " parameter to ",
+      {
+       "children": [
+        "run()"
+       ],
+       "tag": "code"
+      },
+      " signature"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "If ",
+      {
+       "children": [
+        "output_path is None"
+       ],
+       "tag": "code"
+      },
+      ", use ",
+      {
+       "children": [
+        "OUT"
+       ],
+       "tag": "code"
+      },
+      " (the production default)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Otherwise, convert to ",
+      {
+       "children": [
+        "pathlib.Path"
+       ],
+       "tag": "code"
+      },
+      " and create parent directories"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Write to the specified path instead of ",
+      {
+       "children": [
+        "OUT"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Changes to ",
+      {
+       "children": [
+        "atlas/tests/test_pipeline.py"
+       ],
+       "tag": "code"
+      },
+      ":"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Added ",
+      {
+       "children": [
+        "tmp_path"
+       ],
+       "tag": "code"
+      },
+      " fixture parameter to both test functions"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Created temporary output file: ",
+      {
+       "children": [
+        "output_file = tmp_path / \"units.json\""
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Passed to ",
+      {
+       "children": [
+        "build_units.run(..., output_path=output_file)"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Verification before running full suite:"
+     ],
+     "tag": "strong"
+    },
+    " Single pipeline test passed."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "File changes:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "atlas/scripts/build_units.py"
+     ],
+     "tag": "code"
+    },
+    ", ",
+    {
+     "children": [
+      "atlas/tests/test_pipeline.py"
+     ],
+     "tag": "code"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "§4-·-Full-test-suite-run-after-both-fixes"
+   },
+   "children": [
+    "§4 · Full test suite run after both fixes"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Command:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "timeout 300 atlas/.venv/bin/python -m pytest atlas/tests/ -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Result:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "collected 43 items\n\natlas/tests/test_addresses.py ............                    [ 28%]\natlas/tests/test_coverage_report.py ...                      [ 30%]\natlas/tests/test_departures.py .....                         [ 41%]\natlas/tests/test_geocode.py .....                            [ 53%]\natlas/tests/test_geometry_sources.py ....                    [ 67%]\natlas/tests/test_normalize_nei.py ....                       [ 81%]\natlas/tests/test_pipeline.py ..                              [ 83%]\natlas/tests/test_units.py .......                            [ 100%]\n\n======================== 43 passed in 209.06s (0:03:29) ========================"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "All 43 tests passed. Total runtime: 209.06 seconds (~3.5 minutes)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Test counts by file:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "test_units.py: 8 tests (7 pre-existing + 1 new for source registry binding)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "test_pipeline.py: 2 tests (both using tmp_path isolation)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Others: 33 pre-existing tests"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "§5-·-Production-artifact-integrity-check"
+   },
+   "children": [
+    "§5 · Production artifact integrity check"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Task:"
+     ],
+     "tag": "strong"
+    },
+    " Verify that ",
+    {
+     "children": [
+      "atlas/scripts/.cache/units.json"
+     ],
+     "tag": "code"
+    },
+    " still contains the full 445,075-unit index after running the complete test suite."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Command:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "atlas/.venv/bin/python -c \"import json; data = json.load(open('atlas/scripts/.cache/units.json')); print(f'Current units.json count: {len(data[\\\"units\\\"]):,}')\""
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Result:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Current units.json count: 445,075"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Observed count: ",
+    {
+     "children": [
+      "445,075 units"
+     ],
+     "tag": "strong"
+    },
+    " — the full production index, unchanged."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "This confirms that the test isolation fix (§3) is working: neither ",
+    {
+     "children": [
+      "test_pipeline_writes_units_and_a_manifest"
+     ],
+     "tag": "code"
+    },
+    " nor ",
+    {
+     "children": [
+      "test_output_is_valid_json_with_provenance"
+     ],
+     "tag": "code"
+    },
+    " overwrote the real cache during test execution."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "Interpretation"
+   },
+   "children": [
+    "Interpretation"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Both fixes are now implemented and verified:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Registry normalization (Fix 1):"
+       ],
+       "tag": "strong"
+      },
+      " Added five missing polygon source records to ",
+      {
+       "children": [
+        "sources.json"
+       ],
+       "tag": "code"
+      },
+      ", covering 361,936 units (81% of the index). Binding constraint ",
+      {
+       "children": [
+        "\"provenance travels with every feature\""
+       ],
+       "tag": "em"
+      },
+      " is now satisfiable for all polygon-tier units. New test (",
+      {
+       "children": [
+        "test_every_source_id_exists_in_registry"
+       ],
+       "tag": "code"
+      },
+      ") catches regression: if a source.id appears in the unit index but is missing from the registry, CI will fail."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Pipeline isolation (Fix 2):"
+       ],
+       "tag": "strong"
+      },
+      " Test suite no longer overwrites the production ",
+      {
+       "children": [
+        "units.json"
+       ],
+       "tag": "code"
+      },
+      ". Tests use isolated temporary paths via pytest's ",
+      {
+       "children": [
+        "tmp_path"
+       ],
+       "tag": "code"
+      },
+      " fixture. Production artifact remains intact after CI runs."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Test coverage:"
+       ],
+       "tag": "strong"
+      },
+      " Full suite passes with 43 tests (43/43), including the 2 pipeline tests and the new registry binding test. Total runtime is sustainable at ~210 seconds, within acceptable limits for CI workflows."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Defects fixed:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "361,936 units with unresolved source ids (now resolved)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Test suite silently corrupting production cache (now isolated)"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "New safety assertions:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Every source id in units must exist in registry (caught by ",
+      {
+       "children": [
+        "test_every_source_id_exists_in_registry"
+       ],
+       "tag": "code"
+      },
+      ")"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Tests never touch the production cache (enforced by tmp_path parameter)"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0050\ntype: working-paper\nsection: origins\nplace_type: region\nevidence_date: 2026-10-03\nseq: 10"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, niagara, log, prior-art",
+ "path": "2026-08-24--raw-findings-log-11-19",
+ "title": "2026-08-24 — raw findings log",
+ "url": "https://telegra.ph/2026-08-24--raw-findings-log-11-19",
+ "views": 0
+}

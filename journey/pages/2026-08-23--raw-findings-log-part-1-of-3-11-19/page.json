@@ -1,0 +1,3335 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, niagara, hamilton, log, prior-art"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "Backfilled at end of day from the session transcript. Entries are in the order observed. Everything below is raw observation unless marked ",
+    {
+     "children": [
+      "Interpretation"
+     ],
+     "tag": "strong"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "01-·-Hamilton-catalogue-sweep"
+   },
+   "children": [
+    "01 · Hamilton catalogue sweep"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "curl https://open.hamilton.ca/api/feed/dcat-us/1.1.json"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "463 datasets"
+       ],
+       "tag": "strong"
+      },
+      "; 336 with a live ",
+      {
+       "children": [
+        "rest/services"
+       ],
+       "tag": "code"
+      },
+      " endpoint"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Licences: 391 City of Hamilton Open Data Licence, 68 none, 2 malformed HTML"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Themes: only ",
+      {
+       "children": [
+        "geospatial"
+       ],
+       "tag": "code"
+      },
+      " (166) — the theme field is not a useful taxonomy"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Atlas held only ",
+    {
+     "children": [
+      "4 Hamilton layers / 3,422 features"
+     ],
+     "tag": "strong"
+    },
+    " at this point: employment land 22, rail 1,692, truck routes 1,250, industrial zoning 458. The 2026-08-22 bulk fetch was the Niagara catalogue only."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Probe results, key datasets:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Addresses"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 273,535 · Geom: Point"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Buildings"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 214,293 · Geom: Polygon"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Employment Lands"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 22 · Geom: Polygon · Note: ",
+      {
+       "children": [
+        "AREA_HECTARES"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "CATEGORY"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Vacant Building Registry"
+       ],
+       "tag": "strong"
+      },
+      " — Count: ",
+      {
+       "children": [
+        "84"
+       ],
+       "tag": "strong"
+      },
+      " · Geom: ",
+      {
+       "children": [
+        "table"
+       ],
+       "tag": "strong"
+      },
+      " · Note: ",
+      {
+       "children": [
+        "STATUS"
+       ],
+       "tag": "code"
+      },
+      ",",
+      {
+       "children": [
+        "ZONING"
+       ],
+       "tag": "code"
+      },
+      ",",
+      {
+       "children": [
+        "IN_DATE"
+       ],
+       "tag": "code"
+      },
+      ",",
+      {
+       "children": [
+        "ISSUE_DATE"
+       ],
+       "tag": "code"
+      },
+      ",",
+      {
+       "children": [
+        "EXPIRY_DATE"
+       ],
+       "tag": "code"
+      },
+      ",",
+      {
+       "children": [
+        "FOLDER_NAME"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Businesses by Employee Count"
+       ],
+       "tag": "strong"
+      },
+      " — Count: ",
+      {
+       "children": [
+        "10"
+       ],
+       "tag": "strong"
+      },
+      " · Geom: ",
+      {
+       "children": [
+        "table"
+       ],
+       "tag": "strong"
+      },
+      " · Note: ",
+      {
+       "children": [
+        "NUM_1_4 … NUM_500_PLUS"
+       ],
+       "tag": "code"
+      },
+      " — city-wide summary"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Real Estate Sales"
+       ],
+       "tag": "strong"
+      },
+      " — Count: ",
+      {
+       "children": [
+        "9"
+       ],
+       "tag": "strong"
+      },
+      " · Geom: ",
+      {
+       "children": [
+        "table"
+       ],
+       "tag": "strong"
+      },
+      " · Note: ",
+      {
+       "children": [
+        "YEAR,Q1,Q2,Q3,Q4,TOTAL"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Building & Demo Permits 2008-16"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 142,620 · Geom: table"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Building & Demo Permits 2017-"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 51,846 · Geom: table"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Licensed Salvage Yards"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 12 · Geom: table"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Licensed Public Garages"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 578 · Geom: table"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Licensed Trade Contractors"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 654 · Geom: table"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Sanitation Sewer Catchments"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 13,947 · Geom: Polygon"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Water Pressure District"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 28 · Geom: Polygon"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Average Daily Traffic Count"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 2,350 · Geom: Point"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Development Applications"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 5,189 · Geom: Point"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Registered Cooling Towers"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 304 · Geom: Point"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Land Use by Ward / 2018"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 16 / 16 · Geom: Polygon · Note: two epochs, ward-level"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Escarpment"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 1 · Geom: Polyline"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "ESA Boundaries"
+       ],
+       "tag": "strong"
+      },
+      " — Count: 207 · Geom: Polygon"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Interpretation."
+     ],
+     "tag": "strong"
+    },
+    " Two BACKLOG leads closed. \"Businesses by Employee Count\" was recorded as ",
+    {
+     "children": [
+      "\"the only candidate found so far for closing the Hamilton business gap\""
+     ],
+     "tag": "em"
+    },
+    " — it is 10 rows of city-wide totals, a statistic not a register. \"Real Estate Sales\" is 9 rows of annual totals, not transactions."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "No parcel layer exists in Hamilton."
+     ],
+     "tag": "strong"
+    },
+    " Searched the full DCAT feed. Hamilton's ceiling on the analysis ladder is ",
+    {
+     "children": [
+      "footprint"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "02-·-Candidate-numbering-error"
+   },
+   "children": [
+    "02 · Candidate numbering error"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Wrote CANDIDATES-HAMILTON.md prose citing #209 for Vacant Building Registry and #276–278 for the licence registers, based on my ordering of the source list rather than the numbers the enumeration assigned."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Actual: ",
+    {
+     "children": [
+      "#221"
+     ],
+     "tag": "strong"
+    },
+    " Vacant Registry · ",
+    {
+     "children": [
+      "#267–269"
+     ],
+     "tag": "strong"
+    },
+    " licences · ",
+    {
+     "children": [
+      "#222–223"
+     ],
+     "tag": "strong"
+    },
+    " permits · ",
+    {
+     "children": [
+      "#220"
+     ],
+     "tag": "strong"
+    },
+    " Addresses · ",
+    {
+     "children": [
+      "#219"
+     ],
+     "tag": "strong"
+    },
+    " Buildings."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Interpretation."
+     ],
+     "tag": "strong"
+    },
+    " Same class of error as the fuzzy-match failure on 08-22: trusting my own ordering instead of reading the generated artefact. Corrected in the doc. The numbers are the reference key the user quotes back, so this mattered more than a cosmetic slip."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "03-·-Hamilton-fetch-—-memory-failure"
+   },
+   "children": [
+    "03 · Hamilton fetch — memory failure"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "First run killed deliberately."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "ps -o rss= → 4.7 GB RSS ; free -g → 0 GB available (7 GB machine)"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Cause: ",
+    {
+     "children": [
+      "fetch_rest()"
+     ],
+     "tag": "code"
+    },
+    " accumulated every page in a Python list before writing. Contour Lines is 221,518 polylines."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Rewrote to stream to disk. Same layer then ran at ",
+    {
+     "children": [
+      "152 MB RSS"
+     ],
+     "tag": "strong"
+    },
+    ", later ",
+    {
+     "children": [
+      "226 MB"
+     ],
+     "tag": "strong"
+    },
+    " peak. Final file ",
+    {
+     "children": [
+      "2,222 MB"
+     ],
+     "tag": "strong"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Second defect found in the same function: the skip path called ",
+    {
+     "children": [
+      "json.load()"
+     ],
+     "tag": "code"
+    },
+    " on the whole file just to count features. Replaced with a chunked stream count. Two off-by-one bugs in that counter, both fixed:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "marker ",
+      {
+       "children": [
+        "\"type\":\"Feature\""
+       ],
+       "tag": "code"
+      },
+      " also matches ",
+      {
+       "children": [
+        "\"type\":\"FeatureCollection\""
+       ],
+       "tag": "code"
+      },
+      " → ",
+      {
+       "children": [
+        "221,519"
+       ],
+       "tag": "strong"
+      },
+      " (one over). Fixed with a trailing comma in the marker."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "chunk overlap ",
+      {
+       "children": [
+        "tail=buf[-24:]"
+       ],
+       "tag": "code"
+      },
+      " was longer than the 17-char marker, so a marker inside the overlap was counted twice → ",
+      {
+       "children": [
+        "221,520"
+       ],
+       "tag": "strong"
+      },
+      " (two over). Fixed with ",
+      {
+       "children": [
+        "tail=buf[-(len(MARK)-1):]"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "final: ",
+      {
+       "children": [
+        "221,518"
+       ],
+       "tag": "strong"
+      },
+      " ✅ matches the server count."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Receipts undercounted afterwards — 61 receipts against 88 files on disk, because ",
+    {
+     "children": [
+      "ThreadPoolExecutor.map"
+     ],
+     "tag": "code"
+    },
+    " yields in submission order while workers run ahead. Re-running the fetcher reconciled to ",
+    {
+     "children": [
+      "88"
+     ],
+     "tag": "strong"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "04-·-Hamilton-schemas-(inspect-cache.py)"
+   },
+   "children": [
+    "04 · Hamilton schemas (",
+    {
+     "children": [
+      "inspect_cache.py"
+     ],
+     "tag": "code"
+    },
+    ")"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "87 layers profiled: ",
+    {
+     "children": [
+      "56 spatial, 31 tables"
+     ],
+     "tag": "strong"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "#239 Street Light Poles and Luminaires — 0 features."
+       ],
+       "tag": "strong"
+      },
+      " Empty layer."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "#280 Average Unemployment Rate — HTTP 500"
+       ],
+       "tag": "strong"
+      },
+      ", *\"Service"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "OpenData/Tabular_Dashboards_1/MapServer not started\"*. Publisher-side."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "#269 Licensed Trade Contractors has no address field."
+       ],
+       "tag": "strong"
+      },
+      " Fields are"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "OBJECTID, LICENSE_NUMBER, LICENSE_TYPE, SUB_DESCRIPTION, BUSINESS_NAME, EXPIRY_DATE"
+     ],
+     "tag": "code"
+    },
+    ". So the addressed industrial business count is ",
+    {
+     "children": [
+      "590"
+     ],
+     "tag": "strong"
+    },
+    " (12 + 578), not the 1,244 previously stated."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "All dates are epoch milliseconds, e.g. ",
+      {
+       "children": [
+        "1575349200000"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Permit type prefixes, 2017+ epoch (#223):"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "**DP"
+       ],
+       "tag": "strong"
+      },
+      {
+       "children": [
+        " — Records: "
+       ],
+       "tag": "strong"
+      },
+      "3,007",
+      {
+       "children": [
+        " · Demolition-mentioning: "
+       ],
+       "tag": "strong"
+      },
+      "97.2%**"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "R9"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 30,693 · Demolition-mentioning: 1.1%"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "WC"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 4,229 · Demolition-mentioning: 0.0%"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "PPP"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 3,345 · Demolition-mentioning: 0.0%"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "C3"
+       ],
+       "tag": "strong"
+      },
+      " — Records: 2,900 · Demolition-mentioning: 3.3%"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "#222 (2008–2016) uses ",
+    {
+     "children": [
+      "year"
+     ],
+     "tag": "em"
+    },
+    " prefixes (",
+    {
+     "children": [
+      "12-"
+     ],
+     "tag": "code"
+    },
+    ",",
+    {
+     "children": [
+      "10-"
+     ],
+     "tag": "code"
+    },
+    ",",
+    {
+     "children": [
+      "15-"
+     ],
+     "tag": "code"
+    },
+    ") with no type code. Keyword ",
+    {
+     "children": [
+      "\\bdemoli"
+     ],
+     "tag": "code"
+    },
+    " on ",
+    {
+     "children": [
+      "DESCRIPTION"
+     ],
+     "tag": "code"
+    },
+    ": ",
+    {
+     "children": [
+      "6,068"
+     ],
+     "tag": "strong"
+    },
+    " hits in #222, ",
+    {
+     "children": [
+      "3,428"
+     ],
+     "tag": "strong"
+    },
+    " in #223."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Interpretation."
+     ],
+     "tag": "strong"
+    },
+    " Demolition is typed and reliable from 2017 and only keyword-inferable before it, and keyword matching cannot separate \"demolished\" from \"demolished and replaced\". The two epochs are schema-incompatible."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Inspector false positives noted: ",
+    {
+     "children": [
+      "LOCATIONTYPE"
+     ],
+     "tag": "code"
+    },
+    " (#252) and #244's pivoted column names were flagged as address fields. They are not."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "05-·-NEI-cross-year-analysis"
+   },
+   "children": [
+    "05 · NEI cross-year analysis"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "First attempt returned ",
+    {
+     "children": [
+      "0 departures"
+     ],
+     "tag": "strong"
+    },
+    ". Cause: schema drift, not absence."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "2017"
+       ],
+       "tag": "strong"
+      },
+      " — Id field: ",
+      {
+       "children": [
+        "NEI_ID"
+       ],
+       "tag": "code"
+      },
+      " · Employee field: ",
+      {
+       "children": [
+        "SizeRange_Employees"
+       ],
+       "tag": "code"
+      },
+      " · Features: 11,198"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2018"
+       ],
+       "tag": "strong"
+      },
+      " — Id field: ",
+      {
+       "children": [
+        "NEI_ID"
+       ],
+       "tag": "code"
+      },
+      " · Employee field: ",
+      {
+       "children": [
+        "SizeRange_Employees"
+       ],
+       "tag": "code"
+      },
+      " · Features: 11,722"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2019"
+       ],
+       "tag": "strong"
+      },
+      " — Id field: ",
+      {
+       "children": [
+        "NEI_ID"
+       ],
+       "tag": "code"
+      },
+      " · Employee field: ",
+      {
+       "children": [
+        "EmployeeSizeRange"
+       ],
+       "tag": "code"
+      },
+      " · Features: 12,017"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2022"
+       ],
+       "tag": "strong"
+      },
+      " — Id field: ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      " · Employee field: ",
+      {
+       "children": [
+        "sizerangeemployees"
+       ],
+       "tag": "code"
+      },
+      " · Features: 13,033"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "After lower-casing and stripping underscores:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "2017→2019: departed ",
+      {
+       "children": [
+        "198"
+       ],
+       "tag": "strong"
+      },
+      ", arrived 1,016"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "2019→2022: departed ",
+      {
+       "children": [
+        "121"
+       ],
+       "tag": "strong"
+      },
+      ", arrived 1,138, industrial-sector departures ",
+      {
+       "children": [
+        "15"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "ids in both 2019 and 2022: ",
+      {
+       "children": [
+        "11,895"
+       ],
+       "tag": "strong"
+      },
+      "; same business name ",
+      {
+       "children": [
+        "11,351 (95.4%)"
+       ],
+       "tag": "strong"
+      },
+      ";"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "different name under the same id: 544"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Examples of same-id name change: ",
+    {
+     "children": [
+      "Nick's Barber Shop"
+     ],
+     "tag": "code"
+    },
+    " → ",
+    {
+     "children": [
+      "The Old Fashioned Barber Shop"
+     ],
+     "tag": "code"
+    },
+    "; ",
+    {
+     "children": [
+      "Ernies Tailoring"
+     ],
+     "tag": "code"
+    },
+    " → ",
+    {
+     "children": [
+      "Ernie's Men's Wear"
+     ],
+     "tag": "code"
+    },
+    "; ",
+    {
+     "children": [
+      "Thorold Fish Chips and Things"
+     ],
+     "tag": "code"
+    },
+    " → ",
+    {
+     "children": [
+      "Thorold Fish and Chips"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Departure sectors (2-digit NAICS): 72:16, 62:14, 81:13, 44:12, 54:12, 45:9, 33:7, 23:6."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Interpretation."
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    " keys a ",
+    {
+     "children": [
+      "premises record, not a business"
+     ],
+     "tag": "strong"
+    },
+    ". Turnover (544) is 4.5× more common than departure (121). Silent zero from schema drift is a real failure mode and it caught me."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "06-·-Departures-layer-defect"
+   },
+   "children": [
+    "06 · Departures layer defect"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Assembled a site dossier for ",
+    {
+     "children": [
+      "Hopkins Steel Works, 2 Broadway, Welland"
+     ],
+     "tag": "code"
+    },
+    " from ",
+    {
+     "children": [
+      "data/niagara-departures.geojson"
+     ],
+     "tag": "code"
+    },
+    " (",
+    {
+     "children": [
+      "last_seen 2018, gone_by 2022"
+     ],
+     "tag": "code"
+    },
+    ")."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Dossier output: zoning now ",
+    {
+     "children": [
+      "L1 Light Industrial"
+     ],
+     "tag": "strong"
+    },
+    ", zoning was ",
+    {
+     "children": [
+      "I2"
+     ],
+     "tag": "strong"
+    },
+    ", OP Schedule B ",
+    {
+     "children": [
+      "Light Industrial"
+     ],
+     "tag": "strong"
+    },
+    ", CIP area ",
+    {
+     "children": [
+      "Brownfield CIA"
+     ],
+     "tag": "strong"
+    },
+    ", building present, nearest building 17 m, rail 513 m, nearest site plan 247 m, 18 businesses within 500 m of which 3 manufacturing."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "The neighbours list contained Hopkins Steel Works itself."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Direct trace:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "NEI 2017: id=8130 'Hopkins Steel Works ' 2 Broadway         | Welland\nNEI 2018: id=8130 'Hopkins Steel Works ' 2 Broadway         | Welland\nNEI 2019: id=8130 'Hopkins Steel Works ' 2 Broadway Street  | Welland\nNEI 2022: id=8130 'Hopkins Steel Works ' 2 Broadway Street  | Welland"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Checked all 68 claimed departures against NEI 2022:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "same name ",
+      {
+       "children": [
+        "and"
+       ],
+       "tag": "strong"
+      },
+      " address ",
+      {
+       "children": [
+        "and"
+       ],
+       "tag": "strong"
+      },
+      " municipality present: ",
+      {
+       "children": [
+        "18"
+       ],
+       "tag": "strong"
+      },
+      " — definitively false"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "same name, address string differs: ",
+      {
+       "children": [
+        "42"
+       ],
+       "tag": "strong"
+      },
+      " — probably also false"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "no name match: ",
+      {
+       "children": [
+        "8"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "name-only match: ",
+      {
+       "children": [
+        "60 of 68 (88%)"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Interpretation."
+     ],
+     "tag": "strong"
+    },
+    " The layer is live in the atlas and asserts that named businesses ceased operating at stated addresses. The 42 middle cases are uncertain only because address strings drift between survey years (",
+    {
+     "children": [
+      "2 Broadway"
+     ],
+     "tag": "code"
+    },
+    " → ",
+    {
+     "children": [
+      "2 Broadway Street"
+     ],
+     "tag": "code"
+    },
+    ") — the same normalization problem as §05. Recorded as a live defect at the top of BACKLOG.md."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "A per-site evidence assembly falsified an assertion that a regional aggregate would have counted and moved on from."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "07-·-Layer-size-distribution"
+   },
+   "children": [
+    "07 · Layer size distribution"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "200 files, ",
+    {
+     "children": [
+      "4.91 GB"
+     ],
+     "tag": "strong"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "#260 + #114 contours"
+       ],
+       "tag": "strong"
+      },
+      " — Files: 2 · Size: ",
+      {
+       "children": [
+        "3.11 GB"
+       ],
+       "tag": "strong"
+      },
+      " · Share: ",
+      {
+       "children": [
+        "63%"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "> 100 MB (GitHub hard limit)"
+       ],
+       "tag": "strong"
+      },
+      " — Files: 5 · Size: 3.51 GB · Share: 71%"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "> 50 MB"
+       ],
+       "tag": "strong"
+      },
+      " — Files: 14 · Size: 4.20 GB · Share: 86%"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "≤ 10 MB"
+       ],
+       "tag": "strong"
+      },
+      " — Files: 163 · Size: 0.16 GB · Share: 3%"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Bytes per feature, heaviest: ",
+    {
+     "children": [
+      "#62 Provincial Natural Heritage System 137,208 B/feat"
+     ],
+     "tag": "strong"
+    },
+    " (51 features, 7.0 MB); #114 contours 35,838; #56 NF Road Allowance 35,409; #64 Significant Woodlands 26,420; #66 NES Shoreline 22,629. Lightest for contrast: #45 NF Address Points ",
+    {
+     "children": [
+      "246 B/feat"
+     ],
+     "tag": "strong"
+    },
+    " (35,697 features)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "DEM sizing for a 110 × 60 km study area, float32: 1 m = ",
+    {
+     "children": [
+      "26.4 GB"
+     ],
+     "tag": "strong"
+    },
+    " · 10 m = 0.3 GB · 30 m = 0.03 GB. Disk free: 5.7 GB."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "08-·-Address-point-coverage"
+   },
+   "children": [
+    "08 · Address point coverage"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "043-address-points.geojson"
+     ],
+     "tag": "code"
+    },
+    " — Niagara Region, ",
+    {
+     "children": [
+      "208,004 points, all twelve municipalities"
+     ],
+     "tag": "strong"
+    },
+    ":"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "St. Catharines 54,508 · Niagara Falls 39,529 · Welland 24,411 · Fort Erie 17,085\nThorold 12,136 · Grimsby 12,013 · Lincoln 11,281 · Port Colborne 10,200\nNiagara-on-the-Lake 9,412 · Pelham 8,148 · West Lincoln 5,801 · Wainfleet 3,480"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Hamilton #220: 273,535. ",
+    {
+     "children": [
+      "Total 481,539."
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Interpretation."
+     ],
+     "tag": "strong"
+    },
+    " The six municipalities that publish nothing of their own hold ",
+    {
+     "children": [
+      "51,778"
+     ],
+     "tag": "strong"
+    },
+    " address points between them via the Region. The ",
+    {
+     "children": [
+      "point_cluster"
+     ],
+     "tag": "code"
+    },
+    " bottom rung in the engine spec was wrong — every part of the study area has address-level geometry. Corrected: address point is the universal ",
+    {
+     "children": [
+      "join anchor"
+     ],
+     "tag": "strong"
+    },
+    "; parcel/footprint/address is the ",
+    {
+     "children": [
+      "analysis unit"
+     ],
+     "tag": "strong"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "09-·-Package-verification"
+   },
+   "children": [
+    "09 · Package verification"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Installed into ",
+    {
+     "children": [
+      "atlas/.venv"
+     ],
+     "tag": "code"
+    },
+    ": shapely 2.1.2, pyproj 3.7.2, pyogrio 0.13.0, orjson 3.12.0, rasterio 1.4.4. ",
+    {
+     "children": [
+      "atlas/node_modules"
+     ],
+     "tag": "code"
+    },
+    ": mapshaper 0.6.121."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "pyproj round trip (-79.24, 42.99) → UTM17N (643,479.6, 4,761,207.2) → back"
+       ],
+       "tag": "strong"
+      },
+      " — Raw result: error ",
+      {
+       "children": [
+        "0.0000 mm"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "shapely point-in-polygon, Hopkins"
+       ],
+       "tag": "strong"
+      },
+      " — Raw result: ",
+      {
+       "children": [
+        "L1"
+       ],
+       "tag": "code"
+      },
+      " Light Industrial — matches pure-Python"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "shapely area vs Welland ",
+        {
+         "children": [
+          "GeometrySTArea"
+         ],
+         "tag": "code"
+        },
+        ", "
+       ],
+       "tag": "strong"
+      },
+      "1,980 polygons",
+      {
+       "children": [
+        "** — Raw result: median "
+       ],
+       "tag": "strong"
+      },
+      "0.0000%",
+      {
+       "children": [
+        ", p95 "
+       ],
+       "tag": "strong"
+      },
+      "0.0000%**"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "pyogrio reads PSEZ shapefile"
+       ],
+       "tag": "strong"
+      },
+      " — Raw result: 31 features, ",
+      {
+       "children": [
+        "EPSG:26917"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "orjson vs stdlib, 696-feature layer"
+       ],
+       "tag": "strong"
+      },
+      " — Raw result: identical; 17 ms → 6 ms, ",
+      {
+       "children": [
+        "2.6×"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Welland zoning: 1,981 features, ",
+    {
+     "children": [
+      "1,980 with geometry, 1 null"
+     ],
+     "tag": "strong"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Simplification test"
+     ],
+     "tag": "strong"
+    },
+    " — 60-polygon adjacent cluster, 8 touching pairs, 1,541 → ~557 vertices:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "original"
+       ],
+       "tag": "strong"
+      },
+      " — Overlap: 0.0 m² · Pairs affected: 0"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "mapshaper 30% keep-shapes"
+       ],
+       "tag": "strong"
+      },
+      " — Overlap: ",
+      {
+       "children": [
+        "0.0 m²"
+       ],
+       "tag": "strong"
+      },
+      " · Pairs affected: 0 · Union Δ: +0.001%"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "shapely simplify(0.54 m)"
+       ],
+       "tag": "strong"
+      },
+      " — Overlap: ",
+      {
+       "children": [
+        "5.7 m²"
+       ],
+       "tag": "strong"
+      },
+      " · Pairs affected: ",
+      {
+       "children": [
+        "2 of 8"
+       ],
+       "tag": "strong"
+      },
+      " · Union Δ: −0.000%"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "mapshaper -simplify 10%"
+     ],
+     "tag": "code"
+    },
+    " (no keep-shapes) collapsed ",
+    {
+     "children": [
+      "27 of 60 polygons to null geometry"
+     ],
+     "tag": "strong"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "First attempt at this test used ",
+    {
+     "children": [
+      "intersects"
+     ],
+     "tag": "code"
+    },
+    " and showed 8/8 for both methods — too loose a predicate to detect a torn border. Re-run measuring overlap area."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Interpretation."
+     ],
+     "tag": "strong"
+    },
+    " D-6's claim holds directionally but the magnitude at moderate tolerance is small. ",
+    {
+     "children": [
+      "keep-shapes"
+     ],
+     "tag": "code"
+    },
+    " is the stronger practical argument."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "10-·-PSEZ,-and-a-terminology-correction"
+   },
+   "children": [
+    "10 · PSEZ, and a terminology correction"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "All 31 Provincially Significant Employment Zones, by ",
+    {
+     "children": [
+      "MUNICIPALI"
+     ],
+     "tag": "code"
+    },
+    ":"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "TORONTO 5 · DURHAM 3 · HAMILTON 3 · TORONTO,YORK 3 · WATERLOO 3\nBRANTFORD 2 · HALTON 2 · HALTON,PEEL 2 · TORONTO,PEEL 2\nGUELPH 1 · HALDIMAND COUNTY 1 · PEEL 1 · SIMCOE 1 · TORONTO,YORK,PEEL 1 · YORK 1"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "All ",
+    {
+     "children": [
+      "STATUS = \"Identified by the Minister on December 20, 2019\""
+     ],
+     "tag": "code"
+    },
+    ". No zone names any of Niagara Region's twelve municipalities."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Interpretation, corrected."
+     ],
+     "tag": "strong"
+    },
+    " I first stated this as ",
+    {
+     "children": [
+      "\"no PSEZ anywhere in Niagara\""
+     ],
+     "tag": "em"
+    },
+    ". That is ambiguous and, read as the peninsula, ",
+    {
+     "children": [
+      "false"
+     ],
+     "tag": "strong"
+    },
+    " — the ",
+    {
+     "children": [
+      "Niagara Peninsula"
+     ],
+     "tag": "strong"
+    },
+    " has ten (Hamilton 3, Halton 2, Halton/Peel 2, Brantford 2, Haldimand 1). What is true is that ",
+    {
+     "children": [
+      "Niagara Region"
+     ],
+     "tag": "strong"
+    },
+    " — the jurisdiction — has none."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The precise version is the more interesting one: the Province designated provincially significant employment zones across the peninsula and its approaches and ",
+    {
+     "children": [
+      "none inside Niagara Region"
+     ],
+     "tag": "strong"
+    },
+    ". GLOSSARY.md written to prevent a recurrence."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "11-·-Engine-spec-gap-audit"
+   },
+   "children": [
+    "11 · Engine spec gap audit"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Ran a presence check over ",
+    {
+     "children": [
+      "docs/superpowers/specs/2026-08-23-atlas-engine-design.md"
+     ],
+     "tag": "code"
+    },
+    " (566 lines) before asking for review."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "  MISSING  site dossier section (promised, §6)\n  present  departures layer defect referenced\n  present  jurisdiction-precise in_psez\n  MISSING  glossary referenced\n  MISSING  raw logging rule referenced\n  MISSING  toolchain / shapely referenced\n  MISSING  D-5 large-layer disposition referenced\n  loose 'Niagara' usages: 6"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Interpretation."
+     ],
+     "tag": "strong"
+    },
+    " The dossier was promised in conversation on 2026-08-23 (\"Shall I write that up?\" → \"yes develop dormancy then proceed\") and the conversation moved to dormancy, then installs, and the section was never written. Four cross-references to documents created after the spec were also absent, so the spec had drifted out of date with its own repo."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Actions: added ",
+    {
+     "children": [
+      "§7 The site dossier"
+     ],
+     "tag": "strong"
+    },
+    " (structure, the Hopkins falsification, contradiction checks as a build-time stage, per-tier capability, toolchain dependency); renumbered §7–12 → §8–13; added ",
+    {
+     "children": [
+      "D10"
+     ],
+     "tag": "strong"
+    },
+    " to the decisions table; replaced the flat reference list in §10 with a table covering GLOSSARY, ENVIRONMENT, TECHNOLOGY-DECISIONS, PUBLICATION-MODEL and logs/; made the emit stage explicitly honour the D-5 disposition; tightened all 6 loose \"Niagara\" usages plus 1 table header to \"Niagara Region\"."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Spec now 653 lines. Self-review: no placeholders, sections contiguous 1–13, zero loose \"Niagara\"."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "12-·-Correction-to-§7.3-—-&quot;blocks-publication&quot;-was-wrong"
+   },
+   "children": [
+    "12 · Correction to §7.3 — \"blocks publication\" was wrong"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Project owner flagged that \"a failing check blocks publication of that assertion\" was the wrong framing: the site/property card should show a transparent breakdown of findings, optionally a computed claim, and still let the reader draw their own conclusion."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Interpretation."
+     ],
+     "tag": "strong"
+    },
+    " Suppression would hide the most informative thing on the card — that two records disagree — and leave the reader trusting a silence they cannot inspect. It also over-applied the defamation guard, which prohibits ",
+    {
+     "children": [
+      "asserting as fact"
+     ],
+     "tag": "em"
+    },
+    " something unsupported about a named business, not publishing a contradiction."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Rewrote as a three-state model: ",
+    {
+     "children": [
+      "claim_state: supported | contested | refuted"
+     ],
+     "tag": "code"
+    },
+    ", all three displayed with different presentation. Added §7.4 stating the line precisely — not published is the unqualified claim; published is both records, cited and dated, plus the discrepancy. A computed claim may be offered alongside, labelled as computed, never replacing the records."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The §9.2 regression test is restated: it asserts no feature is published in the ",
+    {
+     "children": [
+      "supported"
+     ],
+     "tag": "code"
+    },
+    " state while a later register contradicts it — not that contradicted features are absent."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "13-·-Correction-to-§7-framing-—-context-is-primary,-assertion-optional"
+   },
+   "children": [
+    "13 · Correction to §7 framing — context is primary, assertion optional"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Project owner: don't zero in only on potential dormancy or abandonment; bring the story of each piece's context alive."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Interpretation."
+     ],
+     "tag": "strong"
+    },
+    " The §7 draft put an assertion at the head and made context subordinate. Backwards for the majority case: most parcels carry no assertion and the context is still the point. An atlas that only lights up where it suspects abandonment is a decline map, whereas the stated subject is the physical industrial economy — most of which is working."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Added §7.0 (dossier serves every parcel; assertion is one optional band; scores are three more readings, not the headline) and §7.0.1 (story includes time). Added a HISTORY band to the structure and a context-bands row to the per-tier capability table."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Temporal sources already held, per §7.0.1: Brock air photo mosaics 1934/1954/ 1965/1972; Brock topographic 1910s–1970s; NF ortho 2006/2013/2018; Hamilton permits 2008→present (194,466); NF footprints 2010/2018; Welland zoning pre-2017/current; NEI 2017/2018/2019/2022; NEI ",
+    {
+     "children": [
+      "yearopen"
+     ],
+     "tag": "code"
+    },
+    " per business."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "A parcel that was open field in 1934, built by 1965, rezoned I2→L1 in 2017 and now holds three businesses is a ninety-year story from sources already cached."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "14-·-Root-cause-of-the-departures-defect"
+   },
+   "children": [
+    "14 · Root cause of the departures defect"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Read ",
+    {
+     "children": [
+      "scripts/fetch_nei.py"
+     ],
+     "tag": "code"
+    },
+    ". Its module docstring ",
+    {
+     "children": [
+      "already documents"
+     ],
+     "tag": "strong"
+    },
+    " the field-name casing trap, and ",
+    {
+     "children": [
+      "props()"
+     ],
+     "tag": "code"
+    },
+    " lower-cases keys correctly. So casing is not the bug."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "address_key(p)"
+     ],
+     "tag": "code"
+    },
+    " returns ",
+    {
+     "children": [
+      "(number, street, municipality)"
+     ],
+     "tag": "code"
+    },
+    " from the ",
+    {
+     "children": [
+      "raw"
+     ],
+     "tag": "strong"
+    },
+    " street string. Traced Hopkins Steel Works across editions:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "2017: raw=('2','broadway','welland')\n2018: raw=('2','broadway','welland')\n2019: raw=('2','broadway street','welland')\n2022: raw=('2','broadway street','welland')"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "build()"
+     ],
+     "tag": "code"
+    },
+    " walks ",
+    {
+     "children": [
+      "reversed(years[:-1])"
+     ],
+     "tag": "code"
+    },
+    " and flags a departure when a key is absent from ",
+    {
+     "children": [
+      "occupied_now"
+     ],
+     "tag": "code"
+    },
+    " (2022 keys only). Hopkins' 2018 key ",
+    {
+     "children": [
+      "('2','broadway','welland')"
+     ],
+     "tag": "code"
+    },
+    " is absent from 2022's key set — the Region restyled the street name between the 2018 and 2019 editions — so a false departure is emitted with ",
+    {
+     "children": [
+      "last_seen: 2018"
+     ],
+     "tag": "code"
+    },
+    ". Which is exactly what the shipped layer says."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "First hypothesis (street-suffix normalization) was tested and is only a partial fix."
+     ],
+     "tag": "strong"
+    },
+    " Industrial keys absent from 2022:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "2019"
+       ],
+       "tag": "strong"
+      },
+      " — raw: 28 · suffix-normalized: 28 · artefact share: 0%"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2018"
+       ],
+       "tag": "strong"
+      },
+      " — raw: 39 · suffix-normalized: 34 · artefact share: 13%"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2017"
+       ],
+       "tag": "strong"
+      },
+      " — raw: 53 · suffix-normalized: 48 · artefact share: 9%"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Decisive test — match on ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      " instead of address:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "2022 nei_ids: 13,033\nindustrial businesses whose nei_id is absent from 2022:\n  from 2017: 33     from 2018: 15     from 2019: 15\n\nshipped departures: 68\n  nei_id present in 2022 (never departed): 64\n  no id resolvable by name:                 0\n  genuinely gone by id:                     4"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Interpretation."
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "64 of 68 shipped departures never happened."
+     ],
+     "tag": "strong"
+    },
+    " The root cause is not casing and not street suffixes — it is that ",
+    {
+     "children": [
+      "address strings are not a stable key across NEI editions"
+     ],
+     "tag": "strong"
+    },
+    ", while ",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    " is (95.4% name-stable 2019→2022, §05). Any address-derived key silently manufactures departures whenever a publisher restyles an address."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "True industrial departure counts are 15 (2019 baseline) to 33 (2017 baseline), not 68."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Fix for the plan: key on ",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    "; use normalized address only as a secondary corroborator; and assert as a regression test that no emitted departure names a business whose ",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    " appears in any later edition. Hopkins Steel Works (id 8130) is the named test case."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "15-·-Task-1:-NEI-edition-loader-with-stable-keys"
+   },
+   "children": [
+    "15 · Task 1: NEI edition loader with stable keys"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Files created:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "atlas/scripts/normalize/__init__.py"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "atlas/scripts/normalize/nei.py"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "atlas/tests/test_normalize_nei.py"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Test command and full output:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -m pytest tests/test_normalize_nei.py -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "============================= test session starts ==============================\nplatform linux -- Python 3.11.2, pytest-9.1.1, pluggy-1.6.0\ncachedir: .pytest_cache\nrootdir: a local working copy\ncollected 4 items\n\ntests/test_normalize_nei.py::test_norm_props_lowercases_and_strips_underscores PASSED [ 25%]\ntests/test_normalize_nei.py::test_every_edition_loads_with_ids PASSED [ 50%]\ntests/test_normalize_nei.py::test_editions_intersect_by_id PASSED [ 75%]\ntests/test_normalize_nei.py::test_hopkins_present_in_every_edition PASSED [100%]\n\n============================== 4 passed in 2.66s ==============================="
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Observed record counts per edition:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "2017"
+       ],
+       "tag": "strong"
+      },
+      " — Record Count: 11,198"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2018"
+       ],
+       "tag": "strong"
+      },
+      " — Record Count: 11,722"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2019"
+       ],
+       "tag": "strong"
+      },
+      " — Record Count: 12,017"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2022"
+       ],
+       "tag": "strong"
+      },
+      " — Record Count: 13,033"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Observed pairwise intersections (by ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      "):"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "2017→2018"
+       ],
+       "tag": "strong"
+      },
+      " — Intersection Size: 11,014"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2018→2019"
+       ],
+       "tag": "strong"
+      },
+      " — Intersection Size: 11,701"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2019→2022"
+       ],
+       "tag": "strong"
+      },
+      " — Intersection Size: 11,895"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Field-name drift confirmed in cached GeoJSON files:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "2017"
+       ],
+       "tag": "strong"
+      },
+      " — Id Field: ",
+      {
+       "children": [
+        "NEI_ID"
+       ],
+       "tag": "code"
+      },
+      " · Employee Size Field: ",
+      {
+       "children": [
+        "SizeRange_Employees"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2018"
+       ],
+       "tag": "strong"
+      },
+      " — Id Field: ",
+      {
+       "children": [
+        "NEI_ID"
+       ],
+       "tag": "code"
+      },
+      " · Employee Size Field: ",
+      {
+       "children": [
+        "SizeRange_Employees"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2019"
+       ],
+       "tag": "strong"
+      },
+      " — Id Field: ",
+      {
+       "children": [
+        "NEI_ID"
+       ],
+       "tag": "code"
+      },
+      " · Employee Size Field: ",
+      {
+       "children": [
+        "EmployeeSizeRange"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "2022"
+       ],
+       "tag": "strong"
+      },
+      " — Id Field: ",
+      {
+       "children": [
+        "nei_id"
+       ],
+       "tag": "code"
+      },
+      " · Employee Size Field: ",
+      {
+       "children": [
+        "sizerangeemployees"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Hopkins Steel Works (nei_id 8130) verification:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Present in all four editions with consistent business name:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "2017: nei_id=8130 businessname='Hopkins Steel Works ' address='2 Broadway'\n2018: nei_id=8130 businessname='Hopkins Steel Works ' address='2 Broadway'\n2019: nei_id=8130 businessname='Hopkins Steel Works ' address='2 Broadway Street'\n2022: nei_id=8130 businessname='Hopkins Steel Works ' address='2 Broadway Street'"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Interpretation."
+     ],
+     "tag": "strong"
+    },
+    " The normalizer successfully unifies the schema across four editions by lowercasing keys and stripping underscores. Pairwise intersection sizes (11,014–11,895) all exceed the 5,000-record threshold asserted by the tests, confirming normalization is working and demonstrating why this is necessary: without lowercasing the ",
+    {
+     "children": [
+      "NEI_ID"
+     ],
+     "tag": "code"
+    },
+    "/",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    " and ",
+    {
+     "children": [
+      "SizeRange_Employees"
+     ],
+     "tag": "code"
+    },
+    "/",
+    {
+     "children": [
+      "sizerangeemployees"
+     ],
+     "tag": "code"
+    },
+    " drift, cross-year comparison would silently return zero matches. This silent zero was the failure mode that caught the departures defect in §14: a publisher's field-name restyle creates apparent departures if the key is not normalized. The loader now provides a stable key for all downstream analysis. Hopkins Steel Works is confirmed as the regression test case: it is present in all four editions and must remain so as departures analysis is built."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "16-·-Task-2:-departures-rebuilt-on-nei-id,-defect-corrected"
+   },
+   "children": [
+    "16 · Task 2: departures rebuilt on nei_id, defect corrected"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Files created:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "atlas/scripts/normalize/departures.py"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "atlas/tests/test_departures.py"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Files modified:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "atlas/data/niagara-departures.geojson"
+       ],
+       "tag": "code"
+      },
+      " (regenerated)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "atlas/BACKLOG.md"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Test command and full output:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -m pytest tests/test_departures.py -v"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "============================= test session starts ==============================\nplatform linux -- Python 3.11.2, pytest-9.1.1, pluggy-1.6.0\ncachedir: .pytest_cache\nrootdir: a local working copy\ncollected 5 items\n\ntests/test_departures.py::test_industrial_sector_classification PASSED   [ 20%]\ntests/test_departures.py::test_hopkins_is_not_a_departure PASSED         [ 40%]\ntests/test_departures.py::test_no_departure_names_a_business_present_later PASSED [ 60%]\ntests/test_departures.py::test_departure_count_is_plausible PASSED       [ 80%]\ntests/test_departures.py::test_features_carry_provenance PASSED          [100%]\n\n============================== 5 passed in 5.06s ==============================="
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Before the implementation existed, the same command failed collection with ",
+    {
+     "children": [
+      "ImportError: cannot import name 'departures' from 'normalize'"
+     ],
+     "tag": "code"
+    },
+    " — confirmed before writing ",
+    {
+     "children": [
+      "departures.py"
+     ],
+     "tag": "code"
+    },
+    ", per TDD."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Regeneration command and output:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "cd atlas && .venv/bin/python -m scripts.normalize.departures"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "wrote 34 departures to a local working copy"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Old vs. new count:"
+     ],
+     "tag": "strong"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Old (address-keyed) shipped layer"
+       ],
+       "tag": "strong"
+      },
+      " — count: 68"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "New (",
+        {
+         "children": [
+          "nei_id"
+         ],
+         "tag": "code"
+        },
+        "-keyed) layer"
+       ],
+       "tag": "strong"
+      },
+      " — count: 34"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Breakdown of the 34 by baseline edition"
+     ],
+     "tag": "strong"
+    },
+    " (from ",
+    {
+     "children": [
+      "build()"
+     ],
+     "tag": "code"
+    },
+    ", latest-baseline-wins dedup, so a departure is attributed to the last edition that actually recorded it):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "{2019: 15, 2017: 19}"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "2018 contributed 0 net new ids after dedup against the 2019 pass — every industrial id absent from 2022 that was present in the 2018 edition was also still present in 2019, so it is already captured under the 2019 baseline."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Full list of the 34 surviving nei_ids"
+     ],
+     "tag": "strong"
+    },
+    " (id, baseline year, business, municipality, address, NAICS):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "233   2017 Island Ink Jet | St Catharines | 341 Merritt Street | 339940\n3722  2017 Mr. Furnace Heating and Air Conditioning | St Catharines | 28 Dunkirk Road | 416120\n3892  2017 Sun Country Leisure | St Catharines | 343 Ontario Street | 493190\n6264  2017 Acme Vapours Co. and Acme Juices Co. | Niagara Falls | 4800 Victoria Avenue | 335210\n6664  2017 Northernchem Inc. | Niagara Falls | 8485 Montrose Road | 325410\n7063  2017 NorthernPharm Inc. | Niagara Falls | 4065 Stanley Avenue | 325410\n8700  2017 Bridgeburg Golf | Fort Erie | 755 Gilmore Road | 339920\n9145  2017 George Badewey Ltd. | Port Colborne | 399 Elm Street | 413110\n9295  2017 Brennan Paving Ltd. | Port Colborne | 198 Welland Street | 416390\n9355  2017 E P Machine and Industrial | Port Colborne | 60 Invertose Drive | 332710\n9416  2017 Claire's Delivery Service | Port Colborne | 33 Stonebridge Drive | 484121\n10413 2017 MHPS Canada (Mitsubischi Hitachi Power Systems Canada) | Niagara on the Lake | 509 Glendale Avenue East | 333611\n10763 2017 Foleria | Lincoln | 4655 Bartlett Road | 411130\n11193 2017 VRE Greenhouse Systems | West Lincoln | 7367 Young Street | 332311\n11268 2017 K-Motion Transportation | Port Colborne | 2129 Barber Drive | 484121\n11381 2017 On Command Canada Inc. | Niagara Falls | 5685 Falls Avenue | 417920\n12117 2017 On the Road Machining | Port Colborne | 60 Invertose Drive | 332710\n12195 2017 Hometown Icecream | St Catharines | 142 St. Paul Street | 311520\n12794 2017 E.D. Products Ltd. | Welland | 90 Atlas Avenue | 335990\n2709  2019 Ramm Design Labs | St Catharines | 8 Hiscott Street | 332329\n2859  2019 Krisro Metal | St Catharines | 60 Benfield Drive | 332329\n4481  2019 La Farina | Niagara Falls | 8189 Lundy's Lane | 311811\n7064  2019 Saturn Scale Systems Inc. | Niagara Falls | 4045 Stanley Avenue | 333990\n7131  2019 Neon By Onyx.com | Niagara Falls | 4376 Stanley Avenue | 339950\n8163  2019 Ward Industrial Equipment | Welland | 2 Broadway Street | 417230\n9104  2019 Allied Marine and Industrial | Port Colborne | 118 West Street | 332710\n9515  2019 Coldmax Corporation | Grimsby | 623 South Service Road | 333416\n10802 2019 Mitchells Medical Supply | Lincoln | 4673 Ontario Street | 417930\n10828 2019 Niagara Pistons Inc. | Lincoln | 4758 Christie Drive | 336340\n10845 2019 Wholesale Flooring Kitchens | Lincoln | 4943 Union Road | 414390\n11129 2019 Pinty's Delicious Foods Inc. | Port Colborne | 2276 Second Concession Road | 311615\n12692 2019 Tripar | Niagara on the Lake | 14154 Niagara River Parkway | 484122\n12819 2019 Plastruct Polyzone | Lincoln | 4305 Springcreek Road | 325210\n13624 2019 Stanpac | West Lincoln | 2790 Thompson Avenue | 327214"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "Note on comparing to the old 68: the old shipped features carried no ",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    " property (only name/address/municipality), so the old file cannot be joined to the new one by id directly. The §14 decisive test already established the overlap count (64 of 68 old features resolve to an id present in 2022) by a separate name/address match against the 2022 cache; that number is not re-derived here."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Observed:"
+     ],
+     "tag": "strong"
+    },
+    " ",
+    {
+     "children": [
+      "atlas/scripts/fetch_nei.py"
+     ],
+     "tag": "code"
+    },
+    " is the legacy script that produced the old, address-keyed ",
+    {
+     "children": [
+      "niagara-departures.geojson"
+     ],
+     "tag": "code"
+    },
+    ". It was not modified or removed by this task — the brief calls only for creating ",
+    {
+     "children": [
+      "scripts/normalize/departures.py"
+     ],
+     "tag": "code"
+    },
+    " and regenerating the data file. Anyone re-running ",
+    {
+     "children": [
+      "fetch_nei.py"
+     ],
+     "tag": "code"
+    },
+    " would regenerate the defective layer again; it is now dead code with respect to this output and should be retired in a later task."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Interpretation"
+   },
+   "children": [
+    "Interpretation"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "The regression test (",
+    {
+     "children": [
+      "test_no_departure_names_a_business_present_later"
+     ],
+     "tag": "code"
+    },
+    ") directly encodes the fix: no emitted feature may carry an id that appears in any edition later than its stated baseline. Combined with ",
+    {
+     "children": [
+      "test_hopkins_is_not_a_departure"
+     ],
+     "tag": "code"
+    },
+    ", which pins the specific false-positive case discovered in §14, recurrence of an address-restyle producing a phantom departure is now caught by CI-runnable tests rather than requiring another ad hoc audit."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The new count (34) sits inside the plausible range independently established in §14 (15 from a 2019 baseline, up to 33 from a 2017 baseline) — 34 is 19 (2017-only) + 15 (2019), consistent with those per-baseline figures once 2018's redundant contribution is dedup'd out. This is corroboration, not circular: §14's per-baseline counts were computed independently, before ",
+    {
+     "children": [
+      "departures.py"
+     ],
+     "tag": "code"
+    },
+    " existed, straight from ",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    " set differences."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "The old layer's 68 claimed departures are cut to 34, a reduction of exactly half. Every one of those 34 has been checked, at generation time, against every edition after its own baseline (that is what ",
+    {
+     "children": [
+      "find_departures"
+     ],
+     "tag": "code"
+    },
+    " computes and what the regression test verifies) — none of them can be Hopkins-style false positives. This does not certify that the 34 are true departures in every clerical sense (e.g. a business could have relocated within the same municipality and re-registered under a new ",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    ", which this method cannot distinguish from a genuine closure) — that limitation is inherent to the NEI data model, not to this fix, and is unchanged from before."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0047\ntype: working-paper\nsection: origins\nplace_type: region\nevidence_date: 2026-10-03\nseq: 7"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, niagara, hamilton, log, prior-art",
+ "path": "2026-08-23--raw-findings-log-part-1-of-3-11-19",
+ "title": "2026-08-23 — raw findings log (part 1 of 3)",
+ "url": "https://telegra.ph/2026-08-23--raw-findings-log-part-1-of-3-11-19",
+ "views": 0
+}

@@ -1,0 +1,683 @@
+---
+place_type: region
+country: ca
+subdivision: on
+type: working-paper
+evidence_date: 2026-10-03
+part: 1 of 3
+---
+2026-08-23 — raw findings log (part 1 of 3)
+working-paper, niagara, hamilton, log, prior-art
+
+> A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed.
+
+Backfilled at end of day from the session transcript. Entries are in the order
+observed. Everything below is raw observation unless marked **Interpretation**.
+
+---
+
+## 01 · Hamilton catalogue sweep
+
+```
+curl https://open.hamilton.ca/api/feed/dcat-us/1.1.json
+```
+- **463 datasets**; 336 with a live `rest/services` endpoint
+- Licences: 391 City of Hamilton Open Data Licence, 68 none, 2 malformed HTML
+- Themes: only `geospatial` (166) — the theme field is not a useful taxonomy
+
+Atlas held only **4 Hamilton layers / 3,422 features** at this point:
+employment land 22, rail 1,692, truck routes 1,250, industrial zoning 458.
+The 2026-08-22 bulk fetch was the Niagara catalogue only.
+
+**Probe results, key datasets:**
+
+| Dataset | Count | Geom | Note |
+|---|---:|---|---|
+| Addresses | 273,535 | Point | |
+| Buildings | 214,293 | Polygon | |
+| Employment Lands | 22 | Polygon | `AREA_HECTARES`, `CATEGORY` |
+| Vacant Building Registry | **84** | **table** | `STATUS`,`ZONING`,`IN_DATE`,`ISSUE_DATE`,`EXPIRY_DATE`,`FOLDER_NAME` |
+| Businesses by Employee Count | **10** | **table** | `NUM_1_4 … NUM_500_PLUS` — city-wide summary |
+| Real Estate Sales | **9** | **table** | `YEAR,Q1,Q2,Q3,Q4,TOTAL` |
+| Building & Demo Permits 2008-16 | 142,620 | table | |
+| Building & Demo Permits 2017- | 51,846 | table | |
+| Licensed Salvage Yards | 12 | table | |
+| Licensed Public Garages | 578 | table | |
+| Licensed Trade Contractors | 654 | table | |
+| Sanitation Sewer Catchments | 13,947 | Polygon | |
+| Water Pressure District | 28 | Polygon | |
+| Average Daily Traffic Count | 2,350 | Point | |
+| Development Applications | 5,189 | Point | |
+| Registered Cooling Towers | 304 | Point | |
+| Land Use by Ward / 2018 | 16 / 16 | Polygon | two epochs, ward-level |
+| Escarpment | 1 | Polyline | |
+| ESA Boundaries | 207 | Polygon | |
+
+**Interpretation.** Two BACKLOG leads closed. "Businesses by Employee Count"
+was recorded as *"the only candidate found so far for closing the Hamilton
+business gap"* — it is 10 rows of city-wide totals, a statistic not a register.
+"Real Estate Sales" is 9 rows of annual totals, not transactions.
+
+**No parcel layer exists in Hamilton.** Searched the full DCAT feed. Hamilton's
+ceiling on the analysis ladder is `footprint`.
+
+---
+
+## 02 · Candidate numbering error
+
+Wrote CANDIDATES-HAMILTON.md prose citing #209 for Vacant Building Registry and
+#276–278 for the licence registers, based on my ordering of the source list
+rather than the numbers the enumeration assigned.
+
+Actual: **#221** Vacant Registry · **#267–269** licences · **#222–223** permits
+· **#220** Addresses · **#219** Buildings.
+
+**Interpretation.** Same class of error as the fuzzy-match failure on 08-22:
+trusting my own ordering instead of reading the generated artefact. Corrected
+in the doc. The numbers are the reference key the user quotes back, so this
+mattered more than a cosmetic slip.
+
+---
+
+## 03 · Hamilton fetch — memory failure
+
+First run killed deliberately.
+
+```
+ps -o rss= → 4.7 GB RSS ; free -g → 0 GB available (7 GB machine)
+```
+
+Cause: `fetch_rest()` accumulated every page in a Python list before writing.
+Contour Lines is 221,518 polylines.
+
+Rewrote to stream to disk. Same layer then ran at **152 MB RSS**, later
+**226 MB** peak. Final file **2,222 MB**.
+
+Second defect found in the same function: the skip path called `json.load()` on
+the whole file just to count features. Replaced with a chunked stream count.
+Two off-by-one bugs in that counter, both fixed:
+- marker `"type":"Feature"` also matches `"type":"FeatureCollection"` → **221,519** (one over). Fixed with a trailing comma in the marker.
+- chunk overlap `tail=buf[-24:]` was longer than the 17-char marker, so a marker inside the overlap was counted twice → **221,520** (two over). Fixed with `tail=buf[-(len(MARK)-1):]`.
+- final: **221,518** ✅ matches the server count.
+
+Receipts undercounted afterwards — 61 receipts against 88 files on disk,
+because `ThreadPoolExecutor.map` yields in submission order while workers run
+ahead. Re-running the fetcher reconciled to **88**.
+
+---
+
+## 04 · Hamilton schemas (`inspect_cache.py`)
+
+87 layers profiled: **56 spatial, 31 tables**.
+
+- **#239 Street Light Poles and Luminaires — 0 features.** Empty layer.
+- **#280 Average Unemployment Rate — HTTP 500**, *"Service
+  OpenData/Tabular_Dashboards_1/MapServer not started"*. Publisher-side.
+- **#269 Licensed Trade Contractors has no address field.** Fields are
+  `OBJECTID, LICENSE_NUMBER, LICENSE_TYPE, SUB_DESCRIPTION, BUSINESS_NAME,
+  EXPIRY_DATE`. So the addressed industrial business count is **590**
+  (12 + 578), not the 1,244 previously stated.
+- All dates are epoch milliseconds, e.g. `1575349200000`.
+
+**Permit type prefixes, 2017+ epoch (#223):**
+
+| Prefix | Records | Demolition-mentioning |
+|---|---:|---:|
+| **DP** | **3,007** | **97.2%** |
+| R9 | 30,693 | 1.1% |
+| WC | 4,229 | 0.0% |
+| PPP | 3,345 | 0.0% |
+| C3 | 2,900 | 3.3% |
+
+#222 (2008–2016) uses *year* prefixes (`12-`,`10-`,`15-`) with no type code.
+Keyword `\bdemoli` on `DESCRIPTION`: **6,068** hits in #222, **3,428** in #223.
+
+**Interpretation.** Demolition is typed and reliable from 2017 and only
+keyword-inferable before it, and keyword matching cannot separate "demolished"
+from "demolished and replaced". The two epochs are schema-incompatible.
+
+Inspector false positives noted: `LOCATIONTYPE` (#252) and #244's pivoted
+column names were flagged as address fields. They are not.
+
+---
+
+## 05 · NEI cross-year analysis
+
+First attempt returned **0 departures**. Cause: schema drift, not absence.
+
+| Year | Id field | Employee field | Features |
+|---|---|---|---:|
+| 2017 | `NEI_ID` | `SizeRange_Employees` | 11,198 |
+| 2018 | `NEI_ID` | `SizeRange_Employees` | 11,722 |
+| 2019 | `NEI_ID` | `EmployeeSizeRange` | 12,017 |
+| 2022 | `nei_id` | `sizerangeemployees` | 13,033 |
+
+After lower-casing and stripping underscores:
+
+- 2017→2019: departed **198**, arrived 1,016
+- 2019→2022: departed **121**, arrived 1,138, industrial-sector departures **15**
+- ids in both 2019 and 2022: **11,895**; same business name **11,351 (95.4%)**;
+  **different name under the same id: 544**
+
+Examples of same-id name change: `Nick's Barber Shop` → `The Old Fashioned
+Barber Shop`; `Ernies Tailoring` → `Ernie's Men's Wear`; `Thorold Fish Chips
+and Things` → `Thorold Fish and Chips`.
+
+Departure sectors (2-digit NAICS): 72:16, 62:14, 81:13, 44:12, 54:12, 45:9,
+33:7, 23:6.
+
+**Interpretation.** `nei_id` keys a **premises record, not a business**.
+Turnover (544) is 4.5× more common than departure (121). Silent zero from
+schema drift is a real failure mode and it caught me.
+
+---
+
+## 06 · Departures layer defect
+
+Assembled a site dossier for `Hopkins Steel Works, 2 Broadway, Welland` from
+`data/niagara-departures.geojson` (`last_seen 2018, gone_by 2022`).
+
+Dossier output: zoning now **L1 Light Industrial**, zoning was **I2**, OP
+Schedule B **Light Industrial**, CIP area **Brownfield CIA**, building present,
+nearest building 17 m, rail 513 m, nearest site plan 247 m, 18 businesses
+within 500 m of which 3 manufacturing.
+
+**The neighbours list contained Hopkins Steel Works itself.**
+
+Direct trace:
+```
+NEI 2017: id=8130 'Hopkins Steel Works ' 2 Broadway         | Welland
+NEI 2018: id=8130 'Hopkins Steel Works ' 2 Broadway         | Welland
+NEI 2019: id=8130 'Hopkins Steel Works ' 2 Broadway Street  | Welland
+NEI 2022: id=8130 'Hopkins Steel Works ' 2 Broadway Street  | Welland
+```
+
+Checked all 68 claimed departures against NEI 2022:
+- same name **and** address **and** municipality present: **18** — definitively false
+- same name, address string differs: **42** — probably also false
+- no name match: **8**
+- name-only match: **60 of 68 (88%)**
+
+**Interpretation.** The layer is live in the atlas and asserts that named
+businesses ceased operating at stated addresses. The 42 middle cases are
+uncertain only because address strings drift between survey years
+(`2 Broadway` → `2 Broadway Street`) — the same normalization problem as §05.
+Recorded as a live defect at the top of BACKLOG.md.
+
+**A per-site evidence assembly falsified an assertion that a regional aggregate
+would have counted and moved on from.**
+
+---
+
+## 07 · Layer size distribution
+
+200 files, **4.91 GB**.
+
+| | Files | Size | Share |
+|---|---:|---:|---:|
+| #260 + #114 contours | 2 | **3.11 GB** | **63%** |
+| > 100 MB (GitHub hard limit) | 5 | 3.51 GB | 71% |
+| > 50 MB | 14 | 4.20 GB | 86% |
+| ≤ 10 MB | 163 | 0.16 GB | 3% |
+
+Bytes per feature, heaviest: **#62 Provincial Natural Heritage System 137,208
+B/feat** (51 features, 7.0 MB); #114 contours 35,838; #56 NF Road Allowance
+35,409; #64 Significant Woodlands 26,420; #66 NES Shoreline 22,629.
+Lightest for contrast: #45 NF Address Points **246 B/feat** (35,697 features).
+
+DEM sizing for a 110 × 60 km study area, float32:
+1 m = **26.4 GB** · 10 m = 0.3 GB · 30 m = 0.03 GB. Disk free: 5.7 GB.
+
+---
+
+## 08 · Address point coverage
+
+`043-address-points.geojson` — Niagara Region, **208,004 points, all twelve
+municipalities**:
+
+```
+St. Catharines 54,508 · Niagara Falls 39,529 · Welland 24,411 · Fort Erie 17,085
+Thorold 12,136 · Grimsby 12,013 · Lincoln 11,281 · Port Colborne 10,200
+Niagara-on-the-Lake 9,412 · Pelham 8,148 · West Lincoln 5,801 · Wainfleet 3,480
+```
+Hamilton #220: 273,535. **Total 481,539.**
+
+**Interpretation.** The six municipalities that publish nothing of their own
+hold **51,778** address points between them via the Region. The `point_cluster`
+bottom rung in the engine spec was wrong — every part of the study area has
+address-level geometry. Corrected: address point is the universal **join
+anchor**; parcel/footprint/address is the **analysis unit**.
+
+---
+
+## 09 · Package verification
+
+Installed into `atlas/.venv`: shapely 2.1.2, pyproj 3.7.2, pyogrio 0.13.0,
+orjson 3.12.0, rasterio 1.4.4. `atlas/node_modules`: mapshaper 0.6.121.
+
+| Check | Raw result |
+|---|---|
+| pyproj round trip (-79.24, 42.99) → UTM17N (643,479.6, 4,761,207.2) → back | error **0.0000 mm** |
+| shapely point-in-polygon, Hopkins | `L1` Light Industrial — matches pure-Python |
+| shapely area vs Welland `GeometrySTArea`, **1,980 polygons** | median **0.0000%**, p95 **0.0000%** |
+| pyogrio reads PSEZ shapefile | 31 features, **EPSG:26917** |
+| orjson vs stdlib, 696-feature layer | identical; 17 ms → 6 ms, **2.6×** |
+
+Welland zoning: 1,981 features, **1,980 with geometry, 1 null**.
+
+**Simplification test** — 60-polygon adjacent cluster, 8 touching pairs,
+1,541 → ~557 vertices:
+
+| | Overlap | Pairs affected | Union Δ |
+|---|---:|---:|---:|
+| original | 0.0 m² | 0 | — |
+| mapshaper 30% keep-shapes | **0.0 m²** | 0 | +0.001% |
+| shapely simplify(0.54 m) | **5.7 m²** | **2 of 8** | −0.000% |
+
+`mapshaper -simplify 10%` (no keep-shapes) collapsed **27 of 60 polygons to
+null geometry**.
+
+First attempt at this test used `intersects` and showed 8/8 for both methods —
+too loose a predicate to detect a torn border. Re-run measuring overlap area.
+
+**Interpretation.** D-6's claim holds directionally but the magnitude at
+moderate tolerance is small. `keep-shapes` is the stronger practical argument.
+
+---
+
+## 10 · PSEZ, and a terminology correction
+
+All 31 Provincially Significant Employment Zones, by `MUNICIPALI`:
+
+```
+TORONTO 5 · DURHAM 3 · HAMILTON 3 · TORONTO,YORK 3 · WATERLOO 3
+BRANTFORD 2 · HALTON 2 · HALTON,PEEL 2 · TORONTO,PEEL 2
+GUELPH 1 · HALDIMAND COUNTY 1 · PEEL 1 · SIMCOE 1 · TORONTO,YORK,PEEL 1 · YORK 1
+```
+All `STATUS = "Identified by the Minister on December 20, 2019"`.
+No zone names any of Niagara Region's twelve municipalities.
+
+**Interpretation, corrected.** I first stated this as *"no PSEZ anywhere in
+Niagara"*. That is ambiguous and, read as the peninsula, **false** — the
+**Niagara Peninsula** has ten (Hamilton 3, Halton 2, Halton/Peel 2, Brantford 2,
+Haldimand 1). What is true is that **Niagara Region** — the jurisdiction — has
+none.
+
+The precise version is the more interesting one: the Province designated
+provincially significant employment zones across the peninsula and its
+approaches and **none inside Niagara Region**. GLOSSARY.md written to prevent
+a recurrence.
+
+---
+
+## 11 · Engine spec gap audit
+
+Ran a presence check over `docs/superpowers/specs/2026-08-23-atlas-engine-design.md`
+(566 lines) before asking for review.
+
+```
+  MISSING  site dossier section (promised, §6)
+  present  departures layer defect referenced
+  present  jurisdiction-precise in_psez
+  MISSING  glossary referenced
+  MISSING  raw logging rule referenced
+  MISSING  toolchain / shapely referenced
+  MISSING  D-5 large-layer disposition referenced
+  loose 'Niagara' usages: 6
+```
+
+**Interpretation.** The dossier was promised in conversation on 2026-08-23
+("Shall I write that up?" → "yes develop dormancy then proceed") and the
+conversation moved to dormancy, then installs, and the section was never
+written. Four cross-references to documents created after the spec were also
+absent, so the spec had drifted out of date with its own repo.
+
+Actions: added **§7 The site dossier** (structure, the Hopkins falsification,
+contradiction checks as a build-time stage, per-tier capability, toolchain
+dependency); renumbered §7–12 → §8–13; added **D10** to the decisions table;
+replaced the flat reference list in §10 with a table covering GLOSSARY,
+ENVIRONMENT, TECHNOLOGY-DECISIONS, PUBLICATION-MODEL and logs/; made the emit
+stage explicitly honour the D-5 disposition; tightened all 6 loose "Niagara"
+usages plus 1 table header to "Niagara Region".
+
+Spec now 653 lines. Self-review: no placeholders, sections contiguous 1–13,
+zero loose "Niagara".
+
+---
+
+## 12 · Correction to §7.3 — "blocks publication" was wrong
+
+Project owner flagged that "a failing check blocks publication of that
+assertion" was the wrong framing: the site/property card should show a
+transparent breakdown of findings, optionally a computed claim, and still let
+the reader draw their own conclusion.
+
+**Interpretation.** Suppression would hide the most informative thing on the
+card — that two records disagree — and leave the reader trusting a silence they
+cannot inspect. It also over-applied the defamation guard, which prohibits
+*asserting as fact* something unsupported about a named business, not
+publishing a contradiction.
+
+Rewrote as a three-state model: `claim_state: supported | contested | refuted`,
+all three displayed with different presentation. Added §7.4 stating the line
+precisely — not published is the unqualified claim; published is both records,
+cited and dated, plus the discrepancy. A computed claim may be offered
+alongside, labelled as computed, never replacing the records.
+
+The §9.2 regression test is restated: it asserts no feature is published in the
+`supported` state while a later register contradicts it — not that contradicted
+features are absent.
+
+---
+
+## 13 · Correction to §7 framing — context is primary, assertion optional
+
+Project owner: don't zero in only on potential dormancy or abandonment; bring
+the story of each piece's context alive.
+
+**Interpretation.** The §7 draft put an assertion at the head and made context
+subordinate. Backwards for the majority case: most parcels carry no assertion
+and the context is still the point. An atlas that only lights up where it
+suspects abandonment is a decline map, whereas the stated subject is the
+physical industrial economy — most of which is working.
+
+Added §7.0 (dossier serves every parcel; assertion is one optional band; scores
+are three more readings, not the headline) and §7.0.1 (story includes time).
+Added a HISTORY band to the structure and a context-bands row to the per-tier
+capability table.
+
+Temporal sources already held, per §7.0.1: Brock air photo mosaics 1934/1954/
+1965/1972; Brock topographic 1910s–1970s; NF ortho 2006/2013/2018; Hamilton
+permits 2008→present (194,466); NF footprints 2010/2018; Welland zoning
+pre-2017/current; NEI 2017/2018/2019/2022; NEI `yearopen` per business.
+
+A parcel that was open field in 1934, built by 1965, rezoned I2→L1 in 2017 and
+now holds three businesses is a ninety-year story from sources already cached.
+
+---
+
+## 14 · Root cause of the departures defect
+
+Read `scripts/fetch_nei.py`. Its module docstring **already documents** the
+field-name casing trap, and `props()` lower-cases keys correctly. So casing is
+not the bug.
+
+`address_key(p)` returns `(number, street, municipality)` from the **raw**
+street string. Traced Hopkins Steel Works across editions:
+
+```
+2017: raw=('2','broadway','welland')
+2018: raw=('2','broadway','welland')
+2019: raw=('2','broadway street','welland')
+2022: raw=('2','broadway street','welland')
+```
+
+`build()` walks `reversed(years[:-1])` and flags a departure when a key is
+absent from `occupied_now` (2022 keys only). Hopkins' 2018 key
+`('2','broadway','welland')` is absent from 2022's key set — the Region
+restyled the street name between the 2018 and 2019 editions — so a false
+departure is emitted with `last_seen: 2018`. Which is exactly what the shipped
+layer says.
+
+**First hypothesis (street-suffix normalization) was tested and is only a
+partial fix.** Industrial keys absent from 2022:
+
+| baseline | raw | suffix-normalized | artefact share |
+|---|---:|---:|---:|
+| 2019 | 28 | 28 | 0% |
+| 2018 | 39 | 34 | 13% |
+| 2017 | 53 | 48 | 9% |
+
+**Decisive test — match on `nei_id` instead of address:**
+
+```
+2022 nei_ids: 13,033
+industrial businesses whose nei_id is absent from 2022:
+  from 2017: 33     from 2018: 15     from 2019: 15
+
+shipped departures: 68
+  nei_id present in 2022 (never departed): 64
+  no id resolvable by name:                 0
+  genuinely gone by id:                     4
+```
+
+**Interpretation.** **64 of 68 shipped departures never happened.** The root
+cause is not casing and not street suffixes — it is that **address strings are
+not a stable key across NEI editions**, while `nei_id` is (95.4% name-stable
+2019→2022, §05). Any address-derived key silently manufactures departures
+whenever a publisher restyles an address.
+
+True industrial departure counts are 15 (2019 baseline) to 33 (2017 baseline),
+not 68.
+
+Fix for the plan: key on `nei_id`; use normalized address only as a secondary
+corroborator; and assert as a regression test that no emitted departure names a
+business whose `nei_id` appears in any later edition. Hopkins Steel Works
+(id 8130) is the named test case.
+
+## 15 · Task 1: NEI edition loader with stable keys
+
+**Files created:**
+- `atlas/scripts/normalize/__init__.py`
+- `atlas/scripts/normalize/nei.py`
+- `atlas/tests/test_normalize_nei.py`
+
+**Test command and full output:**
+
+```bash
+cd atlas && .venv/bin/python -m pytest tests/test_normalize_nei.py -v
+```
+
+```
+============================= test session starts ==============================
+platform linux -- Python 3.11.2, pytest-9.1.1, pluggy-1.6.0
+cachedir: .pytest_cache
+rootdir: a local working copy
+collected 4 items
+
+tests/test_normalize_nei.py::test_norm_props_lowercases_and_strips_underscores PASSED [ 25%]
+tests/test_normalize_nei.py::test_every_edition_loads_with_ids PASSED [ 50%]
+tests/test_normalize_nei.py::test_editions_intersect_by_id PASSED [ 75%]
+tests/test_normalize_nei.py::test_hopkins_present_in_every_edition PASSED [100%]
+
+============================== 4 passed in 2.66s ===============================
+```
+
+**Observed record counts per edition:**
+
+| Year | Record Count |
+|------|-------------|
+| 2017 | 11,198      |
+| 2018 | 11,722      |
+| 2019 | 12,017      |
+| 2022 | 13,033      |
+
+**Observed pairwise intersections (by `nei_id`):**
+
+| Year Pair | Intersection Size |
+|-----------|------------------|
+| 2017→2018 | 11,014           |
+| 2018→2019 | 11,701           |
+| 2019→2022 | 11,895           |
+
+**Field-name drift confirmed in cached GeoJSON files:**
+
+| Year | Id Field | Employee Size Field |
+|------|----------|-------------------|
+| 2017 | `NEI_ID` | `SizeRange_Employees` |
+| 2018 | `NEI_ID` | `SizeRange_Employees` |
+| 2019 | `NEI_ID` | `EmployeeSizeRange` |
+| 2022 | `nei_id` | `sizerangeemployees` |
+
+**Hopkins Steel Works (nei_id 8130) verification:**
+
+Present in all four editions with consistent business name:
+
+```
+2017: nei_id=8130 businessname='Hopkins Steel Works ' address='2 Broadway'
+2018: nei_id=8130 businessname='Hopkins Steel Works ' address='2 Broadway'
+2019: nei_id=8130 businessname='Hopkins Steel Works ' address='2 Broadway Street'
+2022: nei_id=8130 businessname='Hopkins Steel Works ' address='2 Broadway Street'
+```
+
+**Interpretation.** The normalizer successfully unifies the schema across four
+editions by lowercasing keys and stripping underscores. Pairwise intersection
+sizes (11,014–11,895) all exceed the 5,000-record threshold asserted by the
+tests, confirming normalization is working and demonstrating why this is
+necessary: without lowercasing the `NEI_ID`/`nei_id` and
+`SizeRange_Employees`/`sizerangeemployees` drift, cross-year comparison would
+silently return zero matches. This silent zero was the failure mode that caught
+the departures defect in §14: a publisher's field-name restyle creates
+apparent departures if the key is not normalized. The loader now provides
+a stable key for all downstream analysis. Hopkins Steel Works is confirmed
+as the regression test case: it is present in all four editions and must remain
+so as departures analysis is built.
+
+## 16 · Task 2: departures rebuilt on nei_id, defect corrected
+
+**Files created:**
+- `atlas/scripts/normalize/departures.py`
+- `atlas/tests/test_departures.py`
+
+**Files modified:**
+- `atlas/data/niagara-departures.geojson` (regenerated)
+- `atlas/BACKLOG.md`
+
+**Test command and full output:**
+
+```
+cd atlas && .venv/bin/python -m pytest tests/test_departures.py -v
+```
+
+```
+============================= test session starts ==============================
+platform linux -- Python 3.11.2, pytest-9.1.1, pluggy-1.6.0
+cachedir: .pytest_cache
+rootdir: a local working copy
+collected 5 items
+
+tests/test_departures.py::test_industrial_sector_classification PASSED   [ 20%]
+tests/test_departures.py::test_hopkins_is_not_a_departure PASSED         [ 40%]
+tests/test_departures.py::test_no_departure_names_a_business_present_later PASSED [ 60%]
+tests/test_departures.py::test_departure_count_is_plausible PASSED       [ 80%]
+tests/test_departures.py::test_features_carry_provenance PASSED          [100%]
+
+============================== 5 passed in 5.06s ===============================
+```
+
+Before the implementation existed, the same command failed collection with
+`ImportError: cannot import name 'departures' from 'normalize'` — confirmed
+before writing `departures.py`, per TDD.
+
+**Regeneration command and output:**
+
+```
+cd atlas && .venv/bin/python -m scripts.normalize.departures
+```
+
+```
+wrote 34 departures to a local working copy
+```
+
+**Old vs. new count:**
+
+| | count |
+|---|---:|
+| Old (address-keyed) shipped layer | 68 |
+| New (`nei_id`-keyed) layer | 34 |
+
+**Breakdown of the 34 by baseline edition** (from `build()`, latest-baseline-wins
+dedup, so a departure is attributed to the last edition that actually recorded
+it):
+
+```
+{2019: 15, 2017: 19}
+```
+
+2018 contributed 0 net new ids after dedup against the 2019 pass — every
+industrial id absent from 2022 that was present in the 2018 edition was also
+still present in 2019, so it is already captured under the 2019 baseline.
+
+**Full list of the 34 surviving nei_ids** (id, baseline year, business,
+municipality, address, NAICS):
+
+```
+233   2017 Island Ink Jet | St Catharines | 341 Merritt Street | 339940
+3722  2017 Mr. Furnace Heating and Air Conditioning | St Catharines | 28 Dunkirk Road | 416120
+3892  2017 Sun Country Leisure | St Catharines | 343 Ontario Street | 493190
+6264  2017 Acme Vapours Co. and Acme Juices Co. | Niagara Falls | 4800 Victoria Avenue | 335210
+6664  2017 Northernchem Inc. | Niagara Falls | 8485 Montrose Road | 325410
+7063  2017 NorthernPharm Inc. | Niagara Falls | 4065 Stanley Avenue | 325410
+8700  2017 Bridgeburg Golf | Fort Erie | 755 Gilmore Road | 339920
+9145  2017 George Badewey Ltd. | Port Colborne | 399 Elm Street | 413110
+9295  2017 Brennan Paving Ltd. | Port Colborne | 198 Welland Street | 416390
+9355  2017 E P Machine and Industrial | Port Colborne | 60 Invertose Drive | 332710
+9416  2017 Claire's Delivery Service | Port Colborne | 33 Stonebridge Drive | 484121
+10413 2017 MHPS Canada (Mitsubischi Hitachi Power Systems Canada) | Niagara on the Lake | 509 Glendale Avenue East | 333611
+10763 2017 Foleria | Lincoln | 4655 Bartlett Road | 411130
+11193 2017 VRE Greenhouse Systems | West Lincoln | 7367 Young Street | 332311
+11268 2017 K-Motion Transportation | Port Colborne | 2129 Barber Drive | 484121
+11381 2017 On Command Canada Inc. | Niagara Falls | 5685 Falls Avenue | 417920
+12117 2017 On the Road Machining | Port Colborne | 60 Invertose Drive | 332710
+12195 2017 Hometown Icecream | St Catharines | 142 St. Paul Street | 311520
+12794 2017 E.D. Products Ltd. | Welland | 90 Atlas Avenue | 335990
+2709  2019 Ramm Design Labs | St Catharines | 8 Hiscott Street | 332329
+2859  2019 Krisro Metal | St Catharines | 60 Benfield Drive | 332329
+4481  2019 La Farina | Niagara Falls | 8189 Lundy's Lane | 311811
+7064  2019 Saturn Scale Systems Inc. | Niagara Falls | 4045 Stanley Avenue | 333990
+7131  2019 Neon By Onyx.com | Niagara Falls | 4376 Stanley Avenue | 339950
+8163  2019 Ward Industrial Equipment | Welland | 2 Broadway Street | 417230
+9104  2019 Allied Marine and Industrial | Port Colborne | 118 West Street | 332710
+9515  2019 Coldmax Corporation | Grimsby | 623 South Service Road | 333416
+10802 2019 Mitchells Medical Supply | Lincoln | 4673 Ontario Street | 417930
+10828 2019 Niagara Pistons Inc. | Lincoln | 4758 Christie Drive | 336340
+10845 2019 Wholesale Flooring Kitchens | Lincoln | 4943 Union Road | 414390
+11129 2019 Pinty's Delicious Foods Inc. | Port Colborne | 2276 Second Concession Road | 311615
+12692 2019 Tripar | Niagara on the Lake | 14154 Niagara River Parkway | 484122
+12819 2019 Plastruct Polyzone | Lincoln | 4305 Springcreek Road | 325210
+13624 2019 Stanpac | West Lincoln | 2790 Thompson Avenue | 327214
+```
+
+Note on comparing to the old 68: the old shipped features carried no `nei_id`
+property (only name/address/municipality), so the old file cannot be joined
+to the new one by id directly. The §14 decisive test already established the
+overlap count (64 of 68 old features resolve to an id present in 2022) by a
+separate name/address match against the 2022 cache; that number is not
+re-derived here.
+
+**Observed:** `atlas/scripts/fetch_nei.py` is the legacy script that produced
+the old, address-keyed `niagara-departures.geojson`. It was not modified or
+removed by this task — the brief calls only for creating
+`scripts/normalize/departures.py` and regenerating the data file. Anyone
+re-running `fetch_nei.py` would regenerate the defective layer again; it is
+now dead code with respect to this output and should be retired in a later
+task.
+
+### Interpretation
+
+The regression test (`test_no_departure_names_a_business_present_later`)
+directly encodes the fix: no emitted feature may carry an id that appears in
+any edition later than its stated baseline. Combined with
+`test_hopkins_is_not_a_departure`, which pins the specific false-positive case
+discovered in §14, recurrence of an address-restyle producing a phantom
+departure is now caught by CI-runnable tests rather than requiring another ad
+hoc audit.
+
+The new count (34) sits inside the plausible range independently established
+in §14 (15 from a 2019 baseline, up to 33 from a 2017 baseline) — 34 is 19
+(2017-only) + 15 (2019), consistent with those per-baseline figures once
+2018's redundant contribution is dedup'd out. This is corroboration, not
+circular: §14's per-baseline counts were computed independently, before
+`departures.py` existed, straight from `nei_id` set differences.
+
+The old layer's 68 claimed departures are cut to 34, a reduction of exactly
+half. Every one of those 34 has been checked, at generation time, against
+every edition after its own baseline (that is what `find_departures` computes
+and what the regression test verifies) — none of them can be Hopkins-style
+false positives. This does not certify that the 34 are true departures in
+every clerical sense (e.g. a business could have relocated within the same
+municipality and re-registered under a new `nei_id`, which this method cannot
+distinguish from a genuine closure) — that limitation is inherent to the NEI
+data model, not to this fix, and is unchanged from before.
+
+---

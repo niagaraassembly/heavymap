@@ -1,0 +1,413 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, niagara, log, prior-art"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "attrs": {
+    "id": "1-·-Atlas-work-paused-at-the-plan-2-boundary"
+   },
+   "children": [
+    "1 · Atlas work paused at the plan-2 boundary"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "No computation, fetch or code change today. This entry exists to fix the state of the work at the moment it was set down, so the resume is a read rather than a reconstruction."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Position-at-pause"
+   },
+   "children": [
+    "Position at pause"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "branch            master (also present: atlas-normalization, intake-pivot, manifesto-site)\nHEAD              824de98  docs: dossier technical report for technical review\nHEAD committed    2026-08-27 08:42:23 -0400\nworking tree      1 modified file, 1 line"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    "The single uncommitted change is in ",
+    {
+     "children": [
+      "atlas/DOSSIER-TECHNICAL-REPORT.md:436"
+     ],
+     "tag": "code"
+    },
+    ", made 2026-08-27 11:12 — after the commit, before the machine shut down:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "-$$U \\;=\\; \\mathrm{clip}\\!\\left(\\sum_{i} w_i \\cdot \\mathbb{1}[\\phi_i(u)],\\; 0,\\; 100\\right)$$\n+$$U \\;=\\; \\mathrm{clip}\\!\\left(\\sum_{i} w_i \\cdot \\mathbf{1}[\\phi_i(u)],\\; 0,\\; 100\\right)$$"
+   ],
+   "tag": "pre"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "grep -n 'mathbb\\|mathbf' atlas/DOSSIER-TECHNICAL-REPORT.md"
+     ],
+     "tag": "code"
+    },
+    " returns one line, so this is a complete edit and not a find/replace interrupted partway. It is left uncommitted deliberately rather than tidied, so the resume sees exactly what the shutdown left."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Completed-and-committed"
+   },
+   "children": [
+    "Completed and committed"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Reconnaissance"
+       ],
+       "tag": "strong"
+      },
+      " — Artefact: ",
+      {
+       "children": [
+        "DATA-SOURCES.md"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "RECON-2026-08-22.md"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "CANDIDATES*.md"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "INGESTION-LEDGER.md"
+       ],
+       "tag": "code"
+      },
+      " · State: complete"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Plan 1 — normalization"
+       ],
+       "tag": "strong"
+      },
+      " — Artefact: merged ",
+      {
+       "children": [
+        "ed4ff52"
+       ],
+       "tag": "code"
+      },
+      "; unit index 445,075 units / 13 municipalities / 3 tiers · State: complete"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Spike — Waterloo, Rochester"
+       ],
+       "tag": "strong"
+      },
+      " — Artefact: ",
+      {
+       "children": [
+        "atlas/RECON-SPIKE-2026-08-27.md"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "b1c728f"
+       ],
+       "tag": "code"
+      },
+      " · State: complete"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Plan 2 — enrichment"
+       ],
+       "tag": "strong"
+      },
+      " — Artefact: ",
+      {
+       "children": [
+        "docs/superpowers/specs/2026-08-27-atlas-enrichment-design.md"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "f414ae4"
+       ],
+       "tag": "code"
+      },
+      "+",
+      {
+       "children": [
+        "0966da8"
+       ],
+       "tag": "code"
+      },
+      " · State: ",
+      {
+       "children": [
+        "design approved, implementation plan not written"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Dossier technical report"
+       ],
+       "tag": "strong"
+      },
+      " — Artefact: ",
+      {
+       "children": [
+        "atlas/DOSSIER-TECHNICAL-REPORT.md"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "824de98"
+       ],
+       "tag": "code"
+      },
+      " · State: complete but for the line above"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Outstanding-when-this-resumes,-in-the-order-judged-right-on-2026-08-27"
+   },
+   "children": [
+    "Outstanding when this resumes, in the order judged right on 2026-08-27"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Commit the ",
+      {
+       "children": [
+        "\\mathbf{1}"
+       ],
+       "tag": "code"
+      },
+      " line."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "**",
+      {
+       "children": [
+        "logs/2026-08-24.md"
+       ],
+       "tag": "code"
+      },
+      " still carries the runaway agent's fabricated figures"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "and still has no append-only correction entry.** Recorded as \"Not done\" on both 2026-08-27 and again here. Two consecutive carry-forwards; the rule in ",
+    {
+     "children": [
+      "CLAUDE.md"
+     ],
+     "tag": "code"
+    },
+    " requires the correction be an appended entry, not an edit."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Write the plan-2 implementation plan from the approved enrichment design."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Two blocking open items inside that design (§14): border-crossing commercial"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "classification has ",
+    {
+     "children": [
+      "no identified source"
+     ],
+     "tag": "strong"
+    },
+    ", so ",
+    {
+     "children": [
+      "dist_commercial_crossing_m"
+     ],
+     "tag": "code"
+    },
+    " must be omitted rather than approximated; and Rochester ",
+    {
+     "children": [
+      "PARCELID"
+     ],
+     "tag": "code"
+    },
+    " stability across twelve snapshots is ",
+    {
+     "children": [
+      "assumed, not verified"
+     ],
+     "tag": "strong"
+    },
+    " — the same assumption ",
+    {
+     "children": [
+      "nei_id"
+     ],
+     "tag": "code"
+    },
+    " needed and address strings failed."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "Reason-for-the-pause"
+   },
+   "children": [
+    "Reason for the pause"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Not a blocker and not a defect. A side project — working name ",
+    {
+     "children": [
+      "Gage"
+     ],
+     "tag": "strong"
+    },
+    " — is being opened to derive the general principles this build has been producing as a by-product, and to state them as a protocol for building open-source tools that serve industrial ecosystems and the people working in them. The atlas is the evidence base for that work, which is why it is being set down at a clean boundary rather than mid-stage."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Interpretation."
+     ],
+     "tag": "strong"
+    },
+    " Pausing here is cheap in a way it would not have been three days ago. Plan 1 is merged and plan 2 is designed but unstarted, so nothing is half-built: the boundary between \"decided\" and \"constructed\" currently falls exactly at the working-tree edge. The cost of the pause is carried almost entirely by item 2 above, which is now a fortnight-old known falsehood sitting in an append-only record — the longer it stands uncorrected, the more it resembles the very failure mode the log convention exists to prevent."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0052\ntype: working-paper\nsection: origins\nplace_type: region\nevidence_date: 2026-10-03\nseq: 12"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, niagara, log, prior-art",
+ "path": "2026-08-28--raw-findings-log-11-19",
+ "title": "2026-08-28 — raw findings log",
+ "url": "https://telegra.ph/2026-08-28--raw-findings-log-11-19",
+ "views": 0
+}

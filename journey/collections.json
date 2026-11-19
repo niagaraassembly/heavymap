@@ -31,5 +31,32 @@
   "parent": "expansion",
   "display": "stream",
   "run": "CR-001"
+ },
+ "working-papers-hamilton": {
+  "name": "Working papers: Hamilton",
+  "path": "Working-papers-Hamilton-11-19",
+  "url": "https://telegra.ph/Working-papers-Hamilton-11-19",
+  "about": "The documents written during the Hamilton work, published nearly as written: studies, pulls, checks and plans.",
+  "parent": "expansion",
+  "display": "list",
+  "run": "CR-001"
+ },
+ "working-papers-origins": {
+  "name": "Working papers: Origins",
+  "path": "Working-papers-Origins-11-19",
+  "url": "https://telegra.ph/Working-papers-Origins-11-19",
+  "about": "The first Hamilton–Niagara atlas and the UK atlas, in their own words: reconnaissance, decisions, reports and daily logs.",
+  "parent": "origins",
+  "display": "list",
+  "run": ""
+ },
+ "working-papers-systems": {
+  "name": "Working papers: Systems",
+  "path": "Working-papers-Systems-11-19",
+  "url": "https://telegra.ph/Working-papers-Systems-11-19",
+  "about": "The architecture and method documents behind HeavyMap and the Industrial Atlas, published nearly as written.",
+  "parent": "systems",
+  "display": "list",
+  "run": ""
  }
 }

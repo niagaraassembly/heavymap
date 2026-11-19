@@ -1,0 +1,257 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "can_edit": true,
+ "content": [
+  {
+   "children": [
+    "The first Hamilton–Niagara atlas and the UK atlas, in their own words: reconnaissance, decisions, reports and daily logs."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/The-Sidebar-Dossier--a-technical-report-11-19"
+       },
+       "children": [
+        "The Sidebar Dossier — a technical report"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 19 min · working-paper, niagara, dossier, prior-art",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Reconnaissance-spike--Waterloo-Region-and-Rochester-11-19"
+       },
+       "children": [
+        "Reconnaissance spike — Waterloo Region and Rochester"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 5 min · working-paper, waterloo, rochester, prior-art",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Niagara-lower-tier-municipalities--source-reconnaissance-11-19"
+       },
+       "children": [
+        "Niagara lower-tier municipalities — source reconnaissance"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 20 min · working-paper, niagara, reconnaissance, prior-art",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/HamiltonNiagara-Industrial-Atlas-11-19"
+       },
+       "children": [
+        "Hamilton–Niagara Industrial Atlas"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 5 min · working-paper, niagara, hamilton, prior-art",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/Atlas--publication-model-and-audiences-11-19"
+       },
+       "children": [
+        "Atlas — publication model and audiences"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 5 min · working-paper, niagara, publication, prior-art",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/2026-08-28--raw-findings-log-11-19"
+       },
+       "children": [
+        "2026-08-28 — raw findings log"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 2 min · working-paper, niagara, log, prior-art",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/2026-08-27--raw-findings-log-11-19"
+       },
+       "children": [
+        "2026-08-27 — raw findings log"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 8 min · working-paper, niagara, log, prior-art",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/2026-08-24--raw-findings-log-11-19"
+       },
+       "children": [
+        "2026-08-24 — raw findings log"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 4 min · working-paper, niagara, log, prior-art",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/2026-08-23--raw-findings-log-part-3-of-3-11-19"
+       },
+       "children": [
+        "2026-08-23 — raw findings log (part 3 of 3)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 15 min · working-paper, niagara, hamilton, log, prior-art",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/2026-08-23--raw-findings-log-part-2-of-3-11-19"
+       },
+       "children": [
+        "2026-08-23 — raw findings log (part 2 of 3)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 18 min · working-paper, niagara, hamilton, log, prior-art",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/2026-08-23--raw-findings-log-part-1-of-3-11-19"
+       },
+       "children": [
+        "2026-08-23 — raw findings log (part 1 of 3)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 19 min · working-paper, niagara, hamilton, log, prior-art",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-03, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
+        "href": "/04--UK-atlas-capability-glean-11-19"
+       },
+       "children": [
+        "04 — UK atlas capability glean"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-18 · 8 min · working-paper, uk, prior-art, lessons",
+      {
+       "tag": "br"
+      },
+      "A working paper written on 2026-10-17, published nearly as written. Local file paths, private repository names and personal names have been removed."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Index generated by Telepatch. byline=plain collection=extra"
+   ],
+   "tag": "p"
+  }
+ ],
+ "description": "",
+ "path": "Working-papers-Origins-11-19",
+ "title": "Working papers: Origins",
+ "url": "https://telegra.ph/Working-papers-Origins-11-19",
+ "views": 0
+}

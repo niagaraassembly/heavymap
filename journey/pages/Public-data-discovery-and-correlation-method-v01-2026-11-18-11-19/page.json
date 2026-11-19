@@ -1,0 +1,1549 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, framework, method, discovery"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "A working paper written on 2026-11-18, published nearly as written. Local file paths, private repository names and personal names have been removed."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "How Industrial Atlas finds, screens, profiles and connects public datasets for a city, so HeavyMap can use them. Catalogue: DOC-110. Decision: D-084. Lessons and calibration: the ",
+    {
+     "children": [
+      "expansion/"
+     ],
+     "tag": "code"
+    },
+    " sheet set (DOC-112)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "This method sits ",
+    {
+     "children": [
+      "upstream"
+     ],
+     "tag": "strong"
+    },
+    " of the existing per-layer routine, ",
+    {
+     "children": [
+      "heavymap/heavymap-planning/DATASET-ROUTINE.md"
+     ],
+     "tag": "code"
+    },
+    " (stages 0–8: slice, discover, pull, profile, quirks, harmonize, verify, use decision, promote). That routine is how one layer gets from catalogue row to spine join. This document is how a whole city's public data is mapped before and around it, and how each city makes the next one easier."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Home: private for now; moves to the ",
+    {
+     "children": [
+      "industrial-atlas"
+     ],
+     "tag": "code"
+    },
+    " repo when it exists (BL-008), with the owner's approval, since IA is meant to be reproducible by anyone (D-078)."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "1.-A-general-theory-of-public-data"
+   },
+   "children": [
+    "1. A general theory of public data"
+   ],
+   "tag": "h3"
+  },
+  {
+   "attrs": {
+    "id": "1.1-Datasets-are-the-exhaust-of-mandates"
+   },
+   "children": [
+    "1.1 Datasets are the exhaust of mandates"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Public data exists because an institution has a duty: to register, assess, permit, plan, regulate, inspect, serve or report. Each duty leaves records. So the question \"what data exists for this city?\" becomes \"which duties touch land and industry here, and who holds them?\""
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Every duty predicts a record, even when nothing is published. An absent dataset is then a ",
+      {
+       "children": [
+        "finding"
+       ],
+       "tag": "strong"
+      },
+      " (unpublished, restricted, fee-based, held elsewhere), never just a blank."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Duties are stable across cities; publishers and formats are not. That is why knowledge transfers from one city to the next."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "1.2-Duties-are-split-across-tiers,-differently-in-each-place"
+   },
+   "children": [
+    "1.2 Duties are split across tiers, differently in each place"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "The same duty sits with different bodies by country, province or state, and city type: federal, provincial or state, regional or county, municipal (single- or lower-tier), and special-purpose bodies (conservation authorities, port authorities, utilities, transit agencies, school boards, assessment corporations, rail operators)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Example from the roster: in Ontario, parcel assessment is MPAC (province-wide corporation), the parcel fabric is often municipal, and floodplain regulation is a conservation authority. In New York, parcels come from a statewide layer that some counties are absent from."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "So the first map of a new city is a ",
+      {
+       "children": [
+        "duty × tier"
+       ],
+       "tag": "strong"
+      },
+      " grid: who holds each duty here."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "1.3-Each-dataset-has-a-grain,-keys-and-a-time-shape"
+   },
+   "children": [
+    "1.3 Each dataset has a grain, keys and a time shape"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Grain"
+       ],
+       "tag": "strong"
+      },
+      ": what one record is: parcel, address point, building, road or rail segment, area (zone, plan, district), point event (permit, inspection, spill), document (by-law schedule, plan PDF), or aggregate (census area)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Keys"
+       ],
+       "tag": "strong"
+      },
+      ": the identifiers it carries (roll number, PIN, parcel id, address, segment id, business number) and what geometry it has."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Time shape"
+       ],
+       "tag": "strong"
+      },
+      ": a ",
+      {
+       "children": [
+        "state"
+       ],
+       "tag": "strong"
+      },
+      " (zoning as of a date), a ",
+      {
+       "children": [
+        "log"
+       ],
+       "tag": "strong"
+      },
+      " (permits issued), or a ",
+      {
+       "children": [
+        "snapshot series"
+       ],
+       "tag": "strong"
+      },
+      ". Plus vintage and cadence."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "1.4-Correlation-is-a-path-to-the-spine"
+   },
+   "children": [
+    "1.4 Correlation is a path to the spine"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "The parcel identity spine is the anchor. Every dataset reaches it, or does not, by a path:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Key join"
+       ],
+       "tag": "strong"
+      },
+      ": a shared identifier (roll number, PIN). Strongest; graded by exactness."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Spatial join"
+       ],
+       "tag": "strong"
+      },
+      ": representative point in polygon, overlap share (IoU), distance. Graded by method and tested hits."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Address join"
+       ],
+       "tag": "strong"
+      },
+      ": through the address register, with normalisation and synonyms."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Indirect"
+       ],
+       "tag": "strong"
+      },
+      ": dataset → building → parcel, or dataset → segment → nearest parcels (SA- associations)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Area context"
+       ],
+       "tag": "strong"
+      },
+      ": the parcel lies within a zone, plan, ward, or census area."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "No path"
+       ],
+       "tag": "strong"
+      },
+      ": city-wide context only, or a gap."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "Draw these paths as a ",
+    {
+     "children": [
+      "join graph"
+     ],
+     "tag": "strong"
+    },
+    " per city: datasets as nodes, keys and spatial methods as edges, the spine at the centre. A dataset's value rises with the strength and shortness of its path."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "1.5-Value-is-the-questions-a-dataset-lets-us-answer"
+   },
+   "children": [
+    "1.5 Value is the questions a dataset lets us answer"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Value for HeavyMap is not \"relevant to industry\" in the abstract. It is which question templates (DOC-109) and story layers (BL-132) a dataset makes answerable, times coverage, trust, licence and cost to keep current. A dataset that answers no planned question is catalogued and parked, not worked."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "This ties discovery to the question banks (D-082): the HeavyMap bank says what we need to know; discovery says what exists to answer it; gaps flow back as data needs."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "1.6-Discovery-saturates,-and-you-can-measure-it"
+   },
+   "children": [
+    "1.6 Discovery saturates, and you can measure it"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Finds per hour fall as a city is mapped. Two ways to tell when to stop:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Discovery curve"
+       ],
+       "tag": "strong"
+      },
+      ": record new distinct datasets per sweep; stop a channel when a full sweep finds nothing new."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Capture–recapture estimate"
+       ],
+       "tag": "strong"
+      },
+      ": run two independent discovery methods (for example, portal enumeration and duty-driven web search). If method A finds ",
+      {
+       "children": [
+        "n1"
+       ],
+       "tag": "code"
+      },
+      ", method B finds ",
+      {
+       "children": [
+        "n2"
+       ],
+       "tag": "code"
+      },
+      ", and ",
+      {
+       "children": [
+        "m"
+       ],
+       "tag": "code"
+      },
+      " are found by both, the total is about ",
+      {
+       "children": [
+        "n1 × n2 ÷ m"
+       ],
+       "tag": "code"
+      },
+      " (Lincoln–Petersen). The gap between this and what we hold says how much is still hidden. It is an estimate with assumptions (independent methods, equal findability); report it as one."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "1.7-Predict-first,-then-look"
+   },
+   "children": [
+    "1.7 Predict first, then look"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    "Before looking at a new city, predict what will be found from the archetypes and patterns learned so far. After the run, score the predictions. Systematic misses show which archetypes or patterns are wrong, and the calibration improves city by city. This is the recursive part (section 6)."
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "attrs": {
+    "id": "2.-Archetypes-of-public-data-for-industrial-land"
+   },
+   "children": [
+    "2. Archetypes of public data for industrial land"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Starting taxonomy; it grows in ",
+    {
+     "children": [
+      "expansion/dataset-archetypes.csv"
+     ],
+     "tag": "code"
+    },
+    ", where each city records whether it was found and how."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Identity"
+       ],
+       "tag": "strong"
+      },
+      " — Archetypes: parcel fabric, assessment roll, land registry, address points, building footprints · Usual holders: municipality, assessment body, province, aggregators (OSM, open footprints) · Usual grain and keys: parcel or address; roll number, PIN, address"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Planning"
+       ],
+       "tag": "strong"
+      },
+      " — Archetypes: zoning, official plan designations, secondary plans, employment lands, urban boundary, site-specific amendments · Usual holders: municipality, region · Usual grain and keys: area; zone code"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Regulation and constraint"
+       ],
+       "tag": "strong"
+      },
+      " — Archetypes: floodplain and regulated areas, greenbelt, escarpment, source water, contaminated sites, heritage · Usual holders: conservation authority, province, federal · Usual grain and keys: area or point"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Activity"
+       ],
+       "tag": "strong"
+      },
+      " — Archetypes: building permits, development applications, committee of adjustment, business licences, inspections · Usual holders: municipality · Usual grain and keys: event; address, parcel id, permit number"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Infrastructure"
+       ],
+       "tag": "strong"
+      },
+      " — Archetypes: water, sewer, stormwater, electricity, gas, telecom, rail, truck routes, roads, ports, airports · Usual holders: municipality, utilities, rail and port operators, province · Usual grain and keys: segment or point; asset id"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Economy"
+       ],
+       "tag": "strong"
+      },
+      " — Archetypes: business directories, employment surveys, industrial land inventories, incentives, brownfield programs · Usual holders: municipality, region, economic development office · Usual grain and keys: point or parcel; business name, address"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Environment"
+       ],
+       "tag": "strong"
+      },
+      " — Archetypes: land cover, soils, wetlands, emissions and pollutant release reporting, permits to take water · Usual holders: province, federal · Usual grain and keys: area or facility"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Population and markets"
+       ],
+       "tag": "strong"
+      },
+      " — Archetypes: census areas, labour force, commuting · Usual holders: national statistics office · Usual grain and keys: aggregate area"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Documents"
+       ],
+       "tag": "strong"
+      },
+      " — Archetypes: by-law schedules, plan PDFs, council reports · Usual holders: municipality · Usual grain and keys: document; references to parcels or areas"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "3.-Discovery-channels-and-how-to-enumerate-them"
+   },
+   "children": [
+    "3. Discovery channels and how to enumerate them"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "ArcGIS Online / Hub"
+       ],
+       "tag": "strong"
+      },
+      " — How to enumerate: Hub search API, org item listing, ",
+      {
+       "children": [
+        "…/arcgis/rest/services"
+       ],
+       "tag": "code"
+      },
+      " directory · Known patterns (see ",
+      {
+       "children": [
+        "expansion/source-patterns.csv"
+       ],
+       "tag": "code"
+      },
+      "): Two Hub sites can front the same org; licence pages are often JS-rendered; layer indices shift"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "ArcGIS Enterprise (self-hosted)"
+       ],
+       "tag": "strong"
+      },
+      " — How to enumerate: REST services directory, folder by folder · Known patterns (see ",
+      {
+       "children": [
+        "expansion/source-patterns.csv"
+       ],
+       "tag": "code"
+      },
+      "): Whole folders (Planning, DOT, Stormwater) beyond what the portal lists"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "CKAN, Socrata, OpenDataSoft"
+       ],
+       "tag": "strong"
+      },
+      " — How to enumerate: ",
+      {
+       "children": [
+        "package_search"
+       ],
+       "tag": "code"
+      },
+      ", catalog APIs · Known patterns (see ",
+      {
+       "children": [
+        "expansion/source-patterns.csv"
+       ],
+       "tag": "code"
+      },
+      "): Metadata often lags the data"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Map viewers"
+       ],
+       "tag": "strong"
+      },
+      " — How to enumerate: Network requests of the viewer reveal REST endpoints · Known patterns (see ",
+      {
+       "children": [
+        "expansion/source-patterns.csv"
+       ],
+       "tag": "code"
+      },
+      "): Viewers expose layers never listed in the catalogue"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Provincial and federal portals"
+       ],
+       "tag": "strong"
+      },
+      " — How to enumerate: Search by geography and duty · Known patterns (see ",
+      {
+       "children": [
+        "expansion/source-patterns.csv"
+       ],
+       "tag": "code"
+      },
+      "): Province-wide layers cover cities with no local portal"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Aggregators"
+       ],
+       "tag": "strong"
+      },
+      " — How to enumerate: OSM, open building footprints, open address projects · Known patterns (see ",
+      {
+       "children": [
+        "expansion/source-patterns.csv"
+       ],
+       "tag": "code"
+      },
+      "): Good fallbacks; licence and vintage differ"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Documents and agendas"
+       ],
+       "tag": "strong"
+      },
+      " — How to enumerate: Duty-driven web search, by-law registries · Known patterns (see ",
+      {
+       "children": [
+        "expansion/source-patterns.csv"
+       ],
+       "tag": "code"
+      },
+      "): Facts with no dataset; often the only source"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Requests"
+       ],
+       "tag": "strong"
+      },
+      " — How to enumerate: Freedom-of-information, data sharing · Known patterns (see ",
+      {
+       "children": [
+        "expansion/source-patterns.csv"
+       ],
+       "tag": "code"
+      },
+      "): Record as a route, never pursue without the owner"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Same-name decoys exist (for example a Monroe County in another state): always confirm the publisher and the extent."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "4.-Warm-up-and-discovery-exercises"
+   },
+   "children": [
+    "4. Warm-up and discovery exercises"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Short, bounded exercises before and between the heavy stages. Each has a fixed output and a time box; usefulness is scored afterwards in ",
+    {
+     "children": [
+      "expansion/warmups.csv"
+     ],
+     "tag": "code"
+    },
+    " so the set improves."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "WU-01"
+       ],
+       "tag": "strong"
+      },
+      " — Exercise: ",
+      {
+       "children": [
+        "Retro of the last city"
+       ],
+       "tag": "strong"
+      },
+      " (first time: Hamilton): read its focus folder, insights, quirks, gaps and process insights; extract reusable lessons · Output: Lesson rows (LL-) and pattern rows (SP-) · Time box: 1–2 h"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "WU-02"
+       ],
+       "tag": "strong"
+      },
+      " — Exercise: ",
+      {
+       "children": [
+        "Predict"
+       ],
+       "tag": "strong"
+      },
+      ": from the archetype table, predict for the new city which archetypes exist, who holds them, likely keys and likely problems · Output: A prediction row per archetype (PR-) · Time box: 30–60 min"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "WU-03"
+       ],
+       "tag": "strong"
+      },
+      " — Exercise: ",
+      {
+       "children": [
+        "Duty × tier grid"
+       ],
+       "tag": "strong"
+      },
+      ": list every institution that holds a land or industry duty for the city · Output: Publisher census · Time box: 1 h"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "WU-04"
+       ],
+       "tag": "strong"
+      },
+      " — Exercise: ",
+      {
+       "children": [
+        "Channel fingerprinting"
+       ],
+       "tag": "strong"
+      },
+      ": for each publisher, identify its platform(s) and how to enumerate them · Output: Channel list with enumeration method · Time box: 1 h"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "WU-05"
+       ],
+       "tag": "strong"
+      },
+      " — Exercise: ",
+      {
+       "children": [
+        "Two independent sweeps"
+       ],
+       "tag": "strong"
+      },
+      ": (A) enumerate every portal and REST directory; (B) duty-driven search from the grid, without looking at A · Output: Two find lists; capture–recapture estimate · Time box: 2–4 h"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "WU-06"
+       ],
+       "tag": "strong"
+      },
+      " — Exercise: ",
+      {
+       "children": [
+        "Key census"
+       ],
+       "tag": "strong"
+      },
+      ": list identifier fields across the found datasets and how they connect · Output: First join graph · Time box: 1–2 h"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "WU-07"
+       ],
+       "tag": "strong"
+      },
+      " — Exercise: ",
+      {
+       "children": [
+        "Count sprints"
+       ],
+       "tag": "strong"
+      },
+      ": live record counts and geometry type for the top archetypes (no pulls) · Output: Counts with source and date · Time box: 1 h"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "WU-08"
+       ],
+       "tag": "strong"
+      },
+      " — Exercise: ",
+      {
+       "children": [
+        "Synonym hunt"
+       ],
+       "tag": "strong"
+      },
+      ": local terms for shared concepts (zone names, land-use words, permit types) · Output: Rows for the synonym ledger (sheet 11) · Time box: 1 h"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "WU-09"
+       ],
+       "tag": "strong"
+      },
+      " — Exercise: ",
+      {
+       "children": [
+        "Licence sweep"
+       ],
+       "tag": "strong"
+      },
+      ": licence text for each publisher, verbatim where possible · Output: Licence column filled; unknowns named · Time box: 1 h"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "WU-10"
+       ],
+       "tag": "strong"
+      },
+      " — Exercise: ",
+      {
+       "children": [
+        "Question backcast"
+       ],
+       "tag": "strong"
+      },
+      ": for each starter question template (DOC-109), which found dataset supplies each measurement it needs · Output: Answerable, partly answerable, gap · Time box: 1 h"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "WU-11"
+       ],
+       "tag": "strong"
+      },
+      " — Exercise: ",
+      {
+       "children": [
+        "Score and retro"
+       ],
+       "tag": "strong"
+      },
+      ": compare predictions with finds; write lessons and method changes · Output: Scored PR- rows, LL- rows, MC- rows · Time box: 1–2 h"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "5.-Stages-of-a-city-run"
+   },
+   "children": [
+    "5. Stages of a city run"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "A"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Prepare · Includes: WU-01, WU-02 · Exit test: Predictions recorded before any search"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "B"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Map · Includes: WU-03, WU-04 · Exit test: Every expected duty has a holder or a reason it has none"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "C"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Enumerate · Includes: WU-05, WU-07 · Exit test: Two sweeps done; capture–recapture estimate reported; discovery curve flat on main channels"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "D"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Screen · Includes: WU-08, WU-09, relevance and sensitivity · Exit test: Every find has relevance, licence status (or \"unclear\"), sensitivity flag"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "E"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Profile and connect · Includes: DATASET-ROUTINE stages 1–6 for the priority slice; WU-06 · Exit test: Priority layers have profiles, quirks, a join method and graded ",
+      {
+       "children": [
+        "hits/tested"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "F"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Value · Includes: WU-10 · Exit test: Each priority layer names the questions it answers; gaps recorded"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "G"
+       ],
+       "tag": "strong"
+      },
+      " — Name: Learn · Includes: WU-11 · Exit test: Predictions scored; lessons, pattern and archetype updates; method changes proposed"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Priority slice: the archetypes that supply the opening story (industrial and employment lands, zoning, parcels) and the starter templates' measurements first; the rest catalogued and parked."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "6.-The-learning-loop"
+   },
+   "children": [
+    "6. The learning loop"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Every city run reads from and writes to ",
+    {
+     "children": [
+      "expansion/"
+     ],
+     "tag": "code"
+    },
+    " (DOC-112):"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Before"
+       ],
+       "tag": "strong"
+      },
+      ": read lessons (LL-), patterns (SP-) and archetypes (DA-) with their hit rates; write predictions (PR-)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "During"
+       ],
+       "tag": "strong"
+      },
+      ": record new patterns as they are met; log the run's counts and time in ",
+      {
+       "children": [
+        "city-runs.csv"
+       ],
+       "tag": "code"
+      },
+      " (CR-)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "After"
+       ],
+       "tag": "strong"
+      },
+      ": score every prediction; update each archetype's seen and found counts; turn repeated observations into lessons; propose method changes (MC-) with the lessons they come from."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Method versions"
+       ],
+       "tag": "strong"
+      },
+      ": this document carries a version. A method change is adopted only by the owner; then the version bumps and the change row records it."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ol"
+  },
+  {
+   "children": [
+    "A lesson becomes ",
+    {
+     "children": [
+      "adopted"
+     ],
+     "tag": "code"
+    },
+    " when it changes the method, an archetype, a pattern or a warm-up. A lesson seen in one city is ",
+    {
+     "children": [
+      "candidate"
+     ],
+     "tag": "code"
+    },
+    "; seen in two or more, it is proposed for adoption."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "7.-Recording:-where-each-thing-goes"
+   },
+   "children": [
+    "7. Recording: where each thing goes"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Catalogue rows for the city"
+       ],
+       "tag": "strong"
+      },
+      " — Where: ",
+      {
+       "children": [
+        "heavymap/Spreadsheets/09-per-jurisdiction-dataset-catalog-*.csv"
+       ],
+       "tag": "code"
+      },
+      " · Notes: On a branch; never push to main without approval"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Service and layer profiles, quirks"
+       ],
+       "tag": "strong"
+      },
+      " — Where: ",
+      {
+       "children": [
+        "heavymap/Spreadsheets/16"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "17"
+       ],
+       "tag": "code"
+      },
+      ", ",
+      {
+       "children": [
+        "18"
+       ],
+       "tag": "code"
+      },
+      " · Notes: DATASET-ROUTINE rules"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Atlas process insights"
+       ],
+       "tag": "strong"
+      },
+      " — Where: ",
+      {
+       "children": [
+        "heavymap/Spreadsheets/19-process-insights.csv"
+       ],
+       "tag": "code"
+      },
+      " (",
+      {
+       "children": [
+        "PI-"
+       ],
+       "tag": "code"
+      },
+      ") · Notes: Standing rule in heavymap AGENTS.md"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Data gaps"
+       ],
+       "tag": "strong"
+      },
+      " — Where: ",
+      {
+       "children": [
+        "heavymap/Spreadsheets/20-data-gaps-ledger.csv"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Synonyms"
+       ],
+       "tag": "strong"
+      },
+      " — Where: ",
+      {
+       "children": [
+        "heavymap/Spreadsheets/11-synonym-parallel-ledger-v1.csv"
+       ],
+       "tag": "code"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "City working view"
+       ],
+       "tag": "strong"
+      },
+      " — Where: ",
+      {
+       "children": [
+        "heavymap/heavymap-planning/focus/<city>/"
+       ],
+       "tag": "code"
+      },
+      " · Notes: Modelled on ",
+      {
+       "children": [
+        "focus/hamilton/"
+       ],
+       "tag": "code"
+      },
+      ": README, DECISIONS, INSIGHTS"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Proposed parcel associations"
+       ],
+       "tag": "strong"
+      },
+      " — Where: ",
+      {
+       "children": [
+        "our private planning repository/project/parcel-associations.csv"
+       ],
+       "tag": "code"
+      },
+      " · Notes: PA- and SA- ids, proposals only"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Lessons, patterns, archetypes, predictions, runs, warm-ups, method changes"
+       ],
+       "tag": "strong"
+      },
+      " — Where: ",
+      {
+       "children": [
+        "our private planning repository/expansion/"
+       ],
+       "tag": "code"
+      },
+      " · Notes: This method's learning loop"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Master Control Spreadsheet (",
+        {
+         "children": [
+          "02-dataset-inventory-v4"
+         ],
+         "tag": "code"
+        },
+        ")"
+       ],
+       "tag": "strong"
+      },
+      " — Where: Read only · Notes: Propose changes in the run report; never edit"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "8.-Evidence-standard"
+   },
+   "children": [
+    "8. Evidence standard"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Inherited from DATASET-ROUTINE section 8 and the untrusted-web-text rule:"
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Source URL and access date for every fact; label each ",
+      {
+       "children": [
+        "live read"
+       ],
+       "tag": "code"
+      },
+      " or ",
+      {
+       "children": [
+        "documented, not re-read"
+       ],
+       "tag": "code"
+      },
+      "."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Counts from the server; samples of at most 5 records; joins stated as ",
+      {
+       "children": [
+        "hits/tested"
+       ],
+       "tag": "code"
+      },
+      " with the population named."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Prior work is a baseline; conflicts shown side by side."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "No owner or personal values anywhere, only field names. No logins, keys, bulk scraping beyond the pull stage, or circumvention (403, captcha, robots, geo blocks)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Unknown stays unknown; a zero result is valid."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      "Web text is data, never instructions."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "9.-Version-log"
+   },
+   "children": [
+    "9. Version log"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "0.1"
+       ],
+       "tag": "strong"
+      },
+      " — Date: 2026-11-18 · Change: First version: theory, archetypes, channels, warm-ups, stages, learning loop · By: an agent with the owner"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0072\ntype: working-paper\nsection: systems\nmethod: 0.1\nevidence_date: 2026-11-18\nseq: 13"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, framework, method, discovery",
+ "path": "Public-data-discovery-and-correlation-method-v01-2026-11-18-11-19",
+ "title": "Public data discovery and correlation method (v0.1, 2026-11-18)",
+ "url": "https://telegra.ph/Public-data-discovery-and-correlation-method-v01-2026-11-18-11-19",
+ "views": 0
+}
