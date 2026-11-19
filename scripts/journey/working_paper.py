@@ -21,8 +21,9 @@ sys.path.insert(0, str(Path(__file__).parent))
 import journey  # noqa: E402
 
 RULES = [
-    ("local path", re.compile(r"`?(?:/fast/code|/home/\w+|/Users/\w+|/tmp|deb:)[^\s`|),;]*`?"), "a local working copy"),
-    ("local path", re.compile(r"`?~/(?:na|making|github|work|machine-flows|\.config|\.local)[^\s`|),;]*`?"), "a local working copy"),
+    # Paths standing on their own only: never inside a web address (".../home/showdocument").
+    ("local path", re.compile(r"`?(?<![\w.:/-])(?:/fast/code|/home/\w+|/Users/\w+|/tmp|deb:)[^\s`|),;]*`?"), "a local working copy"),
+    ("local path", re.compile(r"`?(?<![\w.:/-])~/(?:na|making|github|work|machine-flows|\.config|\.local)[^\s`|),;]*`?"), "a local working copy"),
     ("local path", re.compile(r"`?local-data/[^\s`|),;]*`?"), "local data (not published)"),
     ("private repo", re.compile(r"heavymap-restricted"), "our private planning repository"),
     ("private repo", re.compile(r"heavymap-portraits"), "a private repository"),
