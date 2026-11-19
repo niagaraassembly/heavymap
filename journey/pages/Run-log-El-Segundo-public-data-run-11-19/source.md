@@ -7,9 +7,9 @@ subdivision: ca
 county: los-angeles
 city: el-segundo
 method: 0.2
-stage: C
+stage: D
 type: working-paper
-evidence_date: 2026-11-18
+evidence_date: 2026-11-19
 ---
 Run log: El Segundo public data run
 working-paper, el-segundo, run-log, run-2
@@ -53,4 +53,14 @@ One line per step, newest last. Times are Eastern. Linear is out of use, so this
 - **23:49.** County narrowing test on the assessor parcel layer: tax-rate city 5,459, all inside the boundary; situs city 5,091; 370 city parcels with blank situs (349 single space, 21 null). FAIL RF-020, resolved by using tax-rate city; lesson LL-005.
 - **23:50.** Count sprints on 18 city services (parcels 5,499; zoning 440 to 460 in three versions; General Plan two versions; 109 oil wells; 23 developments).
 - **23:58.** `STAGE-C.md`, `SWEEP-A.csv`, `SWEEP-B.csv` written. Exit test: sweeps and estimate done; discovery curve not yet flat (four new doors to enumerate in stage D).
-- **Next.** Stage D: enumerate the four new doors, then screen (relevance, licence, sensitivity), synonyms (WU-08) and licences (WU-09); decide which zoning and General Plan versions are current.
+
+## Stage D: Screen
+
+- **2026-11-19 00:24.** Four new doors enumerated: county public GIS server (28 folders; Hazards has tsunami zones and floodplain copies), AQMD hub (47), Census TIGER, EPA risk management plans. About 8 to 10 new relevant layers: discovery slowing.
+- **00:25.** RF-006 (FEMA) now has an official second door: the county's floodplain copies. FEMA itself still to retry.
+- **00:25.** Licences read per publisher. FAIL RF-021: the state energy commission prohibits commercial use (owner decision). FAIL RF-022: no licence on any City Hub item. FAIL RF-023: County terms page renders only in a browser (SP-002). FAIL RF-024: AQMD and City of Los Angeles terms not yet read.
+- **00:26.** Zoning and General Plan versions settled: `Zoning_Update` (edited 2026-03-06) is current; General Plan edited 2021-08-12. Industrial codes M-1, M-2, Smoky Hollow, CO and three specific plans (SP-014).
+- **00:28.** Synonyms LG-119 to LG-126 added to the ledger.
+- **00:30.** Screen of 633 candidates: 408 relevant by rule; hand sample of 40 gives precision 0.63 (FAIL RF-025, rule quality). 88 infrastructure-sensitive, 58 with possible personal fields.
+- **00:32.** Catalogue written: `Spreadsheets/09-catalog-us-ca.csv`, 409 rows, the first per-state file. `STAGE-D.md` and `SCREEN.csv` written.
+- **Next.** Stage E: profile and connect the priority slice (parcels, zoning, General Plan, specific plans, permits and developments, businesses, rail, truck routes, ports, airport, power, flood and hazards), build the join graph, and propose parcel associations.

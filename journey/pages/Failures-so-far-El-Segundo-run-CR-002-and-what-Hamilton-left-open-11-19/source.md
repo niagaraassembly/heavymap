@@ -7,14 +7,14 @@ subdivision: ca
 county: los-angeles
 city: el-segundo
 method: 0.2
-stage: C
+stage: D
 type: working-paper
-evidence_date: 2026-11-18
+evidence_date: 2026-11-19
 ---
 Failures so far: El Segundo run (CR-002), and what Hamilton left open
 working-paper, el-segundo, failures, run-2
 
-> What did not work in the El Segundo run so far, and what Hamilton left open: refusals, timeouts and gaps, each with a priority for the runs that follow. Published as written.
+> What did not work in the El Segundo run so far, and what Hamilton left open: refusals, timeouts, licence limits and gaps, each with a priority for the runs that follow. Published as written.
 
 Every step of a run that did not get what it went for is written down the moment it happens, with what was tried, what came back, how much it cost (severity 1 to 5), how much the next runs should focus on it (revisit priority P0 to P3, which the owner changes as priorities shift), how to retry without ever working around a refusal, and its status. Generated from the run failures register.
 
@@ -29,6 +29,22 @@ Every step of a run that did not get what it went for is written down the moment
 - **Retry rule:** Always narrow county parcels by tax-rate city or geometry, never by situs city. Avoided in this run (found by test).
 - **Resolution:** Tax-rate city adopted for the El Segundo slice; lesson LL-005.
 
+### RF-021 · licence restricted · California Energy Commission data (power plants, transmission lines, substations)
+
+- **Stage:** D · **severity:** 4 · **revisit priority:** P0 · **status:** open
+- **Tried:** read conditions of use (https://www.energy.ca.gov/conditions-of-use)
+- **Result:** commercial or profit-making use prohibited; republication only as the terms allow
+- **What it affects:** electricity (37 relevant items)
+- **Retry rule:** Owner decision; check federal HIFLD layers (public domain) as the alternative in stage E; or ask the Commission for permission.
+
+### RF-022 · licence unclear · City of El Segundo GIS Hub (all 55 items)
+
+- **Stage:** D · **severity:** 4 · **revisit priority:** P1 · **status:** open
+- **Tried:** read licence field of every Hub item (https://coes-hub-ElSegundo.hub.arcgis.com)
+- **Result:** no licence stated
+- **What it affects:** zoning, General Plan, specific plans, parcels, permits, businesses (city layers)
+- **Retry rule:** Ask the City (GIS analyst account owns the items) for terms; a human may read the city website.
+
 ### RF-001 · refused · City of El Segundo website (elsegundo.gov)
 
 - **Stage:** B · **severity:** 3 · **revisit priority:** P1 · **status:** open
@@ -36,14 +52,6 @@ Every step of a run that did not get what it went for is written down the moment
 - **Result:** HTTP 403 to an automated client
 - **What it affects:** zoning text, municipal code, truck routes, documents, business registration lists
 - **Retry rule:** Never circumvent. A human may read it in a browser; ask the city for a data contact or bulk files.
-
-### RF-006 · unreachable · FEMA National Flood Hazard Layer service
-
-- **Stage:** B · **severity:** 3 · **revisit priority:** P1 · **status:** open
-- **Tried:** GET ?f=json, two hosts, 2 attempts, 40 s timeout (https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer)
-- **Result:** connection failure (no HTTP response)
-- **What it affects:** floodplain (DA-010)
-- **Retry rule:** Retry in stage C; then look for the NFHL on ArcGIS Online or the State Geoportal.
 
 ### RF-007 · not read · Gas and pipeline holders (federal pipeline map, gas utility, state oil and gas)
 
@@ -60,6 +68,23 @@ Every step of a run that did not get what it went for is written down the moment
 - **Result:** door missing from sweep A
 - **What it affects:** air permits, emissions
 - **Retry rule:** Fingerprint the portal in stage D; check bulk export terms.
+
+### RF-023 · licence unclear · Los Angeles County open data terms
+
+- **Stage:** D · **severity:** 3 · **revisit priority:** P1 · **status:** open
+- **Tried:** GET of the terms page (https://data.lacounty.gov/pages/terms-of-use)
+- **Result:** page renders only in a browser; items carry an 'informational purposes' disclaimer, not a licence
+- **What it affects:** county layers (parcels, flood, hazards)
+- **Retry rule:** A human reads the terms page in a browser and records the text verbatim.
+
+### RF-006 · unreachable · FEMA National Flood Hazard Layer service
+
+- **Stage:** B · **severity:** 3 · **revisit priority:** P2 · **status:** workaround official
+- **Tried:** GET ?f=json, two hosts, 2 attempts, 40 s timeout (https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer)
+- **Result:** connection failure (no HTTP response)
+- **What it affects:** floodplain (DA-010)
+- **Retry rule:** Retry in stage C; then look for the NFHL on ArcGIS Online or the State Geoportal.
+- **Resolution:** County republishes the 100- and 500-year floodplains (public GIS, LACounty_Dynamic/Hazards); FEMA itself still to retry.
 
 ### RF-002 · refused · City of El Segundo document library (elsegundo.org)
 
@@ -124,6 +149,22 @@ Every step of a run that did not get what it went for is written down the moment
 - **Result:** no official second door found
 - **What it affects:** leaking tanks, cleanup sites
 - **Retry rule:** Search the 389 Water Boards Geoportal items by content, not only title.
+
+### RF-024 · not read · South Coast AQMD and City of Los Angeles (port data) terms of use
+
+- **Stage:** D · **severity:** 2 · **revisit priority:** P2 · **status:** open
+- **Tried:** AQMD page fetched, only partly read; LA City terms not fetched (http://www.aqmd.gov/privacy/terms-of-use)
+- **Result:** licence not established
+- **What it affects:** air toxics, ports
+- **Retry rule:** Read both in full before any use decision.
+
+### RF-025 · method miss · Stage D relevance rules
+
+- **Stage:** D · **severity:** 2 · **revisit priority:** P2 · **status:** open
+- **Tried:** rule-based screen of 633 candidates
+- **Result:** 408 marked relevant; hand sample of 40 gives precision 0.63 (county layers for unincorporated areas and other places slip through)
+- **What it affects:** catalogue quality
+- **Retry rule:** Add a coverage test (does the layer's extent include El Segundo?) to the screen; hand-check the priority slice in stage E.
 
 ### RF-014 · tool error · Journey publishing tool, local-path cleaning and home-path check
 

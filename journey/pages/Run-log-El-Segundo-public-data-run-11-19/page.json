@@ -480,6 +480,132 @@
       " written. Exit test: sweeps and estimate done; discovery curve not yet flat (four new doors to enumerate in stage D)."
      ],
      "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "Stage-D:-Screen"
+   },
+   "children": [
+    "Stage D: Screen"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "2026-11-19 00:24."
+       ],
+       "tag": "strong"
+      },
+      " Four new doors enumerated: county public GIS server (28 folders; Hazards has tsunami zones and floodplain copies), AQMD hub (47), Census TIGER, EPA risk management plans. About 8 to 10 new relevant layers: discovery slowing."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "00:25."
+       ],
+       "tag": "strong"
+      },
+      " RF-006 (FEMA) now has an official second door: the county's floodplain copies. FEMA itself still to retry."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "00:25."
+       ],
+       "tag": "strong"
+      },
+      " Licences read per publisher. FAIL RF-021: the state energy commission prohibits commercial use (owner decision). FAIL RF-022: no licence on any City Hub item. FAIL RF-023: County terms page renders only in a browser (SP-002). FAIL RF-024: AQMD and City of Los Angeles terms not yet read."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "00:26."
+       ],
+       "tag": "strong"
+      },
+      " Zoning and General Plan versions settled: ",
+      {
+       "children": [
+        "Zoning_Update"
+       ],
+       "tag": "code"
+      },
+      " (edited 2026-03-06) is current; General Plan edited 2021-08-12. Industrial codes M-1, M-2, Smoky Hollow, CO and three specific plans (SP-014)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "00:28."
+       ],
+       "tag": "strong"
+      },
+      " Synonyms LG-119 to LG-126 added to the ledger."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "00:30."
+       ],
+       "tag": "strong"
+      },
+      " Screen of 633 candidates: 408 relevant by rule; hand sample of 40 gives precision 0.63 (FAIL RF-025, rule quality). 88 infrastructure-sensitive, 58 with possible personal fields."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "00:32."
+       ],
+       "tag": "strong"
+      },
+      " Catalogue written: ",
+      {
+       "children": [
+        "Spreadsheets/09-catalog-us-ca.csv"
+       ],
+       "tag": "code"
+      },
+      ", 409 rows, the first per-state file. ",
+      {
+       "children": [
+        "STAGE-D.md"
+       ],
+       "tag": "code"
+      },
+      " and ",
+      {
+       "children": [
+        "SCREEN.csv"
+       ],
+       "tag": "code"
+      },
+      " written."
+     ],
+     "tag": "li"
     },
     {
      "children": [
@@ -489,7 +615,7 @@
        ],
        "tag": "strong"
       },
-      " Stage D: enumerate the four new doors, then screen (relevance, licence, sensitivity), synonyms (WU-08) and licences (WU-09); decide which zoning and General Plan versions are current."
+      " Stage E: profile and connect the priority slice (parcels, zoning, General Plan, specific plans, permits and developments, businesses, rail, truck routes, ports, airport, power, flood and hazards), build the join graph, and propose parcel associations."
      ],
      "tag": "li"
     }
@@ -500,7 +626,7 @@
    "children": [
     {
      "children": [
-      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-19"
      ],
      "tag": "em"
     }
@@ -512,7 +638,7 @@
   },
   {
    "children": [
-    "heavymap-journey/1\nid: JP-0092\ntype: working-paper\nsection: expansion\nrun: CR-002\nplace: us-ca-0622412-el-segundo\nplace_type: city\nstage: C\nmethod: 0.2\nevidence_date: 2026-11-18\nseq: 42"
+    "heavymap-journey/1\nid: JP-0092\ntype: working-paper\nsection: expansion\nrun: CR-002\nplace: us-ca-0622412-el-segundo\nplace_type: city\nstage: D\nmethod: 0.2\nevidence_date: 2026-11-19\nseq: 42"
    ],
    "tag": "pre"
   }

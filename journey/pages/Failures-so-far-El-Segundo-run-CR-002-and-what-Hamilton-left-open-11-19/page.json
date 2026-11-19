@@ -11,7 +11,7 @@
   },
   {
    "children": [
-    "What did not work in the El Segundo run so far, and what Hamilton left open: refusals, timeouts and gaps, each with a priority for the runs that follow. Published as written."
+    "What did not work in the El Segundo run so far, and what Hamilton left open: refusals, timeouts, licence limits and gaps, each with a priority for the runs that follow. Published as written."
    ],
    "tag": "blockquote"
   },
@@ -139,6 +139,196 @@
   },
   {
    "attrs": {
+    "id": "RF-021-·-licence-restricted-·-California-Energy-Commission-data-(power-plants,-transmission-lines,-substations)"
+   },
+   "children": [
+    "RF-021 · licence restricted · California Energy Commission data (power plants, transmission lines, substations)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " D · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 4 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P0 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " read conditions of use (https://www.energy.ca.gov/conditions-of-use)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " commercial or profit-making use prohibited; republication only as the terms allow"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " electricity (37 relevant items)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Owner decision; check federal HIFLD layers (public domain) as the alternative in stage E; or ask the Commission for permission."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-022-·-licence-unclear-·-City-of-El-Segundo-GIS-Hub-(all-55-items)"
+   },
+   "children": [
+    "RF-022 · licence unclear · City of El Segundo GIS Hub (all 55 items)"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " D · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 4 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P1 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " read licence field of every Hub item (https://coes-hub-ElSegundo.hub.arcgis.com)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " no licence stated"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " zoning, General Plan, specific plans, parcels, permits, businesses (city layers)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Ask the City (GIS analyst account owns the items) for terms; a human may read the city website."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
     "id": "RF-001-·-refused-·-City-of-El-Segundo-website-(elsegundo.gov)"
    },
    "children": [
@@ -226,101 +416,6 @@
        "tag": "strong"
       },
       " Never circumvent. A human may read it in a browser; ask the city for a data contact or bulk files."
-     ],
-     "tag": "li"
-    }
-   ],
-   "tag": "ul"
-  },
-  {
-   "attrs": {
-    "id": "RF-006-·-unreachable-·-FEMA-National-Flood-Hazard-Layer-service"
-   },
-   "children": [
-    "RF-006 · unreachable · FEMA National Flood Hazard Layer service"
-   ],
-   "tag": "h4"
-  },
-  {
-   "children": [
-    {
-     "children": [
-      {
-       "children": [
-        "Stage:"
-       ],
-       "tag": "strong"
-      },
-      " B · ",
-      {
-       "children": [
-        "severity:"
-       ],
-       "tag": "strong"
-      },
-      " 3 · ",
-      {
-       "children": [
-        "revisit priority:"
-       ],
-       "tag": "strong"
-      },
-      " P1 · ",
-      {
-       "children": [
-        "status:"
-       ],
-       "tag": "strong"
-      },
-      " open"
-     ],
-     "tag": "li"
-    },
-    {
-     "children": [
-      {
-       "children": [
-        "Tried:"
-       ],
-       "tag": "strong"
-      },
-      " GET ?f=json, two hosts, 2 attempts, 40 s timeout (https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer)"
-     ],
-     "tag": "li"
-    },
-    {
-     "children": [
-      {
-       "children": [
-        "Result:"
-       ],
-       "tag": "strong"
-      },
-      " connection failure (no HTTP response)"
-     ],
-     "tag": "li"
-    },
-    {
-     "children": [
-      {
-       "children": [
-        "What it affects:"
-       ],
-       "tag": "strong"
-      },
-      " floodplain (DA-010)"
-     ],
-     "tag": "li"
-    },
-    {
-     "children": [
-      {
-       "children": [
-        "Retry rule:"
-       ],
-       "tag": "strong"
-      },
-      " Retry in stage C; then look for the NFHL on ArcGIS Online or the State Geoportal."
      ],
      "tag": "li"
     }
@@ -511,6 +606,208 @@
        "tag": "strong"
       },
       " Fingerprint the portal in stage D; check bulk export terms."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-023-·-licence-unclear-·-Los-Angeles-County-open-data-terms"
+   },
+   "children": [
+    "RF-023 · licence unclear · Los Angeles County open data terms"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " D · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 3 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P1 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " GET of the terms page (https://data.lacounty.gov/pages/terms-of-use)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " page renders only in a browser; items carry an 'informational purposes' disclaimer, not a licence"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " county layers (parcels, flood, hazards)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " A human reads the terms page in a browser and records the text verbatim."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-006-·-unreachable-·-FEMA-National-Flood-Hazard-Layer-service"
+   },
+   "children": [
+    "RF-006 · unreachable · FEMA National Flood Hazard Layer service"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " B · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 3 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P2 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " workaround official"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " GET ?f=json, two hosts, 2 attempts, 40 s timeout (https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " connection failure (no HTTP response)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " floodplain (DA-010)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Retry in stage C; then look for the NFHL on ArcGIS Online or the State Geoportal."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Resolution:"
+       ],
+       "tag": "strong"
+      },
+      " County republishes the 100- and 500-year floodplains (public GIS, LACounty_Dynamic/Hazards); FEMA itself still to retry."
      ],
      "tag": "li"
     }
@@ -1279,6 +1576,196 @@
   },
   {
    "attrs": {
+    "id": "RF-024-·-not-read-·-South-Coast-AQMD-and-City-of-Los-Angeles-(port-data)-terms-of-use"
+   },
+   "children": [
+    "RF-024 · not read · South Coast AQMD and City of Los Angeles (port data) terms of use"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " D · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 2 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P2 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " AQMD page fetched, only partly read; LA City terms not fetched (http://www.aqmd.gov/privacy/terms-of-use)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " licence not established"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " air toxics, ports"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Read both in full before any use decision."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "RF-025-·-method-miss-·-Stage-D-relevance-rules"
+   },
+   "children": [
+    "RF-025 · method miss · Stage D relevance rules"
+   ],
+   "tag": "h4"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Stage:"
+       ],
+       "tag": "strong"
+      },
+      " D · ",
+      {
+       "children": [
+        "severity:"
+       ],
+       "tag": "strong"
+      },
+      " 2 · ",
+      {
+       "children": [
+        "revisit priority:"
+       ],
+       "tag": "strong"
+      },
+      " P2 · ",
+      {
+       "children": [
+        "status:"
+       ],
+       "tag": "strong"
+      },
+      " open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Tried:"
+       ],
+       "tag": "strong"
+      },
+      " rule-based screen of 633 candidates"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Result:"
+       ],
+       "tag": "strong"
+      },
+      " 408 marked relevant; hand sample of 40 gives precision 0.63 (county layers for unincorporated areas and other places slip through)"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "What it affects:"
+       ],
+       "tag": "strong"
+      },
+      " catalogue quality"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Retry rule:"
+       ],
+       "tag": "strong"
+      },
+      " Add a coverage test (does the layer's extent include El Segundo?) to the screen; hand-check the priority slice in stage E."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
     "id": "RF-014-·-tool-error-·-Journey-publishing-tool,-local-path-cleaning-and-home-path-check"
    },
    "children": [
@@ -2015,7 +2502,7 @@
    "children": [
     {
      "children": [
-      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-18"
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-19"
      ],
      "tag": "em"
     }
@@ -2027,7 +2514,7 @@
   },
   {
    "children": [
-    "heavymap-journey/1\nid: JP-0095\ntype: working-paper\nsection: expansion\nrun: CR-002\nplace: us-ca-0622412-el-segundo\nplace_type: city\nstage: C\nmethod: 0.2\nevidence_date: 2026-11-18\nseq: 45"
+    "heavymap-journey/1\nid: JP-0095\ntype: working-paper\nsection: expansion\nrun: CR-002\nplace: us-ca-0622412-el-segundo\nplace_type: city\nstage: D\nmethod: 0.2\nevidence_date: 2026-11-19\nseq: 45"
    ],
    "tag": "pre"
   }

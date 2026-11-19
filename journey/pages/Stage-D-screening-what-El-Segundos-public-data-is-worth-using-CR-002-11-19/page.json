@@ -1,0 +1,539 @@
+{
+ "author_name": "HeavyMap",
+ "author_url": "https://heavymap.com/journey",
+ "content": [
+  {
+   "children": [
+    "working-paper, el-segundo, screening, licences, stage-d, run-2"
+   ],
+   "tag": "aside"
+  },
+  {
+   "children": [
+    "Stage D of the El Segundo run: which of the city's public datasets are relevant, what each publisher's licence allows, which layers are sensitive, and which zoning and General Plan layers are current. Published as written."
+   ],
+   "tag": "blockquote"
+  },
+  {
+   "children": [
+    "Run CR-002, method v0.2, stage D: enumerate the doors stage C added, then screen every candidate for relevance, licence (WU-09) and sensitivity, and gather the local terms (WU-08). Live reads 2026-11-19 05:24 to 05:27 UTC. Full screen: ",
+    {
+     "children": [
+      "SCREEN.csv"
+     ],
+     "tag": "code"
+    },
+    ". Catalogue rows: ",
+    {
+     "children": [
+      "Spreadsheets/09-catalog-us-ca.csv"
+     ],
+     "tag": "code"
+    },
+    " (the first per-state catalogue file)."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "1.-The-doors-stage-C-added"
+   },
+   "children": [
+    "1. The doors stage C added"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Los Angeles County public GIS server"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "public.gis.lacounty.gov"
+       ],
+       "tag": "code"
+      },
+      "): 28 folders. Regional Planning holds 35 services (among them biotech and biomedical companies, landlocked parcels, renewable energy projects, Green Zones layers). The county's dynamic Hazards service holds 18 layers, including ",
+      {
+       "children": [
+        "tsunami inundation zones"
+       ],
+       "tag": "strong"
+      },
+      " and the county's own copies of the ",
+      {
+       "children": [
+        "100- and 500-year floodplains"
+       ],
+       "tag": "strong"
+      },
+      ": an official second door while FEMA's own service stays unreachable."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "South Coast AQMD open data hub"
+       ],
+       "tag": "strong"
+      },
+      " (",
+      {
+       "children": [
+        "data-scaqmd-online.opendata.arcgis.com"
+       ],
+       "tag": "code"
+      },
+      "): 47 items, including modelled residential air-toxics cancer risk on a grid (the MATES study)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "US Census TIGER"
+       ],
+       "tag": "strong"
+      },
+      " and ",
+      {
+       "children": [
+        "EPA risk management plans"
+       ],
+       "tag": "strong"
+      },
+      ": reachable."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "These four doors add about 8 to 10 relevant layers against roughly 276 already held: discovery is slowing but has not stopped."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "2.-Relevance"
+   },
+   "children": [
+    "2. Relevance"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "633 candidates screened by written rules (duty, exclusion words, coverage hints): ",
+    {
+     "children": [
+      "408 relevant"
+     ],
+     "tag": "strong"
+    },
+    ", 54 context, 171 not relevant. A hand check of 40 relevant rows (seed 1119) found 25 truly relevant: ",
+    {
+     "children": [
+      "precision 0.63"
+     ],
+     "tag": "strong"
+    },
+    ", so about 255 relevant layers, consistent with stage C's estimate of 267. The rules let through county layers for unincorporated areas and other places (county sewer mains, wildfire damage inspections, landlocked parcels). Hand-checked rows are marked in the catalogue; the rest say ",
+    {
+     "children": [
+      "screened_by_rule"
+     ],
+     "tag": "code"
+    },
+    "."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    "Relevant layers by duty: electricity 55, roads and trucks 43, parcels 36, rail 34, oil and gas 26, buildings 21, flood 20, businesses 19, ports 19, zoning 18, water and sewer 16, contaminated sites 16, permits and development 15, airport 13, seismic 11, air 10, General Plan 9, specific plans 8, coastal 8, noise 6, addresses 5."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "3.-Licences-(WU-09)"
+   },
+   "children": [
+    "3. Licences (WU-09)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "City of El Segundo (Hub, 55 items)"
+       ],
+       "tag": "strong"
+      },
+      " — Licence as found: none stated on any item · Status: unclear"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Los Angeles County"
+       ],
+       "tag": "strong"
+      },
+      " — Licence as found: \"for informational purposes\" disclaimer; terms page renders only in a browser · Status: unclear"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "SCAG"
+       ],
+       "tag": "strong"
+      },
+      " — Licence as found: preliminary data, consult each jurisdiction · Status: unclear"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "California Energy Commission"
+       ],
+       "tag": "strong"
+      },
+      " — Licence as found: conditions of use ",
+      {
+       "children": [
+        "prohibit commercial or profit-making use"
+       ],
+       "tag": "strong"
+      },
+      " · Status: ",
+      {
+       "children": [
+        "restricted"
+       ],
+       "tag": "strong"
+      }
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Southern California Edison"
+       ],
+       "tag": "strong"
+      },
+      " — Licence as found: none on 39 of 47; accuracy disclaimer on 8 · Status: unclear"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "BTS/NTAD, US Census, US EPA"
+       ],
+       "tag": "strong"
+      },
+      " — Licence as found: US government work, not copyrighted · Status: open"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Caltrans, State Geoportal"
+       ],
+       "tag": "strong"
+      },
+      " — Licence as found: CC BY 4.0 on some items, disclaimers on others · Status: per item"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "South Coast AQMD, City of Los Angeles"
+       ],
+       "tag": "strong"
+      },
+      " — Licence as found: terms page linked, not yet read in full · Status: to read"
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Of the 408 relevant layers: 191 unclear, 91 per item, 80 open, 37 restricted, 9 to read. The restricted energy commission layers (power plants, transmission lines, substations) are not recorded as usable; that needs the owner's decision (RF-021). Federal infrastructure layers are the likely alternative."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "4.-Sensitivity"
+   },
+   "children": [
+    "4. Sensitivity"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Infrastructure (88 layers):"
+       ],
+       "tag": "strong"
+      },
+      " substations, transmission and subtransmission circuits, pipelines, wells, refinery boundaries, hazardous facilities. Rule: show existence and distance to a parcel; never compile vulnerability detail (H6)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Personal fields possible (58 layers):"
+       ],
+       "tag": "strong"
+      },
+      " business, permit and assessor layers. Rule: field names only; screen owner and contact fields at publish (H1)."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "Held:"
+       ],
+       "tag": "strong"
+      },
+      " the City's ",
+      {
+       "children": [
+        "Target_Hazards"
+       ],
+       "tag": "code"
+      },
+      " service (H6), as in stage B."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "attrs": {
+    "id": "5.-Which-zoning-and-General-Plan-are-current"
+   },
+   "children": [
+    "5. Which zoning and General Plan are current"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "The City's server carries three zoning services and two General Plan services (pattern SP-014)."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      {
+       "children": [
+        "Zoning:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "Zoning_Update"
+       ],
+       "tag": "code"
+      },
+      ", last edited ",
+      {
+       "children": [
+        "2026-03-06"
+       ],
+       "tag": "strong"
+      },
+      ", matching the City's \"Zoning Map 2026 (Updated March 2026)\". 440 polygons, 34 codes. Current."
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "children": [
+        "General Plan:"
+       ],
+       "tag": "strong"
+      },
+      " ",
+      {
+       "children": [
+        "General_Plan"
+       ],
+       "tag": "code"
+      },
+      ", last edited 2021-08-12, field ",
+      {
+       "children": [
+        "ESGPLANAME"
+       ],
+       "tag": "code"
+      },
+      ", 30 designations."
+     ],
+     "tag": "li"
+    }
+   ],
+   "tag": "ul"
+  },
+  {
+   "children": [
+    "Industrial land in the City's own terms: zones ",
+    {
+     "children": [
+      "M-1 Light Manufacturing"
+     ],
+     "tag": "strong"
+    },
+    " (11 polygons) and ",
+    {
+     "children": [
+      "M-2 Heavy Manufacturing"
+     ],
+     "tag": "strong"
+    },
+    " (2), ",
+    {
+     "children": [
+      "Smoky Hollow East and West"
+     ],
+     "tag": "strong"
+    },
+    " (20 and 18), ",
+    {
+     "children": [
+      "CO Corporate Office"
+     ],
+     "tag": "strong"
+    },
+    " (11), and the corporate campus, south campus and aviation specific plans; General Plan ",
+    {
+     "children": [
+      "LIGHT INDUSTRIAL"
+     ],
+     "tag": "strong"
+    },
+    " (13), ",
+    {
+     "children": [
+      "HEAVY INDUSTRIAL"
+     ],
+     "tag": "strong"
+    },
+    " (3), ",
+    {
+     "children": [
+      "SMOKY HOLLOW"
+     ],
+     "tag": "strong"
+    },
+    " (38). The name field writes \"HeavyManufacturing\" without a space, and P-F appears both as a code and as a name."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "6.-Local-terms-(WU-08)"
+   },
+   "children": [
+    "6. Local terms (WU-08)"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Eight rows added to the synonym ledger (LG-119 to LG-126): AIN and APN (parallel to Ontario's roll number), tax-rate city (the reliable city filter), situs city (a false friend for selecting a city), General Plan (Ontario's Official Plan), Specific Plan (secondary plan), M-1 and M-2, Smoky Hollow (the nearest parallel to Hamilton's employment lands), and tax rate area."
+   ],
+   "tag": "p"
+  },
+  {
+   "attrs": {
+    "id": "7.-Exit-test-for-stage-D"
+   },
+   "children": [
+    "7. Exit test for stage D"
+   ],
+   "tag": "h3"
+  },
+  {
+   "children": [
+    "Every find has relevance, a licence status (or \"unclear\") and a sensitivity flag: yes, by rule, with a measured precision. Open: the energy commission licence (owner decision), the City and County terms (a human read), and the AQMD and City of Los Angeles terms."
+   ],
+   "tag": "p"
+  },
+  {
+   "children": [
+    {
+     "children": [
+      "Prepared with Claude (Anthropic) · model Claude Opus 5.5 · 2026-11-19"
+     ],
+     "tag": "em"
+    }
+   ],
+   "tag": "p"
+  },
+  {
+   "tag": "hr"
+  },
+  {
+   "children": [
+    "heavymap-journey/1\nid: JP-0097\ntype: working-paper\nsection: expansion\nrun: CR-002\nplace: us-ca-0622412-el-segundo\nplace_type: city\nstage: D\nmethod: 0.2\nevidence_date: 2026-11-19\nseq: 47"
+   ],
+   "tag": "pre"
+  }
+ ],
+ "description": "working-paper, el-segundo, screening, licences, stage-d, run-2",
+ "path": "Stage-D-screening-what-El-Segundos-public-data-is-worth-using-CR-002-11-19",
+ "title": "Stage D: screening what El Segundo's public data is worth using (CR-002)",
+ "url": "https://telegra.ph/Stage-D-screening-what-El-Segundos-public-data-is-worth-using-CR-002-11-19",
+ "views": 0
+}

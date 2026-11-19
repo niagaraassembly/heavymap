@@ -15,6 +15,25 @@
      "children": [
       {
        "attrs": {
+        "href": "/Stage-D-screening-what-El-Segundos-public-data-is-worth-using-CR-002-11-19"
+       },
+       "children": [
+        "Stage D: screening what El Segundo's public data is worth using (CR-002)"
+       ],
+       "tag": "a"
+      },
+      " — 2026-11-19 · 4 min · working-paper, el-segundo, screening, licences, stage-d, run-2",
+      {
+       "tag": "br"
+      },
+      "Stage D of the El Segundo run: which of the city's public datasets are relevant, what each publisher's licence allows, which layers are sensitive, and which zoning and General Plan layers are current. Published as…"
+     ],
+     "tag": "li"
+    },
+    {
+     "children": [
+      {
+       "attrs": {
         "href": "/Stage-C-what-exists-for-El-Segundo-two-ways-CR-002-11-19"
        },
        "children": [
@@ -41,11 +60,11 @@
        ],
        "tag": "a"
       },
-      " — 2026-11-18 · 6 min · working-paper, el-segundo, failures, run-2",
+      " — 2026-11-18 · 7 min · working-paper, el-segundo, failures, run-2",
       {
        "tag": "br"
       },
-      "What did not work in the El Segundo run so far, and what Hamilton left open: refusals, timeouts and gaps, each with a priority for the runs that follow. Published as written."
+      "What did not work in the El Segundo run so far, and what Hamilton left open: refusals, timeouts, licence limits and gaps, each with a priority for the runs that follow. Published as written."
      ],
      "tag": "li"
     },
@@ -98,7 +117,7 @@
        ],
        "tag": "a"
       },
-      " — 2026-11-18 · 3 min · working-paper, el-segundo, run-log, run-2",
+      " — 2026-11-18 · 4 min · working-paper, el-segundo, run-log, run-2",
       {
        "tag": "br"
       },
