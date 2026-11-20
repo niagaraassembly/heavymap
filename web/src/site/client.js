@@ -21,7 +21,6 @@ if (picker) {
     mountThemePicker(
       picker,
       JSON.parse(picker.dataset.themes),
-      document.documentElement.dataset.theme || "us",
     );
   } catch {
     /* The page keeps the theme the head script chose. */

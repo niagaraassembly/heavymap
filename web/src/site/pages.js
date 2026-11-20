@@ -136,6 +136,25 @@ const stageKey = () =>
 
 export function home(c) {
   const news = newsNewestFirst(c);
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 14);
+  const freshNews = news.filter((item) => {
+    const published = new Date(`${item.published_on}T00:00:00Z`);
+    return !Number.isNaN(published.valueOf()) && published >= cutoff;
+  });
+  const latestByLane = [];
+  const seenLanes = new Set();
+  for (const item of [...freshNews, ...news]) {
+    const lane = item.lane || item.event_type || "other";
+    if (!seenLanes.has(lane)) {
+      latestByLane.push(item);
+      seenLanes.add(lane);
+    }
+  }
+  const latestStories = [...latestByLane, ...news.filter((item) => !latestByLane.includes(item))].slice(0, 6);
+  const latestStoryCards = latestStories.map((item) =>
+    `<article class="hm-home-story-card"><p class="eyebrow">${esc(item.place ?? "")}${stageChip(item)}</p><h3><a href="/read/${esc(item.id)}/">${esc(item.title)}</a></h3><p>${esc(item.summary)}</p><p class="archive-date">${esc(longDate(item.published_on))}</p></article>`,
+  ).join("");
   const [lead, ...rest] = news;
   const leadEd = lead && c.editions.get(lead.editions?.[0]);
   const leadDesk = leadEd && regionOf(c, leadEd.desk);
@@ -162,7 +181,7 @@ export function home(c) {
     bodyClass: "hm-home",
     /* The page is a sheet lying on the Hamilton map: a fixed map image sits underneath, the top
      * window shows it, and choosing the map drops the sheet away (client.js) on the way to /map/. */
-    main: `<div class="hm-home-underlay" aria-hidden="true"><picture><source media="(max-width: 700px)" srcset="/map/hamilton-lower-city-tall.webp" width="900" height="1100"><img src="/map/hamilton-lower-city-wide.webp" width="2000" height="1250" alt="" fetchpriority="high"></picture></div><a class="hm-home-window" href="/map/" data-home-map><span class="hm-home-window-peek"><span><strong>Hamilton, Ontario</strong><small>Open the parcel map</small></span><span class="map-peek-arrow" aria-hidden="true">↗</span></span></a><div class="hm-home-sheet" data-home-sheet><div class="return-line" data-resume hidden></div><section class="alt-news-section"><div class="alt-section-head"><div><p class="eyebrow">On the record</p><h2>From the Desks</h2></div><a class="text-link" href="/reader/">All news in Reader ${arrow}</a></div>${fromDesks}</section><section class="alt-region-section" id="desks"><div class="alt-section-head"><div><p class="eyebrow">Choose your field of view</p><h2>Your regional Desks</h2></div><a class="text-link" href="/subscribe/">Follow one or both ${arrow}</a></div><div class="region-pair">${desks}</div></section></div>`,
+    main: `<div class="hm-home-underlay" aria-hidden="true"><picture><source media="(max-width: 700px)" srcset="/map/hamilton-lower-city-tall.webp" width="900" height="1100"><img src="/map/hamilton-lower-city-wide.webp" width="2000" height="1250" alt="" fetchpriority="high"></picture></div><a class="hm-home-window" href="/map/" data-home-map><span class="hm-home-window-peek"><span><strong>Hamilton, Ontario</strong><small>Open the parcel map</small></span><span class="map-peek-arrow" aria-hidden="true">↗</span></span></a><div class="hm-home-sheet" data-home-sheet><div class="return-line" data-resume hidden></div><section class="alt-news-section"><div class="alt-section-head"><div><p class="eyebrow">On the record</p><h2>From the Desks</h2></div><a class="text-link" href="/reader/">All news in Reader ${arrow}</a></div>${fromDesks}</section>${latestStories.length ? `<section class="hm-home-latest" aria-labelledby="home-latest-title"><div class="alt-section-head"><div><p class="eyebrow">Across the region</p><h2 id="home-latest-title">Latest stories</h2></div><a class="text-link" href="/reader/">Explore the Reader ${arrow}</a></div><div class="hm-home-story-grid">${latestStoryCards}</div></section>` : ""}<section class="alt-region-section" id="desks"><div class="alt-section-head"><div><p class="eyebrow">Choose your field of view</p><h2>Your regional Desks</h2></div><a class="text-link" href="/subscribe/">Follow one or both ${arrow}</a></div><div class="region-pair">${desks}</div></section></div>`,
   };
 }
 
