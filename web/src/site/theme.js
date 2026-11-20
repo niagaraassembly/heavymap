@@ -8,19 +8,48 @@ export const THEME_KEY = "heavymap-theme-v1";
 
 /**
  * Which theme and mode to show.
+ * @param {object|null} stored   parsed heavymap-theme-v1, or null
+ * @param {string[]} languages   navigator.languages
+ * @param {boolean} prefersDark  prefers-color-scheme: dark
  * @param {{id:string,country:string,modes:string[]}[]} themes  themes available in this build
  * @param {string} fallback      the default theme id
  * @returns {{theme:string, mode:"light"|"dark", source:"choice"|"hint"|"default"}}
  */
-export function resolveTheme(themes, fallback) {
+export function resolveTheme(stored, languages, prefersDark, themes, fallback) {
   var byId = {};
   for (var i = 0; i < themes.length; i++) byId[themes[i].id] = themes[i];
-  // Locale and appearance are fixed to the initial US English light experience.
-  var theme = byId.us ? "us" : byId[fallback] ? fallback : themes[0].id;
+  var theme = null;
+  var source = "default";
+  if (stored && stored.version === 1 && byId[stored.choice]) {
+    theme = stored.choice;
+    source = "choice";
+  }
+  if (!theme) {
+    for (var j = 0; j < (languages || []).length; j++) {
+      var m = /^[a-z]{2,3}(?:-[A-Za-z]{4})?-([A-Za-z]{2})\b/.exec(
+        languages[j] || "",
+      );
+      if (!m) continue;
+      for (var k = 0; k < themes.length; k++) {
+        if (themes[k].country === m[1].toUpperCase()) theme = themes[k].id;
+      }
+      if (theme) {
+        source = "hint";
+        break;
+      }
+    }
+  }
+  if (!theme) theme = byId[fallback] ? fallback : themes[0].id;
+  var wanted =
+    stored && (stored.mode === "light" || stored.mode === "dark")
+      ? stored.mode
+      : "auto";
+  var dark = wanted === "dark" || (wanted === "auto" && prefersDark);
+  var hasDark = byId[theme].modes.indexOf("dark") !== -1;
   return {
     theme: theme,
-    mode: "light",
-    source: "default",
+    mode: dark && hasDark ? "dark" : "light",
+    source: source,
   };
 }
 
@@ -75,5 +104,6 @@ export function headScript(themes, fallback) {
   const list = JSON.stringify(
     themes.map(({ id, country, modes }) => ({ id, country, modes })),
   );
-  return `<script>(function(){var r=(${resolveTheme.toString()})(${list},${JSON.stringify(fallback)});var h=document.documentElement;h.setAttribute("data-theme",r.theme);h.setAttribute("data-mode",r.mode);h.setAttribute("data-theme-source",r.source)})()</script>`;
+  /* Keep the theme engine's tested API intact while this UI exposes only USA light mode. */
+  return `<script>(function(){var r=(${resolveTheme.toString()})(null,[],false,${list},${JSON.stringify(fallback)});var h=document.documentElement;h.setAttribute("data-theme",r.theme);h.setAttribute("data-mode","light");h.setAttribute("data-theme-source","default")})()</script>`;
 }
