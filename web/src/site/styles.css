@@ -1862,6 +1862,77 @@ body.hm-home-leaving { overflow: hidden; }
   .hm-home-sheet, body.hm-home .alt-footer, .alternate .alt-header { transition: none; }
 }
 
+/* ---- Home footer: title and links in the sky of an industrial landscape --- */
+/* The photo is drawn full width at the bottom. Its sky was faded, at export, into the
+ * page surface (#f5f4ee), so the same colour fills any height above it with no seam.
+ * padding-bottom is a share of the width (as the photo's height is), which keeps the
+ * links in the sky, above the stacker and furnace tops (about 42% down the photo). */
+body.hm-home .hm-home-footer {
+  --hm-footer-sky: #f5f4ee;
+  --hm-footer-shade: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+  min-height: calc(100vw * 756 / 1344);
+  padding-top: clamp(48px, 6vw, 88px);
+  padding-bottom: 37%;
+  border-top: 0;
+  color: var(--text);
+  background:
+    linear-gradient(var(--hm-footer-shade), var(--hm-footer-shade)),
+    url("/editorial/footer-industry-wide.webp") center bottom / 100% auto no-repeat,
+    var(--hm-footer-sky);
+}
+/* Dark: the same photo at dusk. One even shade over photo and fill keeps them seamless;
+ * the top gradient eases the page surface into the shaded sky. */
+:root[data-mode="dark"] body.hm-home .hm-home-footer {
+  --hm-footer-shade: color-mix(in srgb, var(--surface) 78%, transparent);
+  --hm-footer-sky: color-mix(in srgb, var(--surface) 78%, #f5f4ee);
+  background:
+    linear-gradient(to bottom, var(--surface) 0, transparent 220px),
+    linear-gradient(var(--hm-footer-shade), var(--hm-footer-shade)),
+    url("/editorial/footer-industry-wide.webp") center bottom / 100% auto no-repeat,
+    var(--hm-footer-sky);
+}
+.hm-home-footer-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 40px 64px; }
+body.hm-home .hm-home-footer .wordmark { font-size: 34px; }
+body.hm-home .hm-home-footer-brand p { max-width: 44ch; margin: 18px 0 0; color: var(--text-body); font: 1.05rem/1.5 var(--sans); }
+.hm-home-footer-handle { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; color: var(--text-body); font: .86rem/1.3 var(--sans); text-decoration: none; }
+.hm-home-footer-handle:hover, .hm-home-footer-handle:focus-visible { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+body.hm-home .hm-home-footer .hm-home-footer-columns { display: grid; grid-template-columns: repeat(3, auto); gap: 32px clamp(32px, 5vw, 88px); margin: 0; font-size: inherit; }
+.hm-home-footer-columns h2 { margin: 6px 0 18px; color: var(--text); font: 500 1.05rem/1.2 var(--serif); }
+.hm-home-footer-columns ul { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.hm-home-footer-columns a { color: var(--text-body); font: .92rem/1.35 var(--sans); text-decoration: none; }
+.hm-home-footer-columns a:hover, .hm-home-footer-columns a:focus-visible { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+.hm-home-footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 24px; margin-top: clamp(36px, 5vw, 60px); padding-top: 18px; border-top: 1px solid color-mix(in srgb, var(--text) 20%, transparent); color: var(--text-body); font: .8rem/1.4 var(--sans); }
+.hm-home-footer-maker { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; }
+body.hm-home .hm-home-footer .hm-home-footer-social { display: flex; align-items: center; gap: 4px; margin: 0; font-size: inherit; }
+.hm-home-footer-social a { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; color: var(--text-body); transition: color .15s ease, background-color .15s ease; }
+.hm-home-footer-social a:hover, .hm-home-footer-social a:focus-visible { color: var(--text); background: color-mix(in srgb, var(--text) 9%, transparent); }
+@media (max-width: 700px) {
+  /* A larger crop so the works still read on a phone. */
+  body.hm-home .hm-home-footer, :root[data-mode="dark"] body.hm-home .hm-home-footer {
+    min-height: 0;
+    padding-top: 44px;
+    padding-bottom: 55%;
+    background-image:
+      linear-gradient(to bottom, var(--surface) 0, transparent 160px),
+      linear-gradient(var(--hm-footer-shade), var(--hm-footer-shade)),
+      url("/editorial/footer-industry-narrow.webp");
+    background-position: 0 0, 0 0, center bottom;
+    background-size: auto, auto, 160% auto;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+  }
+  body.hm-home .hm-home-footer .wordmark { font-size: 28px; }
+  body.hm-home .hm-home-footer .hm-home-footer-columns { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .hm-home-footer-columns h2 { margin-bottom: 4px; }
+  .hm-home-footer-columns ul { gap: 0; }
+  .hm-home-footer-bottom { flex-direction: column; align-items: flex-start; }
+  .hm-home-footer-social a { width: 44px; height: 44px; }
+}
+
 /* ---- Bars and parcel card, 2026-11-17 (second pass) ----------------------- */
 
 /* Service bars share the map bar's 46px height. */
