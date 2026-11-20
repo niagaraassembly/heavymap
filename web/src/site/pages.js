@@ -149,12 +149,31 @@ const regionalNewsletterStories = (c, limit = 6) => {
     return Number(bFresh) - Number(aFresh) || bDate - aDate;
   });
   const seenArticles = new Set();
-  return candidates.flatMap(({ region, edition, articles }) => {
+  const selected = [];
+  const addNextFrom = ({ region, edition, articles }) => {
     const item = articles.find((article) => !seenArticles.has(article.id));
-    if (!item) return [];
+    if (!item) return false;
     seenArticles.add(item.id);
-    return [{ region, edition, item }];
-  }).slice(0, limit);
+    selected.push({ region, edition, item });
+    return true;
+  };
+
+  // First give every region one story from its latest newsletter.
+  for (const candidate of candidates) {
+    if (selected.length === limit) return selected;
+    addNextFrom(candidate);
+  }
+  // When fewer than six regions have newsletters, fill remaining cards by
+  // rotating through those newsletters so one region does not crowd out the rest.
+  let added = true;
+  while (selected.length < limit && added) {
+    added = false;
+    for (const candidate of candidates) {
+      if (selected.length === limit) break;
+      if (addNextFrom(candidate)) added = true;
+    }
+  }
+  return selected;
 };
 const editionHref = (key) => `/editions/${key}/`;
 const stageChip = (item) =>
