@@ -1,6 +1,9 @@
 /* Client behaviour shared by every prebuilt page. Pages work without it;
  * this adds conveniences. Reader and history arrive in build step 4. */
 import "./styles.css";
+if (document.body.classList.contains("hm-home")) {
+  void import("../journey/journey.css");
+}
 import { mountThemePicker } from "./theme-picker.js";
 import { mountMapBars } from "./map-bars.js";
 import { mountLocalAccount } from "./local-account.js";

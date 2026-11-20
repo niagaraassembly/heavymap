@@ -46,6 +46,11 @@ function recentCard(post) {
   return `<li class="jr-recent-card jr-recent-card--${esc(post.section)}"><p class="jr-recent-kicker">${esc(section?.name ?? post.section)}${post.type ? ` · ${esc(post.type.replace(/-/g, " "))}` : ""}</p><h2><a href="${esc(post.site)}">${esc(post.title)}</a></h2>${post.excerpt ? `<p class="jr-recent-excerpt">${esc(post.excerpt)}</p>` : ""}<p class="jr-meta">${esc(longDay(post.created))}${post.minutes ? ` · ${post.minutes} min read` : ""}</p></li>`;
 }
 
+export function journeyRecentSection(journey, { title = "Recent articles", id = "jr-recent-title", live = false } = {}) {
+  const recent = journey?.recent ?? [];
+  return `<section class="jr-recent" aria-labelledby="${esc(id)}"><header class="jr-recent-head"><h2 id="${esc(id)}">${esc(title)}</h2><span>Latest first</span></header><ul class="jr-recent-grid"${live ? " data-recent-posts" : ""}>${recent.map(recentCard).join("") || '<li class="jr-empty">First posts on their way.</li>'}</ul></section>`;
+}
+
 function runStrip(j) {
   return (j.runs ?? []).map((r) => {
     const at = STAGES.indexOf(r.stage);
@@ -75,7 +80,7 @@ export function journeyLanding(c) {
     title: "Journey",
     description: "Making HeavyMap, in the open: notes from building an industrial map of the world, one city at a time.",
     bodyClass: "hm-journey hm-journey-landing",
-    main: `<div class="jr jr--wide" data-journey><header class="jr-masthead"><p class="jr-kicker">The HeavyMap Journey</p><h1 class="jr-masthead-title">Making HeavyMap, in the open.</h1><p class="jr-masthead-dek">Notes from building an industrial map of the world, one city at a time. What we looked for, what we found, what we got wrong, and what we changed.</p><p class="jr-issue-line"><span data-issue-posts>${counts.posts ?? 0} pieces</span> · ${JOURNEY_SECTIONS.length} sections · ${counts.collections ?? 0} collections · updated as we work</p>${boot}</header><section class="jr-recent" aria-labelledby="jr-recent-title"><header class="jr-recent-head"><h2 id="jr-recent-title">Recent articles</h2><span>Latest first</span></header><ul class="jr-recent-grid" data-recent-posts>${(j.recent ?? []).map(recentCard).join("") || '<li class="jr-empty">First posts on their way.</li>'}</ul></section>${(j.runs ?? []).length ? `<section class="jr-runs" aria-label="City runs"><h2 class="jr-section-label">City runs</h2><div class="jr-runs-list">${runStrip(j)}</div></section>` : ""}${bands}<footer class="jr-coming"><h2 class="jr-section-label">Coming to the Journey</h2><ul>${soon}</ul></footer></div>${configScript(j, "journey")}`,
+    main: `<div class="jr jr--wide" data-journey><header class="jr-masthead"><p class="jr-kicker">The HeavyMap Journey</p><h1 class="jr-masthead-title">Making HeavyMap, in the open.</h1><p class="jr-masthead-dek">Notes from building an industrial map of the world, one city at a time. What we looked for, what we found, what we got wrong, and what we changed.</p><p class="jr-issue-line"><span data-issue-posts>${counts.posts ?? 0} pieces</span> · ${JOURNEY_SECTIONS.length} sections · ${counts.collections ?? 0} collections · updated as we work</p>${boot}</header>${journeyRecentSection(j, { id: "jr-recent-title", live: true })}${(j.runs ?? []).length ? `<section class="jr-runs" aria-label="City runs"><h2 class="jr-section-label">City runs</h2><div class="jr-runs-list">${runStrip(j)}</div></section>` : ""}${bands}<footer class="jr-coming"><h2 class="jr-section-label">Coming to the Journey</h2><ul>${soon}</ul></footer></div>${configScript(j, "journey")}`,
   };
 }
 
