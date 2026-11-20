@@ -41,17 +41,9 @@ const STAGE_NAMES = { A: "Prepare", B: "Map", C: "Enumerate", D: "Screen", E: "C
 const longDay = (iso) => {
   try { return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "America/Toronto" }); } catch { return ""; }
 };
-const typeLabel = (t) => (t || "post").replace(/-/g, " ");
-
-function feature(f, lead) {
-  const p = f.post;
-  const visual = f.image
-    ? `<figure class="jr-feature-visual jr-feature-visual--photo"><img src="${esc(f.image)}" alt="${esc(f.alt || "")}" loading="${lead ? "eager" : "lazy"}"><figcaption>${esc(f.credit || "")}</figcaption></figure>`
-    : f.stat
-      ? `<div class="jr-feature-visual jr-feature-visual--stat" aria-hidden="true"><span class="jr-stat">${esc(f.stat)}</span><span class="jr-stat-label">${esc(f.statLabel || "")}</span></div>`
-      : "";
-  const sectionName = JOURNEY_SECTIONS.find((s) => s.key === p.section)?.name ?? p.section;
-  return `<article class="jr-feature${lead ? " jr-feature--lead" : ""}">${visual}<div class="jr-feature-text"><p class="jr-kicker">${esc(sectionName)} · ${esc(typeLabel(p.type))}${p.run ? ` · run ${esc(p.run.replace("CR-00", ""))}` : ""}</p><h${lead ? 2 : 3} class="jr-feature-title"><a href="${esc(p.site)}">${esc(p.title)}</a></h${lead ? 2 : 3}>${p.excerpt ? `<p class="jr-feature-dek">${esc(p.excerpt)}</p>` : ""}<p class="jr-meta">${esc(longDay(p.created))}${p.minutes ? ` · ${p.minutes} min read` : ""}</p></div></article>`;
+function recentCard(post) {
+  const section = JOURNEY_SECTIONS.find((s) => s.key === post.section);
+  return `<li class="jr-recent-card jr-recent-card--${esc(post.section)}"><p class="jr-recent-kicker">${esc(section?.name ?? post.section)}${post.type ? ` · ${esc(post.type.replace(/-/g, " "))}` : ""}</p><h2><a href="${esc(post.site)}">${esc(post.title)}</a></h2>${post.excerpt ? `<p class="jr-recent-excerpt">${esc(post.excerpt)}</p>` : ""}<p class="jr-meta">${esc(longDay(post.created))}${post.minutes ? ` · ${post.minutes} min read` : ""}</p></li>`;
 }
 
 function runStrip(j) {
@@ -65,7 +57,6 @@ function runStrip(j) {
 
 export function journeyLanding(c) {
   const j = c.journey ?? { collections: {}, fallback: {}, featured: [], runs: [], counts: {} };
-  const [lead, ...rest] = j.featured ?? [];
   const bands = JOURNEY_SECTIONS.map((s, i) => {
     const all = j.fallback[s.key] ?? [];
     const subs = Object.entries(j.collections).filter(([, col]) => col.parent === s.key);
@@ -84,7 +75,7 @@ export function journeyLanding(c) {
     title: "Journey",
     description: "Making HeavyMap, in the open: notes from building an industrial map of the world, one city at a time.",
     bodyClass: "hm-journey hm-journey-landing",
-    main: `<div class="jr jr--wide" data-journey><header class="jr-masthead"><p class="jr-kicker">The HeavyMap Journey</p><h1 class="jr-masthead-title">Making HeavyMap, in the open.</h1><p class="jr-masthead-dek">Notes from building an industrial map of the world, one city at a time. What we looked for, what we found, what we got wrong, and what we changed.</p><p class="jr-issue-line"><span data-issue-posts>${counts.posts ?? 0} pieces</span> · ${JOURNEY_SECTIONS.length} sections · ${counts.collections ?? 0} collections · updated as we work</p>${boot}</header>${lead ? `<div class="jr-front">${feature(lead, true)}<div class="jr-front-side">${rest.map((f) => feature(f, false)).join("")}</div></div>` : ""}${(j.runs ?? []).length ? `<section class="jr-runs" aria-label="City runs"><h2 class="jr-section-label">City runs</h2><div class="jr-runs-list">${runStrip(j)}</div></section>` : ""}${bands}<footer class="jr-coming"><h2 class="jr-section-label">Coming to the Journey</h2><ul>${soon}</ul></footer></div>${configScript(j, "journey")}`,
+    main: `<div class="jr jr--wide" data-journey><header class="jr-masthead"><p class="jr-kicker">The HeavyMap Journey</p><h1 class="jr-masthead-title">Making HeavyMap, in the open.</h1><p class="jr-masthead-dek">Notes from building an industrial map of the world, one city at a time. What we looked for, what we found, what we got wrong, and what we changed.</p><p class="jr-issue-line"><span data-issue-posts>${counts.posts ?? 0} pieces</span> · ${JOURNEY_SECTIONS.length} sections · ${counts.collections ?? 0} collections · updated as we work</p>${boot}</header><section class="jr-recent" aria-labelledby="jr-recent-title"><header class="jr-recent-head"><h2 id="jr-recent-title">Recent articles</h2><span>Latest first</span></header><ul class="jr-recent-grid" data-recent-posts>${(j.recent ?? []).map(recentCard).join("") || '<li class="jr-empty">First posts on their way.</li>'}</ul></section>${(j.runs ?? []).length ? `<section class="jr-runs" aria-label="City runs"><h2 class="jr-section-label">City runs</h2><div class="jr-runs-list">${runStrip(j)}</div></section>` : ""}${bands}<footer class="jr-coming"><h2 class="jr-section-label">Coming to the Journey</h2><ul>${soon}</ul></footer></div>${configScript(j, "journey")}`,
   };
 }
 

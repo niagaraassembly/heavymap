@@ -57,15 +57,17 @@ export function loadJourney(dir) {
       excerpt: parsed?.intro ? nodeText(parsed.intro).trim() : "",
     });
   }
-  // Features named in collections.json (journey.featured), each { path, stat?, statLabel?, image?, alt?, credit? }.
-  const featured = (collections.journey?.featured ?? [])
-    .map((f) => ({ ...f, post: posts.get(f.path) }))
-    .filter((f) => f.post);
+  // The home page rolls forward automatically: newest registered posts enter and
+  // older posts leave. The collections.journey.featured list is reserved for a
+  // future pinning control and does not affect this recent-article row.
+  const recent = [...posts.values()]
+    .sort((a, b) => (b.created || "").localeCompare(a.created || "") || a.title.localeCompare(b.title))
+    .slice(0, 6);
   // Runs: every run with a working-papers or field-notes collection; latest stage reached.
   const runs = (collections.journey?.runs ?? []).map((run) => {
     const done = [...posts.values()].filter((p) => p.run === run.id && p.stage).map((p) => p.stage).sort();
     return { ...run, stage: run.stage || done.at(-1) || "A" };
   });
   const counts = { posts: posts.size, sections: 3, collections: Object.values(collections).filter((c) => c.parent).length };
-  return { collections, fallback, featured, runs, counts };
+  return { collections, fallback, recent, runs, counts };
 }

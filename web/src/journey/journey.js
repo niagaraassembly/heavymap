@@ -7,7 +7,7 @@
 
 import "./journey.css";
 import "../brand/heavy-element-loader.js";
-import { getPage, parseIndex, parsePost, readingMinutes, sanitize, telegraphPath } from "./telegraph.js";
+import { getPage, parseIndex, parsePost, readingMinutes, recentEntries, sanitize, telegraphPath } from "./telegraph.js";
 
 const root = document.querySelector("[data-journey]");
 const config = JSON.parse(document.getElementById("hm-journey-config")?.textContent || "{}");
@@ -167,10 +167,12 @@ const countLabel = (entries) => {
 
 async function landing() {
   const top = Object.keys(SECTIONS).filter((k) => !SECTIONS[k].parent);
-  await say("journey", `built ${config.built || ""} · ${top.length} live sections`);
-  const results = await Promise.all(top.map(loadIndex));
+  const keys = Object.keys(SECTIONS);
+  await say("journey", `built ${config.built || ""} · ${top.length} sections, ${keys.length - top.length} collections`);
+  const results = await Promise.all(keys.map(loadIndex));
+  const topResults = results.filter((r) => !SECTIONS[r.key]?.parent);
   let total = 0;
-  for (const r of results) {
+  for (const r of topResults) {
     const block = root.querySelector(`[data-journey-block="${r.key}"]`);
     const posts = r.entries.filter((e) => !collectionByPath.has(e.path));
     let inCollections = 0;
@@ -186,6 +188,28 @@ async function landing() {
     list.replaceChildren(...posts.slice(0, 3).map((e) => entryItem(e, r.key)));
     if (!posts.length) list.append(el("li", "jr-empty", "First posts on their way."));
     block.querySelector("[data-block-count]").textContent = `${posts.length} ${posts.length === 1 ? "post" : "posts"}`;
+  }
+  const recent = recentEntries(results, collectionByPath.keys(), 6);
+  const recentList = root.querySelector("[data-recent-posts]");
+  if (recentList) {
+    const cards = recent.map((entry) => {
+      const key = entry.key;
+      const sectionKey = SECTIONS[key]?.parent || key;
+      const sectionName = SECTIONS[sectionKey]?.name || sectionKey;
+      const item = el("li", `jr-recent-card jr-recent-card--${sectionKey}`);
+      item.append(el("p", "jr-recent-kicker", sectionName));
+      const heading = el("h2");
+      const link = el("a", null, entry.title);
+      link.href = `${pageOf(key)}#${entry.path}`;
+      heading.append(link);
+      item.append(heading);
+      if (entry.excerpt) item.append(el("p", "jr-recent-excerpt", entry.excerpt));
+      const meta = el("p", "jr-meta", `${entry.date}${entry.minutes ? ` · ${entry.minutes} min read` : ""}`);
+      item.append(meta);
+      return item;
+    });
+    recentList.replaceChildren(...cards);
+    if (!cards.length) recentList.append(el("li", "jr-empty", "First posts on their way."));
   }
   const issue = root.querySelector("[data-issue-posts]");
   if (issue) issue.textContent = `${total} pieces`;

@@ -63,6 +63,22 @@ export function parseIndex(content = []) {
   return { intro, footer, entries, curated: /collection=extra/.test(markerText) };
 }
 
+/** Flatten live section/collection indexes into the newest distinct posts. */
+export function recentEntries(indexes = [], collectionPaths = [], limit = 6) {
+  const collections = new Set(collectionPaths);
+  const posts = new Map();
+  for (const { key, entries = [] } of indexes) {
+    for (const entry of entries) {
+      if (!entry?.path || collections.has(entry.path)) continue;
+      const previous = posts.get(entry.path);
+      if (!previous || (entry.date || "") > (previous.date || "")) posts.set(entry.path, { ...entry, key });
+    }
+  }
+  return [...posts.values()]
+    .sort((a, b) => (b.date || "").localeCompare(a.date || "") || a.title.localeCompare(b.title))
+    .slice(0, limit);
+}
+
 /** Split a post into tags, standfirst, body and colophon fields. */
 export function parsePost(content = []) {
   const nodes = [...content];
